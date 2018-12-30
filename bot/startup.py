@@ -5,11 +5,9 @@ from discord.ext.commands import Bot, Context
 from random import randrange, random, choice
 from datetime import date, timedelta, datetime
 import platform
-from minigames import connectfour as cf, poker as pk, yahtzee as yz, jotto as jo, hangman as hm, planes as pn,\
-    uno as un, boggle as bg, casino as cs, risk as rk
-from utilities import stocks as sk, weed as wd, wiki as wk, translate as tr, dict as dc, words as wr, timein as ti
+from minigames import connectfour as cf, jotto as jo, hangman as hm, planes as pn, boggle as bg, risk as rk
+from utilities import weed as wd, wiki as wk, translate as tr, dict as dc, words as wr, timein as ti
 from pokemon import walker as pm
-from dnd import dungeongen as dg
 from math import floor, ceil, log
 from copy import deepcopy as copy
 from time import time
@@ -17,9 +15,6 @@ from termcolor import colored
 import atexit
 import inspect
 import os
-with open("storage/vals.txt", "r") as ei:
-    valdat = ei.readlines()
-uservals = {l.split("|")[0]: float(l.split("|")[1]) for l in valdat}
 client = Bot(description="A bot that does bot things", command_prefix="z!", pm_help=False, help_attrs={"name": "Шaf"})
 startval = 10000
 kaisid = "238390171022655489"
@@ -37,32 +32,12 @@ def hexcol(hex_code: str):
     return discord.Colour(int(hex_code, 16))
 
 
-def val(i: str):
-    if i in uservals:
-        return uservals[i]
-    uservals[i] = startval
-    rewritevals()
-    return uservals[i]
-
-
-def rewritevals():
-    with open("storage/vals.txt", "w") as f:
-        for i in list(uservals.keys()):
-            f.write("{}|{}|\n".format(i, round(uservals[i], 2)))
-
-
 def rewriteplanes():
     with open("storage/planes.txt", "w") as f:
         f.write("\n".join([str(g) for g in pn.users.values()]))
 
 
-atexit.register(rewritevals)
 atexit.register(print, "hi")
-
-
-def addval(u, n):
-    uservals[u.id] = round(uservals[u.id] + n, 2)
-    rewritevals()
 
 
 def commfloat(s):
