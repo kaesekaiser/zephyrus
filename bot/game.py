@@ -13,6 +13,8 @@ async def connectfour(ctx: Context, opp: discord.Member):
 
     if opp.bot:
         return await errsay("Bots can't play Connect Four.")
+    if opp == ctx.message.author:
+        return await errsay("You can't challenge yourself.")
     conf = await confirm(opp, f"{opp.display_name}, do you accept the challenge?", say=foursay, yes="accept", no="deny")
     if not conf:
         return await errsay(f"{opp.display_name} chickened out.")
@@ -59,11 +61,11 @@ async def connectfour(ctx: Context, opp: discord.Member):
                     return await errsay("Connect Four game timed out.")
                 await delete_message(mcon)
             b.drop(int(mcon.content) - 1, p)
-            if b.victor() is False:
+            if False not in [b.isfull(c) for c in range(7)]:
+                return await client.edit_message(screen, embed=confour("It's a draw!", d=b.str()))
+            elif b.victor() is False:
                 await client.edit_message(screen, embed=confour(f"{tdic[-p].display_name}'s move ({checker_dict[-p]}).",
                                                                 d=b.str()))
-            elif False not in [b.isfull(c) for c in range(7)]:
-                return await client.edit_message(screen, embed=confour("It's a draw!", d=b.str()))
             else:
                 return await client.edit_message(screen, embed=confour(f"{tdic[p].display_name} wins!", d=b.str()))
 
