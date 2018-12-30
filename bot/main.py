@@ -8,7 +8,7 @@ aliases = {
     "dict": "define", "pkmn": "pokemon", "trans": "translate", "connect4": "connectfour", "dice": "roll",
     "poke": "pokemon", "pk": "pokemon", "walker": "pokewalker", "pw": "pokewalker", "stocks": "stock",
     "fw": "foreignwiki", "u": "unicode", "rune": "runes", "jp": "jyutping", "ord_command": "ord",
-    "py": "pinyin"
+    "py": "pinyin", "pick": "choose"
 }
 
 
@@ -56,7 +56,8 @@ commandFormats = {
     "pokemon": "see z!pokemon help",
     "rpg": "see z!rpg help",
     "planes": "see z!planes help",
-    "invite": "z!invite"
+    "invite": "z!invite",
+    "choose": "z!choose <option> or <option> [...etc]"
 }
 
 
@@ -136,7 +137,8 @@ descs = {
     "rpg": "A framework for some kind of RPG I wanted to make. It doesn't really do anything at the moment, but"
            " see ``z!rpg help`` if you're interested.",
     "planes": "A neat little Pocket Planes kinda game, a shipping simulator. Do ``z!p help`` for more info.",
-    "invite": "Gives the link to invite Zephyrus to another server."
+    "invite": "Gives the link to invite Zephyrus to another server.",
+    "choose": "Makes a decision for you. Chooses between several options."
 }
 
 

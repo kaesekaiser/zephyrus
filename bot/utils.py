@@ -560,3 +560,15 @@ async def rot13(*args: str):
         except discord.errors.HTTPException:
             return await errsay("inputs must be less than 2000 characters",
                                 d="isn't Discord supposed to limit you to 2000 characters anyway :thinking:")
+
+
+@client.command(aliases=["pick"])
+async def choose(*args: str):
+    async def choosesay(s: str, **kwargs):
+        return await emolsay(":8ball:", s, hexcol("E1E8ED"), **kwargs)
+
+    args = reg_split(r"\s+or\s+", " ".join(args))
+    if len(args) == 1:
+        raise commands.errors.MissingRequiredArgument
+    string = choice(["I pick {}!", "Obviously it's {}.", "{}, of course.", "{}, obviously.", "Definitely {}."])
+    return await choosesay(string.format(f"**{choice(args)}**"))
