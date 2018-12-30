@@ -167,15 +167,12 @@ images = {
     } for g in borders
 }
 main_map = Image.open(directory + "nqr.png").convert("RGBA")
-print("all provinces generated")
 numbers = {
     g: Image.open(directory + f"{g}.png").convert("RGBA") for g in range(1, 33)
 }
-print("all numbers generated")
 capitals = {
     g: Image.open(directory + f"capital{g}.png").convert("RGBA") for g in list(colors)[:6]
 }
-print("all capitals generated")
 
 
 def dec(n: str, fro: int):
