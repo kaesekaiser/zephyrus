@@ -55,7 +55,8 @@ commandFormats = {
     "rot13": "z!rot13 <text>",
     "pokemon": "see z!pokemon help",
     "rpg": "see z!rpg help",
-    "planes": "see z!planes help"
+    "planes": "see z!planes help",
+    "invite": "z!invite"
 }
 
 
@@ -134,7 +135,8 @@ descs = {
     "pokemon": "A bunch of Pokémon shit. Do ``z!pokemon help`` for more info.",
     "rpg": "A framework for some kind of RPG I wanted to make. It doesn't really do anything at the moment, but"
            " see ``z!rpg help`` if you're interested.",
-    "planes": "A neat little Pocket Planes kinda game, a shipping simulator. Do ``z!p help`` for more info."
+    "planes": "A neat little Pocket Planes kinda game, a shipping simulator. Do ``z!p help`` for more info.",
+    "invite": "Gives the link to invite Zephyrus to another server."
 }
 
 
@@ -154,6 +156,12 @@ async def help(comm: str=None):
         if [g for g, j in aliases.items() if j == comm]:
             help_dict["Aliases"] = f'``{", ".join([f"z!{g}" for g, j in aliases.items() if j == comm])}``'
         return await helpsay(f"``z!{comm}``", d=descs[comm], fs=help_dict, il=True)
+
+
+@client.command()
+async def invite():
+    return await client.say('https://discordapp.com/oauth2/authorize?client_id={}&scope=bot&permissions=8192'
+                            .format(client.user.id))
 
 
 @client.event
