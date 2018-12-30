@@ -1,0 +1,57 @@
+--- IMPASSABLE TYPES MARKED WITH EXCLAMATION POINT ---
+
+bla = black. nothingness. empty space. !
+brg = bridges
+
+- CA - Caves
+cav = cave entrances
+
+dfg = default ground (yellow stuff)
+fnt = furniture !
+    b = bed
+    ch = chair
+    pt = pot
+    s = drawers
+    t = table
+    ts = small table
+grs = regular grass
+
+- H - Houses
+hdr = house door
+hrb = house roof, blue !
+hrk = house roof, pink !
+hrp = house roof, purple !
+hrr = house roof, red !
+hsf = house floor
+hsi = house interior wall !
+hwl = house wall !
+
+idr = a house door, indoors !
+iex = indoor exit
+lnk = Link
+
+- MT - Mountains
+mte = mountain wall edges
+mtg = mountain ground
+mtn = mountain walls !
+mtt = mountaintop (also mountain walls) !
+
+pth = paths
+sgn = signs !
+shl = shallow water
+sts = stairs
+wtr = water !
+
+--- STANDARD DIRECTIONS ---
+
+UL UO UR
+CL CO CR
+DL DO DR
+
+--- 270 DEGREE CORNERS ---
+
+   CL   CR
+UO VL   VR UO
+
+DO TL   TR DO
+   CL   CR
