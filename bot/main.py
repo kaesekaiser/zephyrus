@@ -7,9 +7,9 @@ aliases = {
     "net": "networth", "c": "conv", "weed": "sayno", "p": "planes", "def": "define", "dictionary": "define",
     "dict": "define", "pkmn": "pokemon", "trans": "translate", "connect4": "connectfour", "dice": "roll",
     "poke": "pokemon", "pk": "pokemon", "walker": "pokewalker", "pw": "pokewalker", "stocks": "stock",
-    "fw": "foreignwiki", "u": "unicode", "rune": "runes", "jp": "jyutping", "ord_command": "ord",
-    "py": "pinyin", "pick": "choose"
+    "fw": "foreignwiki", "u": "unicode", "rune": "runes", "jp": "jyutping", "py": "pinyin", "pick": "choose"
 }
+noInclude = ["ord_command", "eightball", 'Шaf']
 
 
 commandFormats = {
@@ -57,7 +57,8 @@ commandFormats = {
     "rpg": "see z!rpg help",
     "planes": "see z!planes help",
     "invite": "z!invite",
-    "choose": "z!choose <option> or <option> [...etc]"
+    "choose": "z!choose <option> or <option> [...etc]",
+    "8ball": "z!8ball <question>"
 }
 
 
@@ -138,7 +139,8 @@ descs = {
            " see ``z!rpg help`` if you're interested.",
     "planes": "A neat little Pocket Planes kinda game, a shipping simulator. Do ``z!p help`` for more info.",
     "invite": "Gives the link to invite Zephyrus to another server.",
-    "choose": "Makes a decision for you. Chooses between several options."
+    "choose": "Makes a decision for you. Chooses between several options.",
+    "8ball": "The divine magic 8 ball answers your yes-or-no questions."
 }
 
 
@@ -168,7 +170,8 @@ async def invite():
 
 @client.event
 async def on_ready():
-    del client.commands['Шaf']
+    for i in noInclude:
+        del client.commands[i]
     if client.user.name == "Zephyrus":
         print(colored("ZEPHYRUS IS ONLINE", color="green", attrs=["bold"]))
     else:

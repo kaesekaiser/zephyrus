@@ -562,13 +562,27 @@ async def rot13(*args: str):
                                 d="isn't Discord supposed to limit you to 2000 characters anyway :thinking:")
 
 
+async def choosesay(s: str, **kwargs):
+    return await emolsay(":8ball:", s, hexcol("E1E8ED"), **kwargs)
+
+
 @client.command(aliases=["pick"])
 async def choose(*args: str):
-    async def choosesay(s: str, **kwargs):
-        return await emolsay(":8ball:", s, hexcol("E1E8ED"), **kwargs)
-
     args = reg_split(r"\s+or\s+", " ".join(args))
     if len(args) == 1:
         raise commands.errors.MissingRequiredArgument
     string = choice(["I pick {}!", "Obviously it's {}.", "{}, of course.", "{}, obviously.", "Definitely {}."])
     return await choosesay(string.format(f"**{choice(args)}**"))
+
+
+@client.command(aliases=["8ball"])
+async def eightball(*args: str):
+    if len(args) == 0:
+        raise commands.errors.MissingRequiredArgument
+
+    options = ["It is certain.", "As I see it, yes.", "Reply hazy, try again.", "Don't count on it.",
+               "It is decidedly so.", "Most likely.", "Ask again later.", "My reply is no.",
+               "Without a doubt.", "Outlook good.", "Better not tell you now.", "My sources say no.",
+               "Yes - definitely.", "Yes.", "Cannot predict now.", "Outlook not so good.",
+               "You may rely on it.", "Signs point to yes.", "Concentrate and ask again.", "Very doubtful."]
+    return await choosesay(choice(options))
