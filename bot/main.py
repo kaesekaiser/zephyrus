@@ -200,10 +200,3 @@ async def on_command_error(exception, context):
     else:
         await client.send_message(context.message.channel, embed=conerr(str(exception)))
         raise exception
-
-
-if wr.levenshtein(input(f"{colored('beta', 'red')} or {colored('stable', 'green')}? ").lower(), "beta") < 3:
-    key = "NTI3MzQxNTk0MTUyNzk2MTYw.DwSW6A.chbnvyHdqw7JRvIAjIoe7V6SAI8"
-else:
-    key = "NDA1MTkwMzk2Njg0MDA5NDcy.DUgyyg.srsiV9DX2sVKmvj12HJkTWiXWdk"
-client.run(key)
