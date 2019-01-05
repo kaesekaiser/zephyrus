@@ -1,12 +1,12 @@
 from minigames.imaging import *
 from math import log, ceil
 from random import choice, randrange, sample
+from typing import Union
 
 
+directory = "risk_dir/"
 if __name__ == "__main__":
-    directory = "C:/Users/Kaesekaiser/PycharmProjects/discobot/risk_dir/"
-else:
-    directory = "risk_dir/"
+    directory = "C:/Users/Kaesekaiser/PycharmProjects/discobot/" + directory
 
 
 baseOrder = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -187,8 +187,8 @@ def d2b(n: int, length: int=0):
     return rebase(str(n), 10, 2).rjust(length, "0")
 
 
-def rebase(n: str, fro: int, to: int):
-    n = dec(n, fro)
+def rebase(n: Union[str, int], fro: int, to: int):
+    n = dec(str(n), fro)
     if not n:
         return "0"
     return "".join(reversed([baseOrder[(n % (to ** (g + 1))) // (to ** g)] for g in range(int(log(n + 0.5, to)) + 1)]))
@@ -223,6 +223,10 @@ def orders(n: int):
         for p4 in playerOrder[:4] if p4 not in [p1, p2, p3]
     ])
     return [g.split("-") for g in sorted(list(set("-".join(j.split("-")[:n]) for j in possible)))]
+
+
+def neighbors(provinces: iter):
+    return {g for g in borders if True in [j in borders[g] for j in provinces] and g not in provinces}
 
 
 class Province:
