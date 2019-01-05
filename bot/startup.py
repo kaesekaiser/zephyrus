@@ -148,36 +148,44 @@ def flint(n: Flint):
 
 class SigFig:
     def __init__(self, s: str, keep_non_dec: bool=False):
-        self.figStr = s.split("e")[0]
-        self.s = s
+        if s[0] == "-":
+            self.figStr = s[1:].split("e")[0]
+            self.s = s[1:]
+            self.negative = True
+        else:
+            self.figStr = s.split("e")[0]
+            self.s = s
+            self.negative = False
         try:
             float(s)
         except ValueError:
-            raise commands.BadArgument
-        if float(s) < 0:
             raise commands.BadArgument
         self.keepNonDecimal = keep_non_dec
 
     @property
     def n(self):
-        return float(self.s)
+        return float(self.add_negative(self.s))
 
     @property
     def figs(self):
+        if self.n == 0:  # workaround for a value of zero with sig figs
+            return SigFig(self.s.replace("0", "1")).figs
         if "." in self.figStr:
             return len("".join(self.figStr.split(".")).lstrip("0"))
         return len(self.figStr.rstrip("0"))
 
     def __str__(self):
-        return self.s
+        return self.add_negative(self.s)
 
     def __round__(self, n=None):
         if not n:
             return self.n
+        if self.n == 0:  # zero workaround
+            return str(round(SigFig(self.s.replace("0", "1")))).replace("1", "0")
         if n < self.figs:
-            return self.decrease_sf(n)
+            return self.add_negative(self.decrease_sf(n))
         else:
-            return self.increase_sf(n)
+            return self.add_negative(self.increase_sf(n))
 
     def increase_sf(self, to: int):
         if to < len(str(int(self.n))):
@@ -187,7 +195,7 @@ class SigFig:
         return self.s + ("" if "." in self.s else ".") + "0" * (to - self.figs)
 
     def decrease_sf(self, to: int):
-        if self.n >= 1:
+        if abs(self.n) >= 1:
             first_fig = to
         else:
             if self.s[0] == "0":
@@ -208,6 +216,9 @@ class SigFig:
                 return ret[:-2]  # cut the whole decimal out
         return round(SigFig(ret), to)  # add any extra zeroes that get cut off in round(self.n)
 
+    def add_negative(self, s: str):
+        return ("-" if (self.negative and s[0] != "-") else "") + s
+
 
 def add_commas(n: Union[Flint, str]):
     n = str(n).split(".")
@@ -215,6 +226,14 @@ def add_commas(n: Union[Flint, str]):
         return ".".join(n)
     n[0] = ",".join(snip(n[0], 3, True))
     return ".".join(n)
+
+
+def gradient(from_hex: str, to_hex: str, value: float):
+    from_value = 1 - value
+    return hexcol(
+        "".join([hex(int(int(from_hex[g:g+2], 16) * from_value + int(to_hex[g:g+2], 16) * value))[2:]
+                 for g in range(0, 5, 2)])
+    )
 
 
 blue = hexcol("5177ca")  # color that many commands use

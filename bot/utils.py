@@ -151,19 +151,27 @@ unitAbbreviations = {
     **metric_name_dict("litre", "l"),
     "teaspoon": "tsp", "tablespoon": "tbsp", "fluid ounce": "fl oz", "cup": "c", "pint": "pt", "quart": "qt",
     "gallon": "gal", "barrel": "bbl",
+    "°C": "C", "celsius": "C", "centigrade": "C",
+    "°F": "F", "fahrenheit": "F",
+    "kelvin": "K",
+    "°R": "R", "rankine": "R",
 }
+
+
+def add_degree(s: str):
+    return s if s == "K" else "°" + s
 
 
 class ConversionGroup:
     def __init__(self, *systems: dict, **inters: tuple):
         self.systems = systems
-        self.allUnits = {j for g in systems for j in g}.union({None})
+        self.allUnits = {j for g in systems for j in g}
         self.inters = inters
         for key, value in self.inters.items():
             [g for g in self.systems if key in g][0]["converter"] = key
             self.systems[0]["converter"] = value[1]
 
-    def convert(self, n: Flint, fro: str, to: Union[str, None]):  # assumes both fro and to are in group
+    def convert(self, n: Flint, fro: str, to: str=None):  # assumes both fro and to are in group
         if to == fro:
             return n
         fro_dict = [g for g in self.systems if fro in g][0]
@@ -218,7 +226,29 @@ conversionTable = (  # groups of units of the same system
         tsp=(4.92892159375, "mL")
     ),
 )
-flattenedConvTable = [j for g in conversionTable for j in g.allUnits]
+tempTable = {
+    "C": {
+        "F": lambda n: 9 * n / 5 + 32,
+        "K": lambda n: n + 273.15,
+        "R": lambda n: 9 * (n + 273.15) / 5,
+    },
+    "F": {
+        "C": lambda n: 5 * (n - 32) / 9,
+        "K": lambda n: 5 * (n - 32) / 9 + 273.15,
+        "R": lambda n: n - 9 * 273.15 / 5,
+    },
+    "K": {
+        "C": lambda n: n - 273.15,
+        "F": lambda n: 9 * (n - 273.15) / 5 + 32,
+        "R": lambda n: 9 * n / 5,
+    },
+    "R": {
+        "C": lambda n: 5 * n / 9 - 273.15,
+        "F": lambda n: n + 9 * 273.15 / 5,
+        "K": lambda n: 5 * n / 9,
+    }
+}
+flattenedConvTable = [j for g in conversionTable for j in g.allUnits] + list(tempTable)
 
 
 defaultUnits = [  # units it's okay to default to if user doesn't give unit to which to convert
@@ -227,14 +257,19 @@ defaultUnits = [  # units it's okay to default to if user doesn't give unit to w
 ]
 
 
+def temp_convert(n: SigFig, fro: str, to: str=None):
+    if not to:
+        return temp_convert(n, fro, list(tempTable)[not list(tempTable).index(fro)])  # C to F; all else to C
+    return to, tempTable[fro].get(to, lambda x: x)(n.n)
+
+
 @zeph.command(aliases=["c", "conv"])
 async def convert(ctx: commands.Context, n: str, *text):
     conv = ClientEmol(":straight_ruler:", hexcol("efc700"), ctx)
     n = SigFig(n)
 
     def find_abbr(s: str):
-        if "." in s:
-            return find_abbr("".join(s.split(".")))
+        s = "".join(s.split("."))
         if s[-1] == "s" and s[:-1].lower() in unitAbbreviations:
             return unitAbbreviations[s[:-1].lower()]
         if s in flattenedConvTable:
@@ -246,7 +281,23 @@ async def convert(ctx: commands.Context, n: str, *text):
     if "to" in text:
         text = [find_abbr(g) for g in " ".join(text).split(" to ")]
     else:
-        text = find_abbr(" ".join(text)), None
+        text = (find_abbr(" ".join(text)), )
+
+    if text[0] in tempTable:
+        try:
+            ret = temp_convert(n, *text)
+        except ValueError:
+            raise commands.CommandError(f"Can't convert between {text[0]} and {text[1]}.")
+        else:
+            if temp_convert(n, text[0], "K")[1] < 0:
+                raise commands.CommandError(f"{n} °{text[0]} is below absolute zero.")
+            value = max(min(temp_convert(n, text[0], "F")[1], 120), 0) / 120
+            temp = ClientEmol(":thermometer:", gradient("88C9F9", "DD2E44", value), ctx)
+            return await temp.say(f"{round(SigFig(str(ret[1]), True), max(n.figs, 2))} {add_degree(ret[0])}",
+                                  d=f"= {n} {add_degree(text[0])}")
+
+    if n.n < 0:
+        raise commands.CommandError(f"Can't have negative measurements.")
 
     try:
         group = [g for g in conversionTable if set(text) < g.allUnits][0]
