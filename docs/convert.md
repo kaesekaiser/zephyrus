@@ -8,7 +8,7 @@ This returns a measurement in ``<unit2>`` equivalent to ``<number>`` ``<unit1>``
 ```
 z!convert <number> <unit...>
 ```
-If you don't include the word ``to``, everything after the number is read as one unit. This returns a measurement in the opposite system (imperial > metric, and vice versa) equivalent to ``<number>`` ``<unit>``.
+If you don't include the word ``to``, everything after the number is read as one unit. This returns a measurement in the opposite system (metric to US, anything else to metric) equivalent to ``<number>`` ``<unit>``.
 
 ## Units
 You can either use the full name of the unit, or the abbreviation. Abbreviations are case-sensitive.
