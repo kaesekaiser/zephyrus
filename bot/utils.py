@@ -172,7 +172,7 @@ class ConversionGroup:
         if not to:
             to_dict = self.systems[not self.systems.index(fro_dict)]
             possible = {g: self.convert(n, fro, g)[1] for g in to_dict if g in defaultUnits}
-            possible = dict(sorted(possible.items(), key=lambda g: max(g[1] / n, n / g[1])))
+            possible = dict(sorted(possible.items(), key=lambda g: max(g[1] / 3, 3 / g[1])))
             return list(possible)[0], possible[list(possible)[0]]
         to_dict = [g for g in self.systems if to in g][0]
         return to, self.cws(  # step 3: convert from system converter to desired unit
@@ -209,7 +209,7 @@ conversionTable = (  # groups of units of the same system
         {"oz": 1, "lb": 16, "st": 16 * 14, "cwt": 1600, "ton": 32000, "long ton": 16 * 2240},
         {"amu": 1, "u": 1, **metric_dict("Da")},
         lb=(453.59237, "g"),
-        amu=(1.660539040, "yg")
+        amu=(1.660539040 * 10 ** -24, "g")
     ),
     ConversionGroup(  # volume
         {**metric_dict("L"), **metric_dict("l")},

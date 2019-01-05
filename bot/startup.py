@@ -182,6 +182,8 @@ class SigFig:
     def increase_sf(self, to: int):
         if to < len(str(int(self.n))):
             return self.s
+        if to == len(str(int(self.n))):
+            return self.s + ("." if str(int(self.n))[-1] == "0" else "")
         return self.s + ("" if "." in self.s else ".") + "0" * (to - self.figs)
 
     def decrease_sf(self, to: int):
@@ -196,12 +198,15 @@ class SigFig:
             ret = str(round(self.n, max(first_fig - len(str(int(self.n))), 0)))
         else:
             ret = str(round(self.n, first_fig - len(str(int(self.n)))))
-        if ret[-2:] == ".0":
-            if SigFig(ret).figs == to + 1:  # removing trailing 0 added by Python
-                return ret[:-1]
-            elif SigFig(ret[:-1]).figs > to:
-                return ret[:-2]
-        return ret
+        if ret[-2:] == ".0":  # removing trailing 0 added in round()
+            if SigFig(ret).figs == to + 1:  # if the trailing zero makes one too many sig figs
+                if ret[-3] == "0":  # if the last zero is significant
+                    return ret[:-1]  # keep the decimal point to show that zeroes are significant
+                else:
+                    return ret[:-2]  # otherwise don't
+            elif SigFig(ret[:-1]).figs > to:  # if the trailing zero makes more than one too many sig figs
+                return ret[:-2]  # cut the whole decimal out
+        return round(SigFig(ret), to)  # add any extra zeroes that get cut off in round(self.n)
 
 
 def add_commas(n: Union[Flint, str]):
