@@ -35,3 +35,9 @@ You can either use the full name of the unit, or the abbreviation. Abbreviations
 The US system is [pretty different](https://en.wikipedia.org/wiki/Comparison_of_the_imperial_and_US_customary_measurement_systems) from the imperial system; all of these measurements are specifically American. Imperial measurements maaaay be added at some point. These are also all liquid volumes.
 
 ``teaspoon``/``tsp`` (4.92892159375 mL); ``tablespoon``/``tbsp`` (3 tsp); ``fluid ounce``/``fl oz`` (2 tbsp); ``cup``/``c`` (8 fl oz); ``pint``/``pt`` (2 c); ``quart``/``qt`` (2 pt); ``gallon``/``gal`` (4 qt); ``barrel``/``bbl`` (31 1/2 gal); ``hogshead`` (63 gal)
+
+### Temperature
+#### Metric
+``celsius``/``centigrade``/``°C``/``C`` and ``kelvin``/``K``
+#### US
+``fahrenheit``/``°F``/``F`` and ``rankine``/``°R``/``R``
