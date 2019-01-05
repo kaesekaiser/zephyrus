@@ -1,5 +1,10 @@
-from random import choice, shuffle
+from random import choice, sample
 adj = -5, -4, -3, -1, 1, 3, 4, 5
+
+
+def score(word: str):
+    return 1 if len(word) < 5 else 2 if len(word) == 5 else 3 if len(word) == 6 else 5 if len(word) == 7\
+        else 11
 
 
 class Board:
@@ -7,25 +12,26 @@ class Board:
             "SUINEE", "COITUM", "FASPFK", "NEAGEA", "VWTHER", "DIXELR", "PASHCO", "TLRYET"]
 
     def __init__(self):
-        shuffle(self.dice)
-        self.board = [choice([c for c in self.dice[g]]) for g in range(16)]
+        self.board = [choice([c for c in sample(self.dice, 16)[g]]) for g in range(16)]
         self.guessed = []
         self.points = 0
 
     def __str__(self):
-        return "| " + ("|\n| ".join([" "
-                                     .join(["Qu" if self.board[j + 4 * g] == "Q" else
-                                           f"{self.board[j + 4 * g].upper()} " for j in range(4)]) for g in range(4)]))\
-                + "|"
+        return "| " + ("|\n| ".join(
+            [" ".join(
+                ["Qu" if j == "Q" else (j + " ") for j in self.board[4 * g:4 * g + 4]]
+            ) for g in range(4)]
+        )) + "|"
 
-    def score(self, word):
-        self.points += 1 if len(word) < 5 else 2 if len(word) == 5 else 3 if len(word) == 6 else 5 if len(word) == 7\
-            else 11
+    def guess(self, word):  # assumes word can be formed
+        self.guessed.append(word)
+        self.points += score(word)
 
     def adjs(self, index):
         ret = {}
         for a in adj:
-            if index + a in range(16) and ((index + a) // 4 == index // 4 or a not in (-1, 1)) and\
+            if index + a in range(16) and \
+                    ((index + a) // 4 == index // 4 or a not in (-1, 1)) and \
                     ((index + a) // 4 == index // 4 - 1 or a not in (-5, -4, -3)) and \
                     ((index + a) // 4 == index // 4 + 1 or a not in (5, 4, 3)):
                 ret[a] = self.board[index + a]
