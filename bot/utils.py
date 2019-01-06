@@ -1,5 +1,9 @@
 from game import *
-from utilities import dice as di
+from utilities import dice as di, weed as wd
+from re import split
+from math import atan2, sqrt, pi
+import requests
+from io import BytesIO
 
 
 @zeph.command()
@@ -235,7 +239,7 @@ tempTable = {
     "F": {
         "C": lambda n: 5 * (n - 32) / 9,
         "K": lambda n: 5 * (n - 32) / 9 + 273.15,
-        "R": lambda n: n - 9 * 273.15 / 5,
+        "R": lambda n: n + 9 * 273.15 / 5 - 32,
     },
     "K": {
         "C": lambda n: n - 273.15,
@@ -244,7 +248,7 @@ tempTable = {
     },
     "R": {
         "C": lambda n: 5 * n / 9 - 273.15,
-        "F": lambda n: n + 9 * 273.15 / 5,
+        "F": lambda n: n - 9 * 273.15 / 5 + 32,
         "K": lambda n: 5 * n / 9,
     }
 }
@@ -307,3 +311,72 @@ async def convert(ctx: commands.Context, n: str, *text):
     ret = group.convert(n.n, *text)
     return await conv.say(f"{add_commas(round(SigFig(str(ret[1]), True), max(n.figs, 3)))} {ret[0]}",
                           d=f"= {n} {text[0]}")
+
+
+@zeph.command(aliases=["weed"])
+async def sayno(ctx: commands.Context):
+    return await ClientEmol(":leaves:", hexcol("98e27c"), ctx).say(wd.sayno())
+
+
+@zeph.command(aliases=["pick"])
+async def choose(ctx: commands.Context, *, text: str):
+    picks = split("\s+or\s+", text)
+    string = choice(["I pick {}!", "Obviously it's {}.", "{}, of course.", "{}, obviously.", "Definitely {}."])
+    return await chooseEmol.send(ctx, string.format(f"**{choice(picks)}**"))
+
+
+@zeph.command(name="8ball")
+async def eightball(ctx: commands.Context, *, text: str):
+    if not text:
+        raise commands.MissingRequiredArgument
+
+    options = ["It is certain.", "As I see it, yes.", "Reply hazy, try again.", "Don't count on it.",
+               "It is decidedly so.", "Most likely.", "Ask again later.", "My reply is no.",
+               "Without a doubt.", "Outlook good.", "Better not tell you now.", "My sources say no.",
+               "Yes - definitely.", "Yes.", "Cannot predict now.", "Outlook not so good.",
+               "You may rely on it.", "Signs point to yes.", "Concentrate and ask again.", "Very doubtful."]
+    return await chooseEmol.send(ctx, choice(options))
+
+
+blankColor = rk.Image.open("utilities/color.png")
+
+
+def rgb_to_hsv(r: int, g: int, b: int):
+    return round(atan2(sqrt(3) * (g - b), 2 * r - g - b) * 360 / (2 * pi)) % 360,\
+           round(100 - 100 * min(r, g, b) / 255),\
+           round(100 * max(r, g, b) / 255)
+
+
+@zeph.command(aliases=["colour"])
+async def color(ctx: commands.Context, *, col: str):
+    if col.lower() == "random":
+        col = "".join([hex(g)[2:] for g in [randrange(256), randrange(256), randrange(256)]])
+    try:
+        ret = discord.Colour.from_rgb(*[int(g) for g in col.split()])
+    except ValueError:
+        try:
+            ret = hexcol(col.strip("#"))
+        except ValueError:
+            raise commands.CommandError(f"Invalid color {col}.")
+    emol = ClientEmol(zeph.emojis["color_wheel"], ret, ctx)
+    rk.global_fill(blankColor, (255, 255, 255), ret.to_rgb())\
+        .save(f"utilities/colors/{str(ret.r)[-1]}{str(ret.b)[-1]}.png")
+    image = await image_url(f"utilities/colors/{str(ret.r)[-1]}{str(ret.b)[-1]}.png")
+    return await emol.say(f"#{hex(ret.value)[2:].rjust(6, '0')}", thumb=image,
+                          d=f"**RGB:** {ret.to_rgb()}\n**HSV:** {rgb_to_hsv(*ret.to_rgb())}")
+
+
+@zeph.command(aliases=["hue"])
+async def hueshift(ctx: commands.Context, url: str, shift: int):
+    message = await ctx.send("processing...")
+    img = rk.Image.open(BytesIO(requests.get(url).content))
+    rk.shift_hue(img, shift).save("utilities/colors/hue-shift.png")
+    await message.delete()
+    return await ctx.send(file=discord.File("utilities/colors/hue-shift.png"))
+
+
+@zeph.command()
+async def invert(ctx: commands.Context, url: str):
+    img = rk.Image.open(BytesIO(requests.get(url).content))
+    rk.invert_colors(img).save("utilities/colors/invert.png")
+    return await ctx.send(file=discord.File("utilities/colors/invert.png"))

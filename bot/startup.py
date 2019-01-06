@@ -71,8 +71,8 @@ def construct_embed(**kwargs):
                                   kwargs.get("same_line", False)))
     if kwargs.get("footer"):
         ret.set_footer(text=kwargs.get("footer"))
-    if kwargs.get("thumb"):
-        ret.set_thumbnail(url=kwargs.get("thumb"))
+    if kwargs.get("thumb", kwargs.get("thumbnail")):
+        ret.set_thumbnail(url=kwargs.get("thumb", kwargs.get("thumbnail")))
     if kwargs.get("author"):
         ret.set_author(name=kwargs.get("author").name, url=kwargs.get("author").url, icon_url=kwargs.get("author").icon)
     if kwargs.get("url"):
@@ -109,6 +109,7 @@ class ClientEmol(Emol):
 # IMPORTANT EMOLS
 err = Emol(":no_entry:", hexcol("880000"))  # error
 succ = Emol(":white_check_mark:", hexcol("22bb00"))  # success
+chooseEmol = Emol(":8ball:", hexcol("e1e8ed"))
 
 
 async def confirm(s: str, dest: commands.Context, caller: User, **kwargs):

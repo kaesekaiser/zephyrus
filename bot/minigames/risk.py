@@ -61,10 +61,10 @@ borders = {
 colors = {
     "Red": (219, 106, 106),
     "Blue": (95, 169, 223),
-    "Yellow": (223, 223, 95),
+    # "Yellow": (223, 223, 95),
     "Black": (128, 128, 128),
     "Green": (121, 214, 134),
-    "Purple": (186, 109, 218),
+    # "Purple": (186, 109, 218),
     None: (192, 192, 192)
 }
 imageCorners = {
@@ -171,7 +171,7 @@ numbers = {
     g: Image.open(directory + f"{g}.png").convert("RGBA") for g in range(1, 33)
 }
 capitals = {
-    g: Image.open(directory + f"capital{g}.png").convert("RGBA") for g in list(colors)[:6]
+    g: Image.open(directory + f"capital{g}.png").convert("RGBA") for g in list(colors)[:-1]
 }
 
 
@@ -278,7 +278,7 @@ class Player:
 class Game:
     def __init__(self, password: str=None):
         if not password:
-            self.players = {g: Player(d2b(randrange(45))) for g in playerOrder[:6]}
+            self.players = {g: Player(d2b(randrange(45))) for g in playerOrder}
             self.board = Board(random_bin(7 * 45))
             self.atBat = randrange(len(self.players))
             self.playerOrder = sample(list(self.players), len(self.players))

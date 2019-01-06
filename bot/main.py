@@ -1,9 +1,11 @@
 from utils import *
+import datetime
 
 
 aliases = {
     "conn4": "connect4", "dice": "roll", "caesar": "rot", "vig": "vigenere", "devig": "devigenere", "?": "help",
-    "h": "help", "sq": "square", "fsq": "flagsquare", "small": "smallcaps", "c": "convert", "conv": "convert"
+    "h": "help", "sq": "square", "fsq": "flagsquare", "small": "smallcaps", "c": "convert", "conv": "convert",
+    "weed": "sayno", "pick": "choose", "colour": "color", "hue": "hueshift"
 }
 
 
@@ -11,7 +13,8 @@ commandCategories = {
     "Games": ["connect4", "jotto", "anagrams", "boggle", "duel", "risk"],
     "Text": ["mock", "expand", "square", "flagsquare", "clap", "scramble", "smallcaps"],
     "Ciphers": ["rot", "rot13", "vigenere", "devigenere"],
-    "Utilities": ["roll", "convert"],
+    "Utilities": ["roll", "convert", "sayno", "choose", "8ball", "color"],
+    "Images": ["hueshift", "invert"],
     "Bot": ["ping", "help", "invite"]
 }
 
@@ -38,6 +41,12 @@ commandFormats = {
     "scramble": "z!scramble <text...>",
     "smallcaps": "z!smallcaps <text...>",
     "convert": "z!convert <number> <unit...> to <unit...>\nz!convert <number> <unit...>",
+    "sayno": "z!sayno",
+    "choose": "z!choose <option...> or <option...> [etc.]",
+    "8ball": "z!8ball <question...>",
+    "color": "z!color <hex code>\nz!color <red> <green> <blue>\nz!color random",
+    "hueshift": "z!hueshift <image url> <value>",
+    "invert": "z!invert <image url>",
 
     "help": "z!help [command]"
 }
@@ -94,6 +103,12 @@ descs = {
     "smallcaps": "Dᴏᴇs ᴛʜɪs ᴛᴏ ʏᴏᴜʀ ᴛᴇxᴛ.",
     "convert": "Converts between units of measurement. More info at "
                "https://github.com/kaesekaiser/zephyrus/blob/master/docs/convert.md.",
+    "sayno": "Say no to drugs.",
+    "choose": "Chooses one from a list of options.",
+    "8ball": "The divine magic 8-ball answers your yes-or-no questions.",
+    "color": "Returns the color that corresponds to your input. ``random`` will randomly generate a color.",
+    "hueshift": "Shifts the hue of an image by ``<value>`` (out of 360).",
+    "invert": "Inverts the colors of an image.",
 
     "help": "Shows the usage + format of a command. If no command is provided, lists all available commands."
 }
@@ -126,8 +141,8 @@ async def invite(ctx: commands.Context):
 
 @zeph.event
 async def on_ready():
-    print("ready")
-    print(list(zeph.all_commands))
+    print(f"ready at {datetime.datetime.now()}")
+    print([g for g in zeph.all_commands if g not in aliases])
     print([g for g in zeph.all_commands if (g not in commandFormats or g not in descs or g not in
            [j for k in commandCategories.values() for j in k]) and g not in aliases])
 
