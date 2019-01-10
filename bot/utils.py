@@ -1,9 +1,12 @@
 from game import *
-from utilities import dice as di, weed as wd
+from utilities import dice as di, weed as wd, timein as ti, translate as tr
 from re import split
 from math import atan2, sqrt, pi
 import requests
+import pinyin
+import jyutping
 from io import BytesIO
+from random import choices
 
 
 @zeph.command()
@@ -349,15 +352,18 @@ def rgb_to_hsv(r: int, g: int, b: int):
 
 @zeph.command(aliases=["colour"])
 async def color(ctx: commands.Context, *, col: str):
-    if col.lower() == "random":
-        col = "".join([hex(g)[2:] for g in [randrange(256), randrange(256), randrange(256)]])
-    try:
-        ret = discord.Colour.from_rgb(*[int(g) for g in col.split()])
-    except ValueError:
+    if col.casefold() == "random".casefold():
+        ret = discord.Colour.from_rgb(randrange(256), randrange(256), randrange(256))
+    else:
         try:
-            ret = hexcol(col.strip("#"))
+            if len(col.split()) == 3:
+                ret = discord.Colour.from_rgb(*[int(g) for g in col.split()])
+            else:
+                ret = hexcol(col.strip("#"))
         except ValueError:
             raise commands.CommandError(f"Invalid color {col}.")
+    if not 0 <= ret.value <= 16777215:
+        raise commands.CommandError(f"Invalid color {col}.")
     emol = ClientEmol(zeph.emojis["color_wheel"], ret, ctx)
     rk.global_fill(blankColor, (255, 255, 255), ret.to_rgb())\
         .save(f"utilities/colors/{str(ret.r)[-1]}{str(ret.b)[-1]}.png")
@@ -380,3 +386,121 @@ async def invert(ctx: commands.Context, url: str):
     img = rk.Image.open(BytesIO(requests.get(url).content))
     rk.invert_colors(img).save("utilities/colors/invert.png")
     return await ctx.send(file=discord.File("utilities/colors/invert.png"))
+
+
+@zeph.command()
+async def timein(ctx: commands.Context, *, place: str):
+    try:
+        ret = ti.format_dict(ti.timein(place), False)
+    except IndexError:
+        raise commands.CommandError("Location not found.")
+    except KeyError:
+        raise commands.CommandError("Location too vague.")
+    address = ", ".join(ti.getcity(place))
+    if address == "Unable to precisely locate.":
+        raise commands.CommandError("Location too vague.")
+    emoji = ret.split()[0]
+    emoji = f":clock{(int(emoji.split(':')[0]) + (1 if int(emoji.split(':')[1]) >= 45 else 0) - 1) % 12 + 1}" \
+            f"{'30' if 15 <= int(emoji.split(':')[1]) < 45 else ''}:"
+    return await ClientEmol(emoji, hexcol("b527e5"), ctx).say(ret, footer=address)
+
+
+chinese_punctuation = {
+    "？": "?", "！": "!", "。": ".", "，": ",", "：": ":", "；": ";", "【": "[", "】": "]", "（": "(", "）": ")",
+    "《": "⟨", "》": "⟩", "、": ","
+}
+
+
+def get_pinyin(c: str):
+    return f" {pinyin.get(c)}" if pinyin.get(c) != c else chinese_punctuation.get(c, "")
+
+
+def get_jyutping(c: str):
+    ret = jyutping.get(c)[0]
+    if type(ret) == str:
+        return f" {jyutping.get(c)[0]}"
+    if type(ret) == list:
+        return f" {jyutping.get(c)[0][0]}"
+    return chinese_punctuation.get(c, "")
+
+
+@zeph.command(name="pinyin")
+async def pinyin_command(ctx: commands.Context, *, chinese: str):
+    ret = "".join([get_pinyin(c) for c in chinese]).strip()
+    if not ret:
+        raise commands.CommandError("No Chinese text input.")
+    return await zhong.send(ctx, ret)
+
+
+@zeph.command(name="jyutping")
+async def jyutping_command(ctx: commands.Context, *, cantonese: str):
+    ret = "".join([get_jyutping(c) for c in cantonese]).strip()
+    if not ret:
+        raise commands.CommandError("No Chinese text input.")
+    return await zhong.send(ctx, ret)
+
+
+@zeph.command(aliases=["trans"])
+async def translate(ctx: commands.Context, fro: str, to: str, *, text: str):
+    trans = ClientEmol(":twisted_rightwards_arrows:", blue, ctx)
+    if fro.lower() not in tr.LANGCODES and fro.lower() not in tr.LANGCODES.values() and fro.lower() not in tr.redirs:
+        raise commands.CommandError(f"{fro} is not a valid language.")
+    fro = tr.specify(fro.lower())
+    if to is None:
+        raise commands.CommandError("Please input a destination language.")
+    if to.lower() not in tr.LANGCODES and to.lower() not in tr.LANGCODES.values() and to.lower() not in tr.redirs:
+        raise commands.CommandError(f"{to} is not a valid language.")
+    to = tr.specify(to.lower())
+    if len(text) > 250:
+        raise commands.CommandError("Text length is limited to 250 characters.")
+
+    if fro == "auto":
+        lang = tr.translator.detect(text).lang
+    else:
+        lang = fro
+
+    translation = tr.translator.translate(text, to, fro)
+    pron = translation.pronunciation if translation.pronunciation != translation.text and \
+        translation.pronunciation is not None else ""
+    return await trans.say(
+        translation.text, d=pron,
+        footer="{}{} -> {}".format("detected: " if fro == "auto" else "",
+                                   tr.LANGUAGES[lang].title(), tr.LANGUAGES[to].title())
+    )
+
+
+async def get_translation(fro: str, to: str, text: str):
+    """Turning this into a coroutine for use with badtranslate(). In previous versions, using non-coroutines would
+    actually kill the bot, as it took too long to run all of the translation requests. Since coroutines are awaited,
+    this should prevent this from happening."""
+    return tr.Translator().translate(text, to, fro).text
+
+
+@zeph.command(aliases=["badtrans"])
+async def badtranslate(ctx: commands.Context, *, text: str):
+    if len(text) > 250:
+        raise commands.CommandError("Text length is limited to 250 characters.")
+    bad = ClientEmol(":boom:", hexcol("DC5B00"), ctx)
+    message = await bad.say("translating...")
+    langs = ["en"] + choices(list(tr.LANGCODES), k=25)
+    for i in range(25):
+        text = await get_translation(langs[i], langs[i + 1], text)
+        await bad.edit(message, "translating...", d=f"{i + 1}/25")
+    return await bad.edit(message, await get_translation(langs[-1], "en", text))
+
+
+@zeph.command()
+async def avatar(ctx: commands.Context, user: User):
+    return await ctx.send(
+        embed=construct_embed(author=author_from_user(user, name=f"{user.display_name}'s Avatar", url=user.avatar_url),
+                              color=user.colour, image=user.avatar_url)
+    )
+
+
+@zeph.command(aliases=["rune"])
+async def runes(ctx: commands.Context, *, s: str):
+    dic = {"ᛆ": "a", "ᛒ": "b", "ᛍ": "c", "ᛑ": "d", "ᚧ": "ð", "ᛂ": "e", "ᚠ": "f", "ᚵ": "g", "ᚼ": "h", "ᛁ": "i", "ᚴ": "k",
+           "ᛚ": "l", "ᛘ": "m", "ᚿ": "n", "ᚮ": "o", "ᛔ": "p", "ᛕ": "p", "ᛩ": "q", "ᚱ": "r", "ᛌ": "s", "ᛋ": "s", "ᛐ": "t",
+           "ᚢ": "u", "ᚡ": "v", "ᚥ": "w", "ᛪ": "x", "ᛦ": "y", "ᛎ": "z", "ᚦ": "þ", "ᛅ": "æ", "ᚯ": "ø"}
+
+    return await ClientEmol(":flag_is:", hexcol("38009e"), ctx).say("".join([dic.get(g, g) for g in s]))

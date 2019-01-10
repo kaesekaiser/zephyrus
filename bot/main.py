@@ -1,11 +1,13 @@
 from utils import *
+from sys import version_info
 import datetime
 
 
 aliases = {
     "conn4": "connect4", "dice": "roll", "caesar": "rot", "vig": "vigenere", "devig": "devigenere", "?": "help",
     "h": "help", "sq": "square", "fsq": "flagsquare", "small": "smallcaps", "c": "convert", "conv": "convert",
-    "weed": "sayno", "pick": "choose", "colour": "color", "hue": "hueshift"
+    "weed": "sayno", "pick": "choose", "colour": "color", "hue": "hueshift", "trans": "translate",
+    "badtrans": "badtranslate", "rune": "runes"
 }
 
 
@@ -13,9 +15,10 @@ commandCategories = {
     "Games": ["connect4", "jotto", "anagrams", "boggle", "duel", "risk"],
     "Text": ["mock", "expand", "square", "flagsquare", "clap", "scramble", "smallcaps"],
     "Ciphers": ["rot", "rot13", "vigenere", "devigenere"],
-    "Utilities": ["roll", "convert", "sayno", "choose", "8ball", "color"],
+    "Utilities": ["roll", "convert", "sayno", "choose", "8ball", "color", "timein", "avatar"],
     "Images": ["hueshift", "invert"],
-    "Bot": ["ping", "help", "invite"]
+    "Languages": ["pinyin", "jyutping", "translate", "badtranslate", "runes"],
+    "Bot": ["ping", "help", "invite", "about"]
 }
 
 
@@ -47,6 +50,14 @@ commandFormats = {
     "color": "z!color <hex code>\nz!color <red> <green> <blue>\nz!color random",
     "hueshift": "z!hueshift <image url> <value>",
     "invert": "z!invert <image url>",
+    "about": "z!about",
+    "timein": "z!timein <place...>",
+    "pinyin": "z!pinyin <Chinese text...>",
+    "jyutping": "z!jyutping <Chinese text...>",
+    "translate": "z!translate <from> <to> <text...>",
+    "badtranslate": "z!badtranslate <text...>",
+    "avatar": "z!avatar <@user>",
+    "runes": "z!runes <runic text...>",
 
     "help": "z!help [command]"
 }
@@ -109,13 +120,29 @@ descs = {
     "color": "Returns the color that corresponds to your input. ``random`` will randomly generate a color.",
     "hueshift": "Shifts the hue of an image by ``<value>`` (out of 360).",
     "invert": "Inverts the colors of an image.",
+    "about": "Shows some information about the bot.",
+    "timein": "Returns the current local time in ``<place>``.",
+    "pinyin": "Romanizes Chinese text according to the Hanyu Pinyin romanization scheme - that is, it turns the "
+              "Chinese characters into Latin syllables that sound like their Mandarin pronunciations.\n\n"
+              "``z!pinyin 你好`` > ``nǐ hǎo``",
+    "jyutping": "Romanizes Chinese text according to the Jyutping romanization scheme, which is used for the "
+                "Cantonese language.\n\n``z!jyutping 你好`` > ``nei5 hou3``",
+    "translate": "Via Google Translate, translates <text> between languages. <from> and <to> must be either the "
+                 "full names of the language, or the ISO 639-1 code for the language. ``chinese`` defaults to "
+                 "Simplified Chinese; for Traditional, use ``traditional-chinese`` or ``zh-tw``.\n\n"
+                 "``z!translate English French Hello, my love`` > ``Bonjour mon amour``",
+    "badtranslate": "Via Google Translate, translates English language text back and forth between twenty-five random "
+                    "languages. The result is a garbled mess which only vaguely resembles the original, if at all.\n\n"
+                    "``z!badtranslate This is an example sentence.`` > ``This is his word.``",
+    "avatar": "Returns a link to a user's avatar.",
+    "runes": "Transcribes [medieval Nordic runes](https://en.wikipedia.org/wiki/Medieval_runes) into Latin letters.",
 
     "help": "Shows the usage + format of a command. If no command is provided, lists all available commands."
 }
 
 
-@zeph.command(aliases=["?", "h"])
-async def help(ctx: commands.Context, comm: str=None):
+@zeph.command(name="help", aliases=["?", "h"])
+async def help_(ctx: commands.Context, comm: str=None):
     hep = ClientEmol(":grey_question:", hexcol("59c4ff"), ctx)
     spacing = "\u00a0" * 5
 
@@ -123,7 +150,7 @@ async def help(ctx: commands.Context, comm: str=None):
     if comm not in commandFormats:
         return await hep.say(
             "Full Command List",
-            d="\n".join([f"**{g}**\n{spacing}``{'``, ``'.join(sorted(j))}``" for g, j in commandCategories.items()])
+            d="\n".join([f"**__{g}__**\n{spacing}``{'``, ``'.join(sorted(j))}``" for g, j in commandCategories.items()])
               + "\n\nFor help with any of these, use ``z!help [command]``."
         )
     else:
@@ -139,12 +166,38 @@ async def invite(ctx: commands.Context):
                           .format(zeph.user.id))
 
 
+zephBuild = "2.0 v7"
+
+
+@zeph.command()
+async def about(ctx: commands.Context):
+    def runtime_format(dt: datetime.timedelta):
+        if dt.days:
+            return f"{dt.days} d {dt.seconds // (24 * 60)} h {dt.seconds // 60} m"
+        return f"{dt.seconds // (24 * 60)} h {dt.seconds // 60} m {dt.seconds // 1} s"
+    py_version = "{}.{}.{}".format(*version_info)
+
+    return await ClientEmol(":robot:", hexcol("6fc96f"), ctx).say(
+        author=author_from_user(zeph.user, f"\u2223 {zeph.user.name}"),
+        d=f"**Connected to:** {len(zeph.guilds) - len(getattr(zeph, 'fortServers'))} servers / "
+        f"{len(set(zeph.users))} users\n"
+        f"**Runtime:** {runtime_format(datetime.datetime.now() - getattr(zeph, 'readyTime'))}\n"
+        f"**Build:** {zephBuild} / Python {py_version}\n"
+        f"[GitHub](https://github.com/kaesekaiser/zephyrus) / "
+        f"[Invite](https://discordapp.com/oauth2/authorize?client_id={zeph.user.id}&scope=bot&permissions=8192) / "
+        f"[Testing](https://discord.gg/t8CBnHP)",
+        thumbnail=zeph.user.avatar_url
+    )
+
+
 @zeph.event
 async def on_ready():
-    print(f"ready at {datetime.datetime.now()}")
+    setattr(zeph, "readyTime", datetime.datetime.now())
+    print(f"ready at {getattr(zeph, 'readyTime')}")
     print([g for g in zeph.all_commands if g not in aliases])
     print([g for g in zeph.all_commands if (g not in commandFormats or g not in descs or g not in
            [j for k in commandCategories.values() for j in k]) and g not in aliases])
+    setattr(zeph, "fortServers", [g for g in zeph.guilds if g.owner.id in [238390171022655489, 474398677599780886]])
 
 
 @zeph.event

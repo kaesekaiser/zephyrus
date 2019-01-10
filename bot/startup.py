@@ -39,6 +39,10 @@ async def on_reaction_add(reaction: discord.Reaction, user: User):
 
 
 def hexcol(hex_code: str):
+    if int(hex_code, 16) < 0:
+        raise ValueError("negative hexcol code")
+    if int(hex_code, 16) > 16777215:
+        raise ValueError("hexcol int should be less than 16777215")
     return discord.Colour(int(hex_code, 16))
 
 
@@ -55,6 +59,10 @@ class EmbedAuthor:
         self.name = name
         self.url = url
         self.icon = icon
+
+
+def author_from_user(user: User, name: str=None, url: str=discord.Embed.Empty):
+    return EmbedAuthor(name if name else f"{user.name}#{user.discriminator}", icon=user.avatar_url, url=url)
 
 
 # INLINE: IF TRUE, PUTS IN SAME LINE. IF FALSE, PUTS ON NEW LINE.
@@ -87,13 +95,13 @@ class Emol:  # fancy emote-color embeds
         self.emoji = str(e)
         self.color = col
 
-    def con(self, s: str, **kwargs):  # constructs
-        return construct_embed(title=f"{self.emoji} \u2223 {s}", col=self.color, **kwargs)
+    def con(self, s: str=None, **kwargs):  # constructs
+        return construct_embed(title=f"{self.emoji} \u2223 {s}" if s else None, col=self.color, **kwargs)
 
-    async def send(self, destination: commands.Context, s: str, **kwargs):  # sends
+    async def send(self, destination: commands.Context, s: str=None, **kwargs):  # sends
         return await destination.send(embed=self.con(s, **kwargs))
 
-    async def edit(self, message: discord.Message, s: str, **kwargs):  # edits message
+    async def edit(self, message: discord.Message, s: str=None, **kwargs):  # edits message
         return await message.edit(embed=self.con(s, **kwargs))
 
 
@@ -102,7 +110,7 @@ class ClientEmol(Emol):
         super().__init__(e, col)
         self.dest = dest
 
-    async def say(self, s: str, **kwargs):
+    async def say(self, s: str=None, **kwargs):
         return await self.send(self.dest, s, **kwargs)
 
 
@@ -110,6 +118,7 @@ class ClientEmol(Emol):
 err = Emol(":no_entry:", hexcol("880000"))  # error
 succ = Emol(":white_check_mark:", hexcol("22bb00"))  # success
 chooseEmol = Emol(":8ball:", hexcol("e1e8ed"))
+zhong = Emol(":u7a7a:", hexcol("8000b0"))
 
 
 async def confirm(s: str, dest: commands.Context, caller: User, **kwargs):
