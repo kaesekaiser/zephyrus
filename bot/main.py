@@ -102,9 +102,9 @@ descs = {
            "decipher a Caesar'd text, put in a negative shift number.",
     "rot13": "Puts text through the ROT13 cipher, which is also a Caesar cipher with a shift of 13. Astute observers "
              "will note that putting ROT13 text back through ROT13 returns the original text.",
-    "vigenere": "Puts text through a Vigenere cipher using the provided keys. Note that the text can't contain any "
-                "spaces, so use underscores or dashes if you want to space it.\n\n"
-                "https://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher",
+    "vigenere": "Puts text through a [Vigenere cipher](https://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher) using the "
+                "provided keys. Note that the text can't contain any spaces, so use underscores or dashes if you want "
+                "to space it.",
     "devigenere": "Deciphers Vigenere'd text using the provided keys. Using a different set of keys than the text "
                   "was encoded with, will more than likely return a garbled mess.\n\n"
                   "``z!vig zephyrus bot`` > ``asiimkvg``\n``z!devig asiimkvg bot`` > ``zephyrus``\n"
@@ -128,8 +128,9 @@ descs = {
     "jyutping": "Romanizes Chinese text according to the Jyutping romanization scheme, which is used for the "
                 "Cantonese language.\n\n``z!jyutping 你好`` > ``nei5 hou3``",
     "translate": "Via Google Translate, translates <text> between languages. <from> and <to> must be either the "
-                 "full names of the language, or the ISO 639-1 code for the language. ``chinese`` defaults to "
-                 "Simplified Chinese; for Traditional, use ``traditional-chinese`` or ``zh-tw``.\n\n"
+                 "full names of the language, or the [code](https://cloud.google.com/translate/docs/languages) "
+                 "for the language. ``chinese`` defaults to Simplified Chinese; for Traditional, use "
+                 "``traditional-chinese`` or ``zh-tw``.\n\n"
                  "``z!translate English French Hello, my love`` > ``Bonjour mon amour``",
     "badtranslate": "Via Google Translate, translates English language text back and forth between twenty-five random "
                     "languages. The result is a garbled mess which only vaguely resembles the original, if at all.\n\n"
