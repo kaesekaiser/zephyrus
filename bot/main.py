@@ -175,7 +175,7 @@ async def about(ctx: commands.Context):
     def runtime_format(dt: datetime.timedelta):
         if dt.days:
             return f"{dt.days} d {dt.seconds // (24 * 60)} h {dt.seconds // 60} m"
-        return f"{dt.seconds // (24 * 60)} h {dt.seconds // 60} m {dt.seconds // 1} s"
+        return f"{dt.seconds // (24 * 60)} h {dt.seconds // 60} m {int(dt.seconds) % 60} s"
     py_version = "{}.{}.{}".format(*version_info)
 
     return await ClientEmol(":robot:", hexcol("6fc96f"), ctx).say(
