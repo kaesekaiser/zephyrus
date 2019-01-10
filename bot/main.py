@@ -13,7 +13,7 @@ aliases = {
 
 commandCategories = {
     "Games": ["connect4", "jotto", "anagrams", "boggle", "duel", "risk"],
-    "Text": ["mock", "expand", "square", "flagsquare", "clap", "scramble", "smallcaps"],
+    "Text": ["mock", "expand", "square", "flagsquare", "clap", "scramble", "smallcaps", "sheriff"],
     "Ciphers": ["rot", "rot13", "vigenere", "devigenere"],
     "Utilities": ["roll", "convert", "sayno", "choose", "8ball", "color", "timein", "avatar"],
     "Images": ["hueshift", "invert"],
@@ -58,6 +58,7 @@ commandFormats = {
     "badtranslate": "z!badtranslate <text...>",
     "avatar": "z!avatar <@user>",
     "runes": "z!runes <runic text...>",
+    "sheriff": "z!sheriff <emoji>",
 
     "help": "z!help [command]"
 }
@@ -137,6 +138,7 @@ descs = {
                     "``z!badtranslate This is an example sentence.`` > ``This is his word.``",
     "avatar": "Returns a link to a user's avatar.",
     "runes": "Transcribes [medieval Nordic runes](https://en.wikipedia.org/wiki/Medieval_runes) into Latin letters.",
+    "sheriff": "Calls the sheriff of <emoji>.",
 
     "help": "Shows the usage + format of a command. If no command is provided, lists all available commands."
 }
@@ -167,7 +169,7 @@ async def invite(ctx: commands.Context):
                           .format(zeph.user.id))
 
 
-zephBuild = "2.0 v7"
+zephBuild = "2.0 v8"
 
 
 @zeph.command()
@@ -182,6 +184,7 @@ async def about(ctx: commands.Context):
         author=author_from_user(zeph.user, f"\u2223 {zeph.user.name}"),
         d=f"**Connected to:** {len(zeph.guilds) - len(getattr(zeph, 'fortServers'))} servers / "
         f"{len(set(zeph.users))} users\n"
+        f"**Commands:** {len([g for g in zeph.commands if g not in aliases])}\n"
         f"**Runtime:** {runtime_format(datetime.datetime.now() - getattr(zeph, 'readyTime'))}\n"
         f"**Build:** {zephBuild} / Python {py_version}\n"
         f"[GitHub](https://github.com/kaesekaiser/zephyrus) / "
