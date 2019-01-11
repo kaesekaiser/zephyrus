@@ -1,5 +1,5 @@
 from game import *
-from utilities import dice as di, weed as wd, timein as ti, translate as tr
+from utilities import dice as di, weed as wd, timein as ti, translate as tr, wiki as wk
 from re import split, search
 from math import atan2, sqrt, pi
 import requests
@@ -8,6 +8,7 @@ import jyutping
 from io import BytesIO
 from random import choices
 from unicodedata import name as uni_name
+from urllib.error import HTTPError
 
 
 @zeph.command()
@@ -407,13 +408,13 @@ async def timein(ctx: commands.Context, *, place: str):
 
 
 chinese_punctuation = {
-    "？": "?", "！": "!", "。": ".", "，": ",", "：": ":", "；": ";", "【": "[", "】": "]", "（": "(", "）": ")",
-    "《": "⟨", "》": "⟩", "、": ","
+    "？": "?", "！": "!", "。": ".", "，": ",", "：": ":", "；": ";", "【": " [", "】": "]", "（": " (", "）": ")",
+    "《": " ⟨", "》": "⟩", "、": ",", "／": " /"
 }
 
 
 def get_pinyin(c: str):
-    return f" {pinyin.get(c)}" if pinyin.get(c) != c else chinese_punctuation.get(c, "")
+    return f" {pinyin.get(c).replace('v', 'ü')}" if pinyin.get(c) != c else chinese_punctuation.get(c, "")
 
 
 def get_jyutping(c: str):
@@ -461,12 +462,9 @@ async def translate(ctx: commands.Context, fro: str, to: str, *, text: str):
         lang = fro
 
     translation = tr.translator.translate(text, to, fro)
-    pron = translation.pronunciation if translation.pronunciation != translation.text and \
-        translation.pronunciation is not None else ""
     return await trans.say(
-        translation.text, d=pron,
-        footer="{}{} -> {}".format("detected: " if fro == "auto" else "",
-                                   tr.LANGUAGES[lang].title(), tr.LANGUAGES[to].title())
+        translation.text, footer="{}{} -> {}".format("detected: " if fro == "auto" else "",
+                                                     tr.LANGUAGES[lang].title(), tr.LANGUAGES[to].title())
     )
 
 
@@ -595,3 +593,41 @@ async def sheriff(ctx: commands.Context, emote: str):
                           "  　  {0}　{0}\n　   {0}　 {0}\n　   :boot:     :boot:\nhowdy. {1}"
                           .format(emote, "the name's mccree" if ord(emote[0]) == int("1f55b", 16) else
                                   f"i'm the sheriff of {name.lower()}"))
+
+
+class WikiNavigator(Navigator):
+    def __init__(self, *results: wk.Result):
+        self.results = results
+        super().__init__(wiki, [g.desc for g in results], 1, "")
+
+    @property
+    def con(self):
+        return self.emol.con(
+            self.results[self.page - 1].title.replace("****", ""), footer=f"{self.page}/{self.pgs}",
+            d=self.results[self.page - 1].desc.replace("****", ""),
+            url=wk.wikilink.format("_".join(self.results[self.page - 1].link.split()))
+        )
+
+
+@zeph.command(aliases=["wiki"])
+async def wikipedia(ctx: commands.Context, *, title: str):
+    parser = wk.WikiParser()
+    parser.feed(wk.readurl(wk.wikiSearch.format("_".join(title.split()))))
+    return await WikiNavigator(*parser.results).run(ctx)
+
+
+@zeph.command(aliases=["fw"])
+async def foreignwiki(ctx: commands.Context, lang: str, *, title: str):
+    parser = wk.ForeignParser()
+    try:
+        parser.feed(wk.readurl(wk.wikilink.format("_".join(title.split()))))
+    except HTTPError:
+        raise commands.CommandError("Article not found in English.")
+    if lang.casefold() == "all":
+        return await Navigator(wiki, [parser.form(g) for g in parser.lang_link], 8,
+                               "Foreign titles of " + parser.title + " [{page}/{pgs}]").run(ctx)
+    lang = parser.code_lang.get(lang.lower(), lang.title())
+    try:
+        return await wiki.send(ctx, parser.lang_title[lang], url=parser.lang_link[lang])
+    except KeyError:
+        raise commands.CommandError(f"Article unavailable in {lang}.")

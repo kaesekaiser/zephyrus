@@ -1,8 +1,10 @@
 import discord
 import asyncio
+from inspect import iscoroutinefunction
 from discord.ext import commands
 from typing import Union
 from minigames.risk import snip
+from math import ceil
 
 
 User = Union[discord.Member, discord.User]
@@ -119,6 +121,7 @@ err = Emol(":no_entry:", hexcol("880000"))  # error
 succ = Emol(":white_check_mark:", hexcol("22bb00"))  # success
 chooseEmol = Emol(":8ball:", hexcol("e1e8ed"))
 zhong = Emol(":u7a7a:", hexcol("8000b0"))
+wiki = Emol(":globe_with_meridians:", hexcol("4100b5"))
 
 
 async def confirm(s: str, dest: commands.Context, caller: User, **kwargs):
@@ -244,6 +247,66 @@ def gradient(from_hex: str, to_hex: str, value: float):
         "".join([hex(int(int(from_hex[g:g+2], 16) * from_value + int(to_hex[g:g+2], 16) * value))[2:]
                  for g in range(0, 5, 2)])
     )
+
+
+def page_list(l: list, per_page: int, page: int):  # assumes page number is between 1 and total pages
+    return l[int(page) * per_page - per_page:int(page) * per_page]
+
+
+class Navigator:  # intended as a parent class
+    def __init__(self, emol: Emol, l: list, per: int, s: str, **kwargs):
+        self.emol = emol
+        self.table = l
+        self.per = per
+        self.page = 1
+        self.pgs = ceil(len(self.table) / self.per)
+        self.title = s
+        self.message = None
+        self.kwargs = kwargs
+        self.funcs = {}
+
+    @property
+    def legal(self):
+        return ["◀", "▶"] + list(self.funcs.keys())
+
+    def post_process(self):  # runs on page change!
+        pass
+
+    @property
+    def con(self):
+        return self.emol.con(self.title.format(page=self.page, pgs=self.pgs),
+                             d=none_list(page_list(self.table, self.per, self.page), "\n"), **self.kwargs)
+
+    async def run(self, ctx: commands.Context):
+        self.message = await ctx.channel.send(embed=self.con)
+        for button in self.legal:
+            await self.message.add_reaction(button)
+        while True:
+            try:
+                emoji = (await zeph.wait_for(
+                    'reaction_add', timeout=300, check=lambda r, u: r.emoji in self.legal and
+                    r.message.id == self.message.id and u == ctx.author
+                ))[0].emoji
+            except asyncio.TimeoutError:
+                return
+            if emoji in self.funcs:
+                if iscoroutinefunction(self.funcs[emoji]):
+                    await self.funcs[emoji]()
+                else:
+                    self.funcs[emoji]()
+            try:
+                self.page = (self.page + (-1 if emoji == "◀" else 1 if emoji == "▶" else 0) - 1) % self.pgs + 1
+            except ZeroDivisionError:
+                self.page = 1
+            await self.message.edit(embed=self.con)
+            try:
+                await self.message.remove_reaction(emoji, ctx.author)
+            except discord.errors.Forbidden:
+                pass
+            if iscoroutinefunction(self.post_process):
+                await self.post_process()
+            else:
+                self.post_process()
 
 
 blue = hexcol("5177ca")  # color that many commands use

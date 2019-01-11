@@ -7,7 +7,7 @@ aliases = {
     "conn4": "connect4", "dice": "roll", "caesar": "rot", "vig": "vigenere", "devig": "devigenere", "?": "help",
     "h": "help", "sq": "square", "fsq": "flagsquare", "small": "smallcaps", "c": "convert", "conv": "convert",
     "weed": "sayno", "pick": "choose", "colour": "color", "hue": "hueshift", "trans": "translate",
-    "badtrans": "badtranslate", "rune": "runes"
+    "badtrans": "badtranslate", "rune": "runes", "wiki": "wikipedia", "fw": "foreignwiki"
 }
 
 
@@ -15,9 +15,9 @@ commandCategories = {
     "Games": ["connect4", "jotto", "anagrams", "boggle", "duel", "risk"],
     "Text": ["mock", "expand", "square", "flagsquare", "clap", "scramble", "smallcaps", "sheriff"],
     "Ciphers": ["rot", "rot13", "vigenere", "devigenere"],
-    "Utilities": ["roll", "convert", "sayno", "choose", "8ball", "color", "timein", "avatar"],
+    "Utilities": ["roll", "convert", "sayno", "choose", "8ball", "color", "timein", "avatar", "wikipedia"],
     "Images": ["hueshift", "invert"],
-    "Languages": ["pinyin", "jyutping", "translate", "badtranslate", "runes"],
+    "Languages": ["pinyin", "jyutping", "translate", "badtranslate", "runes", "foreignwiki"],
     "Bot": ["ping", "help", "invite", "about"]
 }
 
@@ -59,6 +59,8 @@ commandFormats = {
     "avatar": "z!avatar <@user>",
     "runes": "z!runes <runic text...>",
     "sheriff": "z!sheriff <emoji>",
+    "wikipedia": "z!wikipedia <search...>",
+    "foreignwiki": "z!foreignwiki <language> <title...>\nz!foreignwiki all <title...>",
 
     "help": "z!help [command]"
 }
@@ -108,8 +110,8 @@ descs = {
                 "to space it.",
     "devigenere": "Deciphers Vigenere'd text using the provided keys. Using a different set of keys than the text "
                   "was encoded with, will more than likely return a garbled mess.\n\n"
-                  "``z!vig zephyrus bot`` > ``asiimkvg``\n``z!devig asiimkvg bot`` > ``zephyrus``\n"
-                  "``z!devig asiimkvg fun`` > ``vyvdsxqm``",
+                  "``z!vig zephyrus bot`` → ``asiimkvg``\n``z!devig asiimkvg bot`` → ``zephyrus``\n"
+                  "``z!devig asiimkvg fun`` → ``vyvdsxqm``",
     "invite": "Spits out the invite link for Zephyrus, so you can bring it to other servers.",
     "scramble": "eDso thsi ot uryo xtt.e",
     "smallcaps": "Dᴏᴇs ᴛʜɪs ᴛᴏ ʏᴏᴜʀ ᴛᴇxᴛ.",
@@ -125,20 +127,26 @@ descs = {
     "timein": "Returns the current local time in ``<place>``.",
     "pinyin": "Romanizes Chinese text according to the Hanyu Pinyin romanization scheme - that is, it turns the "
               "Chinese characters into Latin syllables that sound like their Mandarin pronunciations.\n\n"
-              "``z!pinyin 你好`` > ``nǐ hǎo``",
+              "``z!pinyin 你好`` → ``nǐ hǎo``",
     "jyutping": "Romanizes Chinese text according to the Jyutping romanization scheme, which is used for the "
-                "Cantonese language.\n\n``z!jyutping 你好`` > ``nei5 hou3``",
-    "translate": "Via Google Translate, translates <text> between languages. <from> and <to> must be either the "
-                 "full names of the language, or the [code](https://cloud.google.com/translate/docs/languages) "
+                "Cantonese language.\n\n``z!jyutping 你好`` → ``nei5 hou3``",
+    "translate": "Via Google Translate, translates ``<text>`` between languages. ``<from>`` and ``<to>`` must be "
+                 "either the name of the language or the [code](https://cloud.google.com/translate/docs/languages) "
                  "for the language. ``chinese`` defaults to Simplified Chinese; for Traditional, use "
-                 "``traditional-chinese`` or ``zh-tw``.\n\n"
-                 "``z!translate English French Hello, my love`` > ``Bonjour mon amour``",
+                 "``traditional-chinese`` or ``zh-tw``. You can also use ``auto`` or ``detect`` for the detect "
+                 "language option.\n\n"
+                 "``z!translate English French Hello, my love`` → ``Bonjour mon amour``\n"
+                 "``z!translate auto en Hola, señor`` → ``Hello sir``",
     "badtranslate": "Via Google Translate, translates English language text back and forth between twenty-five random "
                     "languages. The result is a garbled mess which only vaguely resembles the original, if at all.\n\n"
-                    "``z!badtranslate This is an example sentence.`` > ``This is his word.``",
+                    "``z!badtranslate This is an example sentence.`` → ``That's my law.``",
     "avatar": "Returns a link to a user's avatar.",
     "runes": "Transcribes [medieval Nordic runes](https://en.wikipedia.org/wiki/Medieval_runes) into Latin letters.",
-    "sheriff": "Calls the sheriff of <emoji>.",
+    "sheriff": "Calls the sheriff of ``<emoji>``.",
+    "wikipedia": "Searches Wikipedia for ``<search>``.",
+    "foreignwiki": "``z!foreignwiki <language> <title...>`` finds the ``<language>`` version of the English Wikipedia "
+                   "article ``<title>``.\n``z!foreignwiki all <title...>`` lists all languages which have a version "
+                   "of ``<title>``.",
 
     "help": "Shows the usage + format of a command. If no command is provided, lists all available commands."
 }
@@ -169,7 +177,7 @@ async def invite(ctx: commands.Context):
                           .format(zeph.user.id))
 
 
-zephBuild = "2.0 v8"
+zephBuild = "2.1 v1"
 
 
 @zeph.command()
@@ -188,8 +196,7 @@ async def about(ctx: commands.Context):
         f"**Runtime:** {runtime_format(datetime.datetime.now() - getattr(zeph, 'readyTime'))}\n"
         f"**Build:** {zephBuild} / Python {py_version}\n"
         f"[GitHub](https://github.com/kaesekaiser/zephyrus) / "
-        f"[Invite](https://discordapp.com/oauth2/authorize?client_id={zeph.user.id}&scope=bot&permissions=8192) / "
-        f"[Testing](https://discord.gg/t8CBnHP)",
+        f"[Invite](https://discordapp.com/oauth2/authorize?client_id={zeph.user.id}&scope=bot&permissions=8192)",
         thumbnail=zeph.user.avatar_url
     )
 
