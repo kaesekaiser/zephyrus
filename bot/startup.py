@@ -309,4 +309,10 @@ class Navigator:  # intended as a parent class
                 self.post_process()
 
 
+def lower(l: Union[list, tuple]):
+    if type(l) == tuple:
+        return tuple(g.lower() for g in l)
+    return [g.lower() for g in l]
+
+
 blue = hexcol("5177ca")  # color that many commands use

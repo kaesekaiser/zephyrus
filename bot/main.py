@@ -1,4 +1,4 @@
-from utils import *
+from epitaph import *
 from sys import version_info
 import datetime
 
@@ -12,7 +12,7 @@ aliases = {
 
 
 commandCategories = {
-    "Games": ["connect4", "jotto", "anagrams", "boggle", "duel", "risk"],
+    "Games": ["connect4", "jotto", "anagrams", "boggle", "duel", "risk", "epitaph"],
     "Text": ["mock", "expand", "square", "flagsquare", "clap", "scramble", "smallcaps", "sheriff"],
     "Ciphers": ["rot", "rot13", "vigenere", "devigenere"],
     "Utilities": ["roll", "convert", "sayno", "choose", "8ball", "color", "timein", "avatar", "wikipedia"],
@@ -61,6 +61,7 @@ commandFormats = {
     "sheriff": "z!sheriff <emoji>",
     "wikipedia": "z!wikipedia <search...>",
     "foreignwiki": "z!foreignwiki <language> <title...>\nz!foreignwiki all <title...>",
+    "epitaph": "z!epitaph\nz!epitaph handsoff",
 
     "help": "z!help [command]"
 }
@@ -209,6 +210,16 @@ async def on_ready():
     print([g for g in zeph.all_commands if (g not in commandFormats or g not in descs or g not in
            [j for k in commandCategories.values() for j in k]) and g not in aliases])
     setattr(zeph, "fortServers", [g for g in zeph.guilds if g.owner.id in [238390171022655489, 474398677599780886]])
+
+
+@zeph.command()
+async def test(ctx: commands.Context):
+    zeph.loop.create_task(timer(ctx, 5))
+
+
+async def timer(ctx: commands.Context, seconds: int):
+    await asyncio.sleep(seconds)
+    await ctx.send(content="done")
 
 
 @zeph.event

@@ -12,7 +12,7 @@ traits = ["adaptable", "adventurous", "aloof", "analytical", "arrogant", "artist
 conquerors = ["Conqueror", "Great", "Magnificent", "Merciful", "Ruthless"]
 
 
-class Civ:  # base class. does no actual action; ticking is covered by DiscordCiv class in discobot/epitaph.py
+class Civ:  # base class. does no actual action; ticking is covered by Epitaph class in zephyrus/epitaph.py
     def __init__(self):
         self.stardate = int(randrange(2000, 5000) * randrange(2000, 5000) / 2000)
         self.lastIntervention = self.stardate - 30
@@ -61,10 +61,12 @@ class Civ:  # base class. does no actual action; ticking is covered by DiscordCi
                                           "humid", "lush", "misty", "overgrown", "rainy", "rocky", "sparse", "steamy",
                                           "stormy", "temperate", "torrid", "verdant", "warm", "wet", "windy"])
 
+    @property
     def available_events(self):
         return [g.name for g in events.values() if self.eventChances.get(g.name, 0) > 0 and
                 set(g.prereqs) <= set(self.knowledge) and g.name not in self.knowledge]
 
+    @property
     def available_techs(self):
         return [g.name for g in techs.values() if set(g.prereqs) <= set(self.knowledge)
                 and g.name not in self.knowledge]

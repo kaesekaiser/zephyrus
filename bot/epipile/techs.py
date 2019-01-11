@@ -26,10 +26,6 @@ class Tech(EvenTech):
         super().__init__(name, prereqs, set_vars, event_chances, desc, **vocab)
         techs[self.name.lower()] = self
 
-    def dict(self):
-        return {"Requirements": none_list([cap_name(g) for g in self.prereqs]),
-                "Leads to": none_list([cap_name(g.name) for g in techs.values() if self.name in g.prereqs])}
-
 
 Tech("toolmaking",
      [],
