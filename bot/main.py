@@ -148,6 +148,9 @@ descs = {
     "foreignwiki": "``z!foreignwiki <language> <title...>`` finds the ``<language>`` version of the English Wikipedia "
                    "article ``<title>``.\n``z!foreignwiki all <title...>`` lists all languages which have a version "
                    "of ``<title>``.",
+    "epitaph": "Runs a game of [Max Kreminski's Epitaph](https://mkremins.github.io/epitaph/). As an "
+               "ascended civilization, lead a burgeoning planet to join you in the stars. Play the original.\n\n"
+               "``z!epitaph handsoff`` runs a game without player input.",
 
     "help": "Shows the usage + format of a command. If no command is provided, lists all available commands."
 }
@@ -178,7 +181,7 @@ async def invite(ctx: commands.Context):
                           .format(zeph.user.id))
 
 
-zephBuild = "2.1 v1"
+zephBuild = "2.1 v2"
 
 
 @zeph.command()
@@ -210,16 +213,6 @@ async def on_ready():
     print([g for g in zeph.all_commands if (g not in commandFormats or g not in descs or g not in
            [j for k in commandCategories.values() for j in k]) and g not in aliases])
     setattr(zeph, "fortServers", [g for g in zeph.guilds if g.owner.id in [238390171022655489, 474398677599780886]])
-
-
-@zeph.command()
-async def test(ctx: commands.Context):
-    zeph.loop.create_task(timer(ctx, 5))
-
-
-async def timer(ctx: commands.Context, seconds: int):
-    await asyncio.sleep(seconds)
-    await ctx.send(content="done")
 
 
 @zeph.event
