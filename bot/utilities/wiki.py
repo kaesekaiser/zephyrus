@@ -70,6 +70,7 @@ class ForeignParser(HTMLParser):
         self.code_lang = {}  # language codes. {code: language name}
         self.lang_code = {}  # inverse of redirects. {language name: code}
         self.lang_link = {}  # links to pages. {language name: link}
+        self.lang_form = {}  # links to pages, with close-parens backslashed out for markdown {language name: link}
         super().__init__()
 
     def handle_starttag(self, tag, attrs):
@@ -82,7 +83,8 @@ class ForeignParser(HTMLParser):
             name = dict(attrs)["title"].split(splitter)[1]
             try:
                 self.lang_title[name] = dict(attrs)["title"].split(splitter)[0]
-                self.lang_link[name] = dict(attrs)["href"].replace(')', '\)')
+                self.lang_link[name] = dict(attrs)["href"]
+                self.lang_form[name] = dict(attrs)["href"].replace(')', '\)')
                 self.code_lang[dict(attrs)["lang"]] = name
             except ValueError:
                 pass
@@ -98,7 +100,7 @@ class ForeignParser(HTMLParser):
             self.lang_code = {j: g for g, j in self.code_lang.items()}
 
     def form(self, lang):  # for use in lists of foreign articles
-        return f"{lang} - [{self.lang_title[lang]}]({self.lang_link[lang]})"
+        return f"{lang} - [{self.lang_title[lang]}]({self.lang_form[lang]})"
 
 
 if __name__ == "__main__":
