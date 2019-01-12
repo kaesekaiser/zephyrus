@@ -343,7 +343,7 @@ async def eightball(ctx: commands.Context, *, text: str):
     return await chooseEmol.send(ctx, choice(options))
 
 
-blankColor = rk.Image.open("utilities/color.png")
+blankColor = rk.Image.open("images/color.png")
 
 
 def rgb_to_hsv(r: int, g: int, b: int):
@@ -368,8 +368,8 @@ async def color(ctx: commands.Context, *, col: str):
         raise commands.CommandError(f"Invalid color {col}.")
     emol = ClientEmol(zeph.emojis["color_wheel"], ret, ctx)
     rk.global_fill(blankColor, (255, 255, 255), ret.to_rgb())\
-        .save(f"utilities/colors/{str(ret.r)[-1]}{str(ret.b)[-1]}.png")
-    image = await image_url(f"utilities/colors/{str(ret.r)[-1]}{str(ret.b)[-1]}.png")
+        .save(f"images/{str(ret.r)[-1]}{str(ret.b)[-1]}.png")
+    image = await image_url(f"images/{str(ret.r)[-1]}{str(ret.b)[-1]}.png")
     return await emol.say(f"#{hex(ret.value)[2:].rjust(6, '0')}", thumb=image,
                           d=f"**RGB:** {ret.to_rgb()}\n**HSV:** {rgb_to_hsv(*ret.to_rgb())}")
 
@@ -378,16 +378,16 @@ async def color(ctx: commands.Context, *, col: str):
 async def hueshift(ctx: commands.Context, url: str, shift: int):
     message = await ctx.send("processing...")
     img = rk.Image.open(BytesIO(requests.get(url).content))
-    rk.shift_hue(img, shift).save("utilities/colors/hue-shift.png")
+    rk.shift_hue(img, shift).save("images/hue-shift.png")
     await message.delete()
-    return await ctx.send(file=discord.File("utilities/colors/hue-shift.png"))
+    return await ctx.send(file=discord.File("images/hue-shift.png"))
 
 
 @zeph.command()
 async def invert(ctx: commands.Context, url: str):
     img = rk.Image.open(BytesIO(requests.get(url).content))
-    rk.invert_colors(img).save("utilities/colors/invert.png")
-    return await ctx.send(file=discord.File("utilities/colors/invert.png"))
+    rk.invert_colors(img).save("images/invert.png")
+    return await ctx.send(file=discord.File("images/invert.png"))
 
 
 @zeph.command()
