@@ -82,7 +82,7 @@ class ForeignParser(HTMLParser):
             name = dict(attrs)["title"].split(splitter)[1]
             try:
                 self.lang_title[name] = dict(attrs)["title"].split(splitter)[0]
-                self.lang_link[name] = dict(attrs)["href"]
+                self.lang_link[name] = dict(attrs)["href"].replace(')', '\)')
                 self.code_lang[dict(attrs)["lang"]] = name
             except ValueError:
                 pass
