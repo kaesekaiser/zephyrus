@@ -1,11 +1,11 @@
 from html.parser import HTMLParser
-import urllib.request as req
-from urllib.error import HTTPError
+from pyquery import PyQuery
 wikilink = "https://en.wikipedia.org/wiki/{}"
+wikiSearch = "https://en.wikipedia.org/w/index.php?search={}&title=Special%3ASearch&fulltext=1&limit=100"
 
 
 def readurl(url):
-    return str(req.urlopen(url).read())
+    return str(PyQuery(url, {'title': 'CSS', 'printable': 'yes'}, encoding="utf8"))
 
 
 def remove_paren(s: str):
@@ -14,95 +14,51 @@ def remove_paren(s: str):
     return s
 
 
-def utfasc(s: str):  # converts only \x part of string. use utfs() for a full string that needs conversion
-    return str(bytes([int(x, 0) for x in [f"0x{s[g+2:g+4]}" for g in range(0, len(s), 4)]]), "utf-8")
+class Result:
+    def __init__(self):
+        self.title = ""
+        self.desc = ""
+        self.link = ""
 
-
-def utfs(s: str, remove=()):  # converts entire string
-    if "\\\"" in s:
-        s = "\"".join(s.split("\\\""))
-    if "\\\'" in s:
-        s = "\'".join(s.split("\\\'"))
-    for i in remove:
-        s = "".join(s.split(i))
-    n, ret = 0, ""
-    while n < len(s):
-        if s[n:n+2] == "\\x":
-            x = ""
-            while True:
-                x += s[n:n+4]
-                n += 4
-                if n >= len(s) or s[n] != "\\":
-                    break
-            ret += utfasc(x)
-        else:
-            ret += s[n]
-            n += 1
-    return ret
+    def __str__(self):
+        return self.title + "\n" + self.desc
 
 
 class WikiParser(HTMLParser):
     def __init__(self):
-        self.titling = False
-        self.title = ""
-        self.describing = False
-        self.stoppedDesc = False
-        self.breakDesc = 0
-        self.tableBreak = False
-        self.desc = ""
         super().__init__()
+        self.titling = False
+        self.describing = False
+        self.makingBold = False
+        self.results = []
+
+    def bold(self, s: str):
+        return f"**{s}**" if self.makingBold else s
 
     def handle_starttag(self, tag, attrs):
-        if tag == "h1" and ("id", "firstHeading") in attrs:
+        if dict(attrs).get("data-serp-pos"):
+            self.results.append(Result())
             self.titling = True
-        if tag == "p" and self.stoppedDesc is False and self.tableBreak is False:
+        if dict(attrs).get("class") == "searchresult":
             self.describing = True
-        if tag == "table":
-            self.tableBreak = True
-        if self.describing is True:
-            if tag == "sup" or (tag == "span" and ("class", "nowrap") not in attrs and ("class", "IPA") not in attrs
-                                and ("class", "IPA nopopups excerpt") not in attrs):
-                self.breakDesc += 1
-            if tag == "b":
-                self.desc += "**"
-            if tag == "i":
-                self.desc += "*"
+        if tag == "span" and dict(attrs).get("class") == "searchmatch":
+            self.makingBold = True
 
     def handle_data(self, data):
-        if self.titling is True:
-            self.title = utfs(data)
-        if self.describing is True and self.breakDesc == 0 and self.tableBreak is False:
-            try:
-                self.desc += utfs(data)
-            except ValueError:
-                print("Some character on that page couldn't be handled.")
+        if self.titling:
+            self.results[-1].title += self.bold(data)
+            self.results[-1].link += data.replace("\\", "")
+        elif self.describing:
+            self.results[-1].desc += self.bold(data)
 
     def handle_endtag(self, tag):
-        if tag == "h1" and self.titling is True:
+        if tag == "span" and self.makingBold:
+            self.makingBold = False
+        if tag == "div" and self.titling:
             self.titling = False
-        if tag == "table":
-            if self.describing is True:
-                self.desc = ""
-            self.tableBreak = False
-        if self.describing is True:
-            if tag == "p":
-                if len(self.desc) < 15:
-                    self.desc = ""
-                else:
-                    self.stoppedDesc = True
-                    self.describing = False
-                    self.desc = remove_paren(utfs(self.desc, ["()", "\\n"]))
-                    s = self.desc.split(" ")
-                    if len(s) > 75:
-                        self.desc = " ".join(s[:75]) + " ..."
-            if tag in ["span", "sup"]:
-                self.breakDesc -= 1
-            if tag == "b":
-                self.desc += "**"
-            if tag == "i":
-                self.desc += "*"
-        if self.breakDesc < 0:
-            self.breakDesc = 0
+        if tag == "div" and self.describing:
+            self.describing = False
+            self.results[-1].desc += " ..."
 
 
 class ForeignParser(HTMLParser):
@@ -110,59 +66,45 @@ class ForeignParser(HTMLParser):
         self.recording = False
         self.title = ""
         self.titling = False
-        self.languages = {}  # titles in languages. {language name: title}
-        self.redirects = {}  # language codes. {code: language name}
-        self.reverse = {}  # inverse of redirects. {language name: code}
-        self.links = {}  # links to pages. {language name: link}
+        self.lang_title = {}  # titles in languages. {language name: title}
+        self.code_lang = {}  # language codes. {code: language name}
+        self.lang_code = {}  # inverse of redirects. {language name: code}
+        self.lang_link = {}  # links to pages. {language name: link}
         super().__init__()
 
     def handle_starttag(self, tag, attrs):
-        if tag == "h1" and ("id", "firstHeading") in attrs:
+        if tag == "h1" and dict(attrs).get("id") == "firstHeading":
             self.titling = True
         if tag == "li" and "interlanguage-link interwiki-" in dict(attrs).get("class", ""):
             self.recording = True
         if self.recording and "hreflang" in dict(attrs) and "title" in dict(attrs):
-            splitter = " \\xe2\\x80\\x93 "
-            name = utfs(dict(attrs)["title"].split(splitter)[1])
+            splitter = " – "
+            name = dict(attrs)["title"].split(splitter)[1]
             try:
-                self.languages[name] = utfs(dict(attrs)["title"].split(splitter)[0])
-                self.links[name] = dict(attrs)["href"]
-                self.redirects[dict(attrs)["lang"]] = name
+                self.lang_title[name] = dict(attrs)["title"].split(splitter)[0]
+                self.lang_link[name] = dict(attrs)["href"]
+                self.code_lang[dict(attrs)["lang"]] = name
             except ValueError:
                 pass
 
     def handle_data(self, data):
         if self.titling:
-            self.title = utfs(data)
+            self.title = data
             self.titling = False
 
     def handle_endtag(self, tag):
         if self.recording:
             self.recording = False
-            self.reverse = dict(zip(self.redirects.values(), self.redirects.keys()))
+            self.lang_code = {j: g for g, j in self.code_lang.items()}
 
-    def form(self, lang):
-        return f"\u001b[34m{lang}\u001b[0m [\u001b[36m{self.reverse[lang]}\u001b[0m]"
+    def form(self, lang):  # for use in lists of foreign articles
+        return f"{lang} - [{self.lang_title[lang]}]({self.lang_link[lang]})"
 
 
 if __name__ == "__main__":
-    langs = ["it", "scn", "nap", "vec", "sc", "lij", "pms", "lmo"]
-    while True:
-        fp = ForeignParser()
-        cmd = input("z!fw ").split()
-        try:
-            fp.feed(readurl(wikilink.format(" ".join(cmd[1:]))))
-        except HTTPError:
-            print("\u001b[31mArticle not found in English.\u001b[0m")
-        else:
-            if cmd[0] == "all":
-                print(" / ".join([f"{fp.form(g)}: {fp.languages[g]}" for g in fp.languages]))
-                print("\u001b[33mTotal\u001b[0m:", len(fp.languages))
-            elif cmd[0] == "multi":
-                modLangs = [fp.redirects.get(g) for g in langs if g in fp.redirects]
-                print("\n".join([f"{fp.form(g)}: {fp.languages[g]} -=- {fp.links[g]}" for g in modLangs]))
-            elif cmd[0] in fp.redirects:
-                lang = fp.redirects[cmd[0]]
-                print(f"{fp.form(lang)}: {fp.languages[lang]} -=- {fp.links[lang]}")
-            else:
-                print("\u001b[31mArticle not found in that language.\u001b[31m")
+    html = readurl(wikilink.format("asodijfaiosdjfoasidjfoaisjdf"))
+    parser = ForeignParser()
+    parser.feed(html)
+    for lang, link in parser.lang_link.items():
+        print(lang, "-", link)
+        print(parser.form(lang))
