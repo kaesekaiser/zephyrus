@@ -1,6 +1,6 @@
 from game import *
 from utilities import dice as di, weed as wd, timein as ti, translate as tr, wiki as wk
-from re import split, search
+import re
 from math import atan2, sqrt, pi
 import requests
 import pinyin
@@ -72,11 +72,14 @@ lowerAlphabet = "abcdefghijklmnopqrstuvwxyz"
 smallAlphabet = "ᴀʙᴄᴅᴇꜰɢʜɪᴊᴋʟᴍɴᴏᴘǫʀsᴛᴜᴠᴡxʏᴢ"
 
 
-@zeph.command(aliases=["small"])
-async def smallcaps(ctx: commands.Context, *, text: str):
-    return await ctx.send(
-        content="".join([smallAlphabet[lowerAlphabet.index(g)] if g in lowerAlphabet else g for g in text])
-    )
+def smallcaps(s: str):
+    alpha_dict = {"\u00e9": "ᴇ́", **{lowerAlphabet[g]: smallAlphabet[g] for g in range(26)}}
+    return "".join([alpha_dict.get(g, g) for g in s])
+
+
+@zeph.command(name="smallcaps", aliases=["small"])
+async def smallcaps_command(ctx: commands.Context, *, text: str):
+    return await ctx.send(content=smallcaps(text))
 
 
 class RIEmol(ClientEmol):  # regional indicator emol
@@ -325,7 +328,7 @@ async def sayno(ctx: commands.Context):
 
 @zeph.command(aliases=["pick"])
 async def choose(ctx: commands.Context, *, text: str):
-    picks = split("\s+or\s+", text)
+    picks = re.split("\s+or\s+", text)
     string = choice(["I pick {}!", "Obviously it's {}.", "{}, of course.", "{}, obviously.", "Definitely {}."])
     return await chooseEmol.send(ctx, string.format(f"**{choice(picks)}**"))
 
@@ -569,8 +572,8 @@ async def interpret_potential_emoji(emote: str):
                 name = "pirates"
             elif emote in ["".join([chr(ord(c) + 127365) for c in g]) for g in emojiCountries]:
                 name = emojiCountries["".join([chr(ord(c) - 127365) for c in emote])].lower()
-            elif search(r"[🏻🏼🏽🏾🏿‍♂♀]+", emote) is not None:
-                name = await interpret_potential_emoji("".join(split(r"[🏻🏼🏽🏾🏿‍♂♀]+", emote)))
+            elif re.search(r"[🏻🏼🏽🏾🏿‍♂♀]+", emote):
+                name = await interpret_potential_emoji("".join(re.split(r"[🏻🏼🏽🏾🏿‍♂♀]+", emote)))
             else:
                 raise commands.CommandError("Only input one character.")
         else:
@@ -612,8 +615,11 @@ class WikiNavigator(Navigator):
 @zeph.command(aliases=["wiki"])
 async def wikipedia(ctx: commands.Context, *, title: str):
     parser = wk.WikiParser()
-    parser.feed(wk.readurl(wk.wikiSearch.format("_".join(title.split()))))
-    return await WikiNavigator(*parser.results).run(ctx)
+    parser.feed(wk.readurl(wk.wikiSearch.format("+".join(title.split()))))
+    try:
+        return await WikiNavigator(*parser.results).run(ctx)
+    except IndexError:
+        return await wiki.send(ctx, "No results found.")
 
 
 @zeph.command(aliases=["fw"])
