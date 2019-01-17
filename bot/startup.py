@@ -48,7 +48,7 @@ def hexcol(hex_code: str):
     return discord.Colour(int(hex_code, 16))
 
 
-class IL:
+class NewLine:
     def __init__(self, obj):
         self.object = obj
 
@@ -77,8 +77,7 @@ def construct_embed(**kwargs):
     for i in fields:
         if len(str(fields[i])) != 0:
             ret.add_field(name=i, value=str(fields[i]),
-                          inline=(False if type(fields[i]) == IL else
-                                  kwargs.get("same_line", False)))
+                          inline=(False if type(fields[i]) == NewLine else kwargs.get("same_line", False)))
     if kwargs.get("footer"):
         ret.set_footer(text=kwargs.get("footer"))
     if kwargs.get("thumb", kwargs.get("thumbnail")):
@@ -254,20 +253,28 @@ def page_list(l: list, per_page: int, page: int):  # assumes page number is betw
 
 
 class Navigator:  # intended as a parent class
-    def __init__(self, emol: Emol, l: list, per: int, s: str, **kwargs):
+    def __init__(self, emol: Emol, l: list, per: int, s: str,
+                 prev: Union[discord.Emoji, str]="◀", nxt: Union[discord.Emoji, str]="▶",
+                 close_on_timeout: bool=False, **kwargs):
         self.emol = emol
         self.table = l
         self.per = per
         self.page = 1
-        self.pgs = ceil(len(self.table) / self.per)
         self.title = s
         self.message = None
+        self.close_on_timeout = close_on_timeout
         self.kwargs = kwargs
         self.funcs = {}
+        self.prev = prev
+        self.next = nxt
+
+    @property
+    def pgs(self):
+        return ceil(len(self.table) / self.per)
 
     @property
     def legal(self):
-        return ["◀", "▶"] + list(self.funcs.keys())
+        return [self.prev, self.next] + list(self.funcs.keys())
 
     def post_process(self):  # runs on page change!
         pass
@@ -277,31 +284,47 @@ class Navigator:  # intended as a parent class
         return self.emol.con(self.title.format(page=self.page, pgs=self.pgs),
                              d=none_list(page_list(self.table, self.per, self.page), "\n"), **self.kwargs)
 
+    def advance_page(self, direction: int):
+        self.page = (self.page + direction - 1) % self.pgs + 1
+
+    async def get_emoji(self, ctx: commands.Context):
+        return (await zeph.wait_for(
+            'reaction_add', timeout=300, check=lambda r, u: r.emoji in self.legal and
+            r.message.id == self.message.id and u == ctx.author
+        ))[0].emoji
+
+    async def close(self):
+        await self.message.delete()
+
     async def run(self, ctx: commands.Context):
         self.message = await ctx.channel.send(embed=self.con)
         for button in self.legal:
-            await self.message.add_reaction(button)
+            try:
+                await self.message.add_reaction(button)
+            except discord.errors.HTTPException:
+                pass
         while True:
             try:
-                emoji = (await zeph.wait_for(
-                    'reaction_add', timeout=300, check=lambda r, u: r.emoji in self.legal and
-                    r.message.id == self.message.id and u == ctx.author
-                ))[0].emoji
+                emoji = await self.get_emoji(ctx)
             except asyncio.TimeoutError:
+                if self.close_on_timeout:
+                    return await self.close()
                 return
             if emoji in self.funcs:
                 if iscoroutinefunction(self.funcs[emoji]):
                     await self.funcs[emoji]()
                 else:
                     self.funcs[emoji]()
+            if self.funcs.get(emoji) == self.close:
+                return
             try:
-                self.page = (self.page + (-1 if emoji == "◀" else 1 if emoji == "▶" else 0) - 1) % self.pgs + 1
+                self.advance_page(-1 if emoji == self.prev else 1 if emoji == self.next else 0)
             except ZeroDivisionError:
                 self.page = 1
             await self.message.edit(embed=self.con)
             try:
                 await self.message.remove_reaction(emoji, ctx.author)
-            except discord.errors.Forbidden:
+            except discord.errors.HTTPException:
                 pass
             if iscoroutinefunction(self.post_process):
                 await self.post_process()
@@ -313,6 +336,14 @@ def lower(l: Union[list, tuple]):
     if type(l) == tuple:
         return tuple(g.lower() for g in l)
     return [g.lower() for g in l]
+
+
+def can_int(s: str):
+    try:
+        int(s)
+    except ValueError:
+        return False
+    return True
 
 
 blue = hexcol("5177ca")  # color that many commands use

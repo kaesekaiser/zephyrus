@@ -7,12 +7,12 @@ aliases = {
     "conn4": "connect4", "dice": "roll", "caesar": "rot", "vig": "vigenere", "devig": "devigenere", "?": "help",
     "h": "help", "sq": "square", "fsq": "flagsquare", "small": "smallcaps", "c": "convert", "conv": "convert",
     "weed": "sayno", "pick": "choose", "colour": "color", "hue": "hueshift", "trans": "translate",
-    "badtrans": "badtranslate", "rune": "runes", "wiki": "wikipedia", "fw": "foreignwiki"
+    "badtrans": "badtranslate", "rune": "runes", "wiki": "wikipedia", "fw": "foreignwiki", "dex": "pokedex"
 }
 
 
 commandCategories = {
-    "Games": ["connect4", "jotto", "anagrams", "boggle", "duel", "risk", "epitaph"],
+    "Games": ["connect4", "jotto", "anagrams", "boggle", "duel", "risk", "epitaph", "pokedex"],
     "Text": ["mock", "expand", "square", "flagsquare", "clap", "scramble", "smallcaps", "sheriff"],
     "Ciphers": ["rot", "rot13", "vigenere", "devigenere"],
     "Utilities": ["roll", "convert", "sayno", "choose", "8ball", "color", "timein", "avatar", "wikipedia"],
@@ -62,6 +62,7 @@ commandFormats = {
     "wikipedia": "z!wikipedia <search...>",
     "foreignwiki": "z!foreignwiki <language> <title...>\nz!foreignwiki all <title...>",
     "epitaph": "z!epitaph\nz!epitaph handsoff",
+    "pokedex": "z!pokedex [pok\u00e9mon...]\nz!pokedex [dex number]\nz!pokedex help",
 
     "help": "z!help [command]"
 }
@@ -151,6 +152,10 @@ descs = {
     "epitaph": "Runs a game of [Max Kreminski's Epitaph](https://mkremins.github.io/epitaph/). As an "
                "ascended civilization, lead a burgeoning planet to join you in the stars. Play the original.\n\n"
                "``z!epitaph handsoff`` runs a game without player input.",
+    "pokedex": "Opens the Pok\u00e9dex! ``z!dex [pok\u00e9mon...]`` or ``z!dex [dex number]`` will start you at a "
+               "specific Pok\u00e9mon; otherwise, it starts at everyone's favorite, Bulbasaur. "
+               "``z!dex help`` gives help with navigating the dex.\n\nYou can even name a specific form of a "
+               "Pok\u00e9mon - e.g. ``z!dex giratina origin`` starts at Giratina, in Origin Forme.",
 
     "help": "Shows the usage + format of a command. If no command is provided, lists all available commands."
 }
@@ -181,7 +186,7 @@ async def invite(ctx: commands.Context):
                           .format(zeph.user.id))
 
 
-zephBuild = "2.1 v3"
+zephBuild = "2.1 v5"
 
 
 @zeph.command()
