@@ -1,4 +1,4 @@
-from utils import *
+from pkmn import *
 from epipile import civs as ep
 
 
