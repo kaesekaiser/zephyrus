@@ -1114,3 +1114,4 @@ Huizhou|China|
 Yiwu|China|
 Victoria|Canada|
 Lihue|UnitedStates|
+Sandefjord|Norway|
