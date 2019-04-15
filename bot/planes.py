@@ -832,6 +832,9 @@ class PlanesInterpreter:
         except AssertionError:
             return await plane.send(self.ctx, "Purchase cancelled.")
 
+        for i in bought:
+            self.user.cities.append(i.name)
+        self.user.credits -= price
         return await succ.send(self.ctx, f"Airports purchased!")
 
 
