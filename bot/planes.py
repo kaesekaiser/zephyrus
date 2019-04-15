@@ -422,8 +422,8 @@ class PlanesInterpreter:
                 city = pn.find_city(arg)
             except KeyError:
                 return await err.send(self.ctx, self.invalid_city(arg))
-            # if city.name not in self.user.cities:
-            #     return await err.send(self.ctx, "You don't have the license to {}.".format(city.name))
+            if city.name not in self.user.cities:
+                return await err.send(self.ctx, "You don't have the license to {}.".format(city.name))
 
         args = [pn.find_city(g) for g in args]
         path = [craft.path[0], *args]
