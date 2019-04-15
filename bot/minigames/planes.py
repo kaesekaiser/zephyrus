@@ -1,27 +1,50 @@
-from math import sin, cos, acos, pi, log10, floor, log
+from math import sin, cos, asin, acos, pi, log10, floor, log, atan2, sqrt
 from random import choices, choice
 from minigames.planecities import *
-from html.parser import HTMLParser
 from geopy.geocoders import Nominatim
 from time import time
-import urllib.request as req
+from pyquery import PyQuery
+import re
 rads = {"km": 6371, "mi": 3958.76}
 url = "https://www.google.com/maps/d/u/0/edit?hl=en&mid=1aoVneqZxmbqLxZrznFPyYbpKlCGC4hbx"
 cd_url = "https://www.timeanddate.com/countdown/vacation?iso={}&p0=179&msg={}&font=slab&csz=1#"
-with open("storage/citycountries.txt", "r") as f:
+with open("C:/Users/kaesekaiser/PycharmProjects/zephyrus/storage/citycountries.txt", "r") as f:
     af = f.readlines()
 citcoundat = {l.split("|")[0]: l.split("|")[1] for l in af}
 cities = {}
 countries = {}
-users = {}
 starter_names = ["Meadowlark", "Nightingale", "Endeavor", "Aurora", "Spirit", "Falcon", "Albatross"]
 permit = "".join([*[chr(g) for g in range(65, 91)], *[chr(g) for g in range(97, 123)], "1234567890_-"])
+pattern = r"\[\[\[[0-9.,\-]+\].+?\\n,null,[0-9]+"
+specific_patterns = {
+    "name": r"(?<=\[\\\"name\\\",\[\\\")[a-zA-Z]+?(?=\\\")",
+    "coords": r"(?<=\[\[\[)[0-9.,\-]+?(?=\])",
+    "val": r"(?<=\[\\\"description\\\",\[\\\")[0-9]+?(?=\\\")",
+    "no": r"[0-9]+$"
+}
+
+
+def readurl(s: str):
+    return str(PyQuery(s, {'title': 'CSS', 'printable': 'yes'}, encoding="utf8"))
 
 
 def greatcirc(p1: tuple, p2: tuple, unit="km"):
+    """coordinates must be in radians"""
     if p1 == p2:
         return 0
     return round(rads[unit] * acos(sin(p1[0]) * sin(p2[0]) + cos(p1[0]) * cos(p2[0]) * cos(abs(p2[1]-p1[1]))), 2)
+
+
+def gcp(p1: tuple, p2: tuple, prog: float):
+    """Given PROG[0,1], returns the point PROG of the way along the great circle between P1 and P2."""
+    p1, p2 = rad(p1), rad(p2)
+    d = 2*asin(sqrt((sin((p1[0]-p2[0])/2))**2 + cos(p1[0])*cos(p2[0])*(sin((p1[1]-p2[1])/2))**2))
+    a = sin((1 - prog) * d) / sin(d)
+    b = sin(prog * d) / sin(d)
+    x = a * cos(p1[0]) * cos(p1[1]) + b * cos(p2[0]) * cos(p2[1])
+    y = a * cos(p1[0]) * sin(p1[1]) + b * cos(p2[0]) * sin(p2[1])
+    z = a * sin(p1[0]) + b * sin(p2[0])
+    return round(atan2(z, sqrt(x ** 2 + y ** 2)) * 180 / pi, 5), round(atan2(y, x) * 180 / pi, 5)
 
 
 def twodig(no):
@@ -78,68 +101,23 @@ def rad(n):
     def rd(no):
         return pi * no / 180
     if type(n) in [list, tuple]:
-        return [rd(i) for i in n]
+        return [rd(g) for g in n]
     return rd(n)
 
 
-def readurl(url):
-    return str(req.urlopen(url).read())
-
-
 def rewritecits():
-    with open("storage/citycountries.txt", "w") as f:
+    with open("storage/citycountries.txt", "w") as ff:
         for i in citcoundat:
-            f.write("{}|{}|\n".format(i, citcoundat[i]))
-
-
-class MapParser(HTMLParser):
-    def __init__(self):
-        self.printing = False
-        self.json = ""
-        super().__init__()
-
-    def handle_starttag(self, tag, attrs):
-        if tag == "script" and ("type", "text/javascript") in attrs:
-            self.printing = True
-
-    def handle_data(self, data):
-        if self.printing is True:
-            self.json = data
-
-    def handle_endtag(self, tag):
-        if tag == "script":
-            self.printing = False
-
-
-class Map:
-    def __init__(self, table):
-        self.str = table.split("U.S. Regions")[0].split("null,null,null,null,0,2,null,")[1]\
-                   .split("]\\\\n]\\\\n,[[[")[0][2:] + "]"
-        self.table = []
-        rank, dat = 0, ""
-        for char in self.str:
-            dat += char
-            if char == "[":
-                rank += 1
-            if char == "]":
-                rank -= 1
-            if rank == 0:
-                if len(dat) > 1:
-                    self.table.append(dat)
-                dat = ""
-        self.cities = [c[c.find("\"name\\"):].split('\\\\\"')[2] for c in self.table]
-        self.coords = [tuple(round(float(g), 5) for g in c[c.find("[[[")+3:].split("]")[0].split(","))
-                       for c in self.table]
-        self.descs = [c[c.find("\"description\\"):].split("\\\\\"")[2] for c in self.table]
+            ff.write("{}|{}|\n".format(i, citcoundat[i]))
 
 
 class City:
-    def __init__(self, name: str, coords: iter, val, no=0):
+    def __init__(self, name: str, coords: iter, val: int, no=0):
         self.name = name
         self.coords = coords
         self.radcoords = tuple(rad(c) for c in coords)
-        self.passengers = int(val)
-        self.worth = round((lambda n: 70 * n ** 0.37)(int(val)))
+        self.passengers = val
+        self.value = round((lambda n: 70 * n ** 0.37)(val))
         self.no = no
         self.code = base36(self.no).rjust(2, "0")
         if self.name in citcoundat:
@@ -151,13 +129,22 @@ class City:
             citcoundat[self.name] = coun
             rewritecits()
         self.country = coun
-        self.value = {"Coordinates": f"({twodig(self.coords[0])}, {twodig(self.coords[1])})",
-                      "Country": coun, "Annual Passengers": suff(int(val)),
-                      "Value": "Ȼ{}".format(addcomm(self.worth))}
+        self.dict = {"Coordinates": f"({twodig(self.coords[0])}, {twodig(self.coords[1])})",
+                     "Country": coun, "Annual Passengers": suff(val),
+                     "Value": "Ȼ{}".format(addcomm(self.value))}
         self.jobs = []
         self.job_reset = 0
         if self.name.lower() not in cities:
             cities[self.name.lower()] = self
+
+    @staticmethod
+    def from_html(html: str):
+        return City(
+            re.search(specific_patterns["name"], html)[0],
+            [float(g) for g in re.search(specific_patterns["coords"], html)[0].split(",")],
+            int(re.search(specific_patterns["val"], html)[0]),
+            int(re.search(specific_patterns["no"], html)[0])
+        )
 
     def __eq__(self, other):
         return self.name == other.name
@@ -181,6 +168,11 @@ class Path:
         self.time = start_time
         self.fro = start_city
         self.path = list(dests)
+
+    @staticmethod
+    def from_str(s: str):
+        j = s.split("-")
+        return Path(int(j[1]), code_city(j[0][:2]), *[code_city(g) for g in snip(j[0][2:], 2)])
 
     def __str__(self):
         return f"{self.fro.code}{''.join([g.code for g in self.path])}-{self.time}"
@@ -210,51 +202,93 @@ class Path:
 class Country:
     def __init__(self, name: str, cits: list):
         self.name = name
-        self.cities = sorted(cits, key=lambda c: c.worth, reverse=True)
-        self.worth = round(0.03 * sum([i.worth for i in self.cities]))
+        self.cities = sorted(cits, key=lambda c: c.value, reverse=True)
         if self.name.lower() not in countries:
             countries[self.name.lower()] = self
+
+    @property
+    def worth(self):
+        return round(0.03 * sum([i.value for i in self.cities]))
+
+    @staticmethod
+    def from_name_only(name: str):
+        """Requires that all cities have already been created."""
+        return Country(name, [g for g in cities.values() if g.country.lower() == name.lower()])
 
 
 class Plane:
     def __init__(self, model: Model, name: str, path: Path, jobs: list, upgrades: list):
-        self.model = model.name
-        self.airspeed = model.airspeed * (1 + upgrades[0] * 0.25)
-        self.passcap = model.cap
-        self.fueluse = model.fph * (1 + upgrades[0] * 0.25)
-        self.fuelcap = model.tank * (1 + upgrades[1] * 0.25)
+        self._model = model
         self.upgrades = upgrades
-        self.range = round(self.fuelcap / self.fueluse * self.airspeed)
-        self.lpk = round(self.fueluse / self.airspeed, 2)
         self.name = name
         self.path = path
         self.jobs = jobs
 
+    @property
+    def range(self):
+        return round(self.fuel_cap / self.fuel_use * self.airspeed)
+
+    @property
+    def lpk(self):
+        return round(self.fuel_use / self.airspeed, 2)
+
+    @property
+    def model(self):
+        return self._model.name
+
+    @property
+    def airspeed(self):
+        return self._model.airspeed * (1 + self.upgrades[0] * 0.25)
+
+    @property
+    def pass_cap(self):
+        return self._model.cap
+
+    @property
+    def fuel_use(self):
+        return self._model.fph * (1 + self.upgrades[0] * 0.25)
+
+    @property
+    def fuel_cap(self):
+        return self._model.tank * (1 + self.upgrades[1] * 0.25)
+
+    @staticmethod
+    def from_str(s: str):
+        j = s.split("^")
+        return Plane(craft[j[1].lower()], j[0], Path.from_str(j[3]), snip(j[4], 5), [int(c) for c in j[2].split("/")])
+
+    @staticmethod
+    def new(model: str, name: str = ""):
+        return Plane(craft[model], name, Path(0, cities["london"]), [], [0, 0])
+
     def __str__(self):
-        return f"{self.name}^{self.model}^{''.join([str(g) for g in self.upgrades])}^{self.path}^{''.join(self.jobs)}"
+        return f"{self.name}^{self.model}^{'/'.join([str(g) for g in self.upgrades])}^{self.path}^{''.join(self.jobs)}"
 
     def __eq__(self, other):
         return str(self) == str(other)
 
+    @property
     def fleet_str(self):
         loc = f"Location: {self.path[0].name}" if len(self.path) == 0 else \
-            f"En-route: {self.path[1].name}\nETA: {hrmin(self.arrival() - time())}"
+            f"En-route: {self.path[1].name}\nETA: {hrmin(self.arrival - time())}"
         return f"Model: {self.model}\n{loc}"
 
+    @property
     def dict(self):
         loc = {"Location": self.path[0].name} if len(self.path) == 0 else \
-            {"En-route": "→".join([g.name for g in self.path.path]), "ETA": hrmin(self.arrival() - time())}
-        job = [f"``{g}`` [{code_city(g[2:4]).name} Ȼ{js(g).pay}]" for g in self.jobs]
-        return {"Model": self.model, **loc, "Available Slots": self.passcap - len(self.jobs),
+            {"En-route": "→".join([g.name for g in self.path.path]), "ETA": hrmin(self.arrival - time())}
+        job = [f"``{g}`` [{code_city(g[2:4]).name} Ȼ{Job.from_str(g).pay}]" for g in self.jobs]
+        return {"Model": self.model, **loc, "Available Slots": self.pass_cap - len(self.jobs),
                 "Jobs": ", ".join(job) if len(self.jobs) > 0 else "none"}
 
+    @property
     def stats(self):
-        return {"Airspeed": f"{round(self.airspeed)} km/hr", "Fuel Usage": f"{round(self.fueluse)} L/hr",
-                "Fuel Tank": f"{round(self.fuelcap)} L", "Range": f"{self.range} km",
+        return {"Airspeed": f"{round(self.airspeed)} km/hr", "Fuel Usage": f"{round(self.fuel_use)} L/hr",
+                "Fuel Tank": f"{round(self.fuel_cap)} L", "Range": f"{self.range} km",
                 "Power Level": self.upgrades[0], "Tank Level": self.upgrades[1]}
 
     def load(self, job: str):
-        if len(self.jobs) == self.passcap:
+        if len(self.jobs) == self.pass_cap:
             raise ValueError("fully loaded")
         self.jobs.append(job.upper())
 
@@ -267,35 +301,15 @@ class Plane:
     def travel(self, fro: City, to: City):  # travel time
         return round(fro.dist(to) * 60 / self.airspeed)
 
+    @property
     def arrival(self):
         return self.path.time + sum([self.travel(self.path[g - 1], self.path[g]) for g in range(1, len(self.path) + 1)])
 
-
-def blank_plane(model: str):
-    return Plane(craft[model], "", Path(0, cities["london"]), [], [0, 0])
-
-
-class User:
-    def __init__(self, no: str, licenses: list, cits: list, pns: dict, creds: float):
-        self.no = no
-        self.countries = licenses
-        self.cities = cits
-        self.planes = pns
-        self.credits = creds
-        if str(self.no) not in users:
-            users[str(self.no)] = self
-
-    def __str__(self):
-        return f"{self.no}|{'~'.join(self.countries)}|{'~'.join(self.cities)}|" \
-               f"{'~'.join([str(g) for g in self.planes.values()])}|{round(self.credits)}"
-
-    def jobs(self):
-        return [g for item in self.planes.values() for g in item.jobs]
-
-    def rename(self, old_name: str, new_name: str):
-        self.planes[new_name.lower()] = self.planes[old_name.lower()]
-        del self.planes[old_name.lower()]
-        self.planes[new_name.lower()].name = new_name
+    @property
+    def next_eta(self):
+        if len(self.path) == 0:
+            return 0
+        return self.path.time + self.travel(self.path[0], self.path[1])
 
 
 class Job:  # tbh kind of a dummy class. doesn't really do anything other than serve as a convenience
@@ -305,6 +319,10 @@ class Job:  # tbh kind of a dummy class. doesn't really do anything other than s
         self.code = f"{self.source.code}{self.destination.code}"
         self.pay = round((self.source.dist(self.destination) / 4) ** 1.2)
 
+    @staticmethod
+    def from_str(s: str):
+        return Job(code_city(s[:2]), code_city(s[2:4]))
+
     def __str__(self):
         return self.code
 
@@ -313,25 +331,35 @@ class Job:  # tbh kind of a dummy class. doesn't really do anything other than s
                self.destination.name == other.destination.name
 
 
-def ps(s: str):  # takes name^model^upgrades^path^jobs and returns Plane object
-    j = s.split("^")
-    return Plane(craft[j[1].lower()], j[0], hs(j[3]), snip(j[4], 5), [int(c) for c in j[2]])
+class User:
+    def __init__(self, no: int, licenses: list, cits: list, pns: dict, creds: float):
+        self.id = no
+        self.countries = licenses
+        self.cities = cits
+        self.planes = pns
+        self.credits = creds
 
+    @staticmethod
+    def from_str(s: str):
+        j = s.split("|")  # id|countries|cities|planes|credits
+        p = [Plane.from_str(g) for g in j[3].split("~")]
+        c = [code_city(g).name for g in j[2].split("~")]
+        k = [backCountries[g] for g in j[1].split("~")]
+        return User(int(j[0]), k, c, {g.name.lower(): g for g in p}, int(j[4]))
 
-def us(s: str, no: str=None):  # same as ps() but for User class
-    j = s.split("|")  # id|countries|cities|planes|credits
-    i = j[0] if no is None else no
-    p = [ps(g) for g in j[3].split("~")]
-    return User(i, j[1].split("~"), j[2].split("~"), {g.name.lower(): g for g in p}, int(j[4]))
+    def __str__(self):
+        return f"{self.id}|{'~'.join([planemojis[g] for g in self.countries])}|" \
+               f"{'~'.join([cities[g.lower()].code for g in self.cities])}|" \
+               f"{'~'.join([str(g) for g in self.planes.values()])}|{round(self.credits)}"
 
+    @property
+    def jobs(self):
+        return [g for item in self.planes.values() for g in item.jobs]
 
-def js(s: str):  # for jobs
-    return Job(code_city(s[:2]), code_city(s[2:4]))
-
-
-def hs(s: str):  # for paths
-    j = s.split("-")
-    return Path(int(j[1]), code_city(j[0][:2]), *[code_city(g) for g in snip(j[0][2:], 2)])
+    def rename(self, old_name: str, new_name: str):
+        self.planes[new_name.lower()] = self.planes[old_name.lower()]
+        del self.planes[old_name.lower()]
+        self.planes[new_name.lower()].name = new_name
 
 
 def find_city(s: str):
@@ -339,12 +367,14 @@ def find_city(s: str):
 
 
 def find_country(s: str):
-    return countries[k_alias.get(s.lower(), s.lower())]
+    return countries[k_alias.get(s.lower(), backCountries.get(s.lower(), s.lower())).lower()]
 
 
 def code_city(s: str):
     try:
-        return list(cities.values())[int(s, 36)]
+        ret = list(cities.values())[int(s, 36)]
+        assert isinstance(ret, City)
+        return ret
     except IndexError:
         raise ValueError("invalid city code")
 
@@ -352,26 +382,85 @@ def code_city(s: str):
 def priority(a1: City, a2: City, lis=False):
     if a1.dist(a2) <= log10(a1.passengers) * 25:
         return -100
-    f = lambda x: (-1 / 3 * x ** -3 + 4 / 3 * (x - 1) ** 3 + 4 / 3) ** 1.5
+    ff = lambda x: (-1 / 3 * x ** -3 + 4 / 3 * (x - 1) ** 3 + 4 / 3) ** 1.5
     airport_factor = log10(a1.passengers) - 2
     destination_factor = log10(a2.passengers) - 2
-    domestic_factor = (7.5 - airport_factor) / 2 if a1.value["Country"] == a2.value["Country"] else 0
+    domestic_factor = (7.5 - airport_factor) / 2 if a1.country == a2.country else 0
     dist_factor = a1.dist(a2) / 1000
-    dist_factor = 20 - dist_factor * f(4 / airport_factor)
+    dist_factor = 20 - dist_factor * ff(4 / airport_factor)
     if lis:
         return [destination_factor, dist_factor, domestic_factor]
     return max(destination_factor + dist_factor + domestic_factor, 0)
 
 
-k_alias = {"uk": "unitedkingdom", "greatbritain": "unitedkingdom", "britain": "unitedkingdom", "gb": "unitedkingdom",
-           "us": "unitedstates", "usa": "unitedstates", "america": "unitedstates", "uae": "unitedarabemirates",
-           "car": "centralafricanrepublic", "dprk": "northkorea", "png": "papuanewguinea", "drc": "drcongo",
-           "czechrepublic": "czechia", "arabia": "saudiarabia", "persia": "iran", "burma": "myanmar",
-           "nk": "northkorea", "sk": "southkorea", "sa": "southafrica", "republicofcongo": "congo",
-           "republicofthecongo": "congo", "fyrom": "macedonia", "papua": "papuanewguinea",
-           "newguinea": "papuanewguinea", "nz": "newzealand", "dr": "dominicanrepublic"}
-c_alias = {"ny": "newyork", "nyc": "newyork", "mexico": "mexicocity", "guatemalacity": "guatemala",
-           "panama": "panamacity", "kuwaitcity": "kuwait", "luxemburg": "luxembourg", "brunei": "bandarseribegawan",
-           "bsb": "bandarseribegawan", "jfk": "newyork", "lax": "losangeles", "atl": "atlanta", "rdu": "raleigh",
-           "newyorkcity": "newyork", "charlestonsc": "charlestonsouthcarolina", "compostela": "santiagodecompostela",
-           "charlestonwv": "charlestonwestvirginia", "la": "losangeles", "delhi": "newdelhi", "bombay": "mumbai"}
+k_alias = {
+    "uk": "unitedkingdom", "greatbritain": "unitedkingdom", "britain": "unitedkingdom", "usa": "unitedstates",
+    "america": "unitedstates", "uae": "unitedarabemirates", "car": "centralafricanrepublic", "dprk": "northkorea",
+    "png": "papuanewguinea", "drc": "drcongo", "czechrepublic": "czechia", "arabia": "saudiarabia", "persia": "iran",
+    "burma": "myanmar", "republicofcongo": "congo", "republicofthecongo": "congo", "fyrom": "macedonia",
+    "papua": "papuanewguinea", "eswatini": "swaziland", "newguinea": "papuanewguinea", "dr": "dominicanrepublic",
+    "northmacedonia": "macedonia",
+}
+c_alias = {
+    "ny": "newyork", "nyc": "newyork", "mexico": "mexicocity", "guatemalacity": "guatemala", "juarez": "ciudadjuarez",
+    "panama": "panamacity", "kuwaitcity": "kuwait", "luxemburg": "luxembourg", "brunei": "bandarseribegawan",
+    "bsb": "bandarseribegawan", "jfk": "newyork", "lax": "losangeles", "atl": "atlanta", "rdu": "raleigh",
+    "newyorkcity": "newyork", "charlestonsc": "charlestonsouthcarolina", "compostela": "santiagodecompostela",
+    "charlestonwv": "charlestonwestvirginia", "la": "losangeles", "delhi": "newdelhi", "bombay": "mumbai"
+}
+emojiCountries = {
+    "ac": "Ascension Island", "ad": "Andorra", "ae": "United Arab Emirates", "af": "Afghanistan",
+    "ag": "Antigua and Barbuda", "ai": "Anguilla", "al": "Albania", "am": "Armenia", "ao": "Angola", "aq": "Antarctica",
+    "ar": "Argentina", "as": "American Samoa", "at": "Austria", "au": "Australia", "aw": "Aruba", "ax": "Åland Islands",
+    "az": "Azerbaijan", "ba": "Bosnia and Herzegovina", "bb": "Barbados", "bd": "Bangladesh", "be": "Belgium",
+    "bf": "Burkina Faso", "bg": "Bulgaria", "bh": "Bahrain", "bi": "Burundi", "bj": "Benin", "bl": "St. Barthélemy",
+    "bm": "Bermuda", "bn": "Brunei", "bo": "Bolivia", "bq": "Caribbean Netherlands", "br": "Brazil", "bs": "Bahamas",
+    "bt": "Bhutan", "bv": "Bouvet Island", "bw": "Botswana", "by": "Belarus", "bz": "Belize", "ca": "Canada",
+    "cc": "Cocos Islands", "cd": "Congo-Kinshasa", "cf": "Central African Republic", "cg": "Congo-Brazzaville",
+    "ch": "Switzerland", "ci": "Côte d'Ivoire", "ck": "Cook Islands", "cl": "Chile", "cm": "Cameroon", "cn": "China",
+    "co": "Colombia", "cp": "Clipperton Island", "cr": "Costa Rica", "cu": "Cuba", "cv": "Cape Verde", "cw": "Curaçao",
+    "cx": "Christmas Island", "cy": "Cyprus", "cz": "Czechia", "de": "Germany", "dg": "Diego Garcia", "dj": "Djibouti",
+    "dk": "Denmark", "dm": "Dominica", "do": "Dominican Republic", "dz": "Algeria", "ea": "Ceuta and Melilla",
+    "ec": "Ecuador", "ee": "Estonia", "eg": "Egypt", "eh": "Western Sahara", "er": "Eritrea", "es": "Spain",
+    "et": "Ethiopia", "eu": "European Union", "fi": "Finland", "fj": "Fiji", "fk": "Falkland Islands",
+    "fm": "Micronesia", "fo": "Faroe Islands", "fr": "France", "ga": "Gabon", "gb": "United Kingdom", "gd": "Grenada",
+    "ge": "Georgia", "gf": "French Guiana", "gg": "Guernsey", "gh": "Ghana", "gi": "Gibraltar", "gl": "Greenland",
+    "gm": "Gambia", "gn": "Guinea", "gp": "Guadeloupe", "gq": "Equatorial Guinea", "gr": "Greece",
+    "gs": "South Georgia and South Sandwich Islands", "gt": "Guatemala", "gu": "Guam", "gw": "Guinea-Bissau",
+    "gy": "Guyana", "hk": "Hong Kong", "hm": "Heard and McDonald Islands", "hn": "Honduras", "hr": "Croatia",
+    "ht": "Haiti", "hu": "Hungary", "ic": "Canary Islands", "id": "Indonesia", "ie": "Ireland", "il": "Israel",
+    "im": "Isle of Man", "in": "India", "io": "British Indian Ocean Territory", "iq": "Iraq", "ir": "Iran",
+    "is": "Iceland", "it": "Italy", "je": "Jersey", "jm": "Jamaica", "jo": "Jordan", "jp": "Japan", "ke": "Kenya",
+    "kg": "Kyrgyzstan", "kh": "Cambodia", "ki": "Kiribati", "km": "Comoros", "kn": "St. Kitts and Nevis",
+    "kp": "North Korea", "kr": "South Korea", "kw": "Kuwait", "ky": "Cayman Islands", "kz": "Kazakhstan", "la": "Laos",
+    "lb": "Lebanon", "lc": "St. Lucia", "li": "Liechtenstein", "lk": "Sri Lanka", "lr": "Liberia", "ls": "Lesotho",
+    "lt": "Lithuania", "lu": "Luxembourg", "lv": "Latvia", "ly": "Libya", "ma": "Morocco", "mc": "Monaco",
+    "md": "Moldova", "me": "Montenegro", "mf": "Saint Martin", "mg": "Madagascar", "mh": "Marshall Islands",
+    "mk": "Macedonia", "ml": "Mali", "mm": "Myanmar", "mn": "Mongolia", "mo": "Macau", "mp": "Northern Mariana Islands",
+    "mq": "Martinique", "mr": "Mauritania", "ms": "Montserrat", "mt": "Malta", "mu": "Mauritius", "mv": "Maldives",
+    "mw": "Malawi", "mx": "Mexico", "my": "Malaysia", "mz": "Mozambique", "na": "Namibia", "nc": "New Caledonia",
+    "ne": "Niger", "nf": "Norfolk Island", "ng": "Nigeria", "ni": "Nicaragua", "nl": "Netherlands", "no": "Norway",
+    "np": "Nepal", "nr": "Nauru", "nu": "Niue", "nz": "New Zealand", "om": "Oman", "pa": "Panama", "pe": "Peru",
+    "pf": "French Polynesia", "pg": "Papua New Guinea", "ph": "Philippines", "pk": "Pakistan", "pl": "Poland",
+    "pm": "St. Pierre and Miquelon", "pn": "Pitcairn Islands", "pr": "Puerto Rico", "ps": "Palestine", "pt": "Portugal",
+    "pw": "Palau", "py": "Paraguay", "qa": "Qatar", "re": "Réunion", "ro": "Romania", "rs": "Serbia", "ru": "Russia",
+    "rw": "Rwanda", "sa": "Saudi Arabia", "sb": "Solomon Islands", "sc": "Seychelles", "sd": "Sudan", "se": "Sweden",
+    "sg": "Singapore", "sh": "St. Helena", "si": "Slovenia", "sj": "Svalbard and Jan Mayen", "sk": "Slovakia",
+    "sl": "Sierra Leone", "sm": "San Marino", "sn": "Senegal", "so": "Somalia", "sr": "Suriname", "ss": "South Sudan",
+    "st": "São Tomé and Príncipe", "sv": "El Salvador", "sx": "Sint Maarten", "sy": "Syria", "sz": "Swaziland",
+    "ta": "Tristan da Cunha", "td": "Chad", "tf": "French Southern Territories", "tg": "Togo", "th": "Thailand",
+    "tj": "Tajikistan", "tk": "Tokelau", "tl": "Timor-Leste", "tm": "Turkmenistan", "tn": "Tunisia", "to": "Tonga",
+    "tr": "Turkey", "tt": "Trinidad and Tobago", "tv": "Tuvalu", "tw": "Taiwan", "tz": "Tanzania", "ua": "Ukraine",
+    "ug": "Uganda", "um": "U.S. Outlying Islands", "un": "United Nations", "us": "United States", "uy": "Uruguay",
+    "uz": "Uzbekistan", "va": "Vatican City", "vc": "St. Vincent and Grenadines", "ve": "Venezuela",
+    "vg": "British Virgin Islands", "vi": "U.S. Virgin Islands", "vn": "Vietnam", "vu": "Vanuatu",
+    "wf": "Wallis and Futuna", "ws": "Samoa", "xk": "Kosovo", "ye": "Yemen", "yt": "Mayotte", "za": "South Africa",
+    "zm": "Zambia", "zw": "Zimbabwe"
+}
+specialCases = {
+    "TimorLeste": "tl", "GuineaBissau": "gw", "IvoryCoast": "ci", "Bosnia": "ba", "DRCongo": "cd",  "Congo": "cg",
+    "SaoTome": "st", "USVirginIslands": "vi", "Curacao": "cw", "StLucia": "lc", "StKittsandNevis": "kn",
+    "StVincent": "vc"
+}
+planemojis = {**{"".join(emojiCountries[g].split()): g for g in emojiCountries}, **specialCases}
+backCountries = {j: g for g, j in planemojis.items()}

@@ -1,5 +1,5 @@
 from startup import *
-from random import randrange, choice, sample, random
+from random import randrange, sample, random
 from minigames import connectfour as cf, jotto as jo, hangman as hm, boggle as bg, risk as rk
 from utilities import words as wr
 from copy import deepcopy as copy
@@ -300,12 +300,12 @@ class DiscordRisk(rk.Game):
             f"{sum([j.troops for j in self.board.provinces.values() if j.owner == g])} troops / "
             f"{floor(len([j for j in self.board.provinces.values() if j.owner == g]) / 2)} TPT" for g in self.players
         ])
-        self.image.save(f"storage/risk-{str(self)[0]}.png")
+        self.image.save(f"images/risk-{str(self)[0]}.png")
         kwargs = {
             "s": f"{self.playerOrder[self.atBat]}'s turn - {phase} Phase".upper(),
             "d": string,
             "footer": str(self.saveState),
-            "image": await image_url(f"storage/risk-{str(self)[0]}.png")
+            "image": await image_url(f"images/risk-{str(self)[0]}.png")
         }
         try:
             await self.emol.edit(self.statusMessage, **kwargs)

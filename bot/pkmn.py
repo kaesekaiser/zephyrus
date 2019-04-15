@@ -7,6 +7,20 @@ with open("pokemon/dex.json", "r") as file:
     dexEntries = json.load(file)
 
 
+ballColors = {
+    "beast": "8FD5F6", "cherish": "E84535", "dive": "81C7EF", "dream": "F4B4D0", "dusk": "30A241", "fast": "F2C63F",
+    "friend": "80BA40", "great": "3B82C4", "heal": "E95098", "heavy": "9B9EA4", "level": "F5D617", "love": "E489B8",
+    "lure": "49B0BE", "luxury": "D29936", "master": "7E308E", "moon": "00A6BA", "nest": "7EBF41", "net": "0998B4",
+    "park": "F4D050", "poke": "F18E38", "premier": "FFFFFF", "quick": "73B5E4", "repeat": "FFF338", "safari": "307D54",
+    "sport": "F18E38", "timer": "FFFFFF", "ultra": "FDD23C"
+}
+
+
+def ball_emol():
+    ret = choice(list(ballColors))
+    return Emol(zeph.emojis[f"{ret}_ball"], hexcol(ballColors[ret]))
+
+
 def find_mon(s: str):
     for mon in pk.natDex:
         if set(pk.fix(mon, "_").split("_")) <= set(pk.fix(s, "_").split("_")):
@@ -31,7 +45,8 @@ def dex_entry(mon: pk.Mon, dex: str="Ultra Moon"):
         "thumb": pk.image(mon), "same_line": True, "footer": f"version: {dex}", "fs": {
             "Type": " ／ ".join([zeph.strings[g.lower()] for g in mon.types]), "Species": pk.species[mon.species.name],
             "Height": f"{mon.form.height} m", "Weight": f"{mon.form.weight} kg",
-            "Entry": NewLine(pk.dexEntries[mon.species.name].get(dex, "_unavailable_"))}
+            "Entry": NewLine(pk.dexEntries[mon.species.name].get(dex, "_unavailable_")),
+            "Base Stats": NewLine(" ／ ".join([str(g) for g in mon.base_stats]))}
     }
 
 
@@ -51,7 +66,7 @@ def scroll_list(l: iter, at: int, curved: bool=False):
 
 class DexNavigator(Navigator):
     def __init__(self, start: pk.Mon):
-        super().__init__(Emol(zeph.emojis["poke"], hexcol("f18e38")), [], 1, "",  # params really don't matter here
+        super().__init__(ball_emol(), [], 1, "",  # params really don't matter here
                          prev=zeph.emojis["dex_prev"], nxt=zeph.emojis["dex_next"])
         self.mon = start
         self.dex = pk.gameDexes["Ultra Sun"]

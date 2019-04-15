@@ -4,7 +4,9 @@ from inspect import iscoroutinefunction
 from discord.ext import commands
 from typing import Union
 from minigames.risk import snip
-from math import ceil
+from utilities.words import levenshtein
+from math import ceil, atan2, sqrt, pi
+from random import choice
 
 
 User = Union[discord.Member, discord.User]
@@ -16,6 +18,10 @@ class Zeph(commands.Bot):
     def __init__(self):
         super().__init__("z!", case_insensitive=True)
         del self.all_commands["help"]
+        with open("storage/call_channels.txt", "r") as f:
+            self.phoneNumbers = {int(g.split("|")[0]): int(g.split("|")[1]) for g in f.readlines()}
+            self.callChannels = {int(g.split("|")[1]): int(g.split("|")[2]) for g in f.readlines()}
+        self.planeUsers = {}
 
     @property
     def emojis(self):
@@ -24,6 +30,12 @@ class Zeph(commands.Bot):
     @property
     def strings(self):
         return {g: str(j) for g, j in self.emojis.items()}
+
+    def save(self):
+        with open("storage/call_channels.txt", "w") as f:
+            f.write("\n".join([f"{g}|{j}|{self.callChannels.get(j, '')}" for g, j in self.phoneNumbers.items()]))
+        with open("storage/planes.txt", "w") as f:
+            f.write("\n".join([str(g) for g in self.planeUsers.values()]))
 
 
 zeph = Zeph()
@@ -38,6 +50,12 @@ async def on_message(message: discord.Message):
 @zeph.event
 async def on_reaction_add(reaction: discord.Reaction, user: User):
     zeph.dispatch("reaction_or_message", reaction, user)
+    zeph.dispatch("button", reaction, user, True)
+
+
+@zeph.event
+async def on_reaction_remove(reaction: discord.Reaction, user: User):
+    zeph.dispatch("button", reaction, user, False)
 
 
 def hexcol(hex_code: str):
@@ -63,7 +81,7 @@ class EmbedAuthor:
         self.icon = icon
 
 
-def author_from_user(user: User, name: str=None, url: str=discord.Embed.Empty):
+def author_from_user(user: User, name: str = None, url: str = discord.Embed.Empty):
     return EmbedAuthor(name if name else f"{user.name}#{user.discriminator}", icon=user.avatar_url, url=url)
 
 
@@ -96,13 +114,13 @@ class Emol:  # fancy emote-color embeds
         self.emoji = str(e)
         self.color = col
 
-    def con(self, s: str=None, **kwargs):  # constructs
+    def con(self, s: str = None, **kwargs):  # constructs
         return construct_embed(title=f"{self.emoji} \u2223 {s}" if s else None, col=self.color, **kwargs)
 
-    async def send(self, destination: commands.Context, s: str=None, **kwargs):  # sends
+    async def send(self, destination: commands.Context, s: str = None, **kwargs):  # sends
         return await destination.send(embed=self.con(s, **kwargs))
 
-    async def edit(self, message: discord.Message, s: str=None, **kwargs):  # edits message
+    async def edit(self, message: discord.Message, s: str = None, **kwargs):  # edits message
         return await message.edit(embed=self.con(s, **kwargs))
 
 
@@ -111,7 +129,7 @@ class ClientEmol(Emol):
         super().__init__(e, col)
         self.dest = dest
 
-    async def say(self, s: str=None, **kwargs):
+    async def say(self, s: str = None, **kwargs):
         return await self.send(self.dest, s, **kwargs)
 
 
@@ -121,16 +139,20 @@ succ = Emol(":white_check_mark:", hexcol("22bb00"))  # success
 chooseEmol = Emol(":8ball:", hexcol("e1e8ed"))
 zhong = Emol(":u7a7a:", hexcol("8000b0"))
 wiki = Emol(":globe_with_meridians:", hexcol("4100b5"))
+phone = Emol(":telephone:", hexcol("DD2E44"))
+plane = Emol(":airplane:", hexcol("3a99f7"))
 
 
-async def confirm(s: str, dest: commands.Context, caller: User, **kwargs):
+async def confirm(s: str, dest: Union[commands.Context, discord.TextChannel], caller: User = None, **kwargs):
     def pred(r: discord.Reaction, u: User):
-        return u == caller and r.emoji in [zeph.emojis["yes"], zeph.emojis["no"]] and r.message.id == message.id
+        return r.emoji in [zeph.emojis["yes"], zeph.emojis["no"]] and r.message.id == message.id and \
+               ((caller is None and u != zeph.user) or u == caller)
 
     emol = kwargs.get("emol", Emol(zeph.emojis["yield"], hexcol("DD2E44")))
 
-    message = await emol.send(dest, s, d=f"To {kwargs.get('yes', 'confirm')}, react with {zeph.emojis['yes']}. "
-                                         f"To {kwargs.get('no', 'cancel')}, react with {zeph.emojis['no']}.")
+    message = await emol.send(
+        dest, s, d=f"{kwargs.get('add_info', '')} To {kwargs.get('yes', 'confirm')}, react with {zeph.emojis['yes']}. "
+                   f"To {kwargs.get('no', 'cancel')}, react with {zeph.emojis['no']}.")
     await message.add_reaction(zeph.emojis["yes"])
     await message.add_reaction(zeph.emojis["no"])
     try:
@@ -150,7 +172,7 @@ def plural(s: str, n: Union[float, int], **kwargs):
     return kwargs.get("plural", s + "s") if n != 1 else s
 
 
-def none_list(l: Union[list, tuple], joiner: str=", "):
+def none_list(l: Union[list, tuple], joiner: str = ", "):
     return joiner.join(l) if l else "none"
 
 
@@ -159,7 +181,7 @@ def flint(n: Flint):
 
 
 class SigFig:
-    def __init__(self, s: str, keep_non_dec: bool=False):
+    def __init__(self, s: str, keep_non_dec: bool = False):
         if s[0] == "-":
             self.figStr = s[1:].split("e")[0]
             self.s = s[1:]
@@ -240,7 +262,12 @@ def add_commas(n: Union[Flint, str]):
     return ".".join(n)
 
 
-def gradient(from_hex: str, to_hex: str, value: float):
+def grad(fro: Flint, to: Flint, value: Flint):
+    """Returns a float that is <value> / 1 of the way from <fro> to <to>."""
+    return fro + (to - fro) * value
+
+
+def gradient(from_hex: str, to_hex: str, value: Flint):
     from_value = 1 - value
     return hexcol(
         "".join([hex(int(int(from_hex[g:g+2], 16) * from_value + int(to_hex[g:g+2], 16) * value))[2:]
@@ -248,14 +275,38 @@ def gradient(from_hex: str, to_hex: str, value: float):
     )
 
 
+def rgb_to_hsv(r: int, g: int, b: int):
+    return round(atan2(sqrt(3) * (g - b), 2 * r - g - b) * 360 / (2 * pi)) % 360,\
+           round(100 - 100 * min(r, g, b) / 255),\
+           round(100 * max(r, g, b) / 255)
+
+
+def hue_gradient(from_hex: str, to_hex: str, value: Flint, backwards: bool = False):
+    from_hsv = rgb_to_hsv(*hexcol(from_hex).to_rgb())
+    to_hsv = rgb_to_hsv(*hexcol(to_hex).to_rgb())
+    return discord.Colour.from_hsv(
+        grad(from_hsv[0] + (360 if backwards else 0), to_hsv[0], value) % 360,
+        grad(from_hsv[1], to_hsv[1], value), grad(from_hsv[2], to_hsv[2], value)
+    )
+
+
 def page_list(l: list, per_page: int, page: int):  # assumes page number is between 1 and total pages
     return l[int(page) * per_page - per_page:int(page) * per_page]
 
 
-class Navigator:  # intended as a parent class
+def page_dict(d: dict, per_page: int, page: int):  # assumes page number is between 1 and total pages
+    return {g: j for g, j in d.items() if g in page_list(list(d.keys()), per_page, page)}
+
+
+class Navigator:
+    """Intended mostly as a parent class. Large number of seemingly unnecessary functions is intentional; it allows
+    for child classes to overwrite large amounts of the run() function without having to overwrite the function
+    itself. """
+
     def __init__(self, emol: Emol, l: list, per: int, s: str,
-                 prev: Union[discord.Emoji, str]="◀", nxt: Union[discord.Emoji, str]="▶",
-                 close_on_timeout: bool=False, **kwargs):
+                 prev: Union[discord.Emoji, str] = "◀", nxt: Union[discord.Emoji, str] = "▶",
+                 close_on_timeout: bool = False, **kwargs):
+        """KWARGS are passed to Emol.com()"""
         self.emol = emol
         self.table = l
         self.per = per
@@ -281,13 +332,16 @@ class Navigator:  # intended as a parent class
 
     @property
     def con(self):
-        return self.emol.con(self.title.format(page=self.page, pgs=self.pgs),
-                             d=none_list(page_list(self.table, self.per, self.page), "\n"), **self.kwargs)
+        return self.emol.con(
+            self.title.format(page=self.page, pgs=self.pgs),
+            d=none_list(page_list(self.table, self.per, self.page), "\n"), **self.kwargs
+        )
 
     def advance_page(self, direction: int):
         self.page = (self.page + direction - 1) % self.pgs + 1
 
     async def get_emoji(self, ctx: commands.Context):
+        """Detects a button press, and returns the emoji that was pressed."""
         return (await zeph.wait_for(
             'reaction_add', timeout=300, check=lambda r, u: r.emoji in self.legal and
             r.message.id == self.message.id and u == ctx.author
@@ -303,6 +357,7 @@ class Navigator:  # intended as a parent class
                 await self.message.add_reaction(button)
             except discord.errors.HTTPException:
                 pass
+
         while True:
             try:
                 emoji = await self.get_emoji(ctx)
@@ -310,26 +365,45 @@ class Navigator:  # intended as a parent class
                 if self.close_on_timeout:
                     return await self.close()
                 return
+
             if emoji in self.funcs:
                 if iscoroutinefunction(self.funcs[emoji]):
                     await self.funcs[emoji]()
                 else:
                     self.funcs[emoji]()
+
             if self.funcs.get(emoji) == self.close:
                 return
+
             try:
                 self.advance_page(-1 if emoji == self.prev else 1 if emoji == self.next else 0)
             except ZeroDivisionError:
                 self.page = 1
+
             await self.message.edit(embed=self.con)
+
             try:
                 await self.message.remove_reaction(emoji, ctx.author)
             except discord.errors.HTTPException:
                 pass
+
             if iscoroutinefunction(self.post_process):
                 await self.post_process()
             else:
                 self.post_process()
+
+
+class FieldNavigator(Navigator):
+    def __init__(self, emol: Emol, d: dict, per: int, s: str, **kwargs):
+        super().__init__(emol, [], per, s, **kwargs)
+        self.table = d
+
+    @property
+    def con(self):
+        return self.emol.con(
+            self.title.format(page=self.page, pgs=self.pgs),
+            fs=page_dict(self.table, self.per, self.page), **self.kwargs
+        )
 
 
 def lower(l: Union[list, tuple]):
@@ -344,6 +418,15 @@ def can_int(s: str):
     except ValueError:
         return False
     return True
+
+
+def best_guess(target: str, l: iter):
+    di = {g: levenshtein(target, g.lower()) for g in l}
+    return choice([key for key in di if di[key] == min(list(di.values()))])
+
+
+def two_digit(n: Flint):
+    return str(round(n, 2)) + "0" * (2 - len(str(round(n, 2)).split(".")[1]))
 
 
 blue = hexcol("5177ca")  # color that many commands use

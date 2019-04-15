@@ -1,4 +1,4 @@
-from epitaph import *
+from planes import *
 from sys import version_info
 import datetime
 
@@ -6,13 +6,13 @@ import datetime
 aliases = {
     "conn4": "connect4", "dice": "roll", "caesar": "rot", "vig": "vigenere", "devig": "devigenere", "?": "help",
     "h": "help", "sq": "square", "fsq": "flagsquare", "small": "smallcaps", "c": "convert", "conv": "convert",
-    "weed": "sayno", "pick": "choose", "colour": "color", "hue": "hueshift", "trans": "translate",
+    "weed": "sayno", "pick": "choose", "colour": "color", "hue": "hueshift", "trans": "translate", "p": "planes",
     "badtrans": "badtranslate", "rune": "runes", "wiki": "wikipedia", "fw": "foreignwiki", "dex": "pokedex"
 }
 
 
 commandCategories = {
-    "Games": ["connect4", "jotto", "anagrams", "boggle", "duel", "risk", "epitaph", "pokedex"],
+    "Games": ["connect4", "jotto", "anagrams", "boggle", "duel", "risk", "epitaph", "pokedex", "planes"],
     "Text": ["mock", "expand", "square", "flagsquare", "clap", "scramble", "smallcaps", "sheriff"],
     "Ciphers": ["rot", "rot13", "vigenere", "devigenere"],
     "Utilities": ["roll", "convert", "sayno", "choose", "8ball", "color", "timein", "avatar", "wikipedia"],
@@ -63,6 +63,7 @@ commandFormats = {
     "foreignwiki": "z!foreignwiki <language> <title...>\nz!foreignwiki all <title...>",
     "epitaph": "z!epitaph\nz!epitaph handsoff",
     "pokedex": "z!pokedex [pok\u00e9mon...]\nz!pokedex [dex number]\nz!pokedex help",
+    "planes": "z!planes help",
 
     "help": "z!help [command]"
 }
@@ -156,6 +157,10 @@ descs = {
                "specific Pok\u00e9mon; otherwise, it starts at everyone's favorite, Bulbasaur. "
                "``z!dex help`` gives help with navigating the dex.\n\nYou can even name a specific form of a "
                "Pok\u00e9mon - e.g. ``z!dex giratina origin`` starts at Giratina, in Origin Forme.",
+    "planes": "Lets you play a game I'm just calling Planes. It's a sort of idle shipping simulator - really similar "
+              "to a mobile game called Pocket Planes - where you buy airports and airplanes, and use them to take jobs "
+              "back and forth for profit. There's many sub-commands, so do ``z!planes help`` for more info on what "
+              "exactly you can do, and how to do it.",
 
     "help": "Shows the usage + format of a command. If no command is provided, lists all available commands."
 }
@@ -186,7 +191,7 @@ async def invite(ctx: commands.Context):
                           .format(zeph.user.id))
 
 
-zephBuild = "2.1 v5"
+zephBuild = "2.2 v1"
 
 
 @zeph.command()
@@ -216,9 +221,10 @@ async def on_ready():
     setattr(zeph, "readyTime", datetime.datetime.now())
     print(f"ready at {getattr(zeph, 'readyTime')}")
     print([g for g in zeph.all_commands if g not in aliases])
-    print([g for g in zeph.all_commands if (g not in commandFormats or g not in descs or g not in
-           [j for k in commandCategories.values() for j in k]) and g not in aliases])
+    print([g for g in zeph.all_commands if g not in aliases and not zeph.all_commands[g].hidden and
+          (g not in commandFormats or g not in descs or g not in [j for k in commandCategories.values() for j in k])])
     setattr(zeph, "fortServers", [g for g in zeph.guilds if g.owner.id in [238390171022655489, 474398677599780886]])
+    await initialize_planes()
 
 
 @zeph.event
@@ -236,3 +242,12 @@ async def on_command_error(ctx: commands.Context, exception):
     else:
         await err.send(ctx, f"``{str(exception)}``")
         raise exception
+
+
+async def regularly_save():
+    while True:
+        await asyncio.sleep(60)
+        zeph.save()
+
+
+zeph.loop.create_task(regularly_save())

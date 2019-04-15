@@ -1,7 +1,6 @@
 from game import *
 from utilities import dice as di, weed as wd, timein as ti, translate as tr, wiki as wk
 import re
-from math import atan2, sqrt, pi
 import requests
 import pinyin
 import jyutping
@@ -155,8 +154,8 @@ unitAbbreviations = {
     "astronomical unit": "AU",
     **metric_name_dict("gram", "g"),
     **metric_name_dict("gramme", "g"),
-    "ounce": "oz", "pound": "lb", "stone": "st", "hundredweight": "cwt", "tonne": "Mg", "short ton": "ton",
-    "metric ton": "Mg",
+    "ounce": "oz", "pound": "lb", "stone": "st", "hundredweight": "cwt", "short ton": "ton", "tons": "ton",
+    "tonne": "Mg", "metric ton": "Mg",
     "atomic mass unit": "amu",
     **metric_name_dict("dalton", "Da"),
     **metric_name_dict("liter", "L"),
@@ -185,10 +184,10 @@ class ConversionGroup:
 
     def convert(self, n: Flint, fro: str, to: str=None):  # assumes both fro and to are in group
         if to == fro:
-            return n
+            return to, n
         fro_dict = [g for g in self.systems if fro in g][0]
         if to in fro_dict:
-            return self.cws(n, fro, to, [g for g in self.systems if fro in g][0])
+            return to, self.cws(n, fro, to, [g for g in self.systems if fro in g][0])
         if not to:
             to_dict = self.systems[not self.systems.index(fro_dict)]
             possible = {g: self.convert(n, fro, g)[1] for g in to_dict if g in defaultUnits}
@@ -347,12 +346,6 @@ async def eightball(ctx: commands.Context, *, text: str):
 
 
 blankColor = rk.Image.open("images/color.png")
-
-
-def rgb_to_hsv(r: int, g: int, b: int):
-    return round(atan2(sqrt(3) * (g - b), 2 * r - g - b) * 360 / (2 * pi)) % 360,\
-           round(100 - 100 * min(r, g, b) / 255),\
-           round(100 * max(r, g, b) / 255)
 
 
 @zeph.command(aliases=["colour"])
@@ -637,3 +630,109 @@ async def foreignwiki(ctx: commands.Context, lang: str, *, title: str):
         return await wiki.send(ctx, parser.lang_title[lang], url=parser.lang_link[lang])
     except KeyError:
         raise commands.CommandError(f"Article unavailable in {lang}.")
+
+
+"""def get_phone_no(guild: discord.Guild):
+    if guild.id not in zeph.phoneNumbers.values():
+        zeph.phoneNumbers[choice([g for g in range(1000000) if g not in zeph.phoneNumbers])] = guild.id
+    return {j: g for g, j in zeph.phoneNumbers.items()}[guild.id]
+
+
+def from_phone_no(s: str):
+    try:
+        return zeph.get_guild(zeph.phoneNumbers[int(s)])
+    except IndexError:
+        raise commands.CommandError("That number doesn't exist.")
+
+
+class Call:
+    def __init__(self, caller: discord.TextChannel, receiver: discord.TextChannel, not_set: bool=False):
+        self.caller = caller
+        self.receiver = receiver
+        self.not_set = not_set
+        self.hungUpOn = phone.con("They hung up.")
+        self.timedOut = phone.con("Call timed out.")
+        self.connected = phone.con("You're connected!", d="Prefix messages with \"> \" to send them over.\n"
+                                   "To end the call, use ``z!phone hangup``.")
+
+    async def one_way(self, fro: discord.TextChannel, to: discord.TextChannel):
+        def pred(m: discord.Message):
+            if m.author == zeph.user:
+                embeds = [g.to_dict() for g in m.embeds]
+                return (self.timedOut.to_dict() in embeds or self.hungUpOn.to_dict() in embeds) and m.channel == fro
+            return (m.content.startswith(">") or m.content.lower() == "z!phone hangup") and m.channel == fro
+
+        while True:
+            try:
+                mess = await zeph.wait_for("message", timeout=300, check=pred)
+            except asyncio.TimeoutError:
+                await to.send(embed=self.timedOut)
+                return await fro.send(embed=self.timedOut)
+            assert isinstance(mess, discord.Message)
+            if mess.author.id == zeph.user.id:
+                return
+            if mess.content.lower() == "z!phone hangup":
+                await to.send(embed=self.hungUpOn)
+                return await phone.send(fro, "Call ended.")
+            else:
+                await to.send(content=f":telephone: **{mess.author.display_name}:** {mess.content.lstrip('> ')}")
+
+    async def run(self):
+        await phone.send(self.caller, "Calling...")
+        if await confirm(f"Incoming call from {self.caller.guild.name}!",
+                         self.receiver, yes="pick up", no="decline", emol=phone):
+            zeph.loop.create_task(self.one_way(self.caller, self.receiver))
+            zeph.loop.create_task(self.one_way(self.receiver, self.caller))
+            await self.caller.send(embed=self.connected)
+            await self.receiver.send(embed=self.connected)
+        else:
+            await phone.send(self.caller, "Call declined.")
+
+    @staticmethod
+    def call(fro: discord.TextChannel, to: str):
+        to = from_phone_no(to)
+        assert isinstance(to, discord.Guild)
+        if to.system_channel:
+            return Call(fro, to.system_channel)
+        elif zeph.callChannels.get(to.id):
+            return Call(fro, zeph.get_channel(zeph.call_channels[to.id]))
+        else:
+            return Call(fro, to.text_channels[0], not_set=True)
+
+
+@zeph.command(name="phone")
+async def phone_command(ctx: commands.Context, func: str = "help", channel: str=None):
+    func = func.lower()
+    if func == "number":
+        func = "no"
+
+    if func == "help":
+        return await phone.send(ctx, "Help")
+
+    if func == "register":
+        if channel:
+            try:
+                int(channel)
+            except ValueError:
+                raise commands.CommandError(f"{channel} isn't a valid zPhone number.")
+            else:
+                if len(str(int(channel))) != 6:
+                    raise commands.CommandError(f"{channel} isn't a valid zPhone number.")
+                if int(channel) in zeph.phoneNumbers:
+                    raise commands.CommandError("That number is already taken.")
+        else:
+            channel = choice([g for g in range(100000, 1000000) if g not in zeph.phoneNumbers])
+
+    if func == "no":
+        return await phone.send(ctx, f"This server's zPhone number is: ``{get_phone_no(ctx.guild)}``")
+
+    if func == "call":
+        try:
+            return await Call.call(ctx.channel, channel).run()
+        except AssertionError:
+            raise commands.CommandError(f"No server with the number ``{channel}``.")"""
+
+
+@zeph.command(hidden=True)
+async def save(ctx: commands.Context):
+    zeph.save()
