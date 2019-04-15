@@ -8,7 +8,7 @@ import re
 rads = {"km": 6371, "mi": 3958.76}
 url = "https://www.google.com/maps/d/u/0/edit?hl=en&mid=1aoVneqZxmbqLxZrznFPyYbpKlCGC4hbx"
 cd_url = "https://www.timeanddate.com/countdown/vacation?iso={}&p0=179&msg={}&font=slab&csz=1#"
-with open("C:/Users/kaesekaiser/PycharmProjects/zephyrus/storage/citycountries.txt", "r") as f:
+with open("storage/citycountries.txt", "r") as f:
     af = f.readlines()
 citcoundat = {l.split("|")[0]: l.split("|")[1] for l in af}
 cities = {}
