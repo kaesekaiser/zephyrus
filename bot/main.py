@@ -191,7 +191,7 @@ async def invite(ctx: commands.Context):
                           .format(zeph.user.id))
 
 
-zephBuild = "2.2 v1"
+zephBuild = "2.2 v2"
 
 
 @zeph.command()

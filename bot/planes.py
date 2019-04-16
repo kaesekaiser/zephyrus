@@ -70,8 +70,11 @@ class PlanesInterpreter:
 
     @property
     def user(self):
-        assert isinstance(zeph.planeUsers[self.au.id], pn.User)
-        return zeph.planeUsers[self.au.id]
+        try:
+            assert isinstance(zeph.planeUsers[self.au.id], pn.User)
+            return zeph.planeUsers[self.au.id]
+        except KeyError:
+            return pn.User(0, [], [], {}, 0)
 
     @staticmethod
     def form_et(n):  # formats remaining time
@@ -135,7 +138,7 @@ class PlanesInterpreter:
             await asyncio.sleep(craft.travel(craft.path[0], craft.path[1]))
             delivered += self.next_stop(craft)
 
-        job_str = f" and delivered Ȼ{delivered} in jobs" if delivered else ""
+        job_str = f" and delivered Ȼ{pn.addcomm(delivered)} in jobs" if delivered else ""
         return await plane.send(
             self.ctx, f"{craft.name} arrived at {craft.path[-1].name}{job_str}!", d=self.au.mention
         )
@@ -178,7 +181,7 @@ class PlanesInterpreter:
                             nam = choice(pn.starter_names)
                             zeph.planeUsers[self.au.id] = pn.User(
                                 self.au.id, [cit.country], [cit.name],
-                                {nam.lower(): pn.Plane(pn.craft["tyne-647"], nam, pn.Path(0, cit), [], [0, 0])}, 1500000
+                                {nam.lower(): pn.Plane(pn.craft["tyne-647"], nam, pn.Path(0, cit), [], [0, 0])}, 1000000
                             )
                             await plane.send(self.ctx, f"Great! {pn.cities[cho].name} Airport purchased.",
                                              footer="Anyway, that command...")
@@ -186,10 +189,11 @@ class PlanesInterpreter:
                             break
                         await plane.send(self.ctx, "That's not a recognized city.")
 
-        for craft in self.user.planes.values():  # kinda messy; should only be called if zeph went down
-            if len(craft.path) > 0:              # while a plane was in the air
-                while craft.next_eta and craft.next_eta < time.time():
-                    self.next_stop(craft)
+        if self.au.id in zeph.planeUsers:
+            for craft in self.user.planes.values():  # kinda messy; should only be called if zeph went down
+                if len(craft.path) > 0:              # while a plane was in the air
+                    while craft.next_eta and craft.next_eta < time.time():
+                        self.next_stop(craft)
 
         redirects = {"city": "airport", "offload": "unload"}
         functions = dict([g for g in inspect.getmembers(PlanesInterpreter, predicate=inspect.isroutine)
@@ -836,6 +840,21 @@ class PlanesInterpreter:
             self.user.cities.append(i.name)
         self.user.credits -= price
         return await succ.send(self.ctx, f"Airports purchased!")
+
+    async def _restart(self, *args):
+        try:
+            assert await confirm(
+                "``WARNING:`` This will completely and absolutely wipe your Planes data.", self.ctx, self.au,
+                add_info="All progress will be lost, and you won't be able to get it back, except through your own "
+                         "blood, sweat, and tears. Are you sure you want to start over?\n", yes="wipe everything"
+            )
+        except AssertionError:
+            return await plane.send(self.ctx, "Game data not wiped.")
+        else:
+            mess = await plane.send(self.ctx, "Alright, one moment...")
+            await asyncio.sleep(2 + random() * 2)
+            del zeph.planeUsers[self.au.id]
+            return await succ.edit(mess, "Done.", d="Call any ``z!planes`` function to start anew.")
 
 
 class JobNavigator(Navigator):
