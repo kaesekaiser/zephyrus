@@ -123,7 +123,7 @@ class PlanesInterpreter:
     def next_stop(self, craft: pn.Plane):
         craft.path.iterate(craft.travel(craft.path[0], craft.path[1]))
         ret = 0
-        jobs = craft.jobs
+        jobs = [g for g in craft.jobs]
         for i in jobs:
             job = pn.Job.from_str(i)
             if job.destination == craft.path[0]:

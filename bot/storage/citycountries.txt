@@ -332,7 +332,7 @@ Malatya|Turkey|
 Denizli|Turkey|
 Kutahya|Turkey|
 Kars|Turkey|
-Alexandroupolis|Greece|
+Alexandroupoli|Greece|
 Nicosia|Cyprus|
 Cayenne|France|
 Tahiti|France|
@@ -1115,3 +1115,4 @@ Yiwu|China|
 Victoria|Canada|
 Lihue|UnitedStates|
 Sandefjord|Norway|
+Podgorica|Montenegro|

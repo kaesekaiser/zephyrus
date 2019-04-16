@@ -191,15 +191,15 @@ async def invite(ctx: commands.Context):
                           .format(zeph.user.id))
 
 
-zephBuild = "2.2 v2"
+zephBuild = "2.2 v3"
 
 
 @zeph.command()
 async def about(ctx: commands.Context):
     def runtime_format(dt: datetime.timedelta):
         if dt.days:
-            return f"{dt.days} d {dt.seconds // (24 * 60) % 24} h {dt.seconds // 60 % 60} m"
-        return f"{dt.seconds // (24 * 60)} h {dt.seconds // 60 % 60} m {int(dt.seconds) % 60} s"
+            return f"{dt.days} d {dt.seconds // (60 * 60) % 24} h {dt.seconds // 60 % 60} m"
+        return f"{dt.seconds // (60 * 60)} h {dt.seconds // 60 % 60} m {int(dt.seconds) % 60} s"
 
     py_version = "{}.{}.{}".format(*version_info)
 

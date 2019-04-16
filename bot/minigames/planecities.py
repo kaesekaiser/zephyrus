@@ -51,7 +51,7 @@ countredirs = {
     "Cayman Islands": "UnitedKingdom", "Antigua and Barbuda": "AntiguaandBarbuda",
     "United States of America (USVI Saint Croix)": "UnitedStates", "Saint Kitts and Nevis": "StKittsandNevis",
     "Saint Vincent and the Grenadines": "StVincent", "Falkland Islands": "UnitedKingdom",
-    "United States of America (Kaua'i, Ni'ihau, Ka'ula)": "UnitedStates"
+    "United States of America (Kaua'i, Ni'ihau, Ka'ula)": "UnitedStates", "Crna Gora / Црна Гора": "Montenegro"
 }
 craft = {  # name, company, airspeed (km / hr), passenger capacity, fuel usage (L / hr), fuel tank (L), cost, desc
     "tyne-347": Model("Tyne-347", "Tyne", 225, 1, 50, 200, 50000,
