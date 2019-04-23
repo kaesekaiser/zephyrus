@@ -609,6 +609,7 @@ class DiscordRisk(rk.Game):
             self.saveState = rk.Game(str(self))
 
 
+"""
 @zeph.command()
 async def risk(ctx: commands.Context, cmd: str=None):
     if cmd is None:
@@ -623,3 +624,4 @@ async def risk(ctx: commands.Context, cmd: str=None):
             await b.run()
         except IndexError:
             raise commands.CommandError("Invalid password.")
+"""

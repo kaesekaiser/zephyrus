@@ -30,8 +30,8 @@ def find_mon(s: str):
         if pk.fix(s) == "nidoran":
             ret = "Nidoran-F", ""
         else:
-            best_guess = sorted(list(pk.fixedDex), key=lambda c: wr.levenshtein(c, pk.fix(s)))
-            raise commands.CommandError(f"Mon {s} not found. Did you mean {pk.fixedDex[best_guess[0]]}?")
+            guess = sorted(list(pk.fixedDex), key=lambda c: wr.levenshtein(c, pk.fix(s)))
+            raise commands.CommandError(f"Mon {s} not found. Did you mean {pk.fixedDex[guess[0]]}?")
     for form in pk.natDex[ret[0]].forms:
         if set(pk.fix(form, "_").split("_")) <= set(pk.fix(s, "_").split("_")):
             return pk.Mon(ret[0], form=form)
@@ -39,18 +39,19 @@ def find_mon(s: str):
         return pk.Mon(ret[0])
 
 
-def dex_entry(mon: pk.Mon, dex: str="Ultra Moon"):
+def dex_entry(mon: pk.Mon):
     return {
         "s": f"#{str(mon.dex_no).rjust(3, '0')} {mon.full_name}",
-        "thumb": pk.image(mon), "same_line": True, "footer": f"version: {dex}", "fs": {
+        "thumb": pk.image(mon), "same_line": True, "fs": {
             "Type": " ／ ".join([zeph.strings[g.lower()] for g in mon.types]), "Species": pk.species[mon.species.name],
             "Height": f"{mon.form.height} m", "Weight": f"{mon.form.weight} kg",
-            "Entry": NewLine(pk.dexEntries[mon.species.name].get(dex, "_unavailable_")),
-            "Base Stats": NewLine(" ／ ".join([str(g) for g in mon.base_stats]))}
+            "Entry": NewLine(pk.dexEntries[mon.species.name][list(pk.dexEntries[mon.species.name].keys())[-1]]),
+            "Base Stats": NewLine(" ／ ".join([str(g) for g in mon.base_stats]))
+        }
     }
 
 
-def scroll_list(l: iter, at: int, curved: bool=False):
+def scroll_list(l: iter, at: int, curved: bool = False):
     def format_item(index: int):
         return f"**- {l[index].upper()}**" if index == at else f"- {smallcaps(l[index].lower())}"
 
@@ -72,21 +73,11 @@ class DexNavigator(Navigator):
         self.dex = pk.gameDexes["Ultra Sun"]
         self.mode = None
         self.jumpDest = None
-        self.funcs["🇸"] = self.scroll_mode
-        self.funcs["🇻"] = self.version_mode
-        self.funcs["🇫"] = self.forms_mode
-        self.funcs["🇯"] = self.jump_mode
+        self.funcs[zeph.emojis["forms"]] = self.forms_mode
+        self.funcs[zeph.emojis["search"]] = self.jump_mode
         self.funcs[zeph.emojis["help"]] = self.help_mode
         self.funcs[zeph.emojis["no"]] = self.close
         self.funcs["jump"] = self.jump
-
-    def scroll_mode(self):
-        self.mode = "scroll" if self.mode != "scroll" else None
-
-    def version_mode(self):
-        if self.mode == "version" and self.mon.species.name not in self.dex:
-            self.mon = self.dex[1]
-        self.mode = "version" if self.mode != "version" else None
 
     def forms_mode(self):
         self.mode = "forms" if self.mode != "forms" else None
@@ -108,17 +99,7 @@ class DexNavigator(Navigator):
     @property
     def con(self):
         if not self.mode:
-            return self.emol.con(**dex_entry(self.mon, self.dex.name))
-        elif self.mode == "scroll":
-            return self.emol.con(
-                "National Pok\u00e9dex", footer=f"version: {self.dex.name}",
-                d=scroll_list([f"``{str(g + 1).rjust(3, '0')}`` {j}" for g, j in enumerate(self.dex.dex)],
-                              self.mon.dex_no - 1)
-            )
-        elif self.mode == "version":
-            return self.emol.con(
-                "Pok\u00e9dex Version", d=scroll_list(list(pk.gameDexes), list(pk.gameDexes).index(self.dex.name))
-            )
+            return self.emol.con(**dex_entry(self.mon))
         elif self.mode == "forms":
             return self.emol.con(
                 f"{self.mon.species.name} Forms",
@@ -126,31 +107,24 @@ class DexNavigator(Navigator):
             )
         elif self.mode == "jump":
             return self.emol.con(
-                "Jump to Pok\u00e9mon", d="What Pok\u00e9mon do you want to jump to?",
+                "Find Pok\u00e9mon", d="What Pok\u00e9mon are you looking for?",
                 footer="Say the name or dex number."
             )
         elif self.mode == "help":
             return self.emol.con(
                 "Help", d=f"Use the reactions as buttons to navigate the Pok\u00e9dex!\n\n"
                 f"{zeph.emojis['dex_prev']} and {zeph.emojis['dex_next']} scroll between different Pok\u00e9mon or "
-                f"menu options.\n:regional_indicator_s: takes you to the list of Pok\u00e9mon.\n"
-                f":regional_indicator_v: lets you set which version of the Pok\u00e9dex to use.\n"
-                f":regional_indicator_f: lets you change between different forms of a Pok\u00e9mon.\n"
-                f":regional_indicator_j: lets you jump to a specific Pok\u00e9mon.\n{zeph.emojis['help']} brings you "
+                f"menu options.\n"
+                f"{zeph.emojis['forms']} lets you change between different forms of a Pok\u00e9mon.\n"
+                f"{zeph.emojis['search']} lets you find a specific Pok\u00e9mon.\n{zeph.emojis['help']} brings you "
                 f"here.\n{zeph.emojis['no']} closes the Pok\u00e9dex."
                 f"\n\nHitting the same button again will take you back to the Pok\u00e9mon data screen."
             )
 
     def advance_page(self, direction: int):
         if direction:
-            if not self.mode or self.mode == "scroll":
+            if not self.mode:
                 self.mon = pk.Mon(self.dex[self.mon.dex_no + direction])
-            elif self.mode == "version":
-                self.dex = pk.gameDexes[
-                    list(pk.gameDexes)[(list(pk.gameDexes).index(self.dex.name) + direction) % len(pk.gameDexes)]
-                ]
-                if self.mon.species.name not in self.dex:
-                    self.mon = pk.Mon(self.dex[1])
             elif self.mode == "forms":
                 self.mon = pk.Mon(
                     self.mon.species, form=list(self.mon.species.forms)[
@@ -194,7 +168,7 @@ class DexNavigator(Navigator):
 
 
 @zeph.command(aliases=["dex"])
-async def pokedex(ctx: commands.Context, *, mon: str="1"):
+async def pokedex(ctx: commands.Context, *, mon: str = "1"):
     if can_int(mon):
         init_mon = pk.Mon(pk.gameDexes["Ultra Sun"][int(mon)])
     elif mon.lower() == "help":
@@ -205,3 +179,36 @@ async def pokedex(ctx: commands.Context, *, mon: str="1"):
     if mon.lower() == "help":
         nav.mode = "help"
     return await nav.run(ctx)
+
+
+@zeph.command(aliases=["pkmn", "pk"])
+async def pokemon(ctx: commands.Context, func: str = None, *args):
+    if not func:
+        return await ball_emol().send(
+            ctx, "Fucking Pok\u00e9mon.", d="This command is gonna do a good bit eventually. For now it's not much."
+        )
+
+    return await PokemonInterpreter(ctx).run(str(func).lower(), *args)
+
+
+class PokemonInterpreter(Interpreter):
+    @staticmethod
+    def type_emol(typ: str):
+        return Emol(zeph.emojis[typ.lower()], hexcol(pk.typeColors[typ]))
+
+    async def _type(self, *args):
+        typ = str(args[0]).title()
+        if typ.title() not in pk.types:
+            raise commands.CommandError(f"{typ} isn't a type.")
+
+        eff = {
+            "Super effective against": [g for g in pk.types if pk.effectiveness[typ][g] > 1],
+            "Not very effective against": [g for g in pk.types if 0 < pk.effectiveness[typ][g] < 1],
+            "Ineffective against": [g for g in pk.types if not pk.effectiveness[typ][g]],
+            "Immune to": [g for g in pk.types if not pk.effectiveness[g][typ]],
+            "Resistant to": [g for g in pk.types if 0 < pk.effectiveness[g][typ] < 1],
+            "Weak to": [g for g in pk.types if pk.effectiveness[g][typ] > 1]
+        }
+        return await self.type_emol(typ).send(
+            self.ctx, f"{typ}-type", fs={g: ", ".join(j) for g, j in eff.items() if j}, same_line=True
+        )

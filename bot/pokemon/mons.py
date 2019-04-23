@@ -3,16 +3,22 @@ from re import sub, search
 from typing import Union
 from pyquery import PyQuery
 from random import choice
+from math import floor
 
 
 types = normal, water, fire, grass, electric, ground, rock, steel, ice, ghost, dark, fighting, flying, bug, poison, \
     fairy, dragon, psychic = "Normal", "Water", "Fire", "Grass", "Electric", "Ground", "Rock", "Steel", "Ice", \
     "Ghost", "Dark", "Fighting", "Flying", "Bug", "Poison", "Fairy", "Dragon", "Psychic"
+typeColors = {
+    normal: "A8A878", fire: "F08030", water: "6890F0", grass: "78C850", electric: "F8D030", rock: "B8A038",
+    ground: "E0C068", steel: "B8B8D0", psychic: "F85888", fighting: "C03028", flying: "A890F0", ghost: "705898",
+    dark: "705848", bug: "A8B820", poison: "A040A0", fairy: "EE99AC", dragon: "7038F8", ice: "98D8D8"
+}
 
 
 class Form:
     def __init__(self, hp: int, atk: int, dfn: int, spa: int, spd: int, spe: int, type1, type2,
-                 height: float, weight: float, name: str=""):
+                 height: float, weight: float, name: str = ""):
         self.hp = hp
         self.atk = atk
         self.dfn = dfn
@@ -70,7 +76,18 @@ class Species:
         return [self.name, *[g.json for g in self.forms.values()]]
 
 
+natures = [
+    'Hardy', 'Lonely', 'Adamant', 'Naughty', 'Brave',
+    'Bold', 'Docile', 'Impish', 'Lax', 'Relaxed',
+    'Modest', 'Mild', 'Bashful', 'Rash', 'Quiet',
+    'Calm', 'Gentle', 'Careful', 'Quirky', 'Sassy',
+    'Timid', 'Hasty', 'Jolly', 'Naive', 'Serious'
+]
+
+
 class Mon:
+    """The wieldiest of unwieldy classes."""
+
     def __init__(self, spc: Union[Species, str], **kwargs):
         if isinstance(spc, str):
             self.species = natDex[spc]
@@ -80,6 +97,14 @@ class Mon:
         self.form = self.species.forms[self.species.get_form_name(self.givenForm)]
         self.type1 = self.form.type1  # need to be changeable bc of moves like Soak
         self.type2 = self.form.type2
+        self.level = kwargs.get("level", kwargs.get("lvl", 100))
+        self.nature = kwargs.get("nature", "Hardy")
+        self.iv = kwargs.get("iv", [31, 31, 31, 31, 31, 31])
+        self.ev = kwargs.get("ev", [0, 0, 0, 0, 0, 0])
+        self.stat_stages = kwargs.get(
+            "stat_stages", {"atk": 0, "dfn": 0, "spa": 0, "spd": 0, "spe": 0, "eva": 0, "acc": 0}
+        )
+        self.hpc = self.hp - kwargs.get("dmg", 0)
 
     @property
     def dex_no(self):
@@ -100,6 +125,14 @@ class Mon:
     @property
     def base_stats(self):
         return self.form.hp, self.form.atk, self.form.dfn, self.form.spa, self.form.spd, self.form.spe
+
+    @property
+    def height(self):
+        return self.form.height
+
+    @property
+    def weight(self):
+        return self.form.weight
 
     @property
     def full_name(self):
@@ -123,6 +156,63 @@ class Mon:
             return f"{self.species.name} ({self.form.name} Trim)"
         return formAts.get(self.form.name, "{} (" + self.form.name + " Form)").format(self.species.name)
 
+    @property
+    def ni(self):
+        return natures.index(self.nature)
+
+    def stat_level(self, stat):
+        n = 3 if stat in ["eva", "acc"] else 2
+        change = self.stat_stages[stat]
+        return (n + (0 if change <= 0 else change)) / (n - (0 if change >= 0 else change))
+
+    @property
+    def hp(self):
+        """Maximum HP; current HP is ``Mon.hpc``"""
+        return floor((2 * self.form.hp + self.iv[0] + floor(self.ev[0] / 4)) * self.level / 100) + self.level + 10
+
+    @property
+    def atk(self):
+        return floor(
+            (floor((2 * self.form.atk + self.iv[1] + floor(self.ev[1] / 4)) * self.level / 100) + 5) *
+            (1 + 0.1 * (self.ni // 5 == 0) - 0.1 * (self.ni % 5 == 0))
+        ) * self.stat_level("atk")
+
+    @property
+    def dfn(self):
+        return floor(
+            (floor((2 * self.form.dfn + self.iv[2] + floor(self.ev[2] / 4)) * self.level / 100) + 5) *
+            (1 + 0.1 * (self.ni // 5 == 1) - 0.1 * (self.ni % 5 == 1))
+        ) * self.stat_level("dfn")
+
+    @property
+    def spa(self):
+        return floor(
+            (floor((2 * self.form.spa + self.iv[3] + floor(self.ev[3] / 4)) * self.level / 100) + 5) *
+            (1 + 0.1 * (self.ni // 5 == 2) - 0.1 * (self.ni % 5 == 2))
+        ) * self.stat_level("spa")
+
+    @property
+    def spd(self):
+        return floor(
+            (floor((2 * self.form.spd + self.iv[4] + floor(self.ev[4] / 4)) * self.level / 100) + 5) *
+            (1 + 0.1 * (self.ni // 5 == 3) - 0.1 * (self.ni % 5 == 3))
+        ) * self.stat_level("spd")
+
+    @property
+    def spe(self):
+        return floor(
+            (floor((2 * self.form.spe + self.iv[5] + floor(self.ev[5] / 4)) * self.level / 100) + 5) *
+            (1 + 0.1 * (self.ni // 5 == 4) - 0.1 * (self.ni % 5 == 4))
+        ) * self.stat_level("spe")
+
+    @property
+    def eva(self):
+        return self.stat_level("eva")
+
+    @property
+    def acc(self):
+        return self.stat_level("acc")
+
 
 with open("stats.json" if __name__ == "__main__" else "pokemon/stats.json", "r") as file:
     natDex = {g: Species(j[0], *[Form(*k) for k in j[1:]]) for g, j in json.load(file).items()}
@@ -136,8 +226,12 @@ with open("species.json" if __name__ == "__main__" else "pokemon/species.json", 
     species = json.load(file)
 
 
-def fix(s: str, joiner: str="-"):
-    return sub(f"{joiner}+", joiner, sub(f"[^a-z0-9{joiner}]+", "", sub("\s+", joiner, s.lower().replace("é", "e"))))
+with open("eff.json" if __name__ == "__main__" else "pokemon/eff.json", "r") as file:
+    effectiveness = json.load(file)
+
+
+def fix(s: str, joiner: str = "-"):
+    return sub(f"{joiner}+", joiner, sub(f"[^a-z0-9{joiner}]+", "", sub(r"\s+", joiner, s.lower().replace("é", "e"))))
 
 
 fixedDex = {fix(g): g for g in natDex}

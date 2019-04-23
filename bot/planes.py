@@ -1,7 +1,6 @@
 from epitaph import *
 from minigames import planes as pn
 from math import sin, cos
-import inspect
 import datetime
 
 
@@ -60,13 +59,8 @@ async def planes(ctx: commands.Context, func: str = None, *args: str):
     return await PlanesInterpreter(ctx).run(str(func).lower(), *args)
 
 
-class PlanesInterpreter:
-    def __init__(self, ctx: commands.Context):
-        self.ctx = ctx
-
-    @property
-    def au(self):
-        return self.ctx.author
+class PlanesInterpreter(Interpreter):
+    redirects = {"offload": "unload", "city": "airport"}
 
     @property
     def user(self):
@@ -158,7 +152,7 @@ class PlanesInterpreter:
             "footer": f"new jobs in {self.form_et(((tm // 900 + 1) * 900 - tm) // 60)} min"
         }
 
-    async def run(self, func: str, *args: str):
+    async def before_run(self):
         if self.au.id not in zeph.planeUsers:
             if await confirm("You haven't started a Planes company yet. Would you like to?", self.ctx, self.au,
                              yes="start now", no="start later", emol=plane):
@@ -194,14 +188,6 @@ class PlanesInterpreter:
                 if len(craft.path) > 0:              # while a plane was in the air
                     while craft.next_eta and craft.next_eta < time.time():
                         self.next_stop(craft)
-
-        redirects = {"city": "airport", "offload": "unload"}
-        functions = dict([g for g in inspect.getmembers(PlanesInterpreter, predicate=inspect.isroutine)
-                          if g[0][0] == "_" and g[0][1] != "_"])
-        try:
-            return await functions["_" + redirects.get(func, func)](self, *args)
-        except KeyError:
-            return await err.send(self.ctx, f"unrecognized function ``{func}``")
 
     async def _help(self, *args):
         help_dict = {
@@ -292,7 +278,7 @@ class PlanesInterpreter:
 
         if args[0] == "sell":
             if len(args) == 1:
-                return await err.send(self.ctx, "no plane input")
+                raise commands.CommandError("no plane input")
             args = args[1], args[0]
         if args[0].lower() not in self.user.planes:
             return await plane.send(self.ctx, "no owned plane by that name")
@@ -316,34 +302,34 @@ class PlanesInterpreter:
 
     async def _stats(self, *args):
         if len(args) == 0:
-            return await err.send(self.ctx, "no plane input")
+            raise commands.CommandError("no plane input")
         if args[0].lower() not in self.user.planes:
-            return await err.send(self.ctx, "no owned plane by that name")
+            raise commands.CommandError("no owned plane by that name")
 
         craft = self.user.planes[args[0].lower()]
         return await plane.send(self.ctx, craft.name, fs=craft.stats, same_line=True)
 
     async def _country(self, *args):
         if len(args) == 0:
-            return await err.send(self.ctx, "Please input a country.")
+            raise commands.CommandError("Please input a country.")
         if args[0].lower() == "buy":
             if len(args) == 1:
-                return await err.send(self.ctx, "no country input")
+                raise commands.CommandError("no country input")
             args = args[1], args[0], *args[2:]
 
         try:
             country = pn.find_country(args[0])
         except KeyError:
-            return await err.send(self.ctx, "invalid country")
+            raise commands.CommandError("invalid country")
 
         assert isinstance(country, pn.Country)
         if len(args) > 1 and args[1].lower() == "buy":
             if country.name in self.user.countries:
-                return await err.send(self.ctx, "country already owned")
+                raise commands.CommandError("country already owned")
 
             price = round(country.worth)
             if price > self.user.credits:
-                return await err.send(self.ctx, "not enough credits")
+                raise commands.CommandError("not enough credits")
 
             if await confirm(f"You're buying the {country.name} license for Ȼ{pn.addcomm(price)}.", self.ctx, self.au):
                 self.user.credits -= price
@@ -365,26 +351,26 @@ class PlanesInterpreter:
 
     async def _airport(self, *args):
         if len(args) == 0:
-            return await err.send(self.ctx, "Please input a function or airport.")
+            raise commands.CommandError("Please input a function or airport.")
         if args[0].lower() in ["buy", "sell"]:
             if len(args) == 1:
-                return await err.send(self.ctx, "no airport input")
+                raise commands.CommandError("no airport input")
             args = args[1], args[0], *args[2:]
 
         try:
             city = pn.find_city(args[0])
         except KeyError:
-            return await err.send(self.ctx, self.invalid_city(args[0]))
+            raise commands.CommandError(self.invalid_city(args[0]))
 
         assert isinstance(city, pn.City)
         if len(args) > 1 and args[1].lower() == "buy":
             if city.country not in self.user.countries:
-                return await err.send(self.ctx, "You don't have the {} license.".format(city.country))
+                raise commands.CommandError("You don't have the {} license.".format(city.country))
             if city.name in self.user.cities:
-                return await err.send(self.ctx, "airport already owned")
+                raise commands.CommandError("airport already owned")
             price = round(city.value)
             if price > self.user.credits:
-                return await err.send(self.ctx, "not enough credits")
+                raise commands.CommandError("not enough credits")
 
             if await confirm(f"You're buying {city.name} Airport for Ȼ{pn.addcomm(price)}.", self.ctx, self.au):
                 self.user.credits -= price
@@ -395,7 +381,7 @@ class PlanesInterpreter:
 
         if len(args) > 1 and args[1].lower() == "sell":
             if city.name not in self.user.cities:
-                return await err.send(self.ctx, "airport not owned")
+                raise commands.CommandError("airport not owned")
 
             resale = int(city.value / 4)
             if await confirm(f"You're selling {city.name} Airport for Ȼ{pn.addcomm(resale)}.", self.ctx, self.au):
@@ -412,22 +398,22 @@ class PlanesInterpreter:
 
     async def _launch(self, *args):
         if len(args) == 0:
-            return await err.send(self.ctx, "What plane?")
+            raise commands.CommandError("What plane?")
         if len(args) == 1:
-            return await err.send(self.ctx, "To where?")
+            raise commands.CommandError("To where?")
         if args[0].lower() not in self.user.planes:
-            return await err.send(self.ctx, "That's not a plane you own.")
+            raise commands.CommandError("That's not a plane you own.")
 
         craft, args = self.user.planes[args[0].lower()], args[1:]
         if len(craft.path) != 0:
-            return await err.send(self.ctx, "That plane is currently in the air.")
+            raise commands.CommandError("That plane is currently in the air.")
         for arg in args:
             try:
                 city = pn.find_city(arg)
             except KeyError:
-                return await err.send(self.ctx, self.invalid_city(arg))
+                raise commands.CommandError(self.invalid_city(arg))
             if city.name not in self.user.cities:
-                return await err.send(self.ctx, "You don't have the license to {}.".format(city.name))
+                raise commands.CommandError("You don't have the license to {}.".format(city.name))
 
         args = [pn.find_city(g) for g in args]
         path = [craft.path[0], *args]
@@ -435,7 +421,7 @@ class PlanesInterpreter:
 
         for i in range(len(path) - 1):
             if path[i].dist(path[i + 1]) > craft.range:
-                return await err.send(self.ctx, f"{craft.name} can't reach {path[i + 1].name} from {path[i].name}.")
+                raise commands.CommandError(f"{craft.name} can't reach {path[i + 1].name} from {path[i].name}.")
 
             fuel_cost += round(craft.lpk * path[i].dist(path[i + 1]) * self.fuel_price, 2)
 
@@ -456,9 +442,9 @@ class PlanesInterpreter:
 
     async def _model(self, *args):
         if len(args) == 0:
-            return await err.send(self.ctx, "What model?")
+            raise commands.CommandError("What model?")
         if args[0].lower() not in pn.craft:
-            return await err.send(self.ctx, "That's not a valid model.")
+            raise commands.CommandError("That's not a valid model.")
 
         craft = pn.Plane.new(args[0].lower())
         return await plane.send(
@@ -478,14 +464,14 @@ class PlanesInterpreter:
         try:
             pn.find_city(args[0])
         except KeyError:
-            return await err.send(self.ctx, self.invalid_city(args[0]))
+            raise commands.CommandError(self.invalid_city(args[0]))
 
         st = 0
         for i in range(1, len(args)):
             try:
                 pn.find_city(args[i])
             except KeyError:
-                return await err.send(self.ctx, self.invalid_city(args[i]))
+                raise commands.CommandError(self.invalid_city(args[i]))
 
             st += pn.find_city(args[i - 1]).dist(pn.find_city(args[i]))
 
@@ -497,14 +483,14 @@ class PlanesInterpreter:
         try:
             city = pn.find_city(args[0])
         except KeyError:
-            return await err.send(self.ctx, self.invalid_city(args[0]))
+            raise commands.CommandError(self.invalid_city(args[0]))
 
         pri = sorted([g for g in pn.cities.values()], key=lambda x: -pn.priority(city, x))
         if len(args) != 1:
             try:
                 to = pn.find_city(args[1])
             except KeyError:
-                return await err.send(self.ctx, self.invalid_city(args[1]))
+                raise commands.CommandError(self.invalid_city(args[1]))
 
             name_pri = [g.name for g in pri]
             rank = name_pri.index(to.name) + 1
@@ -524,7 +510,7 @@ class PlanesInterpreter:
         try:
             city = pn.find_city(args[0])
         except KeyError:
-            return await err.send(self.ctx, self.invalid_city(args[0]))
+            raise commands.CommandError(self.invalid_city(args[0]))
 
         tm = time.time()
         if tm - city.job_reset >= 900 or len(city.jobs) == 0:
@@ -538,7 +524,7 @@ class PlanesInterpreter:
             fil_str = "All j"
         elif len(args) > 1 and args[1].lower() == "to":
             if len(args) == 2:
-                return await err.send(self.ctx, "to where?")
+                raise commands.CommandError("to where?")
 
             try:
                 fil = lambda j: j.destination.country == pn.find_country(args[2].lower()).name
@@ -548,7 +534,7 @@ class PlanesInterpreter:
                     fil = lambda j: j.destination.name == pn.find_city(args[2].lower()).name
                     fil_str = f"{pn.find_city(args[2].lower()).name} j"
                 except KeyError:
-                    return await err.send(self.ctx, "invalid location")
+                    raise commands.CommandError("invalid location")
 
         reset = tm // 900 * 900
         if tm - city.job_reset >= 900:
@@ -561,15 +547,15 @@ class PlanesInterpreter:
 
     async def _load(self, *args):
         if len(args) == 0:
-            return await err.send(self.ctx, "no airplane input")
+            raise commands.CommandError("no airplane input")
         if args[0].lower() not in self.user.planes:
-            return await err.send(self.ctx, "no owned plane by that name")
+            raise commands.CommandError("no owned plane by that name")
         if len(args) == 1:
-            return await err.send(self.ctx, "no job codes input")
+            raise commands.CommandError("no job codes input")
 
         craft = self.user.planes[args[0].lower()]
         if len(craft.path) != 0:
-            return await err.send(self.ctx, "plane is in the air")
+            raise commands.CommandError("plane is in the air")
 
         jobs = []
         for job in args[1:]:  # filters out duplicates while preserving input order
@@ -578,12 +564,12 @@ class PlanesInterpreter:
 
         for job in jobs:
             if not self.valid_job(job):
-                return await err.send(self.ctx, f"invalid job code {job}")
+                raise commands.CommandError(f"invalid job code {job}")
             if job.upper() in self.user.jobs:
                 p = [g for g in self.user.planes.values() if job.upper() in g.jobs][0]
                 return await plane.send(self.ctx, f"You've already loaded {job} onto {p.name}.")
             if pn.code_city(job[:2]) != craft.path[0]:
-                return await err.send(self.ctx, f"plane is at different airport from {job}")
+                raise commands.CommandError(f"plane is at different airport from {job}")
 
         for job in jobs:
             try:
@@ -598,34 +584,34 @@ class PlanesInterpreter:
 
     async def _rename(self, *args):
         if len(args) == 0:
-            return await err.send(self.ctx, "no plane input")
+            raise commands.CommandError("no plane input")
         if args[0].lower() not in self.user.planes:
-            return await err.send(self.ctx, "no owned plane by that name")
+            raise commands.CommandError("no owned plane by that name")
 
         nam = self.user.planes[args[0].lower()].name
         if len(args) == 1:
-            return await err.send(self.ctx, "no name input")
+            raise commands.CommandError("no name input")
         if [g in pn.permit for g in args[1]].count(False) != 0:
-            return await err.send(self.ctx, "plane names can only contain alphanumerics, dashes, and underscores")
+            raise commands.CommandError("plane names can only contain alphanumerics, dashes, and underscores")
         if args[1].lower() in self.user.planes:
-            return await err.send(self.ctx, "a plane by that name already exists")
+            raise commands.CommandError("a plane by that name already exists")
         if args[1].lower() == "sell":
-            return await err.send(self.ctx, "You can't name a plane that.")
+            raise commands.CommandError("You can't name a plane that.")
 
         self.user.rename(nam, args[1])
         return await succ.send(self.ctx, f"{nam} renamed to {args[1]}.")
 
     async def _unload(self, *args):
         if len(args) == 0:
-            return await err.send(self.ctx, "no plane input")
+            raise commands.CommandError("no plane input")
         if args[0].lower() not in self.user.planes:
-            return await err.send(self.ctx, "no owned plane by that name")
+            raise commands.CommandError("no owned plane by that name")
 
         craft = self.user.planes[args[0].lower()]
         if len(craft.path) != 0:
-            return await err.send(self.ctx, "plane in air")
+            raise commands.CommandError("plane in air")
         if len(args) == 1:
-            return await err.send(self.ctx, "no job codes input")
+            raise commands.CommandError("no job codes input")
 
         if args[1].lower() == "all":
             jobs = craft.jobs
@@ -633,7 +619,7 @@ class PlanesInterpreter:
             jobs = args[1:]
         for i in jobs:
             if i.upper() not in craft.jobs:
-                return await err.send(self.ctx, f"invalid job code ``{i.upper()}``")
+                raise commands.CommandError(f"invalid job code ``{i.upper()}``")
 
         for i in jobs:
             craft.unload(i.upper())
@@ -647,11 +633,11 @@ class PlanesInterpreter:
 
         if len(args) > 0:
             if args[0].lower() != "buy":
-                return await err.send(self.ctx, f"invalid function ``{args[0]}``")
+                raise commands.CommandError(f"invalid function ``{args[0]}``")
             if len(args) == 1:
-                return await err.send(self.ctx, "no purchase input")
+                raise commands.CommandError("no purchase input")
             if args[1].lower() not in pn.craft:
-                return await err.send(self.ctx, "invalid model")
+                raise commands.CommandError("invalid model")
 
             model = args[1].lower()
             if prices[model] > zeph.planeUsers[self.au.id].credits:
@@ -722,9 +708,9 @@ class PlanesInterpreter:
 
     async def _eta(self, *args):
         if len(args) == 0:
-            return await err.send(self.ctx, "no plane input")
+            raise commands.CommandError("no plane input")
         if args[0].lower() not in self.user.planes:
-            return await err.send(self.ctx, "no owned plane by that name")
+            raise commands.CommandError("no owned plane by that name")
 
         craft = self.user.planes[args[0].lower()]
         if len(craft.path) == 0:
@@ -735,22 +721,22 @@ class PlanesInterpreter:
 
     async def _cities(self, *args):
         if len(args) == 0:
-            return await err.send(self.ctx, "no country input")
+            raise commands.CommandError("no country input")
         try:
             country = pn.find_country(args[0])
         except KeyError:
-            return await err.send(self.ctx, "invalid country")
+            raise commands.CommandError("invalid country")
 
         ret = [f"{g.name} ({g.dict['Annual Passengers']})" for g in country.cities]
         return await Navigator(plane, ret, 6, "List of airports in " + country.name + " [{page}/{pgs}]").run(self.ctx)
 
     async def _unowned(self, *args):
         if len(args) == 0:
-            return await err.send(self.ctx, "no country input")
+            raise commands.CommandError("no country input")
         try:
             country = pn.find_country(args[0]).name
         except KeyError:
-            return await err.send(self.ctx, "invalid country")
+            raise commands.CommandError("invalid country")
 
         ret = [g for g in pn.cities.values() if g.country == country
                and g.name not in self.user.cities]
@@ -764,19 +750,19 @@ class PlanesInterpreter:
 
     async def _upgrade(self, *args):
         if len(args) == 0:
-            return await err.send(self.ctx, "no plane input")
+            raise commands.CommandError("no plane input")
         if args[0].lower() not in self.user.planes:
-            return await err.send(self.ctx, "no owned plane by that name")
+            raise commands.CommandError("no owned plane by that name")
 
         craft = self.user.planes[args[0].lower()]
         if len(craft.path) != 0:
-            return await err.send(self.ctx, "That plane is currently in the air.")
+            raise commands.CommandError("That plane is currently in the air.")
         if len(args) == 1:
-            return await err.send(self.ctx, "no upgrade selected")
+            raise commands.CommandError("no upgrade selected")
 
         ups = ["power", "tank"]
         if args[1].lower() not in ups:
-            return await err.send(self.ctx, "invalid upgrade")
+            raise commands.CommandError("invalid upgrade")
 
         up_cost = int(10000 * 2 ** sum(craft.upgrades + [1]))
         if up_cost > self.user.credits:
@@ -795,11 +781,11 @@ class PlanesInterpreter:
 
     async def _buyout(self, *args):
         if len(args) == 0:
-            return await err.send(self.ctx, "no country input")
+            raise commands.CommandError("no country input")
         try:
             country = pn.find_country(args[0])
         except KeyError:
-            return await err.send(self.ctx, f"invalid country ``{args[0]}``")
+            raise commands.CommandError(f"invalid country ``{args[0]}``")
 
         assert isinstance(country, pn.Country)
         if country.name not in self.user.countries:

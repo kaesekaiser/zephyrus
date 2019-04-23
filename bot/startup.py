@@ -1,12 +1,13 @@
 import discord
 import asyncio
-from inspect import iscoroutinefunction
+import inspect
 from discord.ext import commands
 from typing import Union
 from minigames.risk import snip
 from utilities.words import levenshtein
 from math import ceil, atan2, sqrt, pi
 from random import choice
+import pinyin_jyutping_sentence as pjs
 
 
 User = Union[discord.Member, discord.User]
@@ -22,6 +23,8 @@ class Zeph(commands.Bot):
             self.phoneNumbers = {int(g.split("|")[0]): int(g.split("|")[1]) for g in f.readlines()}
             self.callChannels = {int(g.split("|")[1]): int(g.split("|")[2]) for g in f.readlines()}
         self.planeUsers = {}
+        self.bedtimes = {}
+        self.roman = pjs.RomanizationConversion()
 
     @property
     def emojis(self):
@@ -36,6 +39,11 @@ class Zeph(commands.Bot):
             f.write("\n".join([f"{g}|{j}|{self.callChannels.get(j, '')}" for g, j in self.phoneNumbers.items()]))
         with open("storage/planes.txt", "w") as f:
             f.write("\n".join([str(g) for g in self.planeUsers.values()]))
+
+    async def load_romanization(self):
+        print("Loading romanizer...")
+        self.roman.load_files()
+        print("Romanizer loaded.")
 
 
 zeph = Zeph()
@@ -367,7 +375,7 @@ class Navigator:
                 return
 
             if emoji in self.funcs:
-                if iscoroutinefunction(self.funcs[emoji]):
+                if asyncio.iscoroutinefunction(self.funcs[emoji]):
                     await self.funcs[emoji]()
                 else:
                     self.funcs[emoji]()
@@ -387,7 +395,7 @@ class Navigator:
             except discord.errors.HTTPException:
                 pass
 
-            if iscoroutinefunction(self.post_process):
+            if asyncio.iscoroutinefunction(self.post_process):
                 await self.post_process()
             else:
                 self.post_process()
@@ -404,6 +412,35 @@ class FieldNavigator(Navigator):
             self.title.format(page=self.page, pgs=self.pgs),
             fs=page_dict(self.table, self.per, self.page), **self.kwargs
         )
+
+
+class Interpreter:
+    redirects = {}
+
+    def __init__(self, ctx: commands.Context):
+        self.ctx = ctx
+
+    @property
+    def au(self):
+        return self.ctx.author
+
+    async def run(self, func: str, *args):
+        if asyncio.iscoroutinefunction(self.before_run):
+            await self.before_run()
+        else:
+            self.before_run()
+
+        functions = dict([g for g in inspect.getmembers(type(self), predicate=inspect.isroutine)
+                          if g[0][0] == "_" and g[0][1] != "_"])
+        try:
+            functions["_" + self.redirects.get(func, func)]
+        except KeyError:
+            raise commands.CommandError(f"unrecognized function ``{func}``")
+        else:
+            return await functions["_" + self.redirects.get(func, func)](self, *args)
+
+    def before_run(self):
+        pass
 
 
 def lower(l: Union[list, tuple]):

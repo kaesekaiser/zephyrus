@@ -7,7 +7,8 @@ aliases = {
     "conn4": "connect4", "dice": "roll", "caesar": "rot", "vig": "vigenere", "devig": "devigenere", "?": "help",
     "h": "help", "sq": "square", "fsq": "flagsquare", "small": "smallcaps", "c": "convert", "conv": "convert",
     "weed": "sayno", "pick": "choose", "colour": "color", "hue": "hueshift", "trans": "translate", "p": "planes",
-    "badtrans": "badtranslate", "rune": "runes", "wiki": "wikipedia", "fw": "foreignwiki", "dex": "pokedex"
+    "badtrans": "badtranslate", "rune": "runes", "wiki": "wikipedia", "fw": "foreignwiki", "dex": "pokedex",
+    "bed": "bedtime", "jp": "jyutping", "sherriff": "sheriff"
 }
 
 
@@ -15,9 +16,9 @@ commandCategories = {
     "Games": ["connect4", "jotto", "anagrams", "boggle", "duel", "risk", "epitaph", "pokedex", "planes"],
     "Text": ["mock", "expand", "square", "flagsquare", "clap", "scramble", "smallcaps", "sheriff"],
     "Ciphers": ["rot", "rot13", "vigenere", "devigenere"],
-    "Utilities": ["roll", "convert", "sayno", "choose", "8ball", "color", "timein", "avatar", "wikipedia"],
+    "Utilities": ["roll", "convert", "sayno", "choose", "8ball", "color", "timein", "avatar", "wikipedia", "bedtime"],
     "Images": ["hueshift", "invert"],
-    "Languages": ["pinyin", "jyutping", "translate", "badtranslate", "runes", "foreignwiki"],
+    "Languages": ["pinyin", "jyutping", "translate", "badtranslate", "runes", "foreignwiki", "yale"],
     "Bot": ["ping", "help", "invite", "about"]
 }
 
@@ -52,8 +53,8 @@ commandFormats = {
     "invert": "z!invert <image url>",
     "about": "z!about",
     "timein": "z!timein <place...>",
-    "pinyin": "z!pinyin <Chinese text...>",
-    "jyutping": "z!jyutping <Chinese text...>",
+    "pinyin": "z!pinyin <Mandarin text...>",
+    "jyutping": "z!jyutping <Cantonese text...>",
     "translate": "z!translate <from> <to> <text...>",
     "badtranslate": "z!badtranslate <text...>",
     "avatar": "z!avatar <@user>",
@@ -64,6 +65,8 @@ commandFormats = {
     "epitaph": "z!epitaph\nz!epitaph handsoff",
     "pokedex": "z!pokedex [pok\u00e9mon...]\nz!pokedex [dex number]\nz!pokedex help",
     "planes": "z!planes help",
+    "bedtime": "z!bedtime\nz!bedtime stop",
+    "yale": "z!yale <Cantonese text...>",
 
     "help": "z!help [command]"
 }
@@ -130,9 +133,9 @@ descs = {
     "timein": "Returns the current local time in ``<place>``.",
     "pinyin": "Romanizes Chinese text according to the Hanyu Pinyin romanization scheme - that is, it turns the "
               "Chinese characters into Latin syllables that sound like their Mandarin pronunciations.\n\n"
-              "``z!pinyin 你好`` → ``nǐ hǎo``",
-    "jyutping": "Romanizes Chinese text according to the Jyutping romanization scheme, which is used for the "
-                "Cantonese language.\n\n``z!jyutping 你好`` → ``nei5 hou3``",
+              "``z!pinyin 你好`` → ``nǐhǎo``",
+    "jyutping": "Romanizes Cantonese text according to the Jyutping romanization scheme.\n\n"
+                "``z!jyutping 你好`` → ``nei5hou2``",
     "translate": "Via Google Translate, translates ``<text>`` between languages. ``<from>`` and ``<to>`` must be "
                  "either the name of the language or the [code](https://cloud.google.com/translate/docs/languages) "
                  "for the language. ``chinese`` defaults to Simplified Chinese; for Traditional, use "
@@ -161,6 +164,12 @@ descs = {
               "to a mobile game called Pocket Planes - where you buy airports and airplanes, and use them to take jobs "
               "back and forth for profit. There's many sub-commands, so do ``z!planes help`` for more info on what "
               "exactly you can do, and how to do it.",
+    "bedtime": "Lets you set up a bedtime reminder at a certain time, so you can sleep like a normal human. Just do "
+               "``z!bedtime`` and I'll walk you through the process. Do ``z!bedtime stop`` if you want to turn off "
+               "the reminder after you've set it up.",
+    "yale": "Romanizes Cantonese text according to the Yale romanization scheme. There's also a Yale romanization "
+            "scheme for Mandarin text, but this isn't that, and that's not on this bot.\n\n"
+            "``z!yale 你好`` → ``néihhóu``",
 
     "help": "Shows the usage + format of a command. If no command is provided, lists all available commands."
 }
@@ -191,7 +200,7 @@ async def invite(ctx: commands.Context):
                           .format(zeph.user.id))
 
 
-zephBuild = "2.2 v3"
+zephBuild = "2.3 v1"
 
 
 @zeph.command()
@@ -224,7 +233,8 @@ async def on_ready():
     print([g for g in zeph.all_commands if g not in aliases and not zeph.all_commands[g].hidden and
           (g not in commandFormats or g not in descs or g not in [j for k in commandCategories.values() for j in k])])
     setattr(zeph, "fortServers", [g for g in zeph.guilds if g.owner.id in [238390171022655489, 474398677599780886]])
-    await initialize_planes()
+    zeph.loop.create_task(initialize_planes())
+    zeph.loop.create_task(zeph.load_romanization())
 
 
 @zeph.event

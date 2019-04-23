@@ -14108,5 +14108,8 @@
         "Let's Go Pikachu": "It melts particles of iron and other metals found in the subsoil, so it can absorb them into its body of molten steel.",
         "Let's Go Eevee": "It melts particles of iron and other metals found in the subsoil, so it can absorb them into its body of molten steel."
     },
-    "Melmetal": {}
+    "Melmetal": {
+        "Let's Go Pikachu": "Revered long ago for its capacity to create iron from nothing, for some reason it has come back to life after 3,000 years.",
+        "Let's Go Eevee": "Revered long ago for its capacity to create iron from nothing, for some reason it has come back to life after 3,000 years."
+    }
 }

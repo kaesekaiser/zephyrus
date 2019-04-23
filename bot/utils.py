@@ -2,12 +2,12 @@ from game import *
 from utilities import dice as di, weed as wd, timein as ti, translate as tr, wiki as wk
 import re
 import requests
-import pinyin
-import jyutping
 from io import BytesIO
 from random import choices
 from unicodedata import name as uni_name
 from urllib.error import HTTPError
+import hanziconv
+import pycantonese
 
 
 @zeph.command()
@@ -403,39 +403,47 @@ async def timein(ctx: commands.Context, *, place: str):
     return await ClientEmol(emoji, hexcol("b527e5"), ctx).say(ret, footer=address)
 
 
-chinese_punctuation = {
-    "？": "?", "！": "!", "。": ".", "，": ",", "：": ":", "；": ";", "【": " [", "】": "]", "（": " (", "）": ")",
-    "《": " ⟨", "》": "⟩", "、": ",", "／": " /"
-}
+def chinese_punctuate(s: str):
+    chinese_punctuation = {
+        "？": "?", "！": "!", "。": ".", "，": ",", "：": ":", "；": ";", "【": " [", "】": "]", "（": " (", "）": ")",
+        "《": " ⟨", "》": "⟩", "、": ",", "／": " /", "『": ' "', "』": '"'
+    }
+    ret = f" {s} "
+    for i in chinese_punctuation:
+        ret = i.join(ret.split(f" {i} ")).replace(i, chinese_punctuation[i])
+    return " ".join(re.split(r"\s+", ret)).strip(" ")
 
 
 def get_pinyin(c: str):
-    return f" {pinyin.get(c).replace('v', 'ü')}" if pinyin.get(c) != c else chinese_punctuation.get(c, "")
+    return chinese_punctuate(zeph.roman.process_sentence_pinyin(hanziconv.HanziConv.toSimplified(c)))
 
 
-def get_jyutping(c: str):
-    ret = jyutping.get(c)[0]
-    if type(ret) == str:
-        return f" {jyutping.get(c)[0]}"
-    if type(ret) == list:
-        return f" {jyutping.get(c)[0][0]}"
-    return chinese_punctuation.get(c, "")
+def get_jyutping(s: str):
+    return chinese_punctuate(zeph.roman.process_sentence(
+        s, zeph.roman.jyutping_word_map, zeph.roman.jyutping_char_map, lambda x: x
+    ))
+
+
+def get_yale(s: str):
+    yale = get_jyutping(s)
+    for i in re.findall(r"[a-z]+[0-9]", get_jyutping(s)):
+        yale = yale.replace(i, pycantonese.jyutping2yale(i))
+    return yale
 
 
 @zeph.command(name="pinyin")
 async def pinyin_command(ctx: commands.Context, *, chinese: str):
-    ret = "".join([get_pinyin(c) for c in chinese]).strip()
-    if not ret:
-        raise commands.CommandError("No Chinese text input.")
-    return await zhong.send(ctx, ret)
+    return await zhong.send(ctx, get_pinyin(chinese))
 
 
-@zeph.command(name="jyutping")
+@zeph.command(name="jyutping", aliases=["jp"])
 async def jyutping_command(ctx: commands.Context, *, cantonese: str):
-    ret = "".join([get_jyutping(c) for c in cantonese]).strip()
-    if not ret:
-        raise commands.CommandError("No Chinese text input.")
-    return await zhong.send(ctx, ret)
+    return await zhong.send(ctx, get_jyutping(cantonese))
+
+
+@zeph.command(name="yale")
+async def yale_command(ctx: commands.Context, *, cantonese: str):
+    return await zhong.send(ctx, get_yale(cantonese))
 
 
 @zeph.command(aliases=["trans"])
@@ -581,7 +589,7 @@ async def interpret_potential_emoji(emote: str):
     return name
 
 
-@zeph.command()
+@zeph.command(aliases=["sherriff"])
 async def sheriff(ctx: commands.Context, emote: str):
     name = await interpret_potential_emoji(emote)
     return await ctx.send("⠀ ⠀ ⠀  :cowboy:\n　   {0}\u2060{0}\u2060{0}\n    {0}   {0}　{0}\n"
