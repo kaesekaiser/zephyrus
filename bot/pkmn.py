@@ -31,7 +31,7 @@ def find_mon(s: str):
             ret = "Nidoran-F", ""
         else:
             guess = sorted(list(pk.fixedDex), key=lambda c: wr.levenshtein(c, pk.fix(s)))
-            raise commands.CommandError(f"Mon {s} not found. Did you mean {pk.fixedDex[guess[0]]}?")
+            raise commands.CommandError(f"``{s}`` not found. Did you mean {pk.fixedDex[guess[0]]}?")
     for form in pk.natDex[ret[0]].forms:
         if set(pk.fix(form, "_").split("_")) <= set(pk.fix(s, "_").split("_")):
             return pk.Mon(ret[0], form=form)
@@ -78,6 +78,11 @@ class DexNavigator(Navigator):
         self.funcs[zeph.emojis["help"]] = self.help_mode
         self.funcs[zeph.emojis["no"]] = self.close
         self.funcs["jump"] = self.jump
+        self.funcs["wait"] = self.do_nothing
+        self.last_guess = None
+
+    def do_nothing(self):
+        pass
 
     def forms_mode(self):
         self.mode = "forms" if self.mode != "forms" else None
@@ -95,20 +100,33 @@ class DexNavigator(Navigator):
             self.mon = pk.Mon(self.dex[self.jumpDest])
         self.jumpDest = None
         self.mode = None
+        self.last_guess = None
 
     @property
     def con(self):
         if not self.mode:
-            return self.emol.con(**dex_entry(self.mon))
+            return self.emol.con(
+                f"#{str(self.mon.dex_no).rjust(3, '0')} {self.mon.full_name}",
+                thumb=pk.image(self.mon), same_line=True, fs={
+                    "Type": " ／ ".join([zeph.strings[g.lower()] for g in self.mon.types]),
+                    "Species": pk.species[self.mon.species.name],
+                    "Height": f"{self.mon.form.height} m", "Weight": f"{self.mon.form.weight} kg",
+                    "Entry": NewLine(
+                        pk.dexEntries[self.mon.species.name][list(pk.dexEntries[self.mon.species.name].keys())[-1]]
+                    ),
+                    "Base Stats": NewLine(" ／ ".join([str(g) for g in self.mon.base_stats]))
+                }
+            )
         elif self.mode == "forms":
             return self.emol.con(
                 f"{self.mon.species.name} Forms",
-                d=scroll_list(self.mon.form_names, self.mon.form_names.index(self.mon.full_name))
+                d=scroll_list(self.mon.form_names, self.mon.form_names.index(self.mon.full_name)),
+                thumb=pk.image(self.mon)
             )
         elif self.mode == "jump":
             return self.emol.con(
-                "Find Pok\u00e9mon", d="What Pok\u00e9mon are you looking for?",
-                footer="Say the name or dex number."
+                "Find Pok\u00e9mon", footer="Say the name or dex number.",
+                d=self.last_guess if self.last_guess else "What Pok\u00e9mon are you looking for?"
             )
         elif self.mode == "help":
             return self.emol.con(
@@ -140,12 +158,7 @@ class DexNavigator(Navigator):
                     if can_int(mr.content):
                         return u == ctx.author and int(mr.content) in range(1, len(self.dex) + 1) \
                             and mr.channel == ctx.channel
-                    try:
-                        find_mon(mr.content)
-                    except commands.CommandError:
-                        return False
-                    else:
-                        return u == ctx.author and mr.channel == ctx.channel
+                    return u == ctx.author and mr.channel == ctx.channel
                 else:
                     return u == ctx.author and mr.emoji in self.funcs and mr.message.id == self.message.id
 
@@ -157,7 +170,12 @@ class DexNavigator(Navigator):
                 try:
                     self.jumpDest = int(mess.content)
                 except ValueError:
-                    self.jumpDest = find_mon(mess.content)
+                    try:
+                        self.jumpDest = find_mon(mess.content)
+                    except commands.CommandError as e:
+                        self.last_guess = str(e)
+                        return "wait"
+                    return "jump"
                 return "jump"
             elif isinstance(mess, discord.Reaction):
                 return mess.emoji
@@ -196,6 +214,22 @@ class PokemonInterpreter(Interpreter):
     def type_emol(typ: str):
         return Emol(zeph.emojis[typ.lower()], hexcol(pk.typeColors[typ]))
 
+    async def _help(self, *args):
+        help_dict = {
+            "type": "``z!pokemon type <type>`` shows type effectiveness for a given type.",
+            "eff": "``z!pokemon eff <mon>`` shows all types' effectiveness against a specific species or form of "
+                   "Pok\u00e9mon."
+        }
+
+        if not args or args[0].lower() not in help_dict:
+            return await ball_emol().send(
+                self.ctx, "z!pokemon help",
+                d=f"Available functions:\n```{', '.join(list(help_dict.keys()))}```\n"
+                f"For information on how to use these, use ``z!pokemon help <function>``."
+            )
+
+        return await ball_emol().send(self.ctx, f"z!pokemon {args[0].lower()}", d=help_dict[args[0].lower()])
+
     async def _type(self, *args):
         typ = str(args[0]).title()
         if typ.title() not in pk.types:
@@ -211,4 +245,19 @@ class PokemonInterpreter(Interpreter):
         }
         return await self.type_emol(typ).send(
             self.ctx, f"{typ}-type", fs={g: ", ".join(j) for g, j in eff.items() if j}, same_line=True
+        )
+
+    async def _eff(self, *args):
+        mon = find_mon(" ".join(args))
+        eff = {
+            "Doubly weak to": ", ".join([g for g in pk.types if mon.eff(g) == 4]),
+            "Weak to": ", ".join([g for g in pk.types if mon.eff(g) == 2]),
+            "Damaged normally by": NewLine(", ".join([g for g in pk.types if mon.eff(g) == 1])),
+            "Resistant to": ", ".join([g for g in pk.types if mon.eff(g) == 0.5]),
+            "Doubly resistant to": ", ".join([g for g in pk.types if mon.eff(g) == 0.25]),
+            "Immune to": ", ".join([g for g in pk.types if mon.eff(g) == 0]),
+        }
+        return await ball_emol().send(
+            self.ctx, f"{mon.full_name} ({' ／ '.join([zeph.strings[g.lower()] for g in mon.types])})",
+            fs={g: j for g, j in eff.items() if j}, thumb=pk.image(mon), same_line=True
         )

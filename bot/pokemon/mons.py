@@ -213,6 +213,9 @@ class Mon:
     def acc(self):
         return self.stat_level("acc")
 
+    def eff(self, typ: str):
+        return effectiveness[typ].get(self.type1, 1) * effectiveness[typ].get(self.type2, 1)
+
 
 with open("stats.json" if __name__ == "__main__" else "pokemon/stats.json", "r") as file:
     natDex = {g: Species(j[0], *[Form(*k) for k in j[1:]]) for g, j in json.load(file).items()}

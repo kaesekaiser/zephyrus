@@ -249,7 +249,7 @@ class PlanesInterpreter(Interpreter):
         if len(args) == 0 or args[0].lower() not in help_dict:
             return await plane.send(
                 self.ctx, "z!planes help",
-                d=f"Available functions:\n```{', '.join(list(help_dict.keys()))}```"
+                d=f"Available functions:\n```{', '.join(list(help_dict.keys()))}```\n"
                 f"For information on how to use these, use ``z!planes help <function>``."
             )
 

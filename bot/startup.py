@@ -1,6 +1,7 @@
 import discord
 import asyncio
 import inspect
+import json
 from discord.ext import commands
 from typing import Union
 from minigames.risk import snip
@@ -42,7 +43,13 @@ class Zeph(commands.Bot):
 
     async def load_romanization(self):
         print("Loading romanizer...")
-        self.roman.load_files()
+        with open("utilities/rom.json", "r") as f:
+            file = json.load(f)
+        self.roman.jyutping_char_map.update(file["jp_char"])
+        self.roman.jyutping_word_map.update(file["jp_word"])
+        self.roman.pinyin_char_map.update(file["py_char"])
+        self.roman.pinyin_word_map.update(file["py_word"])
+        self.roman.process_sentence_jyutping("你好")
         print("Romanizer loaded.")
 
 
@@ -80,6 +87,9 @@ class NewLine:
 
     def __str__(self):
         return str(self.object)
+
+    def __bool__(self):
+        return bool(self.object)
 
 
 class EmbedAuthor:
@@ -358,7 +368,7 @@ class Navigator:
     async def close(self):
         await self.message.delete()
 
-    async def run(self, ctx: commands.Context):
+    async def run(self, ctx: commands.Context):  # SHOULD NEVER BE OVERWRITTEN
         self.message = await ctx.channel.send(embed=self.con)
         for button in self.legal:
             try:
@@ -372,6 +382,11 @@ class Navigator:
             except asyncio.TimeoutError:
                 if self.close_on_timeout:
                     return await self.close()
+                for button in self.legal.__reversed__():
+                    try:
+                        await self.message.remove_reaction(button, self.message.author)
+                    except discord.errors.HTTPException:
+                        pass
                 return
 
             if emoji in self.funcs:

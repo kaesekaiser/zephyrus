@@ -8,12 +8,12 @@ aliases = {
     "h": "help", "sq": "square", "fsq": "flagsquare", "small": "smallcaps", "c": "convert", "conv": "convert",
     "weed": "sayno", "pick": "choose", "colour": "color", "hue": "hueshift", "trans": "translate", "p": "planes",
     "badtrans": "badtranslate", "rune": "runes", "wiki": "wikipedia", "fw": "foreignwiki", "dex": "pokedex",
-    "bed": "bedtime", "jp": "jyutping", "sherriff": "sheriff"
+    "bed": "bedtime", "jp": "jyutping", "sherriff": "sheriff", "pkmn": "pokemon", "pk": "pokemon"
 }
 
 
 commandCategories = {
-    "Games": ["connect4", "jotto", "anagrams", "boggle", "duel", "risk", "epitaph", "pokedex", "planes"],
+    "Games": ["connect4", "jotto", "anagrams", "boggle", "duel", "risk", "epitaph", "pokedex", "planes", "pokemon"],
     "Text": ["mock", "expand", "square", "flagsquare", "clap", "scramble", "smallcaps", "sheriff"],
     "Ciphers": ["rot", "rot13", "vigenere", "devigenere"],
     "Utilities": ["roll", "convert", "sayno", "choose", "8ball", "color", "timein", "avatar", "wikipedia", "bedtime"],
@@ -67,6 +67,7 @@ commandFormats = {
     "planes": "z!planes help",
     "bedtime": "z!bedtime\nz!bedtime stop",
     "yale": "z!yale <Cantonese text...>",
+    "pokemon": "z!pokemon help",
 
     "help": "z!help [command]"
 }
@@ -170,6 +171,8 @@ descs = {
     "yale": "Romanizes Cantonese text according to the Yale romanization scheme. There's also a Yale romanization "
             "scheme for Mandarin text, but this isn't that, and that's not on this bot.\n\n"
             "``z!yale 你好`` → ``néihhóu``",
+    "pokemon": "Performs a variety of Pok\u00e9mon-related functions. I'm continually adding to this, so just use "
+               "``z!pokemon help`` for more details.",
 
     "help": "Shows the usage + format of a command. If no command is provided, lists all available commands."
 }
@@ -200,7 +203,7 @@ async def invite(ctx: commands.Context):
                           .format(zeph.user.id))
 
 
-zephBuild = "2.3 v1"
+zephBuild = "2.3 v2"
 
 
 @zeph.command()
