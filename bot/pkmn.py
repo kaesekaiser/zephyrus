@@ -43,7 +43,7 @@ def dex_entry(mon: pk.Mon):
     return {
         "s": f"#{str(mon.dex_no).rjust(3, '0')} {mon.full_name}",
         "thumb": pk.image(mon), "same_line": True, "fs": {
-            "Type": " ／ ".join([zeph.strings[g.lower()] for g in mon.types]), "Species": pk.species[mon.species.name],
+            "Type": " ／ ".join([zeph.strings[g.title()] for g in mon.types]), "Species": pk.species[mon.species.name],
             "Height": f"{mon.form.height} m", "Weight": f"{mon.form.weight} kg",
             "Entry": NewLine(pk.dexEntries[mon.species.name][list(pk.dexEntries[mon.species.name].keys())[-1]]),
             "Base Stats": NewLine(" ／ ".join([str(g) for g in mon.base_stats]))
@@ -108,7 +108,7 @@ class DexNavigator(Navigator):
             return self.emol.con(
                 f"#{str(self.mon.dex_no).rjust(3, '0')} {self.mon.full_name}",
                 thumb=pk.image(self.mon), same_line=True, fs={
-                    "Type": " ／ ".join([zeph.strings[g.lower()] for g in self.mon.types]),
+                    "Type": " ／ ".join([zeph.strings[g.title()] for g in self.mon.types]),
                     "Species": pk.species[self.mon.species.name],
                     "Height": f"{self.mon.form.height} m", "Weight": f"{self.mon.form.weight} kg",
                     "Entry": NewLine(
@@ -199,6 +199,63 @@ async def pokedex(ctx: commands.Context, *, mon: str = "1"):
     return await nav.run(ctx)
 
 
+class EffNavigator(Navigator):
+    types = (None, ) + pk.types
+
+    def __init__(self, type1: str, type2: str = None):
+        super().__init__(ball_emol(), [], 1, "", prev="", nxt="")
+        self.type1 = type1
+        self.type2 = type2
+        self.funcs[zeph.emojis["left1"]] = self.type1bac
+        self.funcs[zeph.emojis["right1"]] = self.type1for
+        self.funcs[zeph.emojis["left2"]] = self.type2bac
+        self.funcs[zeph.emojis["right2"]] = self.type2for
+
+    @property
+    def eff_dict(self):
+        def eff(atk: str, dfn: str):
+            return pk.effectiveness[atk].get(dfn, 1)
+
+        ret = {
+            "4x": ", ".join([g for g in pk.types if eff(g, self.type1) * eff(g, self.type2) == 4]),
+            "2x": ", ".join([g for g in pk.types if eff(g, self.type1) * eff(g, self.type2) == 2]),
+            "1x": ", ".join([g for g in pk.types if eff(g, self.type1) * eff(g, self.type2) == 1]),
+            "1/2x": ", ".join([g for g in pk.types if eff(g, self.type1) * eff(g, self.type2) == 0.5]),
+            "1/4x": ", ".join([g for g in pk.types if eff(g, self.type1) * eff(g, self.type2) == 0.25]),
+            "0x": ", ".join([g for g in pk.types if eff(g, self.type1) * eff(g, self.type2) == 0])
+        }
+        return {g: j for g, j in ret.items() if j}
+
+    def type1for(self):
+        self.type1 = pk.types[(pk.types.index(self.type1) + 1) % len(pk.types)]
+
+    def type1bac(self):
+        self.type1 = pk.types[(pk.types.index(self.type1) - 1) % len(pk.types)]
+
+    def type2for(self):
+        self.type2 = self.types[(self.types.index(self.type2) + 1) % len(self.types)]
+
+    def type2bac(self):
+        self.type2 = self.types[(self.types.index(self.type2) - 1) % len(self.types)]
+
+    @property
+    def image(self):
+        try:
+            return pk.image(find_mon(choice(pk.exemplaryMons[frozenset([self.type1, self.type2])])))
+        except KeyError:
+            return None
+
+    @property
+    def con(self):
+        second_type = f"``{self.type2}`` {zeph.emojis[self.type2.title()]}" if self.type2 else "``None``"
+        return self.emol.con(
+            "Type Effectiveness", thumb=self.image,
+            d=f"{zeph.emojis['left1']} [``{self.type1}`` {zeph.emojis[self.type1.title()]}] {zeph.emojis['right1']} / "
+              f"{zeph.emojis['left2']} [{second_type}] {zeph.emojis['right2']}\n\n" +
+              "\n".join([f"**{g}:** {j}" for g, j in self.eff_dict.items()])
+        )
+
+
 @zeph.command(aliases=["pkmn", "pk"])
 async def pokemon(ctx: commands.Context, func: str = None, *args):
     if not func:
@@ -212,13 +269,15 @@ async def pokemon(ctx: commands.Context, func: str = None, *args):
 class PokemonInterpreter(Interpreter):
     @staticmethod
     def type_emol(typ: str):
-        return Emol(zeph.emojis[typ.lower()], hexcol(pk.typeColors[typ]))
+        return Emol(zeph.emojis[typ.title()], hexcol(pk.typeColors[typ]))
 
     async def _help(self, *args):
         help_dict = {
-            "type": "``z!pokemon type <type>`` shows type effectiveness for a given type.",
-            "eff": "``z!pokemon eff <mon>`` shows all types' effectiveness against a specific species or form of "
-                   "Pok\u00e9mon."
+            "type": "``z!pokemon type <type>`` shows type effectiveness (offense and defense) for a given type.",
+            "eff": "``z!pokemon eff`` checks type matchups against a type combination. Use the buttons "
+                   f"({zeph.emojis['left1']}{zeph.emojis['right1']}{zeph.emojis['left2']}{zeph.emojis['right2']}) "
+                   "to change types.\n``z!pokemon eff <mon...>`` shows matchups against a given species or form.\n"
+                   "``z!pokemon eff <type1> [type2]`` shows matchups against a given type combination."
         }
 
         if not args or args[0].lower() not in help_dict:
@@ -248,16 +307,12 @@ class PokemonInterpreter(Interpreter):
         )
 
     async def _eff(self, *args):
-        mon = find_mon(" ".join(args))
-        eff = {
-            "Doubly weak to": ", ".join([g for g in pk.types if mon.eff(g) == 4]),
-            "Weak to": ", ".join([g for g in pk.types if mon.eff(g) == 2]),
-            "Damaged normally by": NewLine(", ".join([g for g in pk.types if mon.eff(g) == 1])),
-            "Resistant to": ", ".join([g for g in pk.types if mon.eff(g) == 0.5]),
-            "Doubly resistant to": ", ".join([g for g in pk.types if mon.eff(g) == 0.25]),
-            "Immune to": ", ".join([g for g in pk.types if mon.eff(g) == 0]),
-        }
-        return await ball_emol().send(
-            self.ctx, f"{mon.full_name} ({' ／ '.join([zeph.strings[g.lower()] for g in mon.types])})",
-            fs={g: j for g, j in eff.items() if j}, thumb=pk.image(mon), same_line=True
-        )
+        try:
+            types = find_mon(" ".join(args)).types
+        except commands.CommandError:
+            if set(g.title() for g in args).issubset(set(EffNavigator.types)) and 0 < len(args) < 3:
+                types = [g.title() for g in args]
+            else:
+                types = ["Normal"]
+
+        return await EffNavigator(*types).run(self.ctx)

@@ -6,9 +6,9 @@ from random import choice
 from math import floor
 
 
-types = normal, water, fire, grass, electric, ground, rock, steel, ice, ghost, dark, fighting, flying, bug, poison, \
-    fairy, dragon, psychic = "Normal", "Water", "Fire", "Grass", "Electric", "Ground", "Rock", "Steel", "Ice", \
-    "Ghost", "Dark", "Fighting", "Flying", "Bug", "Poison", "Fairy", "Dragon", "Psychic"
+types = normal, fire, water, electric, grass, ice, fighting, poison, ground, flying, psychic, bug, rock, ghost, \
+    dragon, dark, steel, fairy = "Normal", "Fire", "Water", "Electric", "Grass", "Ice", "Fighting", "Poison", \
+    "Ground", "Flying", "Psychic", "Bug", "Rock", "Ghost", "Dragon", "Dark", "Steel", "Fairy"
 typeColors = {
     normal: "A8A878", fire: "F08030", water: "6890F0", grass: "78C850", electric: "F8D030", rock: "B8A038",
     ground: "E0C068", steel: "B8B8D0", psychic: "F85888", fighting: "C03028", flying: "A890F0", ghost: "705898",
@@ -99,7 +99,7 @@ class Mon:
         self.type2 = self.form.type2
         self.level = kwargs.get("level", kwargs.get("lvl", 100))
         self.nature = kwargs.get("nature", "Hardy")
-        self.iv = kwargs.get("iv", [31, 31, 31, 31, 31, 31])
+        self.iv = kwargs.get("iv", [0, 0, 0, 0, 0, 0])
         self.ev = kwargs.get("ev", [0, 0, 0, 0, 0, 0])
         self.stat_stages = kwargs.get(
             "stat_stages", {"atk": 0, "dfn": 0, "spa": 0, "spd": 0, "spe": 0, "eva": 0, "acc": 0}
@@ -171,39 +171,59 @@ class Mon:
         return floor((2 * self.form.hp + self.iv[0] + floor(self.ev[0] / 4)) * self.level / 100) + self.level + 10
 
     @property
-    def atk(self):
+    def atk_base(self):
         return floor(
             (floor((2 * self.form.atk + self.iv[1] + floor(self.ev[1] / 4)) * self.level / 100) + 5) *
             (1 + 0.1 * (self.ni // 5 == 0) - 0.1 * (self.ni % 5 == 0))
-        ) * self.stat_level("atk")
+        )
 
     @property
-    def dfn(self):
+    def atk(self):
+        return self.atk_base * self.stat_level("atk")
+
+    @property
+    def dfn_base(self):
         return floor(
             (floor((2 * self.form.dfn + self.iv[2] + floor(self.ev[2] / 4)) * self.level / 100) + 5) *
             (1 + 0.1 * (self.ni // 5 == 1) - 0.1 * (self.ni % 5 == 1))
-        ) * self.stat_level("dfn")
+        )
 
     @property
-    def spa(self):
+    def dfn(self):
+        return self.dfn_base * self.stat_level("dfn")
+
+    @property
+    def spa_base(self):
         return floor(
             (floor((2 * self.form.spa + self.iv[3] + floor(self.ev[3] / 4)) * self.level / 100) + 5) *
             (1 + 0.1 * (self.ni // 5 == 2) - 0.1 * (self.ni % 5 == 2))
-        ) * self.stat_level("spa")
+        )
 
     @property
-    def spd(self):
+    def spa(self):
+        return self.spa_base * self.stat_level("spa")
+
+    @property
+    def spd_base(self):
         return floor(
             (floor((2 * self.form.spd + self.iv[4] + floor(self.ev[4] / 4)) * self.level / 100) + 5) *
             (1 + 0.1 * (self.ni // 5 == 3) - 0.1 * (self.ni % 5 == 3))
-        ) * self.stat_level("spd")
+        )
 
     @property
-    def spe(self):
+    def spd(self):
+        return self.spd_base * self.stat_level("spd")
+
+    @property
+    def spe_base(self):
         return floor(
             (floor((2 * self.form.spe + self.iv[5] + floor(self.ev[5] / 4)) * self.level / 100) + 5) *
             (1 + 0.1 * (self.ni // 5 == 4) - 0.1 * (self.ni % 5 == 4))
-        ) * self.stat_level("spe")
+        )
+
+    @property
+    def spe(self):
+        return self.spe_base * self.stat_level("spe")
 
     @property
     def eva(self):
@@ -256,6 +276,7 @@ gameGenerations = {
 
 
 class Dex:
+    """Doesn't do much; just a way to access mons either by their name or dex number."""
     def __init__(self, name: str):
         self.name = name
         self.dex = {g: j for g, j in list(natDex.items())[:generationBounds[gameGenerations[name]]]}
@@ -284,6 +305,15 @@ def image(m: Mon):
     else:
         suffix = ""
     return imgLink.format(fix(m.species.name) + suffix)
+
+
+exemplaryMons = {}
+for i in natDex.values():
+    assert isinstance(i, Species)
+    if i.name not in ["Arceus", "Silvally", "Meltan", "Melmetal"]:
+        for form in i.forms.values():
+            exemplaryMons[frozenset([form.type1, form.type2])] = \
+                exemplaryMons.get(frozenset([form.type1, form.type2]), []) + [f"{i.name} {form.name}".strip()]
 
 
 if __name__ == "__main__":
