@@ -1,19 +1,10 @@
 import json
-from re import sub, search
+import random
+from pokemon.moves import *
+from re import sub
 from typing import Union
 from pyquery import PyQuery
-from random import choice
 from math import floor
-
-
-types = normal, fire, water, electric, grass, ice, fighting, poison, ground, flying, psychic, bug, rock, ghost, \
-    dragon, dark, steel, fairy = "Normal", "Fire", "Water", "Electric", "Grass", "Ice", "Fighting", "Poison", \
-    "Ground", "Flying", "Psychic", "Bug", "Rock", "Ghost", "Dragon", "Dark", "Steel", "Fairy"
-typeColors = {
-    normal: "A8A878", fire: "F08030", water: "6890F0", grass: "78C850", electric: "F8D030", rock: "B8A038",
-    ground: "E0C068", steel: "B8B8D0", psychic: "F85888", fighting: "C03028", flying: "A890F0", ghost: "705898",
-    dark: "705848", bug: "A8B820", poison: "A040A0", fairy: "EE99AC", dragon: "7038F8", ice: "98D8D8"
-}
 
 
 class Form:
@@ -89,6 +80,7 @@ class Mon:
     """The wieldiest of unwieldy classes."""
 
     def __init__(self, spc: Union[Species, str], **kwargs):
+        self.nickname = kwargs.get("nickname", None)
         if isinstance(spc, str):
             self.species = natDex[spc]
         else:
@@ -105,6 +97,8 @@ class Mon:
             "stat_stages", {"atk": 0, "dfn": 0, "spa": 0, "spd": 0, "spe": 0, "eva": 0, "acc": 0}
         )
         self.hpc = self.hp - kwargs.get("dmg", 0)
+        self.status_condition = kwargs.get("status_condition", None)
+        self.stat_con_time = kwargs.get("sct", 0)
 
     @property
     def dex_no(self):
@@ -113,6 +107,18 @@ class Mon:
     @property
     def generation(self):
         return [g for g in range(8) if self.dex_no <= generationBounds[g]][-1]
+
+    @property
+    def bulbapedia(self):
+        return f"https://bulbapedia.bulbagarden.net/wiki/{'_'.join(self.species.name.split())}_(Pok\u00e9mon\\)"
+
+    @property
+    def serebii(self):
+        return f"https://serebii.net/pokedex-sm/{self.dex_no}.shtml"
+
+    @property
+    def pokemondb(self):
+        return f"https://pokemondb.net/pokedex/{fix(self.species.name)}"
 
     @property
     def form_names(self):
@@ -133,6 +139,10 @@ class Mon:
     @property
     def weight(self):
         return self.form.weight
+
+    @property
+    def name(self):
+        return self.nickname if self.nickname else self.full_name
 
     @property
     def full_name(self):
@@ -223,7 +233,7 @@ class Mon:
 
     @property
     def spe(self):
-        return self.spe_base * self.stat_level("spe")
+        return self.spe_base * self.stat_level("spe") * (0.5 if self.status_condition == paralyzed else 1)
 
     @property
     def eva(self):
@@ -235,6 +245,20 @@ class Mon:
 
     def eff(self, typ: str):
         return effectiveness[typ].get(self.type1, 1) * effectiveness[typ].get(self.type2, 1)
+
+    def apply(self, stat: Union[StatChange, StatusEffect]):
+        ret = {}
+        if random.random() < stat.chance:
+            if isinstance(stat, StatChange):
+                for k, v in stat.stages.items():
+                    change = max(-6, min(6, self.stat_stages[k] + v)) - self.stat_stages[k]
+                    self.stat_stages[k] += change
+                    ret[k] = -20 if not change and v < 1 else change  # -20 is arbitrary, just to distinguish from -0
+            else:
+                if not self.status_condition:
+                    self.status_condition = stat.effect
+                    self.stat_con_time = random.randrange(1, 4)
+        return ret
 
 
 with open("stats.json" if __name__ == "__main__" else "pokemon/stats.json", "r") as file:
@@ -299,7 +323,7 @@ gameDexes = {g: Dex(g) for g in gameGenerations}
 def image(m: Mon):
     if m.form.name:
         if m.species.name == "Minior" and m.form == "Core":
-            suffix = "-" + choice(["orange", "yellow", "green", "blue", "indigo", "purple"]) + "-core"
+            suffix = "-" + random.choice(["orange", "yellow", "green", "blue", "indigo", "purple"]) + "-core"
         else:
             suffix = "-" + fix(m.form.name)
     else:
@@ -307,24 +331,16 @@ def image(m: Mon):
     return imgLink.format(fix(m.species.name) + suffix)
 
 
+def stat_change_text(mon: Mon, stat: str, change: int):
+    ret = "{name}'s {stat} won't go any lower!" if change == -20 else \
+        StatChange.modifier_strings[max(-3, min(3, change))]
+    return ret.format(name=mon.name, stat=StatChange.stat_name_dict[stat])
+
+
 exemplaryMons = {}
-for i in natDex.values():
-    assert isinstance(i, Species)
-    if i.name not in ["Arceus", "Silvally", "Meltan", "Melmetal"]:
-        for form in i.forms.values():
+for sp in natDex.values():
+    assert isinstance(sp, Species)
+    if sp.name not in ["Arceus", "Silvally", "Meltan", "Melmetal"]:
+        for form in sp.forms.values():
             exemplaryMons[frozenset([form.type1, form.type2])] = \
-                exemplaryMons.get(frozenset([form.type1, form.type2]), []) + [f"{i.name} {form.name}".strip()]
-
-
-if __name__ == "__main__":
-    species = {}
-    for i in natDex:
-        try:
-            species[i] = search(r"(?<=<td>)[^<>]+\sPokémon(?=</td>\n)", read_url(dexLink.format(fix(i))))\
-                .group(0)
-        except AttributeError:
-            print(f"NOT FOUND FOR {i}")
-            continue
-        print(i, species[i])
-    with open("species.json", "w") as file:
-        json.dump(species, file, indent=4)
+                exemplaryMons.get(frozenset([form.type1, form.type2]), []) + [f"{sp.name} {form.name}".strip()]

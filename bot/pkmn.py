@@ -114,8 +114,12 @@ class DexNavigator(Navigator):
                     "Entry": NewLine(
                         pk.dexEntries[self.mon.species.name][list(pk.dexEntries[self.mon.species.name].keys())[-1]]
                     ),
-                    "Base Stats": NewLine(" ／ ".join([str(g) for g in self.mon.base_stats]))
-                }
+                    "Base Stats": NewLine(
+                        " ／ ".join([str(g) for g in self.mon.base_stats]) +
+                        f" ({sum(self.mon.base_stats)})\n\n[Bulbapedia]({self.mon.bulbapedia}) | "
+                        f"[Serebii]({self.mon.serebii}) | [Pok\u00e9monDB]({self.mon.pokemondb})"
+                    )
+                },
             )
         elif self.mode == "forms":
             return self.emol.con(
@@ -316,3 +320,13 @@ class PokemonInterpreter(Interpreter):
                 types = ["Normal"]
 
         return await EffNavigator(*types).run(self.ctx)
+
+    async def _test(self, *args):
+        stat = pk.StatChange(1, {g: randrange(-3, 4) for g in pk.StatChange.stat_name_dict})
+        mon = find_mon("Pikachu")
+        eff = mon.apply(stat)
+        for i in eff:
+            await ball_emol().send(
+                self.ctx, pk.stat_change_text(mon, i, eff[i])
+            )
+        return await ball_emol().send(self.ctx, str(mon.stat_stages))

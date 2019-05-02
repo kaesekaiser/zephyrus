@@ -155,7 +155,8 @@ class ClientEmol(Emol):
 err = Emol(":no_entry:", hexcol("880000"))  # error
 succ = Emol(":white_check_mark:", hexcol("22bb00"))  # success
 chooseEmol = Emol(":8ball:", hexcol("e1e8ed"))
-zhong = Emol(":u7a7a:", hexcol("8000b0"))
+zhong = Emol(":flag_cn:", hexcol("df0000"))
+kong = Emol(":flag_hk:", hexcol("df0000"))
 wiki = Emol(":globe_with_meridians:", hexcol("4100b5"))
 phone = Emol(":telephone:", hexcol("DD2E44"))
 plane = Emol(":airplane:", hexcol("3a99f7"))

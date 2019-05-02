@@ -438,12 +438,12 @@ async def pinyin_command(ctx: commands.Context, *, chinese: str):
 
 @zeph.command(name="jyutping", aliases=["jp"])
 async def jyutping_command(ctx: commands.Context, *, cantonese: str):
-    return await zhong.send(ctx, get_jyutping(cantonese))
+    return await kong.send(ctx, get_jyutping(cantonese))
 
 
 @zeph.command(name="yale")
 async def yale_command(ctx: commands.Context, *, cantonese: str):
-    return await zhong.send(ctx, get_yale(cantonese))
+    return await kong.send(ctx, get_yale(cantonese))
 
 
 @zeph.command(aliases=["trans"])
