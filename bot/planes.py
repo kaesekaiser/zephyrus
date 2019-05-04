@@ -208,7 +208,7 @@ class PlanesInterpreter(Interpreter):
             "jobs": "``z!planes jobs <airport>`` lists available jobs in an airport.\n"
                     "``z!planes jobs <airport> all`` lists all jobs headed to all airports, "
                     "including those you don't own.\n"
-                    "``z!planes jobs <airport> to <city/country> lists all jobs headed to a certain city or country.",
+                    "``z!planes jobs <airport> to <city/country>`` lists all jobs headed to a certain city or country.",
             "launch": "``z!planes launch <plane> <airports>`` launches a plane along a path. Be sure to "
                       "keep fuel prices in mind. The ETA in the launch message links to a countdown timer "
                       "to arrival, and Zephyrus will notify you when it's arrived.\n\n"

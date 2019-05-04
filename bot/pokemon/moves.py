@@ -33,10 +33,15 @@ class StatChange:
         self.chance = chance
         self.stages = {g: j for g, j in stages.items() if j}
 
+    def __bool__(self):
+        return bool(self.chance and self.stages)
+
     @staticmethod
     def from_json(setup: list):
         if not setup:
             return StatChange.null()
+        if isinstance(setup, StatChange):
+            return setup
         return StatChange(*setup)
 
     @staticmethod
@@ -52,6 +57,9 @@ class StatusEffect:
     def __init__(self, chance: float, effect: str):
         self.chance = chance
         self.effect = effect
+
+    def __bool__(self):
+        return bool(self.chance and self.effect)
 
     @staticmethod
     def from_json(setup: list):
@@ -70,7 +78,6 @@ class StatusEffect:
 
 class Move:
     def __init__(self, name: str, typ: str, category: str, pp: int, pwr: Union[str, int], accuracy: int, contact: bool,
-                 can_protect: bool, can_magic_coat: bool, can_snatch: bool, can_mirror_move: bool, can_kings_rock: bool,
                  target: str, **kwargs):
         self.name = name
         self.type = typ
@@ -81,16 +88,26 @@ class Move:
         self.accuracy = accuracy
         self.priority = kwargs.get("priority", 0)
         self.contact = contact
-        self.can_protect = can_protect
-        self.can_magic_coat = can_magic_coat
-        self.can_snatch = can_snatch
-        self.can_mirror_move = can_mirror_move
-        self.can_kings_rock = can_kings_rock
         self.target = target
-        self.user_stat_changes = StatChange.from_json(kwargs.get("user_stat_changes") if target != user else [])
-        self.target_stat_changes = StatChange.from_json(kwargs.get("target_stat_changes"))
-        self.status_effect = StatusEffect.from_json(kwargs.get("status_effects"))
+        self.can_protect = kwargs.get("can_protect", False)
+        self.can_magic_coat = kwargs.get("can_magic_coat", False)
+        self.can_snatch = kwargs.get("can_snatch", False)
+        self.can_mirror_move = kwargs.get("can_mirror_move", False)
+        self.can_kings_rock = kwargs.get("can_kings_rock", False)
+        if target == user:
+            self.user_stat_changes = StatChange.from_json([])
+            self.target_stat_changes = StatChange.from_json(
+                kwargs.get("target_stat_changes", kwargs.get("user_stat_changes", []))
+            )
+        else:
+            self.user_stat_changes = StatChange.from_json(kwargs.get("user_stat_changes"))
+            self.target_stat_changes = StatChange.from_json(kwargs.get("target_stat_changes"))
+        self.status_effect = StatusEffect.from_json(kwargs.get("status_effect"))
         self.flinch = kwargs.get("flinch", False)
+        self.confuse_chance = kwargs.get("confuse_chance", 0)
+        self.absorbent = kwargs.get("absorbent", False)
+        self.recoil = kwargs.get("recoil", 0)
+        self.raised_crit_ratio = kwargs.get("raised_crit_ratio", 0)
 
     @staticmethod
     def from_json(setup: list):
@@ -98,13 +115,17 @@ class Move:
 
     @property
     def json(self):
+        def fi(s: str):
+            return {s: self.__getattribute__(s)} if self.__getattribute__(s) else {}
+
         kwargs = {
-            **({"ppc": self.ppc} if self.ppc != self.pp else {}),
-            **({"priority": self.priority} if self.priority else {}),
+            **({"ppc": self.ppc} if self.ppc != self.pp else {}), **fi("priority"),
             **({"user_stat_changes": self.user_stat_changes.json} if self.user_stat_changes else {}),
             **({"target_stat_changes": self.target_stat_changes.json} if self.target_stat_changes else {}),
             **({"status_effect": self.status_effect.json} if self.status_effect else {}),
-            **({"flinch": self.flinch} if self.flinch else {})
+            **fi("flinch"), **fi("confuse_chance"), **fi("absorbent"), **fi("recoil"), **fi("raised_crit_ratio"),
+            **fi("can_protect"), **fi("can_magic_coat"), **fi("can_snatch"), **fi("can_mirror_move"),
+            **fi("can_kings_rock")
         }
 
         return [

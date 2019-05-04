@@ -99,6 +99,8 @@ class Mon:
         self.hpc = self.hp - kwargs.get("dmg", 0)
         self.status_condition = kwargs.get("status_condition", None)
         self.stat_con_time = kwargs.get("sct", 0)
+        self.confused = kwargs.get("confused", False)
+        self.confusion_time = kwargs.get("confusion_time", 0) if self.confused else 0
 
     @property
     def dex_no(self):
