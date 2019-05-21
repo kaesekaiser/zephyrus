@@ -203,9 +203,6 @@ async def invite(ctx: commands.Context):
                           .format(zeph.user.id))
 
 
-zephBuild = "2.3 v4"
-
-
 @zeph.command()
 async def about(ctx: commands.Context):
     def runtime_format(dt: datetime.timedelta):
@@ -221,11 +218,42 @@ async def about(ctx: commands.Context):
         f"{len(set(zeph.users))} users\n"
         f"**Commands:** {len([g for g in zeph.commands if g not in aliases])}\n"
         f"**Runtime:** {runtime_format(datetime.datetime.now() - getattr(zeph, 'readyTime'))}\n"
-        f"**Build:** {zephBuild} / Python {py_version}\n"
+        f"**Build:** _coming soon_ / Python {py_version}\n"
         f"[GitHub](https://github.com/kaesekaiser/zephyrus) / "
         f"[Invite](https://discordapp.com/oauth2/authorize?client_id={zeph.user.id}&scope=bot&permissions=8192)",
         thumbnail=zeph.user.avatar_url
     )
+
+
+x_sampa_dict = {
+    r'\|\\\|\\': 'ǁ', r'G\\_<': 'ʛ', r'J\\_<': 'ʄ', '_B_L': '᷅', '_H_T': '᷄', '_R_F': '᷈', 'b_<': 'ɓ', 'd_<': 'ɗ',
+    'g_<': 'ɠ', r'r\\`': 'ɻ', '<F>': '↘', '<R>': '↗', r'_\?\\': 'ˤ', 'd`': 'ɖ', r'h\\': 'ɦ', r'j\\': 'ʝ', 'l`': 'ɭ',
+    r'l\\': 'ɺ', 'n`': 'ɳ', r'p\\': 'ɸ', 'r`': 'ɽ', r'r\\': 'ɹ', 's`': 'ʂ', r's\\': 'ɕ', r't`': 'ʈ', r'v\\': 'ʋ',
+    r'x\\': 'ɧ', 'z`': 'ʐ', r'z\\': 'ʑ', r'B\\': 'ʙ', r'G\\': 'ɢ', r'H\\': 'ʜ', r'I\\': 'ᵻ', r'J\\': 'ɟ', r'K\\': 'ɮ',
+    r'L\\': 'ʟ', r'M\\': 'ɰ', r'N\\': 'ɴ', r'O\\': 'ʘ', r'R\\': 'ʀ', r'U\\': 'ᵿ', r'X\\': 'ħ', r'\?\\': 'ʕ',
+    r':\\': 'ˑ', r'@\\': 'ɘ', r'3\\': 'ɞ', r'<\\': 'ʢ', r'>\\': 'ʡ', r'!\\': 'ǃ', r'\|\|': '‖', r'\|\\': 'ǀ',
+    r'=\\': 'ǂ', r'-\\': '‿', '_"': '̈', r'_\+': '̟', '_-': '̠', '_/': '̌', r'_\\': '̂', '_0': '̥', '_>': 'ʼ',
+    r'_\^': '̯', '_}': '̚', '_A': '̘', '_a': '̺', '_B': '̏', '_c': '̜', '_d': '̪', '_e': '̴', '_F': '̂', '_G': 'ˠ',
+    '_H': '́', '_h': 'ʰ', '_j': 'ʲ', '_k': '̰', '_L': '̀', '_l': 'ˡ', '_M': '̄', '_m': '̻', '_N': '̼', '_n': 'ⁿ',
+    '_O': '̹', '_o': '̞', '_q': '̙', '_R': '̌', '_r': '̝', '_T': '̋', '_t': '̤', '_v': '̬', '_w': 'ʷ', '_X': '̆',
+    '_x': '̽', '_=': '̩', '_~': '̃',
+    'g': 'ɡ', 'A': 'ɑ', 'B': 'β', 'C': 'ç', 'D': 'ð', 'E': 'ɛ', 'F': 'ɱ', 'G': 'ɣ', 'H': 'ɥ', 'I': 'ɪ', 'J': 'ɲ',
+    'K': 'ɬ', 'L': 'ʎ', 'M': 'ɯ', 'N': 'ŋ', 'O': 'ɔ', 'P': 'ʋ', 'Q': 'ɒ', r'R': 'ʁ', 'S': 'ʃ', 'T': 'θ', 'U': 'ʊ',
+    'V': 'ʌ', 'W': 'ʍ', 'X': 'χ', 'Y': 'ʏ', 'Z': 'ʒ', '"': 'ˈ', '%': 'ˌ', "'": 'ʲ', '’': 'ʲ', ':': 'ː', '@': 'ə',
+    '}': 'ʉ', '1': 'ɨ', '2': 'ø', '3': 'ɜ', '4': 'ɾ', '5': 'ɫ', '6': 'ɐ', '7': 'ɤ', '8': 'ɵ', '9': 'œ', '&': 'ɶ',
+    r'\|': '|', r'\^': 'ꜛ', '!': 'ꜜ', '=': '̩', '`': '˞', '~': '̃', r'\.': '.', r'\?': 'ʔ', '-': '', r'\*': ''
+}
+
+
+async def sampa(ctx: commands.Context):
+    notes = re.findall(r"[xz][[/].*?[]/]", ctx.message.content)
+    ret = []
+    for note in notes:
+        if note[0] == "x":
+            for rep in x_sampa_dict:
+                note = re.sub(r"(?<!\*)" + rep, x_sampa_dict[rep], note)
+        ret.append(note[1:])
+    return await ctx.send(content="\n".join(ret))
 
 
 @zeph.event
@@ -255,6 +283,25 @@ async def on_command_error(ctx: commands.Context, exception):
     else:
         await err.send(ctx, f"``{str(exception)}``")
         raise exception
+
+
+@zeph.event
+async def on_message(message: discord.Message):
+    zeph.dispatch("reaction_or_message", message, message.author)
+    if re.search(r"[xz][[/].*?[]/]", message.content):
+        await sampa(await zeph.get_context(message))
+    await zeph.process_commands(message)
+
+
+@zeph.event
+async def on_reaction_add(reaction: discord.Reaction, user: User):
+    zeph.dispatch("reaction_or_message", reaction, user)
+    zeph.dispatch("button", reaction, user, True)
+
+
+@zeph.event
+async def on_reaction_remove(reaction: discord.Reaction, user: User):
+    zeph.dispatch("button", reaction, user, False)
 
 
 async def regularly_save():

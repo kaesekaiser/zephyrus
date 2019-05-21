@@ -56,23 +56,6 @@ class Zeph(commands.Bot):
 zeph = Zeph()
 
 
-@zeph.event
-async def on_message(message: discord.Message):
-    zeph.dispatch("reaction_or_message", message, message.author)
-    await zeph.process_commands(message)
-
-
-@zeph.event
-async def on_reaction_add(reaction: discord.Reaction, user: User):
-    zeph.dispatch("reaction_or_message", reaction, user)
-    zeph.dispatch("button", reaction, user, True)
-
-
-@zeph.event
-async def on_reaction_remove(reaction: discord.Reaction, user: User):
-    zeph.dispatch("button", reaction, user, False)
-
-
 def hexcol(hex_code: str):
     if int(hex_code, 16) < 0:
         raise ValueError("negative hexcol code")
