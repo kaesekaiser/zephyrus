@@ -30,7 +30,7 @@ commandFormats = {
     "boggle": "z!boggle",
     "duel": "z!duel <@opponent>",
     "risk": "see z!risk help",
-    "mock": "z!mock <text...>",
+    "mock": "z!mock <text...>\nz!mock",
     "expand": "z!expand <text...>",
     "square": "z!square <text...>",
     "flagsquare": "z!flagsquare <text...>",
@@ -87,9 +87,9 @@ descs = {
               "to each other on the board, and you can't use the same die more than once in a word.",
     "duel": "Challenges an opponent to a duel. Hope you're quick to the draw.",
     "risk": "currently in a development state",
-    "mock": "DoEs ThIs To YoUr TeXt.",
-    "expand": "D o e s   t h i s   t o   y o u r   t e x t .\nThere should be more spaces here, but Discord for some "
-              "reason doesn't like extraneous spaces in embeds. Oh well, you get the idea.",
+    "mock": "DoEs ThIs To YoUr TeXt. If no text is given, mocks the message immediately above the command.\n\n"
+            "``guy: I think Zephyrus is bad\nperson: z!mock\nZephyrus: I tHiNk ZePhYrUs Is BaD``",
+    "expand": "D o e s \u00a0 t h i s \u00a0 t o \u00a0 y o u r \u00a0 t e x t .",
     "square": ":regional_indicator_d: :regional_indicator_o: :regional_indicator_e: :regional_indicator_s:   "
               ":regional_indicator_t: :regional_indicator_h: :regional_indicator_i: :regional_indicator_s:   "
               ":regional_indicator_t: :regional_indicator_o:   :regional_indicator_y: :regional_indicator_o: "

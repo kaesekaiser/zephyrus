@@ -11,13 +11,23 @@ import pycantonese
 
 
 @zeph.command()
-async def mock(ctx: commands.Context, *, text):
+async def mock(ctx: commands.Context, *text):
     def multi_count(s, chars):
         return sum([s.count(ch) for ch in chars])
 
     def dumb(s: str):
-        return "".join([s[g].lower() if (g - multi_count(s[:g], (" ", "'", ".", "?", "!", "\""))) % 2 == 1
-                        else s[g].upper() for g in range(len(s))])
+        return "".join(
+            s[g].lower() if (g - multi_count(s[:g], (" ", "'", ".", "?", "!", "\""))) % 2 == s[0].isupper()
+            else s[g].upper() for g in range(len(s))
+        )
+
+    text = " ".join(text)
+    if not text:
+        async for message in ctx.channel.history(limit=10):
+            if message.id < ctx.message.id:
+                text = message.content
+                await ctx.message.delete()
+                break
 
     return await ctx.send(dumb(text))
 
