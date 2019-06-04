@@ -754,3 +754,16 @@ async def phone_command(ctx: commands.Context, func: str = "help", channel: str=
 @zeph.command(hidden=True)
 async def save(ctx: commands.Context):
     zeph.save()
+
+
+@zeph.command(aliases=["nl"])
+async def narahlena(ctx: commands.Context, *, text: str):
+    narahlena_dict = {
+        "N^": "Ň", "n^": "ň", "C^": "Č", "c^": "č", "C`": "Ç", "c`": "ç", "S^": "Š", "s^": "š",
+        "Z^": "Ž", "z^": "ž", "R^": "Ř", "r^": "ř", "L^": "Ľ", "l^": "ľ", "U:": "Ü", "u:": "ü",
+        "A-": "Ā", "a-": "ā", "I.": "Ì", "i.": "ì", "U.": "Ù", "u.": "ù",
+        r"\^": "^", r"\`": "`", r"\:": ":", r"\-": "-"
+    }
+    for find, rep in narahlena_dict.items():
+        text = text.replace(find, rep)
+    return await ctx.send(content=text)
