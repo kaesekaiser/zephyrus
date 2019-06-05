@@ -215,6 +215,11 @@ async def about(ctx: commands.Context):
         return f"{dt.seconds // (60 * 60)} h {dt.seconds // 60 % 60} m {int(dt.seconds) % 60} s"
 
     py_version = "{}.{}.{}".format(*version_info)
+    step1 = str(wk.PyQuery(
+        "https://github.com/kaesekaiser/zephyrus/releases/latest", {"title": "CSS"}
+    ))  # this is a really gross way of getting the version I know. but shut up
+    step2 = re.search(r"octicon octicon-tag.*?</span>", step1, re.S)[0]
+    zeph_version = re.search(r"(?<=>).*?(?=</span>)", step2)[0]
 
     return await ClientEmol(":robot:", hexcol("6fc96f"), ctx).say(
         author=author_from_user(zeph.user, f"\u2223 {zeph.user.name}"),
@@ -222,7 +227,7 @@ async def about(ctx: commands.Context):
         f"{len(set(zeph.users))} users\n"
         f"**Commands:** {len([g for g in zeph.commands if g not in aliases])}\n"
         f"**Runtime:** {runtime_format(datetime.datetime.now() - getattr(zeph, 'readyTime'))}\n"
-        f"**Build:** _coming soon_ / Python {py_version}\n"
+        f"**Build:** {zeph_version} / Python {py_version}\n"
         f"[GitHub](https://github.com/kaesekaiser/zephyrus) / "
         f"[Invite](https://discordapp.com/oauth2/authorize?client_id={zeph.user.id}&scope=bot&permissions=8192)",
         thumbnail=zeph.user.avatar_url
