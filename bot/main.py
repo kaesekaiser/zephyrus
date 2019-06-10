@@ -259,7 +259,7 @@ x_sampa_dict = {
 
 
 async def sampa(ctx: commands.Context):
-    notes = re.findall(r"[xz][\[/].*?[]/]", ctx.message.content, re.S)
+    notes = re.findall(r"(?<=\s)[xz][\[/].*?[]/]", ctx.message.content, re.S)
     ret = []
     for note in notes:
         if note[0] == "x":
@@ -301,7 +301,7 @@ async def on_command_error(ctx: commands.Context, exception):
 @zeph.event
 async def on_message(message: discord.Message):
     zeph.dispatch("reaction_or_message", message, message.author)
-    if re.search(r"[xz][\[/].*?[]/]", message.content, re.S):
+    if re.search(r"(?<=\s)[xz][\[/].*?[]/]", message.content, re.S):
         await sampa(await zeph.get_context(message))
     await zeph.process_commands(message)
 
