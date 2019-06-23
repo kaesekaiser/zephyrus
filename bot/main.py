@@ -8,7 +8,8 @@ aliases = {
     "h": "help", "sq": "square", "fsq": "flagsquare", "small": "smallcaps", "c": "convert", "conv": "convert",
     "weed": "sayno", "pick": "choose", "colour": "color", "hue": "hueshift", "trans": "translate", "p": "planes",
     "badtrans": "badtranslate", "rune": "runes", "wiki": "wikipedia", "fw": "foreignwiki", "dex": "pokedex",
-    "bed": "bedtime", "jp": "jyutping", "sherriff": "sheriff", "pkmn": "pokemon", "pk": "pokemon", "nl": "narahlena"
+    "bed": "bedtime", "jp": "jyutping", "sherriff": "sheriff", "pkmn": "pokemon", "pk": "pokemon", "nl": "narahlena",
+    "simp": "simplified", "trad": "traditional"
 }
 
 
@@ -18,7 +19,8 @@ commandCategories = {
     "Ciphers": ["rot", "rot13", "vigenere", "devigenere"],
     "Utilities": ["roll", "convert", "sayno", "choose", "8ball", "color", "timein", "avatar", "wikipedia", "bedtime"],
     "Images": ["hueshift", "invert"],
-    "Languages": ["pinyin", "jyutping", "translate", "badtranslate", "runes", "foreignwiki", "yale", "narahlena"],
+    "Languages": ["pinyin", "jyutping", "translate", "badtranslate", "runes", "foreignwiki", "yale", "narahlena",
+                  "simplified", "traditional"],
     "Bot": ["ping", "help", "invite", "about"]
 }
 
@@ -69,6 +71,8 @@ commandFormats = {
     "yale": "z!yale <Cantonese text...>",
     "pokemon": "z!pokemon help",
     "narahlena": "z!narahlena <Narahlena text...>",
+    "simplified": "z!simplified <Traditional Chinese text...>",
+    "traditional": "z!traditional <Simplified Chinese text...>",
 
     "help": "z!help [command]"
 }
@@ -177,13 +181,15 @@ descs = {
     "narahlena": "Converts ASCII Narahlena input into actual Narahlena orthography.\n\n"
                  "[Narahlena](https://fort.miraheze.org/wiki/Narahlena) is a constructed language Fort's making. This "
                  "command probably doesn't mean much to most people. Feel free to check it out, though.",
+    "simplified": "Converts Traditional Chinese characters to Simplified Chinese.",
+    "traditional": "Converts Simplified Chinese characters to Traditional Chinese.",
 
     "help": "Shows the usage + format of a command. If no command is provided, lists all available commands."
 }
 
 
 @zeph.command(name="help", aliases=["?", "h"])
-async def help_(ctx: commands.Context, comm: str=None):
+async def help_(ctx: commands.Context, comm: str = None):
     hep = ClientEmol(":grey_question:", hexcol("59c4ff"), ctx)
     spacing = "\u00a0" * 5
 

@@ -456,6 +456,16 @@ async def yale_command(ctx: commands.Context, *, cantonese: str):
     return await kong.send(ctx, get_yale(cantonese))
 
 
+@zeph.command(aliases=["simp"])
+async def simplified(ctx: commands.Context, *, trad: str):
+    return await zhong.send(ctx, hanziconv.HanziConv.toSimplified(trad))
+
+
+@zeph.command(aliases=["trad"])
+async def traditional(ctx: commands.Context, *, simp: str):
+    return await kong.send(ctx, hanziconv.HanziConv.toTraditional(simp))
+
+
 @zeph.command(aliases=["trans"])
 async def translate(ctx: commands.Context, fro: str, to: str, *, text: str):
     trans = ClientEmol(":twisted_rightwards_arrows:", blue, ctx)
