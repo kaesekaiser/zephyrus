@@ -415,8 +415,8 @@ async def timein(ctx: commands.Context, *, place: str):
 
 def chinese_punctuate(s: str):
     chinese_punctuation = {
-        "？": "?", "！": "!", "。": ".", "，": ",", "：": ":", "；": ";", "【": " [", "】": "]", "（": " (", "）": ")",
-        "《": " ⟨", "》": "⟩", "、": ",", "／": " /", "『": ' "', "』": '"'
+        "？": "? ", "！": "! ", "。": ". ", "，": ", ", "：": ": ", "；": "; ", "【": " [", "】": "] ", "（": " (", "）": ") ",
+        "《": " ⟨", "》": "⟩ ", "、": ", ", "／": " / ", "『": ' "', "』": '" '
     }
     ret = f" {s} "
     for i in chinese_punctuation:
@@ -430,7 +430,7 @@ def get_pinyin(c: str):
 
 def get_jyutping(s: str):
     return chinese_punctuate(zeph.roman.process_sentence(
-        s, zeph.roman.jyutping_word_map, zeph.roman.jyutping_char_map, lambda x: x
+        hanziconv.HanziConv.toTraditional(s), zeph.roman.jyutping_word_map, zeph.roman.jyutping_char_map, lambda x: x
     ))
 
 
