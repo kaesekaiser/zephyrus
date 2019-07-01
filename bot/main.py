@@ -9,7 +9,7 @@ aliases = {
     "weed": "sayno", "pick": "choose", "colour": "color", "hue": "hueshift", "trans": "translate", "p": "planes",
     "badtrans": "badtranslate", "rune": "runes", "wiki": "wikipedia", "fw": "foreignwiki", "dex": "pokedex",
     "bed": "bedtime", "jp": "jyutping", "sherriff": "sheriff", "pkmn": "pokemon", "pk": "pokemon", "nl": "narahlena",
-    "simp": "simplified", "trad": "traditional"
+    "simp": "simplified", "trad": "traditional", "fac": "factors"
 }
 
 
@@ -17,7 +17,8 @@ commandCategories = {
     "Games": ["connect4", "jotto", "anagrams", "boggle", "duel", "risk", "epitaph", "pokedex", "planes", "pokemon"],
     "Text": ["mock", "expand", "square", "flagsquare", "clap", "scramble", "smallcaps", "sheriff"],
     "Ciphers": ["rot", "rot13", "vigenere", "devigenere"],
-    "Utilities": ["roll", "convert", "sayno", "choose", "8ball", "color", "timein", "avatar", "wikipedia", "bedtime"],
+    "Utilities": ["roll", "convert", "sayno", "choose", "8ball", "color", "timein", "avatar", "wikipedia", "bedtime",
+                  "factors"],
     "Images": ["hueshift", "invert"],
     "Languages": ["pinyin", "jyutping", "translate", "badtranslate", "runes", "foreignwiki", "yale", "narahlena",
                   "simplified", "traditional"],
@@ -73,6 +74,7 @@ commandFormats = {
     "narahlena": "z!narahlena <Narahlena text...>",
     "simplified": "z!simplified <Traditional Chinese text...>",
     "traditional": "z!traditional <Simplified Chinese text...>",
+    "factors": "z!factors <integer>",
 
     "help": "z!help [command]"
 }
@@ -183,6 +185,7 @@ descs = {
                  "command probably doesn't mean much to most people. Feel free to check it out, though.",
     "simplified": "Converts Traditional Chinese characters to Simplified Chinese.",
     "traditional": "Converts Simplified Chinese characters to Traditional Chinese.",
+    "factors": "Returns the prime factors of <integer>.",
 
     "help": "Shows the usage + format of a command. If no command is provided, lists all available commands."
 }

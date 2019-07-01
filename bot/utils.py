@@ -8,6 +8,9 @@ from unicodedata import name as uni_name
 from urllib.error import HTTPError
 import hanziconv
 import pycantonese
+from operator import mul
+from functools import reduce
+from math import log10
 
 
 @zeph.command()
@@ -777,3 +780,33 @@ async def narahlena(ctx: commands.Context, *, text: str):
     for find, rep in narahlena_dict.items():
         text = text.replace(find, rep)
     return await ctx.send(content=text)
+
+
+@zeph.command(aliases=["fac"])
+async def factors(ctx: commands.Context, number: int):
+    if number < 1:
+        raise commands.CommandError("Number must be greater than 0.")
+    if log10(number) >= 15:
+        raise commands.CommandError("Please keep numbers to 15 digits or less.")
+
+    def get_factors(n: int):
+        min_search = 3
+        ret = []
+        while n % 2 == 0:
+            n = round(n / 2)
+            ret.append(2)
+        original = n
+        while True:
+            for i in range(min_search, ceil(original ** 0.5) + 1, 2):
+                if n % i == 0:
+                    ret.append(i)
+                    n = round(n / i)
+                    break
+                else:
+                    min_search = i
+            if ret.count(2) == len(ret):
+                return ret + [original]
+            if round(reduce(mul, [1] + ret) * n) == round(original * 2 ** ret.count(2)):
+                return sorted(ret + [n])
+
+    return await ClientEmol(":1234:", blue, ctx).say(f"Prime factors of {number}:", d=f"``= {get_factors(number)}``")
