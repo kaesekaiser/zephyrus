@@ -1,6 +1,7 @@
 from planes import *
 from sys import version_info
 import datetime
+import subprocess
 
 
 aliases = {
@@ -241,6 +242,16 @@ async def about(ctx: commands.Context):
         f"[Invite](https://discordapp.com/oauth2/authorize?client_id={zeph.user.id}&scope=bot&permissions=8192)",
         thumbnail=zeph.user.avatar_url
     )
+
+
+@zeph.command(hidden=True)
+async def update(ctx: commands.Context):
+    if ctx.author.id != 238390171022655489:
+        raise commands.CommandError("You don't have permission to run that command.")
+
+    await ctx.send(content="be right back :wave:")
+    await zeph.logout()
+    subprocess.Popen(["sudo", "bash", "/home/pi/Documents/update.sh"])
 
 
 x_sampa_dict = {
