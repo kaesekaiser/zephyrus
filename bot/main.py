@@ -14,7 +14,7 @@ aliases = {
 
 
 commandCategories = {
-    "Games": ["connect4", "jotto", "anagrams", "boggle", "duel", "risk", "epitaph", "pokedex", "planes", "pokemon"],
+    "Games": ["connect4", "jotto", "anagrams", "boggle", "duel", "epitaph", "pokedex", "planes", "pokemon"],
     "Text": ["mock", "expand", "square", "flagsquare", "clap", "scramble", "smallcaps", "sheriff"],
     "Ciphers": ["rot", "rot13", "vigenere", "devigenere"],
     "Utilities": ["roll", "convert", "sayno", "choose", "8ball", "color", "timein", "avatar", "wikipedia", "bedtime",
@@ -301,7 +301,10 @@ async def on_command_error(ctx: commands.Context, exception):
     elif type(exception) == commands.errors.CommandNotFound:
         pass
     elif type(exception) == commands.CommandError:
-        await err.send(ctx, str(exception))
+        try:
+            await err.send(ctx, str(exception))
+        except discord.errors.HTTPException:
+            await err.send(ctx, "Error!", desc=str(exception))
     else:
         await err.send(ctx, f"``{str(exception)}``")
         raise exception

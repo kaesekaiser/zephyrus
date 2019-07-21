@@ -60,7 +60,7 @@ async def planes(ctx: commands.Context, func: str = None, *args: str):
 
 
 class PlanesInterpreter(Interpreter):
-    redirects = {"offload": "unload", "city": "airport"}
+    redirects = {"offload": "unload", "city": "airport", "airports": "cities"}
 
     @property
     def user(self):
@@ -243,17 +243,20 @@ class PlanesInterpreter(Interpreter):
             "buyout": "``z!planes buyout <country>`` buys as many airports in a certain country as you can afford, "
                       "starting with the biggest airports. For your personal convenience, so that you can quickly "
                       "expand into a new market without having to manually buy a ton of airports.\n"
-                      "``z!planes buyout <country> <number>"
+                      "``z!planes buyout <country> <number>`` does the same, but will only buy, at most, ``<number>`` "
+                      "airports."
         }
 
-        if len(args) == 0 or args[0].lower() not in help_dict:
+        if len(args) == 0 or (args[0].lower() not in help_dict and args[0].lower() not in self.redirects):
             return await plane.send(
                 self.ctx, "z!planes help",
                 d=f"Available functions:\n```{', '.join(list(help_dict.keys()))}```\n"
                 f"For information on how to use these, use ``z!planes help <function>``."
             )
 
-        return await plane.send(self.ctx, f"z!planes {args[0].lower()}", d=help_dict[args[0].lower()])
+        ret = self.redirects.get(args[0].lower(), args[0].lower())
+
+        return await plane.send(self.ctx, f"z!planes {ret}", d=help_dict[ret])
 
     async def _map(self, *args):  # needs to be able to take args like all other commands
         return await plane.send(self.ctx, "Purchasable airports:", d=pn.url)
