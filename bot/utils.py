@@ -774,7 +774,7 @@ async def eval_command(ctx: commands.Context, *, text: str):
     if ctx.author.id != 238390171022655489:  # if it ain't me
         raise commands.CommandError("You don't have permission to run that command.")
 
-    return await ctx.send(content=type(eval(text, locals={"ctx": ctx})))
+    return await ctx.send(content=eval(text, globals(), {"ctx": ctx}))
 
 
 @zeph.command(aliases=["nl"])
