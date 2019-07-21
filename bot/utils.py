@@ -796,17 +796,22 @@ async def factors(ctx: commands.Context, number: int):
             n = round(n / 2)
             ret.append(2)
         original = n
+        max_search = ceil(original ** 0.5) + 1
+        max_search += 1 if max_search % 2 == 0 else 0
         while True:
-            for i in range(min_search, ceil(original ** 0.5) + 1, 2):
+            for i in range(min_search, max_search + 2, 2):
                 if n % i == 0:
                     ret.append(i)
                     n = round(n / i)
                     break
                 else:
                     min_search = i
+            print(ret, min_search, max_search)
             if ret.count(2) == len(ret):
                 return ret + [original]
-            if round(reduce(mul, [1] + ret) * n) == round(original * 2 ** ret.count(2)):
+            if min_search == max_search:
+                if n == 1:
+                    return sorted(ret)
                 return sorted(ret + [n])
 
     return await ClientEmol(":1234:", blue, ctx).say(f"Prime factors of {number}:", d=f"``= {get_factors(number)}``")
