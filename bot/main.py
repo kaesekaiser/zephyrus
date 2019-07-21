@@ -244,6 +244,21 @@ async def about(ctx: commands.Context):
     )
 
 
+@zeph.command(hidden=True, name="eval")
+async def eval_command(ctx: commands.Context, *, text: str):
+    if ctx.author.id != 238390171022655489:  # if it ain't me
+        raise commands.CommandError("You don't have permission to run that command.")
+
+    ret = str(eval(text, globals(), {"ctx": ctx}))
+    if len(ret) > 1980:
+        ret = [f"```{ret[1980*g:1980*(g+1)]}```" for g in range(len(ret) // 1980 + 1)]
+    else:
+        ret = [f"```py\n{ret}\n```"]
+
+    for res in ret:
+        await ctx.send(content=res)
+
+
 x_sampa_dict = {
     "d`z`": "ɖ͡ʐ", "t`s`": "ʈ͡ʂ", r"dK\\": "d͡ɮ", "tK": "t͡ɬ", r"dz\\": "d͡ʑ", r"ts\\": "t͡ɕ", "dz`": "d͡ʐ",
     "ts`": "t͡ʂ", "dz": "d͡z", "ts": "t͡s", "dZ": "d͡ʒ", "tS": "t͡ʃ",

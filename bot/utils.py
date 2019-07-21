@@ -70,7 +70,7 @@ async def ping(ctx: commands.Context):
 
 
 @zeph.command(aliases=["dice"])
-async def roll(ctx: commands.Context, die: str="1d6"):
+async def roll(ctx: commands.Context, die: str = "1d6"):
     dice = ClientEmol(":game_die:", hexcol("EA596E"), ctx)
     try:
         die = di.Die(die)
@@ -767,14 +767,6 @@ async def phone_command(ctx: commands.Context, func: str = "help", channel: str=
 @zeph.command(hidden=True)
 async def save(ctx: commands.Context):
     zeph.save()
-
-
-@zeph.command(hidden=True, name="eval")
-async def eval_command(ctx: commands.Context, *, text: str):
-    if ctx.author.id != 238390171022655489:  # if it ain't me
-        raise commands.CommandError("You don't have permission to run that command.")
-
-    return await ctx.send(content=eval(text, globals(), {"ctx": ctx}))
 
 
 @zeph.command(aliases=["nl"])
