@@ -250,6 +250,7 @@ async def update(ctx: commands.Context):
         raise commands.CommandError("You don't have permission to run that command.")
 
     await ctx.send(content="be right back :wave:")
+    await asyncio.sleep(0.1)
     await zeph.logout()
     subprocess.Popen(["sudo", "bash", "/home/pi/Documents/update.sh"])
 
