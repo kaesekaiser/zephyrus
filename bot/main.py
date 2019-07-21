@@ -244,17 +244,6 @@ async def about(ctx: commands.Context):
     )
 
 
-@zeph.command(hidden=True)
-async def update(ctx: commands.Context):
-    if ctx.author.id != 238390171022655489:
-        raise commands.CommandError("You don't have permission to run that command.")
-
-    await ctx.send(content="be right back :wave:")
-    await asyncio.sleep(0.1)
-    await zeph.logout()
-    subprocess.Popen(["sudo", "bash", "/home/pi/Documents/update.sh"])
-
-
 x_sampa_dict = {
     "d`z`": "ɖ͡ʐ", "t`s`": "ʈ͡ʂ", r"dK\\": "d͡ɮ", "tK": "t͡ɬ", r"dz\\": "d͡ʑ", r"ts\\": "t͡ɕ", "dz`": "d͡ʐ",
     "ts`": "t͡ʂ", "dz": "d͡z", "ts": "t͡s", "dZ": "d͡ʒ", "tS": "t͡ʃ",
