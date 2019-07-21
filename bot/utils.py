@@ -806,7 +806,6 @@ async def factors(ctx: commands.Context, number: int):
                     break
                 else:
                     min_search = i
-            print(ret, min_search, max_search)
             if ret.count(2) == len(ret):
                 return ret + [original]
             if min_search == max_search:
