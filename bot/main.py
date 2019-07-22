@@ -243,10 +243,13 @@ async def about(ctx: commands.Context):
     )
 
 
+noPerms = commands.CommandError("You don't have permission to run that command.")
+
+
 @zeph.command(hidden=True, name="eval")
 async def eval_command(ctx: commands.Context, *, text: str):
     if ctx.author.id != 238390171022655489:  # if it ain't me
-        raise commands.CommandError("You don't have permission to run that command.")
+        raise noPerms
 
     ret = str(eval(text, globals(), {"ctx": ctx}))
     if len(ret) > 1980:
@@ -265,7 +268,7 @@ async def eval_command(ctx: commands.Context, *, text: str):
 )
 async def send_command(ctx: commands.Context, channel_id: int, *, message: str):
     if ctx.author.id != 238390171022655489:
-        raise commands.CommandError("You don't have permission to run that command.")
+        raise noPerms
 
     channel = zeph.get_channel(channel_id)
     if not isinstance(channel, discord.TextChannel):
@@ -275,6 +278,35 @@ async def send_command(ctx: commands.Context, channel_id: int, *, message: str):
         return await channel.send(content=message)
     except discord.errors.Forbidden:
         raise commands.CommandError("I can't send a message to that channel.")
+
+
+@zeph.command(
+    hidden=True, name="presence", usage="z!presence <type> <activity...> [url]",
+    description="Updates the bot's presence.",
+    help="Update's the bot's presence to ``<activity>``. ``<type>`` must be ``playing``, ``listening``, ``streaming``,"
+         "or ``watching``. If a URL is included (for a Twitch stream), prefix it with ``url=``."
+)
+async def presence_command(ctx: commands.Context, activity_type: str, *, activity: str):
+    if ctx.author.id != 238390171022655489:
+        raise noPerms
+
+    types = {
+        "playing": discord.ActivityType.playing,
+        "streaming": discord.ActivityType.streaming,
+        "listening": discord.ActivityType.listening,
+        "watching": discord.ActivityType.watching
+    }
+    if activity_type.lower() not in types:
+        raise commands.CommandError("Type must be ``playing``, ``listening``, or ``watching``.")
+
+    if activity.split()[-1][:4] == "url=":
+        url = activity.split()[-1][4:]
+        activity = " ".join(activity.split()[:-1])
+    else:
+        url = None
+
+    await zeph.change_presence(activity=discord.Activity(type=types[activity_type.lower()], name=activity, url=url))
+    return await succ.send(ctx, "Presence updated.")
 
 
 x_sampa_dict = {
