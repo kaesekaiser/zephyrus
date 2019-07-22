@@ -1,7 +1,6 @@
 from planes import *
 from sys import version_info
 import datetime
-import subprocess
 
 
 aliases = {
@@ -257,6 +256,25 @@ async def eval_command(ctx: commands.Context, *, text: str):
 
     for res in ret:
         await ctx.send(content=res)
+
+
+@zeph.command(
+    hidden=True, name="send", usage="z!send <channel> <message...>",
+    description="Sends a message to a given channel.",
+    help="Sends ``<message>`` to ``<channel>``."
+)
+async def send_command(ctx: commands.Context, channel_id: int, *, message: str):
+    if ctx.author.id != 238390171022655489:
+        raise commands.CommandError("You don't have permission to run that command.")
+
+    channel = zeph.get_channel(channel_id)
+    if not isinstance(channel, discord.TextChannel):
+        raise commands.CommandError("ID does not point to a text channel.")
+
+    try:
+        return await channel.send(content=message)
+    except discord.errors.Forbidden:
+        raise commands.CommandError("I can't send a message to that channel.")
 
 
 x_sampa_dict = {
