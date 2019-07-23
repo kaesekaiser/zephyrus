@@ -188,7 +188,7 @@ descs = {
     "traditional": "Converts Simplified Chinese characters to Traditional Chinese.",
     "factors": "Returns the prime factors of <integer>.",
     "sampa": "Converts a given string of [X-SAMPA](https://en.wikipedia.org/wiki/X-SAMPA) to the International Phonetic"
-             " Alphabet. ``*`` can be used as an escape character."
+             " Alphabet. ``*`` can be used as an escape character.",
 
     "help": "Shows the usage + format of a command. If no command is provided, lists all available commands."
 }
