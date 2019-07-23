@@ -8,8 +8,6 @@ from unicodedata import name as uni_name
 from urllib.error import HTTPError
 import hanziconv
 import pycantonese
-from operator import mul
-from functools import reduce
 from math import log10
 
 
@@ -502,6 +500,7 @@ async def get_translation(fro: str, to: str, text: str):
     return tr.Translator().translate(text, to, fro).text
 
 
+"""
 @zeph.command(aliases=["badtrans"])
 async def badtranslate(ctx: commands.Context, *, text: str):
     if len(text) > 250:
@@ -513,6 +512,7 @@ async def badtranslate(ctx: commands.Context, *, text: str):
         text = await get_translation(langs[i], langs[i + 1], text)
         await bad.edit(message, "translating...", d=f"{i + 1}/25")
     return await bad.edit(message, await get_translation(langs[-1], "en", text))
+"""
 
 
 @zeph.command()

@@ -7,8 +7,8 @@ aliases = {
     "conn4": "connect4", "dice": "roll", "caesar": "rot", "vig": "vigenere", "devig": "devigenere", "?": "help",
     "h": "help", "sq": "square", "fsq": "flagsquare", "small": "smallcaps", "c": "convert", "conv": "convert",
     "weed": "sayno", "pick": "choose", "colour": "color", "hue": "hueshift", "trans": "translate", "p": "planes",
-    "badtrans": "badtranslate", "rune": "runes", "wiki": "wikipedia", "fw": "foreignwiki", "dex": "pokedex",
-    "bed": "bedtime", "jp": "jyutping", "sherriff": "sheriff", "pkmn": "pokemon", "pk": "pokemon", "nl": "narahlena",
+    "rune": "runes", "wiki": "wikipedia", "fw": "foreignwiki", "dex": "pokedex",
+    "jp": "jyutping", "sherriff": "sheriff", "pkmn": "pokemon", "pk": "pokemon", "nl": "narahlena",
     "simp": "simplified", "trad": "traditional", "fac": "factors"
 }
 
@@ -17,8 +17,7 @@ commandCategories = {
     "Games": ["connect4", "jotto", "anagrams", "boggle", "duel", "epitaph", "pokedex", "planes", "pokemon"],
     "Text": ["mock", "expand", "square", "flagsquare", "clap", "scramble", "smallcaps", "sheriff"],
     "Ciphers": ["rot", "rot13", "vigenere", "devigenere"],
-    "Utilities": ["roll", "convert", "sayno", "choose", "8ball", "color", "timein", "avatar", "wikipedia", "bedtime",
-                  "factors"],
+    "Utilities": ["roll", "convert", "sayno", "choose", "8ball", "color", "timein", "avatar", "wikipedia", "factors"],
     "Images": ["hueshift", "invert"],
     "Languages": ["pinyin", "jyutping", "translate", "badtranslate", "runes", "foreignwiki", "yale", "narahlena",
                   "simplified", "traditional"],
@@ -59,7 +58,7 @@ commandFormats = {
     "pinyin": "z!pinyin <Mandarin text...>",
     "jyutping": "z!jyutping <Cantonese text...>",
     "translate": "z!translate <from> <to> <text...>",
-    "badtranslate": "z!badtranslate <text...>",
+    # "badtranslate": "z!badtranslate <text...>",
     "avatar": "z!avatar <@user>",
     "runes": "z!runes <runic text...>",
     "sheriff": "z!sheriff <emoji>",
@@ -151,9 +150,10 @@ descs = {
                  "language option.\n\n"
                  "``z!translate English French Hello, my love`` → ``Bonjour mon amour``\n"
                  "``z!translate auto en Hola, señor`` → ``Hello sir``",
-    "badtranslate": "Via Google Translate, translates English language text back and forth between twenty-five random "
-                    "languages. The result is a garbled mess which only vaguely resembles the original, if at all.\n\n"
-                    "``z!badtranslate This is an example sentence.`` → ``That's my law.``",
+    #  "badtranslate": "Via Google Translate, translates English language text back and forth between twenty-five "
+    #                  "random languages. The result is a garbled mess which only vaguely resembles the original, if "
+    #                  "at all.\n\n"
+    #                  "``z!badtranslate This is an example sentence.`` → ``That's my law.``",
     "avatar": "Returns a link to a user's avatar.",
     "runes": "Transcribes [medieval Nordic runes](https://en.wikipedia.org/wiki/Medieval_runes) into Latin letters.",
     "sheriff": "Calls the sheriff of ``<emoji>``.",
@@ -333,15 +333,16 @@ x_sampa_dict = {
 }
 
 
-async def sampa(ctx: commands.Context):
-    notes = ["".join(g) for g in re.findall(sampa_regex, ctx.message.content)]
-    ret = []
-    for note in notes:
-        if note[0] == "x":
-            for rep in x_sampa_dict:
-                note = re.sub(r"(?<!\*)" + rep, x_sampa_dict[rep], note)
-        ret.append(note[1:])
-    return await ctx.send(content="\n".join(ret))
+@zeph.command(
+    usage="z!sampa <X-SAMPA text...>",
+    description="Converts X-SAMPA to IPA.",
+    help="Converts a given string of [X-SAMPA](https://en.wikipedia.org/wiki/X-SAMPA) to the International Phonetic "
+         "Alphabet. ``*`` can be used as an escape character."
+)
+async def sampa(ctx: commands.Context, *, text: str):
+    for rep in x_sampa_dict:
+        text = re.sub(r"(?<!\*)" + rep, x_sampa_dict[rep], text)
+    return await ctx.send(content=text)
 
 
 @zeph.event
@@ -376,14 +377,9 @@ async def on_command_error(ctx: commands.Context, exception):
         raise exception
 
 
-sampa_regex = re.compile(r"((?<=\s|`)[xz][\[/].+?[\]/](?=\s|`))|(^[xz][\[/].+?[\]/](?=\s|$))", re.S + re.M)
-
-
 @zeph.event
 async def on_message(message: discord.Message):
     zeph.dispatch("reaction_or_message", message, message.author)
-    if re.search(sampa_regex, message.content):
-        await sampa(await zeph.get_context(message))
     await zeph.process_commands(message)
 
 
