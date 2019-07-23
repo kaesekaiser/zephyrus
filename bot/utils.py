@@ -3,7 +3,6 @@ from utilities import dice as di, weed as wd, timein as ti, translate as tr, wik
 import re
 import requests
 from io import BytesIO
-from random import choices
 from unicodedata import name as uni_name
 from urllib.error import HTTPError
 import hanziconv
@@ -62,9 +61,9 @@ async def clap(ctx: commands.Context, *, text):
 
 @zeph.command()
 async def ping(ctx: commands.Context):
-    message = await ctx.send("fuck off")
+    message = await ctx.send(":ping_pong:!")
     return await message.edit(
-        content=f"fuck off ({round((message.created_at - ctx.message.created_at).microseconds / 1000)} ms)")
+        content=f":ping_pong:! ({round((message.created_at - ctx.message.created_at).microseconds / 1000)} ms)")
 
 
 @zeph.command(aliases=["dice"])

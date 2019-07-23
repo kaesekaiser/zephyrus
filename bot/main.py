@@ -20,7 +20,7 @@ commandCategories = {
     "Utilities": ["roll", "convert", "sayno", "choose", "8ball", "color", "timein", "avatar", "wikipedia", "factors"],
     "Images": ["hueshift", "invert"],
     "Languages": ["pinyin", "jyutping", "translate", "badtranslate", "runes", "foreignwiki", "yale", "narahlena",
-                  "simplified", "traditional"],
+                  "simplified", "traditional", "sampa"],
     "Bot": ["ping", "help", "invite", "about"]
 }
 
@@ -74,6 +74,7 @@ commandFormats = {
     "simplified": "z!simplified <Traditional Chinese text...>",
     "traditional": "z!traditional <Simplified Chinese text...>",
     "factors": "z!factors <integer>",
+    "sampa": "z!sampa <X-SAMPA text...>",
 
     "help": "z!help [command]"
 }
@@ -186,6 +187,8 @@ descs = {
     "simplified": "Converts Traditional Chinese characters to Simplified Chinese.",
     "traditional": "Converts Simplified Chinese characters to Traditional Chinese.",
     "factors": "Returns the prime factors of <integer>.",
+    "sampa": "Converts a given string of [X-SAMPA](https://en.wikipedia.org/wiki/X-SAMPA) to the International Phonetic"
+             " Alphabet. ``*`` can be used as an escape character."
 
     "help": "Shows the usage + format of a command. If no command is provided, lists all available commands."
 }
