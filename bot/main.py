@@ -19,7 +19,7 @@ commandCategories = {
     "Ciphers": ["rot", "rot13", "vigenere", "devigenere"],
     "Utilities": ["roll", "convert", "sayno", "choose", "8ball", "color", "timein", "avatar", "wikipedia", "factors"],
     "Images": ["hueshift", "invert"],
-    "Languages": ["pinyin", "jyutping", "translate", "badtranslate", "runes", "foreignwiki", "yale", "narahlena",
+    "Languages": ["pinyin", "jyutping", "translate", "runes", "foreignwiki", "yale", "narahlena",
                   "simplified", "traditional", "sampa"],
     "Bot": ["ping", "help", "invite", "about"]
 }
@@ -242,7 +242,8 @@ async def about(ctx: commands.Context):
         f"**Build:** {zeph_version} / Python {py_version}\n"
         f"[GitHub](https://github.com/kaesekaiser/zephyrus) / "
         f"[Invite](https://discordapp.com/oauth2/authorize?client_id={zeph.user.id}&scope=bot&permissions=8192)",
-        thumbnail=zeph.user.avatar_url
+        thumbnail=zeph.user.avatar_url,
+        footer=f"Feel free to DM {zeph.get_user(238390171022655489)} with any questions!"
     )
 
 
