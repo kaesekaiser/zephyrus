@@ -60,7 +60,12 @@ async def planes(ctx: commands.Context, func: str = None, *args: str):
 
 
 class PlanesInterpreter(Interpreter):
-    redirects = {"offload": "unload", "city": "airport", "airports": "cities"}
+    redirects = {
+        "offload": "unload", "city": "airport", "airports": "cities",
+        "p": "profile", "f": "fleet", "j": "jobs", "l": "load", "g": "launch", "a": "airport", "c": "country",
+        "k": "market", "m": "model", "h": "help", "u": "upgrade", "d": "dist", "e": "eta", "s": "cities",
+        "n": "unowned", "b": "buyout"
+    }
 
     @property
     def user(self):
