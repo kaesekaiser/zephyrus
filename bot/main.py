@@ -356,7 +356,9 @@ async def on_ready():
     print([g for g in zeph.all_commands if g not in aliases])
     print([g for g in zeph.all_commands if g not in aliases and not zeph.all_commands[g].hidden and
           (g not in commandFormats or g not in descs or g not in [j for k in commandCategories.values() for j in k])])
-    setattr(zeph, "fortServers", [g for g in zeph.guilds if g.owner.id in [238390171022655489, 474398677599780886]])
+    setattr(zeph, "fortServers", [
+        g for g in zeph.guilds if g.owner in [zeph.get_user(238390171022655489), zeph.get_user(474398677599780886)]
+    ])
     zeph.loop.create_task(initialize_planes())
     zeph.loop.create_task(zeph.load_romanization())
 
