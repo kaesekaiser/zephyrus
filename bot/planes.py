@@ -199,7 +199,7 @@ class PlanesInterpreter(Interpreter):
                      "money spent on upgrades.",
             "country": "``z!planes country <country>`` shows information for a country.\n"
                        "``z!planes country buy <country>`` buys the license to a country.",
-            "airport": "``z!planes airport <airport>`` shows information for am airport.\n"
+            "airport": "``z!planes airport <airport>`` shows information for an airport.\n"
                        "``z!planes airport buy <airport>`` buys the airport.\n"
                        "``z!planes airport sell <airport>`` sells the airport for 25% of its purchase value.",
             "model": "``z!planes model <model>`` shows specs for a plane model.",
