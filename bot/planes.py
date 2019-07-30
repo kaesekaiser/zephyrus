@@ -64,7 +64,7 @@ class PlanesInterpreter(Interpreter):
         "offload": "unload", "city": "airport", "airports": "cities",
         "p": "profile", "f": "fleet", "j": "jobs", "l": "load", "g": "launch", "a": "airport", "c": "country",
         "k": "market", "m": "model", "h": "help", "u": "upgrade", "d": "dist", "e": "eta", "s": "cities",
-        "n": "unowned", "b": "buyout"
+        "n": "unowned", "b": "buy", "o": "buyout"
     }
 
     @property
@@ -202,10 +202,8 @@ class PlanesInterpreter(Interpreter):
                      "``z!planes fleet <plane>`` shows specs for a specific plane.\n"
                      "``z!planes fleet sell <plane>`` sells a plane for 25% of its purchase value, including "
                      "money spent on upgrades.",
-            "country": "``z!planes country <country>`` shows information for a country.\n"
-                       "``z!planes country buy <country>`` buys the license to a country.",
+            "country": "``z!planes country <country>`` shows information for a country.",
             "airport": "``z!planes airport <airport>`` shows information for an airport.\n"
-                       "``z!planes airport buy <airport>`` buys the airport.\n"
                        "``z!planes airport sell <airport>`` sells the airport for 25% of its purchase value.",
             "model": "``z!planes model <model>`` shows specs for a plane model.",
             "dist": "``z!planes dist <from> <to>`` returns the distance between two airports.\n"
@@ -221,6 +219,12 @@ class PlanesInterpreter(Interpreter):
                       "``z!planes launch meadowlark washington newyork boston`` will tell Meadowlark to "
                       "follow the path from its current location to Washington, then NewYork, then Boston, "
                       "without stopping. Planes will automatically unload jobs along the way.",
+            "buy": "``z!planes buy airport <airports>`` purchases the given airport(s), provided you have "
+                   "enough funds. You can also use the shortcut ``z!p b a``.\n"
+                   "``z!planes buy country <countries>`` does the same, but for countries. You can use the shortcut "
+                   "``z!p b c``.\n"
+                   "``z!planes buy plane <model>`` buys a new plane of the given model. You can only buy one plane at a"
+                   "time, and you can use the shortcut ``z!p b p``.",
             "fuel": "``z!planes fuel`` shows the day's fuel prices. Prices change at midnight UTC.",
             "load": "``z!planes load <plane> <job codes>`` loads jobs onto a plane. The job code is the "
                     "five-letter/number code on the left side of a job list.",
@@ -229,8 +233,7 @@ class PlanesInterpreter(Interpreter):
             "rename": "``z!planes rename <plane> <new name>`` renames plane. Names can only contain "
                       "alphanumeric characters, dashes, and underscores.",
             "market": "``z!planes market`` shows prices for all available plane models. Like fuel, "
-                      "plane prices fluctuate daily.\n"
-                      "``z!planes market buy <model>`` purchases a new craft.",
+                      "plane prices fluctuate daily.",
             "eta": "``z!planes eta <plane>`` links to the timer for a plane's arrival.",
             "cities": "``z!planes cities <country>`` lists all airports in a certain country, ordered "
                       "by traffic.",
@@ -249,7 +252,7 @@ class PlanesInterpreter(Interpreter):
                       "starting with the biggest airports. For your personal convenience, so that you can quickly "
                       "expand into a new market without having to manually buy a ton of airports.\n"
                       "``z!planes buyout <country> <number>`` does the same, but will only buy, at most, ``<number>`` "
-                      "airports."
+                      "airports.",
         }
         desc_dict = {
             "map": "Links to the airport map.",
@@ -261,6 +264,7 @@ class PlanesInterpreter(Interpreter):
             "dist": "Shows distance between two airports, or along a path.",
             "jobs": "Lists available jobs at an airport.",
             "launch": "Launches a plane along a path.",
+            "buy": "Buys airports, countries, or planes.",
             "fuel": "Shows today's fuel price.",
             "load": "Loads jobs on a plane.",
             "unload": "Removes jobs from a plane.",
@@ -273,12 +277,16 @@ class PlanesInterpreter(Interpreter):
             "upgrade": "Upgrades a plane's engine or fuel tank.",
             "buyout": "Buys all unowned airports in a country you can afford."
         }
+        shortcuts = {j: g for g, j in self.redirects.items() if len(g) == 1}
+
+        def get_command(s: str):
+            return f"**`{s}`** (or **`{shortcuts[s]}`**)" if shortcuts.get(s) else f"**`{s}`**"
 
         if len(args) == 0 or (args[0].lower() not in help_dict and args[0].lower() not in self.redirects):
             return await plane.send(
                 self.ctx, "z!planes help",
-                d=f"Available functions:\n```{', '.join(list(help_dict.keys()))}```\n"
-                f"For information on how to use these, use ``z!planes help <function>``."
+                d="Available functions:\n\n" + "\n".join(f"{get_command(g)} - {j}" for g, j in desc_dict.items()) +
+                "\n\nFor information on how to use these, use ``z!planes help <function>``."
             )
 
         ret = self.redirects.get(args[0].lower(), args[0].lower())
@@ -311,13 +319,13 @@ class PlanesInterpreter(Interpreter):
                 raise commands.CommandError("no plane input")
             args = args[1], args[0]
         if args[0].lower() not in self.user.planes:
-            return await plane.send(self.ctx, "no owned plane by that name")
+            raise commands.CommandError("no owned plane by that name")
 
         craft = self.user.planes[args[0].lower()]
 
         if len(args) > 1 and args[1] == "sell":
             if len(self.user.planes) == 1:
-                return await plane.send(self.ctx, "You can't sell your last plane.")
+                raise commands.CommandError("You can't sell your last plane.")
 
             resale = int(self.model_prices[craft.model.lower()] / 4)
             if await confirm(f"You're selling {craft.name} for Ȼ{pn.addcomm(resale)}.", self.ctx, self.au):
@@ -342,10 +350,6 @@ class PlanesInterpreter(Interpreter):
     async def _country(self, *args):
         if len(args) == 0:
             raise commands.CommandError("Please input a country.")
-        if args[0].lower() == "buy":
-            if len(args) == 1:
-                raise commands.CommandError("no country input")
-            args = args[1], args[0], *args[2:]
 
         try:
             country = pn.find_country(args[0])
@@ -353,20 +357,6 @@ class PlanesInterpreter(Interpreter):
             raise commands.CommandError("invalid country")
 
         assert isinstance(country, pn.Country)
-        if len(args) > 1 and args[1].lower() == "buy":
-            if country.name in self.user.countries:
-                raise commands.CommandError("country already owned")
-
-            price = round(country.worth)
-            if price > self.user.credits:
-                raise commands.CommandError("not enough credits")
-
-            if await confirm(f"You're buying the {country.name} license for Ȼ{pn.addcomm(price)}.", self.ctx, self.au):
-                self.user.credits -= price
-                self.user.countries.append(country.name)
-                return await succ.send(self.ctx, "License purchased!")
-
-            return await plane.send(self.ctx, "Purchase cancelled.")
 
         owned = len([g for g in pn.cities.values() if g.country == country.name
                      and g.name in self.user.cities])
@@ -382,7 +372,7 @@ class PlanesInterpreter(Interpreter):
     async def _airport(self, *args):
         if len(args) == 0:
             raise commands.CommandError("Please input a function or airport.")
-        if args[0].lower() in ["buy", "sell"]:
+        if args[0].lower() in ["sell"]:
             if len(args) == 1:
                 raise commands.CommandError("no airport input")
             args = args[1], args[0], *args[2:]
@@ -393,21 +383,6 @@ class PlanesInterpreter(Interpreter):
             raise commands.CommandError(self.invalid_city(args[0]))
 
         assert isinstance(city, pn.City)
-        if len(args) > 1 and args[1].lower() == "buy":
-            if city.country not in self.user.countries:
-                raise commands.CommandError("You don't have the {} license.".format(city.country))
-            if city.name in self.user.cities:
-                raise commands.CommandError("airport already owned")
-            price = round(city.value)
-            if price > self.user.credits:
-                raise commands.CommandError("not enough credits")
-
-            if await confirm(f"You're buying {city.name} Airport for Ȼ{pn.addcomm(price)}.", self.ctx, self.au):
-                self.user.credits -= price
-                self.user.cities.append(city.name)
-                return await succ.send(self.ctx, "Airport purchased!")
-            else:
-                return await plane.send(self.ctx, "Purchase cancelled.")
 
         if len(args) > 1 and args[1].lower() == "sell":
             if city.name not in self.user.cities:
@@ -456,7 +431,7 @@ class PlanesInterpreter(Interpreter):
             fuel_cost += round(craft.lpk * path[i].dist(path[i + 1]) * self.fuel_price, 2)
 
         if round(fuel_cost) > self.user.credits:
-            return await plane.send(self.ctx, "You don't have enough money for fuel.")
+            raise commands.CommandError("You don't have enough money for fuel.")
 
         self.user.credits -= round(fuel_cost)
         craft.launch(*args)
@@ -487,9 +462,9 @@ class PlanesInterpreter(Interpreter):
 
     async def _dist(self, *args):
         if len(args) == 0:
-            return await plane.send(self.ctx, "no city input")
+            raise commands.CommandError("no city input")
         if len(args) == 1:
-            return await plane.send(self.ctx, "no destination input")
+            raise commands.CommandError("no destination input")
 
         try:
             pn.find_city(args[0])
@@ -509,7 +484,7 @@ class PlanesInterpreter(Interpreter):
 
     async def _priority(self, *args):
         if len(args) == 0:
-            return await plane.send(self.ctx, "no city input")
+            raise commands.CommandError("no city input")
         try:
             city = pn.find_city(args[0])
         except KeyError:
@@ -536,7 +511,7 @@ class PlanesInterpreter(Interpreter):
 
     async def _jobs(self, *args):
         if len(args) == 0:
-            return await plane.send(self.ctx, "no city input")
+            raise commands.CommandError("no city input")
         try:
             city = pn.find_city(args[0])
         except KeyError:
@@ -591,7 +566,7 @@ class PlanesInterpreter(Interpreter):
                 raise commands.CommandError("Cannot simultaneously load jobs from different airports.")
             if job.upper() in self.user.jobs:
                 p = [g for g in self.user.planes.values() if job.upper() in g.jobs][0]
-                return await plane.send(self.ctx, f"You've already loaded {job} onto {p.name}.")
+                raise commands.CommandError(f"You've already loaded {job} onto {p.name}.")
 
         possible_planes = [
             g for g in self.user.planes.values() if g.landed_at == pn.Job.from_str(jobs[0]).source and not g.is_full
@@ -677,81 +652,8 @@ class PlanesInterpreter(Interpreter):
 
     async def _market(self, *args):
         prices = self.model_prices
-
-        if len(args) > 0:
-            if args[0].lower() != "buy":
-                raise commands.CommandError(f"invalid function ``{args[0]}``")
-            if len(args) == 1:
-                raise commands.CommandError("no purchase input")
-            if args[1].lower() not in pn.craft:
-                raise commands.CommandError("invalid model")
-
-            model = args[1].lower()
-            if prices[model] > zeph.planeUsers[self.au.id].credits:
-                return await plane.send(self.ctx, "You don't have enough credits.")
-
-            if await confirm(f"You're buying a {pn.craft[model].name} for Ȼ{pn.addcomm(prices[model])}.",
-                             self.ctx, self.au):
-                await succ.send(self.ctx, "Aircraft purchased! What would you like to name your new craft?")
-
-                def pred1(m: discord.Message):
-                    return m.author == self.au and m.channel == self.ctx.channel
-
-                def pred2(m: discord.Message):
-                    if m.author == self.au and m.channel == self.ctx.channel:
-                        try:
-                            pn.find_city(m.content.lower())
-                        except KeyError:
-                            return False
-                        else:
-                            return True
-
-                while True:
-                    try:
-                        mess = await zeph.wait_for("message", timeout=300, check=pred1)
-                    except asyncio.TimeoutError:
-                        return await plane.send(self.ctx, "Purchase timed out and cancelled.")
-
-                    else:
-                        if [g in pn.permit for g in mess.content].count(False) != 0:
-                            await plane.send(self.ctx,
-                                             "Plane names can only contain alphanumerics, dashes, and underscores.",
-                                             d=f"What would you like to name your new {pn.craft[model].name}?")
-                        elif mess.content.lower() in zeph.planeUsers[self.au.id].planes:
-                            await plane.send(self.ctx, "You already own a plane by that name.",
-                                             d=f"What would you like to name your new {pn.craft[model].name}?")
-                        elif mess.content.lower() == "sell":
-                            await plane.send(self.ctx, "You can't name a plane that.",
-                                             d=f"What would you like to name your new {pn.craft[model].name}?")
-                        else:
-                            await succ.send(self.ctx, f"{pn.craft[model].name} named {mess.content}.")
-                            new = pn.Plane.new(model)
-                            new.name = mess.content
-                            break
-
-                await plane.send(self.ctx, f"What city do you want to deploy {new.name} in?")
-                while True:
-                    try:
-                        mess = await zeph.wait_for("message", timeout=300, check=pred2)
-                    except asyncio.TimeoutError:
-                        return await plane.send(self.ctx, "Purchase timed out and cancelled.")
-
-                    else:
-                        if pn.find_city(mess.content).name not in zeph.planeUsers[self.au.id].cities:
-                            await plane.send(self.ctx, f"You don't own {pn.find_city(mess.content).name}.",
-                                             d=f"What city do you want to deploy {new.name} in?")
-                        else:
-                            new.path = pn.Path(0, pn.find_city(mess.content))
-                            self.user.credits -= prices[model]
-                            self.user.planes[new.name.lower()] = new
-                            return await succ.send(self.ctx, f"{new.name} ready for flight!")
-
-            else:
-                return await plane.send(self.ctx, "Purchase cancelled.")
-
-        else:
-            prices = {pn.craft[g].name: f"Ȼ{pn.addcomm(prices[g])}" for g in prices}
-            return await FieldNavigator(plane, prices, 6, "The Market [{page}/{pgs}]", same_line=True).run(self.ctx)
+        prices = {pn.craft[g].name: f"Ȼ{pn.addcomm(prices[g])}" for g in prices}
+        return await FieldNavigator(plane, prices, 6, "The Market [{page}/{pgs}]", same_line=True).run(self.ctx)
 
     async def _eta(self, *args):
         if len(args) == 0:
@@ -813,7 +715,7 @@ class PlanesInterpreter(Interpreter):
 
         up_cost = int(10000 * 2 ** sum(craft.upgrades + [1]))
         if up_cost > self.user.credits:
-            return await plane.send(
+            raise commands.CommandError(
                 self.ctx, f"You don't have enough credits. Your next upgrade will cost Ȼ{pn.addcomm(up_cost)}."
             )
 
@@ -836,7 +738,7 @@ class PlanesInterpreter(Interpreter):
 
         assert isinstance(country, pn.Country)
         if country.name not in self.user.countries:
-            return await plane.send(self.ctx, f"You don't have the license to {country.name}.")
+            raise commands.CommandError(f"You don't have the license to {country.name}.")
 
         if len(args) > 1:
             try:
@@ -850,7 +752,7 @@ class PlanesInterpreter(Interpreter):
         for city in country.cities:
             if sum([g.value for g in bought] + [city.value]) > self.user.credits or len(bought) == stop_at:
                 if not bought:
-                    return await plane.send(self.ctx, f"You can't afford the biggest airport in {country.name}.")
+                    raise commands.CommandError(f"You can't afford the biggest airport in {country.name}.")
                 total = False
                 break
 
@@ -859,7 +761,7 @@ class PlanesInterpreter(Interpreter):
                 price += city.value
 
         if not bought:
-            return await plane.send(self.ctx, f"You already own every airport in {country.name}.")
+            raise commands.CommandError(f"You already own every airport in {country.name}.")
 
         confirm_text = "every airport" if total else f"the {len(bought)} biggest airports"
         try:
@@ -888,6 +790,128 @@ class PlanesInterpreter(Interpreter):
             await asyncio.sleep(2 + random() * 2)
             del zeph.planeUsers[self.au.id]
             return await succ.edit(mess, "Done.", d="Call any ``z!planes`` function to start anew.")
+
+    async def _buy(self, *args):
+        if len(args) < 2:
+            raise commands.CommandError("no purchase input")
+
+        if args[0].lower() in ["a", "airport", "airports", "city", "cities"]:
+            purchases = []
+            for i in args[1:]:
+                try:
+                    purchases.append(pn.find_city(i))
+                except KeyError:
+                    raise commands.CommandError(self.invalid_city(i))
+
+            for i in purchases:
+                if i.name in self.user.cities:
+                    raise commands.CommandError(f"You already own {i.name}.")
+
+            cost = round(sum(g.value for g in purchases))
+            if cost > self.user.credits:
+                raise commands.CommandError(f"You don't have enough credits; you need Ȼ{add_commas(cost)}.")
+
+            if await confirm(
+                f"You're buying {len(purchases)} airport(s) for a total of Ȼ{add_commas(cost)}.", self.ctx, self.au
+            ):
+                self.user.credits -= cost
+                self.user.cities.extend(g.name for g in purchases)
+                return await succ.send(self.ctx, "Airport(s) purchased.")
+
+        elif args[0].lower() in ["c", "country", "countries", "license", "licenses"]:
+            purchases = []
+            for i in args[1:]:
+                try:
+                    purchases.append(pn.find_country(i))
+                except KeyError:
+                    raise commands.CommandError(self.invalid_city(i))
+
+            for i in purchases:
+                if i.name in self.user.countries:
+                    raise commands.CommandError(f"You already own the license to {i.name}.")
+
+            cost = round(sum(g.worth for g in purchases))
+            if cost > self.user.credits:
+                raise commands.CommandError(f"You don't have enough credits; you need Ȼ{add_commas(cost)}.")
+
+            if await confirm(
+                f"You're buying {len(purchases)} country license(s) for a total of Ȼ{add_commas(cost)}.",
+                self.ctx, self.au
+            ):
+                self.user.credits -= cost
+                self.user.countries.extend(g.name for g in purchases)
+                return await succ.send(self.ctx, "Airport(s) purchased.")
+
+        elif args[0].lower() in ["p", "plane", "planes"]:
+            if len(args) > 2:
+                raise commands.CommandError("Only buy one plane at a time.")
+
+            if args[1].lower() not in pn.craft:
+                raise commands.CommandError("invalid model")
+
+            model = args[1].lower()
+            prices = self.model_prices
+            if prices[model] > self.user.credits:
+                raise commands.CommandError("You don't have enough credits.")
+
+            if await confirm(f"You're buying a {pn.craft[model].name} for Ȼ{pn.addcomm(prices[model])}.",
+                             self.ctx, self.au):
+                await succ.send(self.ctx, "Aircraft purchased! What would you like to name your new craft?")
+
+                def pred1(m: discord.Message):
+                    return m.author == self.au and m.channel == self.ctx.channel
+
+                def pred2(m: discord.Message):
+                    if m.author == self.au and m.channel == self.ctx.channel:
+                        try:
+                            pn.find_city(m.content.lower())
+                        except KeyError:
+                            return False
+                        else:
+                            return True
+
+                while True:
+                    try:
+                        mess = await zeph.wait_for("message", timeout=300, check=pred1)
+                    except asyncio.TimeoutError:
+                        return await plane.send(self.ctx, "Purchase timed out and cancelled.")
+
+                    else:
+                        if [g in pn.permit for g in mess.content].count(False) != 0:
+                            await plane.send(self.ctx,
+                                             "Plane names can only contain alphanumerics, dashes, and underscores.",
+                                             d=f"What would you like to name your new {pn.craft[model].name}?")
+                        elif mess.content.lower() in self.user.planes:
+                            await plane.send(self.ctx, "You already own a plane by that name.",
+                                             d=f"What would you like to name your new {pn.craft[model].name}?")
+                        elif mess.content.lower() == "sell":
+                            await plane.send(self.ctx, "You can't name a plane that.",
+                                             d=f"What would you like to name your new {pn.craft[model].name}?")
+                        else:
+                            await succ.send(self.ctx, f"{pn.craft[model].name} named {mess.content}.")
+                            new = pn.Plane.new(model)
+                            new.name = mess.content
+                            break
+
+                await plane.send(self.ctx, f"What city do you want to deploy {new.name} in?")
+                while True:
+                    try:
+                        mess = await zeph.wait_for("message", timeout=300, check=pred2)
+                    except asyncio.TimeoutError:
+                        return await plane.send(self.ctx, "Purchase timed out and cancelled.")
+
+                    else:
+                        if pn.find_city(mess.content).name not in self.user.cities:
+                            await plane.send(self.ctx, f"You don't own {pn.find_city(mess.content).name}.",
+                                             d=f"What city do you want to deploy {new.name} in?")
+                        else:
+                            new.path = pn.Path(0, pn.find_city(mess.content))
+                            self.user.credits -= prices[model]
+                            self.user.planes[new.name.lower()] = new
+                            return await succ.send(self.ctx, f"{new.name} ready for flight!")
+
+            else:
+                return await plane.send(self.ctx, "Purchase cancelled.")
 
 
 class JobNavigator(Navigator):
