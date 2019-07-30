@@ -251,6 +251,28 @@ class PlanesInterpreter(Interpreter):
                       "``z!planes buyout <country> <number>`` does the same, but will only buy, at most, ``<number>`` "
                       "airports."
         }
+        desc_dict = {
+            "map": "Links to the airport map.",
+            "profile": "Shows your country licenses and credit balance.",
+            "fleet": "List or show details for your planes.",
+            "country": "Shows info for a country.",
+            "airport": "Shows info for an airport.",
+            "model": "Shows specs for a plane model.",
+            "dist": "Shows distance between two airports, or along a path.",
+            "jobs": "Lists available jobs at an airport.",
+            "launch": "Launches a plane along a path.",
+            "fuel": "Shows today's fuel price.",
+            "load": "Loads jobs on a plane.",
+            "unload": "Removes jobs from a plane.",
+            "rename": "Renames a plane.",
+            "market": "Browses the market for new planes.",
+            "eta": "Shows ETAs for planes.",
+            "cities": "Lists all airports in a country.",
+            "unowned": "Lists all unowned airports in a country.",
+            "stats": "Shows specs and upgrades for a plane.",
+            "upgrade": "Upgrades a plane's engine or fuel tank.",
+            "buyout": "Buys all unowned airports in a country you can afford."
+        }
 
         if len(args) == 0 or (args[0].lower() not in help_dict and args[0].lower() not in self.redirects):
             return await plane.send(
@@ -555,40 +577,57 @@ class PlanesInterpreter(Interpreter):
 
     async def _load(self, *args):
         if len(args) == 0:
-            raise commands.CommandError("no airplane input")
-        if args[0].lower() not in self.user.planes:
-            raise commands.CommandError("no owned plane by that name")
-        if len(args) == 1:
             raise commands.CommandError("no job codes input")
 
-        craft = self.user.planes[args[0].lower()]
-        if len(craft.path) != 0:
-            raise commands.CommandError("plane is in the air")
-
         jobs = []
-        for job in args[1:]:  # filters out duplicates while preserving input order
+        for job in args:  # filters out duplicates while preserving input order
             if job not in jobs:
                 jobs.append(job)
 
         for job in jobs:
             if not self.valid_job(job):
                 raise commands.CommandError(f"invalid job code {job}")
+            if pn.Job.from_str(job).source != pn.Job.from_str(jobs[0]).source:
+                raise commands.CommandError("Cannot simultaneously load jobs from different airports.")
             if job.upper() in self.user.jobs:
                 p = [g for g in self.user.planes.values() if job.upper() in g.jobs][0]
                 return await plane.send(self.ctx, f"You've already loaded {job} onto {p.name}.")
-            if pn.code_city(job[:2]) != craft.path[0]:
-                raise commands.CommandError(f"plane is at different airport from {job}")
+
+        possible_planes = [
+            g for g in self.user.planes.values() if g.landed_at == pn.Job.from_str(jobs[0]).source and not g.is_full
+        ]
+        if len(possible_planes) == 0:
+            raise commands.CommandError(f"You have no empty planes landed at {pn.Job.from_str(jobs[0]).source.name}.")
+        elif len(possible_planes) == 1:
+            craft = possible_planes[0]
+        else:
+            await plane.send(
+                self.ctx, f"You have multiple planes landed at {pn.Job.from_str(jobs[0]).source.name}.",
+                d=f"Do you want to load these jobs onto {grammatical_join([g.name for g in possible_planes], 'or')}?"
+            )
+
+            def pred(m: discord.Message):
+                return m.author == self.ctx.author and m.channel == self.ctx.channel and m.content.lower() in \
+                    [g.name.lower() for g in possible_planes]
+
+            try:
+                mess = await zeph.wait_for("message", timeout=90, check=pred)
+            except asyncio.TimeoutError:
+                raise commands.CommandError(f"{self.ctx.author.name}'s load request timed out.")
+            else:
+                craft = [g for g in possible_planes if g.name.lower() == mess.content.lower()][0]
 
         for job in jobs:
             try:
                 craft.load(job.upper())
             except ValueError:
-                if jobs.index(job) == 0:
-                    return await plane.send(self.ctx, "That plane is fully loaded.")
-                else:
-                    return await succ.send(self.ctx, f"Fully loaded plane with the first {jobs.index(job)} job(s).")
+                return await succ.send(self.ctx, f"Fully loaded {craft.name} with the first {jobs.index(job)} job(s).")
 
-        return await succ.send(self.ctx, "Job loaded." if len(jobs) == 1 else "Jobs loaded.")
+        return await succ.send(
+            self.ctx, f"Job loaded onto {craft.name}." if len(jobs) == 1 else f"Jobs loaded onto {craft.name}.",
+            d=f"{craft.name} is now full." if craft.is_full else
+              f"{craft.name} has {craft.pass_cap - len(craft.jobs)} empty slots remaining."
+        )
 
     async def _rename(self, *args):
         if len(args) == 0:

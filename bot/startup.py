@@ -465,4 +465,11 @@ def two_digit(n: Flint):
     return str(round(n, 2)) + "0" * (2 - len(str(round(n, 2)).split(".")[1]))
 
 
+def grammatical_join(l: list, conj: str = "and"):
+    if len(l) <= 2:
+        return " ".join(l)
+    else:
+        return f"{', '.join(l[:-1])}, {conj} {l[-1]}"
+
+
 blue = hexcol("5177ca")  # color that many commands use
