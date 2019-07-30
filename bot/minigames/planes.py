@@ -147,7 +147,7 @@ class City:
         )
 
     def __eq__(self, other):
-        return self.name == other.name
+        return isinstance(other, City) and self.name == other.name
 
     def dist(self, other):
         return greatcirc(self.radcoords, other.radcoords)
