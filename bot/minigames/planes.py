@@ -287,8 +287,16 @@ class Plane:
                 "Fuel Tank": f"{round(self.fuel_cap)} L", "Range": f"{self.range} km",
                 "Power Level": self.upgrades[0], "Tank Level": self.upgrades[1]}
 
+    @property
+    def landed_at(self):
+        return None if len(self.path) > 0 else self.path[0]
+
+    @property
+    def is_full(self):
+        return len(self.jobs) == self.pass_cap
+
     def load(self, job: str):
-        if len(self.jobs) == self.pass_cap:
+        if self.is_full:
             raise ValueError("fully loaded")
         self.jobs.append(job.upper())
 
