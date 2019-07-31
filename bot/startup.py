@@ -4,7 +4,7 @@ import inspect
 import json
 from discord.ext import commands
 from typing import Union
-from minigames.risk import snip
+from minigames.risk import snip, Image
 from utilities.words import levenshtein
 from math import ceil, atan2, sqrt, pi
 from random import choice
@@ -26,6 +26,15 @@ class Zeph(commands.Bot):
         self.planeUsers = {}
         self.epitaphChannels = []
         self.roman = pjs.RomanizationConversion()
+        self.airportMaps = {
+            1: Image.open("minigames/minimaps/worldzoom1.png").convert("RGBA"),
+            2: Image.open("minigames/minimaps/worldzoom2.png").convert("RGBA"),
+            4: Image.open("minigames/minimaps/worldzoom4.png").convert("RGBA")
+        }
+        self.airportIcon = Image.open("minigames/minimaps/airport_large.png").convert("RGBA")
+        for i in self.airportMaps.values():
+            assert isinstance(i, Image.Image)
+        assert isinstance(self.airportIcon, Image.Image)
 
     @property
     def emojis(self):
@@ -352,8 +361,13 @@ class Navigator:
     async def close(self):
         await self.message.delete()
 
-    async def run(self, ctx: commands.Context):  # SHOULD NEVER BE OVERWRITTEN
-        self.message = await ctx.channel.send(embed=self.con)
+    async def run(self, ctx: commands.Context, on_new_message: bool = True):  # SHOULD NEVER BE OVERWRITTEN
+        if on_new_message:
+            self.message = await ctx.channel.send(embed=self.con)
+        else:
+            assert isinstance(self.message, discord.Message)
+            await self.message.edit(embed=self.con)
+
         for button in self.legal:
             try:
                 await self.message.add_reaction(button)

@@ -2,6 +2,7 @@ from epitaph import *
 from minigames import planes as pn
 from math import sin, cos
 import datetime
+import os
 
 
 async def initialize_planes():
@@ -64,7 +65,7 @@ class PlanesInterpreter(Interpreter):
         "offload": "unload", "city": "airport", "airports": "cities",
         "p": "profile", "f": "fleet", "j": "jobs", "l": "load", "g": "launch", "a": "airport", "c": "country",
         "k": "market", "m": "model", "h": "help", "u": "upgrade", "d": "dist", "e": "eta", "s": "cities",
-        "n": "unowned", "b": "buy", "o": "buyout"
+        "n": "unowned", "b": "buy", "o": "buyout", "r": "rename"
     }
 
     @property
@@ -203,7 +204,8 @@ class PlanesInterpreter(Interpreter):
                      "``z!planes fleet sell <plane>`` sells a plane for 25% of its purchase value, including "
                      "money spent on upgrades.",
             "country": "``z!planes country <country>`` shows information for a country.",
-            "airport": "``z!planes airport <airport>`` shows information for an airport.\n"
+            "airport": "``z!planes airport <airport>`` shows information for an airport. You can use the :mag: button "
+                       "to toggle the zoom on the minimap that appears.\n"
                        "``z!planes airport sell <airport>`` sells the airport for 25% of its purchase value.",
             "model": "``z!planes model <model>`` shows specs for a plane model.",
             "dist": "``z!planes dist <from> <to>`` returns the distance between two airports.\n"
@@ -396,10 +398,27 @@ class PlanesInterpreter(Interpreter):
 
             return await plane.send(self.ctx, "Sale cancelled.")
 
-        return await plane.send(
+        message = await plane.send(
             self.ctx, city.name + " Airport",
             fs={**city.dict, "Owned": ["No", "Yes"][city.name in self.user.cities]}, same_line=True
         )
+
+        minimaps = {}
+        for zoom in [1, 2, 4]:
+            if os.path.exists(f"storage/minimaps/{city.name}{zoom}.png"):  # avoid unnecessary image generation
+                minimaps[zoom] = await image_url(f"storage/minimaps/{city.name}{zoom}.png")
+            else:
+                base = copy(zeph.airportMaps[zoom])
+                left_bound = max(0, min(city.imageCoords[zoom][0] - 300, 2752 * zoom - 601))
+                upper_bound = max(0, min(city.imageCoords[zoom][1] - 300, 1396 * zoom - 601))
+                right_bound = left_bound + 600
+                lower_bound = upper_bound + 600
+                rk.merge_down(zeph.airportIcon, base, *city.imageCoords[zoom], center=True)
+                base = base.crop((left_bound, upper_bound, right_bound, lower_bound))
+                base.save(f"storage/minimaps/{city.name}{zoom}.png")
+                minimaps[zoom] = await image_url(f"storage/minimaps/{city.name}{zoom}.png")
+
+        return await AirportNavigator(self, city, message, minimaps).run(self.ctx, False)
 
     async def _launch(self, *args):
         if len(args) == 0:
@@ -657,7 +676,17 @@ class PlanesInterpreter(Interpreter):
 
     async def _eta(self, *args):
         if len(args) == 0:
-            raise commands.CommandError("no plane input")
+            def eta(p: pn.Plane):
+                return "**`Landed`** at " if p.landed_at else f"**`{pn.hrmin(p.arrival - now)}`** to"
+
+            now = time.time()
+            return await plane.send(
+                self.ctx, "All ETAs",
+                d="\n".join(
+                    f"{g.name} - {eta(g)} {g.path[-1].name}"
+                    for g in self.user.planes.values()
+                )
+            )
         if args[0].lower() not in self.user.planes:
             raise commands.CommandError("no owned plane by that name")
 
@@ -806,6 +835,8 @@ class PlanesInterpreter(Interpreter):
             for i in purchases:
                 if i.name in self.user.cities:
                     raise commands.CommandError(f"You already own {i.name}.")
+                if i.country not in self.user.countries:
+                    raise commands.CommandError(f"You don't have the license to {i.country}.")
 
             cost = round(sum(g.value for g in purchases))
             if cost > self.user.credits:
@@ -929,3 +960,25 @@ class JobNavigator(Navigator):
         ret = self.interpreter.filter_jobs(self.city, self.fil)
         self.table = ret["table"]
         self.kwargs["footer"] = ret["footer"]
+
+
+class AirportNavigator(Navigator):
+    def __init__(self, inter: PlanesInterpreter, city: pn.City, message: discord.Message, minimaps: dict):
+        super().__init__(plane, [], 0, f"{city.name} Airport", prev="", nxt="")
+        self.interpreter = inter
+        self.city = city
+        self.funcs["🔍"] = self.zoom
+        self.zoom_level = 2
+        self.message = message
+        self.minimaps = minimaps
+
+    def zoom(self):
+        self.zoom_level = {1: 2, 2: 4, 4: 1}[self.zoom_level]
+
+    @property
+    def con(self):
+        return self.emol.con(
+            self.city.name + " Airport", same_line=True,
+            fs={**self.city.dict, "Owned": ["No", "Yes"][self.city.name in self.interpreter.user.cities]},
+            thumb=self.minimaps[self.zoom_level]
+        )
