@@ -1,4 +1,4 @@
-from math import sin, cos, asin, acos, pi, log10, floor, log, atan2, sqrt
+from math import sin, cos, asin, acos, pi, log10, floor, log, atan2, sqrt, tan, asinh
 from random import choices, choice
 from minigames.planecities import *
 from geopy.geocoders import Nominatim
@@ -105,6 +105,46 @@ def rad(n):
     return rd(n)
 
 
+def robinson_x(x):  # found this works better than neville approximation
+    return 1.0000025782957427 - 4.3272151850971580 * 10 ** -4 * x ** 1 + 8.5901022917429554 * 10 ** -5 * x ** 2 \
+        - 1.3912368796075018 * 10 ** -5 * x ** 3 + 5.0268816690188926 * 10 ** -7 * x ** 4 \
+        + 1.1274054880604926 * 10 ** -8 * x ** 5 - 1.3740373454703167 * 10 ** -9 * x ** 6 \
+        + 3.8359516009612151 * 10 ** -11 * x ** 7 - 3.5407459411354098 * 10 ** -13 * x ** 8 \
+        - 2.0721836379074974 * 10 ** -15 * x ** 9 + 4.1009713014767920 * 10 ** -17 * x ** 10 \
+        + 1.1315710050175688 * 10 ** -19 * x ** 11 + 3.5914393783068752 * 10 ** -21 * x ** 12 \
+        - 1.7417023065426016 * 10 ** -22 * x ** 13 + 1.2711476309117433 * 10 ** -24 * x ** 14 \
+        + 5.4153586840702526 * 10 ** -27 * x ** 15 - 9.3580564924063361 * 10 ** -29 * x ** 16 \
+        + 2.8235077456069639 * 10 ** -31 * x ** 17
+
+
+def neville(datax, datay, x):
+    """
+    Finds an interpolated value using Neville's algorithm.
+    Input
+      datax: input x's in a list of size n
+      datay: input y's in a list of size n
+      x: the x value used for interpolation
+    Output
+      p[0]: the polynomial of degree n
+    """
+    n = len(datax)
+    p = n*[0]
+    for k in range(n):
+        for i in range(n-k):
+            if k == 0:
+                p[i] = datay[i]
+            else:
+                p[i] = ((x-datax[i+k])*p[i] + (datax[i]-x)*p[i+1]) / (datax[i]-datax[i+k])
+    return p[0]
+
+
+def robinson_y(x):
+    rob_x = list(range(0, 95, 5))
+    rob_y = [0, 0.062, 0.124, 0.186, 0.248, 0.31, 0.372, 0.434, 0.4958, 0.5571, 0.6176, 0.6769, 0.7346, 0.7903, 0.8435,
+             0.8936, 0.9394, 0.9761, 1]
+    return neville(rob_x, rob_y, x)
+
+
 def rewritecits():
     with open("storage/citycountries.txt", "w") as ff:
         for i in citcoundat:
@@ -115,7 +155,12 @@ class City:
     def __init__(self, name: str, coords: iter, val: int, no=0):
         self.name = name
         self.coords = coords
-        self.radcoords = tuple(rad(c) for c in coords)
+        self.imageCoords = {
+            g: [
+                1376 * g + round(0.8487 * 515 * g * robinson_x(abs(self.coords[0])) * rad(self.coords[1] - 10)),
+                698 * g - round(1.3523 * 515 * g * robinson_y(abs(self.coords[0]))) * (-1 if self.coords[0] < 0 else 1)
+            ] for g in [1, 2, 4]  # levels of magnification
+        }
         self.passengers = val
         self.value = round((lambda n: 70 * n ** 0.37)(val))
         self.no = no
