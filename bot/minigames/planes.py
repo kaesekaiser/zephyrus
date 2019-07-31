@@ -155,6 +155,7 @@ class City:
     def __init__(self, name: str, coords: iter, val: int, no=0):
         self.name = name
         self.coords = coords
+        self.radcoords = tuple(rad(c) for c in coords)
         self.imageCoords = {
             g: [
                 1376 * g + round(0.8487 * 515 * g * robinson_x(abs(self.coords[0])) * rad(self.coords[1] - 10)),
