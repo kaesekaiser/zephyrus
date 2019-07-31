@@ -408,7 +408,7 @@ class PlanesInterpreter(Interpreter):
             if os.path.exists(f"storage/minimaps/{city.name}{zoom}.png"):  # avoid unnecessary image generation
                 minimaps[zoom] = await image_url(f"storage/minimaps/{city.name}{zoom}.png")
             else:
-                base = copy(zeph.airportMaps[zoom])
+                base = zeph.airportMaps[zoom].copy()
                 left_bound = max(0, min(city.imageCoords[zoom][0] - 300, 2752 * zoom - 601))
                 upper_bound = max(0, min(city.imageCoords[zoom][1] - 300, 1396 * zoom - 601))
                 right_bound = left_bound + 600
