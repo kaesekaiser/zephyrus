@@ -3,7 +3,7 @@ from epipile import civs as ep
 
 
 class Epitaph(ep.Civ):
-    def __init__(self, ctx: commands.Context, hands_off: bool=False):
+    def __init__(self, ctx: commands.Context, hands_off: bool = False):
         self.player = ctx.author
         self.ctx = ctx
         self.handsOff = hands_off
@@ -13,7 +13,7 @@ class Epitaph(ep.Civ):
         self.grey = ClientEmol(":rocket:", hexcol("adadad"), ctx)
         super().__init__()
 
-    async def eventech(self, eventech: ep.EvenTech, silent: bool=False, edit: discord.Message=None):
+    async def eventech(self, eventech: ep.EvenTech, silent: bool = False, edit: discord.Message = None):
         # assumes event / tech is valid and available
         for i in eventech.eventChances:
             self.eventChances[i] = self.eventChances.get(i, 0) + eventech.eventChances[i]
@@ -25,8 +25,10 @@ class Epitaph(ep.Civ):
                    footer=f"{self.birth} - {self.stardate}" if self.extinct else None)
         if not silent:
             if edit:
-                return await (self.grey if self.extinct else self.yellow).edit(edit, **dic)
-            return await (self.grey if self.extinct else self.yellow).say(**dic)
+                await (self.grey if self.extinct else self.yellow).edit(edit, **dic)
+            else:
+                await (self.grey if self.extinct else self.yellow).say(**dic)
+        return await self.ctx.trigger_typing()
 
     async def tick(self):
         def pred(m: discord.Message):
@@ -63,16 +65,20 @@ class Epitaph(ep.Civ):
 
     async def run(self):
         cont = self.contact()
+        zeph.epitaphChannels.append(self.ctx.channel)
         await self.yellow.say(f"Stardate {self.stardate}", d=cont)
         self.history.append(f"{self.stardate} - {cont}")
-        async with self.ctx.typing():
-            while not (self.extinct or self.victorious):
-                await asyncio.sleep(0.2 if self.handsOff else 0.5)
-                await self.tick()
+        while not (self.extinct or self.victorious):
+            await asyncio.sleep(0.2 if self.handsOff else 0.5)
+            await self.tick()
+        zeph.epitaphChannels.remove(self.ctx.channel)
 
 
 @zeph.command()
-async def epitaph(ctx: commands.Context, *, text: str=""):
+async def epitaph(ctx: commands.Context, *, text: str = ""):
     if text and text.casefold() != "handsoff":
         raise commands.BadArgument
+    if ctx.channel in zeph.epitaphChannels:
+        raise commands.CommandError("There is already an Epitaph game running in this channel.")
+
     return await Epitaph(ctx, bool(text)).run()

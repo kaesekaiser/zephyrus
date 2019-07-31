@@ -24,7 +24,7 @@ class Zeph(commands.Bot):
             self.phoneNumbers = {int(g.split("|")[0]): int(g.split("|")[1]) for g in f.readlines()}
             self.callChannels = {int(g.split("|")[1]): int(g.split("|")[2]) for g in f.readlines()}
         self.planeUsers = {}
-        self.bedtimes = {}
+        self.epitaphChannels = []
         self.roman = pjs.RomanizationConversion()
 
     @property
