@@ -1,4 +1,5 @@
 from html.parser import HTMLParser
+from re import search
 from pyquery import PyQuery
 wikilink = "https://en.wikipedia.org/wiki/{}"
 wikiSearch = "https://en.wikipedia.org/w/index.php?search={}&title=Special%3ASearch&fulltext=1&limit=100"
@@ -38,6 +39,7 @@ class WikiParser(HTMLParser):
     def handle_starttag(self, tag, attrs):
         if dict(attrs).get("data-serp-pos"):
             self.results.append(Result())
+            self.results[-1].link = dict(attrs)["href"]
             self.titling = True
         if dict(attrs).get("class") == "searchresult":
             self.describing = True
@@ -47,7 +49,6 @@ class WikiParser(HTMLParser):
     def handle_data(self, data):
         if self.titling:
             self.results[-1].title += self.bold(data)
-            self.results[-1].link += data.replace("\\", "")
         elif self.describing:
             self.results[-1].desc += self.bold(data)
 
@@ -83,8 +84,12 @@ class ForeignParser(HTMLParser):
             name = dict(attrs)["title"].split(splitter)[1]
             try:
                 self.lang_title[name] = dict(attrs)["title"].split(splitter)[0]
-                self.lang_link[name] = dict(attrs)["href"]
-                self.lang_form[name] = dict(attrs)["href"].replace(')', '\\)')
+                url_code = search(r"(?<=https://).*?(?=\.wikipedia)", dict(attrs)["href"])[0]
+                lang_link = "_".join(self.lang_title[name].split())
+                self.lang_link[name] = \
+                    f"https://{url_code}.wikipedia.org/wiki/{lang_link}"
+                print(self.lang_link[name])
+                self.lang_form[name] = self.lang_link[name].replace(')', '\\)')
                 self.code_lang[dict(attrs)["lang"]] = name
             except ValueError:
                 pass

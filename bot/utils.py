@@ -10,7 +10,12 @@ import pycantonese
 from math import log10
 
 
-@zeph.command()
+@zeph.command(
+    usage="z!mock <text...>\nz!mock",
+    description="DoEs ThIs To YoUr TeXt.",
+    help="DoEs ThIs To YoUr TeXt. If no text is given, mocks the message immediately above the command.\n\n"
+         "``guy: I think Zephyrus is bad\nperson: z!mock\nZephyrus: I tHiNk ZePhYrUs Is BaD``"
+)
 async def mock(ctx: commands.Context, *text):
     def multi_count(s, chars):
         return sum([s.count(ch) for ch in chars])
@@ -32,7 +37,10 @@ async def mock(ctx: commands.Context, *text):
     return await ctx.send(dumb(text))
 
 
-@zeph.command()
+@zeph.command(
+    usage="z!expand <text...>",
+    help="D o e s \u00a0 t h i s \u00a0 t o \u00a0 y o u r \u00a0 t e x t ."
+)
 async def expand(ctx: commands.Context, *, text):
     return await ctx.send(" ".join([c for c in text]))
 
@@ -44,29 +52,60 @@ def squarize(s: str, joiner=" "):
                         ":question:" if g == "?" else ":exclamation:" if g == "!" else g for g in s])
 
 
-@zeph.command(aliases=["sq"])
+@zeph.command(
+    aliases=["sq"], usage="z!square <text...>",
+    help=":regional_indicator_d: :regional_indicator_o: :regional_indicator_e: :regional_indicator_s:   "
+         ":regional_indicator_t: :regional_indicator_h: :regional_indicator_i: :regional_indicator_s:   "
+         ":regional_indicator_t: :regional_indicator_o:   :regional_indicator_y: :regional_indicator_o: "
+         ":regional_indicator_u: :regional_indicator_r:   :regional_indicator_t: :regional_indicator_e: "
+         ":regional_indicator_x: :regional_indicator_t: ."
+)
 async def square(ctx: commands.Context, *, text):
     return await ctx.send(squarize(text))
 
 
-@zeph.command(aliases=["fsq"])
+@zeph.command(
+    aliases=["fsq"], usage="z!flagsquare <text...>",
+    description=":flag_do::flag_es: :flag_th::flag_is: :flag_to: :regional_indicator_y::regional_indicator_o:"
+                ":regional_indicator_u::regional_indicator_r: :regional_indicator_t::regional_indicator_e:"
+                ":regional_indicator_x::regional_indicator_t:.",
+    help="Same as ``z!square``, but leaves out the spaces - so sometimes country flags appear. That is, it "
+         ":flag_do::flag_es: :flag_th::flag_is: :flag_to: :regional_indicator_y::regional_indicator_o:"
+         ":regional_indicator_u::regional_indicator_r: :regional_indicator_t::regional_indicator_e:"
+         ":regional_indicator_x::regional_indicator_t:."
+)
 async def flagsquare(ctx: commands.Context, *, text):
     return await ctx.send(squarize(text, ""))
 
 
-@zeph.command()
+@zeph.command(
+    usage="z!clap <text...>",
+    help=":clap:Does:clap:this:clap:to:clap:your:clap:text."
+)
 async def clap(ctx: commands.Context, *, text):
     return await ctx.send("👏" + "👏".join(text.split()))
 
 
-@zeph.command()
+@zeph.command(
+    usage="z!ping",
+    help="Pong!"
+)
 async def ping(ctx: commands.Context):
     message = await ctx.send(":ping_pong:!")
     return await message.edit(
         content=f":ping_pong:! ({round((message.created_at - ctx.message.created_at).microseconds / 1000)} ms)")
 
 
-@zeph.command(aliases=["dice"])
+@zeph.command(
+    aliases=["dice"], usage="z!roll [dice]",
+    description="Rolls some dice using standard dice notation.",
+    help="Rolls some dice. Uses standard dice notation:\n``AdB`` rolls ``A`` ``B``-sided dice. ``A`` defaults to 1 "
+         "if empty.\n``d%`` becomes ``d100``, and ``dF`` rolls Fudge dice, which are ``[-1, -1, 0, 0, "
+         "1, 1]``.\n``!`` explodes a die if it rolls the highest number (that is, it rolls an additional extra "
+         "die).\n``!>N``, ``!<N``, ``!=N`` explodes a die if it's greater than, less than, or equal to ``N``, "
+         "respectively.\n``-H`` drops the highest roll. ``-L`` drops the lowest.\n``+N`` at the end of a die "
+         "adds ``N`` to the total roll."
+)
 async def roll(ctx: commands.Context, die: str = "1d6"):
     dice = ClientEmol(":game_die:", hexcol("EA596E"), ctx)
     try:
@@ -82,18 +121,19 @@ smallAlphabet = "ᴀʙᴄᴅᴇꜰɢʜɪᴊᴋʟᴍɴᴏᴘǫʀsᴛᴜᴠᴡxʏ�
 
 
 def smallcaps(s: str):
+    if s.isupper():
+        return smallcaps(s.lower())
+
     alpha_dict = {"\u00e9": "ᴇ́", **{lowerAlphabet[g]: smallAlphabet[g] for g in range(26)}}
     return "".join([alpha_dict.get(g, g) for g in s])
 
 
-@zeph.command(name="smallcaps", aliases=["small"])
+@zeph.command(
+    name="smallcaps", aliases=["small"], usage="z!smallcaps <text...>",
+    help="Dᴏᴇs ᴛʜɪs ᴛᴏ ʏᴏᴜʀ ᴛᴇxᴛ."
+)
 async def smallcaps_command(ctx: commands.Context, *, text: str):
     return await ctx.send(content=smallcaps(text))
-
-
-class RIEmol(ClientEmol):  # regional indicator emol
-    def __init__(self, letter: str, ctx: commands.Context):
-        super().__init__(f":regional_indicator_{letter}:", blue, ctx)
 
 
 def caesar_cipher(letter: str, n: int):
@@ -104,17 +144,28 @@ def caesar_cipher(letter: str, n: int):
     return lowerAlphabet[(lowerAlphabet.index(letter) + n) % 26]
 
 
-@zeph.command(aliases=["rot"])
+@zeph.command(
+    aliases=["rot"], usage="z!rot <shift #> <text...>",
+    description="Puts text through a Caesar cipher.",
+    help="Puts text through a Caesar cipher, which shifts all letters some number of positions down the alphabet.\n\n"
+         "e.g. ``rot 5`` shifts all letters down 5 positions, so ``hello`` becomes ``mjqqt``. If you want to "
+         "decipher a Caesar'd text, put in a negative shift number."
+)
 async def caesar(ctx: commands.Context, n: int, *, text: str):
-    return await RIEmol("r", ctx).say("".join([caesar_cipher(c, n) for c in text]))
+    return await ctx.send("".join([caesar_cipher(c, n) for c in text]))
 
 
-@zeph.command()
+@zeph.command(
+    aliases=["r13"], usage="z!rot13 <text...>",
+    description="Puts text through the ROT13 cipher.",
+    help="Puts text through the ROT13 cipher, which is also a Caesar cipher with a shift of 13. Astute observers "
+         "will note that putting ROT13 text back through ROT13 returns the original text."
+)
 async def rot13(ctx: commands.Context, *, text: str):
-    return await RIEmol("r", ctx).say("".join([caesar_cipher(c, 13) for c in text]))
+    return await ctx.send("".join([caesar_cipher(c, 13) for c in text]))
 
 
-def vig(letter: str, *ks: str, reverse: bool=False):
+def vig(letter: str, *ks: str, reverse: bool = False):
     if letter.lower() not in lowerAlphabet:
         return letter
     if letter.isupper():
@@ -123,21 +174,35 @@ def vig(letter: str, *ks: str, reverse: bool=False):
     return lowerAlphabet[(lowerAlphabet.index(letter) + mul * sum([lowerAlphabet.index(g.lower()) for g in ks])) % 26]
 
 
-@zeph.command(aliases=["vig"])
+@zeph.command(
+    aliases=["vig"], usage="z!vigenere <word> <keys...>",
+    description="Puts text through a [Vigenere cipher](https://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher).",
+    help="Puts text through a [Vigenere cipher](https://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher) using the "
+         "provided keys. Note that the text can't contain any spaces, so use underscores or dashes if you want "
+         "to space it."
+)
 async def vigenere(ctx: commands.Context, text: str, *keys: str):
-    return await RIEmol("v", ctx).say("".join(
-        [vig(text[n], *(k[n % len(k)] for k in keys)) for n in range(len(text))]
-    ))
+    return await ctx.send("".join([vig(text[n], *(k[n % len(k)] for k in keys)) for n in range(len(text))]))
 
 
-@zeph.command(aliases=["devig"])
+@zeph.command(
+    aliases=["devig"], usage="z!devigenere <word> <keys...>",
+    description="Deciphers Vigenere'd text.",
+    help="Deciphers Vigenere'd text using the provided keys. Using a different set of keys than the text "
+         "was encoded with, will more than likely return a garbled mess.\n\n"
+         "``z!vig zephyrus bot`` → ``asiimkvg``\n``z!devig asiimkvg bot`` → ``zephyrus``\n"
+         "``z!devig asiimkvg fun`` → ``vyvdsxqm``"
+)
 async def devigenere(ctx: commands.Context, text: str, *keys: str):
-    return await RIEmol("v", ctx).say("".join(
+    return await ctx.send("".join(
         [vig(text[n], *(k[n % len(k)] for k in keys), reverse=True) for n in range(len(text))]
     ))
 
 
-@zeph.command()
+@zeph.command(
+    usage="z!scramble <text...>",
+    help="eDso thsi ot uryo xtt.e"
+)
 async def scramble(ctx: commands.Context, *text: str):
     return await ctx.send(content=" ".join(["".join(sample(g, len(g))) for g in text]))
 
@@ -284,7 +349,12 @@ def temp_convert(n: SigFig, fro: str, to: str=None):
     return to, tempTable[fro].get(to, lambda x: x)(n.n)
 
 
-@zeph.command(aliases=["c", "conv"])
+@zeph.command(
+    aliases=["c", "conv"], usage="z!convert <number> <unit...> to <unit...>\nz!convert <number> <unit...>",
+    description="Converts between units of measurement.",
+    help="Converts between units of measurement. More info at "
+         "https://github.com/kaesekaiser/zephyrus/blob/master/docs/convert.md."
+)
 async def convert(ctx: commands.Context, n: str, *text):
     conv = ClientEmol(":straight_ruler:", hexcol("efc700"), ctx)
     n = SigFig(n)
@@ -631,7 +701,7 @@ class WikiNavigator(Navigator):
         return self.emol.con(
             self.results[self.page - 1].title.replace("****", ""), footer=f"{self.page}/{self.pgs}",
             d=self.results[self.page - 1].desc.replace("****", ""),
-            url=wk.wikilink.format("_".join(self.results[self.page - 1].link.split()))
+            url=f"https://en.wikipedia.org{self.results[self.page - 1].link}"
         )
 
 
