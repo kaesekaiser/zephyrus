@@ -62,6 +62,8 @@ async def about(ctx: commands.Context):
     ))  # this is a really gross way of getting the version I know. but shut up
     step2 = re.search(r"octicon octicon-tag.*?</span>", step1, re.S)[0]
     zeph_version = re.search(r"(?<=>).*?(?=</span>)", step2)[0]
+    step3 = re.search(r"released this.*?to master", step1, re.S)[0]
+    zeph_version += "." + re.search(r"[0-9]*(?= commits)", step3)[0]
 
     return await ClientEmol(":robot:", hexcol("6fc96f"), ctx).say(
         author=author_from_user(zeph.user, f"\u2223 {zeph.user.name}"),
