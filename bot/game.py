@@ -145,7 +145,7 @@ async def anagrams(ctx: commands.Context):
 
     def pred(mr: MR, u: User):
         if type(mr) == discord.Message:
-            return u == ctx.author and mr.channel == ctx.channel and mr.content.lower() in guesses
+            return u == ctx.author and mr.channel == ctx.channel and mr.content.lower() in words
         else:
             return u == ctx.author and mr.emoji in ["🔄", "⏹"] and mr.message.id == message.id
 
