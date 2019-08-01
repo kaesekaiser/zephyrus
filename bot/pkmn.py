@@ -1,5 +1,5 @@
 from utils import *
-from pokemon import teams as pk
+from pokemon import mons as pk
 import json
 
 
