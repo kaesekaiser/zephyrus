@@ -400,19 +400,28 @@ async def convert(ctx: commands.Context, n: str, *text):
                           d=f"= {n} {text[0]}")
 
 
-@zeph.command(aliases=["weed"])
+@zeph.command(
+    aliases=["weed"], usage="z!sayno",
+    help="Say no to drugs."
+)
 async def sayno(ctx: commands.Context):
     return await ClientEmol(":leaves:", hexcol("98e27c"), ctx).say(wd.sayno())
 
 
-@zeph.command(aliases=["pick"])
+@zeph.command(
+    aliases=["pick"], usage="z!choose <option...> or <option...> ...",
+    help="Chooses one from a list of options."
+)
 async def choose(ctx: commands.Context, *, text: str):
     picks = re.split("\s+or\s+", text)
     string = choice(["I pick {}!", "Obviously it's {}.", "{}, of course.", "{}, obviously.", "Definitely {}."])
     return await chooseEmol.send(ctx, string.format(f"**{choice(picks)}**"))
 
 
-@zeph.command(name="8ball")
+@zeph.command(
+    name="8ball", usage="z!8ball <question...>",
+    help="The divine magic 8-ball answers your yes-or-no questions."
+)
 async def eightball(ctx: commands.Context, *, text: str):
     if not text:
         raise commands.MissingRequiredArgument
@@ -428,7 +437,11 @@ async def eightball(ctx: commands.Context, *, text: str):
 blankColor = rk.Image.open("images/color.png")
 
 
-@zeph.command(aliases=["colour"])
+@zeph.command(
+    aliases=["colour"], usage="z!color <hex code>\nz!color <red> <green> <blue>\nz!color random",
+    description="Shows you a color.",
+    help="Returns the color that corresponds to your input. ``random`` will randomly generate a color."
+)
 async def color(ctx: commands.Context, *, col: str):
     if col.casefold() == "random".casefold():
         ret = discord.Colour.from_rgb(randrange(256), randrange(256), randrange(256))
@@ -450,7 +463,11 @@ async def color(ctx: commands.Context, *, col: str):
                           d=f"**RGB:** {ret.to_rgb()}\n**HSV:** {rgb_to_hsv(*ret.to_rgb())}")
 
 
-@zeph.command(aliases=["hue"])
+@zeph.command(
+    aliases=["hue"], usage="z!hueshift <image url> <value>",
+    description="Hue-shifts an image.",
+    help="Shifts the hue of an image by ``<value>`` (out of 360)."
+)
 async def hueshift(ctx: commands.Context, url: str, shift: int):
     message = await ctx.send("processing...")
     img = rk.Image.open(BytesIO(requests.get(url).content))
@@ -459,14 +476,21 @@ async def hueshift(ctx: commands.Context, url: str, shift: int):
     return await ctx.send(file=discord.File("images/hue-shift.png"))
 
 
-@zeph.command()
+@zeph.command(
+    usage="z!invert <image url>",
+    help="Inverts the colors of an image."
+)
 async def invert(ctx: commands.Context, url: str):
     img = rk.Image.open(BytesIO(requests.get(url).content))
     rk.invert_colors(img).save("images/invert.png")
     return await ctx.send(file=discord.File("images/invert.png"))
 
 
-@zeph.command()
+@zeph.command(
+    usage="z!timein <place...>",
+    description="Tells you what time it is somewhere.",
+    help="Returns the current local time in ``<place>``."
+)
 async def timein(ctx: commands.Context, *, place: str):
     try:
         ret = ti.format_dict(ti.timein(place), False)
@@ -511,32 +535,65 @@ def get_yale(s: str):
     return yale
 
 
-@zeph.command(name="pinyin")
+@zeph.command(
+    name="pinyin", usage="z!pinyin <Mandarin text...>",
+    description="Romanizes Chinese text using Hanyu Pinyin.",
+    help="Romanizes Chinese text according to the Hanyu Pinyin romanization scheme - that is, it turns the "
+         "Chinese characters into Latin syllables that sound like their Mandarin pronunciations.\n\n"
+         "``z!pinyin 你好`` → ``nǐhǎo``"
+)
 async def pinyin_command(ctx: commands.Context, *, chinese: str):
     return await zhong.send(ctx, get_pinyin(chinese))
 
 
-@zeph.command(name="jyutping", aliases=["jp"])
+@zeph.command(
+    name="jyutping", aliases=["jp"], usage="z!jyutping <Cantonese text...>",
+    description="Romanizes Cantonese text using Jyutping.",
+    help="Romanizes Cantonese text according to the Jyutping romanization scheme.\n\n"
+         "``z!jyutping 你好`` → ``nei5hou2``"
+)
 async def jyutping_command(ctx: commands.Context, *, cantonese: str):
     return await kong.send(ctx, get_jyutping(cantonese))
 
 
-@zeph.command(name="yale")
+@zeph.command(
+    name="yale", usage="z!yale <Cantonese text...>",
+    description="Romanizes Cantonese text using the Yale scheme.",
+    help="Romanizes Cantonese text according to the Yale romanization scheme. There's also a Yale romanization "
+         "scheme for Mandarin text, but this isn't that, and that's not on this bot.\n\n"
+         "``z!yale 你好`` → ``néihhóu``"
+)
 async def yale_command(ctx: commands.Context, *, cantonese: str):
     return await kong.send(ctx, get_yale(cantonese))
 
 
-@zeph.command(aliases=["simp"])
+@zeph.command(
+    aliases=["simp"], usage="z!simplified <Traditional Chinese text...>",
+    help="Converts Traditional Chinese characters to Simplified Chinese."
+)
 async def simplified(ctx: commands.Context, *, trad: str):
     return await zhong.send(ctx, hanziconv.HanziConv.toSimplified(trad))
 
 
-@zeph.command(aliases=["trad"])
+@zeph.command(
+    aliases=["trad"], usage="z!traditional <Simplified Chinese text...>",
+    help="Converts Simplified Chinese characters to Traditional Chinese."
+)
 async def traditional(ctx: commands.Context, *, simp: str):
     return await kong.send(ctx, hanziconv.HanziConv.toTraditional(simp))
 
 
-@zeph.command(aliases=["trans"])
+@zeph.command(
+    aliases=["trans"], usage="z!translate <from> <to> <text...>",
+    description="Google Translates text between languages.",
+    help="Via Google Translate, translates ``<text>`` between languages. ``<from>`` and ``<to>`` must be "
+         "either the name of the language or the [code](https://cloud.google.com/translate/docs/languages) "
+         "for the language. ``chinese`` defaults to Simplified Chinese; for Traditional, use "
+         "``traditional-chinese`` or ``zh-tw``. You can also use ``auto`` or ``detect`` for the detect "
+         "language option.\n\n"
+         "``z!translate English French Hello, my love`` → ``Bonjour mon amour``\n"
+         "``z!translate auto en Hola, señor`` → ``Hello sir``"
+)
 async def translate(ctx: commands.Context, fro: str, to: str, *, text: str):
     trans = ClientEmol(":twisted_rightwards_arrows:", blue, ctx)
     if fro.lower() not in tr.LANGCODES and fro.lower() not in tr.LANGCODES.values() and fro.lower() not in tr.redirs:
@@ -584,7 +641,10 @@ async def badtranslate(ctx: commands.Context, *, text: str):
 """
 
 
-@zeph.command()
+@zeph.command(
+    usage="z!avatar <@user>",
+    help="Returns a link to a user's avatar."
+)
 async def avatar(ctx: commands.Context, user: User):
     return await ctx.send(
         embed=construct_embed(author=author_from_user(user, name=f"{user.display_name}'s Avatar", url=user.avatar_url),
@@ -592,7 +652,10 @@ async def avatar(ctx: commands.Context, user: User):
     )
 
 
-@zeph.command(aliases=["rune"])
+@zeph.command(
+    aliases=["rune"], usage="z!runes <runic text...>",
+    help="Transcribes [medieval Nordic runes](https://en.wikipedia.org/wiki/Medieval_runes) into Latin letters."
+)
 async def runes(ctx: commands.Context, *, s: str):
     dic = {"ᛆ": "a", "ᛒ": "b", "ᛍ": "c", "ᛑ": "d", "ᚧ": "ð", "ᛂ": "e", "ᚠ": "f", "ᚵ": "g", "ᚼ": "h", "ᛁ": "i", "ᚴ": "k",
            "ᛚ": "l", "ᛘ": "m", "ᚿ": "n", "ᚮ": "o", "ᛔ": "p", "ᛕ": "p", "ᛩ": "q", "ᚱ": "r", "ᛌ": "s", "ᛋ": "s", "ᛐ": "t",
@@ -652,7 +715,7 @@ emojiCountries = {  # :flag_():
 }
 
 
-async def interpret_potential_emoji(emote: str):
+def interpret_potential_emoji(emote: str):
     try:
         uni_name(emote)
     except TypeError:
@@ -666,7 +729,7 @@ async def interpret_potential_emoji(emote: str):
             elif emote in ["".join([chr(ord(c) + 127365) for c in g]) for g in emojiCountries]:
                 name = emojiCountries["".join([chr(ord(c) - 127365) for c in emote])].lower()
             elif re.search(r"[🏻🏼🏽🏾🏿‍♂♀]+", emote):
-                name = await interpret_potential_emoji("".join(re.split(r"[🏻🏼🏽🏾🏿‍♂♀]+", emote)))
+                name = interpret_potential_emoji("".join(re.split(r"[🏻🏼🏽🏾🏿‍♂♀]+", emote)))
             else:
                 raise commands.CommandError("Only input one character.")
         else:
@@ -681,9 +744,13 @@ async def interpret_potential_emoji(emote: str):
     return name
 
 
-@zeph.command(aliases=["sherriff"])
+@zeph.command(
+    aliases=["sherriff"], usage="z!sheriff <emoji>",
+    description="Calls the sheriff of an emoji.",
+    help="Calls the sheriff of ``<emoji>``."
+)
 async def sheriff(ctx: commands.Context, emote: str):
-    name = await interpret_potential_emoji(emote)
+    name = interpret_potential_emoji(emote)
     return await ctx.send("⠀ ⠀ ⠀  :cowboy:\n　   {0}\u2060{0}\u2060{0}\n    {0}   {0}　{0}\n"
                           "   :point_down:  {0} {0} :point_down:\n"
                           "  　  {0}　{0}\n　   {0}　 {0}\n　   :boot:     :boot:\nhowdy. {1}"
@@ -705,7 +772,11 @@ class WikiNavigator(Navigator):
         )
 
 
-@zeph.command(aliases=["wiki"])
+@zeph.command(
+    aliases=["wiki"], usage="z!wikipedia <search...>",
+    description="Searches Wikipedia.",
+    help="Searches Wikipedia for ``<search>``."
+)
 async def wikipedia(ctx: commands.Context, *, title: str):
     parser = wk.WikiParser()
     parser.feed(wk.readurl(wk.wikiSearch.format("+".join(title.split()))))
@@ -715,7 +786,13 @@ async def wikipedia(ctx: commands.Context, *, title: str):
         return await wiki.send(ctx, "No results found.")
 
 
-@zeph.command(aliases=["fw"])
+@zeph.command(
+    aliases=["fw"], usage="z!foreignwiki <language> <title...>\nz!foreignwiki all <title...>",
+    description="Finds non-English mirrors of a Wikipedia article.",
+    help="``z!foreignwiki <language> <title...>`` finds the ``<language>`` version of the English Wikipedia "
+         "article ``<title>``.\n``z!foreignwiki all <title...>`` lists all languages which have a version "
+         "of ``<title>``."
+)
 async def foreignwiki(ctx: commands.Context, lang: str, *, title: str):
     parser = wk.ForeignParser()
     try:
@@ -833,12 +910,13 @@ async def phone_command(ctx: commands.Context, func: str = "help", channel: str=
             raise commands.CommandError(f"No server with the number ``{channel}``.")"""
 
 
-@zeph.command(hidden=True)
-async def save(ctx: commands.Context):
-    zeph.save()
-
-
-@zeph.command(aliases=["nl"])
+@zeph.command(
+    aliases=["nl"], usage="z!narahlena <Narahlena text...>",
+    description="Converts ASCII to Narahlena text.",
+    help="Converts ASCII Narahlena input into actual Narahlena orthography.\n\n"
+         "[Narahlena](https://fort.miraheze.org/wiki/Narahlena) is a constructed language Fort's making. This "
+         "command probably doesn't mean much to most people. Feel free to check it out, though."
+)
 async def narahlena(ctx: commands.Context, *, text: str):
     narahlena_dict = {
         "N^": "Ň", "n^": "ň", "C^": "Č", "c^": "č", "C`": "Ç", "c`": "ç", "S^": "Š", "s^": "š",
@@ -851,7 +929,11 @@ async def narahlena(ctx: commands.Context, *, text: str):
     return await ctx.send(content=text)
 
 
-@zeph.command(aliases=["fac"])
+@zeph.command(
+    aliases=["fac"], usage="z!factors <integer>",
+    description="Finds the prime factors of a number.",
+    help="Returns the prime factors of `<integer>`."
+)
 async def factors(ctx: commands.Context, number: int):
     if number < 1:
         raise commands.CommandError("Number must be greater than 0.")

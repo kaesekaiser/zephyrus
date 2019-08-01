@@ -7,7 +7,11 @@ from math import floor
 import time
 
 
-@zeph.command(aliases=["conn4"])
+@zeph.command(
+    aliases=["conn4"], usage="z!connect4 <@opponent>",
+    description="Challenges someone to Connect Four.",
+    help="Challenges an opponent to a nice game of Connect Four. Nothing is at stake - except your pride."
+)
 async def connect4(ctx: commands.Context, opponent: User):
     four = ClientEmol(":four:", blue, ctx)
 
@@ -75,7 +79,15 @@ async def connect4(ctx: commands.Context, opponent: User):
             return await four.edit(message, "It's a draw!", d=str(board))
 
 
-@zeph.command()
+@zeph.command(
+    usage="z!jotto",
+    description="Play a game of Jotto against the bot.",
+    help="Plays a game of Jotto. Similar to Mastermind, but with words. I'll choose a random four-letter word, "
+         "and you start guessing other four-letter words. I'll tell you how many of the letters in your guess "
+         "are also in my word. The goal is to figure out my word.\n\ne.g. if my word is ``area``, then the guess "
+         "``cats`` returns ``1``, ``near`` returns ``3``, and ``away`` returns ``2``. It doesn't matter what "
+         "position the letters are in - ``acts`` and ``cats`` are functionally the same guess."
+)
 async def jotto(ctx: commands.Context):
     jot = ClientEmol(":green_book:", hexcol("65c245"), ctx)
 
@@ -113,7 +125,12 @@ async def jotto(ctx: commands.Context):
                           f"correct {plural('letter', score)} in ``{guess}``.")
 
 
-@zeph.command()
+@zeph.command(
+    usage="z!anagrams",
+    description="Play a game of Anagrams.",
+    help="Plays a game of Anagrams. I'll randomly pick eight letters, and you name as many words as possible "
+         "that you can spell with those eight letters."
+)
 async def anagrams(ctx: commands.Context):
     ana = ClientEmol(":closed_book:", hexcol("dd2e44"), ctx)
     message = await ana.say("Picking letters...")
@@ -128,7 +145,7 @@ async def anagrams(ctx: commands.Context):
 
     def pred(mr: MR, u: User):
         if type(mr) == discord.Message:
-            return u == ctx.author and mr.channel == ctx.channel and wr.canform(mr.content.lower(), letters)
+            return u == ctx.author and mr.channel == ctx.channel and mr.content.lower() in guesses
         else:
             return u == ctx.author and mr.emoji in ["🔄", "⏹"] and mr.message.id == message.id
 
@@ -177,7 +194,16 @@ async def anagrams(ctx: commands.Context):
                 await ana.edit(message, f"Scored '{guess}'!", **embed())
 
 
-@zeph.command()
+@zeph.command(
+    usage="z!boggle",
+    description="Play a game of Boggle.",
+    help="Plays a game of Boggle. I'll generate a board by rolling some letter dice, and you name as many "
+         "words as possible that you can spell by stringing those letters together. The letters have to be next "
+         "to each other on the board, and you can't use the same die more than once in a word.\n\n"
+         "For example, you could use these letters to string together `ears`, `car`, `ran`, or `sac`, but not `scare` "
+         "or `near`, because those letters aren't adjacent.\n"
+         "```\nE R N\nS A C```"
+)
 async def boggle(ctx: commands.Context):
     bog = ClientEmol(":hourglass:", hexcol("ffac33"), ctx)
 
@@ -212,14 +238,20 @@ async def boggle(ctx: commands.Context):
             await guess.delete()
             guess = guess.content.lower()
             if guess not in possible:
-                await bog.edit(screen, "That's not a word.", **embed())
+                await bog.edit(screen, f"`{guess}` isn't a word.", **embed())
                 continue
+
             board.guess(guess)
             await bog.edit(screen, f"Scored '{guess}' for {bg.score(guess)} {plural('point', bg.score(guess))}!",
                            **embed())
 
 
-@zeph.command()
+@zeph.command(
+    usage="z!duel <@opponent>",
+    description="Challenge an opponent to a duel.",
+    help="Challenges an opponent to a duel. Prove you're quicker on the draw - but don't draw too early, or you'll "
+         "lose out of sheer embarrassment."
+)
 async def duel(ctx: commands.Context, opponent: User):
     du = ClientEmol(":gun:", hexcol("9AAAB4"), ctx)
 

@@ -22,7 +22,14 @@ async def initialize_planes():
     return print(f"Planes initialized. ({round(time.time() - start, 1)} s)")
 
 
-@zeph.command(aliases=["p"])
+@zeph.command(
+    aliases=["p"], usage="z!planes help",
+    description="A shipping simulator I'm calling Planes.",
+    help="Lets you play a game I'm just calling Planes. It's a sort of semi-idle shipping simulator - really similar "
+         "to a mobile game called Pocket Planes - where you buy airports and airplanes, and use them to take jobs "
+         "back and forth for profit. There's many, many sub-commands, so do ``z!planes help`` for more info on what "
+         "exactly you can do, and how to do it."
+)
 async def planes(ctx: commands.Context, func: str = None, *args: str):
     """
     def lamb(n: Flint):
@@ -202,7 +209,7 @@ class PlanesInterpreter(Interpreter):
                    "``z!planes buy plane <model>`` buys a new plane of the given model. You can only buy one plane at a"
                    "time, and you can use the shortcut ``z!p b p``.",
             "fuel": "``z!planes fuel`` shows the day's fuel prices. Prices change at midnight UTC.",
-            "load": "``z!planes load <plane> <job codes>`` loads jobs onto a plane. The job code is the "
+            "load": "``z!planes load <job codes>`` loads jobs onto a plane. The job code is the "
                     "five-letter/number code on the left side of a job list.",
             "unload": "``z!planes unload <plane> <job codes>`` unloads jobs from a plane without pay, "
                       "returning it to its original source.",
@@ -845,7 +852,7 @@ class PlanesInterpreter(Interpreter):
             ):
                 self.user.credits -= cost
                 self.user.countries.extend(g.name for g in purchases)
-                return await succ.send(self.ctx, "Airport(s) purchased.")
+                return await succ.send(self.ctx, "License(s) purchased.")
 
         elif args[0].lower() in ["p", "plane", "planes"]:
             if len(args) > 2:

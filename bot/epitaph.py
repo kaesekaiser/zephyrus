@@ -75,7 +75,13 @@ class Epitaph(ep.Civ):
         zeph.epitaphChannels.remove(self.ctx.channel)
 
 
-@zeph.command()
+@zeph.command(
+    usage="z!epitaph\nz!epitaph handsoff",
+    description="Runs a game of [Max Kreminski's Epitaph](https://mkremins.github.io/epitaph/).",
+    help="Runs a game of [Max Kreminski's Epitaph](https://mkremins.github.io/epitaph/). As an "
+         "ascended civilization, lead a burgeoning planet to join you in the stars. Play the original.\n\n"
+         "``z!epitaph handsoff`` runs a game without player input."
+)
 async def epitaph(ctx: commands.Context, *, text: str = ""):
     if text and text.casefold() != "handsoff":
         raise commands.BadArgument

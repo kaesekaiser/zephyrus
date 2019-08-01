@@ -1,5 +1,5 @@
 from utils import *
-from pokemon import mons as pk
+from pokemon import teams as pk
 import json
 
 
@@ -189,7 +189,14 @@ class DexNavigator(Navigator):
         ))[0].emoji
 
 
-@zeph.command(aliases=["dex"])
+@zeph.command(
+    aliases=["dex"], usage="z!pokedex [pok\u00e9mon...]\nz!pokedex [dex number]\nz!pokedex help",
+    description="Browses the Pok\u00e9dex.",
+    help="Opens the Pok\u00e9dex! ``z!dex [pok\u00e9mon...]`` or ``z!dex [dex number]`` will start you at a "
+         "specific Pok\u00e9mon; otherwise, it starts at everyone's favorite, Bulbasaur. "
+         "``z!dex help`` gives help with navigating the dex.\n\nYou can even name a specific form of a "
+         "Pok\u00e9mon - e.g. ``z!dex giratina origin`` starts at Giratina, in Origin Forme."
+)
 async def pokedex(ctx: commands.Context, *, mon: str = "1"):
     if can_int(mon):
         init_mon = pk.Mon(pk.gameDexes["Ultra Sun"][int(mon)])
@@ -260,17 +267,25 @@ class EffNavigator(Navigator):
         )
 
 
-@zeph.command(aliases=["pkmn", "pk"])
+@zeph.command(
+    aliases=["pkmn", "pk"], usage="z!pokemon help",
+    description="Performs various Pok\u00e9mon-related functions.",
+    help="Performs a variety of Pok\u00e9mon-related functions. I'm continually adding to this, so just use "
+         "``z!pokemon help`` for more details."
+)
 async def pokemon(ctx: commands.Context, func: str = None, *args):
     if not func:
         return await ball_emol().send(
-            ctx, "Fucking Pok\u00e9mon.", d="This command is gonna do a good bit eventually. For now it's not much."
+            ctx, "It's Pok\u00e9mon.",
+            d="This command is gonna do a good bit eventually. For now it's not much; see `z!pokemon help` for info."
         )
 
     return await PokemonInterpreter(ctx).run(str(func).lower(), *args)
 
 
 class PokemonInterpreter(Interpreter):
+    redirects = {"t": "type", "e": "eff"}
+
     @staticmethod
     def type_emol(typ: str):
         return Emol(zeph.emojis[typ.title()], hexcol(pk.typeColors[typ]))
@@ -278,17 +293,25 @@ class PokemonInterpreter(Interpreter):
     async def _help(self, *args):
         help_dict = {
             "type": "``z!pokemon type <type>`` shows type effectiveness (offense and defense) for a given type.",
-            "eff": "``z!pokemon eff`` checks type matchups against a type combination. Use the buttons "
+            "eff": "``z!pokemon eff`` checks defensive type matchups against a type combination. Use the buttons "
                    f"({zeph.emojis['left1']}{zeph.emojis['right1']}{zeph.emojis['left2']}{zeph.emojis['right2']}) "
                    "to change types.\n``z!pokemon eff <mon...>`` shows matchups against a given species or form.\n"
                    "``z!pokemon eff <type1> [type2]`` shows matchups against a given type combination."
         }
+        desc_dict = {
+            "type": "Shows type effectiveness for a type.",
+            "eff": "Checks type matchups against a combination of types."
+        }
+        shortcuts = {j: g for g, j in self.redirects.items() if len(g) == 1}
+
+        def get_command(s: str):
+            return f"**`{s}`** (or **`{shortcuts[s]}`**)" if shortcuts.get(s) else f"**`{s}`**"
 
         if not args or args[0].lower() not in help_dict:
             return await ball_emol().send(
                 self.ctx, "z!pokemon help",
-                d=f"Available functions:\n```{', '.join(list(help_dict.keys()))}```\n"
-                f"For information on how to use these, use ``z!pokemon help <function>``."
+                d="Available functions:\n\n" + "\n".join(f"{get_command(g)} - {j}" for g, j in desc_dict.items()) +
+                  "\n\nFor information on how to use these, use ``z!planes help <function>``."
             )
 
         return await ball_emol().send(self.ctx, f"z!pokemon {args[0].lower()}", d=help_dict[args[0].lower()])
