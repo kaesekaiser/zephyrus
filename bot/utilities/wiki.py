@@ -86,9 +86,7 @@ class ForeignParser(HTMLParser):
                 self.lang_title[name] = dict(attrs)["title"].split(splitter)[0]
                 url_code = search(r"(?<=https://).*?(?=\.wikipedia)", dict(attrs)["href"])[0]
                 lang_link = "_".join(self.lang_title[name].split())
-                self.lang_link[name] = \
-                    f"https://{url_code}.wikipedia.org/wiki/{lang_link}"
-                print(self.lang_link[name])
+                self.lang_link[name] = f"https://{url_code}.wikipedia.org/wiki/{lang_link}"
                 self.lang_form[name] = self.lang_link[name].replace(')', '\\)')
                 self.code_lang[dict(attrs)["lang"]] = name
             except ValueError:
