@@ -438,11 +438,6 @@ class Interpreter:
         return self.ctx.author
 
     async def run(self, func: str, *args):
-        if asyncio.iscoroutinefunction(self.before_run):
-            await self.before_run()
-        else:
-            self.before_run()
-
         functions = dict([g for g in inspect.getmembers(type(self), predicate=inspect.isroutine)
                           if g[0][0] == "_" and g[0][1] != "_"])
         try:
@@ -450,9 +445,14 @@ class Interpreter:
         except KeyError:
             raise commands.CommandError(f"unrecognized function ``{func}``")
         else:
-            return await functions["_" + self.redirects.get(func, func)](self, *args)
+            func = self.redirects.get(func, func)
+            if asyncio.iscoroutinefunction(self.before_run):
+                await self.before_run(func)
+            else:
+                self.before_run(func)
+            return await functions["_" + func](self, *args)
 
-    def before_run(self):
+    def before_run(self, func: str):
         pass
 
 

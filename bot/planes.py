@@ -158,45 +158,19 @@ class PlanesInterpreter(Interpreter):
             "footer": f"new jobs in {self.form_et(((tm // 900 + 1) * 900 - tm) // 60)} min"
         }
 
-    async def before_run(self):
-        if self.au.id not in zeph.planeUsers:
-            if await confirm("You haven't started a Planes company yet. Would you like to?", self.ctx, self.au,
-                             yes="start now", no="start later", emol=plane):
-                def pred(m: discord.Message):
-                    return m.author == self.au and m.channel == self.ctx.channel and len(m.content.split()) == 1
-
-                await plane.send(
-                    self.ctx, "Pick any city to start.", url=pn.url,
-                    d="You'll get the license to that country along with it. Make sure to omit spaces."
-                )
-                while True:
-                    try:
-                        cho = await zeph.wait_for("message", timeout=300, check=pred)
-                    except asyncio.TimeoutError:
-                        return await plane.send(self.ctx, f"{self.au.display_name}'s request timed out.")
-                    else:
-                        if cho.content.lower() in pn.cities:
-                            cho = cho.content.lower()
-                            cit = pn.cities[cho]
-                            nam = choice(pn.starter_names)
-                            zeph.planeUsers[self.au.id] = pn.User(
-                                self.au.id, [cit.country], [cit.name],
-                                {nam.lower(): pn.Plane(pn.craft["tyne-647"], nam, pn.Path(0, cit), [], [0, 0])}, 1000000
-                            )
-                            await plane.send(self.ctx, f"Great! {pn.cities[cho].name} Airport purchased.",
-                                             footer="Anyway, that command...")
-                            await asyncio.sleep(1)
-                            break
-                        await plane.send(self.ctx, "That's not a recognized city.")
-
+    async def before_run(self, func: str):
         if self.au.id in zeph.planeUsers:
             for craft in self.user.planes.values():  # kinda messy; should only be called if zeph went down
                 if len(craft.path) > 0:              # while a plane was in the air
                     while craft.next_eta and craft.next_eta < time.time():
                         self.next_stop(craft)
+        else:
+            if func not in ["new", "help", "map", "tutorial"]:
+                raise commands.CommandError("You haven't started a Planes company yet; try `z!planes new`.")
 
     async def _help(self, *args):
         help_dict = {
+            "new": "``z!planes new`` starts a new game.",
             "map": "``z!planes map`` links to the airport map.",
             "profile": "``z!planes profile`` shows your country licenses and credit balance.",
             "fleet": "``z!planes fleet`` lists your owned planes.\n"
@@ -243,9 +217,8 @@ class PlanesInterpreter(Interpreter):
                        "ordered by traffic.",
             "stats": "``z!planes stats <plane>`` shows the airspeed, fuel consumption, fuel capacity, and "
                      "upgrade levels for a plane you own.",
-            "upgrade": "``z!planes upgrade <plane> <stat>`` allows you to upgrade a plane. Each upgrade costs "
-                       "Ȼ20,000 plus an additional Ȼ20,000 per already installed upgrade. A plane can go up "
-                       "to level 3 in each stat.\n"
+            "upgrade": "``z!planes upgrade <plane> <stat>`` allows you to upgrade a plane. Upgrades cost Ȼ20,000 "
+                       "initially, but each subsequent upgrade is twice as expensive as the last.\n"
                        "``z!planes upgrade <plane> power`` increases a plane's airspeed by 25%, but also "
                        "increases its fuel consumption by 25%, so its range is not affected.\n"
                        "``z!planes upgrade <plane> tank`` increases a plane's fuel capacity by 25%, which "
@@ -257,6 +230,7 @@ class PlanesInterpreter(Interpreter):
                       "airports.",
         }
         desc_dict = {
+            "new": "Starts a brand new game.",
             "map": "Links to the airport map.",
             "profile": "Shows your country licenses and credit balance.",
             "fleet": "List or show details for your planes.",
@@ -745,7 +719,7 @@ class PlanesInterpreter(Interpreter):
         up_cost = int(10000 * 2 ** sum(craft.upgrades + [1]))
         if up_cost > self.user.credits:
             raise commands.CommandError(
-                self.ctx, f"You don't have enough credits. Your next upgrade will cost Ȼ{pn.addcomm(up_cost)}."
+                f"You don't have enough credits. Your next upgrade will cost Ȼ{pn.addcomm(up_cost)}."
             )
 
         if await confirm(f"Are you sure you want to upgrade {craft.name}'s {args[1].lower()} for "
@@ -818,7 +792,7 @@ class PlanesInterpreter(Interpreter):
             mess = await plane.send(self.ctx, "Alright, one moment...")
             await asyncio.sleep(2 + random() * 2)
             del zeph.planeUsers[self.au.id]
-            return await succ.edit(mess, "Done.", d="Call any ``z!planes`` function to start anew.")
+            return await succ.edit(mess, "Done.", d="Call ``z!planes new`` to start anew.")
 
     async def _buy(self, *args):
         if len(args) < 2:
@@ -943,6 +917,41 @@ class PlanesInterpreter(Interpreter):
 
             else:
                 return await plane.send(self.ctx, "Purchase cancelled.")
+
+    async def _new(self, *args):
+        if self.ctx.author.id in zeph.planeUsers:
+            return await plane.send(
+                self.ctx, "You've already started a game, but you can start over using `z!planes restart` if you want."
+            )
+
+        def pred(m: discord.Message):
+            return m.author == self.au and m.channel == self.ctx.channel and len(m.content.split()) == 1
+
+        await plane.send(
+            self.ctx, "Pick any city to start your empire in.", url=pn.url,
+            d="Click the link to see the full map of available airports. You'll get the license to the country "
+              "along with your first airport. Make sure to omit spaces."
+        )
+        while True:
+            try:
+                cho = await zeph.wait_for("message", timeout=300, check=pred)
+            except asyncio.TimeoutError:
+                return await plane.send(self.ctx, f"{self.au.display_name}'s request timed out.")
+            else:
+                if cho.content.lower() in pn.cities:
+                    cho = cho.content.lower()
+                    cit = pn.cities[cho]
+                    nam = choice(pn.starter_names)
+                    zeph.planeUsers[self.au.id] = pn.User(
+                        self.au.id, [cit.country], [cit.name],
+                        {nam.lower(): pn.Plane(pn.craft["tyne-647"], nam, pn.Path(0, cit), [], [0, 0])}, 1000000
+                    )
+                    return await plane.send(
+                        self.ctx, f"Great! {pn.cities[cho].name} Airport purchased.",
+                        d=f"You've also received the license to {pn.cities[cho].country} and a Tyne-647 to start you "
+                        f"out. To learn how to play, use `z!tutorial` (currently not yet implemented). Have at it!"
+                    )
+                await plane.send(self.ctx, "That's not a recognized city.")
 
 
 class JobNavigator(Navigator):
