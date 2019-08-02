@@ -2,13 +2,15 @@ import discord
 import asyncio
 import inspect
 import json
+import pinyin_jyutping_sentence as pjs
+import re
 from discord.ext import commands
 from typing import Union
 from minigames.risk import snip, Image
 from utilities.words import levenshtein
 from math import ceil, atan2, sqrt, pi
 from random import choice
-import pinyin_jyutping_sentence as pjs
+from pyquery import PyQuery
 
 
 User = Union[discord.Member, discord.User]
@@ -35,6 +37,17 @@ class Zeph(commands.Bot):
         for i in self.airportMaps.values():
             assert isinstance(i, Image.Image)
         assert isinstance(self.airportIcon, Image.Image)
+        step1 = str(PyQuery(
+            "https://github.com/kaesekaiser/zephyrus/releases/latest", {"title": "CSS"}
+        ))  # this is a really gross way of getting the version I know. but shut up
+        step2 = re.search(r"octicon octicon-tag.*?</span>", step1, re.S)[0]
+        zeph_version = re.search(r"(?<=>).*?(?=</span>)", step2)[0]
+        step3 = re.search(r"released this.*?to master", step1, re.S)[0]
+        try:
+            zeph_version += "." + re.search(r"[0-9]*(?= commit)", step3)[0]
+        except TypeError:
+            zeph_version += ".0"
+        self.version = zeph_version
 
     @property
     def emojis(self):

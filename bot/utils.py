@@ -1,6 +1,5 @@
 from game import *
 from utilities import dice as di, weed as wd, timein as ti, translate as tr, wiki as wk
-import re
 import requests
 from io import BytesIO
 from unicodedata import name as uni_name

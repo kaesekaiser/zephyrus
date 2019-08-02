@@ -57,16 +57,6 @@ async def about(ctx: commands.Context):
         return f"{dt.seconds // (60 * 60)} h {dt.seconds // 60 % 60} m {int(dt.seconds) % 60} s"
 
     py_version = "{}.{}.{}".format(*version_info)
-    step1 = str(wk.PyQuery(
-        "https://github.com/kaesekaiser/zephyrus/releases/latest", {"title": "CSS"}
-    ))  # this is a really gross way of getting the version I know. but shut up
-    step2 = re.search(r"octicon octicon-tag.*?</span>", step1, re.S)[0]
-    zeph_version = re.search(r"(?<=>).*?(?=</span>)", step2)[0]
-    step3 = re.search(r"released this.*?to master", step1, re.S)[0]
-    try:
-        zeph_version += "." + re.search(r"[0-9]*(?= commit)", step3)[0]
-    except TypeError:
-        zeph.version += ".0"
 
     return await ClientEmol(":robot:", hexcol("6fc96f"), ctx).say(
         author=author_from_user(zeph.user, f"\u2223 {zeph.user.name}"),
@@ -74,7 +64,7 @@ async def about(ctx: commands.Context):
         f"{len(set(zeph.users))} users\n"
         f"**Commands:** {len([g for g, j in zeph.all_commands.items() if g == j.name])}\n"
         f"**Runtime:** {runtime_format(datetime.datetime.now() - getattr(zeph, 'readyTime'))}\n"
-        f"**Build:** {zeph_version} / Python {py_version}\n"
+        f"**Build:** {zeph.version} / Python {py_version}\n"
         f"[GitHub](https://github.com/kaesekaiser/zephyrus) / "
         f"[Invite](https://discordapp.com/oauth2/authorize?client_id={zeph.user.id}&scope=bot&permissions=8192)",
         thumbnail=zeph.user.avatar_url,
@@ -161,6 +151,18 @@ async def presence_command(ctx: commands.Context, activity_type: str, *, activit
     return await succ.send(ctx, "Presence updated.")
 
 
+@zeph.command(
+    name="close", hidden=True, usage="z!close",
+    help="Saves and stops the bot."
+)
+async def close_command(ctx: commands.Context):
+    admin_check(ctx)
+
+    zeph.save()
+    await ClientEmol(":wave:", blue, ctx).say("Bye!")
+    await zeph.close()
+
+
 x_sampa_dict = {
     "d`z`": "ɖ͡ʐ", "t`s`": "ʈ͡ʂ", r"dK\\": "d͡ɮ", "tK": "t͡ɬ", r"dz\\": "d͡ʑ", r"ts\\": "t͡ɕ", "dz`": "d͡ʐ",
     "ts`": "t͡ʂ", "dz": "d͡z", "ts": "t͡s", "dZ": "d͡ʒ", "tS": "t͡ʃ",
@@ -206,6 +208,7 @@ async def on_ready():
     ])
     zeph.loop.create_task(initialize_planes())
     zeph.loop.create_task(zeph.load_romanization())
+    await zeph.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name="you ❤"))
 
 
 @zeph.event
