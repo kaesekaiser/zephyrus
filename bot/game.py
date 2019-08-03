@@ -251,7 +251,10 @@ async def boggle(ctx: commands.Context):
                 pass
             guess = guess.content.lower()
             if guess not in possible:
-                await bog.edit(screen, f"`{guess}` isn't a word.", **embed())
+                await bog.resend_if_dm(screen, f"`{guess}` isn't a word.", **embed())
+                continue
+            if guess in board.guessed:
+                await bog.resend_if_dm(screen, f"You've already used '{guess}'.", **embed())
                 continue
 
             board.guess(guess)
