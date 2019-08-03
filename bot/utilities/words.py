@@ -1,7 +1,7 @@
 wordList = []
 with open("words.txt" if __name__ == '__main__' else "utilities/words.txt", "r") as r:
     for l in r.readlines():
-        wordList.append(l[:-1])
+        wordList.append(l.replace("\n", ""))
 wordDict = {l: tuple(g for g in wordList if len(g) == l) for l in range(1, 23)}
 anagramsDist = [13, 5, 6, 7, 24, 6, 7, 6, 12, 2, 2, 8, 8, 11, 15, 4, 2, 12, 10, 10, 6, 2, 4, 2, 2, 2]
 anagramsDist = [g for sub in [[chr(j + 97)] * anagramsDist[j] for j in range(26)] for g in sub]

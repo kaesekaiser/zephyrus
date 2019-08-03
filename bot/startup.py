@@ -148,12 +148,18 @@ class Emol:  # fancy emote-color embeds
 
 
 class ClientEmol(Emol):
-    def __init__(self, e: Union[discord.Emoji, str], col: discord.Colour, dest: commands.Context):
+    def __init__(self, e: Union[discord.Emoji, str], col: discord.Colour, ctx: commands.Context):
         super().__init__(e, col)
-        self.dest = dest
+        self.ctx = ctx
 
     async def say(self, s: str = None, **kwargs):
-        return await self.send(self.dest, s, **kwargs)
+        return await self.send(self.ctx, s, **kwargs)
+
+    async def resend_if_dm(self, mess: discord.Message, s: str = None, **kwargs):
+        if isinstance(self.ctx.channel, discord.DMChannel):
+            return await self.say(s, **kwargs)
+        else:
+            return await self.edit(mess, s, **kwargs)
 
 
 # IMPORTANT EMOLS

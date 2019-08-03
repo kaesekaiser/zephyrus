@@ -78,6 +78,59 @@ def admin_check(ctx: commands.Context):
 
 
 @zeph.command(
+    name="wordlist", aliases=["wl"], usage="z!wordlist <add | remove | check> <words...>",
+    description="Checks and suggests changes to the word list used for the word games.",
+    help="If you're Fort, this modifies the word list. If you're not, this suggests to Fort a modification that "
+         "you think should be made to the word list that `z!jotto`, `z!anagrams`, and `z!boggle` use. `z!wl add` "
+         "suggests words to add, and `z!wl remove` suggests words to remove. You can make multiple suggestions in "
+         "the same command - e.g. `z!wl add word1 word2 word3`.\n\n"
+         "`z!wl check` just checks whether the words you pass it are in the word list already."
+)
+async def wordlist_command(ctx: commands.Context, aor: str, *words: str):
+    if aor.lower() not in ["add", "remove", "check"]:
+        raise commands.errors.BadArgument
+    aor = aor.lower()
+
+    if not words:
+        raise commands.CommandError("no words input")
+    if aor == "check":
+        words = list(set(g.lower() for g in words))
+        in_words = [g for g in words if g in wr.wordList]
+        out_words = [g for g in words if g not in in_words]
+        in_words = f"{zeph.emojis['yes']} In word list: `{' '.join(in_words)}`\n" if in_words else ""
+        out_words = f"{zeph.emojis['no']} Not in word list: `{' '.join(out_words)}`" if out_words else ""
+        return await ClientEmol(":blue_book:", hexcol("55acee"), ctx).say("Word Check", d=in_words + out_words)
+
+    words = sorted(list(set(g.lower() for g in words if g.lower() not in wr.wordList)))
+    if not words:
+        raise commands.CommandError("Word(s) already in word list.")
+
+    try:
+        admin_check(ctx)
+    except commands.CommandError:
+        fort = zeph.get_user(238390171022655489)
+        if not fort.dm_channel:
+            await fort.create_dm()
+        await fort.dm_channel.send(
+            content=f"{ctx.author} has suggested that you {aor} the following word(s):\n`{' '.join(words)}`"
+        )
+        return await succ.send(ctx, "Suggestion sent.")
+    else:
+        if aor == "add":
+            wr.wordList.extend(words)
+        else:
+            for g in words:
+                try:
+                    wr.wordList.remove(g)
+                except ValueError:
+                    pass
+        wr.wordDict.update({l: tuple(g for g in wr.wordList if len(g) == l) for l in range(1, 23)})
+        with open("utilities/words.txt", "w") as f:
+            f.writelines("\n".join(sorted(wr.wordList)))
+        return await succ.send(ctx, "Word list updated.")
+
+
+@zeph.command(
     hidden=True, usage="z!save",
     help="Saves any data stored during downtime."
 )

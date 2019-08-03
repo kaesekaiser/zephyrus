@@ -145,7 +145,7 @@ async def anagrams(ctx: commands.Context):
 
     def pred(mr: MR, u: User):
         if type(mr) == discord.Message:
-            return u == ctx.author and mr.channel == ctx.channel and mr.content.lower() in words
+            return u == ctx.author and mr.channel == ctx.channel and mr.content.lower() in [*words, "🔄", "⏹"]
         else:
             return u == ctx.author and mr.emoji in ["🔄", "⏹"] and mr.message.id == message.id
 
@@ -174,24 +174,34 @@ async def anagrams(ctx: commands.Context):
             missed = sorted([g for g in words if g not in guesses])
             return await ana.say("Time's up!", d=f"Words you missed: {none_list(missed)} ({len(missed)})")
         else:
-            if type(guess) == discord.Reaction:
-                await message.remove_reaction(guess.emoji, ctx.author)
-                if guess.emoji == "🔄":
+            if type(guess) == discord.Reaction or guess.content.lower() not in words:
+                if type(guess) == discord.Message:
+                    emoji = guess.content.lower()
+                else:
+                    emoji = guess.emoji
+                    try:
+                        await message.remove_reaction(guess.emoji, ctx.author)
+                    except discord.HTTPException:
+                        pass
+                if emoji == "🔄":
                     letters = sample(letters, len(letters))
-                    await ana.edit(message, "Shuffled!", **embed())
+                    await ana.resend_if_dm(message, "Shuffled!", **embed())
                     continue
-                if guess.emoji == "⏹":
+                if emoji == "⏹":
                     missed = sorted([g for g in words if g not in guesses])
                     return await ana.say("Game over!", d=f"Words you missed: {none_list(missed)} ({len(missed)})")
 
-            await guess.delete()
+            try:
+                await guess.delete()
+            except discord.HTTPException:
+                pass
             guess = guess.content.lower()
             if guess in guesses:
-                await ana.edit(message, "You already guessed that word.", **embed())
+                await ana.resend_if_dm(message, "You already guessed that word.", **embed())
                 continue
             if guess in words:
                 guesses.append(guess)
-                await ana.edit(message, f"Scored '{guess}'!", **embed())
+                await ana.resend_if_dm(message, f"Scored '{guess}'!", **embed())
 
 
 @zeph.command(
@@ -235,15 +245,19 @@ async def boggle(ctx: commands.Context):
             return await bog.say("Time's up!", d=f"You scored **{board.points}** points!\n\n"
                                                  f"Words you missed: {none_list(missed())} ({len(missed())})")
         else:
-            await guess.delete()
+            try:
+                await guess.delete()
+            except discord.HTTPException:
+                pass
             guess = guess.content.lower()
             if guess not in possible:
                 await bog.edit(screen, f"`{guess}` isn't a word.", **embed())
                 continue
 
             board.guess(guess)
-            await bog.edit(screen, f"Scored '{guess}' for {bg.score(guess)} {plural('point', bg.score(guess))}!",
-                           **embed())
+            await bog.resend_if_dm(
+                screen, f"Scored '{guess}' for {bg.score(guess)} {plural('point', bg.score(guess))}!", **embed()
+            )
 
 
 @zeph.command(

@@ -44,7 +44,7 @@ async def expand(ctx: commands.Context, *, text):
     return await ctx.send(" ".join([c for c in text]))
 
 
-def squarize(s: str, joiner=" "):
+def squarize(s: str, joiner="\u200b"):
     noms = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
     return joiner.join([chr(127462 - 97 + ord(g.lower())) if ord(g.lower()) in range(97, 123) else
                         ":{}:".format(noms[int(g)]) if ord(g) in range(48, 58) else
@@ -53,11 +53,7 @@ def squarize(s: str, joiner=" "):
 
 @zeph.command(
     aliases=["sq"], usage="z!square <text...>",
-    help=":regional_indicator_d: :regional_indicator_o: :regional_indicator_e: :regional_indicator_s:   "
-         ":regional_indicator_t: :regional_indicator_h: :regional_indicator_i: :regional_indicator_s:   "
-         ":regional_indicator_t: :regional_indicator_o:   :regional_indicator_y: :regional_indicator_o: "
-         ":regional_indicator_u: :regional_indicator_r:   :regional_indicator_t: :regional_indicator_e: "
-         ":regional_indicator_x: :regional_indicator_t: ."
+    help=squarize("Does this to your text.")
 )
 async def square(ctx: commands.Context, *, text):
     return await ctx.send(squarize(text))
