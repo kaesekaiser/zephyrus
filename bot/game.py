@@ -154,7 +154,7 @@ async def anagrams(ctx: commands.Context):
 
     def embed():
         return {"d": f"{form(letters)}Time remaining: {round(timer())} s",
-                "footer": f"Used words: {none_list(sorted(guesses))}"}
+                "footer": f"Used words: {none_list(sorted(guesses))} ({len(guesses)}/{len(words)})"}
 
     words = wr.anagrams("".join(letters))
     guesses = []
