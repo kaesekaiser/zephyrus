@@ -71,8 +71,8 @@ class PlanesInterpreter(Interpreter):
     redirects = {
         "offload": "unload", "city": "airport", "airports": "cities",
         "p": "profile", "f": "fleet", "j": "jobs", "l": "load", "g": "launch", "a": "airport", "c": "country",
-        "k": "market", "m": "model", "h": "help", "u": "upgrade", "d": "dist", "e": "eta", "s": "cities",
-        "n": "unowned", "b": "buy", "o": "buyout", "r": "rename"
+        "k": "market", "m": "model", "h": "help", "u": "upgrade", "d": "dist", "e": "eta", "s": "search",
+        "b": "buy", "o": "buyout", "r": "rename"
     }
 
     @property
@@ -109,9 +109,9 @@ class PlanesInterpreter(Interpreter):
             return False
         return True
 
-    def oc(self, ci: pn.City, flag=False):
+    def oc(self, ci: pn.City, flag=False, italicize_unowned=True):
         flag = (":flag_" + pn.planemojis[ci.country] + ": ") if flag else ""
-        return flag + (ci.name if ci.name in self.user.cities else "_{}_".format(ci.name))
+        return flag + (ci.name if (ci.name in self.user.cities or not italicize_unowned) else "_{}_".format(ci.name))
 
     @property
     def fuel_price(self):
@@ -218,10 +218,27 @@ class PlanesInterpreter(Interpreter):
             "market": "``z!planes market`` shows prices for all available plane models. Like fuel, "
                       "plane prices fluctuate daily.",
             "eta": "``z!planes eta <plane>`` links to the timer for a plane's arrival.",
-            "cities": "``z!planes cities <country>`` lists all airports in a certain country, ordered "
-                      "by traffic.",
-            "unowned": "``z!planes unowned <country>`` lists unowned airports in a certain country, "
-                       "ordered by traffic.",
+            "search": "`z!planes search [owned | unowned] [criteria...]` is a robust search/sort method for Planes's "
+                      "1100-some airports. At some point in the near future, I'll write a more in-depth tutorial. The "
+                      "following search parameters can be used:\n\n"
+                      "- `owned` (or `o`) / `unowned` (or `u`) restrict the results to only airports you either do or "
+                      "don't own. This param must come first if used.\n\n"
+                      "- `in:<country>` restricts the results to only airports in a given country. You can use "
+                      "multiple `in` params to search in multiple countries.\n\n"
+                      "- `near:<city>` sorts the results by distance from a given airport. You can use multiple `near` "
+                      "params to search near multiple airports; the sorting will be done by the minimum distance to "
+                      "an airport in the list.\n\n"
+                      "- `near:any` sorts the results by closest distance to any airport you own. `near:any` can't be "
+                      "used with any other `near` params. Because the `near` param excludes the airport(s) you input, "
+                      "`near:any` also inherently filters out all owned airports. This makes it very useful to find "
+                      "new airports to buy.\n\n"
+                      "- `sort:name` sorts the results by alphabetical order, and cannot be used with any `near` "
+                      "params.\n\n"
+                      "- `startswith:<text>` restricts the results to only airports starting with a given string "
+                      "of letters."
+                      "\n\nFor example, `z!p s o in:us in:canada near:detroit` returns a list of owned airports in the "
+                      "United States or Canada, sorted by distance from Detroit. All search parameters are optional; "
+                      "`z!p s` returns a list of all airports.",
             "stats": "``z!planes stats <plane>`` shows the airspeed, fuel consumption, fuel capacity, and "
                      "upgrade levels for a plane you own.",
             "upgrade": "``z!planes upgrade <plane> <stat>`` allows you to upgrade a plane. Upgrades cost Ȼ20,000 "
@@ -254,8 +271,7 @@ class PlanesInterpreter(Interpreter):
             "rename": "Renames a plane.",
             "market": "Browses the market for new planes.",
             "eta": "Shows ETAs for planes.",
-            "cities": "Lists all airports in a country.",
-            "unowned": "Lists all unowned airports in a country.",
+            "search": "Searches and sorts airports.",
             "stats": "Shows specs and upgrades for a plane.",
             "upgrade": "Upgrades a plane's engine or fuel tank.",
             "buyout": "Buys all unowned airports in a country you can afford."
@@ -293,13 +309,13 @@ class PlanesInterpreter(Interpreter):
     async def _fleet(self, *args):
         if len(args) == 0:
             return await plane.send(
-                self.ctx, "{}'s Fleet".format(self.au.display_name),
+                self.ctx, f"{self.au.display_name}'s Fleet",
                 fs={p.name: p.fleet_str for p in self.user.planes.values()}, same_line=True
             )
 
         if args[0] == "sell":
             if len(args) == 1:
-                raise commands.CommandError("no plane input")
+                raise commands.CommandError("Format: `z!p fleet sell <plane>`")
             args = args[1], args[0]
         if args[0].lower() not in self.user.planes:
             raise commands.CommandError("no owned plane by that name")
@@ -323,7 +339,7 @@ class PlanesInterpreter(Interpreter):
 
     async def _stats(self, *args):
         if len(args) == 0:
-            raise commands.CommandError("no plane input")
+            raise commands.CommandError("Format: `z!p stats <plane>`")
         if args[0].lower() not in self.user.planes:
             raise commands.CommandError("no owned plane by that name")
 
@@ -332,7 +348,7 @@ class PlanesInterpreter(Interpreter):
 
     async def _country(self, *args):
         if len(args) == 0:
-            raise commands.CommandError("Please input a country.")
+            raise commands.CommandError("Format `z!p country <country>`")
 
         try:
             country = pn.find_country(args[0])
@@ -354,7 +370,7 @@ class PlanesInterpreter(Interpreter):
 
     async def _airport(self, *args):
         if len(args) == 0:
-            raise commands.CommandError("Please input a function or airport.")
+            raise commands.CommandError("Format: `z!p airport [sell] <airport>`")
         if args[0].lower() in ["sell"]:
             if len(args) == 1:
                 raise commands.CommandError("no airport input")
@@ -402,10 +418,8 @@ class PlanesInterpreter(Interpreter):
         return await AirportNavigator(self, city, message, minimaps).run(self.ctx, False)
 
     async def _launch(self, *args):
-        if len(args) == 0:
-            raise commands.CommandError("What plane?")
-        if len(args) == 1:
-            raise commands.CommandError("To where?")
+        if len(args) < 2:
+            raise commands.CommandError("Format: `z!p launch <plane> <path...>`")
         if args[0].lower() not in self.user.planes:
             raise commands.CommandError("That's not a plane you own.")
 
@@ -418,7 +432,7 @@ class PlanesInterpreter(Interpreter):
             except KeyError:
                 raise commands.CommandError(self.invalid_city(arg))
             if city.name not in self.user.cities:
-                raise commands.CommandError("You don't have the license to {}.".format(city.name))
+                raise commands.CommandError(f"You don't have the license to {city.nam}.")
 
         args = [pn.find_city(g) for g in args]
         path = [craft.path[0], *args]
@@ -447,7 +461,7 @@ class PlanesInterpreter(Interpreter):
 
     async def _model(self, *args):
         if len(args) == 0:
-            raise commands.CommandError("What model?")
+            raise commands.CommandError("Format: `z!p model <model>`")
         if args[0].lower() not in pn.craft:
             raise commands.CommandError("That's not a valid model.")
 
@@ -462,9 +476,7 @@ class PlanesInterpreter(Interpreter):
 
     async def _dist(self, *args):
         if len(args) == 0:
-            raise commands.CommandError("no city input")
-        if len(args) == 1:
-            raise commands.CommandError("no destination input")
+            raise commands.CommandError("Format: `z!p dist <from> <to...>`")
 
         try:
             pn.find_city(args[0])
@@ -484,7 +496,7 @@ class PlanesInterpreter(Interpreter):
 
     async def _priority(self, *args):
         if len(args) == 0:
-            raise commands.CommandError("no city input")
+            raise commands.CommandError("Format: `z!p priority <from> [to]`")
         try:
             city = pn.find_city(args[0])
         except KeyError:
@@ -511,7 +523,7 @@ class PlanesInterpreter(Interpreter):
 
     async def _jobs(self, *args):
         if len(args) == 0:
-            raise commands.CommandError("no city input")
+            raise commands.CommandError("Format: `z!p jobs <airport> [filter...]`")
         try:
             city = pn.find_city(args[0])
         except KeyError:
@@ -529,7 +541,7 @@ class PlanesInterpreter(Interpreter):
             fil_str = "All j"
         elif len(args) > 1 and args[1].lower() == "to":
             if len(args) == 2:
-                raise commands.CommandError("to where?")
+                raise commands.CommandError("`to` must be followed by a city or country.")
 
             try:
                 fil = lambda j: j.destination.country == pn.find_country(args[2].lower()).name
@@ -552,7 +564,7 @@ class PlanesInterpreter(Interpreter):
 
     async def _load(self, *args):
         if len(args) == 0:
-            raise commands.CommandError("no job codes input")
+            raise commands.CommandError("Format: `z!p load <job codes...>`")
 
         jobs = []
         for job in args:  # filters out duplicates while preserving input order
@@ -561,7 +573,7 @@ class PlanesInterpreter(Interpreter):
 
         for job in jobs:
             if not self.valid_job(job):
-                raise commands.CommandError(f"invalid job code {job}")
+                raise commands.CommandError(f"invalid job code {job.upper()}")
             if pn.Job.from_str(job).source != pn.Job.from_str(jobs[0]).source:
                 raise commands.CommandError("Cannot simultaneously load jobs from different airports.")
             if job.upper() in self.user.jobs:
@@ -605,18 +617,16 @@ class PlanesInterpreter(Interpreter):
         )
 
     async def _rename(self, *args):
-        if len(args) == 0:
-            raise commands.CommandError("no plane input")
+        if len(args) < 2:
+            raise commands.CommandError("Format: `z!p rename <plane> <new name>`")
         if args[0].lower() not in self.user.planes:
             raise commands.CommandError("no owned plane by that name")
 
         nam = self.user.planes[args[0].lower()].name
-        if len(args) == 1:
-            raise commands.CommandError("no name input")
         if [g in pn.permit for g in args[1]].count(False) != 0:
-            raise commands.CommandError("plane names can only contain alphanumerics, dashes, and underscores")
+            raise commands.CommandError("Plane names can only contain alphanumerics, dashes, and underscores.")
         if args[1].lower() in self.user.planes:
-            raise commands.CommandError("a plane by that name already exists")
+            raise commands.CommandError("You already have a plane with that name.")
         if args[1].lower() == "sell":
             raise commands.CommandError("You can't name a plane that.")
 
@@ -625,15 +635,13 @@ class PlanesInterpreter(Interpreter):
 
     async def _unload(self, *args):
         if len(args) == 0:
-            raise commands.CommandError("no plane input")
+            raise commands.CommandError("Format: `z!p unload <plane> <job codes...| all>`")
         if args[0].lower() not in self.user.planes:
             raise commands.CommandError("no owned plane by that name")
 
         craft = self.user.planes[args[0].lower()]
         if len(craft.path) != 0:
             raise commands.CommandError("plane in air")
-        if len(args) == 1:
-            raise commands.CommandError("no job codes input")
 
         if args[1].lower() == "all":
             jobs = craft.jobs
@@ -673,51 +681,20 @@ class PlanesInterpreter(Interpreter):
 
         craft = self.user.planes[args[0].lower()]
         if len(craft.path) == 0:
-            return await plane.send(self.ctx, f"{craft.name} is landed.")
+            return await plane.send(self.ctx, f"{craft.name} is landed at {craft.path[0].name}.")
         url = pn.cd_url.format(self.form_dt(datetime.datetime.fromtimestamp(craft.arrival)),
                                f"{craft.name}+to+{craft.path[-1].name}")
         return await plane.send(self.ctx, f"ETA: {pn.hrmin(craft.arrival - time.time())}", url=url)
 
-    async def _cities(self, *args):
-        if len(args) == 0:
-            raise commands.CommandError("no country input")
-        try:
-            country = pn.find_country(args[0])
-        except KeyError:
-            raise commands.CommandError("invalid country")
-
-        ret = [f"{g.name} ({g.dict['Annual Passengers']})" for g in country.cities]
-        return await Navigator(plane, ret, 6, "List of airports in " + country.name + " [{page}/{pgs}]").run(self.ctx)
-
-    async def _unowned(self, *args):
-        if len(args) == 0:
-            raise commands.CommandError("no country input")
-        try:
-            country = pn.find_country(args[0]).name
-        except KeyError:
-            raise commands.CommandError("invalid country")
-
-        ret = [g for g in pn.cities.values() if g.country == country
-               and g.name not in self.user.cities]
-        cost = int(sum([g.value for g in ret]))
-        ret = [f"{g.name} (Ȼ{pn.addcomm(g.value)})" for g in sorted(ret, key=lambda c: c.value, reverse=True)]
-
-        return await Navigator(
-            plane, ret, 6, "Unowned airports in " + country + " [{page}/{pgs}]",
-            footer=f"cost of all airports: Ȼ{pn.addcomm(cost)}"
-        ).run(self.ctx)
-
     async def _upgrade(self, *args):
-        if len(args) == 0:
-            raise commands.CommandError("no plane input")
+        if len(args) < 2:
+            raise commands.CommandError("Format: `z!p upgrade <plane> <tank | power>`")
         if args[0].lower() not in self.user.planes:
             raise commands.CommandError("no owned plane by that name")
 
         craft = self.user.planes[args[0].lower()]
         if len(craft.path) != 0:
             raise commands.CommandError("That plane is currently in the air.")
-        if len(args) == 1:
-            raise commands.CommandError("no upgrade selected")
 
         ups = ["power", "tank"]
         if args[1].lower() not in ups:
@@ -740,7 +717,7 @@ class PlanesInterpreter(Interpreter):
 
     async def _buyout(self, *args):
         if len(args) == 0:
-            raise commands.CommandError("no country input")
+            raise commands.CommandError("Format: `z!p buyout <country>`")
         try:
             country = pn.find_country(args[0])
         except KeyError:
@@ -803,7 +780,7 @@ class PlanesInterpreter(Interpreter):
 
     async def _buy(self, *args):
         if len(args) < 2:
-            raise commands.CommandError("no purchase input")
+            raise commands.CommandError("Format: `z!p buy <airport | country | plane> <purchases...>`")
 
         if args[0].lower() in ["a", "airport", "airports", "city", "cities"]:
             purchases = []
@@ -956,9 +933,12 @@ class PlanesInterpreter(Interpreter):
                     return await plane.send(
                         self.ctx, f"Great! {pn.cities[cho].name} Airport purchased.",
                         d=f"You've also received the license to {pn.cities[cho].country} and a Tyne-647 to start you "
-                        f"out. To learn how to play, use `z!tutorial` (currently not yet implemented). Have at it!"
+                        f"out. To learn how to play, use `z!p tutorial` (currently not yet implemented). Have at it!"
                     )
                 await plane.send(self.ctx, "That's not a recognized city.")
+
+    async def _search(self, *args):
+        return await AirportSearchNavigator(self, *[g.lower() for g in args]).run(self.ctx)
 
 
 class JobNavigator(Navigator):
@@ -998,3 +978,123 @@ class AirportNavigator(Navigator):
             fs={**self.city.dict, "Owned": ["No", "Yes"][self.city.name in self.interpreter.user.cities]},
             thumb=self.minimaps[self.zoom_level]
         )
+
+
+class AirportSearchNavigator(Navigator):
+    def __init__(self, inter: PlanesInterpreter, *args):
+        super().__init__(plane, [], 5, "Airport Search [{page}/{pgs}]", prev="", nxt="")
+        self.interpreter = inter
+        self.funcs["⏪"] = self.back_five
+        self.funcs["◀"] = self.back_one
+        self.funcs["▶"] = self.forward_one
+        self.funcs["⏩"] = self.forward_five
+
+        if args:
+            self.own = {"o": "owned", "u": "unowned"}.get(args[0], args[0])
+            if self.own not in ["owned", "unowned"]:
+                self.own = "all"
+            else:
+                args = args[1:]
+        else:
+            self.own = "all"
+
+        self.criteria = self.read_criteria(" " + " ".join(args))
+        self.countries = self.criteria["in"] if self.criteria["in"] else [g.name for g in pn.countries.values()]
+
+        if self.criteria["near"] == "any":
+            self.sort = lambda x: min([x.dist(pn.find_city(g)) for g in self.interpreter.user.cities])
+        elif self.criteria["near"]:
+            self.sort = lambda x: min([x.dist(g) for g in self.criteria["near"]])
+        elif self.criteria["sort"] == "name":
+            self.sort = lambda x: x.name
+        else:
+            self.sort = lambda x: -x.passengers
+
+        table = sorted(
+            (g for g in pn.cities.values() if (self.criteria["near"] != "any" and g not in self.criteria["near"]) or
+             (self.criteria["near"] == "any" and g.name not in self.interpreter.user.cities)),
+            key=self.sort
+        )
+        self.table = [self.form_city(g) for g in table if self.check_city(g)]
+
+    def back_five(self):
+        self.advance_page(-5)
+
+    def back_one(self):
+        self.advance_page(-1)
+
+    def forward_one(self):
+        self.advance_page(1)
+
+    def forward_five(self):
+        self.advance_page(5)
+
+    def check_city(self, city: pn.City):
+        if self.own == "owned":
+            own = city.name in self.interpreter.user.cities
+        elif self.own == "unowned":
+            own = city.name not in self.interpreter.user.cities
+        else:
+            own = True
+        if self.criteria["startswith"]:
+            sw = city.name.lower().startswith(self.criteria["startswith"])
+        else:
+            sw = True
+        return city.country in self.countries and own and sw
+
+    def form_city(self, city: pn.City):
+        if self.criteria["near"] == "any":
+            nearest = sorted([pn.find_city(g) for g in self.interpreter.user.cities], key=lambda x: x.dist(city))[0]
+            dist = f" / {round(nearest.dist(city))} km from {nearest.name}"
+        elif self.criteria["near"]:
+            nearest = sorted(self.criteria["near"], key=lambda x: x.dist(city))[0]
+            if len(self.criteria["near"]) == 1:
+                dist = f" / {round(nearest.dist(city))} km"
+            else:
+                dist = f" / {round(nearest.dist(city))} km from {nearest.name}"
+        else:
+            dist = ""
+        cost = f"Ȼ{pn.addcomm(city.value)}" if city.name not in self.interpreter.user.cities else "owned"
+        return f"**{self.interpreter.oc(city, True, False)}**\n- {pn.suff(city.passengers)} / {cost}{dist}"
+
+    @staticmethod
+    def read_criteria(args: str):
+        possible_params = ["in", "near", "sort", "startswith"]
+        ret = {g: re.findall(r"(?<=\s"+g+r":).+?(?=\s|$)", args) for g in possible_params}
+
+        for i in ret["in"]:
+            try:
+                pn.find_country(i)
+            except KeyError:
+                raise commands.CommandError(f"invalid country `{i}`")
+        ret["in"] = [pn.find_country(g).name for g in ret["in"]]
+
+        if ret["near"] and ret["sort"]:
+            raise commands.CommandError("Cannot combine `near` and `sort` params.")
+
+        if "any" in ret["near"]:
+            if len(ret["near"]) > 1:
+                raise commands.CommandError("Cannot combine other `near` params with `near:any`.")
+            ret["near"] = "any"
+        else:
+            for i in ret["near"]:
+                try:
+                    pn.find_city(i)
+                except KeyError:
+                    raise commands.CommandError(f"invalid airport `{i}`")
+            ret["near"] = [pn.find_city(g) for g in ret["near"]]
+
+        if len(ret["sort"]) > 1:
+            raise commands.CommandError("Cannot use more than one `sort` param.")
+        elif ret["sort"]:
+            ret["sort"] = ret["sort"][0]
+            possible_sorts = ["name"]
+            if ret["sort"] not in possible_sorts:
+                raise commands.CommandError(f"`sort` param must be one of `{' '.join(possible_sorts)}.")
+
+        if len(ret["startswith"]) > 1:
+            raise commands.CommandError("Cannot use more than one `startswith` param.")
+        elif ret["startswith"]:
+            ret["startswith"] = ret["startswith"][0]
+
+        return ret
