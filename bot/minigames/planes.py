@@ -1,4 +1,4 @@
-from math import sin, cos, asin, acos, pi, log10, floor, log, atan2, sqrt, tan, asinh
+from math import sin, cos, asin, acos, pi, log10, floor, log, atan2, sqrt
 from random import choices, choice
 from minigames.planecities import *
 from geopy.geocoders import Nominatim
@@ -420,8 +420,14 @@ def find_city(s: str):
     return cities[c_alias.get(s.lower(), s.lower())]
 
 
+def from_flag(s: str):  # gets country code from regional indicators
+    if False not in [ord(g) in range(127462, 127488) for g in s]:
+        return "".join(chr(ord(g) - 127365) for g in s)
+    return s
+
+
 def find_country(s: str):
-    return countries[k_alias.get(s.lower(), backCountries.get(s.lower(), s.lower())).lower()]
+    return countries[k_alias.get(s.lower(), backCountries.get(from_flag(s.lower()), s.lower())).lower()]
 
 
 def code_city(s: str):
