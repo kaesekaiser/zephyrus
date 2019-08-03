@@ -94,24 +94,26 @@ async def wordlist_command(ctx: commands.Context, aor: str, *words: str):
     if not words:
         raise commands.CommandError("no words input")
     if aor == "check":
-        words = list(set(g.lower() for g in words))
+        words = sorted(list(set(g.lower() for g in words)))
         in_words = [g for g in words if g in wr.wordList]
         out_words = [g for g in words if g not in in_words]
         in_words = f"{zeph.emojis['yes']} In word list: `{' '.join(in_words)}`\n" if in_words else ""
         out_words = f"{zeph.emojis['no']} Not in word list: `{' '.join(out_words)}`" if out_words else ""
         return await ClientEmol(":blue_book:", hexcol("55acee"), ctx).say("Word Check", d=in_words + out_words)
 
-    words = sorted(list(set(g.lower() for g in words if g.lower() not in wr.wordList)))
-    if not words:
-        raise commands.CommandError("Word(s) already in word list.")
+    if aor == "add":
+        words = sorted(list(set(g.lower() for g in words if g.lower() not in wr.wordList)))
+        if not words:
+            raise commands.CommandError("Word(s) already in word list.")
+    if aor == "remove":
+        words = sorted(list(set(g.lower() for g in words if g.lower() in wr.wordList)))
+        if not words:
+            raise commands.CommandError("Word(s) not in word list.")
 
     try:
         admin_check(ctx)
     except commands.CommandError:
-        fort = zeph.get_user(238390171022655489)
-        if not fort.dm_channel:
-            await fort.create_dm()
-        await fort.dm_channel.send(
+        await zeph.get_channel(607102546892554240).send(
             content=f"{ctx.author} has suggested that you {aor} the following word(s):\n`{' '.join(words)}`"
         )
         return await succ.send(ctx, "Suggestion sent.")
