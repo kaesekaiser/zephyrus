@@ -31,28 +31,6 @@ async def initialize_planes():
          "exactly you can do, and how to do it."
 )
 async def planes(ctx: commands.Context, func: str = None, *args: str):
-    """
-    def lamb(n: Flint):
-        return log(tan(pi / 4 + pi * n / 4))
-
-    image = rk.Image.open("C:/Users/Kaesekaiser/Pictures/nqr/airport_map.png")
-    assert isinstance(image, rk.Image.Image)
-    image = image.convert("RGBA")
-
-    for i in re.findall(pn.pattern, pn.readurl(pn.url)):
-        city = pn.City.from_html(i)
-        point = rk.Image.open("C:/Users/Kaesekaiser/Pictures/nqr/airport.png")
-        for j in range(3):
-            try:
-                rk.merge_down(
-                    point, image, int(round(city.coords[1] * 7996 / 360 + 7996 * j)),
-                    -int(round((3671 - 3447) / lamb(1 / 9) * lamb(city.coords[0] / 90))) + 3671, True
-                )
-            except ValueError:
-                pass
-        print(city.name, city.coords)
-    """
-
     if not func:
         print(len(pn.cities), len(pn.countries))
         return await plane.send(
@@ -232,8 +210,10 @@ class PlanesInterpreter(Interpreter):
                       "used with any other `near` params. Because the `near` param excludes the airport(s) you input, "
                       "`near:any` also inherently filters out all owned airports. This makes it very useful to find "
                       "new airports to buy.\n\n"
-                      "- `sort:name` sorts the results by alphabetical order, and cannot be used with any `near` "
-                      "params.\n\n"
+                      "- `priority:<city>` sorts the results by job priority from a given airport. The percentage "
+                      "indicates the approximate proportion of jobs heading to the airport from the parameter.\n\n"
+                      "- `sort:name` sorts the results by alphabetical order.\n\n"
+                      "- `sort:random` sorts the results randomly.\n\n"
                       "- `startswith:<text>` restricts the results to only airports starting with a given string "
                       "of letters."
                       "\n\nFor example, `z!p s o in:us in:canada near:detroit` returns a list of owned airports in the "
@@ -497,33 +477,6 @@ class PlanesInterpreter(Interpreter):
             st += pn.find_city(args[i - 1]).dist(pn.find_city(args[i]))
 
         return await plane.send(self.ctx, f"{round(st, 2)} km")
-
-    async def _priority(self, *args):
-        if len(args) == 0:
-            raise commands.CommandError("Format: `z!p priority <from> [to]`")
-        try:
-            city = pn.find_city(args[0])
-        except KeyError:
-            raise commands.CommandError(self.invalid_city(args[0]))
-
-        pri = sorted([g for g in pn.cities.values()], key=lambda x: -pn.priority(city, x))
-        if len(args) != 1:
-            try:
-                to = pn.find_city(args[1])
-            except KeyError:
-                raise commands.CommandError(self.invalid_city(args[1]))
-
-            name_pri = [g.name for g in pri]
-            rank = name_pri.index(to.name) + 1
-            return await plane.send(
-                self.ctx, f"{round(pn.priority(city, to), 2)} - {[round(g, 2) for g in pn.priority(city, to, True)]}",
-                d=f"Rank {rank}"
-            )
-
-        return await plane.send(
-            self.ctx, f"Highest priority destinations from {city.name}",
-            d=", ".join([self.oc(j) for j in pri[:15]])
-        )
 
     async def _jobs(self, *args):
         if len(args) == 0:
@@ -1009,10 +962,17 @@ class AirportSearchNavigator(Navigator):
             self.sort = lambda x: min([x.dist(pn.find_city(g)) for g in self.interpreter.user.cities])
         elif self.criteria["near"]:
             self.sort = lambda x: min([x.dist(g) for g in self.criteria["near"]])
+        elif self.criteria["priority"]:
+            self.sort = lambda x: -pn.priority(self.criteria["priority"], x)
         elif self.criteria["sort"] == "name":
             self.sort = lambda x: x.name
         else:
             self.sort = lambda x: -x.passengers
+
+        if self.criteria["priority"]:
+            self.total_priority = sum(2 ** pn.priority(self.criteria["priority"], g) for g in pn.cities.values())
+        else:
+            self.total_priority = 0
 
         table = sorted(
             (g for g in pn.cities.values() if (self.criteria["near"] != "any" and g not in self.criteria["near"]) or
@@ -1035,16 +995,18 @@ class AirportSearchNavigator(Navigator):
 
     def check_city(self, city: pn.City):
         if self.own == "owned":
-            own = city.name in self.interpreter.user.cities
+            if city.name not in self.interpreter.user.cities:
+                return False
         elif self.own == "unowned":
-            own = city.name not in self.interpreter.user.cities
-        else:
-            own = True
+            if city.name in self.interpreter.user.cities:
+                return False
         if self.criteria["startswith"]:
-            sw = city.name.lower().startswith(self.criteria["startswith"])
-        else:
-            sw = True
-        return city.country in self.countries and own and sw
+            if not city.name.lower().startswith(self.criteria["startswith"]):
+                return False
+        if self.criteria["priority"]:
+            if pn.priority(self.criteria["priority"], city) < 0:
+                return False
+        return city.country in self.countries
 
     def form_city(self, city: pn.City):
         if self.criteria["near"] == "any":
@@ -1056,6 +1018,8 @@ class AirportSearchNavigator(Navigator):
                 dist = f" / {round(nearest.dist(city))} km"
             else:
                 dist = f" / {round(nearest.dist(city))} km from {nearest.name}"
+        elif self.criteria["priority"]:
+            dist = f" / {round(100 * (2 ** pn.priority(self.criteria['priority'], city)) / self.total_priority, 3)}%"
         else:
             dist = ""
         cost = f"Ȼ{pn.addcomm(city.value)}" if city.name not in self.interpreter.user.cities else "owned"
@@ -1063,7 +1027,8 @@ class AirportSearchNavigator(Navigator):
 
     @staticmethod
     def read_criteria(args: str):
-        possible_params = ["in", "near", "sort", "startswith"]
+        possible_params = ["in", "near", "sort", "startswith", "priority"]
+        sorting_params = ["near", "sort", "priority"]
         ret = {g: re.findall(r"(?<=\s"+g+r":).+?(?=\s|$)", args) for g in possible_params}
 
         for i in ret["in"]:
@@ -1073,8 +1038,8 @@ class AirportSearchNavigator(Navigator):
                 raise commands.CommandError(f"invalid country `{i}`")
         ret["in"] = [pn.find_country(g).name for g in ret["in"]]
 
-        if ret["near"] and ret["sort"]:
-            raise commands.CommandError("Cannot combine `near` and `sort` params.")
+        if [bool(ret[g]) for g in sorting_params].count(True) > 1:
+            raise commands.CommandError("Cannot combine multiple sorting params.")
 
         if "any" in ret["near"]:
             if len(ret["near"]) > 1:
@@ -1087,6 +1052,14 @@ class AirportSearchNavigator(Navigator):
                 except KeyError:
                     raise commands.CommandError(f"invalid airport `{i}`")
             ret["near"] = [pn.find_city(g) for g in ret["near"]]
+
+        if len(ret["priority"]) > 1:
+            raise commands.CommandError("Cannot use more than one `priority` param.")
+        elif ret["priority"]:
+            try:
+                ret["priority"] = pn.find_city(ret["priority"][0])
+            except ValueError:
+                raise commands.CommandError("`priority` param must be an airport.")
 
         if len(ret["sort"]) > 1:
             raise commands.CommandError("Cannot use more than one `sort` param.")
