@@ -432,7 +432,7 @@ class PlanesInterpreter(Interpreter):
             except KeyError:
                 raise commands.CommandError(self.invalid_city(arg))
             if city.name not in self.user.cities:
-                raise commands.CommandError(f"You don't have the license to {city.nam}.")
+                raise commands.CommandError(f"You don't have the license to {city.name}.")
 
         args = [pn.find_city(g) for g in args]
         path = [craft.path[0], *args]
@@ -441,6 +441,10 @@ class PlanesInterpreter(Interpreter):
         for i in range(len(path) - 1):
             if path[i].dist(path[i + 1]) > craft.range:
                 raise commands.CommandError(f"{craft.name} can't reach {path[i + 1].name} from {path[i].name}.")
+            if path[i] == path[i + 1]:
+                if i == 0:
+                    raise commands.CommandError(f"{craft.name} is already at {path[i].name}.")
+                raise commands.CommandError(f"Can't take off and land back at the same airport.")
 
             fuel_cost += round(craft.lpk * path[i].dist(path[i + 1]) * self.fuel_price, 2)
 
