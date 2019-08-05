@@ -95,15 +95,14 @@ class PlanesInterpreter(Interpreter):
     def fuel_price(self):
         return round(0.2 * self.fluctuate(time.time() // 86400), 2) + 1
 
-    @property
-    def model_prices(self):
-        def pre(model: pn.Model):
-            return self.fluctuate(time.time() // 86400 + 750 * list(pn.craft.keys()).index(model.name.lower()))
-
-        return {g.name.lower(): round(g.cost + 0.1 * g.cost * pre(g)) for g in pn.craft.values()}
+    def market_price(self, model: pn.Model, delta: int = 0):
+        return round(
+            model.cost + 0.1 * model.cost *
+            self.fluctuate(time.time() // 86400 + delta + 750 * list(pn.craft.keys()).index(model.name.lower()))
+        )
 
     def plane_value(self, craft: pn.Plane):
-        return self.model_prices[craft.model.lower()] + int(10000 * (2 ** sum(craft.upgrades + [1]) - 1))
+        return self.market_price(craft.model) + int(10000 * (2 ** sum(craft.upgrades + [1]) - 1))
 
     def next_stop(self, craft: pn.Plane):
         craft.path.iterate(craft.travel(craft.path[0], craft.path[1]))
@@ -306,7 +305,7 @@ class PlanesInterpreter(Interpreter):
             if len(self.user.planes) == 1:
                 raise commands.CommandError("You can't sell your last plane.")
 
-            resale = int(self.model_prices[craft.model.lower()] / 4)
+            resale = int(self.market_price(craft.model) / 4)
             if await confirm(f"You're selling {craft.name} for Ȼ{pn.addcomm(resale)}.", self.ctx, self.au):
                 self.user.planes = \
                     {i: g for i, g in self.user.planes.items() if g.name != craft.name}
@@ -616,8 +615,13 @@ class PlanesInterpreter(Interpreter):
         return await plane.send(self.ctx, f"Today's fuel price: Ȼ{two_digit(self.fuel_price)}/L")
 
     async def _market(self, *args):
-        prices = self.model_prices
-        prices = {pn.craft[g].name: f"Ȼ{pn.addcomm(prices[g])}" for g in prices}
+        prices = {g.name: self.market_price(g) for g in pn.craft.values()}
+        yesterday_prices = {g.name: self.market_price(g, -1) for g in pn.craft.values()}
+        prices = {
+            g: f"Ȼ{pn.addcomm(prices[g])}"
+            f"{zeph.emojis['red_tri_up'] if yesterday_prices[g] < prices[g] else zeph.emojis['green_tri_down']}"
+            for g in prices
+        }
         return await FieldNavigator(plane, prices, 6, "The Market [{page}/{pgs}]", same_line=True).run(self.ctx)
 
     async def _eta(self, *args):
