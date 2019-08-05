@@ -95,7 +95,9 @@ class PlanesInterpreter(Interpreter):
     def fuel_price(self):
         return round(0.2 * self.fluctuate(time.time() // 86400), 2) + 1
 
-    def market_price(self, model: pn.Model, delta: int = 0):
+    def market_price(self, model: Union[str, pn.Model], delta: int = 0):
+        if isinstance(model, str):
+            model = pn.craft[model.lower()]
         return round(
             model.cost + 0.1 * model.cost *
             self.fluctuate(time.time() // 86400 + delta + 750 * list(pn.craft.keys()).index(model.name.lower()))
@@ -799,12 +801,12 @@ class PlanesInterpreter(Interpreter):
             if args[1].lower() not in pn.craft:
                 raise commands.CommandError("invalid model")
 
-            model = args[1].lower()
-            prices = self.model_prices
-            if prices[model] > self.user.credits:
+            model = pn.craft(args[1].lower())
+            price = self.market_price(model)
+            if price > self.user.credits:
                 raise commands.CommandError("You don't have enough credits.")
 
-            if await confirm(f"You're buying a {pn.craft[model].name} for Ȼ{pn.addcomm(prices[model])}.",
+            if await confirm(f"You're buying a {model.name} for Ȼ{pn.addcomm(price)}.",
                              self.ctx, self.au):
                 await succ.send(self.ctx, "Aircraft purchased! What would you like to name your new craft?")
 
@@ -830,16 +832,16 @@ class PlanesInterpreter(Interpreter):
                         if [g in pn.permit for g in mess.content].count(False) != 0:
                             await plane.send(self.ctx,
                                              "Plane names can only contain alphanumerics, dashes, and underscores.",
-                                             d=f"What would you like to name your new {pn.craft[model].name}?")
+                                             d=f"What would you like to name your new {model.name}?")
                         elif mess.content.lower() in self.user.planes:
                             await plane.send(self.ctx, "You already own a plane by that name.",
-                                             d=f"What would you like to name your new {pn.craft[model].name}?")
+                                             d=f"What would you like to name your new {model.name}?")
                         elif mess.content.lower() == "sell":
                             await plane.send(self.ctx, "You can't name a plane that.",
-                                             d=f"What would you like to name your new {pn.craft[model].name}?")
+                                             d=f"What would you like to name your new {model.name}?")
                         else:
-                            await succ.send(self.ctx, f"{pn.craft[model].name} named {mess.content}.")
-                            new = pn.Plane.new(model)
+                            await succ.send(self.ctx, f"{model.name} named {mess.content}.")
+                            new = pn.Plane.new(model.name.lower())
                             new.name = mess.content
                             break
 
@@ -856,7 +858,7 @@ class PlanesInterpreter(Interpreter):
                                              d=f"What city do you want to deploy {new.name} in?")
                         else:
                             new.path = pn.Path(0, pn.find_city(mess.content))
-                            self.user.credits -= prices[model]
+                            self.user.credits -= price
                             self.user.planes[new.name.lower()] = new
                             return await succ.send(self.ctx, f"{new.name} ready for flight!")
 
