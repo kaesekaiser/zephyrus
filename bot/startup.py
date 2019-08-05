@@ -500,7 +500,7 @@ def two_digit(n: Flint):
 
 def grammatical_join(l: list, conj: str = "and"):
     if len(l) <= 2:
-        return " ".join(l)
+        return f" {conj} ".join(l)
     else:
         return f"{', '.join(l[:-1])}, {conj} {l[-1]}"
 
