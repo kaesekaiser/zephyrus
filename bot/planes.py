@@ -50,7 +50,7 @@ class PlanesInterpreter(Interpreter):
         "offload": "unload", "city": "airport", "airports": "cities",
         "p": "profile", "f": "fleet", "j": "jobs", "l": "load", "g": "launch", "a": "airport", "c": "country",
         "k": "market", "m": "model", "h": "help", "u": "upgrade", "d": "dist", "e": "eta", "s": "search",
-        "b": "buy", "o": "buyout", "r": "rename"
+        "b": "buy", "o": "buyout", "r": "rename", "x": "specs", "n": "unload", "t": "tutorial"
     }
 
     @property
@@ -90,10 +90,6 @@ class PlanesInterpreter(Interpreter):
     def oc(self, ci: pn.City, flag=False, italicize_unowned=True):
         flag = (":flag_" + pn.planemojis[ci.country] + ": ") if flag else ""
         return flag + (ci.name if (ci.name in self.user.cities or not italicize_unowned) else "_{}_".format(ci.name))
-
-    @property
-    def fuel_price(self):
-        return round(0.2 * self.fluctuate(time.time() // 86400), 2) + 1
 
     def market_price(self, model: Union[str, pn.Model], delta: int = 0):
         if isinstance(model, str):
@@ -175,7 +171,7 @@ class PlanesInterpreter(Interpreter):
                     "including those you don't own.\n"
                     "``z!planes jobs <airport> to <city/country>`` lists all jobs headed to a certain city or country.",
             "launch": "``z!planes launch <plane> <airports>`` launches a plane along a path. Be sure to "
-                      "keep fuel prices in mind. The ETA in the launch message links to a countdown timer "
+                      "keep fuel price in mind. The ETA in the launch message links to a countdown timer "
                       "to arrival, and Zephyrus will notify you when it's arrived.\n\n"
                       "You can chain airports using the ``launch`` command. For example:\n"
                       "``z!planes launch meadowlark washington newyork boston`` will tell Meadowlark to "
@@ -187,15 +183,15 @@ class PlanesInterpreter(Interpreter):
                    "``z!p b c``.\n"
                    "``z!planes buy plane <model>`` buys a new plane of the given model. You can only buy one plane at a"
                    "time, and you can use the shortcut ``z!p b p``.",
-            "fuel": "``z!planes fuel`` shows the day's fuel prices. Prices change at midnight UTC.",
             "load": "``z!planes load <job codes>`` loads jobs onto a plane. The job code is the "
                     "five-letter/number code on the left side of a job list.",
             "unload": "``z!planes unload <plane> <job codes>`` unloads jobs from a plane without pay, "
                       "returning it to its original source.",
             "rename": "``z!planes rename <plane> <new name>`` renames plane. Names can only contain "
                       "alphanumeric characters, dashes, and underscores.",
-            "market": "``z!planes market`` shows prices for all available plane models. Like fuel, "
-                      "plane prices fluctuate daily.",
+            "market": "``z!planes market`` shows prices for all available plane models. Plane prices fluctuate daily; "
+                      "the indicator beside the price tells you whether the price for that model increased or "
+                      "decreased today.",
             "eta": "``z!planes eta <plane>`` links to the timer for a plane's arrival.",
             "search": "`z!planes search [owned | unowned] [criteria...]` is a robust search/sort method for Planes's "
                       "1100-some airports. At some point in the near future, I'll write a more in-depth tutorial. The "
@@ -220,7 +216,7 @@ class PlanesInterpreter(Interpreter):
                       "\n\nFor example, `z!p s o in:us in:canada near:detroit` returns a list of owned airports in the "
                       "United States or Canada, sorted by distance from Detroit. All search parameters are optional; "
                       "`z!p s` returns a list of all airports.",
-            "stats": "``z!planes stats <plane>`` shows the airspeed, fuel consumption, fuel capacity, and "
+            "specs": "``z!planes specs <plane>`` shows the airspeed, fuel consumption, fuel capacity, and "
                      "upgrade levels for a plane you own.",
             "upgrade": "``z!planes upgrade <plane> <stat>`` allows you to upgrade a plane. Upgrades cost Ȼ20,000 "
                        "initially, but each subsequent upgrade is twice as expensive as the last.\n"
@@ -246,14 +242,13 @@ class PlanesInterpreter(Interpreter):
             "jobs": "Lists available jobs at an airport.",
             "launch": "Launches a plane along a path.",
             "buy": "Buys airports, countries, or planes.",
-            "fuel": "Shows today's fuel price.",
             "load": "Loads jobs on a plane.",
             "unload": "Removes jobs from a plane.",
             "rename": "Renames a plane.",
             "market": "Browses the market for new planes.",
             "eta": "Shows ETAs for planes.",
             "search": "Searches and sorts airports.",
-            "stats": "Shows specs and upgrades for a plane.",
+            "specs": "Shows specs and upgrades for a plane.",
             "upgrade": "Upgrades a plane's engine or fuel tank.",
             "buyout": "Buys all unowned airports in a country you can afford."
         }
@@ -318,14 +313,14 @@ class PlanesInterpreter(Interpreter):
 
         return await plane.send(self.ctx, craft.name, fs=craft.dict, same_line=True)
 
-    async def _stats(self, *args):
+    async def _specs(self, *args):
         if len(args) == 0:
-            raise commands.CommandError("Format: `z!p stats <plane>`")
+            raise commands.CommandError("Format: `z!p specs <plane>`")
         if args[0].lower() not in self.user.planes:
             raise commands.CommandError("no owned plane by that name")
 
         craft = self.user.planes[args[0].lower()]
-        return await plane.send(self.ctx, craft.name, fs=craft.stats, same_line=True)
+        return await plane.send(self.ctx, f"{craft.name} ({craft.model})", fs=craft.stats, same_line=True)
 
     async def _country(self, *args):
         if len(args) == 0:
@@ -427,7 +422,7 @@ class PlanesInterpreter(Interpreter):
                     raise commands.CommandError(f"{craft.name} is already at {path[i].name}.")
                 raise commands.CommandError(f"Can't take off and land back at the same airport.")
 
-            fuel_cost += round(craft.lpk * path[i].dist(path[i + 1]) * self.fuel_price, 2)
+            fuel_cost += round(craft.lpk * path[i].dist(path[i + 1]), 2)
 
         if round(fuel_cost) > self.user.credits:
             raise commands.CommandError("You don't have enough money for fuel.")
@@ -602,7 +597,7 @@ class PlanesInterpreter(Interpreter):
             raise commands.CommandError("plane in air")
 
         if args[1].lower() == "all":
-            jobs = craft.jobs
+            jobs = craft.jobs.copy()
         else:
             jobs = args[1:]
         for i in jobs:
@@ -612,9 +607,6 @@ class PlanesInterpreter(Interpreter):
         for i in jobs:
             craft.unload(i.upper())
         return await succ.send(self.ctx, f"{plural('Job', len(jobs))} offloaded.")
-
-    async def _fuel(self, *args):  # also needs to take args
-        return await plane.send(self.ctx, f"Today's fuel price: Ȼ{two_digit(self.fuel_price)}/L")
 
     async def _market(self, *args):
         prices = {g.name: self.market_price(g) for g in pn.craft.values()}

@@ -329,9 +329,15 @@ class Plane:
 
     @property
     def stats(self):
-        return {"Airspeed": f"{round(self.airspeed)} km/hr", "Fuel Usage": f"{round(self.fuel_use)} L/hr",
-                "Fuel Tank": f"{round(self.fuel_cap)} L", "Range": f"{self.range} km",
-                "Power Level": self.upgrades[0], "Tank Level": self.upgrades[1]}
+        power_up = "" if not self.upgrades[0] else f" (+{25 * self.upgrades[0]}%)"
+        tank_up = "" if not self.upgrades[1] else f" (+{25 * self.upgrades[1]}%)"
+        return {
+            "Airspeed": f"{round(self.airspeed)} km/hr{power_up}",
+            "Fuel Usage": f"{round(self.fuel_use)} L/hr{power_up}",
+            "Fuel Tank": f"{round(self.fuel_cap)} L{tank_up}",
+            "Range": f"{self.range} km{tank_up}",
+            "Power Level": self.upgrades[0], "Tank Level": self.upgrades[1]
+        }
 
     @property
     def landed_at(self):
