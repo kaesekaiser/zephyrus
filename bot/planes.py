@@ -793,7 +793,7 @@ class PlanesInterpreter(Interpreter):
             if args[1].lower() not in pn.craft:
                 raise commands.CommandError("invalid model")
 
-            model = pn.craft(args[1].lower())
+            model = pn.craft[args[1].lower()]
             price = self.market_price(model)
             if price > self.user.credits:
                 raise commands.CommandError("You don't have enough credits.")
@@ -964,6 +964,8 @@ class AirportSearchNavigator(Navigator):
             self.sort = lambda x: -pn.priority(self.criteria["priority"], x)
         elif self.criteria["sort"] == "name":
             self.sort = lambda x: x.name
+        elif self.criteria["sort"] == "random":
+            self.sort = lambda x: random()
         else:
             self.sort = lambda x: -x.passengers
 
@@ -1063,9 +1065,9 @@ class AirportSearchNavigator(Navigator):
             raise commands.CommandError("Cannot use more than one `sort` param.")
         elif ret["sort"]:
             ret["sort"] = ret["sort"][0]
-            possible_sorts = ["name"]
+            possible_sorts = ["name", "random"]
             if ret["sort"] not in possible_sorts:
-                raise commands.CommandError(f"`sort` param must be one of `{' '.join(possible_sorts)}.")
+                raise commands.CommandError(f"`sort` param must be one of `{' '.join(possible_sorts)}`.")
 
         if len(ret["startswith"]) > 1:
             raise commands.CommandError("Cannot use more than one `startswith` param.")
