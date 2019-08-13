@@ -505,4 +505,9 @@ def grammatical_join(l: list, conj: str = "and"):
         return f"{', '.join(l[:-1])}, {conj} {l[-1]}"
 
 
+def admin_check(ctx: commands.Context):
+    if ctx.author.id != 238390171022655489:
+        raise commands.CommandError("You don't have permission to run that command.")
+
+
 blue = hexcol("5177ca")  # color that many commands use
