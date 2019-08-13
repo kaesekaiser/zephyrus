@@ -72,11 +72,6 @@ async def about(ctx: commands.Context):
     )
 
 
-def admin_check(ctx: commands.Context):
-    if ctx.author.id != 238390171022655489:
-        raise commands.CommandError("You don't have permission to run that command.")
-
-
 @zeph.command(
     name="wordlist", aliases=["wl"], usage="z!wordlist <add | remove | check> <words...>",
     description="Checks and suggests changes to the word list used for the word games.",
@@ -288,6 +283,8 @@ async def on_command_error(ctx: commands.Context, exception):
 @zeph.event
 async def on_message(message: discord.Message):
     zeph.dispatch("reaction_or_message", message, message.author)
+    if zeph.user in message.mentions and "🤗" in message.content:
+        await message.channel.send(":hugging:")
     await zeph.process_commands(message)
 
 
