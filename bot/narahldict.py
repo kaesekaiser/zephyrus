@@ -84,6 +84,10 @@ class NarahlInterpreter(Interpreter):
         return previous_row[-1]
 
     @staticmethod
+    def alphabetize(s: str):
+        return ["aāâbcçčdefghijklmnňoôprsštuvwyzž".index(g) for g in s.lower()]
+
+    @staticmethod
     def save_ndict():
         with open("storage/ndict.txt", "w", encoding="utf-8") as fip:
             fip.write("\n".join(f"{g} = {j.save()}" for g, j in ndict.items()))
@@ -153,8 +157,8 @@ class NarahlInterpreter(Interpreter):
 
     async def _browse(self, *args):
         return await Navigator(
-            self.emol, [f"- **{g}** (\"{ndict[g].abbrev}\")" for g in sorted(list(ndict.keys()))], 10,
-            "Narahlena Lexicon [{page}/{pgs}]"
+            self.emol, [f"- **{g}** (\"{ndict[g].abbrev}\")" for g in sorted(list(ndict.keys()), key=self.alphabetize)],
+            10, "Narahlena Lexicon [{page}/{pgs}]"
         ).run(self.ctx)
 
     async def _add(self, *args):
