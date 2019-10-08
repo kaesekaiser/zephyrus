@@ -1,0 +1,18 @@
+čân = red = n : red. @ color @ basic color term
+ben = light blue = n : light blue; sky blue. * A basic color term, unlike in English; similar to Russian голубой. @ color @ basic color term
+jon = I, we = pron : the first-person singular pronoun (nominative). @ personal pronoun
+jû = yellow = n : yellow. @ color @ basic color term
+darsa = brown = n : brown. @ color @ basic color term
+fama = dark blue = n : dark blue. * _cf._ Russian синий. @ color @ basic color term
+lena = purple = n : purple. @ color @ basic color term
+ney = grey = n : grey. @ color @ basic color term
+sivân = pink = n : pink. @ color @ basic color term
+sol = green = n : green. @ color @ basic color term
+šâo = black = n : black. @ color @ basic color term
+yāre = orange = n : orange. @ color @ basic color term
+yin = white = n : white. @ color @ basic color term
+vāruma = color = n : a color, especially one of the twelve basic terms. # a type or specie. * ex. _vāruma rô_ "type of person". @ 
+rô = person = n : person, human. # personality. @ human
+de = accusative marker = ptcl : the accusative marker; denotes that the preceding noun phrase is the object of a transitive verb. * Typically reduced to [də]. @ case @ case marker @ clitic
+ne = it = pron : third-person singular non-human pronoun. @ personal pronoun
+kôrun = sick, unwell = adj : having the unplaceable kind of sickness where nothing *specifically* is wrong, but you just kinda feel like garbage. @ unhealthy

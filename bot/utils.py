@@ -905,6 +905,18 @@ async def phone_command(ctx: commands.Context, func: str = "help", channel: str=
             raise commands.CommandError(f"No server with the number ``{channel}``.")"""
 
 
+def ascii_narahlena(s: str):
+    dic = {
+        "N^": "Ň", "n^": "ň", "C^": "Č", "c^": "č", "C`": "Ç", "c`": "ç", "S^": "Š", "s^": "š",
+        "Z^": "Ž", "z^": "ž", "R^": "Ř", "r^": "ř", "L^": "Ľ", "l^": "ľ", "U:": "Ü", "u:": "ü",
+        "A-": "Ā", "a-": "ā", "I.": "Ì", "i.": "ì", "U.": "Ù", "u.": "ù", "Ñ": "Ň", "ñ": "ň",
+        r"\^": "^", r"\`": "`", r"\:": ":", r"\-": "-"
+    }
+    for find, rep in dic.items():
+        s = s.replace(find, rep)
+    return s
+
+
 @zeph.command(
     aliases=["nl"], usage="z!narahlena <Narahlena text...>",
     description="Converts ASCII to Narahlena text.",
@@ -913,15 +925,20 @@ async def phone_command(ctx: commands.Context, func: str = "help", channel: str=
          "command probably doesn't mean much to most people. Feel free to check it out, though."
 )
 async def narahlena(ctx: commands.Context, *, text: str):
-    narahlena_dict = {
-        "N^": "Ň", "n^": "ň", "C^": "Č", "c^": "č", "C`": "Ç", "c`": "ç", "S^": "Š", "s^": "š",
-        "Z^": "Ž", "z^": "ž", "R^": "Ř", "r^": "ř", "L^": "Ľ", "l^": "ľ", "U:": "Ü", "u:": "ü",
-        "A-": "Ā", "a-": "ā", "I.": "Ì", "i.": "ì", "U.": "Ù", "u.": "ù",
-        r"\^": "^", r"\`": "`", r"\:": ":", r"\-": "-"
-    }
-    for find, rep in narahlena_dict.items():
-        text = text.replace(find, rep)
-    return await ctx.send(content=text)
+    return await ctx.send(content=ascii_narahlena(text))
+
+
+@zeph.command(
+    name="nln", usage="z!nln <integer>",
+    description="Converts decimal numbers to the Narahlena number system.",
+    help="Converts decimal numbers to the mixed-base Narahlena numbering system, which uses both base 8 and base 24."
+)
+async def narahlena_numbers(ctx: commands.Context, no: int):
+    def get_nln(n: int):
+        reds = {rk.rebase(g, 10, 24): rk.rebase(g, 10, 8).rjust(2, "0") for g in range(24)}
+        return re.sub("|".join(reds.keys()), lambda m: reds[m[0]] + " ", rk.rebase(n, 10, 24)).lstrip("0").rstrip(" ")
+
+    return await ctx.send(get_nln(no))
 
 
 @zeph.command(
