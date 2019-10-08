@@ -58,7 +58,7 @@ class Entry:
 
 
 class NarahlInterpreter(Interpreter):
-    redirects = {"s": "search", "f": "find", "a": "add"}
+    redirects = {"s": "search", "f": "find", "a": "add", "b": "browse", "h": "help"}
     emol = Emol(":book:", hexcol("226699"))
 
     @staticmethod
@@ -117,7 +117,7 @@ class NarahlInterpreter(Interpreter):
     async def _search(self, *args):
         search = " ".join(args).lower()
         abb_match = [g for g, j in ndict.items() if search in j.abbrev.lower()]
-        def_match = [g for g, j in ndict.items() if search in str(j).lower()]
+        def_match = [g for g, j in ndict.items() if re.search("[^a-z]" + search + "[^a-z]", str(j).lower())]
         tag_match = [g for g, j in ndict.items() if search in j.tags]
         bad_match = [g for g, j in ndict.items() if set(args).intersection(set(j.tags))]
         order = [
