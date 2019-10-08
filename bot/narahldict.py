@@ -58,7 +58,7 @@ class Entry:
 
 
 class NarahlInterpreter(Interpreter):
-    redirects = {"s": "search", "f": "find", "a": "add", "b": "browse", "h": "help"}
+    redirects = {"s": "search", "f": "find", "a": "add", "b": "browse", "h": "help", "e": "edit"}
     emol = Emol(":book:", hexcol("226699"))
 
     @staticmethod
@@ -216,10 +216,91 @@ class NarahlInterpreter(Interpreter):
         self.save_ndict()
         return await succ.send(self.ctx, f"`{word}` added.")
 
+    async def _edit(self, *args):
+        admin_check(self.ctx)
+        
+        if len(args) < 2:
+            raise commands.CommandError("Format: `z!nd e <word> <abb | def | tags>`")
+
+        word = ascii_narahlena(args[0].lower())
+        if word not in ndict:
+            guess = sorted(list(ndict.keys()), key=lambda c: self.levenshtein(word, c))
+            return await self.emol.send(
+                self.ctx, f"\"{word}\" not found.",
+                d="Did you mean?\n - " + "\n - ".join(guess[:5])
+            )
+
+        def pred(m: discord.Message):
+            return m.author == self.ctx.author and m.channel == self.ctx.channel
+
+        if args[1].lower() in ["a", "abb"]:
+            await self.ctx.send(f"Current abbreviated definition of {word}:\n`{ndict[word].abbrev}`")
+            while True:
+                await self.emol.send(self.ctx, f"What is the new abbreviated definition of `{word}`?")
+                try:
+                    abb = await zeph.wait_for("message", check=pred, timeout=600)
+                except asyncio.TimeoutError:
+                    raise commands.CommandError("Definition timed out.")
+                abb = abb.content
+                try:
+                    assert await confirm(
+                        "Is this correct?", self.ctx, emol=self.emol, add_info=f"**{word}** (\"{abb}\")\n\n"
+                    )
+                except AssertionError:
+                    continue
+                else:
+                    ndict[word].abbrev = abb
+                    await succ.send(self.ctx, "Abbreviated definition updated.")
+                    break
+
+        elif args[1].lower() in ["d", "def"]:
+            await self.ctx.send(f"Current definition of {word}:\n`{ndict[word].save()}`")
+            while True:
+                await self.emol.send(self.ctx, f"What is the new full definition of `{word}`?")
+                try:
+                    dfn = await zeph.wait_for("message", check=pred, timeout=600)
+                except asyncio.TimeoutError:
+                    raise commands.CommandError("Definition timed out.")
+                entry = Entry.from_str(f"{ndict[word].abb} = {dfn.content}")
+                try:
+                    assert await confirm("Is this correct?", self.ctx, emol=self.emol, add_info=f"{entry}\n\n")
+                except AssertionError:
+                    continue
+                else:
+                    ndict[word].parts = entry.parts
+                    await succ.send(self.ctx, "Definition updated.")
+                    break
+
+        elif args[1].lower() in ["t", "tags"]:
+            await self.ctx.send(f"Current tags on {word}:\n`{' @ '.join(ndict[word].tags)}`")
+            while True:
+                await self.emol.send(self.ctx, f"What should `{word}` be tagged?", d="Separate tags with ` @ `.")
+                try:
+                    tag = await zeph.wait_for("message", check=pred, timeout=600)
+                except asyncio.TimeoutError:
+                    raise commands.CommandError("Tags timed out.")
+                if tag.content.lower() != "none":
+                    tags = tag.content.lower().split(" @ ")
+                else:
+                    tags = []
+                try:
+                    assert await confirm("Are these correct?", self.ctx, emol=self.emol, add_info=f"{tags}\n\n")
+                except AssertionError:
+                    continue
+                else:
+                    ndict[word].tags = tags
+                    await succ.send(self.ctx, "Tags updated.")
+                    break
+
+        else:
+            raise commands.CommandError("Format: `z!nd e <word> <abb | def | tags>`")
+
+        self.save_ndict()
+
 
 with open("storage/ndict.txt", "r", encoding="utf-8") as fp:
-    ndict = [re.split(r" = ", g, 1) for g in fp.readlines()]
-    ndict = {g[0]: Entry.from_str(g[1].strip("\n")) for g in ndict}
+    ndict_temp = [re.split(r" = ", g, 1) for g in fp.readlines()]
+    ndict = {g[0]: Entry.from_str(g[1].strip("\n")) for g in ndict_temp}
 
 
 @zeph.command(
