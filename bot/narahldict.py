@@ -58,7 +58,7 @@ class Entry:
 
 
 class NarahlInterpreter(Interpreter):
-    redirects = {"s": "search", "f": "find", "a": "add", "b": "browse", "h": "help", "e": "edit"}
+    redirects = {"s": "search", "f": "find", "a": "add", "b": "browse", "h": "help", "e": "edit", "m": "move"}
     emol = Emol(":book:", hexcol("226699"))
 
     @staticmethod
@@ -218,7 +218,7 @@ class NarahlInterpreter(Interpreter):
 
     async def _edit(self, *args):
         admin_check(self.ctx)
-        
+
         if len(args) < 2:
             raise commands.CommandError("Format: `z!nd e <word> <abb | def | tags>`")
 
@@ -261,7 +261,7 @@ class NarahlInterpreter(Interpreter):
                     dfn = await zeph.wait_for("message", check=pred, timeout=600)
                 except asyncio.TimeoutError:
                     raise commands.CommandError("Definition timed out.")
-                entry = Entry.from_str(f"{ndict[word].abb} = {dfn.content}")
+                entry = Entry.from_str(f"{ndict[word].abbrev} = {dfn.content}")
                 try:
                     assert await confirm("Is this correct?", self.ctx, emol=self.emol, add_info=f"{entry}\n\n")
                 except AssertionError:
@@ -296,6 +296,19 @@ class NarahlInterpreter(Interpreter):
             raise commands.CommandError("Format: `z!nd e <word> <abb | def | tags>`")
 
         self.save_ndict()
+
+    async def _move(self, *args):
+        admin_check(self.ctx)
+
+        if len(args) < 2:
+            raise commands.CommandError("Format: `z!nd move <from> <to>`")
+
+        if ascii_narahlena(args[0]) not in ndict:
+            raise commands.CommandError(f"_{ascii_narahlena(args[0])}_ is not defined.")
+
+        ndict[ascii_narahlena(args[1])] = ndict.pop(ascii_narahlena(args[0]))
+        self.save_ndict()
+        return await succ.send(self.ctx, f"_{ascii_narahlena(args[0])}_ moved to _{ascii_narahlena(args[1])}_.")
 
 
 with open("storage/ndict.txt", "r", encoding="utf-8") as fp:
