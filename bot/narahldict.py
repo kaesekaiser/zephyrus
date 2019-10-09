@@ -120,8 +120,11 @@ class NarahlInterpreter(Interpreter):
 
     async def _search(self, *args):
         search = " ".join(args).lower()
+        def_regex = r"(( :)|( #))[^\*]+?[^a-z]" + search + r"[^a-z].*?(( \*+ )|( @ ))"
+        for k, v in ndict.items():
+            print(k, v.save(), bool(re.search(def_regex, v.save().lower())))
         abb_match = [g for g, j in ndict.items() if search in j.abbrev.lower()]
-        def_match = [g for g, j in ndict.items() if re.search("[^a-z]" + search + "[^a-z]", str(j).lower())]
+        def_match = [g for g, j in ndict.items() if re.search(def_regex, j.save().lower())]
         tag_match = [g for g, j in ndict.items() if search in j.tags]
         bad_match = [g for g, j in ndict.items() if set(args).intersection(set(j.tags))]
         order = [
@@ -145,7 +148,7 @@ class NarahlInterpreter(Interpreter):
         ).run(self.ctx)
 
     async def _find(self, *args):
-        word = " ".join(args).lower()
+        word = ascii_narahlena(" ".join(args).lower())
         if word in ndict:
             return await self.emol.send(self.ctx, word, d=str(ndict[word]))
         else:
@@ -245,6 +248,8 @@ class NarahlInterpreter(Interpreter):
                     abb = await zeph.wait_for("message", check=pred, timeout=600)
                 except asyncio.TimeoutError:
                     raise commands.CommandError("Definition timed out.")
+                if abb.content.lower() == "cancel":
+                    return await self.emol.send(self.ctx, "Edit cancelled.")
                 abb = abb.content
                 try:
                     assert await confirm(
@@ -258,13 +263,15 @@ class NarahlInterpreter(Interpreter):
                     break
 
         elif args[1].lower() in ["d", "def"]:
-            await self.ctx.send(f"Current definition of {word}:\n`{ndict[word].save()}`")
+            await self.ctx.send(f"Current definition of {word}:\n`{re.split(' [@=] ', ndict[word].save())[1]}`")
             while True:
                 await self.emol.send(self.ctx, f"What is the new full definition of `{word}`?")
                 try:
                     dfn = await zeph.wait_for("message", check=pred, timeout=600)
                 except asyncio.TimeoutError:
                     raise commands.CommandError("Definition timed out.")
+                if dfn.content.lower() == "cancel":
+                    return await self.emol.send(self.ctx, "Edit cancelled.")
                 entry = Entry.from_str(f"{ndict[word].abbrev} = {dfn.content}")
                 try:
                     assert await confirm("Is this correct?", self.ctx, emol=self.emol, add_info=f"{entry}\n\n")
@@ -283,6 +290,8 @@ class NarahlInterpreter(Interpreter):
                     tag = await zeph.wait_for("message", check=pred, timeout=600)
                 except asyncio.TimeoutError:
                     raise commands.CommandError("Tags timed out.")
+                if tag.content.lower() == "cancel":
+                    return await self.emol.send(self.ctx, "Edit cancelled.")
                 if tag.content.lower() != "none":
                     tags = tag.content.lower().split(" @ ")
                 else:
