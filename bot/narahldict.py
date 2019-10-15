@@ -121,8 +121,6 @@ class NarahlInterpreter(Interpreter):
     async def _search(self, *args):
         search = " ".join(args).lower()
         def_regex = r"(( :)|( #))[^\*]+?[^a-z]" + search + r"[^a-z].*?(( \*+ )|( @ ))"
-        for k, v in ndict.items():
-            print(k, v.save(), bool(re.search(def_regex, v.save().lower())))
         abb_match = [g for g, j in ndict.items() if search in j.abbrev.lower()]
         def_match = [g for g, j in ndict.items() if re.search(def_regex, j.save().lower())]
         tag_match = [g for g, j in ndict.items() if search in j.tags]
