@@ -42,8 +42,8 @@ class Zeph(commands.Bot):
         ))  # this is a really gross way of getting the version I know. but shut up
         step2 = re.search(r"octicon octicon-tag.*?</span>", step1, re.S)[0]
         zeph_version = re.search(r"(?<=>).*?(?=</span>)", step2)[0]
-        step3 = re.search(r"released this.*?to master", step1, re.S)[0]
         try:
+            step3 = re.search(r"released this.*?to master", step1, re.S)[0]
             zeph_version += "." + re.search(r"[0-9]*(?= commit)", step3)[0]
         except TypeError:
             zeph_version += ".0"
