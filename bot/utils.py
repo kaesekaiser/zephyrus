@@ -531,14 +531,14 @@ def get_yale(s: str):
 
 
 @zeph.command(
-    name="pinyin", usage="z!pinyin <Mandarin text...>",
+    name="pinyin", usage="z!pinyin <Mandarin text...>", aliases=["py"],
     description="Romanizes Chinese text using Hanyu Pinyin.",
     help="Romanizes Chinese text according to the Hanyu Pinyin romanization scheme - that is, it turns the "
          "Chinese characters into Latin syllables that sound like their Mandarin pronunciations.\n\n"
          "``z!pinyin 你好`` → ``nǐhǎo``"
 )
 async def pinyin_command(ctx: commands.Context, *, chinese: str):
-    return await zhong.send(ctx, get_pinyin(chinese))
+    return await ctx.send(get_pinyin(chinese))
 
 
 @zeph.command(
@@ -548,7 +548,7 @@ async def pinyin_command(ctx: commands.Context, *, chinese: str):
          "``z!jyutping 你好`` → ``nei5hou2``"
 )
 async def jyutping_command(ctx: commands.Context, *, cantonese: str):
-    return await kong.send(ctx, get_jyutping(cantonese))
+    return await ctx.send(get_jyutping(cantonese))
 
 
 @zeph.command(
@@ -559,7 +559,7 @@ async def jyutping_command(ctx: commands.Context, *, cantonese: str):
          "``z!yale 你好`` → ``néihhóu``"
 )
 async def yale_command(ctx: commands.Context, *, cantonese: str):
-    return await kong.send(ctx, get_yale(cantonese))
+    return await ctx.send(get_yale(cantonese))
 
 
 @zeph.command(
@@ -567,7 +567,7 @@ async def yale_command(ctx: commands.Context, *, cantonese: str):
     help="Converts Traditional Chinese characters to Simplified Chinese."
 )
 async def simplified(ctx: commands.Context, *, trad: str):
-    return await zhong.send(ctx, hanziconv.HanziConv.toSimplified(trad))
+    return await ctx.send(hanziconv.HanziConv.toSimplified(trad))
 
 
 @zeph.command(
@@ -575,7 +575,7 @@ async def simplified(ctx: commands.Context, *, trad: str):
     help="Converts Simplified Chinese characters to Traditional Chinese."
 )
 async def traditional(ctx: commands.Context, *, simp: str):
-    return await kong.send(ctx, hanziconv.HanziConv.toTraditional(simp))
+    return await ctx.send(hanziconv.HanziConv.toTraditional(simp))
 
 
 @zeph.command(
