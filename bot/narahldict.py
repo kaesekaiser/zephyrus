@@ -53,8 +53,11 @@ class Entry:
         )
 
     def save(self):
-        ret = [f"{g} : {j.json()}" for g, j in self.parts.items()]
-        return f"{self.abbrev} = {' | '.join(ret)} @ {' @ '.join(self.tags)}"
+        return f"{self.abbrev} = {self.json_def} @ {' @ '.join(self.tags)}"
+
+    @property
+    def json_def(self):
+        return " | ".join([f"{g} : {j.json()}" for g, j in self.parts.items()])
 
 
 class NarahlInterpreter(Interpreter):
@@ -88,9 +91,28 @@ class NarahlInterpreter(Interpreter):
         return ["aāâbcçčdefghijklmnňoôprsštuvwyzž".index(g) for g in s.lower()]
 
     @staticmethod
+    def tf_idf(doc: str, query: list):
+        doc_words = "".join([g.lower() for g in doc if re.match(r"[a-zA-Z\s]", g)]).split()
+        query = [re.sub(r"[^a-zA-Z\s]", "", g).lower() for g in query]
+        corp = {g: re.sub(r"\s+", " ", re.sub(r"[^a-zA-Z\s]", "", j.save()).lower()).split() for g, j in ndict.items()}
+        ret = {}
+        for item in query:
+            tf = doc_words.count(item) / len(doc_words)
+            try:
+                idf = log10(len(corp) / len([g for g in corp.values() if item in g]))
+            except ZeroDivisionError:
+                idf = 0
+            ret[item] = tf * idf
+        return ret
+
+    @staticmethod
     def save_ndict():
         with open("storage/ndict.txt", "w", encoding="utf-8") as fip:
             fip.write("\n".join(f"{g} = {j.save()}" for g, j in ndict.items()))
+
+    @staticmethod
+    def sqrt_avg(l: iter):
+        return sum(l) / (len(l) ** 0.5)
 
     async def _help(self, *args):
         help_dict = {
@@ -320,6 +342,30 @@ class NarahlInterpreter(Interpreter):
         ndict[ascii_narahlena(args[1])] = ndict.pop(ascii_narahlena(args[0]))
         self.save_ndict()
         return await succ.send(self.ctx, f"_{ascii_narahlena(args[0])}_ moved to _{ascii_narahlena(args[1])}_.")
+
+    async def _remove(self, *args):
+        admin_check(self.ctx)
+
+        if not args:
+            raise commands.CommandError("Format: `z!nd remove <word>`")
+
+        if ascii_narahlena(args[0]) not in ndict:
+            raise commands.CommandError(f"_{ascii_narahlena(args[0])}_ is not defined.")
+
+        word = ascii_narahlena(args[0])
+        try:
+            assert await confirm(
+                f"You want to delete the word _{word}_?", self.ctx, add_info=str(ndict[word]) + "\n\n"
+            )
+        except AssertionError:
+            return await self.emol.send(self.ctx, "Removal cancelled.")
+        del ndict[word]
+        self.save_ndict()
+        return await succ.send(self.ctx, f"_{word}_ removed.")
+
+    async def _download(self, *args):
+        admin_check(self.ctx)
+        return await self.ctx.send(file=discord.File("storage/ndict.txt"))
 
 
 with open("storage/ndict.txt", "r", encoding="utf-8") as fp:
