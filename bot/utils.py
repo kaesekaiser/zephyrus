@@ -391,7 +391,6 @@ async def convert(ctx: commands.Context, n: str, *text):
         raise commands.CommandError(f"Can't convert between {text[0]} and {text[1]}.")
 
     ret = group.convert(n.n, *text)
-    print(ret)
     if ret[0] == "ft":
         try:
             precision = len(round(SigFig(str(ret[1]), True), max(n.figs, 3)).split(".")[1])
