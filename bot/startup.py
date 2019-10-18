@@ -210,6 +210,7 @@ def flint(n: Flint):
 
 class SigFig:
     def __init__(self, s: str, keep_non_dec: bool = False):
+        s = re.sub(",", "", s)
         if s[0] == "-":
             self.figStr = s[1:].split("e")[0]
             self.s = s[1:]

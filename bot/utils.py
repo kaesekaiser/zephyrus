@@ -252,7 +252,7 @@ class ConversionGroup:
             [g for g in self.systems if key in g][0]["converter"] = key
             self.systems[0]["converter"] = value[1]
 
-    def convert(self, n: Flint, fro: str, to: str=None):  # assumes both fro and to are in group
+    def convert(self, n: Flint, fro: str, to: str = None):  # assumes both fro and to are in group
         if to == fro:
             return to, n
         fro_dict = [g for g in self.systems if fro in g][0]
@@ -338,7 +338,7 @@ defaultUnits = [  # units it's okay to default to if user doesn't give unit to w
 ]
 
 
-def temp_convert(n: SigFig, fro: str, to: str=None):
+def temp_convert(n: SigFig, fro: str, to: str = None):
     if not to:
         return temp_convert(n, fro, list(tempTable)[not list(tempTable).index(fro)])  # C to F; all else to C
     return to, tempTable[fro].get(to, lambda x: x)(n.n)
@@ -391,6 +391,15 @@ async def convert(ctx: commands.Context, n: str, *text):
         raise commands.CommandError(f"Can't convert between {text[0]} and {text[1]}.")
 
     ret = group.convert(n.n, *text)
+    print(ret)
+    if ret[0] == "ft":
+        try:
+            precision = len(round(SigFig(str(ret[1]), True), max(n.figs, 3)).split(".")[1])
+        except IndexError:
+            precision = 1
+        inc = floor(12 * (ret[1] % 1)) if precision == 1 else round(12 * (ret[1] % 1), precision - 1)
+        return await conv.say(f"{add_commas(floor(ret[1]))} ft {inc} in",
+                              d=f"= {n} {text[0]}")
     return await conv.say(f"{add_commas(round(SigFig(str(ret[1]), True), max(n.figs, 3)))} {ret[0]}",
                           d=f"= {n} {text[0]}")
 
@@ -408,7 +417,7 @@ async def sayno(ctx: commands.Context):
     help="Chooses one from a list of options."
 )
 async def choose(ctx: commands.Context, *, text: str):
-    picks = re.split("\s+or\s+", text)
+    picks = re.split(r"\s+or\s+", text)
     string = choice(["I pick {}!", "Obviously it's {}.", "{}, of course.", "{}, obviously.", "Definitely {}."])
     return await chooseEmol.send(ctx, string.format(f"**{choice(picks)}**"))
 
@@ -960,7 +969,7 @@ async def factors(ctx: commands.Context, number: int):
             ret.append(2)
         original = n
         max_search = ceil(original ** 0.5) + 1
-        max_search += 1 if max_search % 2 == 0 else 0
+        max_search += not max_search % 2
         while True:
             for i in range(min_search, max_search + 2, 2):
                 if n % i == 0:
