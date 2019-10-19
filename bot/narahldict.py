@@ -1,6 +1,7 @@
 from planes import *
 from typing import Union
 import re
+from random import choices
 
 
 class PartOfSpeech:
@@ -61,7 +62,8 @@ class Entry:
 
 
 class NarahlInterpreter(Interpreter):
-    redirects = {"s": "search", "f": "find", "a": "add", "b": "browse", "h": "help", "e": "edit", "m": "move"}
+    redirects = {"s": "search", "f": "find", "a": "add", "b": "browse", "h": "help", "e": "edit", "m": "move",
+                 "k": "markov"}
     emol = Emol(":book:", hexcol("226699"))
 
     @staticmethod
@@ -119,12 +121,15 @@ class NarahlInterpreter(Interpreter):
             "search": "`z!ndict search <term>` searches the dictionary for words related to <term>. For example, "
                       "`z!ndict s color` will return words that mean \"color\", but also color terms.",
             "find": "`z!ndict find <word>` shows the definition for a given word in the dictionary.",
-            "browse": "`z!ndict browse` lets you flip through the alphabetized dictionary."
+            "browse": "`z!ndict browse` lets you flip through the alphabetized dictionary.",
+            "markov": "`z!ndict markov [syllables] generates a new Narahlena word using a markov chain based off the"
+                      "existing lexicon."
         }
         desc_dict = {
             "search": "Searches for related words.",
             "find": "Shows the definition for a specific word.",
-            "browse": "Flips through the whole dictionary."
+            "browse": "Flips through the whole dictionary.",
+            "markov": "Generates a new word."
         }
         shortcuts = {j: g for g, j in self.redirects.items() if len(g) == 1}
 
@@ -366,6 +371,37 @@ class NarahlInterpreter(Interpreter):
     async def _download(self, *args):
         admin_check(self.ctx)
         return await self.ctx.send(file=discord.File("storage/ndict.txt"))
+
+    async def _markov(self, *args):
+        try:
+            syls = int(args[0])
+        except ValueError:
+            raise commands.CommandError("Format: `z!nd markov [syllables]`")
+        except IndexError:
+            syls = 3
+
+        cons = "bcçčdfghjklmnňprsštvwyzž"
+        vows = "aāâeioôu"
+        all_syllables = " ".join([
+            g for word in [re.split(r"((?=["+cons+"]["+vows+"]))|((?<=["+vows+"])(?=["+vows+"]))", j) for j in ndict]
+            for g in word if g
+        ]).lower() + " "
+        chances = {g: {} for g in cons + vows + " "}
+        for ind, char in list(enumerate(all_syllables))[:-1]:
+            chances[char][all_syllables[ind + 1]] = chances[char].get(all_syllables[ind + 1], 0) + 1
+
+        ret = ""
+        for syl in range(syls):
+            onset = choices(list(chances[" "]), weights=list(chances[" "].values()))[0]
+            if onset in vows:
+                nucleus, onset = onset, ""
+            else:
+                possible_nuclei = {g: j for g, j in chances[onset].items() if g != " "}
+                nucleus = choices(list(possible_nuclei), weights=list(possible_nuclei.values()))[0]
+            coda = choices(list(chances[nucleus]), weights=list(chances[nucleus].values()))[0]
+            ret += (onset + nucleus + coda).strip()
+
+        return await self.ctx.send(ret.strip())
 
 
 with open("storage/ndict.txt", "r", encoding="utf-8") as fp:
