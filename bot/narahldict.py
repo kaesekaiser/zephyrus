@@ -94,12 +94,17 @@ class NarahlInterpreter(Interpreter):
 
     @staticmethod
     def tf_idf(doc: str, query: list):
-        doc_words = "".join([g.lower() for g in doc if re.match(r"[a-zA-Z\s]", g)]).split()
-        query = [re.sub(r"[^a-zA-Z\s]", "", g).lower() for g in query]
-        corp = {g: re.sub(r"\s+", " ", re.sub(r"[^a-zA-Z\s]", "", j.save()).lower()).split() for g, j in ndict.items()}
+        doc_words = "".join([g.lower() for g in doc if re.match(r"[a-zA-Z0-9\s]", g)]).split()
+        query = [re.sub(r"[^a-zA-Z0-9\s]", "", g).lower() for g in query]
+        corp = {
+            g: re.sub(r"\s+", " ", re.sub(r"[^a-zA-Z0-9\s]", "", j.save()).lower()).split() for g, j in ndict.items()
+        }
         ret = {}
         for item in query:
-            tf = doc_words.count(item) / len(doc_words)
+            try:
+                tf = doc_words.count(item) / len(doc_words)
+            except ZeroDivisionError:
+                tf = 0
             try:
                 idf = log10(len(corp) / len([g for g in corp.values() if item in g]))
             except ZeroDivisionError:
@@ -146,30 +151,17 @@ class NarahlInterpreter(Interpreter):
         return await self.emol.send(self.ctx, f"z!ndict {args[0].lower()}", d=help_dict[args[0].lower()])
 
     async def _search(self, *args):
-        search = " ".join(args).lower()
-        def_regex = r"(( :)|( #))[^\*]+?[^a-z]" + search + r"[^a-z].*?(( \*+ )|( @ ))"
-        abb_match = [g for g, j in ndict.items() if search in j.abbrev.lower()]
-        def_match = [g for g, j in ndict.items() if re.search(def_regex, j.save().lower())]
-        tag_match = [g for g, j in ndict.items() if search in j.tags]
-        bad_match = [g for g, j in ndict.items() if set(args).intersection(set(j.tags))]
-        order = [
-            set(abb_match).intersection(def_match).intersection(tag_match),
-            set(abb_match).intersection(def_match),
-            set(abb_match).intersection(tag_match),
-            set(abb_match),
-            set(def_match).intersection(tag_match),
-            set(def_match),
-            set(tag_match),
-            set(bad_match)
-        ]
-        ret = []
-        for st in order:
-            for match in st:
-                if match not in ret:
-                    ret.append(match)
+        search = [re.sub(r"[^a-zA-Z0-9\s]", "", g).lower() for g in args]
+        res = {
+            g: self.sqrt_avg(self.tf_idf(re.sub(r" \* .*?(?= # | \| | @ |$)", "", j.json_def), search).values()) +
+            10 * self.sqrt_avg(self.tf_idf(j.abbrev, search).values()) +
+            self.sqrt_avg(self.tf_idf(" ".join(j.tags), search).values())
+            for g, j in ndict.items()
+        }
+        ret = sorted([g for g, j in res.items() if j > 0.1], key=lambda c: -res[c])
         return await Navigator(
             self.emol, [f"- **{g}** (\"{ndict[g].abbrev}\")" for g in ret], 6,
-            "Results for \"" + search + "\" [{page}/{pgs}]"
+            "Results for \"" + " ".join(search) + "\" [{page}/{pgs}]"
         ).run(self.ctx)
 
     async def _find(self, *args):
