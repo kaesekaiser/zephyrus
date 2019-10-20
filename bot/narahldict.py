@@ -119,7 +119,7 @@ class NarahlInterpreter(Interpreter):
     def update_corp():
         for g, j in ndict.items():
             ndict_corp[g] = re.sub(r"\s+", " ", re.sub(r"[^a-zA-Z0-9\s]", "", j.save()).lower()).split()
-        for g in ndict_corp:
+        for g in list(ndict_corp):
             if g not in ndict:
                 del ndict_corp[g]
 
