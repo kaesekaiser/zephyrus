@@ -96,9 +96,6 @@ class NarahlInterpreter(Interpreter):
     def tf_idf(doc: str, query: list):
         doc_words = "".join([g.lower() for g in doc if re.match(r"[a-zA-Z0-9\s]", g)]).split()
         query = [re.sub(r"[^a-zA-Z0-9\s]", "", g).lower() for g in query]
-        corp = {
-            g: re.sub(r"\s+", " ", re.sub(r"[^a-zA-Z0-9\s]", "", j.save()).lower()).split() for g, j in ndict.items()
-        }
         ret = {}
         for item in query:
             try:
@@ -106,7 +103,7 @@ class NarahlInterpreter(Interpreter):
             except ZeroDivisionError:
                 tf = 0
             try:
-                idf = log10(len(corp) / len([g for g in corp.values() if item in g]))
+                idf = log10(len(ndict_corp) / len([g for g in ndict_corp.values() if item in g]))
             except ZeroDivisionError:
                 idf = 0
             ret[item] = tf * idf
@@ -116,6 +113,15 @@ class NarahlInterpreter(Interpreter):
     def save_ndict():
         with open("storage/ndict.txt", "w", encoding="utf-8") as fip:
             fip.write("\n".join(f"{g} = {j.save()}" for g, j in ndict.items()))
+        NarahlInterpreter.update_corp()
+
+    @staticmethod
+    def update_corp():
+        for g, j in ndict.items():
+            ndict_corp[g] = re.sub(r"\s+", " ", re.sub(r"[^a-zA-Z0-9\s]", "", j.save()).lower()).split()
+        for g in ndict_corp:
+            if g not in ndict:
+                del ndict_corp[g]
 
     @staticmethod
     def sqrt_avg(l: iter):
@@ -399,6 +405,9 @@ class NarahlInterpreter(Interpreter):
 with open("storage/ndict.txt", "r", encoding="utf-8") as fp:
     ndict_temp = [re.split(r" = ", g, 1) for g in fp.readlines()]
     ndict = {g[0]: Entry.from_str(g[1].strip("\n")) for g in ndict_temp}
+    ndict_corp = {
+        g: re.sub(r"\s+", " ", re.sub(r"[^a-zA-Z0-9\s]", "", j.save()).lower()).split() for g, j in ndict.items()
+    }
 
 
 @zeph.command(
