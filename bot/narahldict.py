@@ -198,7 +198,7 @@ class NarahlInterpreter(Interpreter):
             return m.author == self.ctx.author and m.channel == self.ctx.channel
 
         while True:
-            await self.emol.send(self.ctx, f"What is the abbreviated definition of `{word}`?")
+            await self.emol.send(self.ctx, f"What is the abbreviated definition of _{word}_?")
             try:
                 abb = await zeph.wait_for("message", check=pred, timeout=600)
             except asyncio.TimeoutError:
@@ -214,7 +214,7 @@ class NarahlInterpreter(Interpreter):
                 break
 
         while True:
-            await self.emol.send(self.ctx, f"What is the full definition of `{word}`?")
+            await self.emol.send(self.ctx, f"What is the full definition of _{word}_?")
             try:
                 dfn = await zeph.wait_for("message", check=pred, timeout=600)
             except asyncio.TimeoutError:
@@ -228,23 +228,26 @@ class NarahlInterpreter(Interpreter):
                 break
 
         while True:
-            await self.emol.send(self.ctx, f"What should `{word}` be tagged?", d="Separate tags with ` @ `.")
+            await self.emol.send(self.ctx, f"What should _{word}_ be tagged?", d="Separate tags with ` @ `.")
             try:
                 tag = await zeph.wait_for("message", check=pred, timeout=600)
             except asyncio.TimeoutError:
                 raise commands.CommandError("Tags timed out.")
             if tag.content.lower() != "none":
-                entry.tags.extend(tag.content.lower().split(" @ "))
+                tags = tag.content.lower().split(" @ ")
+            else:
+                tags = []
             try:
-                assert await confirm("Are these correct?", self.ctx, emol=self.emol, add_info=f"{entry.tags}\n\n")
+                assert await confirm("Are these correct?", self.ctx, emol=self.emol, add_info=f"{tags}\n\n")
             except AssertionError:
                 continue
             else:
+                entry.tags.extend(tags)
                 break
 
         ndict[word] = entry
         self.save_ndict()
-        return await succ.send(self.ctx, f"`{word}` added.")
+        return await succ.send(self.ctx, f"_{word}_ added.")
 
     async def _edit(self, *args):
         admin_check(self.ctx)
@@ -266,7 +269,7 @@ class NarahlInterpreter(Interpreter):
         if args[1].lower() in ["a", "abb"]:
             await self.ctx.send(f"Current abbreviated definition of {word}:\n`{ndict[word].abbrev}`")
             while True:
-                await self.emol.send(self.ctx, f"What is the new abbreviated definition of `{word}`?")
+                await self.emol.send(self.ctx, f"What is the new abbreviated definition of _{word}_?")
                 try:
                     abb = await zeph.wait_for("message", check=pred, timeout=600)
                 except asyncio.TimeoutError:
@@ -288,7 +291,7 @@ class NarahlInterpreter(Interpreter):
         elif args[1].lower() in ["d", "def"]:
             await self.ctx.send(f"Current definition of {word}:\n`{re.split(' [@=] ', ndict[word].save())[1]}`")
             while True:
-                await self.emol.send(self.ctx, f"What is the new full definition of `{word}`?")
+                await self.emol.send(self.ctx, f"What is the new full definition of _{word}_?")
                 try:
                     dfn = await zeph.wait_for("message", check=pred, timeout=600)
                 except asyncio.TimeoutError:
@@ -308,7 +311,7 @@ class NarahlInterpreter(Interpreter):
         elif args[1].lower() in ["t", "tags"]:
             await self.ctx.send(f"Current tags on {word}:\n`{' @ '.join(ndict[word].tags)}`")
             while True:
-                await self.emol.send(self.ctx, f"What should `{word}` be tagged?", d="Separate tags with ` @ `.")
+                await self.emol.send(self.ctx, f"What should _{word}_ be tagged?", d="Separate tags with ` @ `.")
                 try:
                     tag = await zeph.wait_for("message", check=pred, timeout=600)
                 except asyncio.TimeoutError:
@@ -416,4 +419,10 @@ with open("storage/ndict.txt", "r", encoding="utf-8") as fp:
     help="Browses, searches, and (if you're Fort) edits the Narahlena dictionary. Use `z!nd help` for more info."
 )
 async def ndict_command(ctx: commands.Context, func: str = None, *args: str):
+    if not func:
+        return await NarahlInterpreter.emol.send(
+            ctx, "The Narahlena Dictionary",
+            d="Within this command is contained the full lexicon of the Narahlena language. Use `z!nd help` for "
+              "the various commands you can use to browse it."
+        )
     return await NarahlInterpreter(ctx).run(str(func).lower(), *args)
