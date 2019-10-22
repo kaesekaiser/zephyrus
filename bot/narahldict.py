@@ -61,6 +61,46 @@ class Entry:
         return " | ".join([f"{g} : {j.json()}" for g, j in self.parts.items()])
 
 
+class NDictNavigator(Navigator):
+    @staticmethod
+    def alphabetize(s: str):
+        return ["aāâbcçčdefghijklmnňoôprsštuvwyzž".index(g) for g in s.lower()]
+
+    def __init__(self):
+        lets = "AĀÂBCÇČDEFGHIJKLMNŇOÔPRSŠTUVWYZŽ"
+        lex = {g: sorted([j for j in ndict if j.upper()[0] == g], key=self.alphabetize) for g in lets}
+        lex = {g: j + [""] * (10 - len(j) % 10) for g, j in lex.items() if j}
+        lex = [g for item in [
+            [f"- **{v}** (\"{ndict[v].abbrev}\")" if v else "" for v in j]
+            for j in lex.values()
+        ] for g in item]
+        super().__init__(NarahlInterpreter.emol, lex, 10, "Narahlena Lexicon [{letter}]", prev="", nxt="")
+        self.funcs["⏪"] = self.back_five
+        self.funcs["◀"] = self.back_one
+        self.funcs["▶"] = self.forward_one
+        self.funcs["⏩"] = self.forward_five
+
+    @property
+    def con(self):
+        d = none_list(page_list(self.table, self.per, self.page), "\n")
+        return self.emol.con(
+            self.title.format(letter=d[4].upper() + d[4].lower()),
+            d=d, footer=f"page {self.page} of {self.pgs}"
+        )
+
+    def back_five(self):
+        self.advance_page(-5)
+
+    def back_one(self):
+        self.advance_page(-1)
+
+    def forward_one(self):
+        self.advance_page(1)
+
+    def forward_five(self):
+        self.advance_page(5)
+
+
 class NarahlInterpreter(Interpreter):
     redirects = {"s": "search", "f": "find", "a": "add", "b": "browse", "h": "help", "e": "edit", "m": "move",
                  "k": "markov"}
@@ -87,10 +127,6 @@ class NarahlInterpreter(Interpreter):
             previous_row = current_row
 
         return previous_row[-1]
-
-    @staticmethod
-    def alphabetize(s: str):
-        return ["aāâbcçčdefghijklmnňoôprsštuvwyzž".index(g) for g in s.lower()]
 
     @staticmethod
     def tf_idf(doc: str, query: list):
@@ -182,10 +218,7 @@ class NarahlInterpreter(Interpreter):
             )
 
     async def _browse(self, *args):
-        return await Navigator(
-            self.emol, [f"- **{g}** (\"{ndict[g].abbrev}\")" for g in sorted(list(ndict.keys()), key=self.alphabetize)],
-            10, "Narahlena Lexicon [{page}/{pgs}]"
-        ).run(self.ctx)
+        return await NDictNavigator().run(self.ctx)
 
     async def _add(self, *args):
         admin_check(self.ctx)
