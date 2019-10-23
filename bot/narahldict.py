@@ -236,6 +236,8 @@ class NarahlInterpreter(Interpreter):
                 abb = await zeph.wait_for("message", check=pred, timeout=600)
             except asyncio.TimeoutError:
                 raise commands.CommandError("Definition timed out.")
+            if abb.content.lower() == "cancel":
+                return await self.emol.send(self.ctx, "Definition cancelled.")
             abb = abb.content
             try:
                 assert await confirm(
@@ -252,7 +254,13 @@ class NarahlInterpreter(Interpreter):
                 dfn = await zeph.wait_for("message", check=pred, timeout=600)
             except asyncio.TimeoutError:
                 raise commands.CommandError("Definition timed out.")
-            entry = Entry.from_str(f"{abb} = {dfn.content}")
+            if dfn.content.lower() == "cancel":
+                return await self.emol.send(self.ctx, "Definition cancelled.")
+            try:
+                entry = Entry.from_str(f"{abb} = {dfn.content}")
+            except ValueError:
+                await self.emol.send(self.ctx, "Definition not formatted correctly.")
+                continue
             try:
                 assert await confirm("Is this correct?", self.ctx, emol=self.emol, add_info=f"{entry}\n\n")
             except AssertionError:
@@ -266,6 +274,8 @@ class NarahlInterpreter(Interpreter):
                 tag = await zeph.wait_for("message", check=pred, timeout=600)
             except asyncio.TimeoutError:
                 raise commands.CommandError("Tags timed out.")
+            if tag.content.lower() == "cancel":
+                return await self.emol.send(self.ctx, "Definition cancelled.")
             if tag.content.lower() != "none":
                 tags = tag.content.lower().split(" @ ")
             else:
