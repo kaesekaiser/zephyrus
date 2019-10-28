@@ -208,26 +208,3 @@ generic_extinction("gray-goo",
                    "After several days of rapid expansion, the swarm seems to have become dormant, but not before "
                    "consuming approximately 5% of the entire mass of {planet} and rendering {civ} civilization "
                    "completely extinct.")
-Event("fortnite",
-      [],
-      {"knowledge": ["agriculture", "toolmaking", "construction", "fire"],
-       "eventChances": {"asteroid": 1 / 1000,
-                        "volcano": 1 / 1000,
-                        "food-illness": -1 / 1000,
-                        "gamma-ray-burst": 1 / 3000,
-                        "pets": 9 / 1000,
-                        "overhunting": 1 / 1000,
-                        "overfishing": -6 / 1000,
-                        "crop-failure": 1 / 1000,
-                        "conqueror": 3 / 1000,
-                        "large-city": 1 / 1000,
-                        "city-plague": 2.5 / 1000,
-                        "war-over-metal": -1 / 1000,
-                        "religion": 3 / 1000},
-       "techChance": 1 / 90},
-      {},
-      "In {stardate}, a small video game company centered in {city} released a new product that took the {civ} youth "
-      "by storm: Fortnite. As the game quickly swept across the world, {civ} youth reached a level of cultural "
-      "depravity previously thought impossible. The fallout from the resulting cultural collapse ultimately "
-      "caused the {civ} civilization to completely and irrecoverably implode, reverting {civ} society back to "
-      "before even the Stone Age. Nearly all technological progress has been lost.")
