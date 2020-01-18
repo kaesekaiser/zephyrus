@@ -8,7 +8,7 @@ def score(word: str):
 
 
 class Board:
-    dice = ["LRNNZH", "EGHWEN", "SESITO", "TOWATO", "JOBABO", "RLYDEV", "DITTYS", "QUINHW",
+    dice = ["LRNNZH", "EGHWEN", "SESITO", "TOWATO", "JOBABO", "RLYDEV", "DITTYS", "QUINHM",
             "SUINEE", "COITUM", "FASPFK", "NEAGEA", "VWTHER", "DIXELR", "PASHCO", "TLRYET"]
 
     def __init__(self):
