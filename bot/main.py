@@ -62,7 +62,7 @@ async def about(ctx: commands.Context):
         author=author_from_user(zeph.user, f"\u2223 {zeph.user.name}"),
         d=f"**Connected to:** {len(zeph.guilds) - len(getattr(zeph, 'fortServers'))} servers / "
         f"{len(set(zeph.users))} users\n"
-        f"**Commands:** {len([g for g, j in zeph.all_commands.items() if g == j.name])}\n"
+        f"**Commands:** {len([g for g, j in zeph.all_commands.items() if g == j.name and not j.hidden])}\n"
         f"**Runtime:** {runtime_format(datetime.datetime.now() - getattr(zeph, 'readyTime'))}\n"
         f"**Build:** {zeph.version} / Python {py_version}\n"
         f"[GitHub](https://github.com/kaesekaiser/zephyrus) / "
@@ -285,6 +285,10 @@ async def on_message(message: discord.Message):
     zeph.dispatch("reaction_or_message", message, message.author)
     if zeph.user in message.mentions and "🤗" in message.content:
         await message.channel.send(":hugging:")
+    if zeph.user in message.mentions and "<:o7:686317637495423031>" in message.content:
+        await message.channel.send(zeph.emojis.get("o7", "o7"))
+    if zeph.user in message.mentions and re.search(r"^(.*\s)?o7(\s.*)?$", message.content):
+        await message.channel.send("o7")
     await zeph.process_commands(message)
 
 
