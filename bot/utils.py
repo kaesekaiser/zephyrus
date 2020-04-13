@@ -1,7 +1,5 @@
 from game import *
 from utilities import dice as di, weed as wd, timein as ti, translate as tr, wiki as wk
-import requests
-from io import BytesIO
 from unicodedata import name as uni_name
 from urllib.error import HTTPError
 import hanziconv
@@ -466,7 +464,7 @@ async def color(ctx: commands.Context, *, col: str):
                           d=f"**RGB:** {ret.to_rgb()}\n**HSV:** {rgb_to_hsv(*ret.to_rgb())}")
 
 
-@zeph.command(
+"""@zeph.command(
     aliases=["hue"], usage="z!hueshift <image url> <value>",
     description="Hue-shifts an image.",
     help="Shifts the hue of an image by ``<value>`` (out of 360)."
@@ -486,7 +484,7 @@ async def hueshift(ctx: commands.Context, url: str, shift: int):
 async def invert(ctx: commands.Context, url: str):
     img = rk.Image.open(BytesIO(requests.get(url).content))
     rk.invert_colors(img).save("images/invert.png")
-    return await ctx.send(file=discord.File("images/invert.png"))
+    return await ctx.send(file=discord.File("images/invert.png"))"""
 
 
 @zeph.command(
@@ -985,3 +983,25 @@ async def factors(ctx: commands.Context, number: int):
                 return sorted(ret + [n])
 
     return await ClientEmol(":1234:", blue, ctx).say(f"Prime factors of {number}:", d=f"``= {get_factors(number)}``")
+
+
+@zeph.command(
+    name="base", usage="z!base <base> <base-10 integer>\nz!base <to> <integer> <from>",
+    description="Converts integers between bases.",
+    help="`z!base <base> <base-10 integer>` converts a base-10 (a regular number with digits 0-9) integer to a given "
+         "base.\n`z!base <to> <integer> <from>` converts an integer of any base to any other base. Note that "
+         "Zephyrus can only use bases between 2 and 36, inclusive.\n\n"
+         "`z!base 2 19` → `10011`\n`z!base 10 11001 2` → `25`\n`z!base 16 792997` → `C19A5`"
+)
+async def base_command(ctx: commands.Context, to_base: int, num: str, from_base: int = 10):
+    if to_base not in range(2, 37) or from_base not in range(2, 37):
+        return await err.send(ctx, "Base must be between 2 and 36, inclusive.")
+
+    try:
+        ret = rk.rebase(num.lower(), from_base, to_base).upper()
+    except IndexError:
+        return await err.send(ctx, f"{num.upper()} is not a base-{from_base} number.")
+
+    subscript = "".join(chr(ord(g) - 48 + 8320) for g in str(from_base))
+
+    return await ClientEmol(":1234:", blue, ctx).say(ret, d=f"is ({num.upper()}){subscript} in base {to_base}.")
