@@ -145,9 +145,9 @@ async def anagrams(ctx: commands.Context):
 
     def pred(mr: MR, u: User):
         if type(mr) == discord.Message:
-            return u == ctx.author and mr.channel == ctx.channel and mr.content.lower() in [*words, "🔄", "⏹"]
+            return u == ctx.author and mr.channel == ctx.channel and mr.content.lower() in [*words, "🔄", "⏹", "⏬"]
         else:
-            return u == ctx.author and mr.emoji in ["🔄", "⏹"] and mr.message.id == message.id
+            return u == ctx.author and mr.emoji in ["🔄", "⏹", "⏬"] and mr.message.id == message.id
 
     def timer():
         return 180 + start - time.time()
@@ -161,11 +161,13 @@ async def anagrams(ctx: commands.Context):
     start = time.time()
     await ana.edit(
         message, "Your Letters", footer=f"There are {len(words)} usable words.",
-        d=f"React with :arrows_counterclockwise: to shuffle the letters, or with :stop_button: to finish."
+        d=f"React with :arrows_counterclockwise: to shuffle the letters, :arrow_double_down: to bring the screen back "
+        f"to the bottom of the channel, or with :stop_button: to finish."
         f"\n{form(letters)}Time remaining: 180 s"
     )
     await message.add_reaction("🔄")
     await message.add_reaction("⏹")
+    await message.add_reaction("⏬")
 
     while True:
         try:
@@ -190,6 +192,14 @@ async def anagrams(ctx: commands.Context):
                 if emoji == "⏹":
                     missed = sorted([g for g in words if g not in guesses])
                     return await ana.say("Game over!", d=f"Words you missed: {none_list(missed)} ({len(missed)})")
+                if emoji == "⏬":
+                    await ana.edit(message, "This game was moved. Scroll down a bit.")
+                    message = await ana.say("Hold on...")
+                    await message.add_reaction("🔄")
+                    await message.add_reaction("⏹")
+                    await message.add_reaction("⏬")
+                    await ana.edit(message, "Carry on!", **embed())
+                    continue
 
             try:
                 await guess.delete()
