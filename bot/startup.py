@@ -197,6 +197,7 @@ async def image_url(fp: str):
 
 
 def plural(s: str, n: Union[float, int], **kwargs):
+    """Pluralizes a noun if n != 1. 'plural' kwarg allows alternative plural form."""
     return kwargs.get("plural", s + "s") if n != 1 else s
 
 
@@ -208,82 +209,9 @@ def flint(n: Flint):
     return int(n) if int(n) == n else n
 
 
-class SigFig:
-    def __init__(self, s: str, keep_non_dec: bool = False):
-        s = re.sub(",", "", s)
-        if s[0] == "-":
-            self.figStr = s[1:].split("e")[0]
-            self.s = s[1:]
-            self.negative = True
-        else:
-            self.figStr = s.split("e")[0]
-            self.s = s
-            self.negative = False
-        try:
-            float(s)
-        except ValueError:
-            raise commands.BadArgument
-        self.keepNonDecimal = keep_non_dec
-
-    @property
-    def n(self):
-        return float(self.add_negative(self.s))
-
-    @property
-    def figs(self):
-        if self.n == 0:  # workaround for a value of zero with sig figs
-            return SigFig(self.s.replace("0", "1")).figs
-        if "." in self.figStr:
-            return len("".join(self.figStr.split(".")).lstrip("0"))
-        return len(self.figStr.rstrip("0"))
-
-    def __str__(self):
-        return self.add_negative(self.s)
-
-    def __round__(self, n=None):
-        if not n:
-            return self.n
-        if self.n == 0:  # zero workaround
-            return str(round(SigFig(self.s.replace("0", "1")))).replace("1", "0")
-        if n < self.figs:
-            return self.add_negative(self.decrease_sf(n))
-        else:
-            return self.add_negative(self.increase_sf(n))
-
-    def increase_sf(self, to: int):
-        if to < len(str(int(self.n))):
-            return self.s
-        if to == len(str(int(self.n))):
-            return self.s + ("." if str(int(self.n))[-1] == "0" else "")
-        return self.s + ("" if "." in self.s else ".") + "0" * (to - self.figs)
-
-    def decrease_sf(self, to: int):
-        if abs(self.n) >= 1:
-            first_fig = to
-        else:
-            if self.s[0] == "0":
-                first_fig = len(self.s.split(".")[1]) - len(self.s.split(".")[1].lstrip("0")) + to + 1
-            else:
-                first_fig = -int(self.s.split("e")[1]) + to
-        if self.keepNonDecimal:
-            ret = str(round(self.n, max(first_fig - len(str(int(self.n))), 0)))
-        else:
-            ret = str(round(self.n, first_fig - len(str(int(self.n)))))
-        if ret[-2:] == ".0":  # removing trailing 0 added in round()
-            if SigFig(ret).figs == to + 1:  # if the trailing zero makes one too many sig figs
-                if ret[-3] == "0":  # if the last zero is significant
-                    return ret[:-1]  # keep the decimal point to show that zeroes are significant
-                else:
-                    return ret[:-2]  # otherwise don't
-            elif SigFig(ret[:-1]).figs > to:  # if the trailing zero makes more than one too many sig figs
-                return ret[:-2]  # cut the whole decimal out
-        return round(SigFig(ret), to)  # add any extra zeroes that get cut off in round(self.n)
-
-    def add_negative(self, s: str):
-        return ("-" if (self.negative and s[0] != "-") else "") + s
-
-
 def add_commas(n: Union[Flint, str]):
+    if "e" in str(n):
+        return str(n)
     n = str(n).split(".")
     if len(n[0]) < 5:
         return ".".join(n)
