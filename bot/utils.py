@@ -26,7 +26,7 @@ async def mock(ctx: commands.Context, *text):
     text = " ".join(text)
     if not text:
         async for message in ctx.channel.history(limit=10):
-            if message.id < ctx.message.id:
+            if message.id < ctx.message.id and message.content:
                 text = message.content
                 await ctx.message.delete()
                 break

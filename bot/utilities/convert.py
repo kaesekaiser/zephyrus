@@ -14,7 +14,10 @@ class MultiUnit:
     def __init__(self, top_units: list = tuple(), bottom_units: list = tuple()):
         self.topUnits = list(top_units)
         self.bottomUnits = list(bottom_units)
-        for i in self.topUnits:
+        self.cancel_out()
+
+    def cancel_out(self):
+        for i in self.topUnits.copy():
             if i in self.bottomUnits:
                 self.topUnits.remove(i)
                 self.bottomUnits.remove(i)
@@ -49,6 +52,7 @@ class MultiUnit:
             base_unit = [g for g in conversionTable if unit in g.systems[0]][0].baseUnit
             ret /= base_unit.eq
 
+        ret.cancel_out()
         return ret
 
     def base_terms_of(self):
@@ -64,6 +68,7 @@ class MultiUnit:
             base_unit = [g.baseUnit for g in conversionTable for j in g.systems if unit in j][0]
             ret /= base_unit.eq
 
+        ret.cancel_out()
         return ret
 
     def convertible(self, other):
@@ -138,7 +143,7 @@ class MultiUnit:
 def metric_dict(unit: str, factor: Flint = None):
     met = {"Y": 1e24, "Z": 1e21, "E": 1e18, "P": 1e15, "T": 1e12, "G": 1e9, "M": 1e6,
            "k": 1000, "h": 100, "da": 10, "": 1, "d": 0.1, "c": 0.01, "m": 0.001,
-           "μ": 1e-6, "u": 1e-6, "mc": 1e-6, "n": 1e-9, "p": 1e-12, "f": 1e-15, "a": 1e-18, "z": 1e-21, "y": 1e-24}
+           "μ": 1e-6, "n": 1e-9, "p": 1e-12, "f": 1e-15, "a": 1e-18, "z": 1e-21, "y": 1e-24}
     return {g + unit: ((j * factor) if factor else j) for g, j in met.items()}
 
 
@@ -146,7 +151,8 @@ def metric_name_dict(unit: str, abbreviation: str):
     met = {"yotta": "Y", "zetta": "Z", "exa": "E", "peta": "P", "tera": "T", "giga": "G", "mega": "M", "kilo": "k",
            "hecto": "h", "deca": "da", "deka": "da", "": "", "deci": "d", "centi": "c", "milli": "m", "micro": "μ",
            "nano": "n", "pico": "p", "femto": "f", "atto": "a", "zepto": "z", "yocto": "y"}
-    return {g + unit: j + abbreviation for g, j in met.items()}
+    return {f"u{abbreviation}": f"µ{abbreviation}", f"mc{abbreviation}": f"µ{abbreviation}",
+            **{g + unit: j + abbreviation for g, j in met.items()}}
 
 
 def add_degree(s: str):
@@ -161,6 +167,9 @@ class BaseUnit:
 
 
 def convert_multi(n: Flint, fro: MultiUnit, to: MultiUnit = None):
+    if str(to) == "base":
+        to = fro.base_terms_of()
+
     if to == fro:
         return str(to), n
 
@@ -289,6 +298,11 @@ unitAbbreviations = {  # full name: abbreviation
     **metric_name_dict("ampere", "A"),
     **metric_name_dict("amp", "A"),
 
+    # area
+    **metric_name_dict("are", "a"),
+    "hectare": "ha", "decare": "da",
+    "acre": "ac",
+
     # volume
     **metric_name_dict("liter", "L"),
     **metric_name_dict("litre", "l"),
@@ -338,6 +352,9 @@ unitAbbreviations = {  # full name: abbreviation
 
     # inductance
     **metric_name_dict("henry", "H"),
+
+    # base
+    "base": "base"
 }
 unrulyAbbreviations = {  # abbreviations for whole complex units that might show up
     "mph": "mi/hr", "kph": "km/hr", "pound-foot": "lb*ft"
@@ -379,6 +396,12 @@ conversionTable = (  # groups of units of the same system
     ),
 
     # DERIVED UNITS
+    ConversionGroup(  # area
+        {**metric_dict("a")},  # not really a standard unit per se, but eh.
+        {"ac": 1},
+        ac=(0.40468564224, "ha"),
+        base_unit=BaseUnit("ca", "m^2")
+    ),
     ConversionGroup(  # volume
         {**metric_dict("L"), **metric_dict("l")},
         {"tsp": 1, "tbsp": 3, "fl oz": 6, "c": 48, "pt": 96, "qt": 192, "gal": 768,
