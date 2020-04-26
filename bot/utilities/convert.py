@@ -151,7 +151,7 @@ def metric_name_dict(unit: str, abbreviation: str):
     met = {"yotta": "Y", "zetta": "Z", "exa": "E", "peta": "P", "tera": "T", "giga": "G", "mega": "M", "kilo": "k",
            "hecto": "h", "deca": "da", "deka": "da", "": "", "deci": "d", "centi": "c", "milli": "m", "micro": "μ",
            "nano": "n", "pico": "p", "femto": "f", "atto": "a", "zepto": "z", "yocto": "y"}
-    return {f"u{abbreviation}": f"µ{abbreviation}", f"mc{abbreviation}": f"µ{abbreviation}",
+    return {f"u{abbreviation}": f"μ{abbreviation}", f"mc{abbreviation}": f"μ{abbreviation}",
             **{g + unit: j + abbreviation for g, j in met.items()}}
 
 
