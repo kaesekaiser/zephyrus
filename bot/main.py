@@ -1,6 +1,5 @@
 from narahldict import *
 from sys import version_info
-import datetime
 
 
 class HelpNavigator(Navigator):

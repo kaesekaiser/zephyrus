@@ -4,6 +4,7 @@ from unicodedata import name as uni_name
 from urllib.error import HTTPError
 import hanziconv
 import pycantonese
+import datetime
 from math import log10, isclose
 
 
@@ -249,10 +250,16 @@ async def convert(ctx: commands.Context, n: str, *text):
     else:
         digits_in = len(n)  # if it's just an integer
     digits_in = max(digits_in, 3)  # at least 3 sig figs no matter what
-    n = float(n)
+
+    try:
+        n = float(n)
+    except ValueError:
+        raise commands.BadArgument
 
     if "to" in text:
         text = tuple(cv.MultiUnit.from_str(cv.unrulyAbbreviations.get(g, g)) for g in " ".join(text).split(" to "))
+        if len(text) != 2:
+            raise commands.BadArgument
     else:
         text = (cv.MultiUnit.from_str(cv.unrulyAbbreviations.get(" ".join(text), " ".join(text))), )
 
@@ -788,29 +795,6 @@ async def phone_command(ctx: commands.Context, func: str = "help", channel: str=
             raise commands.CommandError(f"No server with the number ``{channel}``.")"""
 
 
-def ascii_narahlena(s: str):
-    dic = {
-        "N^": "Ň", "n^": "ň", "C^": "Č", "c^": "č", "C`": "Ç", "c`": "ç",
-        "S^": "Š", "s^": "š", "Z^": "Ž", "z^": "ž", "A^": "Â", "a^": "â",
-        "O^": "Ô", "o^": "ô", "A-": "Ā", "a-": "ā", "Ñ": "Ň", "ñ": "ň",
-        r"\^": "^", r"\`": "`", r"\:": ":", r"\-": "-"
-    }
-    for find, rep in dic.items():
-        s = s.replace(find, rep)
-    return s
-
-
-@zeph.command(
-    aliases=["nl"], usage="z!narahlena <Narahlena text...>",
-    description="Converts ASCII to Narahlena text.",
-    help="Converts ASCII Narahlena input into actual Narahlena orthography.\n\n"
-         "[Narahlena](https://fort.miraheze.org/wiki/Narahlena) is a constructed language Fort's making. This "
-         "command probably doesn't mean much to most people. Feel free to check it out, though."
-)
-async def narahlena(ctx: commands.Context, *, text: str):
-    return await ctx.send(content=ascii_narahlena(text))
-
-
 @zeph.command(
     name="nln", usage="z!nln <integer>",
     description="Converts decimal numbers to the Narahlena number system.",
@@ -882,3 +866,17 @@ async def base_command(ctx: commands.Context, to_base: int, num: str, from_base:
     subscript = "".join(chr(ord(g) - 48 + 8320) for g in str(from_base))
 
     return await ClientEmol(":1234:", blue, ctx).say(ret, d=f"is ({num.upper()}){subscript} in base {to_base}.")
+
+
+@zeph.command(
+    name="age", usage="z!age",
+    description="Shows you how old your account is.",
+    help="`z!age` tells you how old your account is, and when you joined the server. That's it, really."
+)
+async def age_command(ctx: commands.Context):
+    age_emol = ClientEmol(":hourglass:", hexcol("ffac33"), ctx)
+    return await age_emol.say(
+        f"{ctx.author.display_name}'s Age",
+        d=f"You created your account on **{ctx.author.created_at.date().strftime('%B %d, %Y')}**.\n"
+        f"You joined this server on **{ctx.author.joined_at.date().strftime('%B %d, %Y')}**."
+    )
