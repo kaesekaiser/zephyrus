@@ -172,6 +172,71 @@ async def send_command(ctx: commands.Context, channel_id: int, *, message: str):
         raise commands.CommandError("I can't send a message to that channel.")
 
 
+class ChannelLink:  # just a class to keep track of things. it doesn't really do much but look nice
+    def __init__(self, fro: discord.TextChannel, to: discord.TextChannel):
+        self.fro = fro
+        self.to = to
+
+    def should_activate(self, message: discord.Message):
+        if not self.fro:
+            return False
+        if message.channel != self.fro and message.channel != self.to:
+            return False
+        if message.author == zeph.user:
+            return False
+        if message.content.lower() == "z!unlink":
+            return False
+        return True
+
+
+@zeph.command(
+    hidden=True, name="link", usage="z!link user <user ID>\nz!link channel <channel ID>",
+    description="Lets you communicate through Zephyrus.",
+    help="Connects you, the viewer, to a given text channel or DM channel and lets you both talk through Zephyrus and "
+         "read the messages back."
+)
+async def link_command(ctx: commands.Context, channel_type: str, idn: int):
+    admin_check(ctx)
+
+    if zeph.channelLink is not None:
+        raise commands.CommandError("Zephyrus is already connected somewhere. Try using `z!disconnect` first.")
+
+    if channel_type == "channel":
+        channel = zeph.get_channel(idn)
+        if not isinstance(channel, discord.TextChannel):
+            raise commands.CommandError("ID does not point to a text channel I can access.")
+        if not channel.permissions_for(channel.guild.me).send_messages:
+            raise commands.CommandError("I can't speak in this channel.")
+
+        await succ.send(ctx, f"Connected to #{channel.name}!")
+
+    elif channel_type == "user":
+        user = zeph.get_user(idn)
+        if not user:
+            raise commands.CommandError("ID does not point to a user I can see.")
+        if not user.dm_channel:
+            await user.create_dm()
+        channel = user.dm_channel
+
+        await succ.send(ctx, f"Connected to {user}!")
+
+    else:
+        raise commands.CommandError("Unknown channel type. Valid inputs are `user` and `channel`.")
+
+    zeph.channelLink = ChannelLink(ctx.channel, channel)
+
+
+@zeph.command(
+    hidden=True, name="unlink", usage="z!unlink",
+    help="Disconnects any existing channel link."
+)
+async def unlink_command(ctx: commands.Context):
+    admin_check(ctx)
+
+    zeph.channelLink = None
+    await succ.send(ctx, "Unlinked.")
+
+
 @zeph.command(
     hidden=True, name="presence", aliases=["pres"], usage="z!presence <type> <activity...> [url]",
     description="Updates the bot's presence.",
@@ -282,12 +347,20 @@ async def on_command_error(ctx: commands.Context, exception):
 @zeph.event
 async def on_message(message: discord.Message):
     zeph.dispatch("reaction_or_message", message, message.author)
+
     if zeph.user in message.mentions and "🤗" in message.content:
         await message.channel.send(":hugging:")
     if zeph.user in message.mentions and "<:o7:686317637495423031>" in message.content:
         await message.channel.send(zeph.emojis.get("o7", "o7"))
     if zeph.user in message.mentions and re.search(r"^(.*\s)?o7(\s.*)?$", message.content):
         await message.channel.send("o7")
+
+    if zeph.channelLink is not None and zeph.channelLink.should_activate(message):
+        if message.channel == zeph.channelLink.to:
+            await zeph.channelLink.fro.send(f"**{message.author}**: {message.content}")
+        if message.channel == zeph.channelLink.fro:
+            await zeph.channelLink.to.send(message.content)
+
     await zeph.process_commands(message)
 
 

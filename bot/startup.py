@@ -48,6 +48,7 @@ class Zeph(commands.Bot):
         except TypeError:
             zeph_version += ".0"
         self.version = zeph_version
+        self.channelLink = None
 
     @property
     def emojis(self):
