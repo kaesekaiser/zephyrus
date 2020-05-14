@@ -880,3 +880,52 @@ async def age_command(ctx: commands.Context):
         d=f"You created your account on **{ctx.author.created_at.date().strftime('%B %d, %Y').replace(' 0', ' ')}**.\n"
         f"You joined this server on **{ctx.author.joined_at.date().strftime('%B %d, %Y').replace(' 0', ' ')}**."
     )
+
+
+@zeph.command(
+    name="react", aliases=["r"], usage="z!react [^...] <emote>\nz!react <message link> <emote>",
+    description="Reacts to a message.",
+    help="`z!r <emote>` reacts to the message immediately above yours with the input emote. `z!r ^ <emote>` does the "
+         "same thing. `z!r ^^ <emote>` reacts to the message *two* above yours; `z!r ^^^ <emote>` reacts to the third, "
+         "and so on. You can also link a specific message to react to - but it has to be the *full link*, not just the "
+         "ID. It's a way to semi-give yourself nitro privileges, assuming Zeph has the emote you want.\n\nNote that "
+         "emote names are *case-sensitive*."
+)
+async def react_command(ctx: commands.Context, *args: str):
+    if len(args) > 2 or len(args) < 1:
+        raise commands.BadArgument
+
+    if args[-1] not in zeph.emojis:
+        raise commands.CommandError("I don't have that emote.")
+    emote = zeph.emojis[args[-1]]
+
+    if len(args) == 1:
+        pointer = "^"
+    else:
+        pointer = args[0]
+
+    mess = ctx.message  # fallback
+    if pointer == "^" * len(pointer):
+        async for message in ctx.channel.history(before=ctx.message, limit=len(pointer)):
+            mess = message  # really shoddy way to get the Nth message back. is there a better way? probably.
+    else:
+        try:
+            mess = await commands.MessageConverter().convert(ctx, args[0])
+        except commands.BadArgument as e:
+            raise commands.CommandError(str(e))
+
+    await mess.add_reaction(emote)
+
+    def pred(r: discord.RawReactionActionEvent):
+        return r.emoji == emote and r.message_id == mess.id and r.user_id == ctx.author.id
+
+    try:
+        await zeph.wait_for('raw_reaction_add', timeout=30, check=pred)
+    except asyncio.TimeoutError:
+        pass
+
+    await mess.remove_reaction(emote, zeph.user)  # remove zeph's reaction once the user has also reacted
+    try:
+        await ctx.message.delete()
+    except discord.Forbidden:
+        pass
