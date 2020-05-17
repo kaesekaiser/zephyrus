@@ -59,20 +59,6 @@ async def square(ctx: commands.Context, *, text):
 
 
 @zeph.command(
-    aliases=["fsq"], usage="z!flagsquare <text...>",
-    description=":flag_do::flag_es: :flag_th::flag_is: :flag_to: :regional_indicator_y::regional_indicator_o:"
-                ":regional_indicator_u::regional_indicator_r: :regional_indicator_t::regional_indicator_e:"
-                ":regional_indicator_x::regional_indicator_t:.",
-    help="Same as ``z!square``, but leaves out the spaces - so sometimes country flags appear. That is, it "
-         ":flag_do::flag_es: :flag_th::flag_is: :flag_to: :regional_indicator_y::regional_indicator_o:"
-         ":regional_indicator_u::regional_indicator_r: :regional_indicator_t::regional_indicator_e:"
-         ":regional_indicator_x::regional_indicator_t:."
-)
-async def flagsquare(ctx: commands.Context, *, text):
-    return await ctx.send(squarize(text, ""))
-
-
-@zeph.command(
     usage="z!clap <text...>",
     help=":clap: Does :clap: this :clap: to :clap: your :clap: text."
 )
@@ -880,6 +866,39 @@ async def age_command(ctx: commands.Context):
         d=f"You created your account on **{ctx.author.created_at.date().strftime('%B %d, %Y').replace(' 0', ' ')}**.\n"
         f"You joined this server on **{ctx.author.joined_at.date().strftime('%B %d, %Y').replace(' 0', ' ')}**."
     )
+
+
+@zeph.command(
+    name="emoji", aliases=["emote", "e"], usage="z!emoji [emote(s)...]",
+    description="Sends a custom emoji.",
+    help="`z!e <emote>` returns the input custom emote, if Zeph has one by that name. `z!e` lists all custom emotes "
+         "Zeph has access to.\n\nNote that emote names are *case-sensitive*."
+)
+async def emote_command(ctx: commands.Context, *args: str):
+    if not args:
+        messages, ret = [], ""
+        for emote in zeph.emojis.values():
+            if emote.guild_id not in testing_emote_servers:
+                if len(ret + str(emote)) < 2000:
+                    ret += str(emote)
+                else:
+                    messages.append(ret)
+                    ret = ""
+
+        for message in messages:
+            await ctx.send(message)
+
+    else:
+        for arg in args:
+            if arg not in zeph.emojis:
+                if len(args) == 1:
+                    raise commands.CommandError("I don't have that emote.")
+                else:
+                    raise commands.CommandError(f"I don't have the `{arg}` emote.")
+        try:
+            await ctx.send("".join(str(zeph.emojis[g]) for g in args))
+        except discord.errors.HTTPException:
+            raise commands.CommandError("I can't fit that many emotes in one message.")
 
 
 @zeph.command(

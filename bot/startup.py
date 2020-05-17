@@ -439,3 +439,7 @@ def admin_check(ctx: commands.Context):
 
 
 blue = hexcol("5177ca")  # color that many commands use
+testing_emote_servers = [  # servers that either are my testing server or that I use only for emote storage
+    405184040161771522, 516004299785109516, 516336805151506449, 516017413729419265, 516044646942638090,
+    516015721998843904, 516079973447237648, 528460450069872640
+]

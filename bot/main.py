@@ -59,7 +59,7 @@ async def about(ctx: commands.Context):
 
     return await ClientEmol(":robot:", hexcol("6fc96f"), ctx).say(
         author=author_from_user(zeph.user, f"\u2223 {zeph.user.name}"),
-        d=f"**Connected to:** {len(zeph.guilds) - len(getattr(zeph, 'fortServers'))} servers / "
+        d=f"**Connected to:** {len([g for g in zeph.guilds if g.id not in testing_emote_servers])} servers / "
         f"{len(set(zeph.users))} users\n"
         f"**Commands:** {len([g for g, j in zeph.all_commands.items() if g == j.name and not j.hidden])}\n"
         f"**Runtime:** {runtime_format(datetime.datetime.now() - getattr(zeph, 'readyTime'))}\n"
@@ -317,9 +317,6 @@ async def sampa(ctx: commands.Context, *, text: str):
 async def on_ready():
     setattr(zeph, "readyTime", datetime.datetime.now())
     print(f"ready at {getattr(zeph, 'readyTime')}")
-    setattr(zeph, "fortServers", [
-        g for g in zeph.guilds if g.owner in [zeph.get_user(238390171022655489), zeph.get_user(474398677599780886)]
-    ])
     zeph.loop.create_task(initialize_planes())
     zeph.loop.create_task(zeph.load_romanization())
     await zeph.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name="you ❤"))
