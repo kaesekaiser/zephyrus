@@ -914,9 +914,9 @@ async def react_command(ctx: commands.Context, *args: str):
     if len(args) > 2 or len(args) < 1:
         raise commands.BadArgument
 
-    if args[-1] not in zeph.emojis:
+    if args[-1].strip(":") not in zeph.emojis:
         raise commands.CommandError("I don't have that emote.")
-    emote = zeph.emojis[args[-1]]
+    emote = zeph.emojis[args[-1].strip(":")]
 
     if len(args) == 1:
         pointer = "^"
