@@ -351,6 +351,8 @@ async def on_message(message: discord.Message):
         await message.channel.send(zeph.emojis.get("o7", "o7"))
     if zeph.user in message.mentions and re.search(r"^(.*\s)?o7(\s.*)?$", message.content):
         await message.channel.send("o7")
+    if message.content == "h" and message.author != zeph.user:
+        await message.channel.send(zeph.emojis.get("aitch", "h"))
 
     if zeph.channelLink is not None and zeph.channelLink.should_activate(message):
         if message.channel == zeph.channelLink.to:
