@@ -63,7 +63,7 @@ async def square(ctx: commands.Context, *, text):
     help=":clap: Does :clap: this :clap: to :clap: your :clap: text."
 )
 async def clap(ctx: commands.Context, *, text):
-    return await ctx.send("👏 " + " 👏 ".join(text.split()))
+    return await ctx.send(" 👏 ".join(text.split()) + " 👏")
 
 
 @zeph.command(
