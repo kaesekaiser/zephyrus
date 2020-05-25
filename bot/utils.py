@@ -513,13 +513,17 @@ async def badtranslate(ctx: commands.Context, *, text: str):
 
 
 @zeph.command(
-    usage="z!avatar <@user>",
-    help="Returns a link to a user's avatar."
+    usage="z!avatar [@user]",
+    description="Returns a link to a user's avatar.",
+    help="Returns a link to a user's avatar. If `[@user]` is left blank, links your avatar."
 )
-async def avatar(ctx: commands.Context, user: User):
+async def avatar(ctx: commands.Context, user: User = None):
+    if not user:
+        user = ctx.author
+    av_url = str(user.avatar_url).replace(".webp", ".png")
     return await ctx.send(
-        embed=construct_embed(author=author_from_user(user, name=f"{user.display_name}'s Avatar", url=user.avatar_url),
-                              color=user.colour, image=user.avatar_url)
+        embed=construct_embed(author=author_from_user(user, name=f"{user.display_name}'s Avatar", url=av_url),
+                              color=user.colour, image=av_url)
     )
 
 
