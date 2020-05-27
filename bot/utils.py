@@ -4,7 +4,6 @@ from unicodedata import name as uni_name
 from urllib.error import HTTPError
 import hanziconv
 import pycantonese
-import datetime
 from math import log10, isclose
 
 
@@ -785,17 +784,9 @@ async def phone_command(ctx: commands.Context, func: str = "help", channel: str=
             raise commands.CommandError(f"No server with the number ``{channel}``.")"""
 
 
-@zeph.command(
-    name="nln", usage="z!nln <integer>",
-    description="Converts decimal numbers to the Narahlena number system.",
-    help="Converts decimal numbers to the mixed-base Narahlena numbering system, which uses both base 8 and base 24."
-)
-async def narahlena_numbers(ctx: commands.Context, no: int):
-    def get_nln(n: int):
-        reds = {rk.rebase(g, 10, 24): rk.rebase(g, 10, 8).rjust(2, "0") for g in range(24)}
-        return re.sub("|".join(reds.keys()), lambda m: reds[m[0]] + " ", rk.rebase(n, 10, 24)).lstrip("0").rstrip(" ")
-
-    return await ctx.send(get_nln(no))
+def nln(n: int):
+    reds = {rk.rebase(g, 10, 24): rk.rebase(g, 10, 8).rjust(2, "0") for g in range(24)}
+    return re.sub("|".join(reds.keys()), lambda m: reds[m[0]] + " ", rk.rebase(n, 10, 24)).lstrip("0").rstrip(" ")
 
 
 @zeph.command(
@@ -887,7 +878,8 @@ async def emote_command(ctx: commands.Context, *args: str):
                     ret += str(emote)
                 else:
                     messages.append(ret)
-                    ret = ""
+                    ret = str(emote)
+        messages.append(ret)
 
         for message in messages:
             await ctx.send(message)
@@ -952,3 +944,52 @@ async def react_command(ctx: commands.Context, *args: str):
         await ctx.message.delete()
     except discord.Forbidden:
         pass
+
+
+@zeph.command(
+    aliases=["rw"], usage="z!randomword [pattern]",
+    description="Generates a random word.",
+    help="Generates a random word made of IPA symbols. If `[pattern]` is not specified, it defaults to CVCVCVCV.\n\n"
+         "Valid pattern letters are: **`C`** for consonants, **`F`** for fricatives, **`J`** for palatals, **`K`** "
+         "for clicks, **`L`** for laterals, **`N`** for nasals, **`P`** for plosives, **`R`** for rhotics, **`S`** "
+         "for sibilants, **`T`** for taps, **`U`** for all vowels, **`V`** for the five basic vowels [a e i o u], "
+         "**`W`** for approximants, and **`X`** for trills."
+)
+async def randomword(ctx: commands.Context, pattern: str = "CVCVCVCV"):
+    """Stolen pretty much directly from Leo (https://github.com/Slorany/LeonardBot)."""
+
+    subs = {
+        "A": "",
+        "B": "",
+        "C": "pbtdʈɖcɟkgqɢʔmɱnɳɲŋɴʙrʀɾɽɸβfvθðszʃʒʂʐçʝxɣχʁħʕhɦɬɮʋɹɻjɰlɭʎʟ",  # consonants
+        "D": "",
+        "E": "",
+        "F": "ɸβfvθðszʃʒʂʐçʝxɣχʁħʕhɦɬɮ",  # fricatives
+        "G": "",
+        "H": "",
+        "I": "",
+        "J": "cɟɲçʝjʎɕʑ",  # palatals
+        "K": "ǁǂǃǀʘ",  # clicks
+        "L": "ʟʎlɬɮɭɺ",  # laterals
+        "M": "",
+        "N": "mɱnɳɲŋɴ",  # nasals
+        "O": "",
+        "P": "pbtdʈɖcɟkgqɢʔ",  # plosives
+        "Q": "",
+        "R": "rɾɹɻʀʁɽɺ",  # rhotics
+        "S": "szʃʒʂʐ",  # sibilants
+        "T": "ɾɽɺ",  # taps / flaps
+        "U": "iyɨʉɯuɪʏʊeøɘɵɤoəɛœɜɞʌɔæɐaɶɑɒ",  # all vowels
+        "V": "aeiou",  # the basic five vowels
+        "W": "ʋɹɻjɰlɭʎʟwʍɥ",  # approximants
+        "X": "ʙrʀ",  # trills
+        "Y": "",
+        "Z": ""
+    }
+
+    def choose_sub(s: str): return "" if not len(subs.get(s, s)) else choice(subs[s]) if subs.get(s) else s
+
+    ret = "".join(choose_sub(c) for c in pattern)
+    if not ret:
+        raise commands.CommandError("Pattern would be empty. Do `z!help rw` for a list of valid sets.")
+    return await ctx.send(ret)
