@@ -59,7 +59,7 @@ async def square(ctx: commands.Context, *, text):
 
 @zeph.command(
     usage="z!clap <text...>",
-    help=":clap: Does :clap: this :clap: to :clap: your :clap: text."
+    help="Does :clap: this :clap: to :clap: your :clap: text. :clap:"
 )
 async def clap(ctx: commands.Context, *, text):
     return await ctx.send(" 👏 ".join(text.split()) + " 👏")
@@ -96,7 +96,7 @@ async def roll(ctx: commands.Context, die: str = "1d6"):
 
 
 lowerAlphabet = "abcdefghijklmnopqrstuvwxyz"
-smallAlphabet = "ᴀʙᴄᴅᴇꜰɢʜɪᴊᴋʟᴍɴᴏᴘǫʀsᴛᴜᴠᴡxʏᴢ"
+smallAlphabet = "ᴀʙᴄᴅᴇꜰɢʜɪᴊᴋʟᴍɴᴏᴘǫʀꜱᴛᴜᴠᴡxʏᴢ"
 
 
 def smallcaps(s: str):
@@ -132,16 +132,6 @@ def caesar_cipher(letter: str, n: int):
 )
 async def caesar(ctx: commands.Context, n: int, *, text: str):
     return await ctx.send("".join([caesar_cipher(c, n) for c in text]))
-
-
-@zeph.command(
-    aliases=["r13"], usage="z!rot13 <text...>",
-    description="Puts text through the ROT13 cipher.",
-    help="Puts text through the ROT13 cipher, which is also a Caesar cipher with a shift of 13. Astute observers "
-         "will note that putting ROT13 text back through ROT13 returns the original text."
-)
-async def rot13(ctx: commands.Context, *, text: str):
-    return await ctx.send("".join([caesar_cipher(c, 13) for c in text]))
 
 
 def vig(letter: str, *ks: str, reverse: bool = False):
@@ -993,3 +983,35 @@ async def randomword(ctx: commands.Context, pattern: str = "CVCVCVCV"):
     if not ret:
         raise commands.CommandError("Pattern would be empty. Do `z!help rw` for a list of valid sets.")
     return await ctx.send(ret)
+
+
+with open("utilities/stest.txt", "r") as fp:
+    stest_sentences = fp.read().splitlines()
+
+
+@zeph.command(
+    aliases=["stest"], usage="z!syntaxtest [number 1-218]\nz!syntaxtest list",
+    description="Gives you a sentence to test conlang syntax.",
+    help="`z!stest` returns a random sentence from the [list of 218 conlang syntax test sentences]"
+         "(https://web.archive.org/web/20120427054736/http://fiziwig.com/conlang/syntax_tests.html).\n"
+         "`z!stest <number 1-218>` returns sentence #`number`.\n"
+         "`z!stest list` links a full list of the sentences."
+)
+async def syntaxtest(ctx: commands.Context, arg: str = None):
+    """This is also taken from Leo (see randomword, above)."""
+
+    if not arg:
+        return await ctx.send(choice(stest_sentences))
+
+    if str(arg).lower() == "list":
+        return await ctx.send("Here's the list of the 218 syntax test sentences: <http://pastebin.com/raw/BpfjThwA>")
+
+    try:
+        int(arg)
+    except ValueError:
+        raise commands.BadArgument
+    else:
+        if int(arg) < 1 or int(arg) > 218:
+            raise commands.BadArgument
+        else:
+            return await ctx.send(stest_sentences[int(arg) - 1])
