@@ -142,8 +142,8 @@ class PlanesInterpreter(Interpreter):
 
     async def before_run(self, func: str):
         if self.au.id in zeph.planeUsers:
-            for craft in self.user.planes.values():  # kinda messy; should only be called if zeph went down
-                if len(craft.path) > 0:              # while a plane was in the air
+            for craft in self.user.planes.values():
+                if len(craft.path) > 0:  # messy; should only be called if zeph went down while a plane was in the air
                     while craft.next_eta and craft.next_eta < time.time():
                         self.next_stop(craft)
         else:
@@ -153,6 +153,7 @@ class PlanesInterpreter(Interpreter):
     async def _help(self, *args):
         help_dict = {
             "new": "``z!planes new`` starts a new game.",
+            "tutorial": "``z!planes tutorial`` links to the tutorial.",
             "map": "``z!planes map`` links to the airport map.",
             "profile": "``z!planes profile`` shows your country licenses and credit balance.",
             "fleet": "``z!planes fleet`` lists your owned planes.\n"
@@ -232,6 +233,7 @@ class PlanesInterpreter(Interpreter):
         }
         desc_dict = {
             "new": "Starts a brand new game.",
+            "tutorial": "Links to the tutorial.",
             "map": "Links to the airport map.",
             "profile": "Shows your country licenses and credit balance.",
             "fleet": "List or show details for your planes.",
@@ -268,10 +270,13 @@ class PlanesInterpreter(Interpreter):
 
         return await plane.send(self.ctx, f"z!planes {ret}", d=help_dict[ret])
 
-    async def _map(self, *args):  # needs to be able to take args like all other commands
+    async def _tutorial(self, *args):  # needs to be able to take args like all other commands
+        return await plane.send(self.ctx, "z!Planes Tutorials:", d="1. [The Basics](https://imgur.com/a/3ot7qog)")
+
+    async def _map(self, *args):  # also needs to be able to take args
         return await plane.send(self.ctx, "Purchasable airports:", d=pn.url)
 
-    async def _profile(self, *args):  # also needs to be able to take args
+    async def _profile(self, *args):  # I am once again asking to take args
         val = sum([pn.find_city(g).value for g in self.user.cities] +
                   [self.plane_value(g) for g in self.user.planes.values()])
         return await plane.send(
@@ -867,9 +872,10 @@ class PlanesInterpreter(Interpreter):
             return m.author == self.au and m.channel == self.ctx.channel and len(m.content.split()) == 1
 
         await plane.send(
-            self.ctx, "Pick any city to start your empire in.", url=pn.url,
-            d="Click the link to see the full map of available airports. You'll get the license to the country "
-              "along with your first airport. Make sure to omit spaces."
+            self.ctx, "Pick any city to start your empire in.",
+            d=f"Click [this link](https://imgur.com/a/3ot7qog) to go to the tutorial.\n\n"
+              f"Click [this link]({pn.url}) to see the full map of available airports. You'll get the license to the "
+              f"country along with your first airport. Make sure to omit spaces."
         )
         while True:
             try:
@@ -888,7 +894,7 @@ class PlanesInterpreter(Interpreter):
                     return await plane.send(
                         self.ctx, f"Great! {pn.cities[cho].name} Airport purchased.",
                         d=f"You've also received the license to {pn.cities[cho].country} and a Tyne-647 to start you "
-                        f"out. To learn how to play, use `z!p tutorial` (currently not yet implemented). Have at it!"
+                        f"out. To learn how to play, use `z!p tutorial`. Have at it!"
                     )
                 await plane.send(self.ctx, "That's not a recognized city.")
 
