@@ -1,7 +1,6 @@
 import random
 from pokemon.field import *
 from re import sub
-from typing import Union
 from pyquery import PyQuery
 from math import floor
 
