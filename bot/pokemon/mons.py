@@ -1,6 +1,5 @@
-import json
 import random
-from pokemon.moves import *
+from pokemon.field import *
 from re import sub
 from typing import Union
 from pyquery import PyQuery
@@ -53,6 +52,11 @@ class Species:
         self.name = name
         self.forms = {g.name: g for g in forms}
 
+    @property
+    def notable_forms(self):
+        """Forms which change the actual stats of the mon, not just appearance (e.g. Vivillon) or type (e.g. Arceus)."""
+        return {g: j for g, j in self.forms.items() if j.json[:6] != list(self.forms.values())[0].json[:6]}
+
     def get_form_name(self, s: str):
         if not s:
             return list(self.forms)[0]
@@ -93,14 +97,71 @@ class Mon:
         self.nature = kwargs.get("nature", "Hardy")
         self.iv = kwargs.get("iv", [0, 0, 0, 0, 0, 0])
         self.ev = kwargs.get("ev", [0, 0, 0, 0, 0, 0])
+        self.ability = kwargs.get("ability", kwargs.get("abil", "No Ability"))
+        self.held_item = kwargs.get("held_item", kwargs.get("item", "None"))
+
         self.stat_stages = kwargs.get(
-            "stat_stages", {"atk": 0, "dfn": 0, "spa": 0, "spd": 0, "spe": 0, "eva": 0, "acc": 0}
+            "stat_stages", {"atk": 0, "dfn": 0, "spa": 0, "spd": 0, "spe": 0, "eva": 0, "acc": 0, "crt": 0}
         )
         self.hpc = self.hp - kwargs.get("dmg", 0)
         self.status_condition = kwargs.get("status_condition", None)
         self.stat_con_time = kwargs.get("sct", 0)
         self.confused = kwargs.get("confused", False)
         self.confusion_time = kwargs.get("confusion_time", 0) if self.confused else 0
+        self.flinching = kwargs.get("flinching", False)
+        self.moves = []
+        for move in kwargs.get("moves", []):
+            self.add_move(move)
+        self.selection = None
+
+        # all of these are effects that take multiple turns to transpire and which need to be damage-controlled by
+        # having more than two states, and I'd rather use multiple booleans than an int
+        # the first variable is set to True immediately upon move use; the second is set at the end of that turn
+        self.charging = False  # charging a two-turn attack of any kind
+        self.has_charged = False
+        self.resting = False  # resting after certain moves like Hyper Beam
+        self.has_rested = False
+        self.drowsy = False
+        self.almost_drowsy = False  # triggers falling asleep at the end of the turn
+        self.flying = False  # Fly / Bounce
+        self.has_flown = False
+        self.digging = False  # Dig
+        self.has_dug = False
+
+        self.seeded = False
+        self.minimized = False
+        self.enduring = False  # reset to False at the end of every turn; set to True upon use of Endure
+        self.protecting = False  # same as above
+        self.successive_uses = 0  # successive uses of Protect, Detect, Endure, etc.
+
+        self.field = kwargs.get("field", Field())
+
+    @property
+    def pack(self):
+        """A JSON-like (but not true JSON) object that stores the crucial, non-volatile data for a mon. Mons are
+        reduced to their `pack` when in the team."""
+        return {
+            "spc": self.species, "form": self.givenForm, "level": self.level, "nature": self.nature, "iv": self.iv,
+            "ev": self.ev, "ability": self.ability, "item": self.held_item, "dmg": round(self.hp - self.hpc),
+            "status_condition": self.status_condition, "moves": self.moves
+        }
+
+    @staticmethod
+    def unpack(pack: dict):
+        """Given a mon's `pack`, returns a fully-fledged Mon object for use in battle."""
+        return Mon(**pack)
+
+    def add_move(self, move: Union[Move, PackedMove, str]):
+        if isinstance(move, Move):
+            self.moves.append(PackedMove.from_move(move))
+        elif isinstance(move, PackedMove):
+            self.moves.append(move)
+        elif isinstance(move, str):
+            try:
+                move = [g for g in moveDex.values() if g.name.lower() == move.lower()][0]
+            except IndexError:
+                raise ValueError(f"Invalid move name '{move}'.")
+            self.moves.append(PackedMove.from_move(move))
 
     @property
     def dex_no(self):
@@ -108,7 +169,7 @@ class Mon:
 
     @property
     def generation(self):
-        return [g for g in range(8) if self.dex_no <= generationBounds[g]][-1]
+        return [g + 1 for g in range(7) if self.dex_no > generationBounds[g]][-1]
 
     @property
     def bulbapedia(self):
@@ -172,6 +233,10 @@ class Mon:
     def ni(self):
         return natures.index(self.nature)
 
+    @property
+    def ability_triggered(self):
+        return f"=== {self.name}'s {self.ability}! ==="
+
     def stat_level(self, stat):
         n = 3 if stat in ["eva", "acc"] else 2
         change = self.stat_stages[stat]
@@ -191,7 +256,8 @@ class Mon:
 
     @property
     def atk(self):
-        return self.atk_base * self.stat_level("atk")
+        return self.atk_base * self.stat_level("atk") * \
+            (2 if self.species.name == "Pikachu" and self.held_item == "Light Ball" else 1)
 
     @property
     def dfn_base(self):
@@ -213,7 +279,8 @@ class Mon:
 
     @property
     def spa(self):
-        return self.spa_base * self.stat_level("spa")
+        return self.spa_base * self.stat_level("spa") * \
+            (2 if self.species.name == "Pikachu" and self.held_item == "Light Ball" else 1)
 
     @property
     def spd_base(self):
@@ -245,22 +312,53 @@ class Mon:
     def acc(self):
         return self.stat_level("acc")
 
+    @property
+    def crt(self):
+        return self.stat_stages["crt"] + (self.ability == "Super Luck")
+
+    @property
+    def can_move(self):
+        return not (self.resting or self.charging or self.flying or self.digging)
+
     def eff(self, typ: str):
-        return effectiveness[typ].get(self.type1, 1) * effectiveness[typ].get(self.type2, 1)
+        if typ:
+            return effectiveness[typ].get(self.type1, 1) * effectiveness[typ].get(self.type2, 1)
+        else:
+            return 1
 
     def apply(self, stat: Union[StatChange, StatusEffect]):
         ret = {}
-        if random.random() < stat.chance:
+        if random.random() < stat.chance / 100:
             if isinstance(stat, StatChange):
                 for k, v in stat.stages.items():
                     change = max(-6, min(6, self.stat_stages[k] + v)) - self.stat_stages[k]
                     self.stat_stages[k] += change
-                    ret[k] = -20 if not change and v < 1 else change  # -20 is arbitrary, just to distinguish from -0
+                    ret[k] = -20 if not change and v < 1 else 20 if not change and v > 1 else change
             else:
                 if not self.status_condition:
                     self.status_condition = stat.effect
                     self.stat_con_time = random.randrange(1, 4)
+                    ret[0] = {
+                        asleep: "{name} fell asleep!",
+                        burned: "{name} was burned!",
+                        frozen: "{name} was frozen solid!",
+                        paralyzed: "{name} was paralyzed!",
+                        poisoned: "{name} was poisoned!",
+                        badlyPoisoned: "{name} was badly poisoned!"
+                    }[stat.effect]
         return ret
+
+    def retrieve_move(self, move_name: str):
+        try:  # first, try for one of the 'system moves' - switching out, exiting, using an item
+            return [PackedMove.from_move(j) for g, j in systemMoves.items() if g.lower() == move_name.lower()][0]
+        except IndexError:
+            try:  # then, try for one of the mon's learned moves
+                return [g for g in self.moves if g.name.lower() == move_name.lower()][0]
+            except IndexError:
+                try:  # finally, try for any move. this will eventually be removed.
+                    return [PackedMove(g.name, 1) for g in moveDex.values() if g.name.lower() == move_name.lower()][0]
+                except IndexError:
+                    return None
 
 
 with open("stats.json" if __name__ == "__main__" else "pokemon/stats.json", "r") as file:
@@ -334,7 +432,9 @@ def image(m: Mon):
 
 
 def stat_change_text(mon: Mon, stat: str, change: int):
+    """Creates the display text for a stat change - 'x sharply fell', etc."""
     ret = "{name}'s {stat} won't go any lower!" if change == -20 else \
+        "{name}'s {stat} won't go any higher!" if change == 20 else \
         StatChange.modifier_strings[max(-3, min(3, change))]
     return ret.format(name=mon.name, stat=StatChange.stat_name_dict[stat])
 
