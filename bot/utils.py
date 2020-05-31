@@ -282,7 +282,7 @@ async def choose(ctx: commands.Context, *, text: str):
     hidden=True, usage="z!tekat <option...> sing <option...> ...",
     help="Chooses one from a list of options, but in Lam Kiraga."
 )
-async def choose(ctx: commands.Context, *, text: str):
+async def tekat(ctx: commands.Context, *, text: str):
     picks = re.split(r"\s+sing\s+", text)
     string = choice(["De tekat {}!"])  # will add more later
     return await chooseEmol.send(ctx, string.format(f"**{choice(picks)}**"))
