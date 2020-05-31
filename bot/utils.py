@@ -278,6 +278,16 @@ async def choose(ctx: commands.Context, *, text: str):
     return await chooseEmol.send(ctx, string.format(f"**{choice(picks)}**"))
 
 
+@zeph.command(  # an easter egg command. z!choose but in a pidgin conlang.
+    hidden=True, usage="z!tekat <option...> sing <option...> ...",
+    help="Chooses one from a list of options, but in Lam Kiraga."
+)
+async def choose(ctx: commands.Context, *, text: str):
+    picks = re.split(r"\s+sing\s+", text)
+    string = choice(["De tekat {}!"])  # will add more later
+    return await chooseEmol.send(ctx, string.format(f"**{choice(picks)}**"))
+
+
 @zeph.command(
     name="8ball", usage="z!8ball <question...>",
     help="The divine magic 8-ball answers your yes-or-no questions."
