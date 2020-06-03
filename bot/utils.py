@@ -10,7 +10,7 @@ from math import log10, isclose
 @zeph.command(
     usage="z!mock <text...>\nz!mock",
     description="DoEs ThIs To YoUr TeXt.",
-    help="DoEs ThIs To YoUr TeXt. If no text is given, mocks the message immediately above the command.\n\n"
+    help="DoEs ThIs To YoUr TeXt. If no text is given, mocks the message above you.\n\n"
          "``guy: I think Zephyrus is bad\nperson: z!mock\nZephyrus: I tHiNk ZePhYrUs Is BaD``"
 )
 async def mock(ctx: commands.Context, *text):
@@ -28,7 +28,10 @@ async def mock(ctx: commands.Context, *text):
         async for message in ctx.channel.history(limit=10):
             if message.id < ctx.message.id and message.content:
                 text = message.content
-                await ctx.message.delete()
+                try:
+                    await ctx.message.delete()
+                except discord.Forbidden:
+                    pass
                 break
 
     return await ctx.send(dumb(text))
@@ -58,10 +61,21 @@ async def square(ctx: commands.Context, *, text):
 
 
 @zeph.command(
-    usage="z!clap <text...>",
-    help="Does :clap: this :clap: to :clap: your :clap: text. :clap:"
+    usage="z!clap <text...>\nz!clap",
+    description="Does :clap: this :clap: to :clap: your :clap: text. :clap:",
+    help="Does :clap: this :clap: to :clap: your :clap: text. :clap: If no text is given, claps the message above you."
 )
-async def clap(ctx: commands.Context, *, text):
+async def clap(ctx: commands.Context, *, text: str = None):
+    if not text:
+        async for message in ctx.channel.history(limit=10):
+            if message.id < ctx.message.id and message.content:
+                text = message.content
+                try:
+                    await ctx.message.delete()
+                except discord.Forbidden:
+                    pass
+                break
+
     return await ctx.send(" 👏 ".join(text.split()) + " 👏")
 
 
