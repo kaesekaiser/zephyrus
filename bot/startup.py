@@ -20,7 +20,7 @@ Flint = Union[float, int]
 
 class Zeph(commands.Bot):
     def __init__(self):
-        super().__init__("z!", case_insensitive=True)
+        super().__init__(["z!", "go go gadget "], case_insensitive=True)
         del self.all_commands["help"]
         with open("storage/call_channels.txt", "r") as f:
             self.phoneNumbers = {int(g.split("|")[0]): int(g.split("|")[1]) for g in f.readlines()}
