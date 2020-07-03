@@ -666,10 +666,22 @@ class PlanesInterpreter(Interpreter):
                 f"You don't have enough credits. Your next upgrade will cost Ȼ{pn.addcomm(up_cost)}."
             )
 
+        comp_craft = pn.Plane.from_str(str(craft))
+        new_grade = [craft.upgrades[0] + (args[1].lower() == "power"),
+                     craft.upgrades[1] + (args[1].lower() == "tank")]
+        comp_craft.upgrades = new_grade
+
+        if args[1].lower() == "power":
+            comparison = f"This will increase its **airspeed** to **{comp_craft.airspeed} km/hr** " \
+                f"(from {craft.airspeed} km/hr), and its **fuel usage** to **{comp_craft.fuel_use} L/hr** " \
+                f"(from {craft.fuel_use} L/hr).\n\n"
+        else:
+            comparison = f"This will increase its **fuel capacity** to **{comp_craft.fuel_cap} L** " \
+                f"(from {craft.fuel_cap} L), which means its **range** will increase to **{comp_craft.range} km** " \
+                f"(from {craft.range} km).\n\n"
+
         if await confirm(f"Are you sure you want to upgrade {craft.name}'s {args[1].lower()} for "
-                         f"Ȼ{pn.addcomm(up_cost)}?", self.ctx, self.au):
-            new_grade = [craft.upgrades[0] + (args[1].lower() == "power"),
-                         craft.upgrades[1] + (args[1].lower() == "tank")]
+                         f"Ȼ{pn.addcomm(up_cost)}?", self.ctx, self.au, add_info=comparison):
             self.user.credits -= up_cost
             craft.upgrades = new_grade
             return await succ.send(self.ctx, "Plane upgraded!")
