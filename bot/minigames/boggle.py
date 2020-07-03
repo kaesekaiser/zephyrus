@@ -12,7 +12,7 @@ class Board:
             "SUINEE", "COITUM", "FASPFK", "NEAGEA", "VWTHER", "DIXELR", "PASHCO", "TLRYET"]
 
     def __init__(self):
-        self.board = [choice([c for c in sample(self.dice, 16)[g]]) for g in range(16)]
+        self.board = [choice(g) for g in sample(self.dice, 16)]
         self.guessed = []
         self.points = 0
 

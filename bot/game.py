@@ -242,8 +242,11 @@ async def boggle(ctx: commands.Context):
         return {"d": f"```ml\n{str(board)}```\nTime remaining: {round(timer())} s",
                 "footer": f"Used words: {none_list(sorted(board.guessed))}"}
 
+    def is_guess(s: str):
+        return board.find(s.lower()) or s.lower() == "forfeit"  # there's only one die with an F, so this is fine
+
     def pred(m: discord.Message):
-        return m.channel == ctx.channel and m.author == ctx.author and board.find(m.content.lower())
+        return m.channel == ctx.channel and m.author == ctx.author and is_guess(m.content)
 
     screen = await bog.say("Boggle", d=f'```ml\n{str(board)}```\nYou have three minutes. Go!')
     start = time.time()
@@ -260,6 +263,9 @@ async def boggle(ctx: commands.Context):
             except discord.HTTPException:
                 pass
             guess = guess.content.lower()
+            if guess == "forfeit":
+                return await bog.say("Game over!", d=f"You scored **{board.points}** points!\n\n"
+                                                     f"Words you missed: {none_list(missed())} ({len(missed())})")
             if guess not in possible:
                 await bog.resend_if_dm(screen, f"`{guess}` isn't a word.", **embed())
                 continue
