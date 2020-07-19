@@ -121,14 +121,6 @@ def smallcaps(s: str):
     return "".join([alpha_dict.get(g, g) for g in s])
 
 
-@zeph.command(
-    name="smallcaps", aliases=["small"], usage="z!smallcaps <text...>",
-    help="Dᴏᴇs ᴛʜɪs ᴛᴏ ʏᴏᴜʀ ᴛᴇxᴛ."
-)
-async def smallcaps_command(ctx: commands.Context, *, text: str):
-    return await ctx.send(content=smallcaps(text))
-
-
 def caesar_cipher(letter: str, n: int):
     if letter.lower() not in lowerAlphabet:
         return letter
@@ -1039,3 +1031,47 @@ async def syntaxtest(ctx: commands.Context, arg: str = None):
             raise commands.BadArgument
         else:
             return await ctx.send(stest_sentences[int(arg) - 1])
+
+
+class RMNavigator(Navigator):
+    def __init__(self, roles: list):
+        super().__init__(
+            Emol(":clipboard:", hexcol("C1694F")), [name_focus(g) for g in roles[0].members],
+            8, "Role Members [{page}/{pgs}]",
+            prefix=f"Total: **{len(roles[0].members)}** ({roles[0].mention})\n\n"
+        )
+        self.roles = roles
+        self.roleIndex = 0
+        if len(roles) > 1:
+            self.funcs["🔃"] = self.cycle_role
+
+    @property
+    def role(self):
+        return self.roles[self.roleIndex]
+
+    def cycle_role(self):
+        self.roleIndex = (self.roleIndex + 1) % len(self.roles)
+        self.table = [name_focus(g) for g in self.role.members]
+        self.prefix = f"Total: **{len(self.role.members)}** ({self.role.mention})\n\n"
+        self.page = 1
+
+
+@zeph.command(
+    aliases=["rm"], usage="z!rolemembers <role>",
+    description="Lists all the members of a certain role.",
+    help="`z!rm <role>` returns a scrollable list of all server members who have the given role, along with a count."
+)
+async def rolemembers(ctx: commands.Context, *, role_name: str):
+    """Another command idea taken from Leo, but this one is heavily adapted from the original."""
+
+    possible_roles = [g for g in ctx.guild.roles if g.name.lower() == role_name.lower()]
+    emol = Emol(":clipboard:", hexcol("C1694F"))
+
+    if len(possible_roles) == 0:
+        raise commands.CommandError(f"`{role_name}` role not found.")
+
+    if len(possible_roles) > 1:  # fuck you manti
+        await emol.send(ctx, f"There are multiple roles called `{role_name}`.",
+                        d="Use the :arrows_clockwise: button to cycle between them.")
+
+    return await RMNavigator(sorted(possible_roles, key=lambda c: -len(c.members))).run(ctx)

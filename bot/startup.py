@@ -272,6 +272,7 @@ class Navigator:
         self.title = s
         self.message = None
         self.close_on_timeout = close_on_timeout
+        self.prefix = kwargs.pop("prefix", "")
         self.kwargs = kwargs
         self.funcs = {}
         self.prev = prev
@@ -292,7 +293,7 @@ class Navigator:
     def con(self):
         return self.emol.con(
             self.title.format(page=self.page, pgs=self.pgs),
-            d=none_list(page_list(self.table, self.per, self.page), "\n"), **self.kwargs
+            d=self.prefix + none_list(page_list(self.table, self.per, self.page), "\n"), **self.kwargs
         )
 
     def advance_page(self, direction: int):
@@ -370,6 +371,7 @@ class FieldNavigator(Navigator):
     def con(self):
         return self.emol.con(
             self.title.format(page=self.page, pgs=self.pgs),
+            d=self.prefix,
             fs=page_dict(self.table, self.per, self.page), **self.kwargs
         )
 
@@ -440,6 +442,10 @@ def admin_check(ctx: commands.Context):
 
 def yesno(b: bool):
     return "yes" if b else "no"
+
+
+def name_focus(user: User):
+    return f"**{user.name}**#{user.discriminator}"
 
 
 blue = hexcol("5177ca")  # color that many commands use
