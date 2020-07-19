@@ -11,7 +11,9 @@ from math import log10, isclose
     usage="z!mock <text...>\nz!mock",
     description="DoEs ThIs To YoUr TeXt.",
     help="DoEs ThIs To YoUr TeXt. If no text is given, mocks the message above you.\n\n"
-         "``guy: I think Zephyrus is bad\nperson: z!mock\nZephyrus: I tHiNk ZePhYrUs Is BaD``"
+         "``guy: I think Zephyrus is bad\nperson: z!mock\nZephyrus: I tHiNk ZePhYrUs Is BaD``\n\n"
+         "You can also use the same message-pointer system that `z!react` uses: pointing to a message by using a "
+         "string of carets, or a message link, as the input text."
 )
 async def mock(ctx: commands.Context, *text):
     def multi_count(s, chars):
@@ -25,14 +27,14 @@ async def mock(ctx: commands.Context, *text):
 
     text = " ".join(text)
     if not text:
-        async for message in ctx.channel.history(limit=10):
-            if message.id < ctx.message.id and message.content:
-                text = message.content
-                try:
-                    await ctx.message.delete()
-                except discord.Forbidden:
-                    pass
-                break
+        text = "^"  # use new message pointing system
+
+    if await get_message_pointer(ctx, text, allow_fail=True):
+        text = (await get_message_pointer(ctx, text)).content
+        try:
+            await ctx.message.delete()
+        except discord.Forbidden:
+            pass
 
     return await ctx.send(dumb(text))
 
@@ -903,14 +905,34 @@ async def emote_command(ctx: commands.Context, *args: str):
             raise commands.CommandError("I can't fit that many emotes in one message.")
 
 
+async def get_message_pointer(ctx: commands.Context, pointer: str, fallback=None, allow_fail: bool = False):
+    """Tries to get a Message object from a pointer.
+    If pointer is a string of carets, returns the Nth message back.
+    If pointer is a valid link to or ID for a message, returns that message.
+    If pointer is neither, returns the fallback input (default None).
+    If allow_fail is True, a message not found error will not prevent execution."""
+
+    mess = fallback
+    if pointer == "^" * len(pointer):
+        async for message in ctx.channel.history(before=ctx.message, limit=len(pointer)):
+            mess = message  # really shoddy way to get the Nth message back. is there a better way? probably.
+    else:
+        try:
+            mess = await commands.MessageConverter().convert(ctx, pointer)
+        except commands.BadArgument as e:
+            if not allow_fail:
+                raise commands.CommandError(str(e))
+    return mess
+
+
 @zeph.command(
     name="react", aliases=["r"], usage="z!react [^...] <emote>\nz!react <message link> <emote>",
     description="Reacts to a message.",
     help="`z!r <emote>` reacts to the message immediately above yours with the input emote. `z!r ^ <emote>` does the "
          "same thing. `z!r ^^ <emote>` reacts to the message *two* above yours; `z!r ^^^ <emote>` reacts to the third, "
-         "and so on. You can also link a specific message to react to - but it has to be the *full link*, not just the "
-         "ID. It's a way to semi-give yourself nitro privileges, assuming Zeph has the emote you want.\n\nNote that "
-         "emote names are *case-sensitive*."
+         "and so on. You can also link a specific message to react to via the URL or ID. It's a way to semi-give "
+         "yourself nitro privileges, assuming Zeph has the emote you want.\n\n"
+         "Note that emote names are *case-sensitive*."
 )
 async def react_command(ctx: commands.Context, *args: str):
     if len(args) > 2 or len(args) < 1:
@@ -925,15 +947,7 @@ async def react_command(ctx: commands.Context, *args: str):
     else:
         pointer = args[0]
 
-    mess = ctx.message  # fallback
-    if pointer == "^" * len(pointer):
-        async for message in ctx.channel.history(before=ctx.message, limit=len(pointer)):
-            mess = message  # really shoddy way to get the Nth message back. is there a better way? probably.
-    else:
-        try:
-            mess = await commands.MessageConverter().convert(ctx, args[0])
-        except commands.BadArgument as e:
-            raise commands.CommandError(str(e))
+    mess = await get_message_pointer(ctx, pointer, fallback=ctx.message)
 
     await mess.add_reaction(emote)
 
