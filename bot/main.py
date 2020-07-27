@@ -172,6 +172,25 @@ async def send_command(ctx: commands.Context, channel_id: int, *, message: str):
         raise commands.CommandError("I can't send a message to that channel.")
 
 
+@zeph.command(
+    hidden=True, name="nickname", aliases=["nick"], usage="z!nickname <name...>\nz!nickname reset",
+    description="Changes the bot's nickname.",
+    help="Changes the bot's nickname to `<nickname>`. `z!nick reset` resets the nickname."
+)
+async def nickname_command(ctx: commands.Context, *, nick: str):
+    admin_check(ctx)
+
+    try:
+        if nick == "reset":
+            await ctx.guild.me.edit(nick="")
+            return await succ.send(ctx, "Nickname reset.")
+        else:
+            await ctx.guild.me.edit(nick=nick)
+            return await succ.send(ctx, "Nickname changed.")
+    except discord.Forbidden:
+        return await err.send(ctx, "Insufficient permissions.")
+
+
 class ChannelLink:  # just a class to keep track of things. it doesn't really do much but look nice
     def __init__(self, fro: discord.TextChannel, to: discord.TextChannel):
         self.fro = fro
