@@ -43,19 +43,23 @@ async def connect4(ctx: commands.Context, opponent: User):
         embed = f"{opponent.display_name} is {zeph.emojis['checkerred']}, " \
                 f"{ctx.author.display_name} is {zeph.emojis['checkeryellow']}."
         players = {1: opponent, -1: ctx.author}
-    await four.edit(init, embed, d="To make a move, reply with the **column number**. Left is ``1``, right is ``7``.")
+    await four.edit(
+        init, embed, d="To make a move, reply with the **column number**. Left is ``1``, right is ``7``.\n"
+                       "If the board gets too far away, reply with the ⏬ emoji to bring it back down."
+    )
     await asyncio.sleep(2)
 
     board = cf.Board(
         zeph.strings["conn4empty"], zeph.strings["conn4red"], zeph.strings["conn4yellow"], zeph.strings["conn4white"],
-        zeph.strings["c4left"] + zeph.strings["c4top"] * 5 + zeph.strings["c4right"]
+        "".join([zeph.strings[f"c4c{g}"] for g in range(1, 8)])
     )
     message = await four.say("Initializing...")
     at_bat = 1
     checkers = {1: zeph.strings["checkerred"], -1: zeph.strings["checkeryellow"]}
 
     def pred(m: discord.Message):
-        return m.channel == ctx.channel and m.content in [str(g + 1) for g in range(7)] and m.author == players[at_bat]
+        return m.channel == ctx.channel and m.author == players[at_bat] \
+            and m.content in ["1", "2", "3", "4", "5", "6", "7", "⏬"]
 
     while True:
         await four.edit(message, f"{players[at_bat].display_name}'s turn. ({checkers[at_bat]})", d=str(board))
@@ -66,12 +70,16 @@ async def connect4(ctx: commands.Context, opponent: User):
             return await four.say("Connect Four game timed out.")
         else:
             await move.delete()
-            move = int(move.content)
-            if board[move - 1].full:
-                await message.edit(embed=message.embeds[0].set_footer("That column is full."))
-                continue
-            board.drop(move - 1, at_bat)
-            at_bat = -at_bat
+            if move.content == "⏬":
+                await four.edit(message, "This game was moved. Scroll down a bit.")
+                message = await four.say("Hold on a second...")
+            else:
+                move = int(move.content)
+                if board[move - 1].full:
+                    await message.edit(embed=message.embeds[0].set_footer("That column is full."))
+                    continue
+                board.drop(move - 1, at_bat)
+                at_bat = -at_bat
 
         if board.victor:
             return await four.edit(message, f"{players[board.victor].display_name} wins!", d=str(board))
