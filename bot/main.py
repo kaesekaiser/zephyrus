@@ -30,10 +30,10 @@ async def help_command(ctx: commands.Context, comm: str = None):
         return await HelpNavigator(hep, comms, 10, "Full Command List [{page}/{pgs}]").run(ctx)
     else:
         aliases = [f"z!{g}" for g, j in zeph.all_commands.items() if j.name == comm.name and g != j.name]
-        help_dict = {"Format": f"``{comm.usage}``"}
+        help_dict = {"Format": f"`{comm.usage}`"}
         if aliases:
-            help_dict["Aliases"] = f'``{", ".join(aliases)}``'
-        return await hep.say(f"``z!{comm.name}``", d=comm.help, fs=help_dict, il=True)
+            help_dict["Aliases"] = ", ".join(f"`{g}`" for g in aliases)
+        return await hep.say(f"`z!{comm.name}`", d=comm.help, fs=help_dict, il=True)
 
 
 @zeph.command(
@@ -191,6 +191,20 @@ async def nickname_command(ctx: commands.Context, *, nick: str):
         return await err.send(ctx, "Insufficient permissions.")
 
 
+@zeph.command(
+    hidden=True, name="embed", usage="z!embed <code...>",
+    help="Returns a message consisting of the encoded embed."
+)
+async def embed_command(ctx: commands.Context, *, code: str):
+    admin_check(ctx)
+
+    ret = eval(code, globals(), {"ctx": ctx})
+    if not isinstance(ret, discord.Embed):
+        raise commands.CommandError("Code does not construct an embed.")
+    else:
+        return await ctx.send(embed=ret)
+
+
 class ChannelLink:  # just a class to keep track of things. it doesn't really do much but look nice
     def __init__(self, fro: discord.TextChannel, to: discord.TextChannel):
         self.fro = fro
@@ -334,11 +348,17 @@ async def sampa(ctx: commands.Context, *, text: str):
 
 @zeph.event
 async def on_ready():
+    try:
+        zeph.load_reminders()
+    except NameError:  # a weird error that seems to happen when the bot is still online when I click run?
+        print("Bot has not fully shut down. Please z!close, and restart.")
+    
     setattr(zeph, "readyTime", datetime.datetime.now())
     print(f"ready at {getattr(zeph, 'readyTime')}")
     zeph.loop.create_task(initialize_planes())
     zeph.loop.create_task(zeph.load_romanization())
     await zeph.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name="you ❤"))
+    zeph.loop.create_task(one_minute_cycle())
 
 
 @zeph.event
@@ -396,10 +416,16 @@ async def on_reaction_remove(reaction: discord.Reaction, user: User):
     zeph.dispatch("button", reaction, user, False)
 
 
-async def regularly_save():
+async def one_minute_cycle():  # unified process for things done once per minute
     while True:
-        await asyncio.sleep(60)
+        # check reminders
+        now = time.time()
+        for rem in zeph.reminders:
+            if rem.time < now:
+                await rem.send()
+                zeph.reminders.remove(rem)
+
+        # save planes, etc data
         zeph.save()
 
-
-zeph.loop.create_task(regularly_save())
+        await asyncio.sleep(60)

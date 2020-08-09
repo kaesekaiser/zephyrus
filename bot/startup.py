@@ -22,9 +22,9 @@ class Zeph(commands.Bot):
     def __init__(self):
         super().__init__(["z!", "go go gadget "], case_insensitive=True)
         del self.all_commands["help"]
-        with open("storage/call_channels.txt", "r") as f:
-            self.phoneNumbers = {int(g.split("|")[0]): int(g.split("|")[1]) for g in f.readlines()}
-            self.callChannels = {int(g.split("|")[1]): int(g.split("|")[2]) for g in f.readlines()}
+        # with open("storage/call_channels.txt", "r") as f:
+        #     self.phoneNumbers = {int(g.split("|")[0]): int(g.split("|")[1]) for g in f.readlines()}
+        #     self.callChannels = {int(g.split("|")[1]): int(g.split("|")[2]) for g in f.readlines()}
         self.planeUsers = {}
         self.epitaphChannels = []
         self.roman = pjs.RomanizationConversion()
@@ -49,6 +49,7 @@ class Zeph(commands.Bot):
             zeph_version += ".0"
         self.version = zeph_version
         self.channelLink = None
+        self.reminders = []
 
     @property
     def emojis(self):
@@ -59,10 +60,12 @@ class Zeph(commands.Bot):
         return {g: str(j) for g, j in self.emojis.items()}
 
     def save(self):
-        with open("storage/call_channels.txt", "w") as f:
-            f.write("\n".join([f"{g}|{j}|{self.callChannels.get(j, '')}" for g, j in self.phoneNumbers.items()]))
+        # with open("storage/call_channels.txt", "w") as f:
+        #     f.write("\n".join([f"{g}|{j}|{self.callChannels.get(j, '')}" for g, j in self.phoneNumbers.items()]))
         with open("storage/planes.txt", "w") as f:
             f.write("\n".join([str(g) for g in self.planeUsers.values()]))
+        with open("storage/reminders.txt", "w") as f:
+            f.write("\n".join(str(g) for g in zeph.reminders))
 
     async def load_romanization(self):
         print("Loading romanizer...")
@@ -74,6 +77,11 @@ class Zeph(commands.Bot):
         self.roman.pinyin_word_map.update(file["py_word"])
         self.roman.process_sentence_jyutping("你好")
         print("Romanizer loaded.")
+
+    def load_reminders(self):
+        with open("storage/reminders.txt", "r") as f:
+            for rem in f.readlines():
+                self.reminders.append(Reminder.from_str(rem))
 
 
 zeph = Zeph()
@@ -130,6 +138,8 @@ def construct_embed(**kwargs):
         ret.url = kwargs.get("url")
     if kwargs.get("image"):
         ret.set_image(url=kwargs.get("image"))
+    if kwargs.get("time", kwargs.get("timestamp")):
+        ret.timestamp = kwargs.get("time", kwargs.get("timestamp"))
     return ret
 
 

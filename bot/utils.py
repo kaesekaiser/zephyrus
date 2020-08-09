@@ -11,9 +11,9 @@ from math import log10, isclose
     usage="z!mock <text...>\nz!mock",
     description="DoEs ThIs To YoUr TeXt.",
     help="DoEs ThIs To YoUr TeXt. If no text is given, mocks the message above you.\n\n"
-         "``guy: I think Zephyrus is bad\nperson: z!mock\nZephyrus: I tHiNk ZePhYrUs Is BaD``\n\n"
-         "You can also use the same message-pointer system that `z!react` uses: pointing to a message by using a "
-         "string of carets, or a message link, as the input text."
+         "`guy: I think Zephyrus is bad\nperson: z!mock\nZephyrus: I tHiNk ZePhYrUs Is BaD`\n\n"
+         "You can also point to a specific message by using a string of carets, or a message link, as the input text. "
+         "`z!mock ^^^` will mock the message three above yours."
 )
 async def mock(ctx: commands.Context, *text):
     def multi_count(s, chars):
@@ -926,7 +926,7 @@ async def get_message_pointer(ctx: commands.Context, pointer: str, fallback=None
 
 
 @zeph.command(
-    name="react", aliases=["r"], usage="z!react [^...] <emote>\nz!react <message link> <emote>",
+    name="react", aliases=["r"], usage="z!react [^...] <emote>\nz!react <message link> <emote>", hidden=True,
     description="Reacts to a message.",
     help="`z!r <emote>` reacts to the message immediately above yours with the input emote. `z!r ^ <emote>` does the "
          "same thing. `z!r ^^ <emote>` reacts to the message *two* above yours; `z!r ^^^ <emote>` reacts to the third, "
@@ -1089,3 +1089,57 @@ async def rolemembers(ctx: commands.Context, *, role_name: str):
                         d="Use the :arrows_clockwise: button to cycle between them.")
 
     return await RMNavigator(sorted(possible_roles, key=lambda c: -len(c.members))).run(ctx)
+
+
+class Reminder:
+    def __init__(self, author_id: int, text: str, timestamp: float):
+        self.author = author_id
+        self.text = text
+        self.time = timestamp
+
+    async def send(self):
+        try:
+            await zeph.get_user(self.author).send(f"**Reminder:** {self.text}")
+        except AttributeError:
+            print(f"A reminder failed to send: {str(self)}")
+
+    def __str__(self):
+        return f"{self.author}|{self.time}|{self.text}"
+
+    @staticmethod
+    def from_str(s: str):
+        return Reminder(int(s.split("|")[0]), "|".join(s.split("|")[2:]), float(s.split("|")[1]))
+
+
+@zeph.command(
+    name="remindme", aliases=["remind", "rme", "rem"], usage="z!remindme <reminder...> in <time...>",
+    description="Reminds you of something later.",
+    help="`z!remindme <reminder> in <time>` sets the bot to DM you with a reminder in a certain amount of time. "
+         "`<reminder>` can be anything. `<time>` can use any combination of integer days, hours, or minutes, "
+         "separated by spaces and in that order.\n\n"
+         "e.g. `z!remindme eat food in 2 hours`, `z!rme work on essay in 5 hours 30 minutes`, or "
+         "`z!remind talk to Sam in 3 days`."
+)
+async def remind_command(ctx: commands.Context, *text: str):
+    # leaving input text as a list, rather than a single string like usual, to make splitting easier
+    if "in" not in text:
+        raise commands.BadArgument
+
+    last_in = [g for g in range(len(text)) if text[g] == "in"][-1]
+    reminder, elapse = " ".join(text[:last_in]), " ".join(text[last_in + 1:])
+    time_regex = r"([0-9]+ days?)?(^|,? |$)(([0-9]+ hours?)?(^|,? |$))?([0-9]+ minutes?)?"
+
+    if not re.fullmatch(time_regex, elapse):
+        raise commands.CommandError("Invalid time. Time argument accepts days, hours, and minutes, in that order.")
+
+    def zero(x): return int(x[0]) if x else 0
+    days = zero(re.search(r"[0-9]+(?= day)", elapse))
+    hours = zero(re.search(r"[0-9]+(?= hour)", elapse))
+    minutes = zero(re.search(r"[0-9]+(?= minute)", elapse))
+
+    timestamp = time.time() + days * 86400 + hours * 3600 + minutes * 60
+
+    reminder = Reminder(ctx.author.id, reminder, timestamp)
+    zeph.reminders.append(reminder)
+
+    return await succ.send(ctx, "Reminder added!")
