@@ -78,11 +78,6 @@ class Zeph(commands.Bot):
         self.roman.process_sentence_jyutping("你好")
         print("Romanizer loaded.")
 
-    def load_reminders(self):
-        with open("storage/reminders.txt", "r") as f:
-            for rem in f.readlines():
-                self.reminders.append(Reminder.from_str(rem))
-
 
 zeph = Zeph()
 

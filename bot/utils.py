@@ -4,6 +4,7 @@ from unicodedata import name as uni_name
 from urllib.error import HTTPError
 import hanziconv
 import pycantonese
+import datetime
 from math import log10, isclose
 
 
@@ -1111,6 +1112,12 @@ class Reminder:
         return Reminder(int(s.split("|")[0]), "|".join(s.split("|")[2:]), float(s.split("|")[1]))
 
 
+def load_reminders():
+    with open("storage/reminders.txt", "r") as f:
+        for rem in f.readlines():
+            zeph.reminders.append(Reminder.from_str(rem.strip("\n")))
+
+
 @zeph.command(
     name="remindme", aliases=["remind", "rme", "rem"], usage="z!remindme <reminder...> in <time...>",
     description="Reminds you of something later.",
@@ -1122,6 +1129,15 @@ class Reminder:
 )
 async def remind_command(ctx: commands.Context, *text: str):
     # leaving input text as a list, rather than a single string like usual, to make splitting easier
+    def concise_td(td: datetime.timedelta):
+        td_minutes = round(td.total_seconds() / 60)  # rounding to account for small variations
+        ds, hs, ms = td_minutes // 1440, td_minutes // 60 % 24, td_minutes % 60
+        return "".join([
+            f"{ds} {plural('day', ds)} " if ds else "",
+            f"{hs} {plural('hour', hs)} " if hs else "",
+            f"{ms} {plural('minute', ms)}" if ms else "",
+        ]).strip()
+
     if "in" not in text:
         raise commands.BadArgument
 
@@ -1139,7 +1155,16 @@ async def remind_command(ctx: commands.Context, *text: str):
 
     timestamp = time.time() + days * 86400 + hours * 3600 + minutes * 60
 
-    reminder = Reminder(ctx.author.id, reminder, timestamp)
-    zeph.reminders.append(reminder)
+    if timestamp > 2147483648:
+        raise commands.CommandError("That's too far out.")
 
-    return await succ.send(ctx, "Reminder added!")
+    reminder = Reminder(ctx.author.id, reminder, timestamp)
+
+    if days + hours + minutes == 0:
+        await reminder.send()
+        return await succ.send(ctx, "Alright, wiseguy, I'll send it right now.")
+
+    zeph.reminders.append(reminder)
+    timedelta = datetime.datetime.fromtimestamp(timestamp) - datetime.datetime.now()
+
+    return await succ.send(ctx, "Reminder added!", d=f"I'll remind you in {concise_td(timedelta)}.")

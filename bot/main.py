@@ -349,10 +349,10 @@ async def sampa(ctx: commands.Context, *, text: str):
 @zeph.event
 async def on_ready():
     try:
-        zeph.load_reminders()
+        load_reminders()
     except NameError:  # a weird error that seems to happen when the bot is still online when I click run?
         print("Bot has not fully shut down. Please z!close, and restart.")
-    
+
     setattr(zeph, "readyTime", datetime.datetime.now())
     print(f"ready at {getattr(zeph, 'readyTime')}")
     zeph.loop.create_task(initialize_planes())
