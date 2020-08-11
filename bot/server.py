@@ -25,6 +25,7 @@ class ServerSettings:
         self.notify_leave_enabled = kwargs.pop("notify_leave", False)
         self.notify_ban_enabled = kwargs.pop("notify_ban", False)
         self.notify_unban_enabled = kwargs.pop("notify_unban", False)
+        self.command_prefixes = kwargs.pop("command_prefixes", ["z!"])
 
     @property
     def notify_join(self):
@@ -53,7 +54,8 @@ class ServerSettings:
             "notify_join": self.notify_join_enabled,
             "notify_leave": self.notify_leave_enabled,
             "notify_ban": self.notify_ban_enabled,
-            "notify_unban": self.notify_unban_enabled
+            "notify_unban": self.notify_unban_enabled,
+            "command_prefixes": self.command_prefixes
         }
 
     @property
@@ -69,9 +71,6 @@ class ServerSettings:
             "Ban Notifications": abled(self.notify_ban_enabled),
             "Unban Notifications": abled(self.notify_unban_enabled)
         }
-
-    def __bool__(self):
-        return bool(self.welcome_channel)
 
     @staticmethod
     def welcome_con(user: User, message: str, col: discord.Color):
@@ -96,6 +95,8 @@ config = Emol(":gear:", hexcol("66757F"))
 
 
 class SConfigInterpreter(Interpreter):
+    redirects = {"prefix": "prefixes"}
+
     @property
     def settings(self):
         return zeph.server_settings[self.ctx.guild.id]
@@ -107,21 +108,29 @@ class SConfigInterpreter(Interpreter):
                        "`z!sc welcome` shows the current settings, as well as all controls.\n\n"
                        "`z!sc welcome channel <channel>` sets the channel for welcome messages.\n\n"
                        "`z!sc welcome enable <join | leave | ban | unban | all>` enables types of notifications.\n\n"
-                       "`z!sc welcome disable <join | leave | ban | unban | all>` disables types of notifications."
+                       "`z!sc welcome disable <join | leave | ban | unban | all>` disables types of notifications.",
+            "prefixes": "Controls for custom command prefixes.\n\n"
+                        "`z!sc prefixes` shows the currently enabled prefixes, and all controls.\n\n"
+                        "`z!sc prefix add <prefix>` adds a new prefix.\n\n"
+                        "`z!sc prefix remove <prefix>` removes a prefix.\n\n"
+                        "`z!sc prefixes reset` removes all custom prefixes and resets to the default, `z!`."
         }
         desc_dict = {
-            "welcome": "Controls for welcome messages."
+            "welcome": "Controls for welcome messages.",
+            "prefixes": "Controls for custom command prefixes."
         }
 
-        if len(args) == 0 or (args[0].lower() not in help_dict):
+        if len(args) == 0 or (args[0].lower() not in help_dict and args[0].lower() not in self.redirects):
             return await config.send(
                 self.ctx, "z!sconfig help",
                 d="Available functions:\n\n" + "\n".join(f"`{g}` - {j}" for g, j in desc_dict.items()) +
-                "\n\nFor information on how to use these, use ``z!sconfig help <function>``.\n"
+                "\n\nFor information on how to use these, use `z!sconfig help <function>`.\n"
                 "(more functions will be added in the future!)"
             )
 
-        return await config.send(self.ctx, f"z!planes {args[0].lower()}", d=help_dict[args[0].lower()])
+        ret = self.redirects.get(args[0].lower(), args[0].lower())
+
+        return await config.send(self.ctx, f"z!sconfig {ret}", d=help_dict[ret])
 
     async def _welcome(self, *args: str):
         assert isinstance(self.settings, ServerSettings)
@@ -158,7 +167,7 @@ class SConfigInterpreter(Interpreter):
 
         elif args[0].lower() == "enable":
             if len(args) == 1:
-                raise commands.CommandError("Format: `z!sconfig welcome enable <type>")
+                raise commands.CommandError("Format: `z!sconfig welcome enable <type>`")
 
             warning = None if self.settings.welcome_channel else \
                 "Notifications will not be sent until the welcome channel is set. " \
@@ -196,7 +205,7 @@ class SConfigInterpreter(Interpreter):
 
         elif args[0].lower() == "disable":
             if len(args) == 1:
-                raise commands.CommandError("Format: `z!sconfig welcome disable <type>")
+                raise commands.CommandError("Format: `z!sconfig welcome disable <type>`")
 
             if args[1].lower() == "all":
                 self.settings.notify_join_enabled = False
@@ -230,6 +239,91 @@ class SConfigInterpreter(Interpreter):
 
         else:
             raise commands.CommandError(f"Invalid argument `{args[0]}`.")
+
+    async def _prefixes(self, *args: str):
+        if not args:
+            return await config.send(
+                self.ctx, "Custom Command Prefixes",
+                d="To add a prefix:\n`z!sconfig prefix add \"<prefix>\"`\n"
+                  "To remove a prefix:\n`z!sconfig prefix remove \"<prefix>\"`\n"
+                  "To reset to only the default prefix, `z!`:\n`z!sconfig prefixes reset`\n\n"
+                  "Please enclose the **entire prefix** in \"double quotes\" when adding or removing, especially if "
+                  "the prefix includes a trailing space.",
+                fs={"Current Prefixes": "\n".join(f"[`{g}`] - e.g. `{g}help`" for g in self.settings.command_prefixes)}
+            )
+
+        if args[0].lower() == "add":
+            if len(args) == 1:
+                raise commands.CommandError("Format: `z!sconfig prefix add \"<prefix>\"`")
+
+            if len(args) > 2:
+                raise commands.CommandError("Please enclose the entire prefix in \"double quotes\".")
+
+            prefix = args[1]
+            warning = f"This will look like: **`{prefix}help`** or **`{prefix}sconfig prefixes reset`**.\n"
+
+            if re.match(r"\s", prefix):
+                # discord removes leading whitespaces, so a prefix that starts with a space would be unusable
+                raise commands.CommandError("Prefixes cannot begin with a whitespace.")
+
+            if prefix in self.settings.command_prefixes:
+                raise commands.CommandError("That prefix is already enabled.")
+
+            for existing_prefix in self.settings.command_prefixes:
+                if prefix in existing_prefix and existing_prefix.index(prefix) == 0:
+                    warning += f"\n:rotating_light: **WARNING:** This will **overwrite and remove** the existing " \
+                        f"prefix `{existing_prefix}`, which contains `{prefix}`.\n"
+
+            if await confirm(f"Add the prefix `{prefix}`?", self.ctx, self.ctx.author, add_info=warning+"\n"):
+                extra_info = ""
+                for existing_prefix in self.settings.command_prefixes:
+                    if prefix in existing_prefix and existing_prefix.index(prefix) == 0:
+                        self.settings.command_prefixes.remove(existing_prefix)
+                        extra_info += f"Prefix `{existing_prefix}` removed.\n"
+
+                self.settings.command_prefixes.append(prefix)
+                return await succ.send(self.ctx, f"Prefix `{prefix}` added.", d=extra_info)
+
+            else:
+                return await config.send(self.ctx, "Prefixes were not changed.")
+
+        elif args[0].lower() == "remove":
+            if len(args) == 1:
+                raise commands.CommandError("Format: `z!sconfig prefix remove \"<prefix>\"`")
+
+            if len(args) > 2:
+                raise commands.CommandError("Please enclose the entire prefix in \"double quotes\".")
+
+            prefix = args[1]
+
+            if prefix not in self.settings.command_prefixes:
+                raise commands.CommandError(f"Prefix `{prefix}` not found.")
+
+            if len(self.settings.command_prefixes) == 1:
+                raise commands.CommandError("You can't remove the only enabled command prefix.")
+
+            if await confirm(f"Remove the prefix `{prefix}`?", self.ctx, self.ctx.author):
+                self.settings.command_prefixes.remove(prefix)
+                return await succ.send(self.ctx, "Prefix removed.")
+
+            else:
+                return await config.send(self.ctx, "Prefixes were not changed.")
+
+        elif args[0].lower() == "reset":
+            warning = f"This will remove all custom prefixes" \
+                f"{', leaving only' if 'z!' in self.settings.command_prefixes else ' and re-enable'} " \
+                f"the default prefix `z!`."
+
+            if await confirm("Reset custom prefixes?", self.ctx, self.ctx.author, add_info=warning):
+                self.settings.command_prefixes.clear()
+                self.settings.command_prefixes.append("z!")
+                return await succ.send(self.ctx, "Prefixes reset.")
+
+            else:
+                return await config.send(self.ctx, "Prefixes were not changed.")
+
+        else:
+            raise commands.command(f"Invalid argument `{args[0]}`.")
 
 
 @zeph.command(

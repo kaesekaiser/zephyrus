@@ -20,8 +20,7 @@ Flint = Union[float, int]
 
 class Zeph(commands.Bot):
     def __init__(self):
-        super().__init__(["z!", "go go gadget "], case_insensitive=True)
-        del self.all_commands["help"]
+        super().__init__(get_command_prefix, case_insensitive=True, help_command=None)
         # with open("storage/call_channels.txt", "r") as f:
         #     self.phoneNumbers = {int(g.split("|")[0]): int(g.split("|")[1]) for g in f.readlines()}
         #     self.callChannels = {int(g.split("|")[1]): int(g.split("|")[2]) for g in f.readlines()}
@@ -80,6 +79,12 @@ class Zeph(commands.Bot):
         self.roman.pinyin_word_map.update(file["py_word"])
         self.roman.process_sentence_jyutping("你好")
         print("Romanizer loaded.")
+
+
+def get_command_prefix(bot: Zeph, message: discord.Message):
+    if not bot.server_settings.get(message.guild.id):
+        return "z!"
+    return bot.server_settings.get(message.guild.id).command_prefixes
 
 
 zeph = Zeph()
