@@ -41,7 +41,7 @@ async def mock(ctx: commands.Context, *text):
 
 
 @zeph.command(
-    usage="z!expand <text...>",
+    usage="z!expand <text...>", hidden=True,
     help="D o e s \u00a0 t h i s \u00a0 t o \u00a0 y o u r \u00a0 t e x t ."
 )
 async def expand(ctx: commands.Context, *, text):
@@ -1113,6 +1113,7 @@ class Reminder:
 
 
 def load_reminders():
+    zeph.reminders.clear()
     with open("storage/reminders.txt", "r") as f:
         for rem in f.readlines():
             zeph.reminders.append(Reminder.from_str(rem.strip("\n")))

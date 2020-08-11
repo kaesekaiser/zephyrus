@@ -1,4 +1,4 @@
-from planes import *
+from server import *
 from sys import version_info
 
 
@@ -352,6 +352,7 @@ async def on_ready():
         load_reminders()
     except NameError:  # a weird error that seems to happen when the bot is still online when I click run?
         print("Bot has not fully shut down. Please z!close, and restart.")
+    load_server_settings()
 
     setattr(zeph, "readyTime", datetime.datetime.now())
     print(f"ready at {getattr(zeph, 'readyTime')}")
@@ -414,6 +415,36 @@ async def on_reaction_add(reaction: discord.Reaction, user: User):
 @zeph.event
 async def on_reaction_remove(reaction: discord.Reaction, user: User):
     zeph.dispatch("button", reaction, user, False)
+
+
+@zeph.event
+async def on_member_join(member: discord.Member):
+    if zeph.server_settings[member.guild.id].notify_join:
+        await zeph.server_settings[member.guild.id].send_join(member)
+
+
+@zeph.event
+async def on_member_remove(member: discord.Member):
+    if zeph.server_settings[member.guild.id].notify_leave:
+        await zeph.server_settings[member.guild.id].send_leave(member)
+
+
+@zeph.event
+async def on_member_ban(guild: discord.Guild, user: User):
+    if zeph.server_settings[guild.id].notify_ban:
+        await zeph.server_settings[guild.id].send_ban(user)
+
+
+@zeph.event
+async def on_member_unban(guild: discord.Guild, user: discord.User):
+    if zeph.server_settings[guild.id].notify_unban:
+        await zeph.server_settings[guild.id].send_unban(user)
+
+
+@zeph.event
+async def on_guild_join(guild: discord.Guild):
+    if not zeph.server_settings.get(guild.id):
+        zeph.server_settings[guild.id] = ServerSettings()
 
 
 async def one_minute_cycle():  # unified process for things done once per minute

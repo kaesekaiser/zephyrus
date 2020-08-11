@@ -50,6 +50,7 @@ class Zeph(commands.Bot):
         self.version = zeph_version
         self.channelLink = None
         self.reminders = []
+        self.server_settings = {}
 
     @property
     def emojis(self):
@@ -65,7 +66,9 @@ class Zeph(commands.Bot):
         with open("storage/planes.txt", "w") as f:
             f.write("\n".join([str(g) for g in self.planeUsers.values()]))
         with open("storage/reminders.txt", "w") as f:
-            f.write("\n".join(str(g) for g in zeph.reminders))
+            f.write("\n".join(str(g) for g in self.reminders))
+        with open("storage/server_settings.json", "w") as f:
+            json.dump({g: j.minimal_json for g, j in self.server_settings.items()}, f, indent=4)
 
     async def load_romanization(self):
         print("Loading romanizer...")
