@@ -262,6 +262,9 @@ class SConfigInterpreter(Interpreter):
             prefix = args[1]
             warning = f"This will look like: **`{prefix}help`** or **`{prefix}sconfig prefixes reset`**.\n"
 
+            if not prefix:
+                raise commands.CommandError("Cannot have an empty prefix.")
+
             if re.match(r"\s", prefix):
                 # discord removes leading whitespaces, so a prefix that starts with a space would be unusable
                 raise commands.CommandError("Prefixes cannot begin with a whitespace.")
