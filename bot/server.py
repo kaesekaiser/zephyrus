@@ -25,6 +25,7 @@ class ServerSettings:
         self.notify_leave_enabled = kwargs.pop("notify_leave", False)
         self.notify_ban_enabled = kwargs.pop("notify_ban", False)
         self.notify_unban_enabled = kwargs.pop("notify_unban", False)
+        self.welcome_message = kwargs.pop("welcome_message", None)
         self.command_prefixes = kwargs.pop("command_prefixes", ["z!"])
 
     @property
@@ -55,6 +56,7 @@ class ServerSettings:
             "notify_leave": self.notify_leave_enabled,
             "notify_ban": self.notify_ban_enabled,
             "notify_unban": self.notify_unban_enabled,
+            "welcome_message": self.welcome_message,
             "command_prefixes": self.command_prefixes
         }
 
@@ -72,14 +74,20 @@ class ServerSettings:
             "Unban Notifications": abled(self.notify_unban_enabled)
         }
 
-    @staticmethod
-    def welcome_con(user: User, message: str, col: discord.Color):
+    def formatted_welcome(self, user: User):
+        if not self.welcome_message:
+            return None
+        else:
+            return self.welcome_message.format(name=user.name)
+
+    def welcome_con(self, user: User, message: str, col: discord.Color, include_welcome: bool = False):
         return construct_embed(
-            title=f"**{user.name}** {message}", author=author_from_user(user), footer=f"ID: {user.id}", col=col
+            title=f"**{user.name}** {message}", d=self.formatted_welcome(user) if include_welcome else None,
+            author=author_from_user(user), footer=f"ID: {user.id}", col=col
         )
 
-    async def send_join(self, member: discord.Member):
-        await self.welcome_channel.send(embed=self.welcome_con(member, "joined the server!", hexcol("22dd22")))
+    async def send_join(self, member: discord.Member):  # if this is changed, update the example in sc welcome message
+        await self.welcome_channel.send(embed=self.welcome_con(member, "joined the server!", hexcol("22dd22"), True))
 
     async def send_leave(self, member: discord.Member):
         await self.welcome_channel.send(embed=self.welcome_con(member, "left the server.", hexcol("ff8800")))
@@ -95,7 +103,7 @@ config = Emol(":gear:", hexcol("66757F"))
 
 
 class SConfigInterpreter(Interpreter):
-    redirects = {"prefix": "prefixes"}
+    redirects = {"prefix": "prefixes", "h": "help", "w": "welcome", "p": "prefixes"}
 
     @property
     def settings(self):
@@ -105,12 +113,15 @@ class SConfigInterpreter(Interpreter):
         help_dict = {
             "welcome": "Controls for welcome messages - notifications for when a user joins, leaves, is banned, or "
                        "is unbanned.\n\n"
-                       "`z!sc welcome` shows the current settings, as well as all controls.\n\n"
+                       "**`z!sc welcome`** shows the current settings, as well as all controls.\n\n"
                        "`z!sc welcome channel <channel>` sets the channel for welcome messages.\n\n"
                        "`z!sc welcome enable <join | leave | ban | unban | all>` enables types of notifications.\n\n"
-                       "`z!sc welcome disable <join | leave | ban | unban | all>` disables types of notifications.",
+                       "`z!sc welcome disable <join | leave | ban | unban | all>` disables types of notifications.\n\n"
+                       "**`z!sc welcome message`** shows the current custom welcome message, and all controls.\n\n"
+                       "`z!sc welcome message set <message...>` sets a new custom welcome message.\n\n"
+                       "`z!sc welcome message remove` removes the current welcome message.",
             "prefixes": "Controls for custom command prefixes.\n\n"
-                        "`z!sc prefixes` shows the currently enabled prefixes, and all controls.\n\n"
+                        "**`z!sc prefixes`** shows the currently enabled prefixes, and all controls.\n\n"
                         "`z!sc prefix add <prefix>` adds a new prefix.\n\n"
                         "`z!sc prefix remove <prefix>` removes a prefix.\n\n"
                         "`z!sc prefixes reset` removes all custom prefixes and resets to the default, `z!`."
@@ -138,8 +149,9 @@ class SConfigInterpreter(Interpreter):
             return await config.send(
                 self.ctx, "Welcome Message Options",
                 d="To enable/disable specific types of notifications:\n`z!sconfig welcome enable/disable <x>`\n"
-                  "To enable/disable all messages at once:\n`z!sconfig welcome enable/disable all`\n"
-                  "To change the channel in which notifications are sent:\n`z!sconfig welcome channel <channel>`" +
+                  "To enable/disable all notifications at once:\n`z!sconfig welcome enable/disable all`\n"
+                  "To change the channel in which notifications are sent:\n`z!sconfig welcome channel <channel>`\n"
+                  "To view custom welcome message settings:\n`z!sconfig welcome message`" +
                   ("\n\n**No notifications will be sent until the welcome channel is set.**"
                    if not self.settings.welcome_channel else ""),
                 fs=self.settings.welcome_fields,
@@ -233,6 +245,50 @@ class SConfigInterpreter(Interpreter):
                     self.settings.notify_unban_enabled = False
 
                 return await succ.send(self.ctx, f"{args[1].title()} notifications **disabled**.")
+
+            else:
+                raise commands.CommandError(f"Invalid argument `{args[1]}`.")
+
+        elif args[0].lower() == "message":
+            if len(args) == 1:
+                return await config.send(
+                    self.ctx, "Welcome Message Settings",
+                    d="The welcome message is an optional custom text that will be displayed alongside the "
+                    "notification for a new member joining the server.\n\n"
+                    "To set a new welcome message:\n`z!sconfig welcome message set <message...>`\n"
+                    "To remove the welcome message:\n`z!sconfig welcome message remove`\n\n"
+                    "When writing a welcome message, you can include the string **`{name}`**, and it will be replaced "
+                    "with the user's name - `z!sc welcome message set Welcome, {name}!` will become \"Welcome, Fort!\"",
+                    fs={"Current Welcome Message": self.settings.welcome_message}
+                )
+
+            if args[1].lower() == "set":
+                message = " ".join(args[2:])
+
+                if not message:
+                    raise commands.CommandError("Cannot have an empty welcome message.")
+
+                if len(message) > 1024:
+                    raise commands.CommandError("The welcome message can't be more than 1024 characters long.")
+
+                if await confirm(
+                    "Set the welcome message?", self.ctx, self.ctx.author,
+                    add_info="This will look like:\n\n" + message.format(name=self.ctx.author.name) + "\n\n"
+                ):
+                    self.settings.welcome_message = message
+                    return await succ.send(self.ctx, "Welcome message set.")
+                else:
+                    return await config.send(self.ctx, "Welcome message settings were not changed.")
+
+            elif args[1].lower() == "remove":
+                if await confirm(
+                    "Remove the welcome message?", self.ctx, self.ctx.author,
+                    add_info="This will **not** disable the join notification; it will just reset it to the default."
+                ):
+                    self.settings.welcome_message = None
+                    return await succ.send(self.ctx, "Welcome message removed.")
+                else:
+                    return await config.send(self.ctx, "Welcome message settings were not changed.")
 
             else:
                 raise commands.CommandError(f"Invalid argument `{args[1]}`.")
