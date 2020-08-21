@@ -520,14 +520,32 @@ async def badtranslate(ctx: commands.Context, *, text: str):
 """
 
 
+def find_user(ctx: commands.Context, s: str):
+    def score(txt: str):
+        if s.lower() == txt.lower():  # search identical to name
+            return 0  # result = 0
+        if s.lower() in txt.lower():  # name contains string, prioritizing shorter names + names that start with string
+            return 0 + (len(txt) - len(s)) / 32 + (txt.lower().index(s.lower()) != 0)  # 0 < result < 2
+        # sort remainder by longest common subsequence, shorter names first
+        return 32 - wr.lcs(s.lower(), txt.lower()) + len(txt) / 32 + 2  # result > 2
+
+    return sorted(ctx.guild.members, key=lambda c: min(score(c.name), score(c.display_name)))[0]
+
+
 @zeph.command(
     usage="z!avatar [@user]",
     description="Returns a link to a user's avatar.",
     help="Returns a link to a user's avatar. If `[@user]` is left blank, links your avatar."
 )
-async def avatar(ctx: commands.Context, user: str = None):
+async def avatar(ctx: commands.Context, *, user: str = None):
     if not user:
         user = ctx.author
+    else:
+        try:
+            user = await commands.UserConverter().convert(ctx, user)
+        except commands.BadArgument:
+            user = find_user(ctx, user)
+
     av_url = str(user.avatar_url_as(format="png"))
     return await ctx.send(
         embed=construct_embed(author=author_from_user(user, name=f"{user.display_name}'s Avatar", url=av_url),

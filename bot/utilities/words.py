@@ -76,94 +76,20 @@ def match_position(iter1: iter, iter2: iter):
     return max(ret)
 
 
-def find_name(s: str, names: list):
-    s = s.casefold()
-    tests = [
-        lambda p: s == p,
-        lambda p: s in p and p.index(s) == 0,
-        lambda p: s in p,
-    ]
-    for test in tests:
-        if [g for g in names if test(g.casefold())]:
-            return sorted([g for g in names if test(g.casefold())])[0]
-    else:
-        # return sorted(names, key=lambda p: match_position(s, p.casefold()), reverse=True)[0]
-        return sorted(names, key=lambda p: levenshtein(s, p.casefold(), 0, 2, 1))
+def lcs(s1, s2):
+    # taken from a website. i dont know how to code
+    m = len(s1)
+    n = len(s2)
 
+    ret = [[0] * (n + 1) for g in range(m + 1)]
 
-if __name__ == "__main__":
-    listOfNames = """Karch#2675
-Snake#0000
-litten8#2372
-rantonels#8376
-melop#3400
-nana#6497
-pebble#9519
-Baloung#9887
-Breadcrumbs#1207
-Brunch#9226
-janKala#8374
-pecan#1321
-ಠಠ 乃モれム工れ丹ㄥ刀 ಠರೃ#2659
-creepyeyes#5370
-Salgado#1575
-Fargie#6711
-bbbourq#4561
-Nake#0615
-Dandvadan#8083
-DzêtaRedfang#9616
-Lily#6359
-Anaïs#3185
-jan Kola#1217
-barbecube#4760
-EineKatze#3828
-Kelema#9301
-Petitioner#6230
-rubberized#8170
-xithi#0996
-BᶦˢᵐᵘᵗʰBᵒʳᵉᵃᶫᶦˢ#4319
-echethesi#8274
-salp#2753
-Ryώko#5626
-eeeeeee#6757
-Tyrdrasil#3126
-m0ssb3rg 935#9713
-Ramu#0148
-Nudl#9532
-pantumbra#1040
-upallday_allen#2196
-Luke#8356
-Tymewalk#7073
-need new name cant decide what#9946
-Kitulous#3691
-Theplayer78#4172
-Taraiph#4438
-miles#5030
-Acrux#7807
-Gufferdk#7786
-Maikasavaila#2305
-Keyvine#4275
-red herring#5078
-Sascha Baer#6416
-Fia#2143
-portland#3305
-MADMac#1816
-Klaus#0247
-felipesnark#7259
-Planita#3079
-Ceneij#7448
-kaesekaiser#2178
-merc#3589
-Swamp Dragon#7615
-Zeuêp#4773
-Redark#5163
-Kurt Gyrozen#1572
-tryddle#9377
-Janos13#5234
-digigon#6256
-Ghalt#7469
-kozet#8409"""
-    listOfNames = [g[:-5].strip() for g in listOfNames.splitlines()]
-    while True:
-        putin = input("name test: ").lower()
-        print(find_name(putin, listOfNames))
+    for i in range(m + 1):
+        for j in range(n + 1):
+            if i == 0 or j == 0:
+                ret[i][j] = 0
+            elif s1[i - 1] == s2[j - 1]:
+                ret[i][j] = ret[i - 1][j - 1] + 1
+            else:
+                ret[i][j] = max(ret[i - 1][j], ret[i][j - 1])
+
+    return ret[m][n]
