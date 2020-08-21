@@ -11,6 +11,7 @@ from utilities.words import levenshtein
 from math import ceil, atan2, sqrt, pi
 from random import choice
 from pyquery import PyQuery
+from functools import partial
 
 
 User = Union[discord.Member, discord.User]
@@ -50,6 +51,7 @@ class Zeph(commands.Bot):
         self.channelLink = None
         self.reminders = []
         self.server_settings = {}
+        self.nativities = []
 
     @property
     def emojis(self):
@@ -322,6 +324,13 @@ class Navigator:
     async def close(self):
         await self.message.delete()
 
+    async def remove_buttons(self):
+        for button in self.legal.__reversed__():
+            try:
+                await self.message.remove_reaction(button, self.message.author)
+            except discord.errors.HTTPException:
+                pass
+
     async def run(self, ctx: commands.Context, on_new_message: bool = True):  # SHOULD NEVER BE OVERWRITTEN
         if on_new_message:
             self.message = await ctx.channel.send(embed=self.con)
@@ -341,15 +350,10 @@ class Navigator:
             except asyncio.TimeoutError:
                 if self.close_on_timeout:
                     return await self.close()
-                for button in self.legal.__reversed__():
-                    try:
-                        await self.message.remove_reaction(button, self.message.author)
-                    except discord.errors.HTTPException:
-                        pass
-                return
+                return await self.remove_buttons()
 
             if emoji in self.funcs:
-                if asyncio.iscoroutinefunction(self.funcs[emoji]):
+                if should_await(self.funcs[emoji]):
                     await self.funcs[emoji]()
                 else:
                     self.funcs[emoji]()
@@ -387,6 +391,27 @@ class FieldNavigator(Navigator):
             d=self.prefix,
             fs=page_dict(self.table, self.per, self.page), **self.kwargs
         )
+
+
+class Nativity:
+    """Short for "Navigator activity". Blocks the use of specified commands while a text-based menu is active,
+    to prevent multiple such menus from being opened simultaneously."""
+    def __init__(self, ctx: commands.Context, *commands_to_block: str, **kwargs):
+        self.ctx = ctx
+        self.commands = commands_to_block
+        self.block_all = kwargs.pop("block_all", False)
+        self.warning = kwargs.pop(
+            "warning_text", f"{'C' if self.block_all else 'Some c'}ommands are blocked while this menu is active."
+        )
+
+    def __eq__(self, other):
+        return isinstance(other, Nativity) and self.ctx == other.ctx
+
+    def match(self, ctx: commands.Context):
+        return ctx.author == self.ctx.author and ctx.channel == self.ctx.channel and self.block(ctx.command)
+
+    def block(self, cmd: commands.Command):
+        return self.block_all or (cmd.name in self.commands)
 
 
 class Interpreter:
@@ -459,6 +484,13 @@ def yesno(b: bool):
 
 def name_focus(user: User):
     return f"**{user.name}**#{user.discriminator}"
+
+
+def should_await(func: callable):
+    if isinstance(func, partial):
+        return asyncio.iscoroutinefunction(func.func)
+    else:
+        return asyncio.iscoroutinefunction(func)
 
 
 blue = hexcol("5177ca")  # color that many commands use

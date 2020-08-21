@@ -41,7 +41,7 @@ async def help_command(ctx: commands.Context, comm: str = None):
     help="Spits out the invite link for Zephyrus, so you can bring it to other servers."
 )
 async def invite(ctx: commands.Context):
-    return await ctx.send(content='https://discordapp.com/oauth2/authorize?client_id={}&scope=bot&permissions=8192'
+    return await ctx.send(content='https://discordapp.com/oauth2/authorize?client_id={}&scope=bot&permissions=268705856'
                           .format(zeph.user.id))
 
 
@@ -445,6 +445,15 @@ async def on_member_unban(guild: discord.Guild, user: discord.User):
 async def on_guild_join(guild: discord.Guild):
     if not zeph.server_settings.get(guild.id):
         zeph.server_settings[guild.id] = ServerSettings()
+
+
+@zeph.check
+def is_nativity_blocked(ctx: commands.Context):
+    for nativity in zeph.nativities:
+        if nativity.match(ctx):
+            raise commands.CommandError(nativity.warning)
+    else:
+        return True
 
 
 async def one_minute_cycle():  # unified process for things done once per minute

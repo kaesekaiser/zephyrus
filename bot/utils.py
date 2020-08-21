@@ -525,17 +525,17 @@ async def badtranslate(ctx: commands.Context, *, text: str):
     description="Returns a link to a user's avatar.",
     help="Returns a link to a user's avatar. If `[@user]` is left blank, links your avatar."
 )
-async def avatar(ctx: commands.Context, user: User = None):
+async def avatar(ctx: commands.Context, user: str = None):
     if not user:
         user = ctx.author
-    av_url = str(user.avatar_url).replace(".webp", ".png")
+    av_url = str(user.avatar_url_as(format="png"))
     return await ctx.send(
         embed=construct_embed(author=author_from_user(user, name=f"{user.display_name}'s Avatar", url=av_url),
                               color=user.colour, image=av_url)
     )
 
 
-@zeph.command(
+"""@zeph.command(
     aliases=["rune"], usage="z!runes <runic text...>",
     help="Transcribes [medieval Nordic runes](https://en.wikipedia.org/wiki/Medieval_runes) into Latin letters."
 )
@@ -544,7 +544,7 @@ async def runes(ctx: commands.Context, *, s: str):
            "ᛚ": "l", "ᛘ": "m", "ᚿ": "n", "ᚮ": "o", "ᛔ": "p", "ᛕ": "p", "ᛩ": "q", "ᚱ": "r", "ᛌ": "s", "ᛋ": "s", "ᛐ": "t",
            "ᚢ": "u", "ᚡ": "v", "ᚥ": "w", "ᛪ": "x", "ᛦ": "y", "ᛎ": "z", "ᚦ": "þ", "ᛅ": "æ", "ᚯ": "ø"}
 
-    return await ClientEmol(":flag_is:", hexcol("38009e"), ctx).say("".join([dic.get(g, g) for g in s]))
+    return await ClientEmol(":flag_is:", hexcol("38009e"), ctx).say("".join([dic.get(g, g) for g in s]))"""
 
 
 emojiCountries = {  # :flag_():
@@ -1106,6 +1106,9 @@ class Reminder:
 
     def __str__(self):
         return f"{self.author}|{self.time}|{self.text}"
+
+    def __eq__(self, other):
+        return str(self) == str(other) and isinstance(other, Reminder)
 
     @staticmethod
     def from_str(s: str):

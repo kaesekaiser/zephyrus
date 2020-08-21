@@ -5,6 +5,115 @@ def abled(b: bool):
     return "Enabled" if b else "Disabled"
 
 
+def checked(b: bool):
+    return zeph.emojis["checked"] if b else zeph.emojis["unchecked"]
+
+
+def sorted_assignable_roles(guild: discord.Guild, filter_selfroles: bool = False):
+    if filter_selfroles:
+        return [g for g in sorted_assignable_roles(guild) if g.id in zeph.server_settings[guild.id].selfroles]
+    return sorted([g for g in guild.roles[1:] if (not g.managed) and g < guild.me.top_role], reverse=True)
+
+
+class SelfRoleNavigator(Navigator):
+    def __init__(self, roles: list, ctx: commands.Context, mode: str = "view"):
+        """mode can be "edit", "assign", or "view". the mode edits the list of selfroles, assigns roles to the user,
+        or just browses the list, respectively."""
+        super().__init__(config, roles, 8, "Selfroles List", close_on_timeout=True)
+        self.mode = mode
+
+        if self.mode == "edit":
+            self.title = "Editing Selfroles"
+            self.prefix = f"To set or remove a role as self-assignable, just say the number. " \
+                f"{zeph.emojis['checked']} indicates which roles are currently set as self-assignable. " \
+                f"Hit {zeph.emojis['no']} when you're done.\n\n"
+        elif self.mode == "assign":
+            self.title = "Self-Assignable Roles"
+            self.prefix = f"To assign or remove a role from yourself, just say the number. " \
+                f"{zeph.emojis['checked']} indicates which roles you currently have. " \
+                f"Hit {zeph.emojis['no']} when you're done.\n\n"
+        else:
+            self.title = "Self-Assignable Roles"
+
+        self.ctx = ctx
+        self.user = ctx.author
+        self.nativity = Nativity(ctx, block_all=True)
+        if self.mode != "view":
+            zeph.nativities.append(self.nativity)
+        self.funcs[zeph.emojis["no"]] = self.close
+        for g in range(8):
+            self.funcs[str(g + 1)] = partial(self.toggle_role, g)
+
+    @property
+    def legal(self):  # overwriting this so it doesn't try to add all the numbers as reactions, delaying startup
+        return [self.prev, self.next, zeph.emojis["no"]]
+
+    async def toggle_role(self, n: int):
+        role = self.roles_table[n]
+
+        if self.mode == "edit":
+            if self.check(role):
+                zeph.server_settings[self.ctx.guild.id].selfroles.remove(role.id)
+            else:
+                zeph.server_settings[self.ctx.guild.id].selfroles.append(role.id)
+
+        elif self.mode == "assign":
+            try:
+                if self.check(role):
+                    await self.user.remove_roles(role, reason="removed via z!selfrole")
+                else:
+                    await self.user.add_roles(role, reason="added via z!selfrole")
+                await asyncio.sleep(0.25)  # to make sure the roles get updated before the menu does
+            except discord.Forbidden:  # this shouldn't happen ideally
+                raise commands.CommandError("Something went wrong. I can't edit that role.")
+
+    def check(self, role: discord.Role):
+        if self.mode == "edit":
+            return role.id in zeph.server_settings[self.ctx.guild.id].selfroles
+        elif self.mode == "assign":
+            return role in self.user.roles
+        else:
+            return False
+
+    @property
+    def roles_table(self):
+        return page_list(self.table, self.per, self.page)
+
+    @property
+    def mentions_table(self):
+        return "\n".join(
+            f"**`{n}.`** {checked(self.check(g))} {g.mention}" if self.mode in ["edit", "assign"] else f"- {g.mention}"
+            for n, g in enumerate(self.roles_table, 1)
+        )
+
+    @property
+    def con(self):
+        return self.emol.con(f"{self.title} [{self.page}/{self.pgs}]", d=self.prefix + self.mentions_table)
+
+    async def close(self):
+        zeph.nativities.remove(self.nativity)
+        await self.emol.edit(self.message, "This menu has closed.")
+        await self.remove_buttons()
+
+    async def get_emoji(self, ctx: commands.Context):
+        def pred(mr: MR, u: User):
+            if isinstance(mr, discord.Message):
+                return can_int(mr.content) and int(mr.content) - 1 in range(len(self.roles_table)) and \
+                    u == ctx.author and mr.channel == ctx.channel
+            else:
+                return u == ctx.author and mr.emoji in self.legal and mr.message.id == self.message.id
+
+        mess = (await zeph.wait_for(
+            'reaction_or_message', timeout=300, check=pred
+        ))[0]
+
+        if isinstance(mess, discord.Message):
+            await mess.delete()
+            return mess.content
+        else:
+            return mess.emoji
+
+
 def load_server_settings():
     zeph.server_settings.clear()
     with open("storage/server_settings.json", "r") as f:
@@ -26,7 +135,11 @@ class ServerSettings:
         self.notify_ban_enabled = kwargs.pop("notify_ban", False)
         self.notify_unban_enabled = kwargs.pop("notify_unban", False)
         self.welcome_message = kwargs.pop("welcome_message", None)
+
         self.command_prefixes = kwargs.pop("command_prefixes", ["z!"])
+
+        self.autoroles = kwargs.pop("autoroles", [])
+        self.selfroles = kwargs.pop("selfroles", [])
 
     @property
     def notify_join(self):
@@ -57,7 +170,8 @@ class ServerSettings:
             "notify_ban": self.notify_ban_enabled,
             "notify_unban": self.notify_unban_enabled,
             "welcome_message": self.welcome_message,
-            "command_prefixes": self.command_prefixes
+            "command_prefixes": self.command_prefixes,
+            "selfroles": self.selfroles
         }
 
     @property
@@ -103,7 +217,9 @@ config = Emol(":gear:", hexcol("66757F"))
 
 
 class SConfigInterpreter(Interpreter):
-    redirects = {"prefix": "prefixes", "h": "help", "w": "welcome", "p": "prefixes"}
+    redirects = {
+        "prefix": "prefixes", "h": "help", "w": "welcome", "p": "prefixes", "selfrole": "selfroles", "sr": "selfroles"
+    }
 
     @property
     def settings(self):
@@ -124,11 +240,16 @@ class SConfigInterpreter(Interpreter):
                         "**`z!sc prefixes`** shows the currently enabled prefixes, and all controls.\n\n"
                         "`z!sc prefix add <prefix>` adds a new prefix.\n\n"
                         "`z!sc prefix remove <prefix>` removes a prefix.\n\n"
-                        "`z!sc prefixes reset` removes all custom prefixes and resets to the default, `z!`."
+                        "`z!sc prefixes reset` removes all custom prefixes and resets to the default, `z!`.",
+            "selfroles": "Controls for self-assignable roles.\n\n"
+                         "**`z!sc selfroles`** shows detailed selfrole information, as well as all controls.\n\n"
+                         "`z!sc selfroles edit` allows you to set and un-set specific roles as self-assignable.\n\n"
+                         "`z!sc selfroles clear` turns off all selfroles."
         }
         desc_dict = {
             "welcome": "Controls for welcome messages.",
-            "prefixes": "Controls for custom command prefixes."
+            "prefixes": "Controls for custom command prefixes.",
+            "selfroles": "Controls for self-assignable roles."
         }
 
         if len(args) == 0 or (args[0].lower() not in help_dict and args[0].lower() not in self.redirects):
@@ -272,8 +393,8 @@ class SConfigInterpreter(Interpreter):
                     raise commands.CommandError("The welcome message can't be more than 1024 characters long.")
 
                 if await confirm(
-                    "Set the welcome message?", self.ctx, self.ctx.author,
-                    add_info="This will look like:\n\n" + message.format(name=self.ctx.author.name) + "\n\n"
+                    "Set the welcome message?", self.ctx, self.au,
+                    add_info="This will look like:\n\n" + message.format(name=self.au.name) + "\n\n"
                 ):
                     self.settings.welcome_message = message
                     return await succ.send(self.ctx, "Welcome message set.")
@@ -282,7 +403,7 @@ class SConfigInterpreter(Interpreter):
 
             elif args[1].lower() == "remove":
                 if await confirm(
-                    "Remove the welcome message?", self.ctx, self.ctx.author,
+                    "Remove the welcome message?", self.ctx, self.au,
                     add_info="This will **not** disable the join notification; it will just reset it to the default."
                 ):
                     self.settings.welcome_message = None
@@ -333,7 +454,7 @@ class SConfigInterpreter(Interpreter):
                     warning += f"\n:rotating_light: **WARNING:** This will **overwrite and remove** the existing " \
                         f"prefix `{existing_prefix}`, which contains `{prefix}`.\n"
 
-            if await confirm(f"Add the prefix `{prefix}`?", self.ctx, self.ctx.author, add_info=warning+"\n"):
+            if await confirm(f"Add the prefix `{prefix}`?", self.ctx, self.au, add_info=warning+"\n"):
                 extra_info = ""
                 for existing_prefix in self.settings.command_prefixes:
                     if prefix in existing_prefix and existing_prefix.index(prefix) == 0:
@@ -361,7 +482,7 @@ class SConfigInterpreter(Interpreter):
             if len(self.settings.command_prefixes) == 1:
                 raise commands.CommandError("You can't remove the only enabled command prefix.")
 
-            if await confirm(f"Remove the prefix `{prefix}`?", self.ctx, self.ctx.author):
+            if await confirm(f"Remove the prefix `{prefix}`?", self.ctx, self.au):
                 self.settings.command_prefixes.remove(prefix)
                 return await succ.send(self.ctx, "Prefix removed.")
 
@@ -373,7 +494,7 @@ class SConfigInterpreter(Interpreter):
                 f"{', leaving only' if 'z!' in self.settings.command_prefixes else ' and re-enable'} " \
                 f"the default prefix `z!`."
 
-            if await confirm("Reset custom prefixes?", self.ctx, self.ctx.author, add_info=warning):
+            if await confirm("Reset custom prefixes?", self.ctx, self.au, add_info=warning):
                 self.settings.command_prefixes.clear()
                 self.settings.command_prefixes.append("z!")
                 return await succ.send(self.ctx, "Prefixes reset.")
@@ -383,6 +504,46 @@ class SConfigInterpreter(Interpreter):
 
         else:
             raise commands.command(f"Invalid argument `{args[0]}`.")
+
+    async def _selfroles(self, *args: str):
+        if not args:
+            return await config.send(
+                self.ctx, "Selfrole Settings",
+                d="Selfroles are roles that any server member can assign themselves using the `z!selfroles` menu.\n\n"
+                  "To view and edit enabled selfroles:\n`z!sc selfroles edit`\n"
+                  "To remove all selfroles:\n`z!sc selfroles clear`\n\n"
+                  "Some roles may not show up in the list. In order for a role to be self-assignable, it must be "
+                  "**lower than Zephyrus's top role** - otherwise, Zephyrus won't be able to assign it." +
+                  ("\n\n:rotating_light: **NOTE:** Zephyrus needs the **Manage Roles** permission for selfrole "
+                   "functionality." if not self.ctx.guild.me.guild_permissions.manage_roles else "")
+            )
+
+        if args[0].lower() == "edit":
+            if not self.ctx.guild.me.guild_permissions.manage_roles:
+                raise commands.CommandError("I need the **Manage Roles** permission to assign selfroles.")
+
+            if not sorted_assignable_roles(self.ctx.guild):
+                return await config.send(
+                    self.ctx, "There are no roles that I can assign. See `z!sc selfroles` for more info."
+                )
+
+            return await SelfRoleNavigator(sorted_assignable_roles(self.ctx.guild), self.ctx, "edit").run(self.ctx)
+
+        elif args[0].lower() == "clear":
+            if not zeph.server_settings[self.ctx.guild.id].selfroles:
+                return await config.send(self.ctx, "There are no selfroles to clear.")
+
+            if await confirm(
+                f"Disable all {len(zeph.server_settings[self.ctx.guild.id].selfroles)} selfroles?", self.ctx, self.au
+            ):
+                zeph.server_settings[self.ctx.guild.id].selfroles.clear()
+                return await succ.send(self.ctx, "Selfroles cleared.")
+
+            else:
+                return await config.send(self.ctx, "Selfroles were not changed.")
+
+        else:
+            raise commands.CommandError(f"Invalid argument `{args[0]}`.")
 
 
 @zeph.command(
@@ -403,3 +564,22 @@ async def sconfig(ctx: commands.Context, func: str = None, *args: str):
         )
 
     return await SConfigInterpreter(ctx).run(func, *args)
+
+
+@zeph.command(
+    name="selfroles", aliases=["sr", "selfrole"], usage="z!selfroles",
+    description="Allows you to edit your self-assigned roles.",
+    help="Allows you to browse the server's list of self-assigned roles, and assign them to or remove them from "
+         "yourself via a menu."
+)
+async def selfroles_command(ctx: commands.Context):
+    if not ctx.guild.me.guild_permissions.manage_roles:
+        return await config.send(
+            ctx, "Selfroles are not configured for this server.",
+            d="If you're an admin, see `z!sc selfroles` for more info."
+        )
+
+    if not sorted_assignable_roles(ctx.guild, True):
+        return await config.send(ctx, "This server has no self-assigned roles.")
+
+    return await SelfRoleNavigator(sorted_assignable_roles(ctx.guild, True), ctx, "assign").run(ctx)
