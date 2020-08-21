@@ -520,7 +520,7 @@ async def badtranslate(ctx: commands.Context, *, text: str):
 """
 
 
-def find_user(ctx: commands.Context, s: str):
+def find_user(guild: discord.Guild, s: str):
     def score(txt: str):
         if s.lower() == txt.lower():  # search identical to name
             return 0  # result = 0
@@ -530,13 +530,13 @@ def find_user(ctx: commands.Context, s: str):
         return 32 - wr.lcs(s.lower(), txt.lower()) + len(txt) / 32 + 2  # result > 2
 
     # including a very slight bias towards actual username
-    return sorted(ctx.guild.members, key=lambda c: min(score(c.name), score(c.display_name) + 0.01))[0]
+    return sorted(guild.members, key=lambda c: min(score(c.name), score(c.display_name) + 0.01))[0]
 
 
 @zeph.command(
-    usage="z!avatar [@user]",
+    usage="z!avatar [user]",
     description="Returns a link to a user's avatar.",
-    help="Returns a link to a user's avatar. If `[@user]` is left blank, links your avatar."
+    help="Returns a link to a user's avatar. If `[user]` is left blank, links your avatar."
 )
 async def avatar(ctx: commands.Context, *, user: str = None):
     if not user:
@@ -545,7 +545,16 @@ async def avatar(ctx: commands.Context, *, user: str = None):
         try:
             user = await commands.UserConverter().convert(ctx, user)
         except commands.BadArgument:
-            user = find_user(ctx, user)
+            if len(ctx.guild.members) > 1000:
+                try:  # more blunt method for large servers, in which lcs() takes too long
+                    user = [g for g in ctx.guild.members if g.name.lower() == user.lower()][0]
+                except IndexError:
+                    raise commands.CommandError(
+                        f"User `@{user}` not found.\n"
+                        f"This server is large, so please specify their username exactly, or just ping them."
+                    )
+            else:
+                user = find_user(ctx.guild, user)
 
     av_url = str(user.avatar_url_as(format="png"))
     return await ctx.send(

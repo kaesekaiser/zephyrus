@@ -373,7 +373,7 @@ async def on_command_error(ctx: commands.Context, exception):
         pass
     elif type(exception) == commands.CommandError:
         try:
-            await err.send(ctx, str(exception))
+            await err.send(ctx, str(exception).split("\n")[0], d="\n".join(str(exception).split("\n")[1:]))
         except discord.errors.HTTPException:
             await err.send(ctx, "Error!", desc=str(exception))
     else:
