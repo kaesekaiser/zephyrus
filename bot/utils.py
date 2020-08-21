@@ -529,7 +529,8 @@ def find_user(ctx: commands.Context, s: str):
         # sort remainder by longest common subsequence, shorter names first
         return 32 - wr.lcs(s.lower(), txt.lower()) + len(txt) / 32 + 2  # result > 2
 
-    return sorted(ctx.guild.members, key=lambda c: min(score(c.name), score(c.display_name)))[0]
+    # including a very slight bias towards actual username
+    return sorted(ctx.guild.members, key=lambda c: min(score(c.name), score(c.display_name) + 0.01))[0]
 
 
 @zeph.command(
