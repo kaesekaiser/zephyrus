@@ -556,7 +556,7 @@ async def avatar(ctx: commands.Context, *, user: str = None):
             else:
                 user = find_user(ctx.guild, user)
 
-    av_url = str(user.avatar_url_as(format="png"))
+    av_url = str(user.avatar_url_as(static_format="png"))
     return await ctx.send(
         embed=construct_embed(author=author_from_user(user, name=f"{user.display_name}'s Avatar", url=av_url),
                               color=user.colour, image=av_url)
