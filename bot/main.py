@@ -65,7 +65,7 @@ async def about(ctx: commands.Context):
         f"**Runtime:** {runtime_format(datetime.datetime.now() - getattr(zeph, 'readyTime'))}\n"
         f"**Build:** {zeph.version} / Python {py_version}\n"
         f"[GitHub](https://github.com/kaesekaiser/zephyrus) / "
-        f"[Invite](https://discordapp.com/oauth2/authorize?client_id={zeph.user.id}&scope=bot&permissions=8192)",
+        f"[Invite](https://discordapp.com/oauth2/authorize?client_id={zeph.user.id}&scope=bot&permissions=268705856)",
         thumbnail=zeph.user.avatar_url,
         footer=f"Feel free to DM {zeph.get_user(238390171022655489)} with any questions!"
     )
