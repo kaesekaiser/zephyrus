@@ -1207,7 +1207,10 @@ async def remind_command(ctx: commands.Context, *text: str):
 @zeph.command(
     name="weather", usage="z!weather <location...>",
     description="Shows the weather somewhere.",
-    help="Shows the weather in `location`. Weather data might be delayed by a few minutes."
+    help="Shows the weather in `<location>` - condition, temperature, highs and lows, rain chance, etc. Weather data "
+         "might be delayed by a couple minutes.\n\n"
+         "`<location>` is converted to an actual place by [Google's geocoding API]"
+         "(https://developers-dot-devsite-v2-prod.appspot.com/maps/documentation/utils/geocoder) (same as `z!timein`)."
 )
 async def weather_command(ctx: commands.Context, *, location: str):
     def heading_direction(heading: float):
@@ -1231,7 +1234,7 @@ async def weather_command(ctx: commands.Context, *, location: str):
 
     # find a good name for the location
     try:
-        title = f"Weather in {ti.getcity(location)[0]}"
+        title = f"Weather in {[g for g in ti.getcity(location) if g][0]}"
     except ValueError:
         title = "Weather"
 
