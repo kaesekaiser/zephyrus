@@ -1,10 +1,11 @@
 from game import *
-from utilities import dice as di, weed as wd, timein as ti, translate as tr, wiki as wk, convert as cv
+from utilities import dice as di, weed as wd, timein as ti, translate as tr, wiki as wk, convert as cv, keys
 from unicodedata import name as uni_name
 from urllib.error import HTTPError
 import hanziconv
 import pycantonese
 import datetime
+import requests
 from math import log10, isclose
 
 
@@ -377,9 +378,10 @@ async def timein(ctx: commands.Context, *, place: str):
         raise commands.CommandError("Location not found.")
     except KeyError:
         raise commands.CommandError("Location too vague.")
-    address = ", ".join(ti.getcity(place))
-    if address == "Unable to precisely locate.":
-        raise commands.CommandError("Location too vague.")
+    try:
+        address = ", ".join([g for g in ti.getcity(place) if g])
+    except ValueError:
+        address = None
     emoji = ret.split()[0]
     emoji = f":clock{(int(emoji.split(':')[0]) + (1 if int(emoji.split(':')[1]) >= 45 else 0) - 1) % 12 + 1}" \
             f"{'30' if 15 <= int(emoji.split(':')[1]) < 45 else ''}:"
@@ -1200,3 +1202,64 @@ async def remind_command(ctx: commands.Context, *text: str):
     timedelta = datetime.datetime.fromtimestamp(timestamp) - datetime.datetime.now()
 
     return await succ.send(ctx, "Reminder added!", d=f"I'll remind you in {concise_td(timedelta)}.")
+
+
+@zeph.command(
+    name="weather", usage="z!weather <location...>",
+    description="Shows the weather somewhere.",
+    help="Shows the weather in `location`. Weather data might be delayed by a few minutes."
+)
+async def weather_command(ctx: commands.Context, *, location: str):
+    def heading_direction(heading: float):
+        dirs = [
+            "N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE",
+            "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW", "N"
+        ]
+        return dirs[round(heading * 16 / 360)]
+
+    def format_kelvin(k: float):
+        return f"**{ti.fahr(k)}° F** (**{round(k - 273.15)}° C**)"
+
+    def conditions(r: dict):
+        return "; ".join(
+            f"{[e for e, v in weather_emotes.items() if g['id'] in v][0]} {g['description']}"
+            for g in r['current']['weather']
+        )
+
+    lat_long = ti.getlatlong(location)
+    req = requests.get(ti.weather_url.format(**lat_long, key=keys.open_weather)).json()
+
+    # find a good name for the location
+    try:
+        title = f"Weather in {ti.getcity(location)[0]}"
+    except ValueError:
+        title = "Weather"
+
+    weather_emotes = {  # weather condition codes to emotes
+        ":sunny:": (800, ),
+        ":white_sun_small_cloud:": (801, ),
+        ":partly_sunny:": (802, ),
+        ":white_sun_cloud:": (803, ),
+        ":cloud:": (701, 711, 721, 731, 741, 751, 761, 804),
+        ":thunder_cloud_rain:": (200, 201, 202, 210, 211, 212, 221, 230, 231, 232),
+        ":cloud_rain:": (300, 301, 302, 310, 311, 312, 313, 314, 321, 500, 501, 502, 503, 504, 520, 521, 522, 531),
+        ":cloud_snow:": (511, ),
+        ":snowflake:": (600, 601, 602, 611, 612, 613, 615, 616, 620, 621, 622),
+        ":volcano:": (762, ),  # volcanic ash
+        ":dash:": (771, ),  # squalls
+        ":tornado:": (781, )  # self-explanatory
+    }
+
+    return await ClientEmol(":umbrella2:", hexcol("9266CC"), ctx).say(
+        title,
+        d=f"**{conditions(req)}** / :thermometer: {format_kelvin(req['current']['temp'])}\n---\n"
+        f":sweat_drops: humidity: **{req['current']['humidity']}%** / "
+        f":thought_balloon: feels like: {format_kelvin(req['current']['feels_like'])}\n"
+        f":wind_blowing_face: wind: ** {heading_direction(req['current']['wind_deg'])} "
+        f"{round(req['current']['wind_speed'] * 2.23693629)} mph** "
+        f"(**{round(req['current']['wind_speed'] * 3.6)} kph**)\n---\n"
+        f":fire: daily high: {format_kelvin(req['daily'][0]['temp']['max'])} / "
+        f":ice_cube: low: {format_kelvin(req['daily'][0]['temp']['min'])}\n"
+        f":umbrella: rain chance: **{round(req['daily'][0]['pop'] * 100)}%**",
+        timestamp=datetime.datetime.utcfromtimestamp(req['current']['dt'])
+    )
