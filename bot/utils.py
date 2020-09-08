@@ -1229,7 +1229,11 @@ async def weather_command(ctx: commands.Context, *, location: str):
             for g in r['current']['weather']
         )
 
-    lat_long = ti.getlatlong(location)
+    try:
+        lat_long = ti.getlatlong(location)
+    except IndexError:
+        raise commands.CommandError("Location not found.")
+    
     req = requests.get(ti.weather_url.format(**lat_long, key=keys.open_weather)).json()
 
     # find a good name for the location
