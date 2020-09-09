@@ -12,64 +12,69 @@ def fahr(k: float):
     return round(9 / 5 * (k - 273.15) + 32)
 
 
-def timezone(location: str, timestamp=None, language=None):
-    # taken directly from Google's API example on GitHub
+def time_offset(location: str):
+    # taken directly from Google's API example on GitHub, with some parts removed
     params = {
-        "location": convert.latlng(getlatlong(location)),
-        "timestamp": convert.time(timestamp or datetime.utcnow())
+        "location": convert.latlng(lat_long(location)),
+        "timestamp": convert.time(datetime.utcnow())
     }
-    if language:
-        params["language"] = language
     ret = gmaps._request("/maps/api/timezone/json", params)
     return (ret["rawOffset"] + ret["dstOffset"]) / 3600
 
 
-def getlatlong(s: str):
-    return geocoding.geocode(gmaps, s)[0]["geometry"]["location"]
+def lat_long(place: str):
+    return geocoding.geocode(gmaps, place)[0]["geometry"]["location"]
 
 
-def getcity(s: str, allow_empty: bool = False):
-    gc = geocoding.geocode(gmaps, s)
-    try:
-        country = [g["long_name"] for g in gc[0]["address_components"] if "country" in g["types"]][0]
-    except IndexError:
-        if allow_empty:
-            return None, None, None
-        else:
-            raise ValueError("Unable to precisely locate.")
-    try:
-        state = [g["long_name"] for g in gc[0]["address_components"] if "administrative_area_level_1" in g["types"]][0]
-    except IndexError:
+def short_placename(place: str):
+    def component_with(components: list, component_type: str):
         try:
-            city = [g["long_name"] for g in gc[0]["address_components"] if "locality" in g["types"]][0]
-            return city, None, country
+            return [g["long_name"] for g in components if component_type in g["types"]][0]
         except IndexError:
-            return None, None, country
+            return None
+
+    order = [
+        "sublocality",  # used rarely. sometimes for things like new york's boroughs, in which there is no 'locality'
+        "locality",  # most common. picks up city/town names
+        *(f"administrative_area_level_{x}" for x in range(5, 0, -1)),  # upwards from the smallest administrative area
+        "country",  # ideally this should only come up rarely
+        "establishment"  # named things that don't fit into any of the above, like international bodies of water
+    ]
+    req = geocoding.geocode(gmaps, place)
+    comps = req[0]["address_components"]
     try:
-        city = [g["long_name"] for g in gc[0]["address_components"] if "locality" in g["types"]][0]
-        return city, state, country
+        return list(filter(bool, [component_with(comps, g) for g in order]))[0]
     except IndexError:
-        return None, state, country
+        return req[0]["formatted_address"]
 
 
-def t_dict(t: datetime):
-    return {"day": t.weekday(), "hour": t.hour, "min": t.minute, "sec": round(t.second + round(t.microsecond * 1000000))}
+def placename(place: str):
+    return geocoding.geocode(gmaps, place)[0]["formatted_address"]
 
 
-def twodig(n: int):
+def dt_dict(dt: datetime):
+    return {
+        "day": dt.weekday(),
+        "hour": dt.hour,
+        "min": dt.minute,
+        "sec": round(dt.second + dt.microsecond / 1000000)
+    }
+
+
+def two_digit(n: int):
     return "0" + str(n) if n < 10 else str(n)
 
 
-def format_dict(d: dict, military: bool = True):
+def format_time_dict(d: dict, military: bool = True):
     if not military:
-        return f"{(d['hour'] - 1) % 12 + 1}:{twodig(d['min'])} {'am' if d['hour'] < 12 else 'pm'}, {days[d['day']]}"
-    return f"{twodig(d['hour'])}:{twodig(d['min'])}, {days[d['day']]}"
+        return f"{(d['hour'] - 1) % 12 + 1}:{two_digit(d['min'])} {'am' if d['hour'] < 12 else 'pm'}, {days[d['day']]}"
+    return f"{two_digit(d['hour'])}:{two_digit(d['min'])}, {days[d['day']]}"
 
 
-def timein(s: str):
-    tz = timezone(s)
+def time_in(place: str):
+    tz = time_offset(place)
     tz = {"hour": round(tz // 1), "min": round((tz % 1) * 60)}
-    dt = t_dict(datetime.utcnow())
+    dt = dt_dict(datetime.utcnow())
     minute = dt["min"] + tz["min"]
     hour = dt["hour"] + tz["hour"] + (minute // 60)
     day = dt["day"] + hour // 24

@@ -367,21 +367,19 @@ async def invert(ctx: commands.Context, url: str):
 
 
 @zeph.command(
-    usage="z!timein <place...>",
+    usage="z!timein <place...>", aliases=["time", "ti"],
     description="Tells you what time it is somewhere.",
-    help="Returns the current local time in ``<place>``."
+    help="Returns the current local time in `<place>`."
 )
 async def timein(ctx: commands.Context, *, place: str):
     try:
-        ret = ti.format_dict(ti.timein(place), False)
+        ret = ti.format_time_dict(ti.time_in(place), False)
     except IndexError:
         raise commands.CommandError("Location not found.")
     except KeyError:
         raise commands.CommandError("Location too vague.")
-    try:
-        address = ", ".join([g for g in ti.getcity(place) if g])
-    except ValueError:
-        address = None
+
+    address = ti.placename(place)
     emoji = ret.split()[0]
     emoji = f":clock{(int(emoji.split(':')[0]) + (1 if int(emoji.split(':')[1]) >= 45 else 0) - 1) % 12 + 1}" \
             f"{'30' if 15 <= int(emoji.split(':')[1]) < 45 else ''}:"
@@ -1230,17 +1228,12 @@ async def weather_command(ctx: commands.Context, *, location: str):
         )
 
     try:
-        lat_long = ti.getlatlong(location)
+        lat_long = ti.lat_long(location)
     except IndexError:
         raise commands.CommandError("Location not found.")
-    
-    req = requests.get(ti.weather_url.format(**lat_long, key=keys.open_weather)).json()
 
-    # find a good name for the location
-    try:
-        title = f"Weather in {[g for g in ti.getcity(location) if g][0]}"
-    except ValueError:
-        title = "Weather"
+    req = requests.get(ti.weather_url.format(**lat_long, key=keys.open_weather)).json()
+    title = f"Weather in {ti.short_placename(location)}"
 
     weather_emotes = {  # weather condition codes to emotes
         ":sunny:": (800, ),
@@ -1268,5 +1261,6 @@ async def weather_command(ctx: commands.Context, *, location: str):
         f":fire: daily high: {format_kelvin(req['daily'][0]['temp']['max'])} / "
         f":ice_cube: low: {format_kelvin(req['daily'][0]['temp']['min'])}\n"
         f":umbrella: rain chance: **{round(req['daily'][0]['pop'] * 100)}%**",
-        timestamp=datetime.datetime.utcfromtimestamp(req['current']['dt'])
+        timestamp=datetime.datetime.utcfromtimestamp(req['current']['dt']),
+        footer=ti.placename(location)
     )
