@@ -88,7 +88,7 @@ async def connect4(ctx: commands.Context, opponent: User):
 
 
 @zeph.command(
-    usage="z!jotto",
+    usage="z!jotto", aliases=["giotto"],
     description="Play a game of Jotto against the bot.",
     help="Plays a game of Jotto. Similar to Mastermind, but with words. I'll choose a random four-letter word, "
          "and you start guessing other four-letter words. I'll tell you how many of the letters in your guess "
