@@ -644,7 +644,7 @@ def interpret_potential_emoji(emote: str):
             else:
                 raise commands.CommandError("Only input one character.")
         else:
-            if emote.split(":")[1] not in zeph.emojis:
+            if emote.split(":")[1] not in zeph.all_emojis:
                 raise commands.CommandError("I don't have access to that emote.")
             else:
                 name = emote.split(":")[1]
@@ -909,7 +909,7 @@ async def age_command(ctx: commands.Context):
 async def emote_command(ctx: commands.Context, *args: str):
     if not args:
         messages, ret = [], ""
-        for emote in zeph.emojis.values():
+        for emote in zeph.all_emojis.values():
             if emote.guild_id not in testing_emote_servers:
                 if len(ret + str(emote)) < 2000:
                     ret += str(emote)
@@ -923,13 +923,13 @@ async def emote_command(ctx: commands.Context, *args: str):
 
     else:
         for arg in args:
-            if arg not in zeph.emojis:
+            if arg not in zeph.all_emojis:
                 if len(args) == 1:
                     raise commands.CommandError("I don't have that emote.")
                 else:
                     raise commands.CommandError(f"I don't have the `{arg}` emote.")
         try:
-            await ctx.send("".join(str(zeph.emojis[g]) for g in args))
+            await ctx.send("".join(str(zeph.all_emojis[g]) for g in args))
         except discord.errors.HTTPException:
             raise commands.CommandError("I can't fit that many emotes in one message.")
 
@@ -967,9 +967,9 @@ async def react_command(ctx: commands.Context, *args: str):
     if len(args) > 2 or len(args) < 1:
         raise commands.BadArgument
 
-    if args[-1].strip(":") not in zeph.emojis:
+    if args[-1].strip(":") not in zeph.all_emojis:
         raise commands.CommandError("I don't have that emote.")
-    emote = zeph.emojis[args[-1].strip(":")]
+    emote = zeph.all_emojis[args[-1].strip(":")]
 
     if len(args) == 1:
         pointer = "^"

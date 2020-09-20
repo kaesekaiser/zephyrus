@@ -55,6 +55,12 @@ class Zeph(commands.Bot):
 
     @property
     def emojis(self):
+        """Emotes that come from my own personal servers, that I use in commands."""
+        return {g.name: g for g in self._connection.emojis if g.guild.id in testing_emote_servers}
+
+    @property
+    def all_emojis(self):
+        """Emotes from any server Zeph is in."""
         return {g.name: g for g in self._connection.emojis}
 
     @property
