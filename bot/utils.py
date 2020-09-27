@@ -1264,3 +1264,15 @@ async def weather_command(ctx: commands.Context, *, location: str):
         timestamp=datetime.datetime.utcfromtimestamp(req['current']['dt']),
         footer=ti.placename(location)
     )
+
+
+@zeph.command(
+    name="role", usage="REDIRECT"
+)
+async def role_redirect_command(ctx: commands.Context):
+    return await lost.send(
+        ctx, "You might be looking for...",
+        d="**`role`** might refer to multiple commands:\n"
+          "- `z!selfroles`, which lets you self-assign roles.\n"
+          "- `z!rolemembers`, which lists all the members of a role."
+    )

@@ -18,17 +18,20 @@ class HelpNavigator(Navigator):
     description="Lists all commands, or helps you with one.",
     help="Shows the usage + format of a command. If no command is provided, lists all available commands."
 )
-async def help_command(ctx: commands.Context, comm: str = None):
+async def help_command(ctx: commands.Context, comm: str = ""):
     hep = ClientEmol(":grey_question:", hexcol("59c4ff"), ctx)
 
     try:
-        comm = zeph.all_commands[comm if comm else ""]
+        comm = zeph.all_commands[comm]
     except KeyError:
         comms = sorted(
             f"**`{g.name}`** - {g.description if g.description else g.help}" for g in zeph.commands if not g.hidden
         )
         return await HelpNavigator(hep, comms, 10, "Full Command List [{page}/{pgs}]").run(ctx)
     else:
+        if comm.usage == "REDIRECT":
+            return await comm.__call__(ctx)  # show the redirect instead of running help
+
         aliases = [f"z!{g}" for g, j in zeph.all_commands.items() if j.name == comm.name and g != j.name]
         help_dict = {"Format": f"`{comm.usage}`"}
         if aliases:

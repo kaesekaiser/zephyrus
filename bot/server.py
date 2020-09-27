@@ -567,7 +567,7 @@ async def sconfig(ctx: commands.Context, func: str = None, *args: str):
 
 
 @zeph.command(
-    name="selfroles", aliases=["sr", "selfrole"], usage="z!selfroles",
+    name="selfroles", aliases=["sr", "selfrole", "roles"], usage="z!selfroles",
     description="Allows you to edit your self-assigned roles.",
     help="Allows you to browse the server's list of self-assigned roles, and assign them to or remove them from "
          "yourself via a menu."

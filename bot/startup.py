@@ -191,6 +191,7 @@ chooseEmol = Emol(":8ball:", hexcol("e1e8ed"))
 wiki = Emol(":globe_with_meridians:", hexcol("4100b5"))
 phone = Emol(":telephone:", hexcol("DD2E44"))
 plane = Emol(":airplane:", hexcol("3a99f7"))
+lost = Emol(":map:", hexcol("55ACEE"))  # redirects - looking for these commands?
 
 
 async def confirm(s: str, dest: Union[commands.Context, discord.TextChannel], caller: User = None, **kwargs):
