@@ -1267,7 +1267,7 @@ async def weather_command(ctx: commands.Context, *, location: str):
 
 
 @zeph.command(
-    name="role", usage="REDIRECT"
+    name="role", usage="REDIRECT", hidden=True
 )
 async def role_redirect_command(ctx: commands.Context):
     return await lost.send(
