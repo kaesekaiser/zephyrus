@@ -425,6 +425,12 @@ async def on_member_join(member: discord.Member):
     if zeph.server_settings[member.guild.id].notify_join:
         await zeph.server_settings[member.guild.id].send_join(member)
 
+    if zeph.server_settings[member.guild.id].autoroles:
+        if member.bot and not zeph.server_settings[member.guild.id].autorole_bots:
+            pass  # if the server doesn't give autoroles to bots
+        else:
+            await member.add_roles(*sorted_assignable_roles(member.guild, filter_autoroles=True), reason="autorole")
+
 
 @zeph.event
 async def on_member_remove(member: discord.Member):

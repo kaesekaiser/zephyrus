@@ -9,24 +9,39 @@ def checked(b: bool):
     return zeph.emojis["checked"] if b else zeph.emojis["unchecked"]
 
 
-def sorted_assignable_roles(guild: discord.Guild, filter_selfroles: bool = False):
+def sorted_assignable_roles(guild: discord.Guild, filter_selfroles: bool = False, filter_autoroles: bool = False):
     if filter_selfroles:
         return [g for g in sorted_assignable_roles(guild) if g.id in zeph.server_settings[guild.id].selfroles]
+    if filter_autoroles:
+        return [g for g in sorted_assignable_roles(guild) if g.id in zeph.server_settings[guild.id].autoroles]
     return sorted([g for g in guild.roles[1:] if (not g.managed) and g < guild.me.top_role], reverse=True)
 
 
 class SelfRoleNavigator(Navigator):
     def __init__(self, roles: list, ctx: commands.Context, mode: str = "view"):
-        """mode can be "edit", "assign", or "view". the mode edits the list of selfroles, assigns roles to the user,
-        or just browses the list, respectively."""
+        """mode can be "self", "auto", "assign", or "view". the mode edits the list of selfroles, edits the list of
+        autoroles, assigns selfroles to the user, or just browses the list, respectively."""
         super().__init__(config, roles, 8, "Selfroles List", close_on_timeout=True)
         self.mode = mode
+        self.ctx = ctx
+        self.user = ctx.author
 
-        if self.mode == "edit":
+        if self.mode == "self":
             self.title = "Editing Selfroles"
             self.prefix = f"To set or remove a role as self-assignable, just say the number. " \
                 f"{zeph.emojis['checked']} indicates which roles are currently set as self-assignable. " \
                 f"Hit {zeph.emojis['no']} when you're done.\n\n"
+            if self.settings.autoroles:
+                self.prefix += f"{zeph.emojis['checked_autorole']} indicates a role that's already set as " \
+                    f"automatically assigned. You can still make this self-assignable if you want.\n\n"
+        elif self.mode == "auto":
+            self.title = "Editing Autoroles"
+            self.prefix = f"To set or remove a role as automatically assigned, just say the number. " \
+                f"{zeph.emojis['checked']} indicates which roles are currently set as automatically assigned. " \
+                f"Hit {zeph.emojis['no']} when you're done.\n\n"
+            if self.settings.selfroles:
+                self.prefix += f"{zeph.emojis['checked_selfrole']} indicates a role that's already set as " \
+                    f"self-assignable. You can still make this automatically assigned if you want.\n\n"
         elif self.mode == "assign":
             self.title = "Self-Assignable Roles"
             self.prefix = f"To assign or remove a role from yourself, just say the number. " \
@@ -35,8 +50,6 @@ class SelfRoleNavigator(Navigator):
         else:
             self.title = "Self-Assignable Roles"
 
-        self.ctx = ctx
-        self.user = ctx.author
         self.nativity = Nativity(ctx, block_all=True)
         if self.mode != "view":
             zeph.nativities.append(self.nativity)
@@ -45,17 +58,27 @@ class SelfRoleNavigator(Navigator):
             self.funcs[str(g + 1)] = partial(self.toggle_role, g)
 
     @property
+    def settings(self):
+        return zeph.server_settings[self.ctx.guild.id]
+
+    @property
     def legal(self):  # overwriting this so it doesn't try to add all the numbers as reactions, delaying startup
         return [self.prev, self.next, zeph.emojis["no"]]
 
     async def toggle_role(self, n: int):
         role = self.roles_table[n]
 
-        if self.mode == "edit":
-            if self.check(role):
-                zeph.server_settings[self.ctx.guild.id].selfroles.remove(role.id)
+        if self.mode == "self":
+            if role.id in self.settings.selfroles:
+                self.settings.selfroles.remove(role.id)
             else:
-                zeph.server_settings[self.ctx.guild.id].selfroles.append(role.id)
+                self.settings.selfroles.append(role.id)
+
+        elif self.mode == "auto":
+            if role.id in self.settings.autoroles:
+                self.settings.autoroles.remove(role.id)
+            else:
+                self.settings.autoroles.append(role.id)
 
         elif self.mode == "assign":
             try:
@@ -68,12 +91,18 @@ class SelfRoleNavigator(Navigator):
                 raise commands.CommandError("Something went wrong. I can't edit that role.")
 
     def check(self, role: discord.Role):
-        if self.mode == "edit":
-            return role.id in zeph.server_settings[self.ctx.guild.id].selfroles
+        if self.mode == "self":
+            if role.id in self.settings.autoroles and role.id not in self.settings.selfroles:
+                return zeph.emojis["checked_autorole"]
+            else:
+                return checked(role.id in self.settings.selfroles)
+        elif self.mode == "auto":
+            if role.id in self.settings.selfroles and role.id not in self.settings.autoroles:
+                return zeph.emojis["checked_selfrole"]
+            else:
+                return checked(role.id in self.settings.autoroles)
         elif self.mode == "assign":
-            return role in self.user.roles
-        else:
-            return False
+            return checked(role in self.user.roles)
 
     @property
     def roles_table(self):
@@ -82,7 +111,7 @@ class SelfRoleNavigator(Navigator):
     @property
     def mentions_table(self):
         return "\n".join(
-            f"**`{n}.`** {checked(self.check(g))} {g.mention}" if self.mode in ["edit", "assign"] else f"- {g.mention}"
+            f"**`{n}.`** {self.check(g)} {g.mention}" if self.mode != "view" else f"- {g.mention}"
             for n, g in enumerate(self.roles_table, 1)
         )
 
@@ -139,6 +168,7 @@ class ServerSettings:
         self.command_prefixes = kwargs.pop("command_prefixes", ["z!"])
 
         self.autoroles = kwargs.pop("autoroles", [])
+        self.autorole_bots = kwargs.pop("autorole_bots", False)
         self.selfroles = kwargs.pop("selfroles", [])
 
     @property
@@ -171,7 +201,9 @@ class ServerSettings:
             "notify_unban": self.notify_unban_enabled,
             "welcome_message": self.welcome_message,
             "command_prefixes": self.command_prefixes,
-            "selfroles": self.selfroles
+            "selfroles": self.selfroles,
+            "autoroles": self.autoroles,
+            "autorole_bots": self.autorole_bots
         }
 
     @property
@@ -218,7 +250,8 @@ config = Emol(":gear:", hexcol("66757F"))
 
 class SConfigInterpreter(Interpreter):
     redirects = {
-        "prefix": "prefixes", "h": "help", "w": "welcome", "p": "prefixes", "selfrole": "selfroles", "sr": "selfroles"
+        "prefix": "prefixes", "h": "help", "w": "welcome", "p": "prefixes", "selfrole": "selfroles", "sr": "selfroles",
+        "autorole": "autoroles", "ar": "autoroles"
     }
 
     @property
@@ -244,12 +277,19 @@ class SConfigInterpreter(Interpreter):
             "selfroles": "Controls for self-assignable roles.\n\n"
                          "**`z!sc selfroles`** shows detailed selfrole information, as well as all controls.\n\n"
                          "`z!sc selfroles edit` allows you to set and un-set specific roles as self-assignable.\n\n"
-                         "`z!sc selfroles clear` turns off all selfroles."
+                         "`z!sc selfroles clear` turns off all selfroles.",
+            "autoroles": "Controls for automatically-assigned roles.\n\n"
+                         "**`z!sc autoroles`** shows detailed autorole information, as well as all controls.\n\n"
+                         "`z!sc autoroles edit` allows you to set and un-set specific roles as auto-assigned.\n\n"
+                         "`z!sc autoroles reassign` automatically reassigns all autoroles to all current members.\n\n"
+                         "`z!sc autoroles clear` turns off all autoroles.\n\n"
+                         "`z!sc autoroles bots <enable | disable>` sets whether to give autoroles to bots."
         }
         desc_dict = {
             "welcome": "Controls for welcome messages.",
             "prefixes": "Controls for custom command prefixes.",
-            "selfroles": "Controls for self-assignable roles."
+            "selfroles": "Controls for self-assignable roles.",
+            "autoroles": "Controls for automatically-assigned roles."
         }
 
         if len(args) == 0 or (args[0].lower() not in help_dict and args[0].lower() not in self.redirects):
@@ -265,7 +305,6 @@ class SConfigInterpreter(Interpreter):
         return await config.send(self.ctx, f"z!sconfig {ret}", d=help_dict[ret])
 
     async def _welcome(self, *args: str):
-        assert isinstance(self.settings, ServerSettings)
         if not args:
             return await config.send(
                 self.ctx, "Welcome Message Options",
@@ -514,6 +553,8 @@ class SConfigInterpreter(Interpreter):
                   "To remove all selfroles:\n`z!sc selfroles clear`\n\n"
                   "Some roles may not show up in the list. In order for a role to be self-assignable, it must be "
                   "**lower than Zephyrus's top role** - otherwise, Zephyrus won't be able to assign it." +
+                  (" :rotating_light: Currently, there are **no roles which fit this criteria**, so "
+                   "**no roles can be set**." if not sorted_assignable_roles(self.ctx.guild) else "") +
                   ("\n\n:rotating_light: **NOTE:** Zephyrus needs the **Manage Roles** permission for selfrole "
                    "functionality." if not self.ctx.guild.me.guild_permissions.manage_roles else "")
             )
@@ -527,20 +568,128 @@ class SConfigInterpreter(Interpreter):
                     self.ctx, "There are no roles that I can assign. See `z!sc selfroles` for more info."
                 )
 
-            return await SelfRoleNavigator(sorted_assignable_roles(self.ctx.guild), self.ctx, "edit").run(self.ctx)
+            return await SelfRoleNavigator(sorted_assignable_roles(self.ctx.guild), self.ctx, "self").run(self.ctx)
 
         elif args[0].lower() == "clear":
             if not zeph.server_settings[self.ctx.guild.id].selfroles:
                 return await config.send(self.ctx, "There are no selfroles to clear.")
 
             if await confirm(
-                f"Disable all {len(zeph.server_settings[self.ctx.guild.id].selfroles)} selfroles?", self.ctx, self.au
+                f"Disable all {len(self.settings.selfroles)} selfroles?", self.ctx, self.au,
+                add_info="This will *not* remove any roles from members who already have them, but will prevent "
+                         "members from self-assigning these roles unless re-enabled.\n\n"
             ):
-                zeph.server_settings[self.ctx.guild.id].selfroles.clear()
+                self.settings.selfroles.clear()
                 return await succ.send(self.ctx, "Selfroles cleared.")
 
             else:
                 return await config.send(self.ctx, "Selfroles were not changed.")
+
+        else:
+            raise commands.CommandError(f"Invalid argument `{args[0]}`.")
+
+    async def _autoroles(self, *args: str):
+        if not args:
+            return await config.send(
+                self.ctx, "Autorole Settings",
+                d="Autoroles are roles that are automatically assigned to all new members of the server.\n\n"
+                  "To view and edit the list of autoroles:\n`z!sc autoroles edit`\n"
+                  "To automatically re-assign all autoroles to each server member (use this if you add a new "
+                  "autorole):\n`z!sc autoroles reassign`\n"
+                  "To toggle whether to give autoroles to bots (disabled by default):\n"
+                  "`z!sc autoroles bots enable/disable`\n"
+                  "To clear all autoroles:\n`z!sc autoroles clear`\n\n"
+                  "Some roles may not show up in the list. In order for a role to be automatically assigned, it must "
+                  "be **lower than Zephyrus's top role** - otherwise, Zephyrus won't be able to assign it." +
+                  (" :rotating_light: Currently, there are **no roles which fit this criteria**, so "
+                   "**no roles can be set**." if not sorted_assignable_roles(self.ctx.guild) else "") +
+                  ("\n\n:rotating_light: **NOTE:** Zephyrus needs the **Manage Roles** permission for autorole "
+                   "functionality." if not self.ctx.guild.me.guild_permissions.manage_roles else ""),
+                fs={"Give autoroles to bots?": abled(zeph.server_settings[self.ctx.guild.id])}
+            )
+
+        elif args[0].lower() == "edit":
+            if not self.ctx.guild.me.guild_permissions.manage_roles:
+                raise commands.CommandError("I need the **Manage Roles** permission to assign autoroles.")
+
+            if not sorted_assignable_roles(self.ctx.guild):
+                return await config.send(
+                    self.ctx, "There are no roles that I can assign. See `z!sc autoroles` for more info."
+                )
+
+            return await SelfRoleNavigator(sorted_assignable_roles(self.ctx.guild), self.ctx, "auto").run(self.ctx)
+
+        elif args[0].lower() == "reassign":
+            if not self.ctx.guild.me.guild_permissions.manage_roles:
+                raise commands.CommandError("I need the **Manage Roles** permission to assign roles.")
+
+            if not self.settings.autoroles:
+                return await config.send(self.ctx, "There are no autoroles to assign.")
+
+            def check(u: discord.Member):
+                if not (set(self.settings.autoroles) <= {g.id for g in u.roles}):
+                    if u.bot and not self.settings.autorole_bots:
+                        return False
+                    else:
+                        return True
+                return False
+
+            users = list(filter(check, self.ctx.guild.members))
+
+            if not users:
+                return await succ.send("All members are currently up-to-date on autoroles.")
+
+            mess = await Emol(zeph.emojis["loading"], hexcol("66757F"))\
+                .send(self.ctx, f"Updating roles for {len(users)} members...")
+            roles = [self.ctx.guild.get_role(g) for g in self.settings.autoroles]
+            for user in users:
+                await user.add_roles(*roles, reason="re-assigning autoroles")
+
+            return await succ.edit(mess, "Autoroles re-assigned.")
+
+        elif args[0].lower() == "bots":
+            if len(args) == 1:
+                return await config.send(
+                    self.ctx,
+                    f"Currently, bots {'**are**' if self.settings.autorole_bots else 'are **not**'} given autoroles.",
+                    d=f"To change this, use `z!sc autoroles bots {abled(not self.settings.autorole_bots).lower()[:-1]}"
+                      f"`. By default, bots are **not** given autoroles."
+                )
+
+            if args[1].lower() == "enable":
+                if self.settings.autorole_bots:
+                    return await config.send(self.ctx, "Bots are already given autoroles.")
+                else:
+                    self.settings.autorole_bots = True
+                    return await succ.send(
+                        self.ctx, "Bots will now be given autoroles.",
+                        d="Use `z!sc autoroles reassign` to update all present bots with the autoroles, automatically."
+                    )
+
+            elif args[1].lower() == "disable":
+                if not self.settings.autorole_bots:
+                    return await config.send(self.ctx, "Bots are already not given autoroles.")
+                else:
+                    self.settings.autorole_bots = False
+                    return await succ.send(self.ctx, "Bots will no longer be given autoroles.")
+
+            else:
+                raise commands.CommandError(f"Invalid argument `{args[1]}`.")
+
+        elif args[0].lower() == "clear":
+            if not zeph.server_settings[self.ctx.guild.id].autoroles:
+                return await config.send(self.ctx, "There are no autoroles to clear.")
+
+            if await confirm(
+                f"Disable all {len(self.settings.autoroles)} autoroles?", self.ctx, self.au,
+                add_info="This will *not* remove any roles from members who already have them, but will stop roles "
+                         "from being automatically added to new members.\n\n"
+            ):
+                self.settings.autoroles.clear()
+                return await succ.send(self.ctx, "Autoroles cleared.")
+
+            else:
+                return await config.send(self.ctx, "Autoroles were not changed.")
 
         else:
             raise commands.CommandError(f"Invalid argument `{args[0]}`.")
