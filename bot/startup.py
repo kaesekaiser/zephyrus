@@ -21,7 +21,9 @@ Flint = Union[float, int]
 
 class Zeph(commands.Bot):
     def __init__(self):
-        super().__init__(get_command_prefix, case_insensitive=True, help_command=None)
+        intents = discord.Intents.default()
+        intents.members = True
+        super().__init__(get_command_prefix, case_insensitive=True, help_command=None, intents=intents)
         # with open("storage/call_channels.txt", "r") as f:
         #     self.phoneNumbers = {int(g.split("|")[0]): int(g.split("|")[1]) for g in f.readlines()}
         #     self.callChannels = {int(g.split("|")[1]): int(g.split("|")[2]) for g in f.readlines()}
