@@ -605,7 +605,7 @@ class SConfigInterpreter(Interpreter):
                    "**no roles can be set**." if not sorted_assignable_roles(self.ctx.guild) else "") +
                   ("\n\n:rotating_light: **NOTE:** Zephyrus needs the **Manage Roles** permission for autorole "
                    "functionality." if not self.ctx.guild.me.guild_permissions.manage_roles else ""),
-                fs={"Give autoroles to bots?": abled(zeph.server_settings[self.ctx.guild.id])}
+                fs={"Give autoroles to bots?": abled(zeph.server_settings[self.ctx.guild.id].autorole_bots)}
             )
 
         elif args[0].lower() == "edit":
