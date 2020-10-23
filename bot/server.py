@@ -82,7 +82,7 @@ class SelfRoleNavigator(Navigator):
 
         elif self.mode == "assign":
             try:
-                if self.check(role):
+                if role in self.user.roles:
                     await self.user.remove_roles(role, reason="removed via z!selfrole")
                 else:
                     await self.user.add_roles(role, reason="added via z!selfrole")
