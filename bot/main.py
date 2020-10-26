@@ -130,6 +130,27 @@ async def wordlist_command(ctx: commands.Context, aor: str, *words: str):
 
 
 @zeph.command(
+    name="feedback", aliases=["suggest", "contact"], usage="z!feedback <feedback...>",
+    description="Sends feedback to the creator.",
+    help="Sends feedback to the creator. You can also use this to make suggestions or just generally contact me, if "
+         "you need."
+)
+async def feedback_command(ctx: commands.Context, *, text: str):
+    if len(text) > 1800:
+        raise commands.CommandError(
+            "Please try to keep feedback relatively short.\nLike, 1800 characters should be plenty. "
+            "If you really need to send more, just ask me to DM you. I'm only human."
+        )
+
+    # send the feedback to my feedback channel
+    await zeph.get_channel(607102546892554240).send(
+        f"**{str(ctx.author)}** (ID `{ctx.author.id}`), in the guild **{ctx.guild.name}**, says:\n{text}"
+    )
+
+    return await succ.send(ctx, "Feedback sent!")
+
+
+@zeph.command(
     hidden=True, usage="z!save",
     help="Saves any data stored during downtime."
 )
@@ -311,42 +332,6 @@ async def close_command(ctx: commands.Context):
     zeph.save()
     await ClientEmol(":wave:", blue, ctx).say("Bye!")
     await zeph.close()
-
-
-x_sampa_dict = {
-    "d`z`": "ɖ͡ʐ", "t`s`": "ʈ͡ʂ", r"dK\\": "d͡ɮ", "tK": "t͡ɬ", r"dz\\": "d͡ʑ", r"ts\\": "t͡ɕ", "dz`": "d͡ʐ",
-    "ts`": "t͡ʂ", "dz": "d͡z", "ts": "t͡s", "dZ": "d͡ʒ", "tS": "t͡ʃ",
-    r'\|\\\|\\': 'ǁ', r'G\\_<': 'ʛ', r'J\\_<': 'ʄ', '_B_L': '᷅', '_H_T': '᷄', '_R_F': '᷈', 'b_<': 'ɓ', 'd_<': 'ɗ',
-    'g_<': 'ɠ', r'r\\`': 'ɻ', '<F>': '↘', '<R>': '↗', r'_\?\\': 'ˤ', 'd`': 'ɖ', r'h\\': 'ɦ', r'j\\': 'ʝ', 'l`': 'ɭ',
-    r'l\\': 'ɺ', 'n`': 'ɳ', r'p\\': 'ɸ', 'r`': 'ɽ', r'r\\': 'ɹ', 's`': 'ʂ', r's\\': 'ɕ', r't`': 'ʈ', r'v\\': 'ʋ',
-    r'x\\': 'ɧ', 'z`': 'ʐ', r'z\\': 'ʑ', r'B\\': 'ʙ', r'G\\': 'ɢ', r'H\\': 'ʜ', r'I\\': 'ᵻ', r'J\\': 'ɟ',
-    r'K\\': 'ɮ', r'L\\': 'ʟ', r'M\\': 'ɰ', r'N\\': 'ɴ', r'O\\': 'ʘ', r'R\\': 'ʀ', r'U\\': 'ᵿ', r'X\\': 'ħ',
-    r'\?\\': 'ʕ', r':\\': 'ˑ', r'@\\': 'ɘ', r'3\\': 'ɞ', r'<\\': 'ʢ', r'>\\': 'ʡ', r'!\\': 'ǃ', r'\|\|': '‖',
-    r'\|\\': 'ǀ', r'=\\': 'ǂ',
-    r'-\\': '‿', '_"': '̈', r'_\+': '̟', '_-': '̠', '_/': '̌', r'_\\': '̂', '_0': '̥', '_>': 'ʼ', r'_\^': '̯',
-    '_}': '̚', '_A': '̘', '_a': '̺', '_B': '̏', '_c': '̜', '_d': '̪', '_e': '̴', '_F': '̂', '_G': 'ˠ', '_H': '́',
-    '_h': 'ʰ', '_j': 'ʲ', '_k': '̰', '_L': '̀', '_l': 'ˡ', '_M': '̄', '_m': '̻', '_N': '̼', '_n': 'ⁿ', '_O': '̹',
-    '_o': '̞', '_q': '̙', '_R': '̌', '_r': '̝', '_T': '̋', '_t': '̤', '_v': '̬', '_w': 'ʷ', '_X': '̆', '_x': '̽',
-    '_=': '̩', '_~': '̃',
-    r'\{': 'æ', 'A': 'ɑ', 'B': 'β', 'C': 'ç', 'D': 'ð', 'E': 'ɛ', 'F': 'ɱ', 'G': 'ɣ', 'H': 'ɥ', 'I': 'ɪ', 'J': 'ɲ',
-    'K': 'ɬ', 'L': 'ʎ', 'M': 'ɯ', 'N': 'ŋ', 'O': 'ɔ', 'P': 'ʋ', 'Q': 'ɒ', r'R': 'ʁ', 'S': 'ʃ', 'T': 'θ', 'U': 'ʊ',
-    'V': 'ʌ', 'W': 'ʍ', 'X': 'χ', 'Y': 'ʏ', 'Z': 'ʒ', '"': 'ˈ', '%': 'ˌ', "'": 'ʲ', '’': 'ʲ', ':': 'ː', '@': 'ə',
-    '}': 'ʉ', '1': 'ɨ', '2': 'ø', '3': 'ɜ', '4': 'ɾ', '5': 'ɫ', '6': 'ɐ', '7': 'ɤ', '8': 'ɵ', '9': 'œ', '&': 'ɶ',
-    r'\|': '|', r'\^': 'ꜛ', '!': 'ꜜ', '=': '̩', '`': '˞', '~': '̃', r'\.': '.', r'\?': 'ʔ', r'\)': '͡', '0': '∅',
-    '-': '', r'\*': ''
-}
-
-
-@zeph.command(
-    usage="z!sampa <X-SAMPA text...>",
-    description="Converts X-SAMPA to IPA.",
-    help="Converts a given string of [X-SAMPA](https://en.wikipedia.org/wiki/X-SAMPA) to the International Phonetic "
-         "Alphabet. ``*`` can be used as an escape character."
-)
-async def sampa(ctx: commands.Context, *, text: str):
-    for rep in x_sampa_dict:
-        text = re.sub(r"(?<!\*)" + rep, x_sampa_dict[rep], text)
-    return await ctx.send(content=text)
 
 
 @zeph.event
