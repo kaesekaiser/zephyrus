@@ -33,7 +33,7 @@ class Epitaph(ep.Civ):
 
     async def tick(self):
         def pred(m: discord.Message):
-            return m.content.lower() in lower(self.available_techs) and m.author == self.player and \
+            return m.content.lower() in lower(self.available_techs) + ["exit"] and m.author == self.player and \
                 m.channel == self.ctx.channel
 
         if self.stardate - self.lastIntervention == 30 and not self.handsOff:
@@ -41,15 +41,21 @@ class Epitaph(ep.Civ):
             form = ", or of ".join(f"__{g}__" for g in self.available_techs)
             message = await self.red.say(
                 f"Stardate {self.stardate}", d=f"We could teach them the secrets of {form}.",
-                footer="Just say the name of the technology. Time is paused until you do."
-                if len(self.knowledge) == 0 else None
+                footer="Just say the name of the technology. Time is paused until you do. "
+                       "Alternatively, say \"exit\" to exit." if len(self.knowledge) == 0 else None
             )
             try:
                 cho = await zeph.wait_for("message", timeout=300, check=pred)
             except asyncio.TimeoutError:
                 self.extinct = True
                 return await self.yellow.say("Game timed out.")
-            await cho.delete()
+            if cho.content.lower() == "exit":
+                self.extinct = True
+                return await self.yellow.say("Exited game.")
+            try:
+                await cho.delete()
+            except discord.Forbidden:
+                pass
             await self.eventech(ep.techs[cho.content.lower()], edit=message)
         else:
             for i in self.available_events:

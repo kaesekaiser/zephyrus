@@ -367,6 +367,9 @@ async def on_ready():
 
 @zeph.event
 async def on_command_error(ctx: commands.Context, exception):
+    if ctx.command == epitaph and ctx.channel in zeph.epitaphChannels:
+        zeph.epitaphChannels.remove(ctx.channel)
+
     if type(exception) in [commands.errors.MissingRequiredArgument, commands.errors.BadArgument,
                            commands.errors.TooManyArguments]:
         await err.send(
