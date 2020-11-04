@@ -944,18 +944,10 @@ async def age_command(ctx: commands.Context):
 )
 async def emote_command(ctx: commands.Context, *args: str):
     if not args:
-        messages, ret = [], ""
-        for emote in zeph.all_emojis.values():
-            if emote.guild_id not in testing_emote_servers:
-                if len(ret + str(emote)) < 2000:
-                    ret += str(emote)
-                else:
-                    messages.append(ret)
-                    ret = str(emote)
-        messages.append(ret)
-
-        for message in messages:
-            await ctx.send(message)
+        raise commands.CommandError(
+            "I deprecated the full emote list because it got slightly too obnoxious.\n"
+            "Use `z!e <emote>` to look for a specific emote."
+        )
 
     else:
         for arg in args:
