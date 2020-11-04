@@ -92,6 +92,8 @@ class Zeph(commands.Bot):
 
 
 def get_command_prefix(bot: Zeph, message: discord.Message):
+    if not message.guild:
+        return "z!"
     if not bot.server_settings.get(message.guild.id):
         return "z!"
     return bot.server_settings.get(message.guild.id).command_prefixes
