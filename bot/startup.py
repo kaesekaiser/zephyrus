@@ -303,6 +303,7 @@ class Navigator:
         self.funcs = {}
         self.prev = prev
         self.next = nxt
+        self.closed_elsewhere = False  # to prevent weird loop things if a different method closes the menu
 
     @property
     def pgs(self):
@@ -369,7 +370,7 @@ class Navigator:
                 else:
                     self.funcs[emoji]()
 
-            if self.funcs.get(emoji) == self.close:
+            if (self.funcs.get(emoji) == self.close) or self.closed_elsewhere:
                 return
 
             try:

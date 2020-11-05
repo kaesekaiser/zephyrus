@@ -1160,6 +1160,9 @@ class Reminder:
         except AttributeError:
             print(f"A reminder failed to send: {str(self)}")
 
+    def remaining_time(self, now: datetime.datetime = datetime.datetime.now()):
+        return reminder_td(datetime.datetime.fromtimestamp(self.time) - now)
+
     def __str__(self):
         return f"{self.author}|{self.time}|{self.text}"
 
@@ -1178,27 +1181,118 @@ def load_reminders():
             zeph.reminders.append(Reminder.from_str(rem.strip("\n")))
 
 
+def reminder_td(td: datetime.timedelta):
+    """pretty timedelta formatting for reminders"""
+    td_minutes = round(td.total_seconds() / 60)  # rounding to account for small variations
+    ds, hs, ms = td_minutes // 1440, td_minutes // 60 % 24, td_minutes % 60
+    return "".join([
+        f"{ds} {plural('day', ds)} " if ds else "",
+        f"{hs} {plural('hour', hs)} " if hs else "",
+        f"{ms} {plural('minute', ms)}" if ms else "",
+    ]).strip()
+
+
+class RemindNavigator(Navigator):
+    def __init__(self, user: User):
+        self.user = user
+        rems = sorted([g for g in zeph.reminders if g.author == self.user.id], key=lambda c: c.time)
+        super().__init__(
+            Emol(":alarm_clock:", hexcol("DD2E44")), rems, 4, "Reminders [{page}/{pgs}]", close_on_timeout=True
+        )
+        self.funcs[zeph.emojis["no"]] = self.close
+        for g in range(self.per):
+            self.funcs[f"remove {g+1}"] = partial(self.remove_reminder, g)
+        self.funcs["remove all"] = self.remove_all
+
+    @property
+    def rems(self):
+        return sorted([g for g in zeph.reminders if g.author == self.user.id], key=lambda c: c.time)
+
+    @property
+    def pgs(self):
+        return ceil(len(self.rems) / self.per)
+
+    async def remove_reminder(self, n: int):
+        try:
+            rem = page_list(self.rems, self.per, self.page)[n]
+        except IndexError:  # if there aren't that many listed on the page, do nothing
+            return
+
+        zeph.reminders.remove(rem)
+        await succ.edit(self.message, "Reminder removed.")
+        if len(self.rems) == 0:  # if you just removed your only reminder, close the menu
+            self.closed_elsewhere = True
+            await asyncio.sleep(2)
+            return await self.close()
+        else:
+            if self.page > self.pgs:
+                self.page -= 1
+            return await asyncio.sleep(2)
+
+    async def remove_all(self):
+        for rem in list(self.rems):
+            zeph.reminders.remove(rem)
+        await succ.edit(self.message, "All reminders removed.")
+        await asyncio.sleep(2)
+        self.closed_elsewhere = True
+        return await self.close()
+
+    @property
+    def con(self):
+        now = datetime.datetime.now()
+
+        return self.emol.con(
+            self.title.format(page=self.page, pgs=self.pgs),
+            d="\n".join(
+                f"**`[{g+1}]`** {j.text} (in **{j.remaining_time(now)}**)"
+                for g, j in enumerate(page_list(self.rems, self.per, self.page))
+            ) + "\n\nTo remove a reminder, say `remove <#>` in chat, e.g. `remove 1`. "
+                "You can also say `remove all` to get rid of all your reminders at once."
+        )
+
+    async def get_emoji(self, ctx: commands.Context):
+        def pred(mr: MR, u: User):
+            if isinstance(mr, discord.Message):
+                return u == ctx.author and mr.channel == ctx.channel and mr.content in self.funcs.keys()
+            else:
+                return u == ctx.author and mr.message == self.message and mr.emoji in self.legal
+
+        mess = (await zeph.wait_for('reaction_or_message', timeout=300, check=pred))[0]
+
+        if isinstance(mess, discord.Message):
+            await mess.delete()
+            return mess.content
+        else:
+            return mess.emoji
+
+    async def close(self):
+        if len(self.rems) == 0:
+            await self.emol.edit(self.message, "Menu closed; you have no more reminders set.")
+        else:
+            await self.emol.edit(self.message, "This menu has closed.")
+        await self.remove_buttons()
+
+
 @zeph.command(
-    name="remindme", aliases=["remind", "rme", "rem"], usage="z!remindme <reminder...> in <time...>",
+    name="remindme", aliases=["remind", "rme", "rem"], usage="z!remindme <reminder...> in <time...>\nz!remindme list",
     description="Reminds you of something later.",
     help="`z!remindme <reminder> in <time>` sets the bot to DM you with a reminder in a certain amount of time. "
          "`<reminder>` can be anything. `<time>` can use any combination of integer days, hours, or minutes, "
-         "separated by spaces and in that order.\n\n"
+         "separated by spaces and in that order. `z!remindme list` lists your set reminders, and lets you remove any "
+         "if need be.\n\n"
          "e.g. `z!remindme eat food in 2 hours`, `z!rme work on essay in 5 hours 30 minutes`, or "
          "`z!remind talk to Sam in 3 days`."
 )
 async def remind_command(ctx: commands.Context, *text: str):
     # leaving input text as a list, rather than a single string like usual, to make splitting easier
-    def concise_td(td: datetime.timedelta):
-        td_minutes = round(td.total_seconds() / 60)  # rounding to account for small variations
-        ds, hs, ms = td_minutes // 1440, td_minutes // 60 % 24, td_minutes % 60
-        return "".join([
-            f"{ds} {plural('day', ds)} " if ds else "",
-            f"{hs} {plural('hour', hs)} " if hs else "",
-            f"{ms} {plural('minute', ms)}" if ms else "",
-        ]).strip()
 
     if "in" not in text:
+        if " ".join(text).lower() in ["list", "edit", "remove", "delete"]:
+            if not [g for g in zeph.reminders if g.author == ctx.author.id]:
+                return await Emol(":alarm_clock:", hexcol("DD2E44")).send(ctx, "You have no reminders set currently.")
+
+            return await RemindNavigator(ctx.author).run(ctx)
+
         raise commands.BadArgument
 
     last_in = [g for g in range(len(text)) if text[g] == "in"][-1]
@@ -1227,7 +1321,7 @@ async def remind_command(ctx: commands.Context, *text: str):
     zeph.reminders.append(reminder)
     timedelta = datetime.datetime.fromtimestamp(timestamp) - datetime.datetime.now()
 
-    return await succ.send(ctx, "Reminder added!", d=f"I'll remind you in {concise_td(timedelta)}.")
+    return await succ.send(ctx, "Reminder added!", d=f"I'll remind you in {reminder_td(timedelta)}.")
 
 
 @zeph.command(
