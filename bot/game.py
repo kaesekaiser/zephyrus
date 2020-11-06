@@ -69,7 +69,11 @@ async def connect4(ctx: commands.Context, opponent: User):
         except asyncio.TimeoutError:
             return await four.say("Connect Four game timed out.")
         else:
-            await move.delete()
+            try:
+                await move.delete()
+            except discord.HTTPException:
+                pass
+
             if move.content == "⏬":
                 await four.edit(message, "This game was moved. Scroll down a bit.")
                 message = await four.say("Hold on a second...")

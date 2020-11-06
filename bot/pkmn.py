@@ -178,7 +178,11 @@ class DexNavigator(Navigator):
                 'reaction_or_message', timeout=300, check=pred
             ))[0]
             if isinstance(mess, discord.Message):
-                await mess.delete()
+                try:
+                    await mess.delete()
+                except discord.HTTPException:
+                    pass
+
                 try:
                     self.jumpDest = int(mess.content)
                 except ValueError:
@@ -412,7 +416,11 @@ class DexSearchNavigator(Navigator):
                 'reaction_or_message', timeout=300, check=pred
             ))[0]
             if isinstance(mess, discord.Message):
-                await mess.delete()
+                try:
+                    await mess.delete()
+                except discord.HTTPException:
+                    pass
+
                 self.apply_settings_change(*mess.content.lower().split(":"))
                 self.reapply_search()
                 return "wait"

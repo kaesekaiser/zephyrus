@@ -137,7 +137,10 @@ class SelfRoleNavigator(Navigator):
         ))[0]
 
         if isinstance(mess, discord.Message):
-            await mess.delete()
+            try:
+                await mess.delete()
+            except discord.HTTPException:
+                pass
             return mess.content
         else:
             return mess.emoji

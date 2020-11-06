@@ -1260,7 +1260,10 @@ class RemindNavigator(Navigator):
         mess = (await zeph.wait_for('reaction_or_message', timeout=300, check=pred))[0]
 
         if isinstance(mess, discord.Message):
-            await mess.delete()
+            try:
+                await mess.delete()
+            except discord.HTTPException:
+                pass
             return mess.content
         else:
             return mess.emoji

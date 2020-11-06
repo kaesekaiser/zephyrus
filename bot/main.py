@@ -143,9 +143,14 @@ async def feedback_command(ctx: commands.Context, *, text: str):
         )
 
     # send the feedback to my feedback channel
-    await zeph.get_channel(607102546892554240).send(
-        f"**{str(ctx.author)}** (ID `{ctx.author.id}`), in the guild **{ctx.guild.name}**, says:\n{text}"
-    )
+    if isinstance(ctx.channel, discord.DMChannel) or isinstance(ctx.channel, discord.GroupChannel):
+        await zeph.get_channel(607102546892554240).send(
+            f"**{str(ctx.author)}** (ID `{ctx.author.id}`), in DMs, says:\n{text}"
+        )
+    else:
+        await zeph.get_channel(607102546892554240).send(
+            f"**{str(ctx.author)}** (ID `{ctx.author.id}`), in the guild **{ctx.guild.name}**, says:\n{text}"
+        )
 
     return await succ.send(ctx, "Feedback sent!")
 
