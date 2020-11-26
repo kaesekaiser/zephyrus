@@ -864,6 +864,9 @@ async def sconfig(ctx: commands.Context, func: str = None, *args: str):
          "yourself via a menu."
 )
 async def selfroles_command(ctx: commands.Context):
+    if not ctx.guild:
+        raise commands.CommandError("This command can only be run in a server.")
+
     if not ctx.guild.me.guild_permissions.manage_roles:
         return await config.send(
             ctx, "Selfroles are not configured for this server.",

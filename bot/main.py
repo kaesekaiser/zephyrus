@@ -391,7 +391,7 @@ async def on_message(message: discord.Message):
     if zeph.user in message.mentions and re.search(r"^(.*\s)?o7(\s.*)?$", message.content):
         await message.channel.send("o7")
     if re.fullmatch("h+", message.content) and message.author != zeph.user:
-        if zeph.server_settings[message.guild.id].can_h_in(message.channel):
+        if (not message.guild) or zeph.server_settings[message.guild.id].can_h_in(message.channel):
             await message.channel.send(zeph.emojis.get("aitch", "h"))
 
     if zeph.channelLink is not None and zeph.channelLink.should_activate(message):
