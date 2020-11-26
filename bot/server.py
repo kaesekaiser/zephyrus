@@ -146,6 +146,75 @@ class SelfRoleNavigator(Navigator):
             return mess.emoji
 
 
+class AitchNavigator(Navigator):
+    def __init__(self, ctx: commands.Context):
+        super().__init__(config, ctx.guild.text_channels, 8, "Aitch Settings", close_on_timeout=True)
+        self.ctx = ctx
+        self.prefix = f"To toggle {zeph.emojis['aitch']} on or off in a channel, just say the number. " \
+            f"{zeph.emojis['checked']} indicates which channels it is currently enabled in. " \
+            f"Hit {zeph.emojis['no']} when you're done.\n\n"
+
+        self.nativity = Nativity(ctx, block_all=True)
+        zeph.nativities.append(self.nativity)
+        self.funcs[zeph.emojis["no"]] = self.close
+        for g in range(8):
+            self.funcs[str(g + 1)] = partial(self.toggle_channel, g)
+
+    async def toggle_channel(self, n: int):
+        channel = self.channels_table[n]
+
+        if channel.id in self.settings.h_exceptions:
+            self.settings.h_exceptions.remove(channel.id)
+        else:
+            self.settings.h_exceptions.append(channel.id)
+
+    @property
+    def settings(self):
+        return zeph.server_settings[self.ctx.guild.id]
+
+    def check(self, channel: discord.TextChannel):
+        # should show whether or not it's enabled in that channel
+        return checked(self.settings.h_default ^ (channel.id in self.settings.h_exceptions))
+
+    @property
+    def channels_table(self):
+        return page_list(self.table, self.per, self.page)
+
+    @property
+    def mentions_table(self):
+        return "\n".join(f"**`{n}.`** {self.check(g)} {g.mention}" for n, g in enumerate(self.channels_table, 1))
+
+    @property
+    def con(self):
+        return self.emol.con(f"{self.title} [{self.page}/{self.pgs}]", d=self.prefix + self.mentions_table)
+
+    async def close(self):
+        zeph.nativities.remove(self.nativity)
+        await self.emol.edit(self.message, "This menu has closed.")
+        await self.remove_buttons()
+
+    async def get_emoji(self, ctx: commands.Context):
+        def pred(mr: MR, u: User):
+            if isinstance(mr, discord.Message):
+                return can_int(mr.content) and int(mr.content) - 1 in range(len(self.channels_table)) and \
+                    u == ctx.author and mr.channel == ctx.channel
+            else:
+                return u == ctx.author and mr.emoji in self.legal and mr.message.id == self.message.id
+
+        mess = (await zeph.wait_for(
+            'reaction_or_message', timeout=300, check=pred
+        ))[0]
+
+        if isinstance(mess, discord.Message):
+            try:
+                await mess.delete()
+            except discord.HTTPException:
+                pass
+            return mess.content
+        else:
+            return mess.emoji
+
+
 def load_server_settings():
     zeph.server_settings.clear()
     with open("storage/server_settings.json", "r") as f:
@@ -173,6 +242,9 @@ class ServerSettings:
         self.autoroles = kwargs.pop("autoroles", [])
         self.autorole_bots = kwargs.pop("autorole_bots", False)
         self.selfroles = kwargs.pop("selfroles", [])
+
+        self.h_default = kwargs.pop("h_default", True)
+        self.h_exceptions = kwargs.pop("h_exceptions", [])
 
     @property
     def notify_join(self):
@@ -206,7 +278,9 @@ class ServerSettings:
             "command_prefixes": self.command_prefixes,
             "selfroles": self.selfroles,
             "autoroles": self.autoroles,
-            "autorole_bots": self.autorole_bots
+            "autorole_bots": self.autorole_bots,
+            "h_default": self.h_default,
+            "h_exceptions": self.h_exceptions
         }
 
     @property
@@ -247,14 +321,17 @@ class ServerSettings:
     async def send_unban(self, member: discord.Member):
         await self.welcome_channel.send(embed=self.welcome_con(member, "has been unbanned.", hexcol("2244dd")))
 
+    def can_h_in(self, channel: discord.TextChannel):
+        return self.h_default ^ (channel.id in self.h_exceptions)
+
 
 config = Emol(":gear:", hexcol("66757F"))
 
 
 class SConfigInterpreter(Interpreter):
     redirects = {
-        "prefix": "prefixes", "h": "help", "w": "welcome", "p": "prefixes", "selfrole": "selfroles", "sr": "selfroles",
-        "autorole": "autoroles", "ar": "autoroles"
+        "prefix": "prefixes", "w": "welcome", "p": "prefixes", "selfrole": "selfroles", "sr": "selfroles",
+        "autorole": "autoroles", "ar": "autoroles", "h": "help"
     }
 
     @property
@@ -286,13 +363,18 @@ class SConfigInterpreter(Interpreter):
                          "`z!sc autoroles edit` allows you to set and un-set specific roles as auto-assigned.\n\n"
                          "`z!sc autoroles reassign` automatically reassigns all autoroles to all current members.\n\n"
                          "`z!sc autoroles clear` turns off all autoroles.\n\n"
-                         "`z!sc autoroles bots <enable | disable>` sets whether to give autoroles to bots."
+                         "`z!sc autoroles bots <enable | disable>` sets whether to give autoroles to bots.",
+            "aitch": f"Controls for Zeph's {zeph.emojis['aitch']} feature.\n\n"
+                     f"**`z!sc aitch`** shows the current settings, as well as all controls.\n\n"
+                     f"`z!sc aitch enable/disable all` enables or disables the function in all channels at once.\n\n"
+                     f"`z!sc aitch channels` allows you to enable or disable the function in specific channels."
         }
         desc_dict = {
             "welcome": "Controls for welcome messages.",
             "prefixes": "Controls for custom command prefixes.",
             "selfroles": "Controls for self-assignable roles.",
-            "autoroles": "Controls for automatically-assigned roles."
+            "autoroles": "Controls for automatically-assigned roles.",
+            "aitch": f"Controls for Zeph's {zeph.emojis['aitch']} feature."
         }
 
         if len(args) == 0 or (args[0].lower() not in help_dict and args[0].lower() not in self.redirects):
@@ -697,6 +779,63 @@ class SConfigInterpreter(Interpreter):
         else:
             raise commands.CommandError(f"Invalid argument `{args[0]}`.")
 
+    async def _aitch(self, *args: str):
+        if not args:
+            exceptions = sorted([zeph.get_channel(g) for g in self.settings.h_exceptions], key=lambda c: c.position)
+            if exceptions:
+                embed_fs = {
+                    "Default": f"{zeph.emojis['aitch']} is currently **{abled(self.settings.h_default).lower()}** in "
+                    f"most channels, and will be initially {abled(self.settings.h_default).lower()} in new channels.",
+                    "Exceptions": f"{zeph.emojis['aitch']} is currently **{abled(not self.settings.h_default).lower()}"
+                    f"** in **{len(exceptions)} {plural('channel', len(exceptions))}:** "
+                    f"{', '.join(g.mention for g in exceptions[:10])}"
+                    + (f", and **{round(len(exceptions) - 10)}** more" if len(exceptions) > 10 else "")
+                }
+            else:
+                embed_fs = {
+                    "Default": f"{zeph.emojis['aitch']} is currently **{abled(self.settings.h_default).lower()}** in "
+                    f"**all channels**, and will be initially {abled(self.settings.h_default).lower()} in new channels."
+                }
+
+            return await config.send(
+                self.ctx, "Aitch Settings",
+                d="Zephyrus will respond with " + zeph.strings["aitch"] +
+                  " to messages consisting of solely `h`. This is on by default, but can be disabled.\n\n"
+                  "To enable or disable across all channels at once:\n`z!sc aitch enable/disable`\n"
+                  "To enable or disable on a channel-by-channel basis:\n`z!sc aitch channels`",
+                fs=embed_fs
+            )
+
+        elif args[0].lower() == "enable":
+            if self.settings.h_default is True:
+                if self.settings.h_exceptions:
+                    self.settings.h_exceptions.clear()
+                    return await succ.send(self.ctx, f"{zeph.emojis['aitch']} enabled in all channels.")
+                else:
+                    return await config.send(self.ctx, f"{zeph.emojis['aitch']} is already enabled in all channels.")
+            else:
+                self.settings.h_default = True
+                self.settings.h_exceptions.clear()
+                return await succ.send(self.ctx, f"{zeph.emojis['aitch']} enabled in all channels.")
+
+        elif args[0].lower() == "disable":
+            if self.settings.h_default is False:
+                if self.settings.h_exceptions:
+                    self.settings.h_exceptions.clear()
+                    return await succ.send(self.ctx, f"{zeph.emojis['aitch']} disabled in all channels.")
+                else:
+                    return await config.send(self.ctx, f"{zeph.emojis['aitch']} is already disabled in all channels.")
+            else:
+                self.settings.h_default = False
+                self.settings.h_exceptions.clear()
+                return await succ.send(self.ctx, f"{zeph.emojis['aitch']} disabled in all channels.")
+
+        elif args[0].lower() in ["channel", "channels"]:
+            return await AitchNavigator(self.ctx).run(self.ctx)
+
+        else:
+            raise commands.CommandError(f"Invalid argument `{args[0]}`.")
+
 
 @zeph.command(
     aliases=["sc"], usage="z!sconfig help",
@@ -705,7 +844,7 @@ class SConfigInterpreter(Interpreter):
          "messages, custom prefixes, etc. Use `z!sconfig help` for more specific details."
 )
 async def sconfig(ctx: commands.Context, func: str = None, *args: str):
-    if not ctx.author.guild_permissions.administrator:
+    if not ctx.author.guild_permissions.manage_guild:
         raise commands.CommandError("You don't have permission to do that.")
 
     if not func:
