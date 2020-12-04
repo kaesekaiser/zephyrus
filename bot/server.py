@@ -844,6 +844,9 @@ class SConfigInterpreter(Interpreter):
          "messages, custom prefixes, etc. Use `z!sconfig help` for more specific details."
 )
 async def sconfig(ctx: commands.Context, func: str = None, *args: str):
+    if not ctx.guild:
+        raise commands.CommandError("This command can only be run in a server.")
+
     if not ctx.author.guild_permissions.manage_guild:
         raise commands.CommandError("You don't have permission to do that.")
 
