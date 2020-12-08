@@ -26,18 +26,17 @@ async def initialize_planes():
     description="A shipping simulator I'm calling Planes.",
     help="Lets you play a game I'm just calling Planes. It's a sort of semi-idle shipping simulator - really similar "
          "to a mobile game called Pocket Planes - where you buy airports and airplanes, and use them to take jobs "
-         "back and forth for profit. There's many, many sub-commands, so do ``z!planes help`` for more info on what "
+         "back and forth for profit. There's many, many sub-commands, so do `z!planes help` for more info on what "
          "exactly you can do, and how to do it."
 )
 async def planes(ctx: commands.Context, func: str = None, *args: str):
     if not func:
-        print(len(pn.cities), len(pn.countries))
         return await plane.send(
             ctx, "Planes",
             d="I don't particularly know what this is. If you've ever played Pocket Planes on mobile, it's essentially "
               "that, but a tiny bit different. There's a lot more airports, for one, and there's a distinct lack of a "
-              "screen, because it's Discord. I'm working on that. For now though, use ``z!planes map`` to view all "
-              "the airports, and ``z!planes help`` to view all the possible commands.\n\n"
+              "screen, because it's Discord. I'm working on that. For now though, use `z!planes map` to view all "
+              "the airports, and `z!planes help` to view all the possible commands.\n\n"
               "Important side note: One in-game hour is equal to one real-life minute. Everything else is to scale."
         )
 
@@ -74,7 +73,7 @@ class PlanesInterpreter(Interpreter):
 
     @staticmethod
     def invalid_city(s: str):
-        return f"invalid city {s.lower()}. Did you mean {pn.cities[best_guess(s.lower(), pn.cities)].name}?"
+        return f"Invalid city {s.lower()}. Did you mean {pn.cities[best_guess(s.lower(), pn.cities)].name}?"
 
     @staticmethod
     def valid_job(s: str):
@@ -130,7 +129,7 @@ class PlanesInterpreter(Interpreter):
             print(f"generating jobs for {city.name}")
             city.rpj()
         gen = [g for g in city.jobs if g.code not in self.user.jobs and fil(g)]
-        gen = [f"**``[{g.code}]``**  {self.oc(g.destination, True)}  (Ȼ{g.pay})" for g in gen]
+        gen = [f"**`[{g.code}]`**  {self.oc(g.destination, True)}  (Ȼ{g.pay})" for g in gen]
         reset = tm // 900 * 900
         if tm - city.job_reset >= 900:
             city.job_reset = reset
@@ -151,48 +150,48 @@ class PlanesInterpreter(Interpreter):
 
     async def _help(self, *args):
         help_dict = {
-            "new": "``z!planes new`` starts a new game.",
-            "tutorial": "``z!planes tutorial`` links to the tutorial.",
-            "map": "``z!planes map`` links to the airport map.",
-            "profile": "``z!planes profile`` shows your country licenses and credit balance.",
-            "fleet": "``z!planes fleet`` lists your owned planes.\n"
-                     "``z!planes fleet <plane>`` shows specs for a specific plane.\n"
-                     "``z!planes fleet sell <plane>`` sells a plane for 25% of its purchase value, including "
+            "new": "`z!planes new` starts a new game.",
+            "tutorial": "`z!planes tutorial` links to the tutorial.",
+            "map": "`z!planes map` links to the airport map.",
+            "profile": "`z!planes profile` shows your country licenses and credit balance.",
+            "fleet": "`z!planes fleet` lists your owned planes.\n"
+                     "`z!planes fleet <plane>` shows specs for a specific plane.\n"
+                     "`z!planes fleet sell <plane>` sells a plane for 25% of its purchase value, including "
                      "money spent on upgrades.",
-            "country": "``z!planes country <country>`` shows information for a country.",
-            "airport": "``z!planes airport <airport>`` shows information for an airport. You can use the :mag: button "
+            "country": "`z!planes country <country>` shows information for a country.",
+            "airport": "`z!planes airport <airport>` shows information for an airport. You can use the :mag: button "
                        "to toggle the zoom on the minimap that appears.\n"
-                       "``z!planes airport sell <airport>`` sells the airport for 25% of its purchase value.",
-            "model": "``z!planes model <model>`` shows specs for a plane model.",
-            "dist": "``z!planes dist <from> <to>`` returns the distance between two airports.\n"
-                    "``z!planes dist <airports>`` returns the length of a path along multiple airports.",
-            "jobs": "``z!planes jobs <airport>`` lists available jobs in an airport.\n"
-                    "``z!planes jobs <airport> all`` lists all jobs headed to all airports, "
+                       "`z!planes airport sell <airport>` sells the airport for 25% of its purchase value.",
+            "model": "`z!planes model <model>` shows specs for a plane model.",
+            "dist": "`z!planes dist <from> <to>` returns the distance between two airports.\n"
+                    "`z!planes dist <airports>` returns the length of a path along multiple airports.",
+            "jobs": "`z!planes jobs <airport>` lists available jobs in an airport.\n"
+                    "`z!planes jobs <airport> all` lists all jobs headed to all airports, "
                     "including those you don't own.\n"
-                    "``z!planes jobs <airport> to <city/country>`` lists all jobs headed to a certain city or country.",
-            "launch": "``z!planes launch <plane> <airports>`` launches a plane along a path. Be sure to "
+                    "`z!planes jobs <airport> to <city/country>` lists all jobs headed to a certain city or country.",
+            "launch": "`z!planes launch <plane> <airports>` launches a plane along a path. Be sure to "
                       "keep fuel price in mind. The ETA in the launch message links to a countdown timer "
                       "to arrival, and Zephyrus will notify you when it's arrived.\n\n"
-                      "You can chain airports using the ``launch`` command. For example:\n"
-                      "``z!planes launch meadowlark washington newyork boston`` will tell Meadowlark to "
+                      "You can chain airports using the `launch` command. For example:\n"
+                      "`z!planes launch meadowlark washington newyork boston` will tell Meadowlark to "
                       "follow the path from its current location to Washington, then NewYork, then Boston, "
                       "without stopping. Planes will automatically unload jobs along the way.",
-            "buy": "``z!planes buy airport <airports>`` purchases the given airport(s), provided you have "
-                   "enough funds. You can also use the shortcut ``z!p b a``.\n"
-                   "``z!planes buy country <countries>`` does the same, but for countries. You can use the shortcut "
-                   "``z!p b c``.\n"
-                   "``z!planes buy plane <model>`` buys a new plane of the given model. You can only buy one plane at a"
-                   "time, and you can use the shortcut ``z!p b p``.",
-            "load": "``z!planes load <job codes>`` loads jobs onto a plane. The job code is the "
+            "buy": "`z!planes buy airport <airports>` purchases the given airport(s), provided you have "
+                   "enough funds. You can also use the shortcut `z!p b a`.\n"
+                   "`z!planes buy country <countries>` does the same, but for countries. You can use the shortcut "
+                   "`z!p b c`.\n"
+                   "`z!planes buy plane <model>` buys a new plane of the given model. You can only buy one plane at a"
+                   "time, and you can use the shortcut `z!p b p`.",
+            "load": "`z!planes load <job codes>` loads jobs onto a plane. The job code is the "
                     "five-letter/number code on the left side of a job list.",
-            "unload": "``z!planes unload <plane> <job codes>`` unloads jobs from a plane without pay, "
+            "unload": "`z!planes unload <plane> <job codes>` unloads jobs from a plane without pay, "
                       "returning it to its original source.",
-            "rename": "``z!planes rename <plane> <new name>`` renames plane. Names can only contain "
+            "rename": "`z!planes rename <plane> <new name>` renames plane. Names can only contain "
                       "alphanumeric characters, dashes, and underscores.",
-            "market": "``z!planes market`` shows prices for all available plane models. Plane prices fluctuate daily; "
+            "market": "`z!planes market` shows prices for all available plane models. Plane prices fluctuate daily; "
                       "the indicator beside the price tells you whether the price for that model increased or "
                       "decreased today.",
-            "eta": "``z!planes eta <plane>`` links to the timer for a plane's arrival.",
+            "eta": "`z!planes eta <plane>` links to the timer for a plane's arrival.",
             "search": "`z!planes search [owned | unowned] [criteria...]` is a robust search/sort method for Planes's "
                       "1100-some airports. At some point in the near future, I'll write a more in-depth tutorial. The "
                       "following search parameters can be used:\n\n"
@@ -216,18 +215,18 @@ class PlanesInterpreter(Interpreter):
                       "\n\nFor example, `z!p s o in:us in:canada near:detroit` returns a list of owned airports in the "
                       "United States or Canada, sorted by distance from Detroit. All search parameters are optional; "
                       "`z!p s` returns a list of all airports.",
-            "specs": "``z!planes specs <plane>`` shows the airspeed, fuel consumption, fuel capacity, and "
+            "specs": "`z!planes specs <plane>` shows the airspeed, fuel consumption, fuel capacity, and "
                      "upgrade levels for a plane you own.",
-            "upgrade": "``z!planes upgrade <plane> <stat>`` allows you to upgrade a plane. Upgrades cost Ȼ20,000 "
+            "upgrade": "`z!planes upgrade <plane> <stat>` allows you to upgrade a plane. Upgrades cost Ȼ20,000 "
                        "initially, but each subsequent upgrade is twice as expensive as the last.\n"
-                       "``z!planes upgrade <plane> power`` increases a plane's airspeed by 25%, but also "
+                       "`z!planes upgrade <plane> power` increases a plane's airspeed by 25%, but also "
                        "increases its fuel consumption by 25%, so its range is not affected.\n"
-                       "``z!planes upgrade <plane> tank`` increases a plane's fuel capacity by 25%, which "
+                       "`z!planes upgrade <plane> tank` increases a plane's fuel capacity by 25%, which "
                        "increases its range but does not affect its airspeed or fuel consumption.",
-            "buyout": "``z!planes buyout <country>`` buys as many airports in a certain country as you can afford, "
+            "buyout": "`z!planes buyout <country>` buys as many airports in a certain country as you can afford, "
                       "starting with the biggest airports. For your personal convenience, so that you can quickly "
                       "expand into a new market without having to manually buy a ton of airports.\n"
-                      "``z!planes buyout <country> <number>`` does the same, but will only buy, at most, ``<number>`` "
+                      "`z!planes buyout <country> <number>` does the same, but will only buy, at most, `<number>` "
                       "airports.",
         }
         desc_dict = {
@@ -262,7 +261,7 @@ class PlanesInterpreter(Interpreter):
             return await plane.send(
                 self.ctx, "z!planes help",
                 d="Available functions:\n\n" + "\n".join(f"{get_command(g)} - {j}" for g, j in desc_dict.items()) +
-                "\n\nFor information on how to use these, use ``z!planes help <function>``."
+                "\n\nFor information on how to use these, use `z!planes help <function>`."
             )
 
         ret = self.redirects.get(args[0].lower(), args[0].lower())
@@ -328,7 +327,7 @@ class PlanesInterpreter(Interpreter):
 
     async def _country(self, *args):
         if len(args) == 0:
-            raise commands.CommandError("Format `z!p country <country>`")
+            raise commands.CommandError("Format: `z!p country <country>`")
 
         try:
             country = pn.find_country(args[0])
@@ -606,7 +605,7 @@ class PlanesInterpreter(Interpreter):
             jobs = args[1:]
         for i in jobs:
             if i.upper() not in craft.jobs:
-                raise commands.CommandError(f"invalid job code ``{i.upper()}``")
+                raise commands.CommandError(f"invalid job code `{i.upper()}`")
 
         for i in jobs:
             craft.unload(i.upper())
@@ -692,7 +691,7 @@ class PlanesInterpreter(Interpreter):
         try:
             country = pn.find_country(args[0])
         except KeyError:
-            raise commands.CommandError(f"invalid country ``{args[0]}``")
+            raise commands.CommandError(f"invalid country `{args[0]}`")
 
         assert isinstance(country, pn.Country)
         if country.name not in self.user.countries:
@@ -737,7 +736,7 @@ class PlanesInterpreter(Interpreter):
     async def _restart(self, *args):
         try:
             assert await confirm(
-                "``WARNING:`` This will completely and absolutely wipe your Planes data.", self.ctx, self.au,
+                "`WARNING:` This will completely and absolutely wipe your Planes data.", self.ctx, self.au,
                 add_info="All progress will be lost, and you won't be able to get it back, except through your own "
                          "blood, sweat, and tears. Are you sure you want to start over?\n", yes="wipe everything"
             )
@@ -747,7 +746,7 @@ class PlanesInterpreter(Interpreter):
             mess = await plane.send(self.ctx, "Alright, one moment...")
             await asyncio.sleep(2 + random() * 2)
             del zeph.planeUsers[self.au.id]
-            return await succ.edit(mess, "Done.", d="Call ``z!planes new`` to start anew.")
+            return await succ.edit(mess, "Done.", d="Call `z!planes new` to start anew.")
 
     async def _buy(self, *args):
         if len(args) < 2:

@@ -8,7 +8,7 @@ class HelpNavigator(Navigator):
         return self.emol.con(
             self.title.format(page=self.page, pgs=self.pgs),
             d=none_list(page_list(self.table, self.per, self.page), "\n") +
-            "\n\nFor help with any of these, use ``z!help [command]``.",
+            "\n\nFor help with any of these, use `z!help [command]`.",
             **self.kwargs
         )
 
@@ -186,7 +186,7 @@ async def eval_command(ctx: commands.Context, *, text: str):
 @zeph.command(
     hidden=True, name="send", usage="z!send <channel> <message...>",
     description="Sends a message to a given channel.",
-    help="Sends ``<message>`` to ``<channel>``."
+    help="Sends `<message>` to `<channel>`."
 )
 async def send_command(ctx: commands.Context, channel_id: int, *, message: str):
     admin_check(ctx)
@@ -302,8 +302,8 @@ async def unlink_command(ctx: commands.Context):
 @zeph.command(
     hidden=True, name="presence", aliases=["pres"], usage="z!presence <type> <activity...> [url]",
     description="Updates the bot's presence.",
-    help="Update's the bot's presence to ``<activity>``. ``<type>`` must be ``playing``, ``listening``, ``streaming``,"
-         "or ``watching``. If a URL is included (for a Twitch stream), prefix it with ``url=``."
+    help="Update's the bot's presence to `<activity>`. `<type>` must be `playing`, `listening`, `streaming`,"
+         "or `watching`. If a URL is included (for a Twitch stream), prefix it with `url=`."
 )
 async def presence_command(ctx: commands.Context, activity_type: str, *, activity: str):
     admin_check(ctx)
@@ -315,7 +315,7 @@ async def presence_command(ctx: commands.Context, activity_type: str, *, activit
         "watching": discord.ActivityType.watching
     }
     if activity_type.lower() not in types:
-        raise commands.CommandError("Type must be ``playing``, ``listening``, or ``watching``.")
+        raise commands.CommandError("Type must be `playing`, `listening`, or `watching`.")
 
     if activity.split()[-1][:4] == "url=":
         url = activity.split()[-1][4:]
@@ -363,7 +363,7 @@ async def on_command_error(ctx: commands.Context, exception):
     if type(exception) in [commands.errors.MissingRequiredArgument, commands.errors.BadArgument,
                            commands.errors.TooManyArguments]:
         await err.send(
-            ctx, f"Format: ``{'`` or ``'.join(ctx.command.usage.splitlines())}``"
+            ctx, f"Format: `{'` or `'.join(ctx.command.usage.splitlines())}`"
         )
     elif type(exception) == commands.errors.CommandNotFound:
         pass
@@ -374,7 +374,7 @@ async def on_command_error(ctx: commands.Context, exception):
             await err.send(ctx, "Error!", desc=str(exception))
     else:
         try:
-            await err.send(ctx, f"``{str(exception)}``")
+            await err.send(ctx, f"`{str(exception)}`")
         except discord.errors.HTTPException:
             await err.send(ctx, "Error!", desc=str(exception))
         raise exception

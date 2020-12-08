@@ -86,7 +86,7 @@ class Epitaph(ep.Civ):
     description="Runs a game of [Max Kreminski's Epitaph](https://mkremins.github.io/epitaph/).",
     help="Runs a game of [Max Kreminski's Epitaph](https://mkremins.github.io/epitaph/). As an "
          "ascended civilization, lead a burgeoning planet to join you in the stars. Play the original.\n\n"
-         "``z!epitaph handsoff`` runs a game without player input."
+         "`z!epitaph handsoff` runs a game without player input."
 )
 async def epitaph(ctx: commands.Context, *, text: str = ""):
     if text and text.casefold() != "handsoff":

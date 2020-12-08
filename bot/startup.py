@@ -442,7 +442,7 @@ class Interpreter:
         try:
             functions["_" + self.redirects.get(func, func)]
         except KeyError:
-            raise commands.CommandError(f"unrecognized function ``{func}``")
+            raise commands.CommandError(f"Unrecognized function `{func}`.")
         else:
             func = self.redirects.get(func, func)
             if asyncio.iscoroutinefunction(self.before_run):

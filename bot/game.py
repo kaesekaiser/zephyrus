@@ -44,7 +44,7 @@ async def connect4(ctx: commands.Context, opponent: User):
                 f"{ctx.author.display_name} is {zeph.emojis['checkeryellow']}."
         players = {1: opponent, -1: ctx.author}
     await four.edit(
-        init, embed, d="To make a move, reply with the **column number**. Left is ``1``, right is ``7``.\n"
+        init, embed, d="To make a move, reply with the **column number**. Left is `1`, right is `7`.\n"
                        "If the board gets too far away, reply with the ⏬ emoji to bring it back down."
     )
     await asyncio.sleep(2)
@@ -96,9 +96,9 @@ async def connect4(ctx: commands.Context, opponent: User):
     description="Play a game of Jotto against the bot.",
     help="Plays a game of Jotto. Similar to Mastermind, but with words. I'll choose a random four-letter word, "
          "and you start guessing other four-letter words. I'll tell you how many of the letters in your guess "
-         "are also in my word. The goal is to figure out my word.\n\ne.g. if my word is ``area``, then the guess "
-         "``cats`` returns ``1``, ``near`` returns ``3``, and ``away`` returns ``2``. It doesn't matter what "
-         "position the letters are in - ``acts`` and ``cats`` are functionally the same guess."
+         "are also in my word. The goal is to figure out my word.\n\ne.g. if my word is `area`, then the guess "
+         "`cats` returns `1`, `near` returns `3`, and `away` returns `2`. It doesn't matter what "
+         "position the letters are in - `acts` and `cats` are functionally the same guess."
 )
 async def jotto(ctx: commands.Context):
     jot = ClientEmol(":green_book:", hexcol("65c245"), ctx)
@@ -106,7 +106,7 @@ async def jotto(ctx: commands.Context):
     game = jo.Jotto(choice(wr.wordDict[4]))
     await jot.say("The word has been chosen. Start guessing!",
                   d="To guess, reply with a four-letter word. To see your guess history, say "
-                    "``history``. To forfeit, say ``forfeit``.")
+                    "`history`. To forfeit, say `forfeit`.")
 
     def pred(m: discord.Message):
         return m.author == ctx.author and m.channel == ctx.channel and \
@@ -119,7 +119,7 @@ async def jotto(ctx: commands.Context):
             return await jot.say("Jotto game timed out.")
         else:
             if guess == "history":
-                await jot.say("Guess History", d="\n".join([f"**``{g}``**: ``{j}``" for g, j in game.history.items()]))
+                await jot.say("Guess History", d="\n".join([f"**`{g}`**: `{j}`" for g, j in game.history.items()]))
                 continue
             if guess == "forfeit":
                 return await jot.say(f"The word was **{game.word}**.")
@@ -134,7 +134,7 @@ async def jotto(ctx: commands.Context):
             if score == 4:
                 return await jot.say(f"Correct! It took you **{len(game.history)}** guesses.")
             await jot.say(f"There {'is' if score == 1 else 'are'} {hm.numbers[game.guess(guess)]} "
-                          f"correct {plural('letter', score)} in ``{guess}``.")
+                          f"correct {plural('letter', score)} in `{guess}`.")
 
 
 @zeph.command(
@@ -308,7 +308,7 @@ async def duel(ctx: commands.Context, opponent: User):
     if not await confirm(f"{opponent.display_name}, do you accept the challenge?", ctx, opponent,
                          emol=du, yes="accept", no="chicken out"):
         return await du.say(f"{opponent.display_name} chickened out.")
-    await du.say("A duel has been declared!", d="When I say \"draw\", send the gun emoji (``:gun:`` :gun:) "
+    await du.say("A duel has been declared!", d="When I say \"draw\", send the gun emoji (`:gun:` :gun:) "
                                                 "in chat as fast as you can.")
     await asyncio.sleep(2)
     await du.say("Ready...")
@@ -509,13 +509,13 @@ class DiscordRisk(rk.Game):
             transfer_str = ""
         self.rewrite()
         await self.say(f"Battle of {to.name}",
-                       d=f"``ATTACKER:`` {attack_str}\n``DEFENDER:`` {defense_str}\n\n{losses_str}{transfer_str}")
+                       d=f"`ATTACKER:` {attack_str}\n`DEFENDER:` {defense_str}\n\n{losses_str}{transfer_str}")
 
-    async def quit(self, reason: str="Quitting game."):
+    async def quit(self, reason: str = "Quitting game."):
         return await self.say(reason, d="Use the password at the bottom of the screen if you want to come back "
                                         "to this game.")
 
-    async def wait_for(self, timeout: int=None, author: User=None, check: callable=None):
+    async def wait_for(self, timeout: int = None, author: User = None, check: callable = None):
         def pred(mr: MR, u: User):
             if type(mr) == discord.Message:
                 return (author is None or u == author) and mr.channel == self.dest.channel
@@ -611,7 +611,7 @@ class DiscordRisk(rk.Game):
                 while True:
                     await self.update_status("Reinforcement")
                     await self.say(f"You have {reinforcements} reinforcements remaining.",
-                                   d=f"To reinforce, say ``<province> <number>``. Hit {zeph.strings['yes']} if "
+                                   d=f"To reinforce, say `<province> <number>`. Hit {zeph.strings['yes']} if "
                                      f"you're done reinforcing before you've used all your troops.")
                     command = await self.wait_for(
                         timeout=300,  # author=self.users[player],
@@ -645,8 +645,8 @@ class DiscordRisk(rk.Game):
                 await asyncio.sleep(3)
 
             # ATTACK PHASE
-            await self.say("ATTACK PHASE", d=f"To attack, say ``<target> from <source> with "
-                                             f"<number>``. When you're done, hit {zeph.strings['yes']}.")
+            await self.say("ATTACK PHASE", d=f"To attack, say `<target> from <source> with "
+                                             f"<number>`. When you're done, hit {zeph.strings['yes']}.")
             while True:
                 await self.update_status("Attack")
                 command = await self.wait_for(
@@ -664,7 +664,7 @@ class DiscordRisk(rk.Game):
                 )
 
             # MOVE PHASE
-            await self.say("MOVE PHASE", d=f"To move, say ``<number> from <source> to <destination>``. "
+            await self.say("MOVE PHASE", d=f"To move, say `<number> from <source> to <destination>`. "
                                            f"When you're done moving, hit {zeph.strings['yes']}.")
             while True:
                 await self.update_status("Move")

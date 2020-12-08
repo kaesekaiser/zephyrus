@@ -16,7 +16,7 @@ class Die:
     def __init__(self, s: str):
         if search(r"[^0-9d!+\-><=f%lh]", s.lower()):
             wrong = findall(r"[^0-9d!+\-><=f%lh]", s.lower())
-            raise BadString(f"Invalid characters: ``{'``, ``'.join(wrong)}``")
+            raise BadString(f"Invalid characters: `{'`, `'.join(wrong)}`")
 
         self.str = s.lower()
 
@@ -80,7 +80,7 @@ class Die:
             elif search(r"-l", self.str):
                 self.drop = "-L"
             else:
-                raise BadString("Invalid ``-`` argument.")
+                raise BadString("Invalid `-` argument.")
         else:
             self.drop = ""
         if self.drop and self.count == 1:
@@ -90,7 +90,7 @@ class Die:
             if search(r"\+[0-9]+\Z", self.str):
                 self.add = int(findall(r"(?<=\+)[0-9]+\Z", self.str)[0])
             else:
-                raise BadString("Invalid ``+`` argument. ``+`` must be at the end of a string.")
+                raise BadString("Invalid `+` argument. `+` must be at the end of a string.")
         elif search(r"-[0-9]+\Z", self.str):  # subtracting n from total
             self.add = -int(findall(r"(?<=-)[0-9]+\Z", self.str)[0])
         else:

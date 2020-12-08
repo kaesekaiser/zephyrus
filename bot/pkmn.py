@@ -1,27 +1,8 @@
-from utils import *
-from pokemon import mons as pk
-import json
+from pkmn_battle import *
 
 
-with open("pokemon/dex.json", "r") as file:
-    dexEntries = json.load(file)
-
-
-ballColors = {
-    "beast": "8FD5F6", "cherish": "E84535", "dive": "81C7EF", "dream": "F4B4D0", "dusk": "30A241", "fast": "F2C63F",
-    "friend": "80BA40", "great": "3B82C4", "heal": "E95098", "heavy": "9B9EA4", "level": "F5D617", "love": "E489B8",
-    "lure": "49B0BE", "luxury": "D29936", "master": "7E308E", "moon": "00A6BA", "nest": "7EBF41", "net": "0998B4",
-    "park": "F4D050", "poke": "F18E38", "premier": "FFFFFF", "quick": "73B5E4", "repeat": "FFF338", "safari": "307D54",
-    "sport": "F18E38", "timer": "FFFFFF", "ultra": "FDD23C"
-}
-
-
-def ball_emol():
-    ret = choice(list(ballColors))
-    return Emol(zeph.emojis[f"{ret}_ball"], hexcol(ballColors[ret]))
-
-
-def find_mon(s: str):
+def find_mon(s: str, **kwargs):
+    """Use **kwargs to pass additional arguments to the Mon.__init__() statement."""
     for mon in pk.natDex:
         if set(pk.fix(mon, "_").split("_")) <= set(pk.fix(s, "_").split("_")):
             ret = mon, pk.fix("-".join(re.split(pk.fix(mon), pk.fix(s))))
@@ -31,12 +12,21 @@ def find_mon(s: str):
             ret = "Nidoran-F", ""
         else:
             guess = sorted(list(pk.fixedDex), key=lambda c: wr.levenshtein(c, pk.fix(s)))
-            raise commands.CommandError(f"``{s}`` not found. Did you mean {pk.fixedDex[guess[0]]}?")
+            raise commands.CommandError(f"`{s}` not found. Did you mean {pk.fixedDex[guess[0]]}?")
     for form in pk.natDex[ret[0]].forms:
         if set(pk.fix(form, "_").split("_")) <= set(pk.fix(s, "_").split("_")):
-            return pk.Mon(ret[0], form=form)
+            return pk.Mon(ret[0], form=form, **kwargs)
     else:
-        return pk.Mon(ret[0])
+        return pk.Mon(ret[0], **kwargs)
+
+
+def find_move(s: str):
+    try:
+        return [j.copy() for g, j in pk.moveDex.items() if pk.fix(g) == pk.fix(s)][0]
+    except IndexError:
+        lis = {pk.fix(g): g for g in pk.moveDex}
+        guess = sorted(list(lis), key=lambda c: wr.levenshtein(c, pk.fix(s)))
+        raise commands.CommandError(f"`{s}` not found. Did you mean {lis[guess[0]]}?")
 
 
 def dex_entry(mon: pk.Mon):
@@ -178,11 +168,7 @@ class DexNavigator(Navigator):
                 'reaction_or_message', timeout=300, check=pred
             ))[0]
             if isinstance(mess, discord.Message):
-                try:
-                    await mess.delete()
-                except discord.HTTPException:
-                    pass
-
+                await mess.delete()
                 try:
                     self.jumpDest = int(mess.content)
                 except ValueError:
@@ -416,11 +402,7 @@ class DexSearchNavigator(Navigator):
                 'reaction_or_message', timeout=300, check=pred
             ))[0]
             if isinstance(mess, discord.Message):
-                try:
-                    await mess.delete()
-                except discord.HTTPException:
-                    pass
-
+                await mess.delete()
                 self.apply_settings_change(*mess.content.lower().split(":"))
                 self.reapply_search()
                 return "wait"
@@ -436,10 +418,10 @@ class DexSearchNavigator(Navigator):
 @zeph.command(
     aliases=["dex"], usage="z!pokedex [pok\u00e9mon | dex number]\nz!pokedex help\nz!pokedex search [terms...]",
     description="Browses the Pok\u00e9dex.",
-    help="Opens the Pok\u00e9dex! ``z!dex [pok\u00e9mon...]`` or ``z!dex [dex number]`` will start you at a "
+    help="Opens the Pok\u00e9dex! `z!dex [pok\u00e9mon...]` or `z!dex [dex number]` will start you at a "
          "specific Pok\u00e9mon; otherwise, it starts at everyone's favorite, Bulbasaur. "
-         "``z!dex help`` gives help with navigating the dex.\n\nYou can even name a specific form of a "
-         "Pok\u00e9mon - e.g. ``z!dex giratina origin`` starts at Giratina, in Origin Forme.\n\n"
+         "`z!dex help` gives help with navigating the dex.\n\nYou can even name a specific form of a "
+         "Pok\u00e9mon - e.g. `z!dex giratina origin` starts at Giratina, in Origin Forme.\n\n"
          "`z!dex search` will lead you to a separate menu which lets you sort and filter through the Pok\u00e9dex. "
          "You can change search terms from there; you can also include the search terms in your command, e.g. "
          "`z!dex search type:fire gen:5`."
@@ -518,10 +500,10 @@ class EffNavigator(Navigator):
 
     @property
     def con(self):
-        second_type = f"``{self.type2}`` {zeph.emojis[self.type2.title()]}" if self.type2 else "``None``"
+        second_type = f"`{self.type2}` {zeph.emojis[self.type2.title()]}" if self.type2 else "`None`"
         return self.emol.con(
             "Type Effectiveness", thumb=self.image,
-            d=f"{zeph.emojis['left1']} [``{self.type1}`` {zeph.emojis[self.type1.title()]}] {zeph.emojis['right1']} / "
+            d=f"{zeph.emojis['left1']} [`{self.type1}` {zeph.emojis[self.type1.title()]}] {zeph.emojis['right1']} / "
               f"{zeph.emojis['left2']} [{second_type}] {zeph.emojis['right2']}\n\n" +
               "\n".join([f"**{g}:** {j}" for g, j in self.eff_dict.items()])
         )
@@ -531,7 +513,7 @@ class EffNavigator(Navigator):
     aliases=["pkmn", "pk"], usage="z!pokemon help",
     description="Performs various Pok\u00e9mon-related functions.",
     help="Performs a variety of Pok\u00e9mon-related functions. I'm continually adding to this, so just use "
-         "``z!pokemon help`` for more details."
+         "`z!pokemon help` for more details."
 )
 async def pokemon(ctx: commands.Context, func: str = None, *args):
     if not func:
@@ -543,24 +525,37 @@ async def pokemon(ctx: commands.Context, func: str = None, *args):
     return await PokemonInterpreter(ctx).run(str(func).lower(), *args)
 
 
+def type_emol(typ: str):
+    return Emol(zeph.emojis[typ.title()], hexcol(pk.typeColors[typ]))
+
+
 class PokemonInterpreter(Interpreter):
-    redirects = {"t": "type", "e": "eff"}
+    redirects = {"t": "type", "e": "eff", "m": "move", "s": "test"}
 
     @staticmethod
-    def type_emol(typ: str):
-        return Emol(zeph.emojis[typ.title()], hexcol(pk.typeColors[typ]))
+    def move_embed(move: pk.Move):
+        priority = f" / **Priority:** {move.priority}" if move.priority else ""
+        return type_emol(move.type).con(
+            move.name,
+            d=f"**Type:** {move.type} / **Category:** {move.category}\n"
+            f"**Power:** {move.power_str} / **Accuracy:** {move.accuracy_str} / **PP:** {move.pp}{priority}\n"
+            f"**Target:** {move.target}\n\n{move.description}"
+        )
 
     async def _help(self, *args):
         help_dict = {
-            "type": "``z!pokemon type <type>`` shows type effectiveness (offense and defense) for a given type.",
-            "eff": "``z!pokemon eff`` checks defensive type matchups against a type combination. Use the buttons "
+            "type": "`z!pokemon type <type>` shows type effectiveness (offense and defense) for a given type.",
+            "eff": "`z!pokemon eff` checks defensive type matchups against a type combination. Use the buttons "
                    f"({zeph.emojis['left1']}{zeph.emojis['right1']}{zeph.emojis['left2']}{zeph.emojis['right2']}) "
-                   "to change types.\n``z!pokemon eff <mon...>`` shows matchups against a given species or form.\n"
-                   "``z!pokemon eff <type1> [type2]`` shows matchups against a given type combination."
+                   "to change types.\n`z!pokemon eff <mon...>` shows matchups against a given species or form.\n"
+                   "`z!pokemon eff <type1> [type2]` shows matchups against a given type combination.",
+            "move": "`z!pokemon move <move>` shows various information about a move - including type, power, "
+                    "accuracy, etc."
         }
         desc_dict = {
             "type": "Shows type effectiveness for a type.",
-            "eff": "Checks type matchups against a combination of types."
+            "eff": "Checks type matchups against a combination of types.",
+            "move": "Shows info about a move."
         }
         shortcuts = {j: g for g, j in self.redirects.items() if len(g) == 1}
 
@@ -571,7 +566,7 @@ class PokemonInterpreter(Interpreter):
             return await ball_emol().send(
                 self.ctx, "z!pokemon help",
                 d="Available functions:\n\n" + "\n".join(f"{get_command(g)} - {j}" for g, j in desc_dict.items()) +
-                  "\n\nFor information on how to use these, use ``z!planes help <function>``."
+                  "\n\nFor information on how to use these, use `z!pokemon help <function>`."
             )
 
         return await ball_emol().send(self.ctx, f"z!pokemon {args[0].lower()}", d=help_dict[args[0].lower()])
@@ -589,7 +584,7 @@ class PokemonInterpreter(Interpreter):
             "Resistant to": [g for g in pk.types if 0 < pk.effectiveness[g][typ] < 1],
             "Weak to": [g for g in pk.types if pk.effectiveness[g][typ] > 1]
         }
-        return await self.type_emol(typ).send(
+        return await type_emol(typ).send(
             self.ctx, f"{typ}-type", fs={g: ", ".join(j) for g, j in eff.items() if j}, same_line=True
         )
 
@@ -605,11 +600,61 @@ class PokemonInterpreter(Interpreter):
         return await EffNavigator(*types).run(self.ctx)
 
     async def _test(self, *args):
-        stat = pk.StatChange(1, {g: randrange(-3, 4) for g in pk.StatChange.stat_name_dict})
-        mon = find_mon("Pikachu")
-        eff = mon.apply(stat)
-        for i in eff:
-            await ball_emol().send(
-                self.ctx, pk.stat_change_text(mon, i, eff[i])
-            )
-        return await ball_emol().send(self.ctx, str(mon.stat_stages))
+        admin_check(self.ctx)
+
+        field = pk.Field()
+        b = Battle(field, self.ctx)
+        a = find_mon("Leafeon", field=field, moves=["X-Scissor", "Solar Beam", "Quick Attack", "Yawn"])
+        d = find_mon("Aggron", field=field, moves=["Tackle", "Quick Attack", "Growl", "Agility"], item="Light Ball")
+
+        while not b.closed:
+            await b.turn(a, d)
+
+    async def _move(self, *args):
+        move = find_move(" ".join(args))
+        return await self.ctx.send(embed=self.move_embed(move))
+
+
+@zeph.command(hidden=True, aliases=["lm"], usage="z!lm name type category PP power accuracy contact target **kwargs")
+async def loadmove(
+    ctx: commands.Context, name: str, typ: str, category: str, pp: int, pwr: Union[int, str], accuracy: int,
+    contact: bool, target: str, *args
+):
+    admin_check(ctx)
+
+    shortcuts = {
+        "pt": "can_protect", "mc": "can_magic_coat", "sn": "can_snatch", "mm": "can_mirror_move",
+        "kr": "can_kings_rock"
+    }
+
+    def interpret_kwarg(s: str):
+        if len(s.split("=")) == 1:
+            return shortcuts.get(s, s), True
+        elif s.startswith("z_effect="):
+            return "z_effect", dict((interpret_kwarg(s[9:]), ))
+        else:
+            return shortcuts.get(s.split("=")[0], s.split("=")[0]), eval(s.split("=")[1])
+
+    kwargs = dict(interpret_kwarg(g) for g in args)
+
+    assert typ.title() in pk.types
+    assert category.title() in pk.categories
+
+    move = pk.Move(name, typ.title(), category.title(), pp, pwr, accuracy, contact, eval(f"pk.{target}"), **kwargs)
+    assert move.json == move.copy().json
+
+    if move.category == pk.status and not move.z_effect:
+        await ctx.send(embed=Emol(zeph.emojis["yield"], hexcol("DD2E44")).con("This status move has no Z-Effect."))
+    if move.name in pk.moveDex:
+        await ctx.send(embed=Emol(zeph.emojis["yield"], hexcol("DD2E44")).con("This move already exists."))
+
+    await ctx.send(f"```py\n{move.json}```", embed=PokemonInterpreter.move_embed(move.copy()))
+    try:
+        assert await confirm(f"{'Overwrite' if move.name in pk.moveDex else 'Save'} this move?", ctx, yes="save")
+    except AssertionError:
+        pass
+    else:
+        pk.moveDex[move.name] = move.copy()
+        with open("pokemon/moves.json", "w") as fp:
+            json.dump({g: j.json for g, j in pk.moveDex.items()}, fp, indent=4)
+        return await succ.send(ctx, "Move saved.")

@@ -270,7 +270,7 @@ def find_abbr(s: str, temperature: bool = False):
         return s
     if s.lower() in abb:
         return abb[s.lower()]
-    raise CommandError(f"Invalid unit ``{s}``.")
+    raise CommandError(f"Invalid unit `{s}`.")
 
 
 unitAbbreviations = {  # full name: abbreviation
