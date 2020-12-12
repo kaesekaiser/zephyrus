@@ -465,7 +465,11 @@ async def one_minute_cycle():  # unified process for things done once per minute
         now = time.time()
         for rem in zeph.reminders:
             if rem.time < now:
-                await rem.send()
+                try:
+                    await rem.send()
+                except discord.HTTPException:
+                    pass
+
                 zeph.reminders.remove(rem)
 
         # save planes, etc data

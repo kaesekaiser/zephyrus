@@ -1282,7 +1282,7 @@ class RemindNavigator(Navigator):
     help="`z!remindme <reminder> in <time>` sets the bot to DM you with a reminder in a certain amount of time. "
          "`<reminder>` can be anything. `<time>` can use any combination of integer days, hours, or minutes, "
          "separated by spaces and in that order. `z!remindme list` lists your set reminders, and lets you remove any "
-         "if need be.\n\n"
+         "if need be. **Make sure your DMs are open, or else the reminder won't send.**\n\n"
          "e.g. `z!remindme eat food in 2 hours`, `z!rme work on essay in 5 hours 30 minutes`, or "
          "`z!remind talk to Sam in 3 days`."
 )
@@ -1297,6 +1297,12 @@ async def remind_command(ctx: commands.Context, *text: str):
             return await RemindNavigator(ctx.author).run(ctx)
 
         raise commands.BadArgument
+
+    if not ctx.author.dm_channel:
+        try:
+            await ctx.author.create_dm()
+        except discord.HTTPException:
+            raise commands.CommandError("I can't DM you! Are your DMs open?\n`z!remindme` uses DMs to send reminders.")
 
     last_in = [g for g in range(len(text)) if text[g] == "in"][-1]
     reminder, elapse = " ".join(text[:last_in]), " ".join(text[last_in + 1:])
@@ -1318,13 +1324,18 @@ async def remind_command(ctx: commands.Context, *text: str):
     reminder = Reminder(ctx.author.id, reminder, timestamp)
 
     if days + hours + minutes == 0:
-        await reminder.send()
-        return await succ.send(ctx, "Alright, wiseguy, I'll send it right now.")
+        await succ.send(ctx, "Alright, wiseguy, I'll send it right now.")
+        try:
+            return await reminder.send()
+        except discord.HTTPException:
+            raise commands.CommandError("Never mind, I can't DM you. Are your DMs open?")
 
     zeph.reminders.append(reminder)
     timedelta = datetime.datetime.fromtimestamp(timestamp) - datetime.datetime.now()
 
-    return await succ.send(ctx, "Reminder added!", d=f"I'll remind you in {reminder_td(timedelta)}.")
+    return await succ.send(
+        ctx, "Reminder added!", d=f"I'll remind you in {reminder_td(timedelta)}."
+    )
 
 
 @zeph.command(
