@@ -304,6 +304,7 @@ class Navigator:
         self.prev = prev
         self.next = nxt
         self.closed_elsewhere = False  # to prevent weird loop things if a different method closes the menu
+        self.remove_reaction = kwargs.pop("remove_reaction", True)  # whether to remove the user's input reaction
 
     @property
     def pgs(self):
@@ -380,10 +381,11 @@ class Navigator:
 
             await self.message.edit(embed=self.con)
 
-            try:
-                await self.message.remove_reaction(emoji, ctx.author)
-            except discord.errors.HTTPException:
-                pass
+            if self.remove_reaction:
+                try:
+                    await self.message.remove_reaction(emoji, ctx.author)
+                except discord.errors.HTTPException:
+                    pass
 
             if asyncio.iscoroutinefunction(self.post_process):
                 await self.post_process()
@@ -505,7 +507,7 @@ def should_await(func: callable):
         return asyncio.iscoroutinefunction(func)
 
 
-blue = hexcol("5177ca")  # color that many commands use
+blue = hexcol("3B88C3")  # color that many commands use
 testing_emote_servers = [  # servers that either are my testing server or that I use only for emote storage
     405184040161771522, 516004299785109516, 516336805151506449, 516017413729419265, 516044646942638090,
     516015721998843904, 516079973447237648, 528460450069872640

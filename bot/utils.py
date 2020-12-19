@@ -1412,3 +1412,105 @@ async def role_redirect_command(ctx: commands.Context):
           "- `z!selfroles`, which lets you self-assign roles.\n"
           "- `z!rolemembers`, which lists all the members of a role."
     )
+
+
+class CounterNavigator(Navigator):
+    def __init__(self, start_at: int = 0):
+        super().__init__(
+            Emol(":1234:", blue), [], 1, "Counter", prev=zeph.emojis["minus"], nxt=zeph.emojis["plus"]
+        )
+        self.page = start_at
+        self.mode = "count"
+        self.funcs[zeph.emojis["settings"]] = self.change_mode
+
+    async def change_mode(self):
+        if self.mode == "count":
+            self.mode = "settings"
+        else:
+            self.mode = "count"
+
+    @property
+    def con(self):
+        if self.mode == "count":
+            return self.emol.con(
+                self.title, d=f"**{add_commas(self.page)}**",
+                footer="Use the buttons to count up or down."
+            )
+        else:
+            return self.emol.con(
+                "Settings",
+                d="To change a setting, say `<option>:<value>` - for example, `increment:5`. You can "
+                  "reset the counter via `value:0`.\n\n"
+                  "`increment` must be an integer between 1 and 999,999,999.\n"
+                  "`value` must be an integer between -999,999,999 and 999,999,999.\n"
+                  "`title` must be less than 200 characters.",
+                fs={"Increment by (`increment`)": add_commas(self.per),
+                    "Current value (`value`)": add_commas(self.page),
+                    "Title (`title`)": self.title},
+                same_line=True
+            )
+
+    def advance_page(self, direction: int):
+        if direction:
+            self.page = round(self.page + self.per) if direction > 0 else round(self.page - self.per)
+
+    @staticmethod
+    def is_valid_setting(s: str):
+        if s.count(":") != 1:
+            return False
+
+        option, value = s.lower().split(":")
+
+        if option == "increment":
+            return can_int(value) and len(value) < 10 and int(value) > 0
+        elif option == "value":
+            return can_int(value) and len(value.strip("-")) < 10
+        elif option == "title":
+            return len(value) <= 200
+        else:
+            return False
+
+    def apply_settings_change(self, option: str, value: str):
+        """Assumes that the string <option>:<value> passes is_valid_setting()."""
+
+        if option.lower() == "increment":
+            self.per = int(value)
+        if option.lower() == "value":
+            self.page = int(value)
+        if option.lower() == "title":
+            self.title = value
+
+    async def get_emoji(self, ctx: commands.Context):
+        if self.mode == "settings":
+            def pred(mr: MR, u: User):
+                if isinstance(mr, discord.Message):
+                    return u == ctx.author and mr.channel == ctx.channel and self.is_valid_setting(mr.content)
+                else:
+                    return u == ctx.author and mr.emoji in self.funcs and mr.message.id == self.message.id
+
+            mess = (await zeph.wait_for(
+                'reaction_or_message', timeout=300, check=pred
+            ))[0]
+            if isinstance(mess, discord.Message):
+                await mess.delete()
+                self.apply_settings_change(*mess.content.split(":"))
+                return "wait"
+            elif isinstance(mess, discord.Reaction):
+                return mess.emoji
+
+        return (await zeph.wait_for(
+            'reaction_add', timeout=300, check=lambda r, u: r.emoji in self.legal and
+            r.message.id == self.message.id and u == ctx.author
+        ))[0].emoji
+
+
+@zeph.command(
+    name="counter", aliases=["count"], usage="z!counter [starting value]",
+    description="Runs a counter, so you can count.",
+    help="Runs a simple counter. Count up or down by a specified value using the reaction buttons. I wouldn't "
+         "recommend using this command if you have to repeatedly and *quickly* change the value, however; due to "
+         "Discord's rate limits, some of your clicks might get lost. Optional argument is the value the counter starts "
+         "at; this defaults to 0."
+)
+async def counter_command(ctx: commands.Context, start_value: int = 0):
+    return await CounterNavigator(start_value).run(ctx)
