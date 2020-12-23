@@ -536,15 +536,26 @@ def find_user(guild: discord.Guild, s: str):
 @zeph.command(
     usage="z!avatar [user]",
     description="Returns a link to a user's avatar.",
-    help="Returns a link to a user's avatar. If `[user]` is left blank, links your avatar."
+    help="Returns a link to a user's avatar. If `[user]` is left blank, links your avatar.\n\n"
+         "This command works slightly differently in DMs. When used in a server, `[user]` will be converted to a "
+         "member of that server. However, in DMs, `[user]` will be converted to any user Zephyrus shares a server "
+         "with, if possible."
 )
 async def avatar(ctx: commands.Context, *, user: str = None):
     if not user:
         user = ctx.author
     else:
         try:
-            user = await commands.UserConverter().convert(ctx, user)
+            user = await commands.MemberConverter().convert(ctx, user)
         except commands.BadArgument:
+            if not ctx.guild:
+                raise commands.CommandError(
+                    f"User `@{user}` not found." + (
+                        "\nThis looks like a valid username + discriminator, which means this user probably doesn't "
+                        "share a server with Zephyrus. Due to a Discord limitation, I can't see users I don't share "
+                        "servers with." if re.search(r"#[0-9]{4}$", user) else ""
+                    )
+                )
             if len(ctx.guild.members) > 1000:
                 try:  # more blunt method for large servers, in which lcs() takes too long
                     user = [g for g in ctx.guild.members if g.name.lower() == user.lower()][0]
@@ -557,8 +568,9 @@ async def avatar(ctx: commands.Context, *, user: str = None):
                 user = find_user(ctx.guild, user)
 
     av_url = str(user.avatar_url_as(static_format="png"))
+    display_name = user.display_name if ctx.guild else str(user)
     return await ctx.send(
-        embed=construct_embed(author=author_from_user(user, name=f"{user.display_name}'s Avatar", url=av_url),
+        embed=construct_embed(author=author_from_user(user, name=f"{display_name}'s Avatar", url=av_url),
                               color=user.colour, image=av_url)
     )
 
