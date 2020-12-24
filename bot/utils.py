@@ -7,6 +7,7 @@ import pycantonese
 import datetime
 import requests
 from math import log10, isclose
+from sympy import factorint
 
 
 @zeph.command(
@@ -882,32 +883,12 @@ def nln(n: int):
 async def factors(ctx: commands.Context, number: int):
     if number < 1:
         raise commands.CommandError("Number must be greater than 0.")
-    if log10(number) >= 15:
-        raise commands.CommandError("Please keep numbers to 15 digits or less.")
+    if log10(number) >= 25:
+        raise commands.CommandError("Please keep numbers to 25 digits or less.")
 
     def get_factors(n: int):
-        min_search = 3
-        ret = []
-        while n % 2 == 0:
-            n = round(n / 2)
-            ret.append(2)
-        original = n
-        max_search = ceil(original ** 0.5) + 1
-        max_search += not max_search % 2
-        while True:
-            for i in range(min_search, max_search + 2, 2):
-                if n % i == 0:
-                    ret.append(i)
-                    n = round(n / i)
-                    break
-                else:
-                    min_search = i
-            if ret.count(2) == len(ret):
-                return ret + [original]
-            if min_search == max_search:
-                if n == 1:
-                    return sorted(ret)
-                return sorted(ret + [n])
+        fac_dic = factorint(n)
+        return [g for l in [[k] * v for k, v in fac_dic.items()] for g in l]
 
     return await ClientEmol(":1234:", blue, ctx).say(f"Prime factors of {number}:", d=f"`= {get_factors(number)}`")
 
