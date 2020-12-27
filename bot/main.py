@@ -351,6 +351,7 @@ async def on_ready():
     print(f"ready at {getattr(zeph, 'readyTime')}")
     zeph.loop.create_task(initialize_planes())
     zeph.loop.create_task(zeph.load_romanization())
+    zeph.loop.create_task(zeph.get_channel(activity_channel).send(f":up: **Ready** at `{datetime.datetime.now()}`"))
     await zeph.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name="you ❤"))
     zeph.loop.create_task(one_minute_cycle())
 
@@ -360,23 +361,30 @@ async def on_command_error(ctx: commands.Context, exception):
     if ctx.command == epitaph and ctx.channel in zeph.epitaphChannels:
         zeph.epitaphChannels.remove(ctx.channel)
 
-    if type(exception) in [commands.errors.MissingRequiredArgument, commands.errors.BadArgument,
-                           commands.errors.TooManyArguments]:
+    if type(exception) in [commands.MissingRequiredArgument, commands.BadArgument, commands.TooManyArguments]:
         await err.send(
             ctx, f"Format: `{'` or `'.join(ctx.command.usage.splitlines())}`"
         )
-    elif type(exception) == commands.errors.CommandNotFound:
+    elif type(exception) == commands.CommandNotFound:
         pass
     elif type(exception) == commands.CommandError:
         try:
             await err.send(ctx, str(exception).split("\n")[0], d="\n".join(str(exception).split("\n")[1:]))
-        except discord.errors.HTTPException:
+        except discord.HTTPException:
             await err.send(ctx, "Error!", desc=str(exception))
     else:
         try:
             await err.send(ctx, f"`{str(exception)}`")
-        except discord.errors.HTTPException:
+        except discord.HTTPException:
             await err.send(ctx, "Error!", desc=str(exception))
+        try:
+            await zeph.get_channel(activity_channel).send(
+                f":no_entry: **Error**: `{str(exception)}`\n"
+                f"{zeph.emojis['__']} **Context**: `{ctx.message.content}`\n"
+                f"{zeph.emojis['__']} **URL**: {ctx.message.jump_url} (guild: **{ctx.guild if ctx.guild else 'DM'}**)"
+            )
+        except discord.HTTPException:
+            pass
         raise exception
 
 

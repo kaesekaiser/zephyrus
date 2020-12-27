@@ -1,5 +1,5 @@
 from game import *
-from utilities import dice as di, weed as wd, timein as ti, translate as tr, wiki as wk, convert as cv, keys
+from utilities import dice as di, weed as wd, timein as ti, wiki as wk, convert as cv, keys
 from unicodedata import name as uni_name
 from urllib.error import HTTPError
 import hanziconv
@@ -461,64 +461,6 @@ async def simplified(ctx: commands.Context, *, trad: str):
 )
 async def traditional(ctx: commands.Context, *, simp: str):
     return await ctx.send(hanziconv.HanziConv.toTraditional(simp))
-
-
-@zeph.command(
-    aliases=["trans"], usage="z!translate <from> <to> <text...>",
-    description="Google Translates text between languages.",
-    help="Via Google Translate, translates `<text>` between languages. `<from>` and `<to>` must be "
-         "either the name of the language or the [code](https://cloud.google.com/translate/docs/languages) "
-         "for the language. `chinese` defaults to Simplified Chinese; for Traditional, use "
-         "`traditional-chinese` or `zh-tw`. You can also use `auto` or `detect` for the detect "
-         "language option.\n\n"
-         "`z!translate English French Hello, my love` → `Bonjour mon amour`\n"
-         "`z!translate auto en Hola, señor` → `Hello sir`"
-)
-async def translate(ctx: commands.Context, fro: str, to: str, *, text: str):
-    trans = ClientEmol(":twisted_rightwards_arrows:", blue, ctx)
-    if fro.lower() not in tr.LANGCODES and fro.lower() not in tr.LANGCODES.values() and fro.lower() not in tr.redirs:
-        raise commands.CommandError(f"{fro} is not a valid language.")
-    fro = tr.specify(fro.lower())
-    if to is None:
-        raise commands.CommandError("Please input a destination language.")
-    if to.lower() not in tr.LANGCODES and to.lower() not in tr.LANGCODES.values() and to.lower() not in tr.redirs:
-        raise commands.CommandError(f"{to} is not a valid language.")
-    to = tr.specify(to.lower())
-    if len(text) > 250:
-        raise commands.CommandError("Text length is limited to 250 characters.")
-
-    if fro == "auto":
-        lang = tr.translator.detect(text).lang
-    else:
-        lang = fro
-
-    translation = tr.translator.translate(text, to, fro)
-    return await trans.say(
-        translation.text, footer="{}{} -> {}".format("detected: " if fro == "auto" else "",
-                                                     tr.LANGUAGES[lang].title(), tr.LANGUAGES[to].title())
-    )
-
-
-async def get_translation(fro: str, to: str, text: str):
-    """Turning this into a coroutine for use with badtranslate(). In previous versions, using non-coroutines would
-    actually kill the bot, as it took too long to run all of the translation requests. Since coroutines are awaited,
-    this should prevent this from happening."""
-    return tr.Translator().translate(text, to, fro).text
-
-
-"""
-@zeph.command(aliases=["badtrans"])
-async def badtranslate(ctx: commands.Context, *, text: str):
-    if len(text) > 250:
-        raise commands.CommandError("Text length is limited to 250 characters.")
-    bad = ClientEmol(":boom:", hexcol("DC5B00"), ctx)
-    message = await bad.say("translating...")
-    langs = ["en"] + choices(list(tr.LANGCODES), k=25)
-    for i in range(25):
-        text = await get_translation(langs[i], langs[i + 1], text)
-        await bad.edit(message, "translating...", d=f"{i + 1}/25")
-    return await bad.edit(message, await get_translation(langs[-1], "en", text))
-"""
 
 
 def find_user(guild: discord.Guild, s: str):

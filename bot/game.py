@@ -105,8 +105,8 @@ async def jotto(ctx: commands.Context):
 
     game = jo.Jotto(choice(wr.wordDict[4]))
     await jot.say("The word has been chosen. Start guessing!",
-                  d="To guess, reply with a four-letter word. To see your guess history, say "
-                    "`history`. To forfeit, say `forfeit`.")
+                  d="To guess, reply with a four-letter word. To see your guess history, say **`history`**. "
+                    "To forfeit, say **`forfeit`**. If you don't know what this is, do **`z!help jotto`**.")
 
     def pred(m: discord.Message):
         return m.author == ctx.author and m.channel == ctx.channel and \
