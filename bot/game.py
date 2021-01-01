@@ -304,6 +304,8 @@ async def duel(ctx: commands.Context, opponent: User):
         raise commands.CommandError("You can't challenge yourself.")
     if opponent.bot:
         raise commands.CommandError("You can't duel a bot.")
+    if opponent not in ctx.guild.members:
+        raise commands.CommandError("User is not in this server.")
 
     if not await confirm(f"{opponent.display_name}, do you accept the challenge?", ctx, opponent,
                          emol=du, yes="accept", no="chicken out"):

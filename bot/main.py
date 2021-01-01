@@ -361,7 +361,7 @@ async def on_command_error(ctx: commands.Context, exception):
     if ctx.command == epitaph and ctx.channel in zeph.epitaphChannels:
         zeph.epitaphChannels.remove(ctx.channel)
 
-    if type(exception) in [commands.MissingRequiredArgument, commands.BadArgument, commands.TooManyArguments]:
+    if isinstance(exception, commands.UserInputError):
         await err.send(
             ctx, f"Format: `{'` or `'.join(ctx.command.usage.splitlines())}`"
         )
