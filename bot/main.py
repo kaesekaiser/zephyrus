@@ -334,6 +334,10 @@ async def presence_command(ctx: commands.Context, activity_type: str, *, activit
 async def close_command(ctx: commands.Context):
     admin_check(ctx)
 
+    if zeph.nativities:
+        if not await confirm("Someone has an active menu somewhere. Shut down anyway?", ctx):
+            return await err.send(ctx, "Operation cancelled.")
+
     zeph.save()
     await ClientEmol(":wave:", blue, ctx).say("Bye!")
     await zeph.close()
