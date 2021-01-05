@@ -1442,10 +1442,33 @@ class CounterNavigator(Navigator):
 @zeph.command(
     name="counter", aliases=["count"], usage="z!counter [starting value]",
     description="Runs a counter, so you can count.",
-    help="Runs a simple counter. Count up or down by a specified value using the reaction buttons. I wouldn't "
+    help="Runs a simple counter. Count up or down by an adjustable value using the reaction buttons. I wouldn't "
          "recommend using this command if you have to repeatedly and *quickly* change the value, however; due to "
          "Discord's rate limits, some of your clicks might get lost. Optional argument is the value the counter starts "
          "at; this defaults to 0."
 )
 async def counter_command(ctx: commands.Context, start_value: int = 0):
     return await CounterNavigator(start_value).run(ctx)
+
+
+@zeph.command(
+    name="yesno", aliases=["poll", "yn"], usage="z!yesno <poll question...>",
+    description="Sets up a simple yes/no poll.",
+    help="Sets up a very simple yes-or-no poll for other server members to answer. You provide a question, and "
+         "Zeph creates a fancy-looking box, with fancy-looking reactions. Just a slightly faster and slightly "
+         "prettier way to collect opinions."
+)
+async def yesno_command(ctx: commands.Context, *, question: str):
+    if len(question) > 1800:
+        raise commands.CommandError("Keep questions to under 1800 characters.")
+
+    if isinstance(ctx.channel, discord.DMChannel):
+        raise commands.CommandError("This command can't be run in DMs.")
+
+    emol = Emol(zeph.emojis["yesno"], hexcol("7289DA"))
+
+    message = await emol.send(ctx, "Yea or Nay?", d=question)
+    await message.add_reaction(zeph.emojis["yea"])
+    await message.add_reaction(zeph.emojis["nay"])
+
+    return
