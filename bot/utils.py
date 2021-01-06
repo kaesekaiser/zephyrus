@@ -44,16 +44,17 @@ async def mock(ctx: commands.Context, *input_text):
                 text = (await zeph.get_channel(ref.channel_id).fetch_message(ref.message_id)).content
             except discord.HTTPException:
                 raise commands.CommandError("I couldn't find the referenced message, sorry.")
-        try:
-            await ctx.message.delete()
-        except discord.Forbidden:
-            pass
 
     elif await get_message_pointer(ctx, text, allow_fail=True):
         text = (await get_message_pointer(ctx, text)).content
+
+    if not text:  # the ONLY reason this should be true is if the user has pointed to a message with no text
+        raise commands.CommandError("That message has no text, so there's nothing to mock.")
+
+    if not input_text:
         try:
             await ctx.message.delete()
-        except discord.Forbidden:
+        except discord.HTTPException:
             pass
 
     return await ctx.send(dumb(text))
