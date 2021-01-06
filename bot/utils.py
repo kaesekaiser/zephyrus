@@ -11,14 +11,14 @@ from sympy import factorint
 
 
 @zeph.command(
-    usage="z!mock <text...>\nz!mock",
+    usage="z!mock [text...]",
     description="DoEs ThIs To YoUr TeXt.",
     help="DoEs ThIs To YoUr TeXt. If no text is given, mocks the message above you.\n\n"
          "`guy: I think Zephyrus is bad\nperson: z!mock\nZephyrus: I tHiNk ZePhYrUs Is BaD`\n\n"
-         "You can also point to a specific message by using a string of carets, or a message link, as the input text. "
-         "`z!mock ^^^` will mock the message three above yours."
+         "You can also reply to a message (using Discord's new reply feature) with `z!mock`, and it will mock "
+         "that message."
 )
-async def mock(ctx: commands.Context, *text):
+async def mock(ctx: commands.Context, *input_text):
     def multi_count(s, chars):
         return sum([s.count(ch) for ch in chars])
 
@@ -28,11 +28,28 @@ async def mock(ctx: commands.Context, *text):
             else s[g].upper() for g in range(len(s))
         )
 
-    text = " ".join(text)
+    text = " ".join(input_text)
     if not text:
         text = "^"  # use new message pointing system
 
-    if await get_message_pointer(ctx, text, allow_fail=True):
+    if ctx.message.reference:  # if the message is a reply to another message
+        if input_text:
+            raise commands.CommandError("Either reply to a message, OR manually input text. Don't do both.")
+
+        ref = ctx.message.reference
+        if ref.cached_message:  # check for the cached message first, it'll be faster
+            text = ref.cached_message.content
+        else:  # if not, try to manually fetch the referenced message
+            try:
+                text = (await zeph.get_channel(ref.channel_id).fetch_message(ref.message_id)).content
+            except discord.HTTPException:
+                raise commands.CommandError("I couldn't find the referenced message, sorry.")
+        try:
+            await ctx.message.delete()
+        except discord.Forbidden:
+            pass
+
+    elif await get_message_pointer(ctx, text, allow_fail=True):
         text = (await get_message_pointer(ctx, text)).content
         try:
             await ctx.message.delete()
@@ -918,12 +935,13 @@ async def get_message_pointer(ctx: commands.Context, pointer: str, fallback=None
 
 
 @zeph.command(
-    name="react", aliases=["r"], usage="z!react [^...] <emote>\nz!react <message link> <emote>", hidden=True,
+    name="react", aliases=["r"], usage="z!react <emote>\nz!react <message link> <emote>", hidden=True,
     description="Reacts to a message.",
-    help="`z!r <emote>` reacts to the message immediately above yours with the input emote. `z!r ^ <emote>` does the "
-         "same thing. `z!r ^^ <emote>` reacts to the message *two* above yours; `z!r ^^^ <emote>` reacts to the third, "
-         "and so on. You can also link a specific message to react to via the URL or ID. It's a way to semi-give "
-         "yourself nitro privileges, assuming Zeph has the emote you want.\n\n"
+    help="`z!r <emote>` reacts to the message immediately above yours with the input emote. You can also reply "
+         "to a message (using Discord's new reply feature) with `z!r <emote>`, and it will react to that message. "
+         "Finally, you can also give a message URL (right-click and hit Copy Message Link), and it will react to "
+         "the linked message. Then, you yourself can react with that emote, and Zeph's will disappear - it'll "
+         "look like you just used Nitro to react.\n\n"
          "Note that emote names are *case-sensitive*."
 )
 async def react_command(ctx: commands.Context, *args: str):
@@ -939,7 +957,20 @@ async def react_command(ctx: commands.Context, *args: str):
     else:
         pointer = args[0]
 
-    mess = await get_message_pointer(ctx, pointer, fallback=ctx.message)
+    if ctx.message.reference:  # if the message is a reply to another message
+        if len(args) == 2:
+            raise commands.CommandError("Either reply to a message, OR give a URL. Don't do both.")
+        ref = ctx.message.reference
+        if ref.cached_message:  # check for the cached message first, it'll be faster
+            mess = ref.cached_message
+        else:  # if not, try to manually fetch the referenced message
+            try:
+                mess = await zeph.get_channel(ref.channel_id).fetch_message(ref.message_id)
+            except discord.HTTPException:
+                raise commands.CommandError("I couldn't find the referenced message, sorry.")
+
+    else:
+        mess = await get_message_pointer(ctx, pointer, fallback=ctx.message)
 
     await mess.add_reaction(emote)
 

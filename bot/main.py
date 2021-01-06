@@ -33,7 +33,7 @@ async def help_command(ctx: commands.Context, comm: str = ""):
             return await comm.__call__(ctx)  # show the redirect instead of running help
 
         aliases = [f"z!{g}" for g, j in zeph.all_commands.items() if j.name == comm.name and g != j.name]
-        help_dict = {"Format": f"`{comm.usage}`"}
+        help_dict = {"Format": "\n".join(f"`{g}`" for g in comm.usage.split("\n"))}
         if aliases:
             help_dict["Aliases"] = ", ".join(f"`{g}`" for g in aliases)
         return await hep.say(f"`z!{comm.name}`", d=comm.help, fs=help_dict, il=True)
