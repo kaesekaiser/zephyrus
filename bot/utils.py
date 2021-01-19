@@ -95,7 +95,7 @@ async def clap(ctx: commands.Context, *, text: str = None):
                 text = message.content
                 try:
                     await ctx.message.delete()
-                except discord.Forbidden:
+                except discord.HTTPException:
                     pass
                 break
 
@@ -991,7 +991,7 @@ async def react_command(ctx: commands.Context, *args: str):
     await mess.remove_reaction(emote, zeph.user)  # remove zeph's reaction once the user has also reacted
     try:
         await ctx.message.delete()
-    except discord.Forbidden:
+    except discord.HTTPException:
         pass
 
 

@@ -54,7 +54,7 @@ class Epitaph(ep.Civ):
                 return await self.yellow.say("Exited game.")
             try:
                 await cho.delete()
-            except discord.Forbidden:
+            except discord.HTTPException:
                 pass
             await self.eventech(ep.techs[cho.content.lower()], edit=message)
         else:
