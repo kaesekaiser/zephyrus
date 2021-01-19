@@ -17,6 +17,72 @@ def sorted_assignable_roles(guild: discord.Guild, filter_selfroles: bool = False
     return sorted([g for g in guild.roles[1:] if (not g.managed) and g < guild.me.top_role], reverse=True)
 
 
+class PrefixNavigator(Navigator):
+    def __init__(self, ctx: commands.Context):
+        self.ctx = ctx
+        super().__init__(config, self.prefixes, 8, "Custom Prefixes [{page}/{pgs}]", close_on_timeout=True)
+        self.funcs[zeph.emojis["no"]] = self.close
+        for g in range(self.per):
+            self.funcs[f"remove {g+1}"] = partial(self.remove_prefix, g)
+
+    @property
+    def prefixes(self):
+        return zeph.server_settings[self.ctx.guild.id].command_prefixes
+
+    @property
+    def pgs(self):
+        return ceil(len(self.prefixes) / self.per)
+
+    async def remove_prefix(self, n: int):
+        try:
+            prefix = page_list(self.prefixes, self.per, self.page)[n]
+        except IndexError:  # if there aren't that many listed on the page, do nothing
+            return
+
+        if len(self.prefixes) == 1:
+            await config.edit(self.message, "You can't remove the last prefix.")
+            return await asyncio.sleep(2)
+        else:
+            self.prefixes.remove(prefix)
+            await succ.edit(self.message, "Prefix removed.")
+            if self.page > self.pgs:
+                self.page -= 1
+            return await asyncio.sleep(2)
+
+    @property
+    def con(self):
+        return self.emol.con(
+            self.title.format(page=self.page, pgs=self.pgs),
+            d="\n".join(
+                f"**`[{g + 1}]`** [`{j}`] - e.g. `{j}help`"
+                for g, j in enumerate(page_list(self.prefixes, self.per, self.page))
+            ) + "\n\nTo remove a prefix, say `remove <#>` in chat, e.g. `remove 1`. "
+                "To completely reset all custom prefixes, exit this menu and use `z!sconfig prefixes reset`."
+        )
+
+    async def get_emoji(self, ctx: commands.Context):
+        def pred(mr: MR, u: User):
+            if isinstance(mr, discord.Message):
+                return u == ctx.author and mr.channel == ctx.channel and mr.content in self.funcs.keys()
+            else:
+                return u == ctx.author and mr.message == self.message and mr.emoji in self.legal
+
+        mess = (await zeph.wait_for('reaction_or_message', timeout=300, check=pred))[0]
+
+        if isinstance(mess, discord.Message):
+            try:
+                await mess.delete()
+            except discord.HTTPException:
+                pass
+            return mess.content
+        else:
+            return mess.emoji
+
+    async def close(self):
+        await self.emol.edit(self.message, "This menu has closed.")
+        await self.remove_buttons()
+
+
 class SelfRoleNavigator(Navigator):
     def __init__(self, roles: list, ctx: commands.Context, mode: str = "view"):
         """mode can be "self", "auto", "assign", or "view". the mode edits the list of selfroles, edits the list of
@@ -543,14 +609,17 @@ class SConfigInterpreter(Interpreter):
 
     async def _prefixes(self, *args: str):
         if not args:
+            prefix_preview = "\n".join(f"[`{g}`] - e.g. `{g}help`" for g in self.settings.command_prefixes[:5]) + \
+                (f"\n...plus **{len(self.settings.command_prefixes) - 5}** more; see `z!sc prefixes list`"
+                 if len(self.settings.command_prefixes) > 5 else "")
             return await config.send(
                 self.ctx, "Custom Command Prefixes",
                 d="To add a prefix:\n`z!sconfig prefix add \"<prefix>\"`\n"
-                  "To remove a prefix:\n`z!sconfig prefix remove \"<prefix>\"`\n"
+                  "To view and disable prefixes:\n`z!sconfig prefixes list`\n"
                   "To reset to only the default prefix, `z!`:\n`z!sconfig prefixes reset`\n\n"
                   "Please enclose the **entire prefix** in \"double quotes\" when adding or removing, especially if "
                   "the prefix includes a trailing space.",
-                fs={"Current Prefixes": "\n".join(f"[`{g}`] - e.g. `{g}help`" for g in self.settings.command_prefixes)}
+                fs={"Current Prefixes": prefix_preview}
             )
 
         if args[0].lower() == "add":
@@ -561,6 +630,10 @@ class SConfigInterpreter(Interpreter):
                 raise commands.CommandError("Please enclose the entire prefix in \"double quotes\".")
 
             prefix = args[1]
+
+            if len(prefix) > 100:
+                raise commands.CommandError("Prefixes cannot be more than 100 characters long.")
+
             warning = f"This will look like: **`{prefix}help`** or **`{prefix}sconfig prefixes reset`**.\n"
 
             if not prefix:
@@ -590,6 +663,9 @@ class SConfigInterpreter(Interpreter):
 
             else:
                 return await config.send(self.ctx, "Prefixes were not changed.")
+
+        elif args[0].lower() in ["edit", "list"]:
+            return await PrefixNavigator(self.ctx).run(self.ctx)
 
         elif args[0].lower() == "remove":
             if len(args) == 1:
