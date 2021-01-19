@@ -882,11 +882,16 @@ async def base_command(ctx: commands.Context, to_base: int, num: str, from_base:
 )
 async def age_command(ctx: commands.Context):
     age_emol = ClientEmol(":hourglass:", hexcol("ffac33"), ctx)
-    return await age_emol.say(
-        f"{ctx.author.display_name}'s Age",
-        d=f"You created your account on **{ctx.author.created_at.date().strftime('%B %d, %Y').replace(' 0', ' ')}**.\n"
-        f"You joined this server on **{ctx.author.joined_at.date().strftime('%B %d, %Y').replace(' 0', ' ')}**."
-    )
+    if ctx.guild:
+        return await age_emol.say(
+            f"{ctx.author.display_name}'s Age",
+            d=f"You created your account on **{ctx.author.created_at.date().strftime('%B %d, %Y').replace(' 0', ' ')}**"
+            f".\nYou joined this server on **{ctx.author.joined_at.date().strftime('%B %d, %Y').replace(' 0', ' ')}**."
+        )
+    else:
+        return await age_emol.say(
+            f"You created your account on **{ctx.author.created_at.date().strftime('%B %d, %Y').replace(' 0', ' ')}**."
+        )
 
 
 @zeph.command(
