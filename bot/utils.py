@@ -481,17 +481,20 @@ async def traditional(ctx: commands.Context, *, simp: str):
     return await ctx.send(hanziconv.HanziConv.toTraditional(simp))
 
 
-def find_user(guild: discord.Guild, s: str):
-    def score(txt: str):
-        if s.lower() == txt.lower():  # search identical to name
-            return 0  # result = 0
-        if s.lower() in txt.lower():  # name contains string, prioritizing shorter names + names that start with string
-            return 0 + (len(txt) - len(s)) / 32 + (txt.lower().index(s.lower()) != 0)  # 0 < result < 2
-        # sort remainder by longest common subsequence, shorter names first
-        return 32 - wr.lcs(s.lower(), txt.lower()) + len(txt) / 32 + 2  # result > 2
+def modified_lcs(s1: str, query: str):
+    # used for find_user and z!esearch
 
+    if query.lower() == s1.lower():  # search identical to name
+        return 0  # result = 0
+    if query.lower() in s1.lower():  # name contains string, prioritizing shorter names + names that start with string
+        return 0 + (len(s1) - len(query)) / 32 + (s1.lower().index(query.lower()) != 0)  # 0 < result < 2
+    # sort remainder by longest common subsequence, shorter names first
+    return 32 - wr.lcs(s1.lower(), query.lower()) + len(s1) / 32 + 2  # result > 2
+
+
+def find_user(guild: discord.Guild, s: str):
     # including a very slight bias towards actual username
-    return sorted(guild.members, key=lambda c: min(score(c.name), score(c.display_name) + 0.01))[0]
+    return sorted(guild.members, key=lambda c: min(modified_lcs(c.name, s), modified_lcs(c.display_name, s) + 0.01))[0]
 
 
 @zeph.command(
@@ -1509,3 +1512,17 @@ async def yesno_command(ctx: commands.Context, *, question: str):
     await message.add_reaction(zeph.emojis["nay"])
 
     return
+
+
+@zeph.command(
+    name="esearch", aliases=["es"], usage="z!esearch <emote name>",
+    description="Searches for an emote.",
+    help="Searches for an emote by name. Returns a scrollable list of similarly-named emotes Zeph has access to, "
+         "for use with `z!e` and `z!r`."
+)
+async def emote_search_command(ctx: commands.Context, *, query: str = ""):
+    emol = Emol(zeph.emojis["search"], hexcol("83BEEC"))
+    scd = {g: modified_lcs(g, query.replace(" ", "_")) for g in zeph.all_emojis}  # single calc of modified_lcs
+    emotes = sorted([g for g, j in scd.items() if j <= 2 + (32 - len(query) / 2)], key=lambda k: scd[k])
+    await Navigator(emol, [f"`:{g}:` ({zeph.all_emojis[g]})" for g in emotes], 8, "Emote List [{page}/{pgs}]").run(ctx)
+
