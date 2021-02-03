@@ -45,6 +45,9 @@ class Die:
         if self.sides == 1:
             raise BadString("Can't roll a one-sided die.")
 
+        if self.sides > 1000 or self.count > 100:
+            raise BadString("I can only roll up to 100 dice, with up to 1000 sides each.")
+
         if search(r"!", self.str):  # exploding!
             if self.sides == 0:
                 raise BadString("Can't explode Fudge dice.")
