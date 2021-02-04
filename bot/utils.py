@@ -900,8 +900,8 @@ async def age_command(ctx: commands.Context):
 @zeph.command(
     name="emoji", aliases=["emote", "e"], usage="z!emoji [emote(s)...]",
     description="Sends a custom emoji.",
-    help="`z!e <emote>` returns the input custom emote, if Zeph has one by that name. `z!e` lists all custom emotes "
-         "Zeph has access to.\n\nNote that emote names are *case-sensitive*."
+    help="`z!e <emote>` returns the input custom emote, if Zeph has one by that name. If you want to search for an "
+         "emote, use `z!esearch`.\n\nNote that emote names are *case-sensitive*. For a line break, write `\\n`."
 )
 async def emote_command(ctx: commands.Context, *args: str):
     if not args:
@@ -912,13 +912,13 @@ async def emote_command(ctx: commands.Context, *args: str):
 
     else:
         for arg in args:
-            if arg not in zeph.all_emojis:
+            if arg not in zeph.all_emojis and arg != "\\n":
                 if len(args) == 1:
                     raise commands.CommandError("I don't have that emote.")
                 else:
                     raise commands.CommandError(f"I don't have the `{arg}` emote.")
         try:
-            await ctx.send("".join(str(zeph.all_emojis[g]) for g in args))
+            await ctx.send("".join("\n" if g == "\\n" else str(zeph.all_emojis[g])for g in args))
         except discord.errors.HTTPException:
             raise commands.CommandError("I can't fit that many emotes in one message.")
 

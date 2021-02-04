@@ -280,6 +280,9 @@ async def link_command(ctx: commands.Context, channel_type: str, idn: int):
             await user.create_dm()
         channel = user.dm_channel
 
+        await phone.send(  # for the sake of transparency
+            channel, "DMs linked.", d="Hi! This is Fort, DMing you through Zeph. You can talk back, and I can read it."
+        )
         await succ.send(ctx, f"Connected to {user}!")
 
     else:
@@ -294,6 +297,12 @@ async def link_command(ctx: commands.Context, channel_type: str, idn: int):
 )
 async def unlink_command(ctx: commands.Context):
     admin_check(ctx)
+
+    if isinstance(zeph.channelLink.to, discord.DMChannel):  # transparency again
+        await phone.send(
+            zeph.channelLink.to, "DMs unlinked.",
+            d="I can no longer read what you say here. Use `z!feedback` if you need anything else."
+        )
 
     zeph.channelLink = None
     await succ.send(ctx, "Unlinked.")
