@@ -219,9 +219,9 @@ async def tconvert(ctx: commands.Context, n: str, *text):
     n = float(n)
 
     if "to" in text:
-        text = [cv.find_abbr(g, True) for g in " ".join(text).split(" to ")]
+        text = [cv.find_abbr(g, True) for g in " ".join(text).upper().split(" TO ")]
     else:
-        text = (cv.find_abbr(" ".join(text), True), )
+        text = (cv.find_abbr(" ".join(text).upper(), True), )
 
     try:
         ret = cv.temp_convert(n, *text)
@@ -907,7 +907,7 @@ async def emote_command(ctx: commands.Context, *args: str):
     if not args:
         raise commands.CommandError(
             "I deprecated the full emote list because it got slightly too obnoxious.\n"
-            "Use `z!e <emote>` to look for a specific emote."
+            "Use `z!esearch <emote>` to look for specific emotes."
         )
 
     else:
