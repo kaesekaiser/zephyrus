@@ -155,6 +155,12 @@ def metric_name_dict(unit: str, abbreviation: str):
             **{g + unit: j + abbreviation for g, j in met.items()}}
 
 
+def narahl_dict(unit: str):  # using the Narahl metric-ish system
+    nar = {"noma": 24 ** 6, "sira": 24 ** 4, "nila": 24 ** 3, "benna": 576, "dara": 24, "": 1,
+           "dika": 1/24, "rani": 1/576, "juna": 1/24 ** 3, "caya": 1/24 ** 4, "hana": 1/24 ** 6}
+    return {g + unit: j for g, j in nar.items()}
+
+
 def add_degree(s: str):
     return s if s == "K" else "°" + s
 
@@ -179,7 +185,12 @@ def convert_multi(n: Flint, fro: MultiUnit, to: MultiUnit = None):
         else:
             cg = [g for g in conversionTable for j in g.systems if str(fro) in j][0]
             if str(fro) in cg.systems[0] and (len(cg.systems) == 1 or not cg.systems[1]):
-                raise CommandError(f"There's no imperial alternative to `{str(fro)}`.")
+                raise CommandError(
+                    f"There's no imperial alternative to `{str(fro)}`." +
+                    ("\n`z!conv` reads `C` as coulombs. If you wanted Celsius, use `z!tconv`." if str(fro) == "C" else
+                     "\n`z!conv` reads `F` as farads. If you wanted Fahrenheit, use `z!tconv`." if str(fro) == "F" else
+                     "")
+                )
             else:
                 try:
                     # this converts index 0 (metric) to index 1 (imperial) and vice versa
@@ -270,6 +281,8 @@ def find_abbr(s: str, temperature: bool = False):
         return s
     if s.lower() in abb:
         return abb[s.lower()]
+    if "°" in s and not temperature:
+        raise CommandError("Use `z!tconv` for temperature conversions.")
     raise CommandError(f"Invalid unit `{s}`.")
 
 
@@ -280,6 +293,7 @@ unitAbbreviations = {  # full name: abbreviation
     **metric_name_dict("metre", "m"),
     "inch": "in", "inches": "in", "foot": "ft", "feet": "ft", "yard": "yd", "mile": "mi", "fathom": "ftm",
     "astronomical unit": "AU",
+    "linhardts": "linhardt",
 
     # mass
     **metric_name_dict("gram", "g"),
@@ -374,12 +388,14 @@ conversionTable = (  # groups of units of the same system
         metric_dict("m"),
         {"in": 1, "ft": 12, "yd": 36, "mi": 12 * 5280, "ftm": 6 * 12},
         {"au": 1, "AU": 1, "ua": 1},
-        **{"in": (0.0254, "m"), "au": (149597870700, "m")},  # only doing it this way because in= doesn't work
+        {**narahl_dict("dari"), "cera": 576*8},
+        {"linhardt": 1},
+        **{"in": (0.0254, "m"), "au": (149597870700, "m"), "dari": (0.2056, "m"), "linhardt": (1.77, "m")},
         base_unit=BaseUnit("m", "m")
     ),
     ConversionGroup(  # mass
         metric_dict("g"),
-        {"oz": 1, "lb": 16, "st": 16 * 14, "cwt": 1600, "ton": 32000, "long ton": 16 * 2240},
+        {"oz": 1, "lb": 16, "st": 16 * 14, "cwt": 1600, "ton": 32000, "long ton": 16 * 2240, "slug": 16 * 32.174},
         {"amu": 1, "u": 1, **metric_dict("Da")},
         lb=(453.59237, "g"),
         amu=(1.660539040 * 10 ** -24, "g"),

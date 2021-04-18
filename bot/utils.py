@@ -228,6 +228,9 @@ async def tconvert(ctx: commands.Context, n: str, *text):
         digits_in = 0
     n = float(n)
 
+    if not text:
+        raise commands.BadArgument
+
     if "to" in text:
         text = [cv.find_abbr(g, True) for g in " ".join(text).upper().split(" TO ")]
     else:
@@ -248,12 +251,16 @@ async def tconvert(ctx: commands.Context, n: str, *text):
 
 @zeph.command(
     aliases=["c", "conv"], usage="z!convert <number> <unit...> to <unit...>\nz!convert <number> <unit...>",
-    description="Converts between units of measurement.",
-    help="Converts between units of measurement. More info at "
+    description="Converts between non-temperature units of measurement.",
+    help="Converts between units of measurement. Note that this does **not** include temperature, for unit "
+         "compatibility reasons; temperature can be converted using `z!tconvert`. More info at "
          "https://github.com/kaesekaiser/zephyrus/blob/master/docs/convert.md."
 )
 async def convert(ctx: commands.Context, n: str, *text):
     conv = ClientEmol(":straight_ruler:", hexcol("efc700"), ctx)
+
+    if not text:
+        raise commands.BadArgument
 
     # determining number of sig figs
     if "e" in n:
