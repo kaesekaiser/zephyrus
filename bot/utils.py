@@ -144,6 +144,16 @@ def smallcaps(s: str):
     return "".join([alpha_dict.get(g, g) for g in s])
 
 
+@zeph.command(
+    name="smallcaps", aliases=["small"], usage="z!smallcaps <text...>",
+    description=smallcaps("Does this to your text."),
+    help=smallcaps("Does this to your text.") + " There is no small-caps X, and the small-caps F and S may not "
+                                                "display on some devices."
+)
+async def smallcaps_command(ctx: commands.Context, *, text: str):
+    return await ctx.send(smallcaps(text))
+
+
 def caesar_cipher(letter: str, n: int):
     if letter.lower() not in lowerAlphabet:
         return letter
@@ -201,8 +211,8 @@ async def devigenere(ctx: commands.Context, text: str, *keys: str):
     usage="z!scramble <text...>",
     help="eDso thsi ot uryo xtt.e"
 )
-async def scramble(ctx: commands.Context, *text: str):
-    return await ctx.send(content=" ".join(["".join(sample(g, len(g))) for g in text]))
+async def scramble(ctx: commands.Context, *, text: str):
+    return await ctx.send(content=" ".join(["".join(sample(g, len(g))) for g in text.split()]))
 
 
 @zeph.command(

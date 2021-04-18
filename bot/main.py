@@ -391,11 +391,13 @@ async def on_command_error(ctx: commands.Context, exception):
         except discord.HTTPException:
             await err.send(ctx, "Error!", desc=str(exception))
         try:
-            await zeph.get_channel(activity_channel).send(
-                f":no_entry: **Error**: `{str(exception)}`\n"
-                f"{zeph.emojis['__']} **Context**: `{ctx.message.content}`\n"
-                f"{zeph.emojis['__']} **URL**: {ctx.message.jump_url} (guild: **{ctx.guild if ctx.guild else 'DM'}**)"
-            )
+            if ctx.command != eval_command:
+                await zeph.get_channel(activity_channel).send(
+                    f":no_entry: **Error**: `{str(exception)}`\n"
+                    f":pencil: **Context**: `{ctx.message.content}`\n"
+                    f":map: **Guild**: {ctx.guild if ctx.guild else 'DM'}\n"
+                    f":fast_forward: **URL**: {ctx.message.jump_url}"
+                )
         except discord.HTTPException:
             pass
         raise exception
