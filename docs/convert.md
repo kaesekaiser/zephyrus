@@ -2,13 +2,13 @@ This file extensively covers the usage of two closely related Zephyrus functions
 
 # z!tconvert
 `z!tconvert` converts between units of temperature. The command is formatted:
-``
+```
 z!tconvert <number> <unit1> to <unit2>
-``
+```
 This returns a temperature in `<unit2>` equivalent to `<number>` degrees `<unit1>`. The command can also be formatted:
-``
+```
 z!tconvert <number> <unit>
-``
+```
 This returns a temperature in the opposite system (Celsius to Fahrenheit, anything else to Celsius) equivalent to `<number>` degrees `<unit>`.
 
 ## Units
@@ -16,13 +16,13 @@ This returns a temperature in the opposite system (Celsius to Fahrenheit, anythi
 
 # z!convert
 `z!convert` converts between units of measurement *other than temperature* in much the same way as `z!tconvert`. The command is formatted:
-``
+```
 z!convert <number> <unit1...> to <unit2...>
-``
+```
 This returns a measurement in `<unit2>` equivalent to `<number>` `<unit1>`. The command can also be formatted:
-``
+```
 z!convert <number> <unit...>
-``
+```
 If you don't include the word `to`, everything after the number is read as one unit. This returns a measurement in the opposite system (metric to US, anything else to metric) equivalent to `<number>` `<unit>`.
 
 `z!convert` works with most [SI (International System) units](https://en.wikipedia.org/wiki/International_System_of_Units#Units_and_prefixes), along with their US counterparts. It also allows for combinations of these units (for example, meters per second); for more on this, see the section [Combining Units](#combining-units).
