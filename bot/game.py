@@ -1,7 +1,6 @@
 from startup import *
 from random import randrange, sample, random
 from minigames import connectfour as cf, jotto as jo, hangman as hm, boggle as bg, zchess as ch
-from utilities import words as wr
 import time
 
 

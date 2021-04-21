@@ -6,8 +6,8 @@ import pinyin_jyutping_sentence as pjs
 import re
 from discord.ext import commands
 from typing import Union
-from minigames.risk import snip, Image
-from utilities.words import levenshtein
+from minigames import imaging as im
+from utilities import words as wr
 from math import ceil, atan2, sqrt, pi
 from random import choice
 from pyquery import PyQuery
@@ -31,14 +31,14 @@ class Zeph(commands.Bot):
         self.epitaphChannels = []
         self.roman = pjs.RomanizationConversion()
         self.airportMaps = {
-            1: Image.open("minigames/minimaps/worldzoom1.png").convert("RGBA"),
-            2: Image.open("minigames/minimaps/worldzoom2.png").convert("RGBA"),
-            4: Image.open("minigames/minimaps/worldzoom4.png").convert("RGBA")
+            1: im.Image.open("minigames/minimaps/worldzoom1.png").convert("RGBA"),
+            2: im.Image.open("minigames/minimaps/worldzoom2.png").convert("RGBA"),
+            4: im.Image.open("minigames/minimaps/worldzoom4.png").convert("RGBA")
         }
-        self.airportIcon = Image.open("minigames/minimaps/airport_large.png").convert("RGBA")
+        self.airportIcon = im.Image.open("minigames/minimaps/airport_large.png").convert("RGBA")
         for i in self.airportMaps.values():
-            assert isinstance(i, Image.Image)
-        assert isinstance(self.airportIcon, Image.Image)
+            assert isinstance(i, im.Image.Image)
+        assert isinstance(self.airportIcon, im.Image.Image)
         step1 = str(PyQuery(
             "https://github.com/kaesekaiser/zephyrus/releases/latest", {"title": "CSS"}
         ))  # this is a really gross way of getting the version I know. but shut up
@@ -236,6 +236,13 @@ def none_list(l: Union[list, tuple], joiner: str = ", "):
 
 def flint(n: Flint):
     return int(n) if int(n) == n else n
+
+
+def snip(s: str, n: int, from_back: bool = False):  # breaks string into n-long pieces
+    if not from_back:
+        return [s[n * m:n * (m + 1)] for m in range(ceil(len(s) / n))]
+    else:
+        return list(reversed([s[-n:]] + [s[-n * (m + 1):-n * m] for m in range(1, ceil(len(s) / n))]))
 
 
 def add_commas(n: Union[Flint, str]):
@@ -488,7 +495,7 @@ def can_int(s: str):
 
 
 def best_guess(target: str, l: iter):
-    di = {g: levenshtein(target, g.lower()) for g in l}
+    di = {g: wr.levenshtein(target, g.lower()) for g in l}
     return choice([key for key in di if di[key] == min(list(di.values()))])
 
 

@@ -1,6 +1,5 @@
 from game import *
 from utilities import dice as di, weed as wd, timein as ti, wiki as wk, convert as cv, keys
-from minigames import imaging as im
 from unicodedata import name as uni_name
 from urllib.error import HTTPError
 import hanziconv
