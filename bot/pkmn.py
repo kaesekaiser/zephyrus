@@ -1,5 +1,6 @@
 from utils import *
 from pokemon import mons as pk
+from copy import deepcopy as copy
 import json
 
 

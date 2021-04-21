@@ -1,12 +1,13 @@
 from game import *
 from utilities import dice as di, weed as wd, timein as ti, wiki as wk, convert as cv, keys
+from minigames import imaging as im
 from unicodedata import name as uni_name
 from urllib.error import HTTPError
 import hanziconv
 import pycantonese
 import datetime
 import requests
-from math import log10, isclose
+from math import log10, isclose, floor, log
 from sympy import factorint
 
 
@@ -350,7 +351,7 @@ async def eightball(ctx: commands.Context, *, text: str):
     return await chooseEmol.send(ctx, choice(options))
 
 
-blankColor = rk.Image.open("images/color.png")
+blankColor = im.Image.open("images/color.png")
 
 
 @zeph.command(
@@ -372,7 +373,7 @@ async def color(ctx: commands.Context, *, col: str):
     if not 0 <= ret.value <= 16777215:
         raise commands.CommandError(f"Invalid color {col}.")
     emol = ClientEmol(zeph.emojis["color_wheel"], ret, ctx)
-    rk.global_fill(blankColor, (255, 255, 255), ret.to_rgb())\
+    im.global_fill(blankColor, (255, 255, 255), ret.to_rgb())\
         .save(f"images/{str(ret.r)[-1]}{str(ret.b)[-1]}.png")
     image = await image_url(f"images/{str(ret.r)[-1]}{str(ret.b)[-1]}.png")
     return await emol.say(f"#{hex(ret.value)[2:].rjust(6, '0')}", thumb=image,
@@ -851,8 +852,8 @@ async def phone_command(ctx: commands.Context, func: str = "help", channel: str=
 
 
 def nln(n: int):
-    reds = {rk.rebase(g, 10, 24): rk.rebase(g, 10, 8).rjust(2, "0") for g in range(24)}
-    return re.sub("|".join(reds.keys()), lambda m: reds[m[0]] + " ", rk.rebase(n, 10, 24)).lstrip("0").rstrip(" ")
+    reds = {rebase(g, 10, 24): rebase(g, 10, 8).rjust(2, "0") for g in range(24)}
+    return re.sub("|".join(reds.keys()), lambda m: reds[m[0]] + " ", rebase(n, 10, 24)).lstrip("0").rstrip(" ")
 
 
 @zeph.command(
@@ -873,6 +874,24 @@ async def factors(ctx: commands.Context, number: int):
     return await ClientEmol(":1234:", blue, ctx).say(f"Prime factors of {number}:", d=f"`= {get_factors(number)}`")
 
 
+base_order = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
+
+def dec(n: str, from_base: int):
+    for c in n:
+        if c not in base_order[:from_base]:
+            raise IndexError(f"invalid base {from_base} number {n}")
+    n = "".join(list(reversed(n)))
+    return sum([base_order.index(n[g]) * from_base ** g for g in range(len(n))])
+
+
+def rebase(n: Union[str, int], fro: int, to: int):
+    n = dec(str(n), fro)
+    if not n:
+        return "0"
+    return "".join(reversed([base_order[(n % (to ** (g + 1))) // (to ** g)] for g in range(int(log(n + 0.5, to)) + 1)]))
+
+
 @zeph.command(
     name="base", usage="z!base <base> <base-10 integer>\nz!base <to> <integer> <from>",
     description="Converts integers between bases.",
@@ -886,7 +905,7 @@ async def base_command(ctx: commands.Context, to_base: int, num: str, from_base:
         return await err.send(ctx, "Base must be between 2 and 36, inclusive.")
 
     try:
-        ret = rk.rebase(num.lower(), from_base, to_base).upper()
+        ret = rebase(num.lower(), from_base, to_base).upper()
     except IndexError:
         return await err.send(ctx, f"{num.upper()} is not a base-{from_base} number.")
 

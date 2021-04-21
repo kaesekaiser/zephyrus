@@ -216,6 +216,8 @@ async def confirm(s: str, dest: Union[commands.Context, discord.TextChannel], ca
         await emol.edit(message, "Confirmation request timed out.")
         return False
     else:
+        if kwargs.get("delete"):  # this should only be used in EXTREME edge cases
+            await message.delete()
         return con.emoji == zeph.emojis["yes"]
 
 
@@ -334,6 +336,10 @@ class Navigator:
             r.message.id == self.message.id and u == ctx.author
         ))[0].emoji
 
+    async def run_nonstandard_emoji(self, emoji: Union[discord.Emoji, str], ctx: commands.Context):
+        # For doing weird things with the input.
+        pass
+
     async def close(self):
         await self.message.delete()
 
@@ -344,32 +350,39 @@ class Navigator:
             except discord.errors.HTTPException:
                 pass
 
-    async def run(self, ctx: commands.Context, on_new_message: bool = True):  # SHOULD NEVER BE OVERWRITTEN
-        if on_new_message:
-            self.message = await ctx.channel.send(embed=self.con)
-        else:
-            assert isinstance(self.message, discord.Message)
-            await self.message.edit(embed=self.con)
+    async def after_timeout(self):
+        if self.close_on_timeout:
+            return await self.close()
+        return await self.remove_buttons()
 
-        for button in self.legal:
-            try:
-                await self.message.add_reaction(button)
-            except discord.errors.HTTPException:
-                pass
+    async def run(self, ctx: commands.Context, on_new_message: bool = True, skip_setup: bool = False):
+        """This function should never be overwritten."""
+        if not skip_setup:
+            if on_new_message:
+                self.message = await ctx.channel.send(embed=self.con)
+            else:
+                assert isinstance(self.message, discord.Message)
+                await self.message.edit(embed=self.con)
+
+            for button in self.legal:
+                try:
+                    await self.message.add_reaction(button)
+                except discord.errors.HTTPException:
+                    pass
 
         while True:
             try:
                 emoji = await self.get_emoji(ctx)
             except asyncio.TimeoutError:
-                if self.close_on_timeout:
-                    return await self.close()
-                return await self.remove_buttons()
+                return await self.after_timeout()
 
             if emoji in self.funcs:
                 if should_await(self.funcs[emoji]):
                     await self.funcs[emoji]()
                 else:
                     self.funcs[emoji]()
+
+            await self.run_nonstandard_emoji(emoji, ctx)
 
             if (self.funcs.get(emoji) == self.close) or self.closed_elsewhere:
                 return
@@ -384,13 +397,16 @@ class Navigator:
             if self.remove_reaction:
                 try:
                     await self.message.remove_reaction(emoji, ctx.author)
-                except discord.errors.HTTPException:
+                except discord.HTTPException:
                     pass
 
             if asyncio.iscoroutinefunction(self.post_process):
                 await self.post_process()
             else:
                 self.post_process()
+
+            if self.closed_elsewhere:
+                return
 
 
 class FieldNavigator(Navigator):
@@ -505,6 +521,15 @@ def should_await(func: callable):
         return asyncio.iscoroutinefunction(func.func)
     else:
         return asyncio.iscoroutinefunction(func)
+
+
+def tsum(*lists: iter):
+    try:
+        assert [len(g) for g in lists].count(len(lists[0])) == len(lists)  # all lists are the same length
+    except AssertionError:
+        raise ValueError("All lists must be the same length.")
+    else:
+        return [sum(g[j] for g in lists) for j in range(len(lists[0]))]
 
 
 blue = hexcol("3B88C3")  # color that many commands use
