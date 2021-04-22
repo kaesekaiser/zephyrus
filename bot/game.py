@@ -503,7 +503,7 @@ class ChessPlayNavigator(Navigator):
 
         if ch.san_regex.fullmatch(s):
             return s
-        elif self.fir.fullmatch(s):
+        elif self.fir.fullmatch(s.lower()):
             s = s.lower()
             piece_type = re.split(r"\s", s)[0]
             piece = ch.chess.Piece(ch.chess.PIECE_NAMES.index(piece_type), self.turn)
