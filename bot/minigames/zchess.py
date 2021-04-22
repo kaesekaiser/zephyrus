@@ -148,9 +148,9 @@ class BoardWrapper(chess.Board):
     def emote_names(self, white_perspective: bool = True):
         def color(rank: int, file: int) -> str:
             if self.move_stack and rank * 8 + file in [self.peek().to_square, self.peek().from_square]:
-                return "P" if (rank + file) % 2 else "V"
+                return "V" if (rank + file) % 2 else "P"
             else:
-                return "B" if (rank + file) % 2 else "W"
+                return "W" if (rank + file) % 2 else "B"
 
         pieces = self.piece_map()
         return [
