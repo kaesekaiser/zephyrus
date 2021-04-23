@@ -331,6 +331,180 @@ async def duel(ctx: commands.Context, opponent: User):
 chess_emol = Emol(":chess_pawn:", hexcol("5C913B"))
 
 
+class CustomChessNavigator(Navigator):
+    color = None
+    starting_fen = ch.chess.STARTING_FEN
+    moves = None
+
+    def __init__(self, author: User):
+        super().__init__(chess_emol, [], 0, "", prev="", nxt="")
+        self.author = author
+        self.view_mode = False
+        self.funcs[zeph.emojis["yes"]] = self.close
+        self.funcs["🔍"] = self.view_board
+        self.funcs["color"] = self.change_color
+        self.funcs["setup"] = self.change_setup
+        self.funcs["moves"] = self.change_moves
+
+    async def close(self):
+        return await self.remove_buttons()
+
+    def standard_pred(self, m: discord.Message):
+        return m.channel == self.message.channel and m.author == self.author
+
+    def view_board(self):
+        self.view_mode = not self.view_mode
+
+    async def change_color(self):
+        await self.emol.edit(self.message, "Will you play White, Black, or random?")
+        try:
+            col = await zeph.wait_for(
+                "message", timeout=300,
+                check=lambda m: self.standard_pred(m) and m.content.lower() in ["white", "black", "random", "cancel"]
+            )
+        except asyncio.TimeoutError:
+            await self.emol.edit(self.message, "Custom challenge timed out.")
+            self.closed_elsewhere = True
+            return await self.remove_buttons()
+        else:
+            try:
+                await col.delete()
+            except discord.HTTPException:
+                pass
+
+            if col.content.lower() == "cancel":
+                return
+            self.color = {"random": None, "black": False, "white": True}[col.content.lower()]
+
+    async def change_setup(self):
+        await self.emol.edit(
+            self.message, "What's the FEN of the initial position?",
+            d="FEN is [Forsyth-Edwards Notation](https://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation). "
+              "I'd suggest just copy-pasting it from somewhere; you can use an online tool like "
+              "[lichess](https://lichess.org/editor) (the FEN field below the board) to get this from a position.",
+            footer="Say \"cancel\" to cancel."
+        )
+        try:
+            col = await zeph.wait_for("message", timeout=300, check=self.standard_pred)
+        except asyncio.TimeoutError:
+            await self.emol.edit(self.message, "Custom challenge timed out.")
+            self.closed_elsewhere = True
+            return await self.remove_buttons()
+        else:
+            try:
+                await col.delete()
+            except discord.HTTPException:
+                pass
+
+            if col.content.lower() == "cancel":
+                return
+
+            try:
+                ch.BoardWrapper(fen=col.content)
+            except ValueError:
+                await self.emol.edit(self.message, "Invalid FEN. Make sure you've copied it correctly.")
+                await asyncio.sleep(2)
+                return
+            else:
+                self.starting_fen = col.content
+                self.moves = None
+
+    async def change_moves(self):
+        await self.emol.edit(
+            self.message, "What moves have been played so far?",
+            d="Enter the full list of moves in [Standard Algebraic Notation]"
+              "(https://en.wikipedia.org/wiki/Algebraic_notation_(chess)). You can get this from a PGN file (such as "
+              "one from a past Zephyrus game), where it's the lower section of the file. It'll look something like "
+              "`1. e4 e5 2. Nc3` and so on. You can also get this from an online tool like "
+              "[lichess](https://lichess.org/analysis) (copy-paste the PGN field below the board).",
+            footer="Say \"cancel\" to cancel."
+        )
+        try:
+            col = await zeph.wait_for(
+                "message", timeout=300,
+                check=lambda m: self.standard_pred(m) and (ch.seems_san(m.content) or m.content.lower() == "cancel")
+            )
+        except asyncio.TimeoutError:
+            await self.emol.edit(self.message, "Custom challenge timed out.")
+            self.closed_elsewhere = True
+            return await self.remove_buttons()
+        else:
+            try:
+                await col.delete()
+            except discord.HTTPException:
+                pass
+
+            if col.content.lower() == "cancel":
+                return
+            try:
+                b = ch.BoardWrapper.from_san(col.content, fen=self.starting_fen)
+            except ValueError:
+                await self.emol.edit(
+                    self.message, "Invalid SAN.",
+                    d="Double-check the moves line up with your initial position."
+                    if self.starting_fen != ch.chess.STARTING_FEN else None
+                )
+                await asyncio.sleep(2)
+                return
+            else:
+                if b.inclusive_result() != "*":
+                    await self.emol.edit(self.message, "Invalid SAN. This would mean the game is already over.")
+                    await asyncio.sleep(3)
+                    return
+
+                self.moves = b.san
+
+    async def get_emoji(self, ctx: commands.Context):
+        def pred(mr: MR, u: User):
+            if isinstance(mr, discord.Message):
+                return self.standard_pred(mr) and mr.content.lower() in self.legal
+            elif isinstance(mr, discord.Reaction):
+                return mr.emoji in self.legal and mr.message == self.message and u == self.author
+
+        ret = (await zeph.wait_for('reaction_or_message', timeout=300, check=pred))[0]
+
+        if isinstance(ret, discord.Reaction):
+            return ret.emoji
+        elif isinstance(ret, discord.Message):
+            try:
+                await ret.delete()
+            except discord.HTTPException:
+                pass
+            return ret.content
+
+    @property
+    def board(self):
+        if self.moves:
+            return ch.BoardWrapper.from_san(self.moves, fen=self.starting_fen)
+        else:
+            return ch.BoardWrapper(fen=self.starting_fen)
+
+    @property
+    def con(self):
+        if self.view_mode:
+            return chess_emol.con(
+                "Starting Board State",
+                d=f"{'White' if self.board.turn else 'Black'} to move.\n\n"
+                f"{ChessPlayNavigator.get_emoji_chessboard(self.board)}"
+            )
+
+        return chess_emol.con(
+            "Chess Game Options",
+            d="To change an option, say the part in (`parentheses`). Hit :mag: to view the current board state, and "
+              f"hit {zeph.emojis['yes']} when you're done to start the game.\n\n"
+              f"`color` sets what color you, {self.author.name}, play. `setup` sets the initial position of all the "
+              f"pieces on the board. `moves` sets what moves have been played up to this point; this is only really "
+              f"useful for continuing a game that got interrupted.",
+            fs={
+                "You play... (`color`)": ("random" if self.color is None else "White" if self.color else "Black"),
+                "Starting Position (`setup`)":
+                    ("default" if self.starting_fen == ch.chess.STARTING_FEN else f"`{self.starting_fen}`"),
+                "Continuing after... (`moves`)": (self.moves.history_range(0, 6, ell=True) if self.moves else "none")
+            },
+            same_line=True
+        )
+
+
 class ChessPlayNavigator(Navigator):
     """Somewhat in beta."""
 
@@ -347,7 +521,9 @@ class ChessPlayNavigator(Navigator):
         self.perspectives = [False, True]
         self.funcs["🔃"] = self.flip_board
         self.funcs["⏬"] = self.bring_down
+        self.funcs["resign"] = self.resign
         self.funcs["🏳️"] = self.resign
+        self.funcs["draw"] = self.draw_offer
         self.funcs[zeph.emojis["draw_offer"]] = self.draw_offer
         self.funcs[zeph.emojis["help"]] = self.help
         self.help_mode = False
@@ -421,8 +597,7 @@ class ChessPlayNavigator(Navigator):
             f"Chess vs. {self.players[not color].name}" +
             (f", Round {self.board.round} ({self.score_for(color)})" if self.board.round > 1 else ""),
             d=top + self.get_emoji_chessboard(self.board, self.perspectives[color]),
-            footer=f"📗 [{self.board.opening.eco}] {self.board.opening.name}\n{self.board.abbreviated_san}"
-            if self.board.opening else self.board.abbreviated_san
+            footer=self.board.footer
         )
 
     @property
@@ -452,8 +627,7 @@ class ChessPlayNavigator(Navigator):
             (f", Round {self.board.round} ({self.score_for(True)})" if self.board.round > 1 else ""),
             d=(f"{self.board.end_condition()}\n\n" if self.board.end_condition() else "") +
             self.get_emoji_chessboard(self.board),
-            footer=f"📗 [{self.board.opening.eco}] {self.board.opening.name}\n{self.board.abbreviated_san}"
-                   if self.board.opening else self.board.abbreviated_san
+            footer=self.board.footer
         )
 
     @staticmethod
@@ -474,7 +648,7 @@ class ChessPlayNavigator(Navigator):
             if isinstance(mr, discord.Message) and not self.help_mode:
                 return mr.channel == self.message.channel and u == self.at_play and \
                        (ch.san_regex.fullmatch(mr.content) or self.fir.fullmatch(mr.content.lower()) or
-                        self.fir_castle.fullmatch(mr.content.lower()))
+                        self.fir_castle.fullmatch(mr.content.lower()) or mr.content.lower() in self.legal)
             elif isinstance(mr, discord.Reaction):
                 return mr.emoji in self.legal and mr.message == self.message and u == self.at_play
 
@@ -647,34 +821,72 @@ class ChessPlayNavigator(Navigator):
 
 
 @zeph.command(
-    name="chess", aliases=["xiaqi", "xq"], usage="z!chess <@opponent>",
+    name="chess", aliases=["xiaqi", "xq"], usage="z!chess <@opponent>\nz!chess custom <@opponent>",
     description="Challenges someone to a game of chess.",
-    help="Challenges someone to a nice game of chess, played in DMs. Somewhat in beta."
+    help="Challenges someone to a nice game of chess, played in DMs. Somewhat in beta.\n\n"
+         "`z!chess <@opponent>` challenges an opponent to a standard game of chess, with a normal starting position "
+         "and random colors. If you want more control, such as setting the starting colors, using a custom piece "
+         "setup, or continuing from an unfinished game, use `z!chess custom <@opponent>`."
 )
-async def chess_command(ctx: commands.Context, opponent: User):
+async def chess_command(ctx: commands.Context, *args):
     async def rematch():
         def pred(r: discord.Reaction, u: User):
-            return (r.emoji == zeph.emojis["yes"] or r.emoji == zeph.emojis["no"]) and r.message == mess and \
-                (u == ctx.author or u == opponent)
+            return (r.emoji == "🔄" or r.emoji == "📥") and r.message == mess and (u == ctx.author or u == opponent)
 
-        states = {ctx.author: None, opponent: None}
-        mess = await chess_emol.send(ctx, "Rematch?")
-        await mess.add_reaction(zeph.emojis["yes"])
-        await mess.add_reaction(zeph.emojis["no"])
+        states = {ctx.author: False, opponent: False, "dl": 1}
+        mess = await chess_emol.send(ctx, "To rematch, hit 🔄. To download this game, hit 📥.")
+        cont = "If you want to pick this back up where you left off, use `z!chess custom <@opponent>`, and copy-" \
+               "paste the moves into the `moves` field.\n\n" if cpn.board.inclusive_result() == "*" else ""
+        await mess.add_reaction("🔄")
+        await mess.add_reaction("📥")
         while True:
             try:
-                rem = await zeph.wait_for("reaction_add", timeout=60, check=pred)
+                rem = await zeph.wait_for("reaction_add", timeout=120, check=pred)
             except asyncio.TimeoutError:
-                await chess_emol.edit(mess, "Rematch timed out.")
+                if states["dl"] == 2:
+                    await chess_emol.edit(mess, "Rematch option timed out.", d=f"{cont}```\n{cpn.board.pgn()}```")
+                    return
+                await chess_emol.edit(mess, "Rematch + download option timed out.")
                 await asyncio.sleep(2)
                 return await mess.delete()
             else:
-                if rem[0].emoji.name == "no":
-                    await asyncio.sleep(2)
-                    return await mess.delete()
-                states[rem[1]] = True
-                if all(states.values()):
-                    return True
+                if rem[0].emoji == "📥" and states["dl"] == 1:
+                    await chess_emol.edit(mess, "To rematch, hit 🔄.", d=f"{cont}```\n{cpn.board.pgn()}```")
+                    states["dl"] = 2
+                elif rem[0].emoji == "🔄":
+                    states[rem[1]] = True
+                    if all(states.values()):
+                        return True
+
+    if not args:
+        return await chess_emol.send(
+            ctx, "[BETA] Chess",
+            d="Challenges someone to a game of chess, played in DMs.\n\n"
+              "`z!chess <@opponent>` challenges an opponent to a standard game of chess, with a normal starting "
+              "position and random colors. If you want more control, such as setting the starting colors, using a "
+              "custom initial setup, or continuing from an unfinished game, use `z!chess custom <@opponent>`."
+        )
+
+    opponent = await commands.MemberConverter().convert(ctx, args[-1])
+
+    if len(args) == 2:
+        if args[0].lower() != "custom":
+            raise commands.BadArgument
+        options = CustomChessNavigator(ctx.author)
+        await options.run(ctx)
+        b, w = (opponent, ctx.author) if options.color is True else (ctx.author, opponent) if options.color is False \
+            else ((ctx.author, opponent) if random() < 0.5 else (opponent, ctx.author))
+        board = options.board
+        board.black_player = str(b)
+        board.white_player = str(w)
+
+    elif len(args) == 1:
+        options = None
+        b, w = (ctx.author, opponent) if random() < 0.5 else (opponent, ctx.author)
+        board = ch.BoardWrapper(white=str(w), black=str(b))
+
+    else:
+        raise commands.BadArgument
 
     if opponent == ctx.author:
         return await chess_emol.send(ctx, "You can't challenge yourself.")
@@ -682,12 +894,12 @@ async def chess_command(ctx: commands.Context, opponent: User):
         return await chess_emol.send(ctx, "Bots can't play chess.")
 
     if await confirm(
-            f"{opponent.name}, do you accept the challenge?", ctx, opponent, yes="accept", no="deny", emol=chess_emol,
+            f"{opponent.name}, do you accept the challenge{' with these rules' if options else ''}?",
+            ctx, opponent, yes="accept", no="deny", emol=chess_emol,
             add_info="This will be played via DMs, so that each player can see the board from the right side. "
                      "However, spectators will be able to watch in this channel.\n\n"
     ):
-        b, w = (ctx.author, opponent) if random() < 0.5 else (opponent, ctx.author)
-        cpn = ChessPlayNavigator(w, b, ch.BoardWrapper(white=str(w), black=str(b)))
+        cpn = ChessPlayNavigator(w, b, board)
         try:
             await cpn.play(ctx)
         except discord.Forbidden:
@@ -697,10 +909,12 @@ async def chess_command(ctx: commands.Context, opponent: User):
             )
         else:
             while await rematch():
-                results = {"1-0": [0, 1], "1/2-1/2": [0.5, 0.5], "0-1": [1, 0], None: [0, 0]}
+                results = {"1-0": [0, 1], "1/2-1/2": [0.5, 0.5], "0-1": [1, 0], "*": [0, 0]}
                 cpn = ChessPlayNavigator(
                     cpn.black, cpn.white,
-                    ch.BoardWrapper(white=str(cpn.black), black=str(cpn.white), round=int(cpn.board.round + 1)),
+                    ch.BoardWrapper(
+                        white=str(cpn.black), black=str(cpn.white), round=int(cpn.board.round + 1), fen=board.setup
+                    ),
                     running_score=list(tsum(cpn.running_score, results[cpn.board.inclusive_result()]).__reversed__())
                 )
                 try:

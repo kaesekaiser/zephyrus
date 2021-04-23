@@ -8,6 +8,10 @@ from typing import Union
 san_regex = re.compile(r"^([0-9]+\.{1,3})?((O-O(-O)?|0-0(-0)?)|" + chess.SAN_REGEX.pattern[1:-2] + r")\Z")
 
 
+def seems_san(s: str):
+    return bool(SAN.from_str(s).moves)
+
+
 def wrap_lines(s: str, line_length: int):
     """Assumes words will always be shorter than line_length."""
     ret, words, line = [], s.split(), ""
@@ -22,8 +26,8 @@ def wrap_lines(s: str, line_length: int):
 
 
 class SAN:
-    def __init__(self, moves: list):
-        self.moves = moves
+    def __init__(self, moves: list, turn: bool = True):
+        self.moves = (["..."] if not turn else []) + moves
 
     @staticmethod
     def from_str(san: str):
@@ -57,6 +61,10 @@ class SAN:
         """Starts at zero! Stops before stop. If no stop, goes to the end."""
         if not self.moves:
             return ""
+
+        if self.moves[0] == "...":
+            start_hm += 1
+            stop_hm = None if stop_hm is None else (stop_hm + 1)
 
         if start_hm < 0 and stop_hm is None:
             return self.history_range(max(0, len(self.moves) + start_hm), space_out=space_out, ell=ell)
@@ -98,18 +106,18 @@ class SAN:
 class BoardWrapper(chess.Board):
     def __init__(self, fen: str = chess.STARTING_FEN, white: str = "?", black: str = "?", **kwargs):
         super().__init__(fen=fen)
-        self.setup = fen
+        self.setup = self.fen()
         self.fen_history = [self.repetition_fen]
-        self.san = SAN([])
+        self.san = SAN(["..."] if not self.turn else [])
         self.opening = None
         self.date = datetime.date.today()
-        self.track_opening = bool(kwargs.pop("track_opening", True))
+        self.track_opening = bool(kwargs.pop("track_opening", self.setup == chess.STARTING_FEN))
         self.white_player = white
         self.black_player = black
         self.draw_offer_accepted = False
         self.resignation = None
         self.timed_out = False
-        self.round = kwargs.pop("round", 1)
+        self.round = int(kwargs.pop("round", 1))
 
     @staticmethod
     def from_san(san: Union[SAN, str], **kwargs):
@@ -189,6 +197,9 @@ class BoardWrapper(chess.Board):
             self.move_by_uci(move)
 
     def move_by_san(self, san: str):
+        if san == "...":
+            pass
+
         move = self.parse_san(san)
         self.san.append(self.san_and_push(move))
         self.fen_history.append(self.repetition_fen)
@@ -265,6 +276,13 @@ class BoardWrapper(chess.Board):
 
         return "\n".join(tags) + \
             f"\n\n{wrap_lines(self.san.history_range(space_out=True) + ' ' + self.inclusive_result(), 80)}"
+
+    @property
+    def footer(self):
+        if self.opening:
+            return f"📗 [{self.opening.eco}] {self.opening.name}\n{self.abbreviated_san}"
+        else:
+            return ("📗 Custom Position\n" if self.setup != chess.STARTING_FEN else "") + self.abbreviated_san
 
 
 class Opening:
