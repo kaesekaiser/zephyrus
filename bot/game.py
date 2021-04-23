@@ -637,11 +637,13 @@ class ChessPlayNavigator(Navigator):
                 return str(rf) + ("W" if white_perspective else "B")
             return str(rf) + "A"
 
+        ss = zeph.strings  # calling this only once makes this function literally dozens of times faster
+
         return "\n".join(
-            zeph.strings[f"L{get_followup(8 - n if white_perspective else n + 1)}"] +
-            ("".join(zeph.strings[j] for j in g)) for n, g in enumerate(board.emote_names(white_perspective))
-        ) + "\n" + zeph.strings["__"] + \
-            ("".join(zeph.strings[f"L{get_followup(g)}"] for g in ("ABCDEFGH" if white_perspective else "HGFEDCBA")))
+            ss[f"L{get_followup(8 - n if white_perspective else n + 1)}"] +
+            ("".join(ss[j] for j in g)) for n, g in enumerate(board.emote_names(white_perspective))
+        ) + "\n" + ss["__"] + \
+            ("".join(ss[f"L{get_followup(g)}"] for g in ("ABCDEFGH" if white_perspective else "HGFEDCBA")))
 
     async def get_emoji(self, ctx: commands.Context):
         def pred(mr: MR, u: User):
