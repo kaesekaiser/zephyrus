@@ -1149,7 +1149,11 @@ async def rolemembers(ctx: commands.Context, *, role_name: str):
     emol = Emol(":clipboard:", hexcol("C1694F"))
 
     if len(possible_roles) == 0:
-        raise commands.CommandError(f"`{role_name}` role not found.")
+        if not ctx.guild.roles:
+            raise commands.CommandError("There's no roles in this server.")
+
+        dym = sorted(ctx.guild.roles, key=lambda c: modified_lcs(c.name, role_name))
+        raise commands.CommandError(f"`{role_name}` role not found.\nDid you mean {dym[0].mention}?")
 
     if len(possible_roles) > 1:  # fuck you manti
         await emol.send(ctx, f"There are multiple roles called `{role_name}`.",
