@@ -526,6 +526,7 @@ async def avatar(ctx: commands.Context, *, user: str = None):
     if not user:
         user = ctx.author
     else:
+        user = user.replace("\n", "")
         try:
             user = await commands.MemberConverter().convert(ctx, user)
         except commands.BadArgument:
