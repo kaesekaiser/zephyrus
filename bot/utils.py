@@ -916,7 +916,7 @@ async def base_command(ctx: commands.Context, to_base: int, num: str, from_base:
 
 @zeph.command(
     name="age", usage="z!age [@user]",
-    description="Shows you how am account is.",
+    description="Shows you how old an account is.",
     help="Shows you how old the given account is, and when they joined the server. If `[@user]` is none, defaults to "
          "your account."
 )
