@@ -1200,7 +1200,9 @@ def reminder_td(td: datetime.timedelta):
     """pretty timedelta formatting for reminders"""
     td_minutes = round(td.total_seconds() / 60)  # rounding to account for small variations
     ds, hs, ms = td_minutes // 1440, td_minutes // 60 % 24, td_minutes % 60
+    ws, ds = ds // 7, ds % 7
     return "".join([
+        f"{ws} {plural('week', ws)} " if ws else "",
         f"{ds} {plural('day', ds)} " if ds else "",
         f"{hs} {plural('hour', hs)} " if hs else "",
         f"{ms} {plural('minute', ms)}" if ms else "",
@@ -1295,7 +1297,7 @@ class RemindNavigator(Navigator):
     name="remindme", aliases=["remind", "rme", "rem"], usage="z!remindme <reminder...> in <time...>\nz!remindme list",
     description="Reminds you of something later.",
     help="`z!remindme <reminder> in <time>` sets the bot to DM you with a reminder in a certain amount of time. "
-         "`<reminder>` can be anything. `<time>` can use any combination of integer days, hours, or minutes, "
+         "`<reminder>` can be anything. `<time>` can use any combination of integer weeks, days, hours, or minutes, "
          "separated by spaces and in that order. `z!remindme list` lists your set reminders, and lets you remove any "
          "if need be. **Make sure your DMs are open, or else the reminder won't send.**\n\n"
          "e.g. `z!remindme eat food in 2 hours`, `z!rme work on essay in 5 hours 30 minutes`, or "
@@ -1321,24 +1323,28 @@ async def remind_command(ctx: commands.Context, *text: str):
 
     last_in = [g for g in range(len(text)) if text[g] == "in"][-1]
     reminder, elapse = " ".join(text[:last_in]), " ".join(text[last_in + 1:])
-    time_regex = r"([0-9]+ days?)?(^|,? |$)(([0-9]+ hours?)?(^|,? |$))?([0-9]+ minutes?)?"
+    time_regex = r"([0-9]+ weeks?)?(^|,? |$)(([0-9]+ days?)?(^|,? |$))?(([0-9]+ hours?)?(^|,? |$))?([0-9]+ minutes?)?"
+
+    if not elapse:
+        raise commands.BadArgument
 
     if not re.fullmatch(time_regex, elapse):
-        raise commands.CommandError("Invalid time. Time argument accepts days, hours, and minutes, in that order.")
+        raise commands.CommandError("Invalid time. Time arg accepts weeks, days, hours, and minutes, in that order.")
 
     def zero(x): return int(x[0]) if x else 0
+    weeks = zero(re.search(r"[0-9]+(?= week)", elapse))
     days = zero(re.search(r"[0-9]+(?= day)", elapse))
     hours = zero(re.search(r"[0-9]+(?= hour)", elapse))
     minutes = zero(re.search(r"[0-9]+(?= minute)", elapse))
 
-    timestamp = time.time() + days * 86400 + hours * 3600 + minutes * 60
+    timestamp = time.time() + weeks * 604800 + days * 86400 + hours * 3600 + minutes * 60
 
     if timestamp > 2147483648:
         raise commands.CommandError("That's too far out.")
 
     reminder = Reminder(ctx.author.id, reminder, timestamp)
 
-    if days + hours + minutes == 0:
+    if weeks + days + hours + minutes == 0:
         await succ.send(ctx, "Alright, wiseguy, I'll send it right now.")
         try:
             return await reminder.send()
