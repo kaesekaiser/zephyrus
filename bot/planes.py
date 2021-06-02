@@ -389,7 +389,7 @@ class PlanesInterpreter(Interpreter):
                 upper_bound = max(0, min(city.imageCoords[zoom][1] - 300, 1396 * zoom - 601))
                 right_bound = left_bound + 600
                 lower_bound = upper_bound + 600
-                rk.merge_down(zeph.airportIcon, base, *city.imageCoords[zoom], center=True)
+                im.merge_down(zeph.airportIcon, base, *city.imageCoords[zoom], center=True)
                 base = base.crop((left_bound, upper_bound, right_bound, lower_bound))
                 base.save(f"storage/minimaps/{city.name}{zoom}.png")
                 minimaps[zoom] = await image_url(f"storage/minimaps/{city.name}{zoom}.png")
