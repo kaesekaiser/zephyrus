@@ -5,7 +5,7 @@ import time
 
 
 @zeph.command(
-    aliases=["conn4"], usage="z!connect4 <@opponent>",
+    aliases=["conn4", "c4"], usage="z!connect4 <@opponent>",
     description="Challenges someone to Connect Four.",
     help="Challenges an opponent to a nice game of Connect Four. Nothing is at stake - except your pride."
 )
@@ -89,7 +89,7 @@ async def connect4(ctx: commands.Context, opponent: User):
 
 
 @zeph.command(
-    usage="z!jotto", aliases=["giotto"],
+    usage="z!jotto", aliases=["giotto", "jt"],
     description="Play a game of Jotto against the bot.",
     help="Plays a game of Jotto. Similar to Mastermind, but with words. I'll choose a random four-letter word, "
          "and you start guessing other four-letter words. I'll tell you how many of the letters in your guess "
@@ -135,7 +135,7 @@ async def jotto(ctx: commands.Context):
 
 
 @zeph.command(
-    usage="z!anagrams",
+    aliases=["anagram", "an"], usage="z!anagrams",
     description="Play a game of Anagrams.",
     help="Plays a game of Anagrams. I'll randomly pick eight letters, and you name as many words as possible "
          "that you can spell with those eight letters."
@@ -224,7 +224,7 @@ async def anagrams(ctx: commands.Context):
 
 
 @zeph.command(
-    usage="z!boggle",
+    aliases=["bg"], usage="z!boggle",
     description="Play a game of Boggle.",
     help="Plays a game of Boggle. I'll generate a board by rolling some letter dice, and you name as many "
          "words as possible that you can spell by stringing those letters together. The letters have to be next "

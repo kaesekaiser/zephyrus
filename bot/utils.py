@@ -451,7 +451,7 @@ def get_yale(s: str):
 
 
 @zeph.command(
-    name="pinyin", usage="z!pinyin <Mandarin text...>", aliases=["py"],
+    name="pinyin", aliases=["py"], usage="z!pinyin <Mandarin text...>",
     description="Romanizes Chinese text using Hanyu Pinyin.",
     help="Romanizes Chinese text according to the Hanyu Pinyin romanization scheme - that is, it turns the "
          "Chinese characters into Latin syllables that sound like their Mandarin pronunciations.\n\n"
@@ -515,7 +515,7 @@ def find_user(guild: discord.Guild, s: str):
 
 
 @zeph.command(
-    usage="z!avatar [user]",
+    aliases=["avi", "pfp"], usage="z!avatar [user]",
     description="Returns a link to a user's avatar.",
     help="Returns a link to a user's avatar. If `[user]` is left blank, links your avatar.\n\n"
          "This command works slightly differently in DMs. When used in a server, `[user]` will be converted to a "
@@ -915,17 +915,22 @@ async def base_command(ctx: commands.Context, to_base: int, num: str, from_base:
 
 
 @zeph.command(
-    name="age", usage="z!age",
-    description="Shows you how old your account is.",
-    help="`z!age` tells you how old your account is, and when you joined the server. That's it, really."
+    name="age", usage="z!age [@user]",
+    description="Shows you how am account is.",
+    help="Shows you how old the given account is, and when they joined the server. If `[@user]` is none, defaults to "
+         "your account."
 )
-async def age_command(ctx: commands.Context):
+async def age_command(ctx: commands.Context, user: discord.Member = None):
+    if not user:
+        user = ctx.author
+
     age_emol = ClientEmol(":hourglass:", hexcol("ffac33"), ctx)
     if ctx.guild:
         return await age_emol.say(
-            f"{ctx.author.display_name}'s Age",
-            d=f"You created your account on **{ctx.author.created_at.date().strftime('%B %d, %Y').replace(' 0', ' ')}**"
-            f".\nYou joined this server on **{ctx.author.joined_at.date().strftime('%B %d, %Y').replace(' 0', ' ')}**."
+            f"{user.display_name}'s Age",
+            d=f"This account was created on **{user.created_at.date().strftime('%B %d, %Y').replace(' 0', ' ')}**"
+            f".\n{'You' if user == ctx.author else 'They'} "
+            f"joined this server on **{user.joined_at.date().strftime('%B %d, %Y').replace(' 0', ' ')}**."
         )
     else:
         return await age_emol.say(
@@ -987,6 +992,7 @@ async def get_message_pointer(ctx: commands.Context, pointer: str, fallback=None
          "Finally, you can also give a message URL (right-click and hit Copy Message Link), and it will react to "
          "the linked message. Then, you yourself can react with that emote, and Zeph's will disappear - it'll "
          "look like you just used Nitro to react.\n\n"
+         "If you don't react, Zeph's reaction will disappear after a short while.\n\n"
          "Note that emote names are *case-sensitive*."
 )
 async def react_command(ctx: commands.Context, *args: str):
@@ -994,7 +1000,10 @@ async def react_command(ctx: commands.Context, *args: str):
         raise commands.BadArgument
 
     if args[-1].strip(":") not in zeph.all_emojis:
-        raise commands.CommandError("I don't have that emote.")
+        if args[0].strip(":") in zeph.all_emojis:
+            args = args[1], args[0]
+        else:
+            raise commands.CommandError("I don't have that emote.")
     emote = zeph.all_emojis[args[-1].strip(":")]
 
     if len(args) == 1:
@@ -1088,7 +1097,7 @@ with open("utilities/stest.txt", "r") as fp:
 
 
 @zeph.command(
-    aliases=["stest"], usage="z!syntaxtest [number 1-218]\nz!syntaxtest list",
+    aliases=["stest", "st"], usage="z!syntaxtest [number 1-218]\nz!syntaxtest list",
     description="Gives you a sentence to test conlang syntax.",
     help="`z!stest` returns a random sentence from the [list of 218 conlang syntax test sentences]"
          "(https://web.archive.org/web/20120427054736/http://fiziwig.com/conlang/syntax_tests.html).\n"
@@ -1294,7 +1303,8 @@ class RemindNavigator(Navigator):
 
 
 @zeph.command(
-    name="remindme", aliases=["remind", "rme", "rem"], usage="z!remindme <reminder...> in <time...>\nz!remindme list",
+    name="remindme", aliases=["remind", "reminder", "rme", "rem"],
+    usage="z!remindme <reminder...> in <time...>\nz!remindme list",
     description="Reminds you of something later.",
     help="`z!remindme <reminder> in <time>` sets the bot to DM you with a reminder in a certain amount of time. "
          "`<reminder>` can be anything. `<time>` can use any combination of integer weeks, days, hours, or minutes, "
@@ -1572,3 +1582,12 @@ async def emote_search_command(ctx: commands.Context, *, query: str = ""):
     emotes = sorted([g for g, j in scd.items() if j <= 2 + (32 - len(query) / 2)], key=lambda k: scd[k])
     await Navigator(emol, [f"`:{g}:` ({zeph.all_emojis[g]})" for g in emotes], 8, "Emote List [{page}/{pgs}]").run(ctx)
 
+
+@zeph.command(
+    name="coinflip", aliases=["flip", "coin", "cf"], usage="z!coinflip",
+    help="Flips a coin."
+)
+async def coinflip_command(ctx: commands.Context):
+    return await ctx.send(
+        f"{zeph.emojis['coinheads']} **Heads!**" if random() < 0.5 else f"{zeph.emojis['cointails']} **Tails!**"
+    )
