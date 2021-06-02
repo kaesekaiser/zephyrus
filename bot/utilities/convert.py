@@ -305,7 +305,7 @@ unitAbbreviations = {  # full name: abbreviation
 
     # time
     **metric_name_dict("second", "s"),
-    "minute": "min", "hour": "hr", "day": "d", "week": "wk",
+    "minute": "min", "hour": "hr", "day": "d", "week": "wk", "h": "hr",
     **metric_name_dict("year", "yr"),
 
     # current
@@ -313,8 +313,7 @@ unitAbbreviations = {  # full name: abbreviation
     **metric_name_dict("amp", "A"),
 
     # area
-    **metric_name_dict("are", "a"),
-    "hectare": "ha", "decare": "da",
+    "hectare": "ha", "decare": "daa", "are": "a", "deciare": "da", "centiare": "ca",
     "acre": "ac",
 
     # volume
@@ -371,7 +370,7 @@ unitAbbreviations = {  # full name: abbreviation
     "base": "base"
 }
 unrulyAbbreviations = {  # abbreviations for whole complex units that might show up
-    "mph": "mi/hr", "kph": "km/hr", "pound-foot": "lb*ft"
+    "mph": "mi/hr", "kph": "km/hr", "pound-foot": "lb*ft", "kmh": "km/hr"
 }
 tempAbbreviations = {
     "°C": "C", "celsius": "C", "centigrade": "C",
@@ -413,7 +412,7 @@ conversionTable = (  # groups of units of the same system
 
     # DERIVED UNITS
     ConversionGroup(  # area
-        {**metric_dict("a")},  # not really a standard unit per se, but eh.
+        {"ca": 1, "da": 10, "a": 100, "daa": 1000, "ha": 10000},
         {"ac": 1},
         ac=(0.40468564224, "ha"),
         base_unit=BaseUnit("ca", "m^2")
