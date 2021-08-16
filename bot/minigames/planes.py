@@ -1,10 +1,15 @@
+import googlemaps
+import googlemaps.geocoding
+import re
 from math import sin, cos, asin, acos, pi, log10, floor, log, atan2, sqrt
 from random import choices, choice
 from minigames.planecities import *
-from geopy.geocoders import Nominatim
+from utilities.keys import google_maps as gm_key
 from time import time
 from pyquery import PyQuery
-import re
+
+
+gmaps = googlemaps.Client(key=gm_key)
 rads = {"km": 6371, "mi": 3958.76}
 url = "https://www.google.com/maps/d/u/0/edit?hl=en&mid=1aoVneqZxmbqLxZrznFPyYbpKlCGC4hbx"
 cd_url = "https://www.timeanddate.com/countdown/vacation?iso={}&p0=179&msg={}&font=slab&csz=1#"
@@ -15,12 +20,12 @@ cities = {}
 countries = {}
 starter_names = ["Meadowlark", "Nightingale", "Endeavor", "Aurora", "Spirit", "Falcon", "Albatross"]
 permit = "".join([*[chr(g) for g in range(65, 91)], *[chr(g) for g in range(97, 123)], "1234567890_-"])
-pattern = r"\[\[\[[0-9.,\-]+\].+?\\n,null,[0-9]+"
+pattern = r"\[\\\"[0-9A-Z]+?\\\",\[\[\[.+?null,[0-9]+?\]"
 specific_patterns = {
     "name": r"(?<=\[\\\"name\\\",\[\\\")[a-zA-Z]+?(?=\\\")",
     "coords": r"(?<=\[\[\[)[0-9.,\-]+?(?=\])",
     "val": r"(?<=\[\\\"description\\\",\[\\\")[0-9]+?(?=\\\")",
-    "no": r"[0-9]+$"
+    "no": r"(?<=null,)[0-9]+(?=\]$)"
 }
 
 
@@ -169,7 +174,7 @@ class City:
         if self.name in citcoundat:
             coun = citcoundat[self.name]
         else:
-            coun = Nominatim().reverse(self.coords).raw["address"]["country"]
+            coun = googlemaps.geocoding.reverse_geocode(gmaps, self.coords)[0]["formatted_address"].split(", ")[-1]
             coun = countredirs.get(coun, coun)
             print(name, coun)
             citcoundat[self.name] = coun
