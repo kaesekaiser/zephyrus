@@ -163,7 +163,9 @@ class City:
         self.radcoords = tuple(rad(c) for c in coords)
         self.imageCoords = {
             g: [
-                1376 * g + round(0.8487 * 515 * g * robinson_x(abs(self.coords[0])) * rad(self.coords[1] - 10)),
+                1376 * g + round(
+                    0.8487 * 515 * g * robinson_x(abs(self.coords[0])) *
+                    rad(self.coords[1] - 10 + (360 if self.coords[1] < -170 else 0))),  # accounting for map wraparound
                 698 * g - round(1.3523 * 515 * g * robinson_y(abs(self.coords[0]))) * (-1 if self.coords[0] < 0 else 1)
             ] for g in [1, 2, 4]  # levels of magnification
         }
