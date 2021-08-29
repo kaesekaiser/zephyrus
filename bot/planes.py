@@ -988,7 +988,7 @@ class AirportSearchNavigator(Navigator):
             try:
                 self.sort = lambda x: -pn.priority(self.criteria["priority"], x)
             except KeyError:
-                raise commands.CommandError(f"")
+                raise commands.CommandError(f"Unrecognized airport `{self.criteria['priority']}`.")
         elif self.criteria["sort"] == "name":
             self.sort = lambda x: x.name
         elif self.criteria["sort"] == "random":
