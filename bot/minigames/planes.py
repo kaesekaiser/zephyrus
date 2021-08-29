@@ -215,6 +215,22 @@ class City:
                 choice([chr(g) for g in range(65, 91) if chr(g) not in
                         [self.jobs[h].code[4] for h in range(j) if self.jobs[h].code[:4] == self.jobs[j].code[:4]]])
 
+    @property
+    def lat(self):
+        return self.coords[0]
+
+    @property
+    def long(self):
+        return self.coords[1]
+
+    @property
+    def radlat(self):
+        return self.radcoords[0]
+
+    @property
+    def radlong(self):
+        return self.radcoords[1]
+
 
 class Path:
     def __init__(self, start_time: int, start_city: City, *dests: City):
@@ -276,6 +292,7 @@ class Plane:
         self.name = name
         self.path = path
         self.jobs = jobs
+        self.task = None  # asyncio task for arrival timer
 
     @property
     def range(self):
@@ -330,7 +347,7 @@ class Plane:
     def dict(self):
         loc = {"Location": self.path[0].name} if len(self.path) == 0 else \
             {"En-route": "→".join([g.name for g in self.path.path]), "ETA": hrmin(self.arrival - time())}
-        job = [f"``{g}`` [{code_city(g[2:4]).name} Ȼ{Job.from_str(g).pay}]" for g in self.jobs]
+        job = [f"`{g}` [{code_city(g[2:4]).name} Ȼ{Job.from_str(g).pay}]" for g in self.jobs]
         return {"Model": self.model, **loc, "Available Slots": self.pass_cap - len(self.jobs),
                 "Jobs": ", ".join(job) if len(self.jobs) > 0 else "none"}
 

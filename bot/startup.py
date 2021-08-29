@@ -39,9 +39,8 @@ class Zeph(commands.Bot):
         for i in self.airportMaps.values():
             assert isinstance(i, im.Image.Image)
         assert isinstance(self.airportIcon, im.Image.Image)
-        step1 = str(PyQuery(
-            "https://github.com/kaesekaiser/zephyrus/releases/latest", {"title": "CSS"}
-        ))  # this is a really gross way of getting the version I know. but shut up
+        # this is a really gross way of getting the version I know. but shut up
+        step1 = str(PyQuery("https://github.com/kaesekaiser/zephyrus/releases/latest"))
         step2 = re.search(r"octicon octicon-tag.*?</span>", step1, re.S)[0]
         zeph_version = re.search(r"(?<=>).*?(?=</span>)", step2)[0]
         try:
@@ -54,6 +53,7 @@ class Zeph(commands.Bot):
         self.reminders = []
         self.server_settings = {}
         self.nativities = []
+        self.tags = {}
 
     @property
     def emojis(self):
@@ -72,12 +72,15 @@ class Zeph(commands.Bot):
     def save(self):
         # with open("storage/call_channels.txt", "w") as f:
         #     f.write("\n".join([f"{g}|{j}|{self.callChannels.get(j, '')}" for g, j in self.phoneNumbers.items()]))
-        with open("storage/planes.txt", "w") as f:
-            f.write("\n".join([str(g) for g in self.planeUsers.values()]))
+        if self.planeUsers:  # if planes fails to initialize for some reason, DO NOT overwrite saved data
+            with open("storage/planes.txt", "w") as f:
+                f.write("\n".join([str(g) for g in self.planeUsers.values()]))
         with open("storage/reminders.txt", "w") as f:
             f.write("\n".join(str(g) for g in self.reminders))
         with open("storage/server_settings.json", "w") as f:
             json.dump({g: j.minimal_json for g, j in self.server_settings.items()}, f, indent=4)
+        with open("storage/tags.json", "w") as f:
+            pass
 
     async def load_romanization(self):
         print("Loading romanizer...")
@@ -350,10 +353,13 @@ class Navigator:
     async def close(self):
         await self.message.delete()
 
-    async def remove_buttons(self):
+    async def remove_buttons(self, from_message: discord.Message = None):
+        if not from_message:
+            from_message = self.message
+
         for button in self.legal.__reversed__():
             try:
-                await self.message.remove_reaction(button, self.message.author)
+                await from_message.remove_reaction(button, from_message.author)
             except discord.errors.HTTPException:
                 pass
 
@@ -408,6 +414,7 @@ class Navigator:
                     pass
 
             if asyncio.iscoroutinefunction(self.post_process):
+                # noinspection PyUnresolvedReferences
                 await self.post_process()
             else:
                 self.post_process()
@@ -467,10 +474,15 @@ class Interpreter:
         try:
             functions["_" + self.redirects.get(func, func)]
         except KeyError:
+            if asyncio.iscoroutinefunction(self.fallback):
+                await self.fallback(*[func, *args])
+            else:
+                self.fallback(*[func, *args])
             raise commands.CommandError(f"Unrecognized function `{func}`.")
         else:
             func = self.redirects.get(func, func)
             if asyncio.iscoroutinefunction(self.before_run):
+                # noinspection PyUnresolvedReferences
                 await self.before_run(func)
             else:
                 self.before_run(func)
@@ -478,6 +490,10 @@ class Interpreter:
 
     def before_run(self, func: str):
         pass
+
+    def fallback(self, *args):
+        """Called if argument given is not a valid function."""
+        raise commands.CommandError(f"Unrecognized function `{args[0]}`.")
 
 
 def lower(l: Union[list, tuple]):

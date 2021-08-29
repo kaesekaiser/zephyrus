@@ -423,7 +423,7 @@ class PlanesInterpreter(Interpreter):
             if path[i] == path[i + 1]:
                 if i == 0:
                     raise commands.CommandError(f"{craft.name} is already at {path[i].name}.")
-                raise commands.CommandError(f"Can't take off and land back at the same airport.")
+                raise commands.CommandError(f"Can't take off and immediately land back at the same airport.")
 
             fuel_cost += round(craft.lpk * path[i].dist(path[i + 1]), 2)
 
@@ -436,7 +436,7 @@ class PlanesInterpreter(Interpreter):
             self.form_dt(datetime.datetime.fromtimestamp(craft.arrival)),
             f"{craft.name}+to+{craft.path[-1].name}"
         )
-        zeph.loop.create_task(self.arrival_timer(craft))
+        plane.task = zeph.loop.create_task(self.arrival_timer(craft))
         return await plane.send(
             self.ctx, "ETA: {}".format(pn.hrmin(craft.arrival - time.time())),
             d=f"Fuel cost: Ȼ{round(fuel_cost)}", url=url
@@ -590,14 +590,14 @@ class PlanesInterpreter(Interpreter):
         return await succ.send(self.ctx, f"{nam} renamed to {args[1]}.")
 
     async def _unload(self, *args):
-        if len(args) == 0:
+        if len(args) < 2:
             raise commands.CommandError("Format: `z!p unload <plane> <job codes...| all>`")
         if args[0].lower() not in self.user.planes:
             raise commands.CommandError("no owned plane by that name")
 
         craft = self.user.planes[args[0].lower()]
         if len(craft.path) != 0:
-            raise commands.CommandError("plane in air")
+            raise commands.CommandError("You can't offload jobs in mid-air.\nYou don't have enough parachutes.")
 
         if args[1].lower() == "all":
             jobs = craft.jobs.copy()
@@ -969,6 +969,12 @@ class AirportSearchNavigator(Navigator):
         else:
             self.own = "all"
 
+        if any(g[-1] == ":" for g in args):
+            raise commands.CommandError(
+                "Don't put spaces between the sort parameters and their values.\n"
+                "i.e. do `near:london`, not `near: london` or `near london`."
+            )
+
         self.criteria = self.read_criteria(" " + " ".join(args))
         self.countries = self.criteria["in"] if self.criteria["in"] else [g.name for g in pn.countries.values()]
 
@@ -977,7 +983,12 @@ class AirportSearchNavigator(Navigator):
         elif self.criteria["near"]:
             self.sort = lambda x: min([x.dist(g) for g in self.criteria["near"]])
         elif self.criteria["priority"]:
-            self.sort = lambda x: -pn.priority(self.criteria["priority"], x)
+            if self.criteria["priority"] == "any":
+                raise commands.CommandError("You can only sort by job priority from one airport.")
+            try:
+                self.sort = lambda x: -pn.priority(self.criteria["priority"], x)
+            except KeyError:
+                raise commands.CommandError(f"")
         elif self.criteria["sort"] == "name":
             self.sort = lambda x: x.name
         elif self.criteria["sort"] == "random":
@@ -1074,7 +1085,7 @@ class AirportSearchNavigator(Navigator):
         elif ret["priority"]:
             try:
                 ret["priority"] = pn.find_city(ret["priority"][0])
-            except ValueError:
+            except KeyError:
                 raise commands.CommandError("`priority` param must be an airport.")
 
         if len(ret["sort"]) > 1:
