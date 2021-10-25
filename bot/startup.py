@@ -42,7 +42,7 @@ class Zeph(commands.Bot):
         # this is a really gross way of getting the version I know. but shut up
         step1 = str(PyQuery("https://github.com/kaesekaiser/zephyrus/releases/latest"))
         step2 = re.search(r"octicon octicon-tag.*?</span>", step1, re.S)[0]
-        zeph_version = re.search(r"(?<=>).*?(?=</span>)", step2)[0]
+        zeph_version = re.search(r"(?<=ml-1\">)\s*.*?\s*(?=</span>)", step2.replace("\n", ""))[0].strip()
         try:
             step3 = re.search(r"released this.*?to master", step1, re.S)[0]
             zeph_version += "." + re.search(r"[0-9]*(?= commit)", step3)[0]
@@ -166,8 +166,8 @@ class Emol:  # fancy emote-color embeds
         self.emoji = str(e)
         self.color = col
 
-    def con(self, s: str = None, **kwargs):  # constructs
-        return construct_embed(title=f"{self.emoji} \u2223 {s}" if s else None, col=self.color, **kwargs)
+    def con(self, s: str = "", **kwargs):  # constructs
+        return construct_embed(title=f"{self.emoji} \u2223 {s}" if s else "", col=self.color, **kwargs)
 
     async def send(self, destination: commands.Context, s: str = None, **kwargs):  # sends
         return await destination.send(embed=self.con(s, **kwargs))
