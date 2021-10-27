@@ -1591,3 +1591,11 @@ async def coinflip_command(ctx: commands.Context):
     return await ctx.send(
         f"{zeph.emojis['coinheads']} **Heads!**" if random() < 0.5 else f"{zeph.emojis['cointails']} **Tails!**"
     )
+
+
+@zeph.command(
+    name="hug", aliases=["hugs"], usage="z!hug [user]",
+    help="Hugs you, or a friend."
+)
+async def hug_command(ctx: commands.Context):
+    return await ctx.send(":hugging:")
