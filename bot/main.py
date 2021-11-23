@@ -417,6 +417,13 @@ async def on_message(message: discord.Message):
         if (not message.guild) or zeph.server_settings[message.guild.id].can_h_in(message.channel):
             await message.channel.send(zeph.emojis.get("aitch", "h"))
 
+    sampas = []
+    if re.search(r"(?<=x)(\[.*?]|/.*?/)", message.content) and message.author != zeph.user:
+        for match in re.finditer(r"(?<=x)(\[.*?]|/.*?/)", message.content):
+            sampas.append(convert_sampa(match[0]))
+        if sampas:
+            await message.channel.send("\n".join(sampas))
+
     if zeph.channelLink is not None and zeph.channelLink.should_activate(message):
         if message.channel == zeph.channelLink.to:
             await zeph.channelLink.fro.send(f"**{message.author}**: {message.content}")

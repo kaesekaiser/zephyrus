@@ -4,6 +4,8 @@ import inspect
 import json
 import pinyin_jyutping_sentence as pjs
 import re
+
+import requests.exceptions
 from discord.ext import commands
 from typing import Union
 from minigames import imaging as im
@@ -39,8 +41,20 @@ class Zeph(commands.Bot):
         for i in self.airportMaps.values():
             assert isinstance(i, im.Image.Image)
         assert isinstance(self.airportIcon, im.Image.Image)
+        self.version = self.get_version()
+        self.channelLink = None
+        self.reminders = []
+        self.server_settings = {}
+        self.nativities = []
+        self.tags = {}
+
+    @staticmethod
+    def get_version():
         # this is a really gross way of getting the version I know. but shut up
-        step1 = str(PyQuery("https://github.com/kaesekaiser/zephyrus/releases/latest"))
+        try:
+            step1 = str(PyQuery("https://github.com/kaesekaiser/zephyrus/releases/latest"))
+        except requests.exceptions.ConnectionError:
+            return "version check failed"
         step2 = re.search(r"octicon octicon-tag.*?</span>", step1, re.S)[0]
         zeph_version = re.search(r"(?<=ml-1\">)\s*.*?\s*(?=</span>)", step2.replace("\n", ""))[0].strip()
         try:
@@ -48,12 +62,7 @@ class Zeph(commands.Bot):
             zeph_version += "." + re.search(r"[0-9]*(?= commit)", step3)[0]
         except TypeError:
             zeph_version += ".0"
-        self.version = zeph_version
-        self.channelLink = None
-        self.reminders = []
-        self.server_settings = {}
-        self.nativities = []
-        self.tags = {}
+        return zeph_version
 
     @property
     def emojis(self):

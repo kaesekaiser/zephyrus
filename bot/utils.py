@@ -738,6 +738,13 @@ x_sampa_dict = {
 }
 
 
+def convert_sampa(s: str):
+    ret = s
+    for rep in x_sampa_dict:
+        ret = re.sub(r"(?<!\*)" + rep, x_sampa_dict[rep], ret)
+    return ret
+
+
 @zeph.command(
     usage="z!sampa <X-SAMPA text...>",
     description="Converts X-SAMPA to IPA.",
@@ -745,9 +752,7 @@ x_sampa_dict = {
          "Alphabet. `*` can be used as an escape character."
 )
 async def sampa(ctx: commands.Context, *, text: str):
-    for rep in x_sampa_dict:
-        text = re.sub(r"(?<!\*)" + rep, x_sampa_dict[rep], text)
-    return await ctx.send(content=text)
+    return await ctx.send(content=convert_sampa(text))
 
 
 """def get_phone_no(guild: discord.Guild):
