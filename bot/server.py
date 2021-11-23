@@ -312,6 +312,8 @@ class ServerSettings:
         self.h_default = kwargs.pop("h_default", True)
         self.h_exceptions = kwargs.pop("h_exceptions", [])
 
+        self.sampa = kwargs.pop("sampa", True)
+
     @property
     def notify_join(self):
         return (self.welcome_channel is not None) and self.notify_join_enabled
@@ -346,7 +348,8 @@ class ServerSettings:
             "autoroles": self.autoroles,
             "autorole_bots": self.autorole_bots,
             "h_default": self.h_default,
-            "h_exceptions": self.h_exceptions
+            "h_exceptions": self.h_exceptions,
+            "sampa": self.sampa
         }
 
     @property
@@ -397,7 +400,7 @@ config = Emol(":gear:", hexcol("66757F"))
 class SConfigInterpreter(Interpreter):
     redirects = {
         "prefix": "prefixes", "w": "welcome", "p": "prefixes", "selfrole": "selfroles", "sr": "selfroles",
-        "autorole": "autoroles", "ar": "autoroles", "h": "help"
+        "autorole": "autoroles", "ar": "autoroles", "h": "help", "x": "sampa", "connie": "sampa"
     }
 
     @property
@@ -433,14 +436,18 @@ class SConfigInterpreter(Interpreter):
             "aitch": f"Controls for Zeph's {zeph.emojis['aitch']} feature.\n\n"
                      f"**`z!sc aitch`** shows the current settings, as well as all controls.\n\n"
                      f"`z!sc aitch enable/disable all` enables or disables the function in all channels at once.\n\n"
-                     f"`z!sc aitch channels` allows you to enable or disable the function in specific channels."
+                     f"`z!sc aitch channels` allows you to enable or disable the function in specific channels.",
+            "sampa": "Controls for Zeph's X-SAMPA interpretation feature.\n\n"
+                     "**`z!sc sampa`** shows the current settings, as well as all controls.\n\n"
+                     "`z!sc sampa enable/disable` enables or disables the feature."
         }
         desc_dict = {
             "welcome": "Controls for welcome messages.",
             "prefixes": "Controls for custom command prefixes.",
             "selfroles": "Controls for self-assignable roles.",
             "autoroles": "Controls for automatically-assigned roles.",
-            "aitch": f"Controls for Zeph's {zeph.emojis['aitch']} feature."
+            "aitch": f"Controls for Zeph's {zeph.emojis['aitch']} feature.",
+            "sampa": "Controls for Zeph's X-SAMPA interpretation feature."
         }
 
         if len(args) == 0 or (args[0].lower() not in help_dict and args[0].lower() not in self.redirects):
@@ -908,6 +915,35 @@ class SConfigInterpreter(Interpreter):
 
         elif args[0].lower() in ["channel", "channels"]:
             return await AitchNavigator(self.ctx).run(self.ctx)
+
+        else:
+            raise commands.CommandError(f"Invalid argument `{args[0]}`.")
+
+    async def _sampa(self, *args: str):
+        if not args:
+            return await config.send(
+                self.ctx, "X-SAMPA Settings",
+                d=f"Zephyrus will automatically interpret X-SAMPA text surrounded by x/slashes/ or x[brackets] "
+                  f"preceded by a lowercase `x`, in the style of the late Connie bot. (Unfortunately, there is "
+                  f"Z-SAMPA interpretation at the moment, because I'm lazy and this is a quick fix.) This is on by "
+                  f"default, but can be disabled.\n\n"
+                  f"To enable or disable:\n`z!sc sampa enable/disable`\n\n"
+                  f"X-SAMPA interpretation is currently **{abled(self.settings.sampa).lower()}**."
+            )
+
+        elif args[0].lower() == "disable":
+            if not self.settings.sampa:
+                return await config.send(self.ctx, "X-SAMPA interpretation was already disabled.")
+            else:
+                self.settings.sampa = False
+                return await succ.send(self.ctx, "X-SAMPA interpretation disabled.")
+
+        elif args[0].lower() == "enable":
+            if self.settings.sampa:
+                return await config.send(self.ctx, "X-SAMPA interpretation was already enabled.")
+            else:
+                self.settings.sampa = True
+                return await succ.send(self.ctx, "X-SAMPA interpretation enabled.")
 
         else:
             raise commands.CommandError(f"Invalid argument `{args[0]}`.")
