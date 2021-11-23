@@ -419,11 +419,10 @@ async def on_message(message: discord.Message):
 
     if zeph.server_settings[message.guild.id].sampa and message.author != zeph.user:
         sampas = []
-        if sampa_gex := list(re.finditer(r"(?<=x)(\[.*?]|/.*?/)", message.content)):
-            for match in sampa_gex:
-                sampas.append(convert_sampa(match[0]))
-            if sampas:
-                await message.channel.send("\n".join(sampas))
+        for match in list(re.finditer(r"(?<=x)(\[.*?]|/.*?/)", message.content)):
+            sampas.append(convert_sampa(match[0]))
+        if sampas:
+            await message.channel.send("\n".join(sampas))
 
     if zeph.channelLink is not None and zeph.channelLink.should_activate(message):
         if message.channel == zeph.channelLink.to:
