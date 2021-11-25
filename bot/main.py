@@ -419,8 +419,10 @@ async def on_message(message: discord.Message):
 
     if (not message.guild or zeph.server_settings[message.guild.id].sampa) and message.author != zeph.user:
         sampas = []
-        for match in list(re.finditer(r"(?<=[^a-zA-Z0-9/\\]x)(\[.*?]|/.*?/)|(?<=^x)(\[.*?]|/.*?/)", message.content)):
-            sampas.append(convert_sampa(match[0]))
+        for match in list(re.finditer(r"((?<=\Wx)|(?<=^x))(\[.*?]|/.*?/)", message.content)):
+            sampas.append(convert_x_sampa(match[0]))
+        for match in list(re.finditer(r"((?<=\Wz)|(?<=^z))(\[.*?]|/.*?/)", message.content)):
+            sampas.append(convert_z_sampa(match[0]))
         if sampas:
             await message.channel.send("\n".join(sampas))
 

@@ -437,7 +437,7 @@ class SConfigInterpreter(Interpreter):
                      f"**`z!sc aitch`** shows the current settings, as well as all controls.\n\n"
                      f"`z!sc aitch enable/disable all` enables or disables the function in all channels at once.\n\n"
                      f"`z!sc aitch channels` allows you to enable or disable the function in specific channels.",
-            "sampa": "Controls for Zeph's X-SAMPA interpretation feature.\n\n"
+            "sampa": "Controls for Zeph's X- and Z-SAMPA interpretation feature.\n\n"
                      "**`z!sc sampa`** shows the current settings, as well as all controls.\n\n"
                      "`z!sc sampa enable/disable` enables or disables the feature."
         }
@@ -447,7 +447,7 @@ class SConfigInterpreter(Interpreter):
             "selfroles": "Controls for self-assignable roles.",
             "autoroles": "Controls for automatically-assigned roles.",
             "aitch": f"Controls for Zeph's {zeph.emojis['aitch']} feature.",
-            "sampa": "Controls for Zeph's X-SAMPA interpretation feature."
+            "sampa": "Controls for Zeph's X- and Z-SAMPA interpretation feature."
         }
 
         if len(args) == 0 or (args[0].lower() not in help_dict and args[0].lower() not in self.redirects):
@@ -922,28 +922,27 @@ class SConfigInterpreter(Interpreter):
     async def _sampa(self, *args: str):
         if not args:
             return await config.send(
-                self.ctx, "X-SAMPA Settings",
-                d=f"Zephyrus will automatically interpret X-SAMPA text surrounded by x/slashes/ or x[brackets] "
-                  f"preceded by a lowercase `x`, in the style of the late Connie bot. (Unfortunately, there is "
-                  f"Z-SAMPA interpretation at the moment, because I'm lazy and this is a quick fix.) This is on by "
-                  f"default, but can be disabled.\n\n"
+                self.ctx, "SAMPA Settings",
+                d=f"In the style of the late Connie bot, Zephyrus will automatically interpret X-SAMPA text surrounded "
+                  f"by x/slashes/ or x[brackets] preceded by a lowercase `x`, and Z-SAMPA text in z/slashes/ or "
+                  f"z[brackets] preceded by a lowercase `z`. This is on by default, but can be disabled.\n\n"
                   f"To enable or disable:\n`z!sc sampa enable/disable`\n\n"
-                  f"X-SAMPA interpretation is currently **{abled(self.settings.sampa).lower()}**."
+                  f"SAMPA interpretation is currently **{abled(self.settings.sampa).lower()}**."
             )
 
         elif args[0].lower() == "disable":
             if not self.settings.sampa:
-                return await config.send(self.ctx, "X-SAMPA interpretation was already disabled.")
+                return await config.send(self.ctx, "SAMPA interpretation was already disabled.")
             else:
                 self.settings.sampa = False
-                return await succ.send(self.ctx, "X-SAMPA interpretation disabled.")
+                return await succ.send(self.ctx, "SAMPA interpretation disabled.")
 
         elif args[0].lower() == "enable":
             if self.settings.sampa:
-                return await config.send(self.ctx, "X-SAMPA interpretation was already enabled.")
+                return await config.send(self.ctx, "SAMPA interpretation was already enabled.")
             else:
                 self.settings.sampa = True
-                return await succ.send(self.ctx, "X-SAMPA interpretation enabled.")
+                return await succ.send(self.ctx, "SAMPA interpretation enabled.")
 
         else:
             raise commands.CommandError(f"Invalid argument `{args[0]}`.")
