@@ -48,7 +48,7 @@ class PlanesInterpreter(Interpreter):
         "offload": "unload", "city": "airport", "airports": "cities",
         "p": "profile", "f": "fleet", "j": "jobs", "l": "load", "g": "launch", "a": "airport", "c": "country",
         "k": "market", "m": "model", "h": "help", "u": "upgrade", "d": "dist", "e": "eta", "s": "search",
-        "b": "buy", "o": "buyout", "r": "rename", "x": "specs", "n": "unload", "t": "tutorial"
+        "b": "buy", "o": "buyout", "r": "rename", "x": "specs", "n": "unload", "t": "tutorial", "w": "ownmap"
     }
 
     @property
@@ -228,6 +228,8 @@ class PlanesInterpreter(Interpreter):
                       "expand into a new market without having to manually buy a ton of airports.\n"
                       "`z!planes buyout <country> <number>` does the same, but will only buy, at most, `<number>` "
                       "airports.",
+            "ownmap": "`z!planes ownmap` generates + links an image showing every airport you own on a map. It does "
+                      "not yet show names, unfortunately. The technology will get there eventually."
         }
         desc_dict = {
             "new": "Starts a brand new game.",
@@ -250,7 +252,8 @@ class PlanesInterpreter(Interpreter):
             "search": "Searches and sorts airports.",
             "specs": "Shows specs and upgrades for a plane.",
             "upgrade": "Upgrades a plane's engine or fuel tank.",
-            "buyout": "Buys all unowned airports in a country you can afford."
+            "buyout": "Buys all unowned airports in a country you can afford.",
+            "ownmap": "Shows every airport you own on a map."
         }
         shortcuts = {j: g for g, j in self.redirects.items() if len(g) == 1}
 
@@ -910,6 +913,22 @@ class PlanesInterpreter(Interpreter):
 
     async def _search(self, *args):
         return await AirportSearchNavigator(self, *[g.lower() for g in args]).run(self.ctx)
+
+    async def _ownmap(self, *args):
+        message = await Emol(zeph.emojis["loading"], hexcol("66757F")).send(self.ctx, "Generating...")
+
+        base = zeph.airportMaps[4].copy()
+        icon = im.Image.open("minigames/minimaps/airport.png").convert("RGBA")
+
+        for city in pn.cities.values():
+            if city.name in self.user.cities:
+                im.merge_down(icon, base, *city.imageCoords[4], center=True)
+
+        base.save("storage/ownmap.png")
+        return await plane.edit(
+            message, "Owned Airports",
+            image=(await image_url("storage/ownmap.png")), footer="Click to open full image."
+        )
 
 
 class JobNavigator(Navigator):
