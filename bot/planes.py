@@ -228,8 +228,8 @@ class PlanesInterpreter(Interpreter):
                       "expand into a new market without having to manually buy a ton of airports.\n"
                       "`z!planes buyout <country> <number>` does the same, but will only buy, at most, `<number>` "
                       "airports.",
-            "ownmap": "`z!planes ownmap` generates + links an image showing every airport you own on a map. It does "
-                      "not yet show names, unfortunately. The technology will get there eventually."
+            # "ownmap": "`z!planes ownmap` generates + links an image showing every airport you own on a map. It does "
+            #           "not yet show names, unfortunately. The technology will get there eventually."
         }
         desc_dict = {
             "new": "Starts a brand new game.",
@@ -253,7 +253,7 @@ class PlanesInterpreter(Interpreter):
             "specs": "Shows specs and upgrades for a plane.",
             "upgrade": "Upgrades a plane's engine or fuel tank.",
             "buyout": "Buys all unowned airports in a country you can afford.",
-            "ownmap": "Shows every airport you own on a map."
+            # "ownmap": "Shows every airport you own on a map."
         }
         shortcuts = {j: g for g, j in self.redirects.items() if len(g) == 1}
 
