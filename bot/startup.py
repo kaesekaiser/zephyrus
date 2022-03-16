@@ -86,8 +86,9 @@ class Zeph(commands.Bot):
                 f.write("\n".join([str(g) for g in self.planeUsers.values()]))
         with open("storage/reminders.txt", "w") as f:
             f.write("\n".join(str(g) for g in self.reminders))
-        with open("storage/server_settings.json", "w") as f:
-            json.dump({g: j.minimal_json for g, j in self.server_settings.items()}, f, indent=4)
+        if self.server_settings:  # zephyrus has accidentally erased this before, so only write if it exists
+            with open("storage/server_settings.json", "w") as f:
+                json.dump({g: j.minimal_json for g, j in self.server_settings.items()}, f, indent=4)
         with open("storage/tags.json", "w") as f:
             pass
 

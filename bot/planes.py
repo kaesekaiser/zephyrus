@@ -914,21 +914,21 @@ class PlanesInterpreter(Interpreter):
     async def _search(self, *args):
         return await AirportSearchNavigator(self, *[g.lower() for g in args]).run(self.ctx)
 
-    async def _ownmap(self, *args):
-        message = await Emol(zeph.emojis["loading"], hexcol("66757F")).send(self.ctx, "Generating...")
-
-        base = zeph.airportMaps[4].copy()
-        icon = im.Image.open("minigames/minimaps/airport.png").convert("RGBA")
-
-        for city in pn.cities.values():
-            if city.name in self.user.cities:
-                im.merge_down(icon, base, *city.imageCoords[4], center=True)
-
-        base.save("storage/ownmap.png")
-        return await plane.edit(
-            message, "Owned Airports",
-            image=(await image_url("storage/ownmap.png")), footer="Click to open full image."
-        )
+#     async def _ownmap(self, *args):
+#         message = await Emol(zeph.emojis["loading"], hexcol("66757F")).send(self.ctx, "Generating...")
+#
+#         base = zeph.airportMaps[4].copy()
+#         icon = im.Image.open("minigames/minimaps/airport.png").convert("RGBA")
+#
+#         for city in pn.cities.values():
+#             if city.name in self.user.cities:
+#                 im.merge_down(icon, base, *city.imageCoords[4], center=True)
+#
+#         base.save("storage/ownmap.png")
+#         return await plane.edit(
+#             message, "Owned Airports",
+#             image=(await image_url("storage/ownmap.png")), footer="Click to open full image."
+#         )
 
 
 class JobNavigator(Navigator):

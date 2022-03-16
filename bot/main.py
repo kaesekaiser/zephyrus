@@ -414,10 +414,10 @@ async def on_message(message: discord.Message):
     if zeph.user in message.mentions and re.search(r"^(.*\s)?o7(\s.*)?$", message.content):
         await message.channel.send("o7")
     if re.fullmatch("h+", message.content) and message.author != zeph.user:
-        if (not message.guild) or zeph.server_settings[message.guild.id].can_h_in(message.channel):
+        if (not message.guild) or zeph.server_settings.get(message.guild.id).can_h_in(message.channel):
             await message.channel.send(zeph.emojis.get("aitch", "h"))
 
-    if (not message.guild or zeph.server_settings[message.guild.id].sampa) and message.author != zeph.user:
+    if (not message.guild or zeph.server_settings.get(message.guild.id).sampa) and message.author != zeph.user:
         sampas = []
         for match in list(re.finditer(r"((?<=[^a-zA-Z0-9/\\_]x)|(?<=^x))(\[[^\s].*?]|/[^\s].*?/)", message.content)):
             sampas.append(convert_x_sampa(match[0]))
@@ -448,11 +448,11 @@ async def on_reaction_remove(reaction: discord.Reaction, user: User):
 
 @zeph.event
 async def on_member_join(member: discord.Member):
-    if zeph.server_settings[member.guild.id].notify_join:
-        await zeph.server_settings[member.guild.id].send_join(member)
+    if zeph.server_settings.get(member.guild.id).notify_join:
+        await zeph.server_settings.get(member.guild.id).send_join(member)
 
-    if zeph.server_settings[member.guild.id].autoroles:
-        if member.bot and not zeph.server_settings[member.guild.id].autorole_bots:
+    if zeph.server_settings.get(member.guild.id).autoroles:
+        if member.bot and not zeph.server_settings.get(member.guild.id).autorole_bots:
             pass  # if the server doesn't give autoroles to bots
         else:
             await member.add_roles(*sorted_assignable_roles(member.guild, filter_autoroles=True), reason="autorole")
@@ -460,20 +460,20 @@ async def on_member_join(member: discord.Member):
 
 @zeph.event
 async def on_member_remove(member: discord.Member):
-    if zeph.server_settings[member.guild.id].notify_leave:
-        await zeph.server_settings[member.guild.id].send_leave(member)
+    if zeph.server_settings.get(member.guild.id).notify_leave:
+        await zeph.server_settings.get(member.guild.id).send_leave(member)
 
 
 @zeph.event
 async def on_member_ban(guild: discord.Guild, user: User):
-    if zeph.server_settings[guild.id].notify_ban:
-        await zeph.server_settings[guild.id].send_ban(user)
+    if zeph.server_settings.get(guild.id).notify_ban:
+        await zeph.server_settings.get(guild.id).send_ban(user)
 
 
 @zeph.event
 async def on_member_unban(guild: discord.Guild, user: discord.User):
-    if zeph.server_settings[guild.id].notify_unban:
-        await zeph.server_settings[guild.id].send_unban(user)
+    if zeph.server_settings.get(guild.id).notify_unban:
+        await zeph.server_settings.get(guild.id).send_unban(user)
 
 
 @zeph.event
