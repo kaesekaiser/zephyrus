@@ -1254,19 +1254,16 @@ async def rolemembers(ctx: commands.Context, *, role_name: str):
 
 
 class Reminder:
-    def __init__(self, author_id: int, text: str, timestamp: float):
+    def __init__(self, author_id: int, text: str, timestamp: int):
         self.author = author_id
         self.text = text
-        self.time = timestamp
+        self.time = int(timestamp)
 
     async def send(self):
         try:
             await zeph.get_user(self.author).send(f"**Reminder:** {self.text}")
         except AttributeError:
             print(f"A reminder failed to send: {str(self)}")
-
-    def remaining_time(self, now: datetime.datetime = datetime.datetime.now()):
-        return reminder_td(datetime.datetime.fromtimestamp(self.time) - now)
 
     def __str__(self):
         return f"{self.author}|{self.time}|{self.text}"
@@ -1276,7 +1273,7 @@ class Reminder:
 
     @staticmethod
     def from_str(s: str):
-        return Reminder(int(s.split("|")[0]), "|".join(s.split("|")[2:]), float(s.split("|")[1]))
+        return Reminder(int(s.split("|")[0]), "|".join(s.split("|")[2:]), round(float(s.split("|")[1])))
 
 
 def load_reminders():
@@ -1351,7 +1348,7 @@ class RemindNavigator(Navigator):
         return self.emol.con(
             self.title.format(page=self.page, pgs=self.pgs),
             d="\n".join(
-                f"**`[{g+1}]`** {j.text} (in **{j.remaining_time(now)}**)"
+                f"**`[{g+1}]`** {j.text} (<t:{j.time}:R>)"
                 for g, j in enumerate(page_list(self.rems, self.per, self.page))
             ) + "\n\nTo remove a reminder, say `remove <#>` in chat, e.g. `remove 1`. "
                 "You can also say `remove all` to get rid of all your reminders at once."
@@ -1428,7 +1425,7 @@ async def remind_command(ctx: commands.Context, *text: str):
     hours = zero(re.search(r"[0-9]+(?= hour)", elapse))
     minutes = zero(re.search(r"[0-9]+(?= minute)", elapse))
 
-    timestamp = time.time() + weeks * 604800 + days * 86400 + hours * 3600 + minutes * 60
+    timestamp = round(time.time() + weeks * 604800 + days * 86400 + hours * 3600 + minutes * 60)
 
     if timestamp > 2147483648:
         raise commands.CommandError("That's too far out.")
@@ -1443,10 +1440,9 @@ async def remind_command(ctx: commands.Context, *text: str):
             raise commands.CommandError("Never mind, I can't DM you. Are your DMs open?")
 
     zeph.reminders.append(reminder)
-    timedelta = datetime.datetime.fromtimestamp(timestamp) - datetime.datetime.now()
 
     return await succ.send(
-        ctx, "Reminder added!", d=f"I'll remind you in {reminder_td(timedelta)}."
+        ctx, "Reminder added!", d=f"I'll remind you <t:{timestamp}:R>."
     )
 
 
@@ -1680,3 +1676,11 @@ async def coinflip_command(ctx: commands.Context):
 )
 async def hug_command(ctx: commands.Context):
     return await ctx.send(":hugging:")
+
+
+@zeph.command(
+    name="cases", aliases=["case", "grammar"], usage="z!cases",
+    hidden=True
+)
+async def cases_command(ctx: commands.Context):
+    return await ctx.send("<https://en.wikipedia.org/wiki/List_of_grammatical_cases>")
