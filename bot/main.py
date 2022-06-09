@@ -44,7 +44,7 @@ async def help_command(ctx: commands.Context, comm: str = ""):
     help="Spits out the invite link for Zephyrus, so you can bring it to other servers."
 )
 async def invite(ctx: commands.Context):
-    return await ctx.send(content='https://discordapp.com/oauth2/authorize?client_id={}&scope=bot&permissions=268705856'
+    return await ctx.send(content='https://discordapp.com/oauth2/authorize?client_id={}&scope=bot&permissions=275146729552'
                           .format(zeph.user.id))
 
 
