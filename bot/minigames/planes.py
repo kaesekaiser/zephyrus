@@ -416,7 +416,7 @@ class Job:  # tbh kind of a dummy class. doesn't really do anything other than s
 
 
 class User:
-    def __init__(self, no: int, licenses: list, cits: list, pns: dict, creds: float):
+    def __init__(self, no: int, licenses: dict, cits: list, pns: dict, creds: float):
         self.id = no
         self.countries = licenses
         self.cities = cits
@@ -425,16 +425,22 @@ class User:
 
     @staticmethod
     def from_str(s: str):
+        def failsafe_country_load(country: str):
+            if len(country) < 3:
+                return backCountries[country], 1
+            else:
+                return backCountries[country[:2]], int(country[2:])
+
         j = s.split("|")  # id|countries|cities|planes|credits
         p = [Plane.from_str(g) for g in j[3].split("~")]
         c = [code_city(g).name for g in j[2].split("~")]
-        k = [backCountries[g] for g in j[1].split("~")]
+        k = dict(failsafe_country_load(g) for g in j[1].split("~"))
         return User(int(j[0]), k, c, {g.name.lower(): g for g in p}, int(j[4]))
 
     def __str__(self):
-        return f"{self.id}|{'~'.join([planemojis[g] for g in self.countries])}|" \
-               f"{'~'.join([cities[g.lower()].code for g in self.cities])}|" \
-               f"{'~'.join([str(g) for g in self.planes.values()])}|{round(self.credits)}"
+        return f"{self.id}|{'~'.join(planemojis[k] + str(v) for k, v in self.countries.items())}|" \
+               f"{'~'.join(cities[g.lower()].code for g in self.cities)}|" \
+               f"{'~'.join(str(g) for g in self.planes.values())}|{round(self.credits)}"
 
     @property
     def jobs(self):

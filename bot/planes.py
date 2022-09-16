@@ -57,7 +57,7 @@ class PlanesInterpreter(Interpreter):
             assert isinstance(zeph.planeUsers[self.au.id], pn.User)
             return zeph.planeUsers[self.au.id]
         except KeyError:
-            return pn.User(0, [], [], {}, 0)
+            return pn.User(0, {}, [], {}, 0)
 
     @staticmethod
     def form_et(n):  # formats remaining time
@@ -100,6 +100,18 @@ class PlanesInterpreter(Interpreter):
     def plane_value(self, craft: pn.Plane):
         return self.market_price(craft.model) + int(10000 * (2 ** sum(craft.upgrades + [1]) - 1))
 
+    def job_pay(self, job: pn.Job):
+        if job.destination.country not in self.user.countries:
+            return job.pay
+        else:
+            return round(job.pay * (0.75 + 0.25 * self.user.countries[job.destination.country]))
+
+    def airport_price(self, airport: pn.City):
+        if airport.country not in self.user.countries:
+            return airport.value
+        else:
+            return round(airport.value * (1.1 - 0.1 * self.user.countries[airport.country]))
+
     def next_stop(self, craft: pn.Plane):
         craft.path.iterate(craft.travel(craft.path[0], craft.path[1]))
         ret = 0
@@ -108,8 +120,11 @@ class PlanesInterpreter(Interpreter):
             job = pn.Job.from_str(i)
             if job.destination == craft.path[0]:
                 craft.unload(i)
-                self.user.credits += job.pay
-                ret += job.pay
+                print(job.destination.country, job.destination.country in self.user.countries)
+                pay = self.job_pay(job)
+                print(job.pay, self.job_pay(job), pay)
+                self.user.credits += pay
+                ret += pay
         return ret
 
     async def arrival_timer(self, craft: pn.Plane):
@@ -126,10 +141,9 @@ class PlanesInterpreter(Interpreter):
     def filter_jobs(self, city: pn.City, fil: callable):
         tm = time.time()
         if tm - city.job_reset >= 900:
-            print(f"generating jobs for {city.name}")
             city.rpj()
         gen = [g for g in city.jobs if g.code not in self.user.jobs and fil(g)]
-        gen = [f"**`[{g.code}]`**  {self.oc(g.destination, True)}  (Ȼ{g.pay})" for g in gen]
+        gen = [f"**`[{g.code}]`**  {self.oc(g.destination, True)}  (Ȼ{pn.addcomm(self.job_pay(g))})" for g in gen]
         reset = tm // 900 * 900
         if tm - city.job_reset >= 900:
             city.job_reset = reset
@@ -154,20 +168,23 @@ class PlanesInterpreter(Interpreter):
             "tutorial": "`z!planes tutorial` links to the tutorial.",
             "map": "`z!planes map` links to the airport map.",
             "profile": "`z!planes profile` shows your country licenses and credit balance.",
-            "fleet": "`z!planes fleet` lists your owned planes.\n"
-                     "`z!planes fleet <plane>` shows specs for a specific plane.\n"
+            "fleet": "`z!planes fleet` lists your owned planes.\n\n"
+                     "`z!planes fleet <plane>` shows specs for a specific plane.\n\n"
                      "`z!planes fleet sell <plane>` sells a plane for 25% of its purchase value, including "
                      "money spent on upgrades.",
-            "country": "`z!planes country <country>` shows information for a country.",
+            "country": "`z!planes country <country>` shows information for a country.\n\n"
+                       "`z!planes country upgrade <country>` upgrades your license in a country. An upgraded license "
+                       "increases the payout for jobs headed to that country, and decreases the price of airports in "
+                       "that country. Licenses start at level 1, and may be upgraded up to level 9.",
             "airport": "`z!planes airport <airport>` shows information for an airport. You can use the :mag: button "
-                       "to toggle the zoom on the minimap that appears.\n"
+                       "to toggle the zoom on the minimap that appears.\n\n"
                        "`z!planes airport sell <airport>` sells the airport for 25% of its purchase value.",
             "model": "`z!planes model <model>` shows specs for a plane model.",
-            "dist": "`z!planes dist <from> <to>` returns the distance between two airports.\n"
+            "dist": "`z!planes dist <from> <to>` returns the distance between two airports.\n\n"
                     "`z!planes dist <airports>` returns the length of a path along multiple airports.",
-            "jobs": "`z!planes jobs <airport>` lists available jobs in an airport.\n"
+            "jobs": "`z!planes jobs <airport>` lists available jobs in an airport.\n\n"
                     "`z!planes jobs <airport> all` lists all jobs headed to all airports, "
-                    "including those you don't own.\n"
+                    "including those you don't own.\n\n"
                     "`z!planes jobs <airport> to <city/country>` lists all jobs headed to a certain city or country.",
             "launch": "`z!planes launch <plane> <airports>` launches a plane along a path. Be sure to "
                       "keep fuel price in mind. The ETA in the launch message links to a countdown timer "
@@ -177,9 +194,9 @@ class PlanesInterpreter(Interpreter):
                       "follow the path from its current location to Washington, then NewYork, then Boston, "
                       "without stopping. Planes will automatically unload jobs along the way.",
             "buy": "`z!planes buy airport <airports>` purchases the given airport(s), provided you have "
-                   "enough funds. You can also use the shortcut `z!p b a`.\n"
+                   "enough funds. You can also use the shortcut `z!p b a`.\n\n"
                    "`z!planes buy country <countries>` does the same, but for countries. You can use the shortcut "
-                   "`z!p b c`.\n"
+                   "`z!p b c`.\n\n"
                    "`z!planes buy plane <model>` buys a new plane of the given model. You can only buy one plane at a"
                    "time, and you can use the shortcut `z!p b p`.",
             "load": "`z!planes load <job codes>` loads jobs onto a plane. The job code is the "
@@ -218,14 +235,14 @@ class PlanesInterpreter(Interpreter):
             "specs": "`z!planes specs <plane>` shows the airspeed, fuel consumption, fuel capacity, and "
                      "upgrade levels for a plane you own.",
             "upgrade": "`z!planes upgrade <plane> <stat>` allows you to upgrade a plane. Upgrades cost Ȼ20,000 "
-                       "initially, but each subsequent upgrade is twice as expensive as the last.\n"
+                       "initially, but each subsequent upgrade is twice as expensive as the last.\n\n"
                        "`z!planes upgrade <plane> power` increases a plane's airspeed by 25%, but also "
-                       "increases its fuel consumption by 25%, so its range is not affected.\n"
+                       "increases its fuel consumption by 25%, so its range is not affected.\n\n"
                        "`z!planes upgrade <plane> tank` increases a plane's fuel capacity by 25%, which "
                        "increases its range but does not affect its airspeed or fuel consumption.",
             "buyout": "`z!planes buyout <country>` buys as many airports in a certain country as you can afford, "
                       "starting with the biggest airports. For your personal convenience, so that you can quickly "
-                      "expand into a new market without having to manually buy a ton of airports.\n"
+                      "expand into a new market without having to manually buy a ton of airports.\n\n"
                       "`z!planes buyout <country> <number>` does the same, but will only buy, at most, `<number>` "
                       "airports.",
             # "ownmap": "`z!planes ownmap` generates + links an image showing every airport you own on a map. It does "
@@ -300,7 +317,7 @@ class PlanesInterpreter(Interpreter):
                 raise commands.CommandError("Format: `z!p fleet sell <plane>`")
             args = args[1], args[0]
         if args[0].lower() not in self.user.planes:
-            raise commands.CommandError("no owned plane by that name")
+            raise commands.CommandError("No owned plane by that name.")
 
         craft = self.user.planes[args[0].lower()]
 
@@ -323,7 +340,7 @@ class PlanesInterpreter(Interpreter):
         if len(args) == 0:
             raise commands.CommandError("Format: `z!p specs <plane>`")
         if args[0].lower() not in self.user.planes:
-            raise commands.CommandError("no owned plane by that name")
+            raise commands.CommandError("No owned plane by that name.")
 
         craft = self.user.planes[args[0].lower()]
         return await plane.send(self.ctx, f"{craft.name} ({craft.model})", fs=craft.stats, same_line=True)
@@ -332,30 +349,78 @@ class PlanesInterpreter(Interpreter):
         if len(args) == 0:
             raise commands.CommandError("Format: `z!p country <country>`")
 
+        if args[0] in ["upgrade", "u", "--u"]:
+            if len(args) == 1:
+                raise commands.CommandError("Format: `z!p country upgrade <country>`")
+            args = args[1], args[0]
+
         try:
             country = pn.find_country(args[0])
         except KeyError:
-            raise commands.CommandError("invalid country")
+            raise commands.CommandError("Invalid country.")
 
         assert isinstance(country, pn.Country)
 
         owned = len([g for g in pn.cities.values() if g.country == country.name
                      and g.name in self.user.cities])
-        return await plane.send(
-            self.ctx, country.name, same_line=True,
-            fs={"Traffic": pn.suff(sum([g.passengers for g in country.cities])),
-                "Cities": f"{len(country.cities)} ({owned} owned)",
-                "License Value": f"Ȼ{pn.addcomm(country.worth)}",
-                "Owned": ["No", "Yes"][country.name in self.user.countries],
-                "Flag": f":flag_{pn.planemojis[country.name]}:"}
-        )
+
+        license_level = self.user.countries.get(country.name, 0)
+        upgrade_cost = round(country.worth * 0.5 * license_level)
+
+        if len(args) > 1 and args[1] in ["upgrade", "u", "--u"]:
+            if country.name not in self.user.countries:
+                raise commands.CommandError(f"You must buy the license to {country.name} first.")
+
+            if license_level == 9:
+                raise commands.CommandError("Licenses may not be upgraded past level 9.")
+
+            if upgrade_cost > self.user.credits:
+                raise commands.CommandError(
+                    f"You don't have enough credits. It will cost Ȼ{pn.addcomm(upgrade_cost)} to upgrade this license."
+                )
+
+            comparison = f"Jobs headed to {country.name} will be worth **{round(100 + 25 * license_level)}%** of " \
+                f"their base price (+25%), and airports in {country.name} may be bought for " \
+                f"**{round(100 - 10 * license_level)}%** of their base price (-10%).\n\n"
+
+            if await confirm(
+                f"Are you sure you want to upgrade your license in {country.name} to level {license_level + 1} for "
+                f"Ȼ{pn.addcomm(upgrade_cost)}?", self.ctx, self.au, add_info=comparison
+            ):
+                self.user.credits -= upgrade_cost
+                self.user.countries[country.name] += 1
+                return await succ.send(self.ctx, "License upgraded!")
+            return await plane.send(self.ctx, "License not upgraded.")
+
+        fields = {
+            "Traffic": pn.suff(sum([g.passengers for g in country.cities])),
+            "Cities": f"{len(country.cities)} ({owned} owned)",
+            "License Value": f"Ȼ{pn.addcomm(country.worth)}",
+            "Owned": ["No", "Yes"][country.name in self.user.countries],
+            "Flag": f":flag_{pn.planemojis[country.name]}:",
+            "Code": f"`{pn.planemojis[country.name].upper()}`"
+        }
+        if country.name in self.user.countries:
+            fields["License Level"] = NewLine(
+                f"Your license is **Level {license_level}** [{zeph.emojis['ziplv' + str(license_level)]}]. "
+                f"Jobs headed for this country are worth **{round(25 * (license_level - 1))}%** more, "
+                f"and airports in this country are **{round(10 * (license_level - 1))}%** cheaper.\n\n"
+                f"Your license may be upgraded for **Ȼ{pn.addcomm(upgrade_cost)}** using "
+                f"`z!p country upgrade {country.name}`." if license_level > 1 else
+                f"Your license is **Level 1** [{zeph.emojis['ziplv' + str(license_level)]}]. "
+                f"This provides no additional bonuses. "
+                f"Your license may be upgraded for **Ȼ{pn.addcomm(upgrade_cost)}** using "
+                f"`z!p country upgrade {country.name}`."
+            )
+
+        return await plane.send(self.ctx, country.name, same_line=True, fs=fields)
 
     async def _airport(self, *args):
         if len(args) == 0:
             raise commands.CommandError("Format: `z!p airport [sell] <airport>`")
         if args[0].lower() in ["sell"]:
             if len(args) == 1:
-                raise commands.CommandError("no airport input")
+                raise commands.CommandError("No airport input.")
             args = args[1], args[0], *args[2:]
 
         try:
@@ -367,9 +432,9 @@ class PlanesInterpreter(Interpreter):
 
         if len(args) > 1 and args[1].lower() == "sell":
             if city.name not in self.user.cities:
-                raise commands.CommandError("airport not owned")
+                raise commands.CommandError("You don't own that airport.")
 
-            resale = int(city.value / 4)
+            resale = int(self.airport_price(city) / 4)
             if await confirm(f"You're selling {city.name} Airport for Ȼ{pn.addcomm(resale)}.", self.ctx, self.au):
                 self.user.credits += resale
                 self.user.cities.remove(city.name)
@@ -490,7 +555,6 @@ class PlanesInterpreter(Interpreter):
 
         tm = time.time()
         if tm - city.job_reset >= 900 or len(city.jobs) == 0:
-            print(f"generating jobs for {city.name}")
             city.rpj()  # only rpj city when called
 
         fil = lambda j: j.destination.name in self.user.cities
@@ -510,7 +574,7 @@ class PlanesInterpreter(Interpreter):
                     fil = lambda j: j.destination.name == pn.find_city(args[2].lower()).name
                     fil_str = f"{pn.find_city(args[2].lower()).name} j"
                 except KeyError:
-                    raise commands.CommandError("invalid location")
+                    raise commands.CommandError("Invalid location.")
 
         reset = tm // 900 * 900
         if tm - city.job_reset >= 900:
@@ -532,7 +596,7 @@ class PlanesInterpreter(Interpreter):
 
         for job in jobs:
             if not self.valid_job(job):
-                raise commands.CommandError(f"invalid job code {job.upper()}")
+                raise commands.CommandError(f"Invalid job code `{job.upper()}`.")
             if pn.Job.from_str(job).source != pn.Job.from_str(jobs[0]).source:
                 raise commands.CommandError("Cannot simultaneously load jobs from different airports.")
             if job.upper() in self.user.jobs:
@@ -579,7 +643,7 @@ class PlanesInterpreter(Interpreter):
         if len(args) < 2:
             raise commands.CommandError("Format: `z!p rename <plane> <new name>`")
         if args[0].lower() not in self.user.planes:
-            raise commands.CommandError("no owned plane by that name")
+            raise commands.CommandError("No owned plane by that name.")
 
         nam = self.user.planes[args[0].lower()].name
         if [g in pn.permit for g in args[1]].count(False) != 0:
@@ -596,7 +660,7 @@ class PlanesInterpreter(Interpreter):
         if len(args) < 2:
             raise commands.CommandError("Format: `z!p unload <plane> <job codes...| all>`")
         if args[0].lower() not in self.user.planes:
-            raise commands.CommandError("no owned plane by that name")
+            raise commands.CommandError("No owned plane by that name.")
 
         craft = self.user.planes[args[0].lower()]
         if len(craft.path) != 0:
@@ -608,7 +672,7 @@ class PlanesInterpreter(Interpreter):
             jobs = args[1:]
         for i in jobs:
             if i.upper() not in craft.jobs:
-                raise commands.CommandError(f"invalid job code `{i.upper()}`")
+                raise commands.CommandError(f"Invalid job code `{i.upper()}`.")
 
         for i in jobs:
             craft.unload(i.upper())
@@ -638,7 +702,7 @@ class PlanesInterpreter(Interpreter):
                 )
             )
         if args[0].lower() not in self.user.planes:
-            raise commands.CommandError("no owned plane by that name")
+            raise commands.CommandError("No owned plane by that name.")
 
         craft = self.user.planes[args[0].lower()]
         if len(craft.path) == 0:
@@ -651,7 +715,7 @@ class PlanesInterpreter(Interpreter):
         if len(args) < 2:
             raise commands.CommandError("Format: `z!p upgrade <plane> <tank | power>`")
         if args[0].lower() not in self.user.planes:
-            raise commands.CommandError("no owned plane by that name")
+            raise commands.CommandError("No owned plane by that name.")
 
         craft = self.user.planes[args[0].lower()]
         if len(craft.path) != 0:
@@ -659,7 +723,7 @@ class PlanesInterpreter(Interpreter):
 
         ups = ["power", "tank"]
         if args[1].lower() not in ups:
-            raise commands.CommandError("invalid upgrade")
+            raise commands.CommandError("Upgrade type must be `tank` or `power`.")
 
         up_cost = int(10000 * 2 ** sum(craft.upgrades + [1]))
         if up_cost > self.user.credits:
@@ -694,7 +758,7 @@ class PlanesInterpreter(Interpreter):
         try:
             country = pn.find_country(args[0])
         except KeyError:
-            raise commands.CommandError(f"invalid country `{args[0]}`")
+            raise commands.CommandError(f"Invalid country `{args[0]}`.")
 
         assert isinstance(country, pn.Country)
         if country.name not in self.user.countries:
@@ -710,7 +774,8 @@ class PlanesInterpreter(Interpreter):
 
         bought, price, total = [], 0, True
         for city in country.cities:
-            if sum([g.value for g in bought] + [city.value]) > self.user.credits or len(bought) == stop_at:
+            if sum([self.airport_price(g) for g in bought] + [self.airport_price(city)]) > self.user.credits or \
+                    len(bought) == stop_at:
                 if not bought:
                     raise commands.CommandError(f"You can't afford the biggest airport in {country.name}.")
                 total = False
@@ -718,7 +783,7 @@ class PlanesInterpreter(Interpreter):
 
             if city.name not in self.user.cities:
                 bought.append(city)
-                price += city.value
+                price += self.airport_price(city)
 
         if not bought:
             raise commands.CommandError(f"You already own every airport in {country.name}.")
@@ -769,7 +834,7 @@ class PlanesInterpreter(Interpreter):
                 if i.country not in self.user.countries:
                     raise commands.CommandError(f"You don't have the license to {i.country}.")
 
-            cost = round(sum(g.value for g in purchases))
+            cost = round(sum(self.airport_price(g) for g in purchases))
             if cost > self.user.credits:
                 raise commands.CommandError(f"You don't have enough credits; you need Ȼ{add_commas(cost)}.")
 
@@ -801,7 +866,7 @@ class PlanesInterpreter(Interpreter):
                 self.ctx, self.au
             ):
                 self.user.credits -= cost
-                self.user.countries.extend(g.name for g in purchases)
+                self.user.countries.update([(g.name, 1) for g in purchases])
                 return await succ.send(self.ctx, "License(s) purchased.")
 
         elif args[0].lower() in ["p", "plane", "planes"]:
@@ -809,7 +874,7 @@ class PlanesInterpreter(Interpreter):
                 raise commands.CommandError("Only buy one plane at a time.")
 
             if args[1].lower() not in pn.craft:
-                raise commands.CommandError("invalid model")
+                raise commands.CommandError("Invalid model.")
 
             model = pn.craft[args[1].lower()]
             price = self.market_price(model)
@@ -901,7 +966,7 @@ class PlanesInterpreter(Interpreter):
                     cit = pn.cities[cho]
                     nam = choice(pn.starter_names)
                     zeph.planeUsers[self.au.id] = pn.User(
-                        self.au.id, [cit.country], [cit.name],
+                        self.au.id, {cit.country: 1}, [cit.name],
                         {nam.lower(): pn.Plane(pn.craft["tyne-647"], nam, pn.Path(0, cit), [], [0, 0])}, 1000000
                     )
                     return await plane.send(
@@ -929,6 +994,32 @@ class PlanesInterpreter(Interpreter):
 #             message, "Owned Airports",
 #             image=(await image_url("storage/ownmap.png")), footer="Click to open full image."
 #         )
+
+    async def _admin(self, *args):
+        admin_check(self.ctx)
+
+        if len(args) < 2:
+            raise commands.CommandError("Format: `z!p admin <function> <args...>`")
+
+        if args[0] in ["funds", "credits", "gold", "$"]:
+            if not can_int(args[1]):
+                raise commands.CommandError("Format: `z!p admin credits <#>`")
+
+            if len(args) > 2 and can_int(args[2]):
+                try:
+                    user = zeph.planeUsers[int(args[2])]
+                except KeyError:
+                    raise commands.CommandError("User ID not found.")
+            else:
+                user = self.user
+
+            user.credits += int(args[1])
+
+            await succ.send(
+                self.ctx,
+                f"Credits changed by {'-' if int(args[1]) < 0 else ''}Ȼ{pn.addcomm(abs(int(args[1])))}.",
+                d=f"New value: **Ȼ{pn.addcomm(user.credits)}**."
+            )
 
 
 class JobNavigator(Navigator):
@@ -1068,7 +1159,8 @@ class AirportSearchNavigator(Navigator):
             dist = f" / {round(100 * (2 ** pn.priority(self.criteria['priority'], city)) / self.total_priority, 3)}%"
         else:
             dist = ""
-        cost = f"Ȼ{pn.addcomm(city.value)}" if city.name not in self.interpreter.user.cities else "owned"
+        cost = f"Ȼ{pn.addcomm(self.interpreter.airport_price(city))}" if city.name not in self.interpreter.user.cities \
+            else "owned"
         return f"**{self.interpreter.oc(city, True, False)}**\n- {pn.suff(city.passengers)} / {cost}{dist}"
 
     @staticmethod
@@ -1081,7 +1173,7 @@ class AirportSearchNavigator(Navigator):
             try:
                 pn.find_country(i)
             except KeyError:
-                raise commands.CommandError(f"invalid country `{i}`")
+                raise commands.CommandError(f"Invalid country `{i}`.")
         ret["in"] = [pn.find_country(g).name for g in ret["in"]]
 
         if [bool(ret[g]) for g in sorting_params].count(True) > 1:
@@ -1096,7 +1188,7 @@ class AirportSearchNavigator(Navigator):
                 try:
                     pn.find_city(i)
                 except KeyError:
-                    raise commands.CommandError(f"invalid airport `{i}`")
+                    raise commands.CommandError(f"Invalid airport `{i}`.")
             ret["near"] = [pn.find_city(g) for g in ret["near"]]
 
         if len(ret["priority"]) > 1:
