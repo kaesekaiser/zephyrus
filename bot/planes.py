@@ -127,9 +127,7 @@ class PlanesInterpreter(Interpreter):
             job = pn.Job.from_str(i)
             if job.destination == craft.path[0]:
                 craft.unload(i)
-                print(job.destination.country, job.destination.country in self.user.countries)
                 pay = self.job_pay(job)
-                print(job.pay, self.job_pay(job), pay)
                 self.user.credits += pay
                 ret += pay
         return ret
