@@ -147,7 +147,7 @@ class PlanesInterpreter(Interpreter):
             if jobs_delivered else ""
         return await plane.send(self.ctx, f"{craft.name} arrived at {craft.path[-1].name}!", d=job_str)
 
-    def filter_jobs(self, city: pn.City, fil: callable, exclusion_exceptions: list[str] = (), reload: bool = True):
+    def filter_jobs(self, city: pn.City, fil: callable, exclusion_exceptions: list = (), reload: bool = True):
         tm = time.time()
         reset = tm // 900 * 900
         if tm - city.job_reset >= 900 and (reload or not city.jobs):
