@@ -163,6 +163,47 @@ class PlanesInterpreter(Interpreter):
             "footer": f"new jobs <t:{(tm // 900 + 1) * 900}:R>"
         }
 
+    async def launch_plane(self, craft: pn.Plane, *args: str):
+        # NOTE: all errors thrown within this function MUST be of the CommandError class for compatibility
+        if len(craft.path) != 0:
+            raise commands.CommandError("That plane is currently in the air.")
+        for arg in args:
+            try:
+                city = pn.find_city(arg)
+            except KeyError:
+                raise commands.CommandError(self.invalid_city(arg))
+            if city.name not in self.user.cities:
+                raise commands.CommandError(f"You don't have the license to {city.name}.")
+
+        if len(args) > 25:
+            raise commands.CommandError("Paths can't be longer than 25 stops.")
+
+        args = [pn.find_city(g) for g in args]
+        path = [craft.path[0], *args]
+        fuel_cost = 0
+
+        for i in range(len(path) - 1):
+            if path[i].dist(path[i + 1]) > craft.range:
+                raise commands.CommandError(f"{craft.name} can't reach {path[i + 1].name} from {path[i].name}.")
+            if path[i] == path[i + 1]:
+                if i == 0:
+                    raise commands.CommandError(f"{craft.name} is already at {path[i].name}.")
+                raise commands.CommandError(f"Can't take off and immediately land back at the same airport.")
+
+            fuel_cost += round(craft.lpk * path[i].dist(path[i + 1]), 2)
+
+        if round(fuel_cost) > self.user.credits:
+            raise commands.CommandError("You don't have enough money for fuel.")
+
+        self.user.credits -= round(fuel_cost)
+        craft.launch(*args)
+        plane.task = zeph.loop.create_task(self.arrival_timer(craft))
+        return await plane.send(
+            self.ctx, f"{craft.name} will arrive at {craft.path[-1].name} <t:{craft.arrival}:R>.",
+            d=f"ETA: <t:{craft.arrival}:t> / Flight time: `{pn.hrmin(round(craft.arrival - time.time()))}` / "
+              f"Fuel cost: Ȼ{pn.addcomm(round(fuel_cost))}"
+        )
+
     async def before_run(self, func: str):
         if self.au.id in zeph.planeUsers:
             for craft in self.user.planes.values():
@@ -200,8 +241,13 @@ class PlanesInterpreter(Interpreter):
                     "`z!planes jobs <airport> to:<city/country>` lists all jobs headed to a given city or country.\n\n"
                     "If you have a plane landed at the airport, you can also use this command to load jobs "
                     "onto it. Say the number of the job you'd like to load in chat (e.g. `2` for the second job "
-                    "in the list), and it will automatically be loaded onto the plane. If you have multiple planes "
-                    "landed at the airport, use the ✈ button to switch between them.",
+                    "in the list), and it will automatically be loaded onto the plane. You can load multiple jobs at "
+                    "once by separating them with spaces (e.g. `2 3 5 7`). If you have multiple planes "
+                    "landed at the airport, use the ✈ button to switch between them.\n\n"
+                    "You can also launch planes from the airport whose jobs you're browsing. If you're loading a "
+                    "plane, say `launch` in the chat to bring up a dialogue in which you may set its course; or, "
+                    "follow the command with a list of destinations (e.g. `launch london paris rome` - the same way "
+                    "as `z!p launch`) to launch the plane straightaway.",
             "launch": "`z!planes launch <plane> <airports>` launches a plane along a path. Be sure to "
                       "keep fuel price in mind. The ETA in the launch message links to a countdown timer "
                       "to arrival, and Zephyrus will notify you when it's arrived.\n\n"
@@ -232,6 +278,8 @@ class PlanesInterpreter(Interpreter):
                       "don't own. This param must come first if used.\n\n"
                       "- `in:<country>` restricts the results to only airports in a given country. You can use "
                       "multiple `in` params to search in multiple countries.\n\n"
+                      "- `in:owned` (or `in:licensed`) is a shorthand for all countries whose license you own. This "
+                      "can be combined with other `in` params.\n\n"
                       "- `near:<city>` sorts the results by distance from a given airport. You can use multiple `near` "
                       "params to search near multiple airports; the sorting will be done by the minimum distance to "
                       "an airport in the list.\n\n"
@@ -246,8 +294,8 @@ class PlanesInterpreter(Interpreter):
                       "- `startswith:<text>` restricts the results to only airports starting with a given string "
                       "of letters."
                       "\n\nFor example, `z!p s o in:us in:canada near:detroit` returns a list of owned airports in the "
-                      "United States or Canada, sorted by distance from Detroit. All search parameters are optional; "
-                      "`z!p s` returns a list of all airports.",
+                      "United States or Canada, sorted by distance from Detroit. **All search parameters are "
+                      "optional**; `z!p s` returns a list of all airports.",
             "specs": "`z!planes specs <plane>` shows the airspeed, fuel consumption, fuel capacity, and "
                      "upgrade levels for a plane you own.",
             "upgrade": "`z!planes upgrade <plane> <stat>` allows you to upgrade a plane. Upgrades cost Ȼ20,000 "
@@ -482,44 +530,7 @@ class PlanesInterpreter(Interpreter):
             raise commands.CommandError(f"No owned plane by the name `{args[0]}`.")
 
         craft, args = self.user.planes[args[0].lower()], args[1:]
-        if len(craft.path) != 0:
-            raise commands.CommandError("That plane is currently in the air.")
-        for arg in args:
-            try:
-                city = pn.find_city(arg)
-            except KeyError:
-                raise commands.CommandError(self.invalid_city(arg))
-            if city.name not in self.user.cities:
-                raise commands.CommandError(f"You don't have the license to {city.name}.")
-
-        if len(args) > 25:
-            raise commands.CommandError("Paths can't be longer than 25 stops.")
-
-        args = [pn.find_city(g) for g in args]
-        path = [craft.path[0], *args]
-        fuel_cost = 0
-
-        for i in range(len(path) - 1):
-            if path[i].dist(path[i + 1]) > craft.range:
-                raise commands.CommandError(f"{craft.name} can't reach {path[i + 1].name} from {path[i].name}.")
-            if path[i] == path[i + 1]:
-                if i == 0:
-                    raise commands.CommandError(f"{craft.name} is already at {path[i].name}.")
-                raise commands.CommandError(f"Can't take off and immediately land back at the same airport.")
-
-            fuel_cost += round(craft.lpk * path[i].dist(path[i + 1]), 2)
-
-        if round(fuel_cost) > self.user.credits:
-            raise commands.CommandError("You don't have enough money for fuel.")
-
-        self.user.credits -= round(fuel_cost)
-        craft.launch(*args)
-        plane.task = zeph.loop.create_task(self.arrival_timer(craft))
-        return await plane.send(
-            self.ctx, f"{craft.name} will arrive at {craft.path[-1].name} <t:{craft.arrival}:R>.",
-            d=f"ETA: <t:{craft.arrival}:t> / Flight time: `{pn.hrmin(round(craft.arrival - time.time()))}` / "
-              f"Fuel cost: Ȼ{pn.addcomm(round(fuel_cost))}"
-        )
+        return await self.launch_plane(craft, *args)
 
     async def _model(self, *args):
         if len(args) == 0:
@@ -596,13 +607,16 @@ class PlanesInterpreter(Interpreter):
             city.job_reset = reset
 
         await JobNavigator(
-            self, city, fil, fil_str,
+            self, city, fil, fil_str, close_on_timeout=True,
+            browse_only=nativity_special_case_match(self.ctx, "zip jobs"),
             footer=f"new jobs in {self.form_et(((tm // 900 + 1) * 900 - tm) // 60)} min"
         ).run(self.ctx)
 
     async def _load(self, *args):
         if len(args) == 0:
             raise commands.CommandError("Format: `z!p load <job codes...>`")
+
+        plane.send(self.ctx, "Warning: This command will soon be merged into `z!p jobs`.")
 
         jobs = []
         for job in args:  # filters out duplicates while preserving input order
@@ -1016,10 +1030,12 @@ class PlanesInterpreter(Interpreter):
     async def _admin(self, *args):
         admin_check(self.ctx)
 
-        if len(args) < 2:
+        if len(args) < 1:
             raise commands.CommandError("Format: `z!p admin <function> <args...>`")
 
         if args[0] in ["funds", "credits", "gold", "$"]:
+            if len(args) < 2:
+                raise commands.CommandError("Format: `z!p admin credits <#>`")
             if not can_int(args[1]):
                 raise commands.CommandError("Format: `z!p admin credits <#>`")
 
@@ -1044,7 +1060,7 @@ class PlanesInterpreter(Interpreter):
             for city in pn.cities.values():
                 if city.jobs and city.job_reset < tm - 3600:  # if a city hasn't been checked in the last hour
                     city.jobs.clear()
-            return await succ.send("Job cache cleared.")
+            return await succ.send(self.ctx, "Job cache cleared.")
 
     async def _licenses(self, *args):
         nat_counts = {nat: len([g for g in pn.cities.values() if g.country == nat]) for nat in self.user.countries}
@@ -1057,12 +1073,15 @@ class PlanesInterpreter(Interpreter):
 
 
 class JobNavigator(Navigator):
+    launch_commands = ["launch", "go", "g"]
+
     def __init__(self, inter: PlanesInterpreter, city: pn.City, fil: callable, fil_str: str, **kwargs):
         super().__init__(plane, [], 8, fil_str + "obs in " + city.name + " [{page}/{pgs}]", **kwargs)
         self.interpreter = inter
         self.city = city
         self.fil = fil
         self.fil_str = fil_str
+        self.is_browse_only = kwargs.pop("browse_only", False)
         if self.available_planes:
             self.plane = list(self.available_planes.values())[0]
         else:
@@ -1072,13 +1091,25 @@ class JobNavigator(Navigator):
         self.update_jobs()
         self.funcs["🔄"] = self.update_jobs
         self.funcs["✈"] = self.switch_planes
+        self.funcs[zeph.emojis["no"]] = self.close
+        self.funcs["exit"] = self.close
+
+        self.nativity = Nativity(self.ctx, special_case="zip jobs")
+        if not self.is_browse_only:
+            self.activate_nativity()
 
     @property
     def pgs(self):
-        return len(self.raw_jobs) // self.per + 1
+        return (len(self.raw_jobs) - 1) // self.per + 1
+
+    @property
+    def ctx(self):
+        return self.interpreter.ctx
 
     @property
     def available_planes(self):
+        if self.is_browse_only:
+            return {}
         ret = {g.name: g for g in self.interpreter.user.planes.values() if g.landed_at == self.city}
         if not ret:
             self.plane = None
@@ -1098,22 +1129,37 @@ class JobNavigator(Navigator):
         self.kwargs["footer"] = ret["footer"]
 
     def check_plane(self):
-        if self.plane is None or self.plane.name not in self.available_planes:
+        if self.plane not in self.available_planes.values():  # works if self.plane is None, which also won't be there
             return self.reset_loading_plane()
 
     def switch_planes(self):
         if self.mode == "terminal":
+            if self.is_browse_only:
+                if not nativity_special_case_match(self.ctx, "zip jobs"):
+                    self.activate_nativity()
             self.check_plane()
             self.mode = "hangar"
         elif self.mode == "hangar":
             self.update_jobs(reload=False)
             self.mode = "terminal"
 
+    def activate_nativity(self):
+        self.is_browse_only = False
+        zeph.nativities.append(self.nativity)
+
     def reset_loading_plane(self):
         try:
             self.plane = list(self.available_planes.values())[0]
         except IndexError:
             self.plane = None
+
+    async def close(self):
+        self.closed_elsewhere = True
+        try:
+            zeph.nativities.remove(self.nativity)
+        except ValueError:
+            pass
+        return await self.remove_buttons()
 
     def advance_page(self, direction: int):
         if self.mode == "terminal":
@@ -1131,10 +1177,15 @@ class JobNavigator(Navigator):
                     self.plane = list(available_planes.values())[pos]
 
     async def get_emoji(self, ctx: commands.Context):
+        def is_1thru8(s: str):
+            return len(s) == 1 and 49 <= ord(s) <= 56
+
         def pred(mr: MR, u: User):
             if isinstance(mr, discord.Message) and self.mode == "terminal":
-                return mr.channel == self.message.channel and u == self.interpreter.au and can_int(mr.content) and \
-                    1 <= int(mr.content) <= 8
+                return mr.channel == self.message.channel and u == self.interpreter.au and not self.is_browse_only and \
+                    (all(is_1thru8(g) for g in mr.content.split()) or
+                     mr.content.split()[0].lower() in self.launch_commands or
+                     mr.content.lower() == "exit")
             elif isinstance(mr, discord.Reaction):
                 return mr.emoji in self.legal and mr.message == self.message and u == self.interpreter.au
 
@@ -1153,7 +1204,10 @@ class JobNavigator(Navigator):
         if emoji in self.legal:
             return
         else:
-            self.load_job(int(emoji))
+            if emoji.split()[0].lower() in self.launch_commands:
+                return await self.launch_protocol(*emoji.split()[1:])
+            for job in emoji.split():
+                self.load_job(int(job))
 
     def load_job(self, job_no: int):
         if not self.plane:
@@ -1170,11 +1224,87 @@ class JobNavigator(Navigator):
             else:
                 self.plane.load(job)
 
+    async def launch_protocol(self, *path: str):
+        self.check_plane()
+        if not self.plane:
+            return
+
+        async def exit_message(message: discord.Message, text: str):
+            await plane.edit(message, text)
+            await asyncio.sleep(4)
+            await message.delete()
+
+        if not path:
+            if self.plane.jobs:
+                sorted_cities = sorted(
+                    set(pn.Job.from_str(g).destination.name for g in self.plane.jobs),
+                    key=lambda c: self.city.dist(pn.cities[c.lower()])
+                )
+                job_appendix = f"\n\n{self.plane.name} is carrying jobs bound for " \
+                    f"{grammatical_join(sorted_cities)}."
+            else:
+                job_appendix = ""
+
+            prompt_title = f"What destinations should {self.plane.name} fly to?"
+            prompt_desc = "Say them all in order, separated by spaces, or say `cancel` to cancel." + job_appendix
+
+            def pred(m: discord.Message):
+                return m.channel == self.ctx.channel and m.author == self.interpreter.au
+
+            mess = await plane.send(self.ctx, prompt_title, d=prompt_desc)
+
+            while True:
+                try:
+                    response = await zeph.wait_for("message", check=pred, timeout=60)
+                except asyncio.TimeoutError:
+                    return await exit_message(mess, "Launch timed out. Returning to main jobs menu.")
+
+                response_text = response.content.lower()
+                await response.delete()
+
+                if response_text == "cancel":
+                    return await exit_message(mess, "Returning to main jobs menu.")
+
+                try:
+                    await self.interpreter.launch_plane(self.plane, *response_text.split())
+                except commands.CommandError as e:
+                    await plane.edit(mess, str(e))
+                    await asyncio.sleep(5)
+                    await plane.edit(mess, prompt_title, d=prompt_desc)
+                else:
+                    if self.available_planes:
+                        self.reset_loading_plane()
+                        self.update_jobs(reload=False)
+                        return await exit_message(mess, "Returning to main jobs menu.")
+                    else:
+                        await plane.edit(mess, "No other planes are landed at this airport; exiting jobs menu.")
+                        return await self.close()
+
+        else:
+            try:
+                await self.interpreter.launch_plane(self.plane, *path)
+            except commands.CommandError as e:
+                mess = await plane.send(self.ctx, str(e))
+                await asyncio.sleep(5)
+                await mess.delete()
+            else:
+                if self.available_planes:
+                    self.reset_loading_plane()
+                    self.update_jobs(reload=False)
+                    mess = await plane.send(self.ctx, "Returning to main jobs menu.")
+                    await asyncio.sleep(2)
+                    return await mess.delete()
+                else:
+                    await plane.send(self.ctx, "No other planes are landed at this airport; exiting jobs menu.")
+                    return await self.close()
+
     @property
     def con(self):
         if self.mode == "terminal":
             if not self.raw_jobs:
                 prefix = ""
+            elif self.is_browse_only:
+                prefix = "This list is in **browse-only mode**. Hit ✈ for more info.\n\n"
             elif not self.available_planes:
                 prefix = f"You have no planes at this city to load jobs onto.\n\n"
             else:
@@ -1200,10 +1330,21 @@ class JobNavigator(Navigator):
         elif self.mode == "hangar":
             available_planes = self.available_planes  # preallocate for speed
 
+            if self.is_browse_only:
+                return plane.con(
+                    f"Planes landed at {self.city.name}",
+                    d=f"This list is in **browse-only mode** to prevent interference with another open jobs menu. "
+                      f"If you want to load jobs at this airport, first close the other menu with "
+                      f"{zeph.emojis['no']}, then return to this one."
+                )
+
             if not available_planes:
                 title_suffix = ""
                 desc = "*none*"
             else:
+                if self.plane not in available_planes:
+                    self.reset_loading_plane()
+
                 pos = list(available_planes.keys()).index(self.plane.name)
 
                 if len(available_planes) > 8:
@@ -1349,18 +1490,24 @@ class AirportSearchNavigator(Navigator):
             else "owned"
         return f"**{self.interpreter.pretty_city(city, True, False)}**\n- {pn.suff(city.passengers)} / {cost}{dist}"
 
-    @staticmethod
-    def read_criteria(args: str):
+    def read_criteria(self, args: str):
         possible_params = ["in", "near", "sort", "startswith", "priority"]
         sorting_params = ["near", "sort", "priority"]
         ret = {g: re.findall(r"(?<=\s"+g+r":).+?(?=\s|$)", args) for g in possible_params}
 
+        additional_countries = []
         for i in ret["in"]:
             try:
                 pn.find_country(i)
             except KeyError:
-                raise commands.CommandError(f"Invalid country `{i}`.")
-        ret["in"] = [pn.find_country(g).name for g in ret["in"]]
+                if i in ["license", "licensed", "own", "owned"]:
+                    additional_countries.extend(list(self.interpreter.user.countries.keys()))
+                else:
+                    raise commands.CommandError(f"Invalid country `{i}`.")
+        ret["in"] = list(set(
+            [pn.find_country(g).name for g in ret["in"] if g not in ["license", "licensed", "own", "owned"]] +
+            additional_countries
+        ))
 
         if [bool(ret[g]) for g in sorting_params].count(True) > 1:
             raise commands.CommandError("Cannot combine multiple sorting params.")
@@ -1420,7 +1567,7 @@ class LicenseUpgradeNavigator(Navigator):
         if price <= self.interpreter.user.credits:
             self.interpreter.user.credits -= price
             self.interpreter.user.countries[self.country.name] = self.page
-            await succ.send(self.interpreter.ctx, f"Level {self.page} licenses purchased.")
+            await succ.send(self.interpreter.ctx, f"Level {self.page} license purchased.")
             return await self.close()
         else:
             return

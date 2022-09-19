@@ -452,7 +452,11 @@ class Nativity:
     to prevent multiple such menus from being opened simultaneously."""
     def __init__(self, ctx: commands.Context, *commands_to_block: str, **kwargs):
         self.ctx = ctx
-        self.commands = commands_to_block
+        self.special_case = kwargs.pop("special_case", None)  # manually matches a passcode-based special case
+        if self.special_case:
+            self.commands = []
+        else:
+            self.commands = commands_to_block
         self.block_all = kwargs.pop("block_all", False)
         self.warning = kwargs.pop(
             "warning_text", f"{'C' if self.block_all else 'Some c'}ommands are blocked while this menu is active."
@@ -464,8 +468,22 @@ class Nativity:
     def match(self, ctx: commands.Context):
         return ctx.author == self.ctx.author and ctx.channel == self.ctx.channel and self.block(ctx.command)
 
+    def match_special_case(self, ctx: commands.Context, passcode: str):
+        if self.special_case:
+            return ctx.author == self.ctx.author and ctx.channel == self.ctx.channel and passcode == self.special_case
+        else:
+            return False
+
     def block(self, cmd: commands.Command):
         return self.block_all or (cmd.name in self.commands)
+
+
+def nativity_special_case_match(ctx: commands.Context, passcode: str):
+    """Returns True iff a matching Nativity exists."""
+    for nativity in zeph.nativities:
+        if nativity.match_special_case(ctx, passcode):
+            return True
+    return False
 
 
 class Interpreter:
