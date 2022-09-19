@@ -1091,13 +1091,19 @@ class JobNavigator(Navigator):
         return self.plane.jobs
 
     def update_jobs(self, reload: bool = True):
+        self.check_plane()
         self.page = 1
         ret = self.interpreter.filter_jobs(self.city, self.fil, self.loaded_jobs, reload=reload)
         self.raw_jobs = ret["job_ids"]
         self.kwargs["footer"] = ret["footer"]
 
+    def check_plane(self):
+        if self.plane is None or self.plane.name not in self.available_planes:
+            return self.reset_loading_plane()
+
     def switch_planes(self):
         if self.mode == "terminal":
+            self.check_plane()
             self.mode = "hangar"
         elif self.mode == "hangar":
             self.update_jobs(reload=False)
