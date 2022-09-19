@@ -57,8 +57,9 @@ def twodig(no):
     return str(n) if len(str(n).split(".")[1]) > 1 else str(float(n)) + "0"
 
 
-def hrmin(m):
-    return "{} min {} s".format(round(m) // 60, round(m) % 60)
+def hrmin(td: int):
+    return f"{td // 3600} hr {(td % 3600) // 60} min {td % 60} sec" if td >= 3600 else \
+        f"{td // 60} min {td % 60} s" if td >= 60 else f"{td} s"
 
 
 def addcomm(n):
@@ -349,13 +350,13 @@ class Plane:
     @property
     def fleet_str(self):
         loc = f"Location: {self.path[0].name}" if len(self.path) == 0 else \
-            f"En-route: {self.path[1].name}\nETA: {hrmin(self.arrival - time())}"
+            f"En-route: {self.path[1].name}\nETA: <t:{self.arrival}:R>"
         return f"Model: {self.model}\n{loc}"
 
     @property
     def dict(self):
         loc = {"Location": self.path[0].name} if len(self.path) == 0 else \
-            {"En-route": "→".join([g.name for g in self.path.path]), "ETA": hrmin(self.arrival - time())}
+            {"En-route": "→".join([g.name for g in self.path.path]), "ETA": f"<t:{self.arrival}:R>"}
         job = [f"`{g}` [{code_city(g[2:4]).name} Ȼ{Job.from_str(g).pay}]" for g in self.jobs]
         return {"Model": self.model, **loc, "Available Slots": self.pass_cap - len(self.jobs),
                 "Jobs": ", ".join(job) if len(self.jobs) > 0 else "none"}

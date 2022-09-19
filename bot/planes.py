@@ -48,7 +48,7 @@ class PlanesInterpreter(Interpreter):
         "offload": "unload", "city": "airport", "airports": "cities",
         "p": "profile", "f": "fleet", "j": "jobs", "l": "load", "g": "launch", "a": "airport", "c": "country",
         "k": "market", "m": "model", "h": "help", "u": "upgrade", "d": "dist", "e": "eta", "s": "search",
-        "b": "buy", "o": "buyout", "r": "rename", "x": "specs", "n": "unload", "t": "tutorial", "w": "ownmap"
+        "b": "buy", "o": "buyout", "r": "rename", "x": "specs", "n": "unload", "t": "tutorial", "y": "licenses"
     }
 
     @property
@@ -73,7 +73,7 @@ class PlanesInterpreter(Interpreter):
 
     @staticmethod
     def invalid_city(s: str):
-        return f"Invalid city {s.lower()}. Did you mean {pn.cities[best_guess(s.lower(), pn.cities)].name}?"
+        return f"Invalid city `{s.lower()}`. Did you mean {pn.cities[best_guess(s.lower(), pn.cities)].name}?"
 
     @staticmethod
     def valid_job(s: str):
@@ -85,9 +85,9 @@ class PlanesInterpreter(Interpreter):
             return False
         return True
 
-    def oc(self, ci: pn.City, flag=False, italicize_unowned=True):
-        flag = (":flag_" + pn.planemojis[ci.country] + ": ") if flag else ""
-        return flag + (ci.name if (ci.name in self.user.cities or not italicize_unowned) else "_{}_".format(ci.name))
+    def pretty_city(self, ci: pn.City, flag=False, italicize_unowned=True):
+        flag = f":flag_{pn.planemojis[ci.country]}: " if flag else ""
+        return flag + (ci.name if (ci.name in self.user.cities or not italicize_unowned) else f"_{ci.name}_")
 
     def market_price(self, model: Union[str, pn.Model], delta: int = 0):
         if isinstance(model, str):
@@ -114,14 +114,15 @@ class PlanesInterpreter(Interpreter):
 
     def plane_dict(self, airplane: pn.Plane):
         loc = {"Location": airplane.path[0].name} if len(airplane.path) == 0 else \
-            {"En-route": "→".join(g.name for g in airplane.path.path), "ETA": pn.hrmin(airplane.arrival - time.time())}
+            {"En-route": "→".join(g.name for g in airplane.path.path), "ETA": f"<t:{airplane.arrival}:R>"}
         job = [f"`{g}` [{pn.code_city(g[2:4]).name} Ȼ{self.job_pay(pn.Job.from_str(g))}]" for g in airplane.jobs]
         return {"Model": airplane.model, **loc, "Available Slots": airplane.pass_cap - len(airplane.jobs),
                 "Jobs": ", ".join(job) if len(airplane.jobs) > 0 else "none"}
 
     def next_stop(self, craft: pn.Plane):
         craft.path.iterate(craft.travel(craft.path[0], craft.path[1]))
-        ret = 0
+        jobs_delivered = 0
+        payout = 0
         jobs = [g for g in craft.jobs]
         for i in jobs:
             job = pn.Job.from_str(i)
@@ -129,32 +130,37 @@ class PlanesInterpreter(Interpreter):
                 craft.unload(i)
                 pay = self.job_pay(job)
                 self.user.credits += pay
-                ret += pay
-        return ret
+                jobs_delivered += 1
+                payout += pay
+        return jobs_delivered, payout
 
     async def arrival_timer(self, craft: pn.Plane):
-        delivered = 0
+        jobs_delivered = 0
+        payout = 0
         while len(craft.path) > 0:
             await asyncio.sleep(craft.travel(craft.path[0], craft.path[1]))
-            delivered += self.next_stop(craft)
+            status = self.next_stop(craft)
+            jobs_delivered += status[0]
+            payout += status[1]
 
-        job_str = f" and delivered Ȼ{pn.addcomm(delivered)} in jobs" if delivered else ""
-        return await plane.send(
-            self.ctx, f"{craft.name} arrived at {craft.path[-1].name}{job_str}!", d=self.au.mention
-        )
+        job_str = f"Jobs delivered: **{jobs_delivered}** / Total payout: **Ȼ{pn.addcomm(payout)}**" \
+            if jobs_delivered else ""
+        return await plane.send(self.ctx, f"{craft.name} arrived at {craft.path[-1].name}!", d=job_str)
 
-    def filter_jobs(self, city: pn.City, fil: callable):
+    def filter_jobs(self, city: pn.City, fil: callable, exclusion_exceptions: list[str] = (), reload: bool = True):
         tm = time.time()
-        if tm - city.job_reset >= 900:
-            city.rpj()
-        gen = [g for g in city.jobs if g.code not in self.user.jobs and fil(g)]
-        gen = [f"**`[{g.code}]`**  {self.oc(g.destination, True)}  (Ȼ{pn.addcomm(self.job_pay(g))})" for g in gen]
         reset = tm // 900 * 900
-        if tm - city.job_reset >= 900:
+        if tm - city.job_reset >= 900 and (reload or not city.jobs):
+            city.rpj()
             city.job_reset = reset
+        jobs = [g for g in city.jobs if (g.code not in self.user.jobs or g.code in exclusion_exceptions) and fil(g)]
+        jobs = {
+            g.code: f"**`[{g.code}]`** {self.pretty_city(g.destination, True)} "
+            f"(Ȼ{pn.addcomm(self.job_pay(g))})" for g in jobs
+        }
         return {
-            "table": gen,
-            "footer": f"new jobs in {self.form_et(((tm // 900 + 1) * 900 - tm) // 60)} min"
+            "job_ids": jobs,
+            "footer": f"new jobs <t:{(tm // 900 + 1) * 900}:R>"
         }
 
     async def before_run(self, func: str):
@@ -180,7 +186,8 @@ class PlanesInterpreter(Interpreter):
             "country": "`z!planes country <country>` shows information for a country.\n\n"
                        "`z!planes country upgrade <country>` upgrades your license in a country. An upgraded license "
                        "increases the payout for jobs headed to that country, and decreases the price of airports in "
-                       "that country. Licenses start at level 1, and may be upgraded up to level 9.",
+                       "that country. Licenses start at level 1, and may be upgraded up to level 9. You can also "
+                       "use the shortcut `z!p c u`.",
             "airport": "`z!planes airport <airport>` shows information for an airport. You can use the :mag: button "
                        "to toggle the zoom on the minimap that appears.\n\n"
                        "`z!planes airport sell <airport>` sells the airport for 25% of its purchase value.",
@@ -190,7 +197,11 @@ class PlanesInterpreter(Interpreter):
             "jobs": "`z!planes jobs <airport>` lists available jobs in an airport.\n\n"
                     "`z!planes jobs <airport> all` lists all jobs headed to all airports, "
                     "including those you don't own.\n\n"
-                    "`z!planes jobs <airport> to <city/country>` lists all jobs headed to a certain city or country.",
+                    "`z!planes jobs <airport> to:<city/country>` lists all jobs headed to a given city or country.\n\n"
+                    "If you have a plane landed at the airport, you can also use this command to load jobs "
+                    "onto it. Say the number of the job you'd like to load in chat (e.g. `2` for the second job "
+                    "in the list), and it will automatically be loaded onto the plane. If you have multiple planes "
+                    "landed at the airport, use the ✈ button to switch between them.",
             "launch": "`z!planes launch <plane> <airports>` launches a plane along a path. Be sure to "
                       "keep fuel price in mind. The ETA in the launch message links to a countdown timer "
                       "to arrival, and Zephyrus will notify you when it's arrived.\n\n"
@@ -208,7 +219,7 @@ class PlanesInterpreter(Interpreter):
                     "five-letter/number code on the left side of a job list.",
             "unload": "`z!planes unload <plane> <job codes>` unloads jobs from a plane without pay, "
                       "returning it to its original source.",
-            "rename": "`z!planes rename <plane> <new name>` renames plane. Names can only contain "
+            "rename": "`z!planes rename <plane> <new name>` renames a plane. Names can only contain "
                       "alphanumeric characters, dashes, and underscores.",
             "market": "`z!planes market` shows prices for all available plane models. Plane prices fluctuate daily; "
                       "the indicator beside the price tells you whether the price for that model increased or "
@@ -251,13 +262,15 @@ class PlanesInterpreter(Interpreter):
                       "`z!planes buyout <country> <number>` does the same, but will only buy, at most, `<number>` "
                       "airports.",
             # "ownmap": "`z!planes ownmap` generates + links an image showing every airport you own on a map. It does "
-            #           "not yet show names, unfortunately. The technology will get there eventually."
+            #           "not yet show names, unfortunately. The technology will get there eventually.",
+            "licenses": "`z!planes licenses` lists your owned flight licenses, their levels, and how many airports "
+                        "you own in their countries."
         }
         desc_dict = {
             "new": "Starts a brand new game.",
             "tutorial": "Links to the tutorial.",
             "map": "Links to the airport map.",
-            "profile": "Shows your country licenses and credit balance.",
+            "profile": "Shows basic airline data, including credit balance.",
             "fleet": "List or show details for your planes.",
             "country": "Shows info for a country.",
             "airport": "Shows info for an airport.",
@@ -275,7 +288,8 @@ class PlanesInterpreter(Interpreter):
             "specs": "Shows specs and upgrades for a plane.",
             "upgrade": "Upgrades a plane's engine or fuel tank.",
             "buyout": "Buys all unowned airports in a country you can afford.",
-            # "ownmap": "Shows every airport you own on a map."
+            # "ownmap": "Shows every airport you own on a map.",
+            "licenses": "Lists your country licenses in more detail."
         }
         shortcuts = {j: g for g, j in self.redirects.items() if len(g) == 1}
 
@@ -300,14 +314,25 @@ class PlanesInterpreter(Interpreter):
         return await plane.send(self.ctx, "Purchasable airports:", d=pn.url)
 
     async def _profile(self, *args):  # I am once again asking to take args
-        val = sum([pn.find_city(g).value for g in self.user.cities] +
-                  [self.plane_value(g) for g in self.user.planes.values()])
+        airline_value = sum(
+            [pn.find_city(g).value for g in self.user.cities] +
+            [self.plane_value(g) for g in self.user.planes.values()]
+        )
+
+        nat_counts = {nat: len([g for g in pn.cities.values() if g.country == nat]) for nat in self.user.countries}
+        licenses = " ".join(
+            f":flag_{pn.planemojis[g]}:" for g, _ in
+            sorted(list(self.user.countries.items()), key=lambda c: -(c[1] * 1000 + nat_counts[c[0]]))[:10]
+        )
+        if len(self.user.countries) > 10:
+            licenses += f" *...and {len(self.user.countries) - 10} more*"
+
         return await plane.send(
-            self.ctx, "{}'s Profile".format(self.au.display_name), same_line=True,
-            fs={"Licenses": NewLine(" ".join([f":flag_{pn.planemojis[g]}:" for g in self.user.countries])),
+            self.ctx, f"{self.au.display_name}'s Profile", same_line=True,
+            fs={"Licenses": NewLine(licenses),
                 "Credits": f"Ȼ{pn.addcomm(self.user.credits)}",
                 "Airports": len(self.user.cities),
-                "Airline Value": f"Ȼ{pn.addcomm(val)}"}
+                "Airline Value": f"Ȼ{pn.addcomm(airline_value)}"}
         )
 
     async def _fleet(self, *args):
@@ -454,7 +479,7 @@ class PlanesInterpreter(Interpreter):
         if len(args) < 2:
             raise commands.CommandError("Format: `z!p launch <plane> <path...>`")
         if args[0].lower() not in self.user.planes:
-            raise commands.CommandError("That's not a plane you own.")
+            raise commands.CommandError(f"No owned plane by the name `{args[0]}`.")
 
         craft, args = self.user.planes[args[0].lower()], args[1:]
         if len(craft.path) != 0:
@@ -466,6 +491,9 @@ class PlanesInterpreter(Interpreter):
                 raise commands.CommandError(self.invalid_city(arg))
             if city.name not in self.user.cities:
                 raise commands.CommandError(f"You don't have the license to {city.name}.")
+
+        if len(args) > 25:
+            raise commands.CommandError("Paths can't be longer than 25 stops.")
 
         args = [pn.find_city(g) for g in args]
         path = [craft.path[0], *args]
@@ -486,14 +514,11 @@ class PlanesInterpreter(Interpreter):
 
         self.user.credits -= round(fuel_cost)
         craft.launch(*args)
-        url = pn.cd_url.format(
-            self.form_dt(datetime.datetime.fromtimestamp(craft.arrival)),
-            f"{craft.name}+to+{craft.path[-1].name}"
-        )
         plane.task = zeph.loop.create_task(self.arrival_timer(craft))
         return await plane.send(
-            self.ctx, "ETA: {}".format(pn.hrmin(craft.arrival - time.time())),
-            d=f"Fuel cost: Ȼ{round(fuel_cost)}", url=url
+            self.ctx, f"{craft.name} will arrive at {craft.path[-1].name} <t:{craft.arrival}:R>.",
+            d=f"ETA: <t:{craft.arrival}:t> / Flight time: `{pn.hrmin(round(craft.arrival - time.time()))}` / "
+              f"Fuel cost: Ȼ{pn.addcomm(round(fuel_cost))}"
         )
 
     async def _model(self, *args):
@@ -548,19 +573,23 @@ class PlanesInterpreter(Interpreter):
         if len(args) > 1 and args[1].lower() == "all":
             fil = lambda j: True
             fil_str = "All j"
-        elif len(args) > 1 and args[1].lower() == "to":
-            if len(args) == 2:
-                raise commands.CommandError("`to` must be followed by a city or country.")
+        elif len(args) > 1 and args[1].lower().startswith("to"):
+            if len(args[1].split(":")) != 2:
+                raise commands.CommandError("Format: `z!p jobs <airport> to:<destination>`")
+
+            dest = args[1].split(":")[1]
 
             try:
-                fil = lambda j: j.destination.country == pn.find_country(args[2].lower()).name
-                fil_str = f"{pn.find_country(args[2].lower()).name} j"
+                fil = lambda j: j.destination.country == pn.find_country(dest).name
+                fil_str = f"{pn.find_country(dest).name} j"
             except KeyError:
                 try:
-                    fil = lambda j: j.destination.name == pn.find_city(args[2].lower()).name
-                    fil_str = f"{pn.find_city(args[2].lower()).name} j"
+                    fil = lambda j: j.destination.name == pn.find_city(dest).name
+                    fil_str = f"{pn.find_city(dest).name} j"
                 except KeyError:
-                    raise commands.CommandError("Invalid location.")
+                    raise commands.CommandError("Destination must be a city or country.")
+        elif len(args) > 1:
+            raise commands.CommandError(f"Unrecognized argument `{args[1]}`.")
 
         reset = tm // 900 * 900
         if tm - city.job_reset >= 900:
@@ -682,15 +711,12 @@ class PlanesInterpreter(Interpreter):
     async def _eta(self, *args):
         if len(args) == 0:
             def eta(p: pn.Plane):
-                return "**`Landed`** at " if p.landed_at else f"**`{pn.hrmin(p.arrival - now)}`** to"
+                return f"**`LANDED`** at {p.landed_at.name}" if len(p.path) == 0 else \
+                    f"**`ARRIVING`** at {p.path[-1].name} <t:{p.arrival}:R>"
 
-            now = time.time()
             return await plane.send(
                 self.ctx, "All ETAs",
-                d="\n".join(
-                    f"{g.name} - {eta(g)} {g.path[-1].name}"
-                    for g in self.user.planes.values()
-                )
+                d="\n".join(f"{g.name} - {eta(g)}" for g in self.user.planes.values())
             )
         if args[0].lower() not in self.user.planes:
             raise commands.CommandError("No owned plane by that name.")
@@ -698,9 +724,7 @@ class PlanesInterpreter(Interpreter):
         craft = self.user.planes[args[0].lower()]
         if len(craft.path) == 0:
             return await plane.send(self.ctx, f"{craft.name} is landed at {craft.path[0].name}.")
-        url = pn.cd_url.format(self.form_dt(datetime.datetime.fromtimestamp(craft.arrival)),
-                               f"{craft.name}+to+{craft.path[-1].name}")
-        return await plane.send(self.ctx, f"ETA: {pn.hrmin(craft.arrival - time.time())}", url=url)
+        return await plane.send(self.ctx, f"{craft.name} will arrive at {craft.path[-1].name} <t:{craft.arrival}:R>.")
 
     async def _upgrade(self, *args):
         if len(args) < 2:
@@ -1009,11 +1033,27 @@ class PlanesInterpreter(Interpreter):
 
             user.credits += int(args[1])
 
-            await succ.send(
+            return await succ.send(
                 self.ctx,
                 f"Credits changed by {'-' if int(args[1]) < 0 else ''}Ȼ{pn.addcomm(abs(int(args[1])))}.",
                 d=f"New value: **Ȼ{pn.addcomm(user.credits)}**."
             )
+
+        if args[0] in ["cache", "clearcache", "clear_cache"]:
+            tm = time.time()
+            for city in pn.cities.values():
+                if city.jobs and city.job_reset < tm - 3600:  # if a city hasn't been checked in the last hour
+                    city.jobs.clear()
+            return await succ.send("Job cache cleared.")
+
+    async def _licenses(self, *args):
+        nat_counts = {nat: len([g for g in pn.cities.values() if g.country == nat]) for nat in self.user.countries}
+        licenses = [
+            f":flag_{pn.planemojis[k]}: **{k}**: Level {v} [{zeph.emojis['ziplv' + str(v)]}]\n"
+            f"- {len([g for g in self.user.cities if pn.citcoundat[g] == k])}/{nat_counts[k]} airports owned"
+            for k, v in sorted(list(self.user.countries.items()), key=lambda c: -(c[1] * 1000 + nat_counts[c[0]]))
+        ]
+        return await Navigator(plane, licenses, 4, "Flight Licenses [{page}/{pgs}]").run(self.ctx)
 
 
 class JobNavigator(Navigator):
@@ -1023,14 +1063,160 @@ class JobNavigator(Navigator):
         self.city = city
         self.fil = fil
         self.fil_str = fil_str
+        if self.available_planes:
+            self.plane = list(self.available_planes.values())[0]
+        else:
+            self.plane = None
+        self.mode = "terminal"
+        self.raw_jobs = {}
         self.update_jobs()
         self.funcs["🔄"] = self.update_jobs
+        self.funcs["✈"] = self.switch_planes
 
-    def update_jobs(self):
+    @property
+    def pgs(self):
+        return len(self.raw_jobs) // self.per + 1
+
+    @property
+    def available_planes(self):
+        ret = {g.name: g for g in self.interpreter.user.planes.values() if g.landed_at == self.city}
+        if not ret:
+            self.plane = None
+        return ret
+
+    @property
+    def loaded_jobs(self):
+        if not self.plane:
+            return []
+        return self.plane.jobs
+
+    def update_jobs(self, reload: bool = True):
         self.page = 1
-        ret = self.interpreter.filter_jobs(self.city, self.fil)
-        self.table = ret["table"]
+        ret = self.interpreter.filter_jobs(self.city, self.fil, self.loaded_jobs, reload=reload)
+        self.raw_jobs = ret["job_ids"]
         self.kwargs["footer"] = ret["footer"]
+
+    def switch_planes(self):
+        if self.mode == "terminal":
+            self.mode = "hangar"
+        elif self.mode == "hangar":
+            self.update_jobs(reload=False)
+            self.mode = "terminal"
+
+    def reset_loading_plane(self):
+        try:
+            self.plane = list(self.available_planes.values())[0]
+        except IndexError:
+            self.plane = None
+
+    def advance_page(self, direction: int):
+        if self.mode == "terminal":
+            self.page = (self.page + direction - 1) % self.pgs + 1
+        elif self.mode == "hangar":
+            available_planes = self.available_planes  # preallocate for speed
+            if not available_planes:
+                return
+            else:
+                try:
+                    pos = (list(available_planes.keys()).index(self.plane.name) + direction) % len(available_planes)
+                except ValueError:
+                    self.reset_loading_plane()
+                else:
+                    self.plane = list(available_planes.values())[pos]
+
+    async def get_emoji(self, ctx: commands.Context):
+        def pred(mr: MR, u: User):
+            if isinstance(mr, discord.Message) and self.mode == "terminal":
+                return mr.channel == self.message.channel and u == self.interpreter.au and can_int(mr.content) and \
+                    1 <= int(mr.content) <= 8
+            elif isinstance(mr, discord.Reaction):
+                return mr.emoji in self.legal and mr.message == self.message and u == self.interpreter.au
+
+        ret = (await zeph.wait_for('reaction_or_message', timeout=300, check=pred))[0]
+
+        if isinstance(ret, discord.Reaction):
+            return ret.emoji
+        elif isinstance(ret, discord.Message):
+            try:
+                await ret.delete()
+            except discord.HTTPException:
+                pass
+            return ret.content
+
+    async def run_nonstandard_emoji(self, emoji: Union[discord.Emoji, str], ctx: commands.Context):
+        if emoji in self.legal:
+            return
+        else:
+            self.load_job(int(emoji))
+
+    def load_job(self, job_no: int):
+        if not self.plane:
+            return
+        if self.plane.landed_at != self.city:
+            self.reset_loading_plane()
+            return
+        job = page_list(list(self.raw_jobs.keys()), 8, self.page)[job_no - 1]
+        if job in self.plane.jobs:
+            self.plane.unload(job)
+        else:
+            if self.plane.is_full:
+                return
+            else:
+                self.plane.load(job)
+
+    @property
+    def con(self):
+        if self.mode == "terminal":
+            if not self.raw_jobs:
+                prefix = ""
+            elif not self.available_planes:
+                prefix = f"You have no planes at this city to load jobs onto.\n\n"
+            else:
+                prefix = f"You are currently loading jobs onto **{self.plane.name}**. " \
+                    f"This plane has **{self.plane.pass_cap - len(self.plane.jobs)}** available cargo slots."
+                if len(self.available_planes) > 1:
+                    prefix += " Hit the ✈ button to switch loading planes.\n\n"
+                else:
+                    prefix += "\n\n"
+
+            display_table = none_list(page_list([
+                v + (" 📦" if k in self.loaded_jobs else "") for k, v in self.raw_jobs.items()
+            ], self.per, self.page), "\n")
+
+            appendix = f"\n\n*new jobs <t:{round(self.city.job_reset + 900)}:R>*"
+            if time.time() > self.city.job_reset + 900:
+                appendix += " *(hit 🔄 to refresh)*"
+
+            return plane.con(
+                self.title.format(page=self.page, pgs=self.pgs),
+                d=prefix + display_table + appendix
+            )
+        elif self.mode == "hangar":
+            available_planes = self.available_planes  # preallocate for speed
+
+            if not available_planes:
+                title_suffix = ""
+                desc = "*none*"
+            else:
+                pos = list(available_planes.keys()).index(self.plane.name)
+
+                if len(available_planes) > 8:
+                    page = pos // 8 + 1
+                    title_suffix = f" [{page}/{len(available_planes) // 8 + 1}]"
+                else:
+                    page = 1
+                    title_suffix = ""
+
+                plane_list = [
+                    f"- *{k}* ({v.pass_cap - len(v.jobs)} available slots)" for k, v in self.available_planes.items()
+                ]
+                desc = none_list(page_list(
+                    [f"**{g}**" if n == pos else g for n, g in enumerate(plane_list)], 8, page
+                ), "\n")
+
+            return plane.con(f"Planes landed at {self.city.name}" + title_suffix, d=desc)
+        else:
+            return err.con("Something has gone horribly wrong.")
 
 
 class AirportNavigator(Navigator):
@@ -1155,7 +1341,7 @@ class AirportSearchNavigator(Navigator):
             dist = ""
         cost = f"Ȼ{pn.addcomm(self.interpreter.airport_price(city))}" if city.name not in self.interpreter.user.cities \
             else "owned"
-        return f"**{self.interpreter.oc(city, True, False)}**\n- {pn.suff(city.passengers)} / {cost}{dist}"
+        return f"**{self.interpreter.pretty_city(city, True, False)}**\n- {pn.suff(city.passengers)} / {cost}{dist}"
 
     @staticmethod
     def read_criteria(args: str):
@@ -1228,7 +1414,7 @@ class LicenseUpgradeNavigator(Navigator):
         if price <= self.interpreter.user.credits:
             self.interpreter.user.credits -= price
             self.interpreter.user.countries[self.country.name] = self.page
-            await succ.send(self.interpreter.ctx, "Upgrade purchased.")
+            await succ.send(self.interpreter.ctx, f"Level {self.page} licenses purchased.")
             return await self.close()
         else:
             return
