@@ -112,6 +112,13 @@ class PlanesInterpreter(Interpreter):
         else:
             return round(airport.value * (1.1 - 0.1 * self.user.countries[airport.country]))
 
+    def plane_dict(self, airplane: pn.Plane):
+        loc = {"Location": airplane.path[0].name} if len(airplane.path) == 0 else \
+            {"En-route": "→".join(g.name for g in airplane.path.path), "ETA": pn.hrmin(airplane.arrival - time.time())}
+        job = [f"`{g}` [{pn.code_city(g[2:4]).name} Ȼ{self.job_pay(pn.Job.from_str(g))}]" for g in airplane.jobs]
+        return {"Model": airplane.model, **loc, "Available Slots": airplane.pass_cap - len(airplane.jobs),
+                "Jobs": ", ".join(job) if len(airplane.jobs) > 0 else "none"}
+
     def next_stop(self, craft: pn.Plane):
         craft.path.iterate(craft.travel(craft.path[0], craft.path[1]))
         ret = 0
@@ -334,7 +341,7 @@ class PlanesInterpreter(Interpreter):
 
             return await plane.send(self.ctx, "Sale cancelled.")
 
-        return await plane.send(self.ctx, craft.name, fs=craft.dict, same_line=True)
+        return await plane.send(self.ctx, craft.name, fs=self.plane_dict(craft), same_line=True)
 
     async def _specs(self, *args):
         if len(args) == 0:
@@ -365,7 +372,6 @@ class PlanesInterpreter(Interpreter):
                      and g.name in self.user.cities])
 
         license_level = self.user.countries.get(country.name, 0)
-        upgrade_cost = round(country.worth * 0.5 * license_level)
 
         if len(args) > 1 and args[1] in ["upgrade", "u", "--u"]:
             if country.name not in self.user.countries:
@@ -374,23 +380,7 @@ class PlanesInterpreter(Interpreter):
             if license_level == 9:
                 raise commands.CommandError("Licenses may not be upgraded past level 9.")
 
-            if upgrade_cost > self.user.credits:
-                raise commands.CommandError(
-                    f"You don't have enough credits. It will cost Ȼ{pn.addcomm(upgrade_cost)} to upgrade this license."
-                )
-
-            comparison = f"Jobs headed to {country.name} will be worth **{round(100 + 25 * license_level)}%** of " \
-                f"their base price (+25%), and airports in {country.name} may be bought for " \
-                f"**{round(100 - 10 * license_level)}%** of their base price (-10%).\n\n"
-
-            if await confirm(
-                f"Are you sure you want to upgrade your license in {country.name} to level {license_level + 1} for "
-                f"Ȼ{pn.addcomm(upgrade_cost)}?", self.ctx, self.au, add_info=comparison
-            ):
-                self.user.credits -= upgrade_cost
-                self.user.countries[country.name] += 1
-                return await succ.send(self.ctx, "License upgraded!")
-            return await plane.send(self.ctx, "License not upgraded.")
+            return await LicenseUpgradeNavigator(self, country).run(self.ctx)
 
         fields = {
             "Traffic": pn.suff(sum([g.passengers for g in country.cities])),
@@ -405,12 +395,10 @@ class PlanesInterpreter(Interpreter):
                 f"Your license is **Level {license_level}** [{zeph.emojis['ziplv' + str(license_level)]}]. "
                 f"Jobs headed for this country are worth **{round(25 * (license_level - 1))}%** more, "
                 f"and airports in this country are **{round(10 * (license_level - 1))}%** cheaper.\n\n"
-                f"Your license may be upgraded for **Ȼ{pn.addcomm(upgrade_cost)}** using "
-                f"`z!p country upgrade {country.name}`." if license_level > 1 else
-                f"Your license is **Level 1** [{zeph.emojis['ziplv' + str(license_level)]}]. "
+                f"Your license may be upgraded using `z!p country upgrade {country.name}`." if license_level > 1 else
+                f"Your license is **Level 1** [{zeph.emojis['ziplv1']}]. "
                 f"This provides no additional bonuses. "
-                f"Your license may be upgraded for **Ȼ{pn.addcomm(upgrade_cost)}** using "
-                f"`z!p country upgrade {country.name}`."
+                f"Your license may be upgraded using `z!p country upgrade {country.name}`."
             )
 
         return await plane.send(self.ctx, country.name, same_line=True, fs=fields)
@@ -667,7 +655,9 @@ class PlanesInterpreter(Interpreter):
             raise commands.CommandError("You can't offload jobs in mid-air.\nYou don't have enough parachutes.")
 
         if args[1].lower() == "all":
-            jobs = craft.jobs.copy()
+            for i in craft.jobs.copy():
+                craft.unload(i.upper())
+            return await succ.send(self.ctx, "All jobs offloaded.")
         else:
             jobs = args[1:]
         for i in jobs:
@@ -686,7 +676,10 @@ class PlanesInterpreter(Interpreter):
             f"{zeph.emojis['red_tri_up'] if yesterday_prices[g] < prices[g] else zeph.emojis['green_tri_down']}"
             for g in prices
         }
-        return await FieldNavigator(plane, prices, 6, "The Market [{page}/{pgs}]", same_line=True).run(self.ctx)
+        return await FieldNavigator(
+            plane, prices, 6, "The Market [{page}/{pgs}]", same_line=True,
+            footer="Use z!p model to see detailed stats, and z!p buy to buy a plane."
+        ).run(self.ctx)
 
     async def _eta(self, *args):
         if len(args) == 0:
@@ -818,7 +811,10 @@ class PlanesInterpreter(Interpreter):
 
     async def _buy(self, *args):
         if len(args) < 2:
-            raise commands.CommandError("Format: `z!p buy <airport | country | plane> <purchases...>`")
+            raise commands.CommandError(
+                "Format: `z!p buy <airport | country | plane> <purchases...>`\n"
+                "See `z!p help buy` for more details."
+            )
 
         if args[0].lower() in ["a", "airport", "airports", "city", "cities"]:
             purchases = []
@@ -1213,3 +1209,54 @@ class AirportSearchNavigator(Navigator):
             ret["startswith"] = ret["startswith"][0]
 
         return ret
+
+
+class LicenseUpgradeNavigator(Navigator):
+    def __init__(self, inter: PlanesInterpreter, country: pn.Country):
+        super().__init__(plane, list(range(1, 10)), 1, f"{country.name} License Upgrades", close_on_timeout=True)
+        self.interpreter = inter
+        self.country = country
+        self.current_level = self.interpreter.user.countries[country.name]
+        self.page = self.current_level
+        self.funcs[zeph.emojis["yes"]] = self.purchase_upgrade
+        self.funcs[zeph.emojis["no"]] = self.close
+
+    async def purchase_upgrade(self):
+        if self.current_level >= self.page:
+            return
+
+        price = self.country.upgrade_price(self.page, self.current_level)
+
+        if price <= self.interpreter.user.credits:
+            self.interpreter.user.credits -= price
+            self.interpreter.user.countries[self.country.name] = self.page
+            await succ.send(self.interpreter.ctx, "Upgrade purchased.")
+            return await self.close()
+        else:
+            return
+
+    async def close(self):
+        self.closed_elsewhere = True
+        await plane.edit(self.message, "This menu has closed.")
+        await self.remove_buttons()
+
+    @property
+    def con(self):
+        desc = f"**License Level {self.page} [{zeph.emojis['ziplv' + str(self.page)]}]:**\n" \
+            f"Job payout boost: **+{round(25 * (self.page - 1))}%**\n" \
+            f"Airport price: **-{round(10 * (self.page - 1))}%**"
+
+        price = self.country.upgrade_price(self.page, self.current_level)
+
+        if self.current_level > self.page:
+            desc += f"\n\nYou already have a higher-level license. Your license is Level {self.current_level}."
+        elif self.current_level == self.page:
+            desc += "\n\nThis is your current license level."
+        else:
+            desc += f"\n\nUpgrading to this level will cost **Ȼ{pn.addcomm(price)}**.\n"
+            if price <= self.interpreter.user.credits:
+                desc += f"Hit the {zeph.emojis['yes']} button to confirm upgrade."
+            else:
+                desc += "You do not have enough credits for this upgrade."
+
+        return plane.con(self.title, d=desc)

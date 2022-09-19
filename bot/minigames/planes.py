@@ -184,7 +184,7 @@ class City:
         self.country = coun
         self.dict = {"Coordinates": f"({twodig(self.coords[0])}, {twodig(self.coords[1])})",
                      "Country": coun, "Annual Passengers": suff(val),
-                     "Value": "Ȼ{}".format(addcomm(self.value))}
+                     "Base Value": "Ȼ{}".format(addcomm(self.value))}
         self.jobs = []
         self.job_reset = 0
         if self.name.lower() not in cities:
@@ -278,6 +278,15 @@ class Country:
     @property
     def worth(self):
         return round(0.03 * sum([i.value for i in self.cities]))
+
+    def upgrade_price(self, to_lvl: int, from_lvl: int = 1):
+        ret = 0
+        if from_lvl < to_lvl:
+            for i in range(from_lvl, to_lvl):
+                ret += round(self.worth * 0.5 * (i + 1))
+            return ret
+        else:
+            return 0
 
     @staticmethod
     def from_name_only(name: str):

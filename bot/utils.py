@@ -68,7 +68,7 @@ async def expand(ctx: commands.Context, *, text):
     return await ctx.send(" ".join([c for c in text]))
 
 
-def squarize(s: str, joiner="\u200b"):
+def squarize(s: str, joiner="\u2060"):
     noms = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
     return joiner.join([chr(127462 - 97 + ord(g.lower())) if ord(g.lower()) in range(97, 123) else
                         ":{}:".format(noms[int(g)]) if ord(g) in range(48, 58) else
