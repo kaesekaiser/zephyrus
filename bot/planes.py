@@ -1215,7 +1215,10 @@ class JobNavigator(Navigator):
         if self.plane.landed_at != self.city:
             self.reset_loading_plane()
             return
-        job = page_list(list(self.raw_jobs.keys()), 8, self.page)[job_no - 1]
+        try:
+            job = page_list(list(self.raw_jobs.keys()), 8, self.page)[job_no - 1]
+        except IndexError:
+            return
         if job in self.plane.jobs:
             self.plane.unload(job)
         else:
@@ -1277,7 +1280,6 @@ class JobNavigator(Navigator):
                         self.update_jobs(reload=False)
                         return await exit_message(mess, "Returning to main jobs menu.")
                     else:
-                        await plane.edit(mess, "No other planes are landed at this airport; exiting jobs menu.")
                         return await self.close()
 
         else:
@@ -1295,7 +1297,6 @@ class JobNavigator(Navigator):
                     await asyncio.sleep(2)
                     return await mess.delete()
                 else:
-                    await plane.send(self.ctx, "No other planes are landed at this airport; exiting jobs menu.")
                     return await self.close()
 
     @property
@@ -1342,7 +1343,7 @@ class JobNavigator(Navigator):
                 title_suffix = ""
                 desc = "*none*"
             else:
-                if self.plane not in available_planes:
+                if self.plane not in available_planes.values():
                     self.reset_loading_plane()
 
                 pos = list(available_planes.keys()).index(self.plane.name)

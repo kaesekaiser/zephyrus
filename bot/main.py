@@ -373,6 +373,9 @@ async def on_ready():
 async def on_command_error(ctx: commands.Context, exception):
     if ctx.command == epitaph and ctx.channel in zeph.epitaphChannels:
         zeph.epitaphChannels.remove(ctx.channel)
+    for nativity in copy(zeph.nativities):
+        if nativity.ctx == ctx:
+            zeph.nativities.remove(nativity)
 
     if isinstance(exception, commands.UserInputError):
         await err.send(
