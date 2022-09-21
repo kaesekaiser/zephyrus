@@ -100,7 +100,7 @@ Hamburg|Germany|
 Cologne|Germany|
 Stuttgart|Germany|
 Hannover|Germany|
-Nuremburg|Germany|
+Nuremberg|Germany|
 Bremen|Germany|
 Hahn|Germany|
 Leipzig|Germany|
