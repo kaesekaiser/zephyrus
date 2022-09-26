@@ -11,15 +11,16 @@ from pyquery import PyQuery
 
 gmaps = googlemaps.Client(key=gm_key)
 rads = {"km": 6371, "mi": 3958.76}
-url = "https://www.google.com/maps/d/u/0/edit?hl=en&mid=1aoVneqZxmbqLxZrznFPyYbpKlCGC4hbx"
-cd_url = "https://www.timeanddate.com/countdown/vacation?iso={}&p0=179&msg={}&font=slab&csz=1#"
+map_url = "https://www.google.com/maps/d/u/0/edit?hl=en&mid=1aoVneqZxmbqLxZrznFPyYbpKlCGC4hbx"
+
 with open("storage/citycountries.txt", "r") as f:
-    af = f.readlines()
-citcoundat = {l.split("|")[0]: l.split("|")[1] for l in af}
+    # noinspection PyTypeChecker
+    city_countries = dict(tuple(g.split("|")) for g in f.read().splitlines())
+
 cities = {}
 countries = {}
 starter_names = ["Meadowlark", "Nightingale", "Endeavor", "Aurora", "Spirit", "Falcon", "Albatross"]
-permit = "".join([*[chr(g) for g in range(65, 91)], *[chr(g) for g in range(97, 123)], "1234567890_-"])
+plane_name_chars = "".join([*[chr(g) for g in range(65, 91)], *[chr(g) for g in range(97, 123)], "1234567890_-"])
 pattern = r"\[\\\"[0-9A-Z]+?\\\",\[\[\[.+?null,[0-9]+?\]"
 specific_patterns = {
     "name": r"(?<=\[\\\"name\\\",\[\\\")[a-zA-Z]+?(?=\\\")",
@@ -151,10 +152,9 @@ def robinson_y(x):
     return neville(rob_x, rob_y, x)
 
 
-def rewritecits():
-    with open("storage/citycountries.txt", "w") as ff:
-        for i in citcoundat:
-            ff.write("{}|{}|\n".format(i, citcoundat[i]))
+def save_city_countries():
+    with open("storage/citycountries.txt", "w") as fp:
+        fp.write("\n".join(f"{k}|{v}" for k, v in city_countries.items()))
 
 
 class City:
@@ -174,17 +174,21 @@ class City:
         self.value = round((lambda n: 70 * n ** 0.37)(val))
         self.no = no
         self.code = base36(self.no).rjust(2, "0")
-        if self.name in citcoundat:
-            coun = citcoundat[self.name]
+        if self.name in city_countries:
+            country = city_countries[self.name]
         else:
-            coun = googlemaps.geocoding.reverse_geocode(gmaps, self.coords)[0]["formatted_address"].split(", ")[-1]
-            coun = countredirs.get(coun, coun)
-            print(name, coun)
-            citcoundat[self.name] = coun
-            rewritecits()
-        self.country = coun
+            geocode = googlemaps.geocoding.reverse_geocode(gmaps, self.coords)[0]
+            try:
+                country = [g["long_name"] for g in geocode["address_components"] if "country" in g["types"]][0]
+            except IndexError:
+                country = input(f"What's the country for the z!p airport {self.name}? ")
+            country = countredirs.get(country, country)
+            print(name, country)
+            city_countries[self.name] = country
+            save_city_countries()
+        self.country = country
         self.dict = {"Coordinates": f"({twodig(self.coords[0])}, {twodig(self.coords[1])})",
-                     "Country": coun, "Annual Passengers": suff(val),
+                     "Country": country, "Annual Passengers": suff(val),
                      "Base Value": "Ȼ{}".format(addcomm(self.value))}
         self.jobs = []
         self.job_reset = 0
@@ -437,9 +441,9 @@ class User:
     def from_str(s: str):
         def failsafe_country_load(country: str):
             if len(country) < 3:
-                return backCountries[country], 1
+                return code_countries[country], 1
             else:
-                return backCountries[country[:2]], int(country[2:])
+                return code_countries[country[:2]], int(country[2:])
 
         j = s.split("|")  # id|countries|cities|planes|credits
         p = [Plane.from_str(g) for g in j[3].split("~")]
@@ -448,7 +452,7 @@ class User:
         return User(int(j[0]), k, c, {g.name.lower(): g for g in p}, int(j[4]))
 
     def __str__(self):
-        return f"{self.id}|{'~'.join(planemojis[k] + str(v) for k, v in self.countries.items())}|" \
+        return f"{self.id}|{'~'.join(country_codes[k] + str(v) for k, v in self.countries.items())}|" \
                f"{'~'.join(cities[g.lower()].code for g in self.cities)}|" \
                f"{'~'.join(str(g) for g in self.planes.values())}|{round(self.credits)}"
 
@@ -473,7 +477,7 @@ def from_flag(s: str):  # gets country code from regional indicators
 
 
 def find_country(s: str):
-    return countries[k_alias.get(s.lower(), backCountries.get(from_flag(s.lower()), s.lower())).lower()]
+    return countries[k_alias.get(s.lower(), code_countries.get(from_flag(s.lower()), s.lower())).lower()]
 
 
 def code_city(s: str):
@@ -568,5 +572,5 @@ specialCases = {
     "SaoTome": "st", "USVirginIslands": "vi", "Curacao": "cw", "StLucia": "lc", "StKittsandNevis": "kn",
     "StVincent": "vc"
 }
-planemojis = {**{"".join(emojiCountries[g].split()): g for g in emojiCountries}, **specialCases}
-backCountries = {j: g for g, j in planemojis.items()}
+country_codes = {**{"".join(emojiCountries[g].split()): g for g in emojiCountries}, **specialCases}
+code_countries = {j: g for g, j in country_codes.items()}

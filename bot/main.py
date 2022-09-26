@@ -373,9 +373,10 @@ async def on_ready():
 async def on_command_error(ctx: commands.Context, exception):
     if ctx.command == epitaph and ctx.channel in zeph.epitaphChannels:
         zeph.epitaphChannels.remove(ctx.channel)
-    for nativity in copy(zeph.nativities):
-        if nativity.ctx == ctx:
-            zeph.nativities.remove(nativity)
+
+    relevant_nativities = [g for g in zeph.nativities if g.ctx == ctx]
+    for nativity in relevant_nativities:
+        zeph.nativities.remove(nativity)
 
     if isinstance(exception, commands.UserInputError):
         await err.send(
@@ -420,7 +421,8 @@ async def on_message(message: discord.Message):
         if (not message.guild) or zeph.server_settings.get(message.guild.id).can_h_in(message.channel):
             await message.channel.send(zeph.emojis.get("aitch", "h"))
 
-    if (not message.guild or zeph.server_settings.get(message.guild.id).sampa) and message.author != zeph.user:
+    if (not message.guild or zeph.server_settings.get(message.guild.id, ServerSettings.null()).sampa) \
+            and message.author != zeph.user:
         sampas = []
         for match in list(re.finditer(r"((?<=[^a-zA-Z0-9/\\_]x)|(?<=^x))(\[[^\s].*?]|/[^\s].*?/)", message.content)):
             sampas.append(convert_x_sampa(match[0]))

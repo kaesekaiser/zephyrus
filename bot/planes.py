@@ -7,7 +7,7 @@ import os
 async def initialize_planes():
     print("Initializing planes...")
     start = time.time()
-    for i in re.findall(pn.pattern, pn.readurl(pn.url)):
+    for i in re.findall(pn.pattern, pn.readurl(pn.map_url)):
         pn.City.from_html(i)
     if len(pn.cities) == 0:
         return print("Initialization failed.")
@@ -86,7 +86,7 @@ class PlanesInterpreter(Interpreter):
         return True
 
     def pretty_city(self, ci: pn.City, flag=False, italicize_unowned=True):
-        flag = f":flag_{pn.planemojis[ci.country]}: " if flag else ""
+        flag = f":flag_{pn.country_codes[ci.country]}: " if flag else ""
         return flag + (ci.name if (ci.name in self.user.cities or not italicize_unowned) else f"_{ci.name}_")
 
     def market_price(self, model: Union[str, pn.Model], delta: int = 0):
@@ -359,7 +359,7 @@ class PlanesInterpreter(Interpreter):
         return await plane.send(self.ctx, "z!Planes Tutorials:", d="1. [The Basics](https://imgur.com/a/3ot7qog)")
 
     async def _map(self, *args):  # also needs to be able to take args
-        return await plane.send(self.ctx, "Purchasable airports:", d=pn.url)
+        return await plane.send(self.ctx, "Purchasable airports:", d=pn.map_url)
 
     async def _profile(self, *args):  # I am once again asking to take args
         airline_value = sum(
@@ -369,7 +369,7 @@ class PlanesInterpreter(Interpreter):
 
         nat_counts = {nat: len([g for g in pn.cities.values() if g.country == nat]) for nat in self.user.countries}
         licenses = " ".join(
-            f":flag_{pn.planemojis[g]}:" for g, _ in
+            f":flag_{pn.country_codes[g]}:" for g, _ in
             sorted(list(self.user.countries.items()), key=lambda c: -(c[1] * 1000 + nat_counts[c[0]]))[:10]
         )
         if len(self.user.countries) > 10:
@@ -458,8 +458,8 @@ class PlanesInterpreter(Interpreter):
             "Cities": f"{len(country.cities)} ({owned} owned)",
             "License Value": f"Ȼ{pn.addcomm(country.worth)}",
             "Owned": ["No", "Yes"][country.name in self.user.countries],
-            "Flag": f":flag_{pn.planemojis[country.name]}:",
-            "Code": f"`{pn.planemojis[country.name].upper()}`"
+            "Flag": f":flag_{pn.country_codes[country.name]}:",
+            "Code": f"`{pn.country_codes[country.name].upper()}`"
         }
         if country.name in self.user.countries:
             fields["License Level"] = NewLine(
@@ -675,7 +675,7 @@ class PlanesInterpreter(Interpreter):
             raise commands.CommandError("No owned plane by that name.")
 
         nam = self.user.planes[args[0].lower()].name
-        if [g in pn.permit for g in args[1]].count(False) != 0:
+        if [g in pn.plane_name_chars for g in args[1]].count(False) != 0:
             raise commands.CommandError("Plane names can only contain alphanumerics, dashes, and underscores.")
         if args[1].lower() in self.user.planes:
             raise commands.CommandError("You already have a plane with that name.")
@@ -936,7 +936,7 @@ class PlanesInterpreter(Interpreter):
                         return await plane.send(self.ctx, "Purchase timed out and cancelled.")
 
                     else:
-                        if [g in pn.permit for g in mess.content].count(False) != 0:
+                        if [g in pn.plane_name_chars for g in mess.content].count(False) != 0:
                             await plane.send(self.ctx,
                                              "Plane names can only contain alphanumerics, dashes, and underscores.",
                                              d=f"What would you like to name your new {model.name}?")
@@ -984,8 +984,8 @@ class PlanesInterpreter(Interpreter):
         await plane.send(
             self.ctx, "Pick any city to start your empire in.",
             d=f"Click [this link](https://imgur.com/a/3ot7qog) to go to the tutorial.\n\n"
-              f"Click [this link]({pn.url}) to see the full map of available airports. You'll get the license to the "
-              f"country along with your first airport. Make sure to omit spaces."
+              f"Click [this link]({pn.map_url}) to see the full map of available airports. You'll get the license to "
+              f"the country along with your first airport. Make sure to omit spaces."
         )
         while True:
             try:
@@ -1065,8 +1065,8 @@ class PlanesInterpreter(Interpreter):
     async def _licenses(self, *args):
         nat_counts = {nat: len([g for g in pn.cities.values() if g.country == nat]) for nat in self.user.countries}
         licenses = [
-            f":flag_{pn.planemojis[k]}: **{k}**: Level {v} [{zeph.emojis['ziplv' + str(v)]}]\n"
-            f"- {len([g for g in self.user.cities if pn.citcoundat[g] == k])}/{nat_counts[k]} airports owned"
+            f":flag_{pn.country_codes[k]}: **{k}**: Level {v} [{zeph.emojis['ziplv' + str(v)]}]\n"
+            f"- {len([g for g in self.user.cities if pn.city_countries[g] == k])}/{nat_counts[k]} airports owned"
             for k, v in sorted(list(self.user.countries.items()), key=lambda c: -(c[1] * 1000 + nat_counts[c[0]]))
         ]
         return await Navigator(plane, licenses, 4, "Flight Licenses [{page}/{pgs}]").run(self.ctx)
