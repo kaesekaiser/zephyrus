@@ -1434,16 +1434,22 @@ class AirportSearchNavigator(Navigator):
         else:
             self.sort = lambda x: -x.passengers
 
-        if self.criteria["priority"]:
-            self.total_priority = sum(2 ** pn.priority(self.criteria["priority"], g) for g in pn.cities.values())
-        else:
-            self.total_priority = 0
-
         table = sorted(
             (g for g in pn.cities.values() if (self.criteria["near"] != "any" and g not in self.criteria["near"]) or
              (self.criteria["near"] == "any" and g.name not in self.interpreter.user.cities)),
             key=self.sort
         )
+
+        if self.criteria["priority"]:
+            self.total_priority = sum(2 ** pn.priority(self.criteria["priority"], g) for g in pn.cities.values())
+            if any(not self.check_city(g) for g in table):
+                filter_priority = sum(
+                    2 ** pn.priority(self.criteria['priority'], g) for g in table if self.check_city(g)
+                )
+                self.kwargs["footer"] = f"total priority: {round(filter_priority / self.total_priority * 100, 3)}%"
+        else:
+            self.total_priority = 0
+
         self.table = [self.form_city(g) for g in table if self.check_city(g)]
 
     def back_five(self):
