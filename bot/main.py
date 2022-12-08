@@ -44,8 +44,9 @@ async def help_command(ctx: commands.Context, comm: str = ""):
     help="Spits out the invite link for Zephyrus, so you can bring it to other servers."
 )
 async def invite(ctx: commands.Context):
-    return await ctx.send(content='https://discordapp.com/oauth2/authorize?client_id={}&scope=bot&permissions=275146730560'
-                          .format(zeph.user.id))
+    return await ctx.send(
+        content=f'https://discordapp.com/oauth2/authorize?client_id={zeph.user.id}&scope=bot&permissions=275146730560'
+    )
 
 
 @zeph.command(
@@ -123,7 +124,7 @@ async def wordlist_command(ctx: commands.Context, aor: str, *words: str):
                     wr.wordList.remove(g)
                 except ValueError:
                     pass
-        wr.wordDict.update({l: tuple(g for g in wr.wordList if len(g) == l) for l in range(1, 23)})
+        wr.wordDict.update({n: tuple(g for g in wr.wordList if len(g) == n) for n in range(1, 23)})
         with open("utilities/words.txt", "w") as f:
             f.writelines("\n".join(sorted(wr.wordList)))
         return await succ.send(ctx, "Word list updated.")
@@ -136,9 +137,9 @@ async def wordlist_command(ctx: commands.Context, aor: str, *words: str):
          "you need."
 )
 async def feedback_command(ctx: commands.Context, *, text: str):
-    if len(text) > 1800:
+    if len(text) > 1600:
         raise commands.CommandError(
-            "Please try to keep feedback relatively short.\nLike, 1800 characters should be plenty. "
+            "Please try to keep feedback relatively short.\nLike, 1600 characters should be plenty. "
             "If you really need to send more, just ask me to DM you. I'm only human."
         )
 
@@ -149,7 +150,8 @@ async def feedback_command(ctx: commands.Context, *, text: str):
         )
     else:
         await zeph.get_channel(607102546892554240).send(
-            f"**{str(ctx.author)}** (ID `{ctx.author.id}`), in the guild **{ctx.guild.name}**, says:\n{text}"
+            f"**{str(ctx.author)}** (ID `{ctx.author.id}`), in the guild **{ctx.guild.name}**, says:\n{text}\n\n"
+            f"Link to message: {ctx.message.jump_url}"
         )
 
     return await succ.send(ctx, "Feedback sent!")

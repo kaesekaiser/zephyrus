@@ -17,12 +17,15 @@ targets = anyAdjFoe, anyAdj, anyMon, userOrAdjAlly, allAdjFoe, allAdj, allFoe, a
     "the user and all allies"
 statusConditions = poisoned, badlyPoisoned, burned, paralyzed, asleep, frozen, fainted = "Poisoned", "Badly poisoned", \
     "Burned", "Paralyzed", "Asleep", "Frozen", "Fainted"
+weather_types = sun, rain, hail, sandstorm, snow = "Harsh sunlight", "Rain", "Hail", "Sandstorm", "Snow"
+six_stats = {"hp": "HP", "atk": "Atk", "def": "Def", "spa": "SpA", "spd": "SpD", "spe": "Spe"}
+six_stat_names = list(six_stats.values())
 
 
 class StatChange:
     """Chances should be the percentage value, NOT the decimal value. A 10% chance should be input as 10."""
     stat_name_dict = {
-        "atk": "Attack", "dfn": "Defense", "spa": "Special Attack", "spd": "Special Defense", "spe": "Speed",
+        "atk": "Attack", "def": "Defense", "spa": "Special Attack", "spd": "Special Defense", "spe": "Speed",
         "eva": "evasion", "acc": "accuracy"
     }
     modifier_strings = [
@@ -40,14 +43,15 @@ class StatChange:
         return bool(self.chance and self.stages)
 
     def str(self, affected: str):
-        if set(self.stages) == {"atk", "dfn", "spa", "spd", "spe"}:
+        if set(self.stages) == {"atk", "def", "spa", "spd", "spe"}:
             ret = {f"all the {affected}'s stats": self.stages["atk"]}
         else:
             ret = {f"the {affected}'s {self.stat_name_dict[g]}": j for g, j in self.stages.items()}
         if self.chance == 100:
             return "\n".join(f"{'Raises' if j > 0 else 'Lowers'} {g} by {self.numbers[j]}." for g, j in ret.items())
         return "\n".join(
-            f"Has a chance to {'raise' if j > 0 else 'lower'} {g} by {self.numbers[j]}." for g, j in ret.items()
+            f"Has a {self.chance}% chance to {'raise' if j > 0 else 'lower'} {g} by {self.numbers[j]}."
+            for g, j in ret.items()
         )
 
     @staticmethod
@@ -58,6 +62,8 @@ class StatChange:
             return setup
         if isinstance(setup, list):
             return StatChange(*setup)
+        if isinstance(setup, dict):
+            return StatChange(100, setup)
         return StatChange.null()
 
     @staticmethod
@@ -86,13 +92,15 @@ class StatusEffect:
             return "Puts the target to sleep." if self.effect == asleep else \
                 f"{effects[self.effect]}s the target."
         else:
-            return "Has a chance to put the target to sleep." if self.effect == asleep else \
-                f"Has a chance to {effects[self.effect].lower()} the target."
+            return f"Has a {self.chance}% chance to put the target to sleep." if self.effect == asleep else \
+                f"Has a {self.chance}% chance to {effects[self.effect].lower()} the target."
 
     @staticmethod
     def from_json(setup: list):
         if not setup:
             return StatusEffect.null()
+        if isinstance(setup, str):
+            return StatusEffect(100, setup)
         return StatusEffect(*setup)
 
     @staticmethod
@@ -155,10 +163,9 @@ class Move:
         self.can_magic_coat = kwargs.get("can_magic_coat", False)
         self.can_snatch = kwargs.get("can_snatch", False)
         self.can_mirror_move = kwargs.get("can_mirror_move", False)
-        self.can_kings_rock = kwargs.get("can_kings_rock", False)
 
         if self.category == status:
-            self.z_effect = ZEffect.from_json(kwargs.get("z_effect", {}))
+            self.z_effect = ZEffect.from_json(kwargs.get("z_effect", kwargs.get("z")))
         else:
             self.z_effect = ZEffect.null()
 
@@ -171,10 +178,12 @@ class Move:
         else:
             self.user_stat_changes = StatChange.from_json(kwargs.get("user_stat_changes", kwargs.get("usc")))
             self.target_stat_changes = StatChange.from_json(kwargs.get("target_stat_changes", kwargs.get("tsc")))
-        self.reset_stats = kwargs.get("reset_stats", False)
+        self.reset_low_stats = kwargs.get("reset_low_stats", False)
+        self.reset_target_stats = kwargs.get("reset_target_stats", False)
+        self.reset_all_stats = kwargs.get("reset_all_stats", False)
 
         # STATUS EFFECTS / CONDITIONS
-        self.status_effect = StatusEffect.from_json(kwargs.get("status_effect"))
+        self.status_effect = StatusEffect.from_json(kwargs.get("status_effect", kwargs.get("status")))
         self.flinch = kwargs.get("flinch", 0)
         self.confuse = kwargs.get("confuse", 0)
 
@@ -187,13 +196,20 @@ class Move:
         self.counter = kwargs.get("counter", False)
         self.psyshock = kwargs.get("psyshock", False)
         self.false_swipe = kwargs.get("false_swipe", False)
-        self.switch = kwargs.get("switch", False)  # switching out. only for system use
         self.leech_seed = kwargs.get("leech_seed", False)
         self.yawn = kwargs.get("yawn", False)
         self.fake_out = kwargs.get("fake_out", False)
         self.dig = kwargs.get("dig", False)
         self.endure = kwargs.get("endure", False)
         self.protect = kwargs.get("protect", False)
+        self.growth = kwargs.get("growth", False)
+        self.rage = kwargs.get("rage", False)
+        self.mimic = kwargs.get("mimic", False)
+        self.reflect = kwargs.get("reflect", False)
+        self.light_screen = kwargs.get("light_screen", False)
+        self.aurora_veil = kwargs.get("aurora_veil", False)
+        self.trick_room = kwargs.get("trick_room", False)
+        self.tera_blast = kwargs.get("tera_blast", False)
 
         # COMMON ADDITIONAL EFFECTS
         self.absorbent = kwargs.get("absorbent", False)
@@ -203,13 +219,18 @@ class Move:
         self.force_out = kwargs.get("force_out", False)
         self.binding = kwargs.get("binding", False)
         self.full_heal = kwargs.get("full_heal", False)  # full HP restoration
+        self.half_heal = kwargs.get("half_heal", False)
         self.used_in_succession = kwargs.get("used_in_succession", False)
+        self.add_type = kwargs.get("add_type", None)
+        self.change_type = kwargs.get("change_type", None)
+        self.ignore_tsc = kwargs.get("ignore_tsc", False)
 
         # STRIKE / TURN CONTROL
         self.multi2 = kwargs.get("multi2", False)
         self.multi25 = kwargs.get("multi25", False)
         self.two_turn = kwargs.get("two_turn", False)
         self.must_recharge = kwargs.get("must_recharge", kwargs.get("must_rest", False))  # Giga Impact, etc.
+        self.solar = kwargs.get("solar", False)  # Solar Beam + Solar Blade
 
         # ABSOLUTE POWER / DAMAGE MODS
         self.ohko = kwargs.get("ohko", False)
@@ -224,45 +245,56 @@ class Move:
 
         # WEATHER / FIELD MODS
         self.removes_barriers = kwargs.get("removes_barriers", False)  # removes Light Screen / Reflect
+        self.weather = kwargs.get("weather", None)
 
         # ACCURACY BYPASSES
         self.can_hit_fly = kwargs.get("can_hit_fly", False)
         self.can_hit_dive = kwargs.get("can_hit_dive", False)
         self.can_hit_dig = kwargs.get("can_hit_dig", False)
         self.hits_in_hail = kwargs.get("hits_in_hail", False)
+        self.hits_in_rain = kwargs.get("hits_in_rain", False)
+        self.poison_never_miss = kwargs.get("poison_never_miss", False)
 
         # CATEGORIZATIONS
         self.sound_based = kwargs.get("sound_based", False)  # Soundproof is immune
         self.ball_and_bomb = kwargs.get("ball_and_bomb", False)  # Bulletproof is immune
         self.powder_based = kwargs.get("powder_based", False)  # Grass-types, Safety Goggles, and Overcoat are immune
         self.aura_and_pulse = kwargs.get("aura_and_pulse", False)  # boosted by Mega Launcher
+        self.still_typed = kwargs.get("still_typed", False)  # offensive status moves still affected by type
 
     @staticmethod
     def from_json(setup: list):
         return Move(*setup[:-1], **setup[-1])
 
+    @staticmethod
+    def control(name: str):
+        return Move(name, "", "", 0, 0, 0, False, "")
+
+    @property
+    def pack(self):
+        return PackedMove(self.name, self.pp, self.ppc)
+
     @property
     def json(self):
-        def fi(s: str):
-            return {s: self.__getattribute__(s)} if self.__getattribute__(s) else {}
+        basic_args = [
+            "priority", "can_protect", "can_magic_coat", "can_snatch", "can_mirror_move", "flinch", "confuse",
+            "absorbent", "recoil", "raised_crit_ratio", "multi25", "payday", "ohko", "two_turn", "reset_low_stats",
+            "can_hit_fly", "fly", "binding", "stomp", "multi2", "crash", "thrash", "force_out", "sound_based",
+            "exact_damage", "disable", "mist", "full_heal", "can_hit_dive", "hits_in_hail", "weight_based", "counter",
+            "level_damage", "psyshock", "facade", "false_swipe", "leech_seed", "must_recharge", "yawn", "brine",
+            "can_hit_dig", "ball_and_bomb", "powder_based", "aura_and_pulse", "removes_barriers", "fake_out", "dig",
+            "used_in_succession", "protect", "growth", "weather", "solar", "still_typed", "hits_in_rain", "endure",
+            "poison_never_miss", "rage", "mimic", "tera_blast", "half_heal", "reset_target_stats", "reset_all_stats",
+            "add_type", "change_type", "ignore_tsc", "reflect", "light_screen", "aurora_veil", "trick_room"
+        ]
 
         kwargs = {
-            **({"ppc": self.ppc} if self.ppc != self.pp else {}), **fi("priority"),
+            **({"ppc": self.ppc} if self.ppc != self.pp else {}),
             **({"user_stat_changes": self.user_stat_changes.json} if self.user_stat_changes else {}),
             **({"target_stat_changes": self.target_stat_changes.json} if self.target_stat_changes else {}),
             **({"status_effect": self.status_effect.json} if self.status_effect else {}),
             **({"z_effect": self.z_effect.json} if self.z_effect else {}),
-            **fi("can_protect"), **fi("can_magic_coat"), **fi("can_snatch"), **fi("can_mirror_move"),
-            **fi("can_kings_rock"),
-            **fi("flinch"), **fi("confuse"), **fi("absorbent"), **fi("recoil"), **fi("raised_crit_ratio"),
-            **fi("multi25"), **fi("payday"), **fi("ohko"), **fi("two_turn"), **fi("reset_stats"), **fi("can_hit_fly"),
-            **fi("fly"), **fi("binding"), **fi("stomp"), **fi("multi2"), **fi("crash"), **fi("thrash"),
-            **fi("force_out"), **fi("sound_based"), **fi("exact_damage"), **fi("disable"), **fi("mist"),
-            **fi("full_heal"), **fi("can_hit_dive"), **fi("hits_in_hail"), **fi("weight_based"), **fi("counter"),
-            **fi("level_damage"), **fi("psyshock"), **fi("facade"), **fi("false_swipe"), **fi("switch"),
-            **fi("leech_seed"), **fi("must_recharge"), **fi("yawn"), **fi("brine"), **fi("can_hit_dig"),
-            **fi("ball_and_bomb"), **fi("powder_based"), **fi("aura_and_pulse"), **fi("removes_barriers"),
-            **fi("fake_out"), **fi("dig"), **fi("endure"), **fi("used_in_succession"), **fi("protect")
+            **{g: self.__getattribute__(g) for g in basic_args if self.__getattribute__(g)}
         }
 
         return [
@@ -285,16 +317,18 @@ class Move:
         ret = []
         if self.two_turn:
             ret.append("- Strikes on the second turn.")
+        if self.solar:
+            ret.append("- Can be executed in a single turn during harsh sunlight.")
         if self.status_effect:
             ret.append(f"- {self.status_effect}")
         if self.confuse == 100:
             ret.append("- Confuses the target.")
         elif self.confuse:
-            ret.append("- May confuse the target.")
+            ret.append(f"- Has a {self.confuse}% chance to confuse the target.")
         if self.flinch == 100:
             ret.append("- Causes the target to flinch.")
         elif self.flinch:
-            ret.append("- May cause the target to flinch.")
+            ret.append(f"- Has a {self.flinch}% chance to cause the target to flinch.")
         if self.user_stat_changes:
             ret.append("- " + "\n- ".join(self.user_stat_changes.str("user").splitlines()))
         if self.target_stat_changes:
@@ -315,8 +349,12 @@ class Move:
             ret.append("- One-hit KOs the target if it hits.")
         if self.payday:
             ret.append("- Money is earned after the battle.")
-        if self.reset_stats:
+        if self.reset_low_stats:
             ret.append("- Resets the user's lowered stats.")
+        if self.reset_target_stats:
+            ret.append("- Resets the target's stat changes.")
+        if self.reset_all_stats:
+            ret.append("- Resets the stat changes of all mons on the field.")
         if self.can_hit_fly:
             ret.append("- Can hit targets during Fly.")
         if self.can_hit_dive:
@@ -341,8 +379,12 @@ class Move:
             ret.append("- Prevents the user and its allies' stats from being lowered for five turns.")
         if self.full_heal:
             ret.append("- Fully restores the user's HP.")
+        if self.half_heal:
+            ret.append("- Restores half the user's HP.")
         if self.hits_in_hail:
             ret.append("- Always hits during hailstorms.")
+        if self.hits_in_rain:
+            ret.append("- Always hits during rain.")
         if self.weight_based:
             ret.append("- The heavier the target, the greater the move's power.")
         if self.counter:
@@ -375,6 +417,42 @@ class Move:
             ret.append("- The user endures any attack with at least 1 HP.")
         if self.protect:
             ret.append("- Enables the user to evade all attacks.")
+        if self.growth:
+            ret.append("- Raises the user's Attack and Special Attack by one stage each, or two stages in sunlight.")
+        if self.poison_never_miss:
+            ret.append("- Poison-types never miss this move.")
+        if self.rage:
+            ret.append("- After landing this move once, the user's Attack stat will rise one stage each time it is "
+                       "damaged by an attack. This will continue until another move is selected.")
+        if self.mimic:
+            ret.append("- Copies the target's last used move, which the user may continue using until the battle ends.")
+        if self.add_type:
+            ret.append(f"- Adds the {self.add_type} type to the target. "
+                       f"Fails if the target is already {self.add_type}-type.")
+        if self.change_type:
+            ret.append(f"- Changes the target to become pure {self.change_type}-type.")
+        if self.ignore_tsc:
+            ret.append("- Ignores the target's defensive stat changes.")
+        if self.reflect:
+            ret.append("- For 5 turns, reduces physical damage taken by the mon and its allies by half "
+                       "(or one-third in a Double Battle).")
+        if self.light_screen:
+            ret.append("- For 5 turns, reduces special damage taken by the mon and its allies by half "
+                       "(or one-third in a Double Battle).")
+        if self.aurora_veil:
+            ret.append("- For 5 turns, reduces physical and special damage taken by the mon and its allies by half "
+                       "(or one-third in a Double Battle). Can only be used during hail or snow.")
+        if self.trick_room:
+            ret.append("- For 5 turns, mons with a lower Speed stat will move first within their priority bracket.")
+        if self.tera_blast:
+            ret.append("- Changes to the user's Tera type when Terastallized. Becomes a physical move if the user's "
+                       "Attack is higher than its Special Attack.")
+
+        if self.weather:
+            weather_descriptions = {
+                sun: "intense sunlight", rain: "a heavy rain", hail: "a hailstorm", sandstorm: "a sandstorm"
+            }
+            ret.append(f"- Summons {weather_descriptions[self.weather]} that lasts for five turns.")
 
         if self.used_in_succession:
             ret.append("- Its chance of failing rises if it is used in succession.")
@@ -399,6 +477,13 @@ class PackedMove:
     def from_move(m: Move):
         return PackedMove(m.name, m.pp, m.ppc)
 
+    @staticmethod
+    def null():
+        return PackedMove("", 0)
+
+    def __bool__(self):
+        return bool(self.name)
+
     def unpack(self):
         if self.name in systemMoves:
             ret = systemMoves[self.name].copy()
@@ -422,6 +507,10 @@ twoTurnTexts = {
 
 systemMoves = {
     "Switch": Move.from_json(["Switch", None, None, 0, 0, 0, False, None, {"switch": True, "priority": 10}]),
-    "Exit": Move.from_json(["Exit", None, None, 0, 0, 0, False, None, {}]),
-    "Confused": Move.from_json(["Confused", None, physical, 0, 40, 0, False, None, {"raised_crit_ratio": -100}])
+    "Team": Move.control("Switch"),
+    "Exit": Move.control("Exit"),
+    "Confused": Move.from_json(["Confused", None, physical, 0, 40, 0, False, None, {"raised_crit_ratio": -100}]),
+    "Status": Move.control("Status"),
+    "Terastallize": Move.control("Terastallize"),
+    "Tera": Move.control("Terastallize")
 }

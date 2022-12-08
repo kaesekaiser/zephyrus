@@ -5,10 +5,6 @@ def abled(b: bool):
     return "Enabled" if b else "Disabled"
 
 
-def checked(b: bool):
-    return zeph.emojis["checked"] if b else zeph.emojis["unchecked"]
-
-
 def sorted_assignable_roles(guild: discord.Guild, filter_selfroles: bool = False, filter_autoroles: bool = False):
     if filter_selfroles:
         return [g for g in sorted_assignable_roles(guild) if g.id in zeph.server_settings[guild.id].selfroles]

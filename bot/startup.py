@@ -25,6 +25,7 @@ class Zeph(commands.Bot):
     def __init__(self):
         intents = discord.Intents.default()
         intents.members = True
+        intents.message_content = True
         super().__init__(get_command_prefix, case_insensitive=True, help_command=None, intents=intents)
         # with open("storage/call_channels.txt", "r") as f:
         #     self.phoneNumbers = {int(g.split("|")[0]): int(g.split("|")[1]) for g in f.readlines()}
@@ -65,17 +66,17 @@ class Zeph(commands.Bot):
         return zeph_version
 
     @property
-    def emojis(self):
+    def emojis(self) -> dict:
         """Emotes that come from my own personal servers, that I use in commands."""
         return {g.name: g for g in self._connection.emojis if g.guild.id in testing_emote_servers}
 
     @property
-    def all_emojis(self):
+    def all_emojis(self) -> dict:
         """Emotes from any server Zeph is in."""
         return {g.name: g for g in self._connection.emojis if g.available}
 
     @property
-    def strings(self):
+    def strings(self) -> dict:
         return {g: str(j) for g, j in self.emojis.items()}
 
     def save(self):
@@ -89,8 +90,6 @@ class Zeph(commands.Bot):
         if self.server_settings:  # zephyrus has accidentally erased this before, so only write if it exists
             with open("storage/server_settings.json", "w") as f:
                 json.dump({g: j.minimal_json for g, j in self.server_settings.items()}, f, indent=4)
-        with open("storage/tags.json", "w") as f:
-            pass
 
     async def load_romanization(self):
         print("Loading romanizer...")
@@ -135,21 +134,21 @@ class NewLine:
 
 
 class EmbedAuthor:
-    def __init__(self, name, url=discord.Embed.Empty, icon=discord.Embed.Empty):
+    def __init__(self, name, url=None, icon=None):
         self.name = name
         self.url = url
         self.icon = icon
 
 
-def author_from_user(user: User, name: str = None, url: str = discord.Embed.Empty):
-    return EmbedAuthor(name if name else f"{user.name}#{user.discriminator}", icon=user.avatar_url, url=url)
+def author_from_user(user: User, name: str = None, url: str = None):
+    return EmbedAuthor(name if name else f"{user.name}#{user.discriminator}", icon=user.avatar.url, url=url)
 
 
-# INLINE: IF TRUE, PUTS IN SAME LINE. IF FALSE, PUTS ON NEW LINE.
+# SAME_LINE: IF TRUE, PUTS IN SAME LINE. IF FALSE, PUTS ON NEW LINE.
 def construct_embed(**kwargs):
-    title = kwargs.get("s", kwargs.get("title", discord.embeds.EmptyEmbed))
-    desc = kwargs.get("d", kwargs.get("desc", discord.embeds.EmptyEmbed))
-    color = kwargs.get("col", kwargs.get("color", discord.embeds.EmptyEmbed))
+    title = kwargs.get("s", kwargs.get("title"))
+    desc = kwargs.get("d", kwargs.get("desc"))
+    color = kwargs.get("col", kwargs.get("color"))
     fields = kwargs.get("fs", kwargs.get("fields", {}))
     ret = discord.Embed(title=title, description=desc, colour=color)
     for i in fields:
@@ -179,7 +178,7 @@ class Emol:  # fancy emote-color embeds
     def con(self, s: str = "", **kwargs):  # constructs
         return construct_embed(title=f"{self.emoji} \u2223 {s}" if s else "", col=self.color, **kwargs)
 
-    async def send(self, destination: commands.Context, s: str = None, **kwargs):  # sends
+    async def send(self, destination: discord.abc.Messageable, s: str = None, **kwargs):  # sends
         return await destination.send(embed=self.con(s, **kwargs))
 
     async def edit(self, message: discord.Message, s: str = None, **kwargs):  # edits message
@@ -211,7 +210,7 @@ plane = Emol(":airplane:", hexcol("3a99f7"))
 lost = Emol(":map:", hexcol("55ACEE"))  # redirects - looking for these commands?
 
 
-async def confirm(s: str, dest: Union[commands.Context, discord.TextChannel], caller: User = None, **kwargs):
+async def confirm(s: str, dest: discord.abc.Messageable, caller: User = None, **kwargs):
     def pred(r: discord.Reaction, u: User):
         return r.emoji in [zeph.emojis["yes"], zeph.emojis["no"]] and r.message.id == message.id and \
                ((caller is None and u != zeph.user) or u == caller)
@@ -219,19 +218,38 @@ async def confirm(s: str, dest: Union[commands.Context, discord.TextChannel], ca
     emol = kwargs.get("emol", Emol(zeph.emojis["yield"], hexcol("DD2E44")))
 
     message = await emol.send(
-        dest, s, d=f"{kwargs.get('add_info', '')} To {kwargs.get('yes', 'confirm')}, react with {zeph.emojis['yes']}. "
-                   f"To {kwargs.get('no', 'cancel')}, react with {zeph.emojis['no']}.")
+        dest, s,
+        d=kwargs.get("desc_override") if "desc_override" in kwargs else
+        (f"{kwargs.get('add_info', '')} To {kwargs.get('yes', 'confirm')}, react with {zeph.emojis['yes']}. "
+         f"To {kwargs.get('no', 'cancel')}, react with {zeph.emojis['no']}.")
+    )
     await message.add_reaction(zeph.emojis["yes"])
     await message.add_reaction(zeph.emojis["no"])
     try:
-        con = (await zeph.wait_for("reaction_add", timeout=kwargs.get("timeout", 120), check=pred))[0]
+        if kwargs.get("allow_text_response"):
+            def mr_pred(mr: MR, u: User):
+                if isinstance(mr, discord.Reaction):
+                    return pred(mr, u)
+                else:
+                    if isinstance(dest, commands.Context):
+                        return mr.content.lower() in ["yes", "no"] and general_pred(dest)(mr)
+                    else:
+                        return mr.content.lower() in ["yes", "no"] and mr.channel == dest and \
+                               ((caller is None and u != zeph.user) or u == caller)
+            con = (await zeph.wait_for("reaction_or_message", timeout=kwargs.get("timeout", 120), check=mr_pred))[0]
+            if isinstance(con, discord.Reaction):
+                con = con.emoji.name
+            else:
+                con = con.content.lower()
+        else:
+            con = (await zeph.wait_for("reaction_add", timeout=kwargs.get("timeout", 120), check=pred))[0].emoji.name
     except asyncio.TimeoutError:
         await emol.edit(message, "Confirmation request timed out.")
         return False
     else:
         if kwargs.get("delete"):  # this should only be used in EXTREME edge cases
             await message.delete()
-        return con.emoji == zeph.emojis["yes"]
+        return con == "yes"
 
 
 async def image_url(fp: str):
@@ -243,8 +261,8 @@ def plural(s: str, n: Union[float, int], **kwargs):
     return kwargs.get("plural", s + "s") if n != 1 else s
 
 
-def none_list(l: Union[list, tuple], joiner: str = ", "):
-    return joiner.join(l) if l else "none"
+def none_list(ls: Union[list, tuple], joiner: str = ", ", if_empty: str = "none"):
+    return joiner.join(ls) if ls else if_empty
 
 
 def flint(n: Flint):
@@ -296,8 +314,8 @@ def hue_gradient(from_hex: str, to_hex: str, value: Flint, backwards: bool = Fal
     )
 
 
-def page_list(l: list, per_page: int, page: int):  # assumes page number is between 1 and total pages
-    return l[int(page) * per_page - per_page:int(page) * per_page]
+def page_list(ls: list, per_page: int, page: int):  # assumes page number is between 1 and total pages
+    return ls[int(page) * per_page - per_page:int(page) * per_page]
 
 
 def page_dict(d: dict, per_page: int, page: int):  # assumes page number is between 1 and total pages
@@ -309,12 +327,12 @@ class Navigator:
     for child classes to overwrite large amounts of the run() function without having to overwrite the function
     itself. """
 
-    def __init__(self, emol: Emol, l: list, per: int, s: str,
+    def __init__(self, emol: Emol, ls: list, per: int, s: str,
                  prev: Union[discord.Emoji, str] = "◀", nxt: Union[discord.Emoji, str] = "▶",
                  close_on_timeout: bool = False, **kwargs):
         """KWARGS are passed to Emol.com()"""
         self.emol = emol
-        self.table = l
+        self.table = ls
         self.per = per
         self.page = 1
         self.title = s
@@ -524,22 +542,30 @@ class Interpreter:
         raise commands.CommandError(f"Unrecognized function `{args[0]}`.")
 
 
-def lower(l: Union[list, tuple]):
-    if type(l) == tuple:
-        return tuple(g.lower() for g in l)
-    return [g.lower() for g in l]
+def lower(ls: Union[list, tuple]):
+    if type(ls) == tuple:
+        return tuple(g.lower() for g in ls)
+    return [g.lower() for g in ls]
 
 
-def can_int(s: str):
+def can_use_without_error(func: callable, arg, error_type=ValueError):
     try:
-        int(s)
-    except ValueError:
+        func(arg)
+    except error_type:
         return False
     return True
 
 
-def best_guess(target: str, l: iter):
-    di = {g: wr.levenshtein(target, g.lower()) for g in l}
+def can_int(s: str):
+    return can_use_without_error(int, s)
+
+
+def can_float(s: str):
+    return can_use_without_error(float, s)
+
+
+def best_guess(target: str, ls: iter):
+    di = {g: wr.levenshtein(target, g.lower()) for g in ls}
     return choice([key for key in di if di[key] == min(list(di.values()))])
 
 
@@ -547,11 +573,11 @@ def two_digit(n: Flint):
     return str(round(n, 2)) + "0" * (2 - len(str(round(n, 2)).split(".")[1]))
 
 
-def grammatical_join(l: list, conj: str = "and"):
-    if len(l) <= 2:
-        return f" {conj} ".join(l)
+def grammatical_join(ls: list, conj: str = "and"):
+    if len(ls) <= 2:
+        return f" {conj} ".join(ls)
     else:
-        return f"{', '.join(l[:-1])}, {conj} {l[-1]}"
+        return f"{', '.join(ls[:-1])}, {conj} {ls[-1]}"
 
 
 def admin_check(ctx: commands.Context):
@@ -581,6 +607,21 @@ def tsum(*lists: iter):
         raise ValueError("All lists must be the same length.")
     else:
         return [sum(g[j] for g in lists) for j in range(len(lists[0]))]
+
+
+def checked(b: bool):
+    return zeph.emojis["checked"] if b else zeph.emojis["unchecked"]
+
+
+def caseless_match(s: str, database: iter) -> Union[str, None]:
+    try:
+        return [g for g in database if str(g).lower() == s.lower()][0]
+    except IndexError:
+        return None
+
+
+def general_pred(ctx: commands.Context) -> callable:
+    return lambda m: m.author == ctx.author and m.channel == ctx.channel
 
 
 blue = hexcol("3B88C3")  # color that many commands use

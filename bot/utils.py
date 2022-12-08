@@ -549,7 +549,7 @@ async def avatar(ctx: commands.Context, *, user: str = None):
             else:
                 user = find_user(ctx.guild, user)
 
-    av_url = str(user.avatar_url_as(static_format="png"))
+    av_url = str(user.avatar.url)
     display_name = user.display_name if ctx.guild else str(user)
     return await ctx.send(
         embed=construct_embed(author=author_from_user(user, name=f"{display_name}'s Avatar", url=av_url),
@@ -950,7 +950,7 @@ async def factors(ctx: commands.Context, number: int):
 
     def get_factors(n: int):
         fac_dic = factorint(n)
-        return [g for l in [[k] * v for k, v in fac_dic.items()] for g in l]
+        return [g for j in [[k] * v for k, v in fac_dic.items()] for g in j]
 
     return await ClientEmol(":1234:", blue, ctx).say(f"Prime factors of {number}:", d=f"`= {get_factors(number)}`")
 

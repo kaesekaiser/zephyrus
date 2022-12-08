@@ -29,7 +29,7 @@ class Epitaph(ep.Civ):
             else:
                 await (self.grey if self.extinct else self.yellow).say(**dic)
         if not self.extinct:
-            return await self.ctx.trigger_typing()
+            return await self.ctx.typing()
 
     async def tick(self):
         def pred(m: discord.Message):
