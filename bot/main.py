@@ -70,7 +70,7 @@ async def about(ctx: commands.Context):
         f"**Build:** {zeph.version} / Python {py_version}\n"
         f"[GitHub](https://github.com/kaesekaiser/zephyrus) / "
         f"[Invite](https://discordapp.com/oauth2/authorize?client_id={zeph.user.id}&scope=bot&permissions=268705856)",
-        thumbnail=zeph.user.avatar_url,
+        thumbnail=zeph.user.avatar.url,
         footer=f"Feel free to DM {zeph.get_user(238390171022655489)} with any questions!"
     )
 
