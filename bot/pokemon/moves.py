@@ -5,7 +5,7 @@ import json
 types = normal, fire, water, electric, grass, ice, fighting, poison, ground, flying, psychic, bug, rock, ghost, \
     dragon, dark, steel, fairy = "Normal", "Fire", "Water", "Electric", "Grass", "Ice", "Fighting", "Poison", \
     "Ground", "Flying", "Psychic", "Bug", "Rock", "Ghost", "Dragon", "Dark", "Steel", "Fairy"
-typeColors = {
+type_colors = {
     normal: "A8A878", fire: "F08030", water: "6890F0", grass: "78C850", electric: "F8D030", rock: "B8A038",
     ground: "E0C068", steel: "B8B8D0", psychic: "F85888", fighting: "C03028", flying: "A890F0", ghost: "705898",
     dark: "705848", bug: "A8B820", poison: "A040A0", fairy: "EE99AC", dragon: "7038F8", ice: "98D8D8"
@@ -15,8 +15,8 @@ targets = anyAdjFoe, anyAdj, anyMon, userOrAdjAlly, allAdjFoe, allAdj, allFoe, a
     "any adjacent foe", "any adjacent Pok\u00e9mon", "any Pok\u00e9mon", "the user or an adjacent ally", \
     "all adjacent foes", "all adjacent Pok\u00e9mon", "all foes", "all Pok\u00e9mon", "any adjacent ally", "the user", \
     "the user and all allies"
-statusConditions = poisoned, badlyPoisoned, burned, paralyzed, asleep, frozen, fainted = "Poisoned", "Badly poisoned", \
-    "Burned", "Paralyzed", "Asleep", "Frozen", "Fainted"
+status_conditions = poisoned, badly_poisoned, burned, paralyzed, asleep, frozen, fainted = "Poisoned", \
+    "Badly poisoned", "Burned", "Paralyzed", "Asleep", "Frozen", "Fainted"
 weather_types = sun, rain, hail, sandstorm, snow = "Harsh sunlight", "Rain", "Hail", "Sandstorm", "Snow"
 six_stats = {"hp": "HP", "atk": "Atk", "def": "Def", "spa": "SpA", "spd": "SpD", "spe": "Spe"}
 six_stat_names = list(six_stats.values())
@@ -86,7 +86,7 @@ class StatusEffect:
 
     def __str__(self):
         effects = {
-            burned: "Burn", frozen: "Freeze", paralyzed: "Paralyze", poisoned: "Poison", badlyPoisoned: "Badly poison"
+            burned: "Burn", frozen: "Freeze", paralyzed: "Paralyze", poisoned: "Poison", badly_poisoned: "Badly poison"
         }
         if self.chance == 100:
             return "Puts the target to sleep." if self.effect == asleep else \

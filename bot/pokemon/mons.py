@@ -2,7 +2,7 @@ import random
 from pokemon.field import *
 from re import sub
 from pyquery import PyQuery
-from math import floor, log
+from math import floor, log, ceil
 
 
 def add_sign(n: Union[float, int]) -> str:
@@ -106,13 +106,18 @@ castform_weathers = {sun: "Sunny", rain: "Rainy", hail: "Snowy"}
 
 
 class Species:
-    def __init__(self, name, *forms: Form):
+    def __init__(self, name: str, catch_rate: int, forms: list[Form]):
         self.name = name
         self.forms = {g.name: g for g in forms}
+        self.catch_rate = catch_rate
 
     @staticmethod
     def null():
-        return Species("NULL", Form.null())
+        return Species("NULL", 0, [Form.null()])
+
+    @staticmethod
+    def from_json(js: dict):
+        return Species(js["name"], js["catch_rate"], [Form(*g) for g in js["forms"]])
 
     def add_form(self, fm: Form):
         self.forms[fm.name] = fm
@@ -136,7 +141,7 @@ class Species:
 
     @property
     def json(self):
-        return [self.name, *[g.json for g in self.forms.values()]]
+        return {"name": self.name, "catch_rate": self.catch_rate, "forms": [g.json for g in self.forms.values()]}
 
 
 natures = [
@@ -201,8 +206,8 @@ berries = [
 ]
 status_berries = {
     "Aspear Berry": [frozen], "Cheri Berry": [paralyzed], "Chesto Berry": [asleep],
-    "Pecha Berry": [poisoned, badlyPoisoned], "Rawst Berry": [burned],
-    "Lum Berry": [frozen, paralyzed, asleep, poisoned, badlyPoisoned, burned]
+    "Pecha Berry": [poisoned, badly_poisoned], "Rawst Berry": [burned],
+    "Lum Berry": [frozen, paralyzed, asleep, poisoned, badly_poisoned, burned]
 }
 drives = ['Burn Drive', 'Chill Drive', 'Douse Drive', 'Shock Drive']
 gems = [f"{g} Gem" for g in types]
@@ -306,6 +311,11 @@ held_items = [
     'Strawberry Sweet', 'Sun Stone', 'Sweet Apple', 'Tart Apple', 'Terrain Extender', 'Thick Club', 'Throat Spray',
     'Thunder Stone', 'Toxic Orb', 'Upgrade', 'Utility Umbrella', 'Water Stone', 'Wave Incense', 'Weakness Policy',
     'Whipped Dream', 'White Herb', 'Wide Lens', 'Wise Glasses', 'Zoom Lens'
+]
+poke_ball_types = [
+    "beast", "cherish", "dive", "dream", "dusk", "fast", "friend", "great", "heal", "heavy", "level", "love", "lure",
+    "luxury", "master", "moon", "nest", "net", "park", "poke", "premier", "quick", "repeat", "safari", "sport",
+    "timer", "ultra"
 ]
 genderless_mons = [
     'Magnemite', 'Magneton', 'Voltorb', 'Electrode', 'Staryu', 'Starmie', 'Porygon', 'Porygon2', 'Shedinja',
@@ -807,7 +817,7 @@ class Mon:
                         frozen: "{name} was frozen solid!",
                         paralyzed: "{name} was paralyzed!",
                         poisoned: "{name} was poisoned!",
-                        badlyPoisoned: "{name} was badly poisoned!"
+                        badly_poisoned: "{name} was badly poisoned!"
                     }[stat.effect]
         return ret
 
@@ -849,7 +859,7 @@ class Mon:
 
 
 with open("stats.json" if __name__ == "__main__" else "pokemon/stats.json", "r") as file:
-    nat_dex = {g: Species(j[0], *[Form(*k) for k in j[1:]]) for g, j in json.load(file).items()}
+    nat_dex = {g: Species.from_json(j) for g, j in json.load(file).items()}
 
 
 # with open("dex.json" if __name__ == "__main__" else "pokemon/dex.json", "r") as file:
@@ -890,23 +900,23 @@ game_generations = {
 }
 
 
-def image(m: Mon):
-    if m.form.name and m.species.name != "Dudunsparce":
-        if m.species_and_form == "Minior-Core":
+def image(mon: Mon):
+    if mon.form.name and mon.species.name != "Dudunsparce":
+        if mon.species_and_form == "Minior-Core":
             suffix = "-" + random.choice(["orange", "yellow", "green", "blue", "indigo", "purple"]) + "-core"
-        elif m.species.name == "Maushold":
-            suffix = {"Three": "-family3", "Four": "-family4"}[m.form.name]
-        elif m.species_and_form == "Tinkaton-Ideal":
+        elif mon.species.name == "Maushold":
+            suffix = {"Three": "-family3", "Four": "-family4"}[mon.form.name]
+        elif mon.species_and_form == "Tinkaton-Ideal":
             return "https://cdn.discordapp.com/attachments/582754042527088694/1047738638454231162/tinkaton.png"
         else:
-            suffix = "-" + fix(m.form.name)
+            suffix = "-" + fix(mon.form.name)
     else:
         suffix = ""
-    if m.generation == 9:
-        return f"https://img.pokemondb.net/sprites/scarlet-violet/normal/{fix(m.species.name) + suffix}.png"
-    if m.generation == 8:
-        return f"https://img.pokemondb.net/artwork/large/{fix(m.species.name) + suffix}.jpg"
-    return img_link.format(fix(m.species.name) + suffix)
+    if mon.generation == 9:
+        return f"https://img.pokemondb.net/sprites/scarlet-violet/normal/{fix(mon.species.name) + suffix}.png"
+    if mon.generation == 8:
+        return f"https://img.pokemondb.net/artwork/large/{fix(mon.species.name) + suffix}.jpg"
+    return img_link.format(fix(mon.species.name) + suffix)
 
 
 def stat_change_text(mon: Mon, stat: str, change: int):
@@ -937,3 +947,148 @@ def add_new_mon(species: Species):
 def rewrite_mons():
     with open("stats.json" if __name__ == "__main__" else "pokemon/stats.json", "w") as f:
         json.dump({k: v.json for k, v in nat_dex.items()}, f, indent=4)
+
+
+class CatchRate:
+    def __init__(self, ball_type: str, mon: Mon, **kwargs):
+        self.ball_type = ball_type
+        self.mon = mon
+        self.hp_percentage = kwargs.get("hp_percentage", kwargs.get("hp", 100))
+        self.player_mon = kwargs.get("player_mon", Mon("Bulbasaur", gender="female"))
+        self.is_dark_grass = kwargs.get("is_dark_grass", kwargs.get("grass", False))
+        self.is_fishing = kwargs.get("is_fishing", kwargs.get("fishing", False))
+        self.is_surfing = kwargs.get("is_surfing", kwargs.get("surfing", False))
+        self.dex_caught = kwargs.get("dex_caught", kwargs.get("dex", 10))
+        self.has_all_badges = kwargs.get("has_all_badges", kwargs.get("badges", True))
+        self.caught_previously = kwargs.get("caught_previously", kwargs.get("repeat", False))
+        self.turn = kwargs.get("turn", 1)
+        self.is_night = kwargs.get("is_night", kwargs.get("dark", False))
+
+    @property
+    def multiplicative_ball_bonus(self):
+        if self.ball_type == "great":
+            return 1.5
+        if self.ball_type == "ultra":
+            return 2
+        if self.ball_type == "level":
+            return 8 if self.player_mon.level >= 4 * self.mon.level else \
+                4 if self.player_mon.level >= 2 * self.mon.level else \
+                2 if self.player_mon.level > self.mon.level else 1
+        if self.ball_type == "lure":
+            return 4 if self.is_fishing else 1
+        if self.ball_type == "moon":
+            return 4 if self.mon.species.name in [
+                "Nidoran-F", "Nidorina", "Nidoqueen", "Nidoran-M", "Nidorino", "Nidoking", "Cleffa", "Clefairy",
+                "Clefable", "Igglybuff", "Jigglypuff", "Wigglytuff", "Skitty", "Delcatty", "Munna", "Musharna"
+            ] else 1
+        if self.ball_type == "love":
+            return 8 if (
+                self.mon.species.name == self.player_mon.species.name and
+                (
+                    (self.mon.gender == "female" and self.player_mon.gender == "male") or
+                    (self.mon.gender == "male" and self.player_mon.gender == "female")
+                )
+            ) else 1
+        if self.ball_type == "fast":
+            return 4 if self.mon.form.spe >= 100 else 1
+        if self.ball_type == "net":
+            return 3.5 if (bug in self.mon.types or water in self.mon.types) else 1
+        if self.ball_type == "nest":
+            return (floor((41 - self.mon.level) * 4096 / 10) / 4096) if self.mon.level < 30 else 1
+        if self.ball_type == "repeat":
+            return 3.5 if self.caught_previously else 3
+        if self.ball_type == "timer":
+            return min(4, 1 + (self.turn - 1) * 1229 / 4096)
+        if self.ball_type == "dive":
+            return 3.5 if (self.is_fishing or self.is_surfing) else 1
+        if self.ball_type == "dusk":
+            return 3 if self.is_night else 1
+        if self.ball_type == "quick":
+            return 5 if self.turn == 1 else 1
+        if self.ball_type == "dream":
+            return 4 if self.mon.status_condition == asleep else 1
+        if self.ball_type == "beast":
+            return 5 if self.mon.species.name in [
+                "Nihilego", "Buzzwole", "Pheromosa", "Xurkitree", "Celesteela", "Kartana", "Guzzlord", "Poipole",
+                "Naganadel", "Stakataka", "Blacephalon"
+            ] else 410/4096
+        return 1
+
+    @property
+    def additive_ball_bonus(self):
+        if self.ball_type == "heavy":
+            return -20 if self.mon.weight < 100 else 0 if self.mon.weight < 200 else \
+                20 if self.mon.weight < 300 else 30
+        return 1
+
+    @property
+    def dark_grass_modifier(self):
+        if not self.is_dark_grass:
+            return 1
+        return 1229/4096 if self.dex_caught < 30 else 2048/4096 if self.dex_caught <= 150 else \
+            2867/4096 if self.dex_caught <= 300 else 3277 if self.dex_caught <= 450 else \
+            3686/4096 if self.dex_caught <= 600 else 1
+
+    @property
+    def status_bonus(self):
+        return 2.5 if self.mon.status_condition in [asleep, frozen] else \
+            1.5 if self.mon.status_condition is not None else 1
+
+    @property
+    def badge_modifier(self):
+        return 410/4096 if (not self.has_all_badges) and (self.mon.level > self.player_mon.level) else 1
+
+    @property
+    def level_bonus(self):
+        return max(1, (30 - self.mon.level) / 10)
+
+    @property
+    def a(self) -> int:
+        return floor(
+            (3 * self.mon.hp - 2 * (self.hp_percentage / 100 * self.mon.hp)) * self.dark_grass_modifier *
+            max(1, min(255, self.mon.species.catch_rate + self.additive_ball_bonus))
+            * self.multiplicative_ball_bonus / (3 * self.mon.hp) *
+            self.status_bonus * self.badge_modifier * self.level_bonus
+        )
+
+    @property
+    def shake_check_odds_out_of_65536(self) -> int:
+        if self.ball_type in ["master", "park"]:
+            return 65536
+        return floor(65535 / (255 / self.a) ** 0.1875)
+
+    @property
+    def shake_check_chance(self) -> float:
+        if self.ball_type in ["master", "park"]:
+            return 1
+        return floor(self.shake_check_odds_out_of_65536) / 65536
+
+    @property
+    def critical_capture_odds_out_of_256(self) -> int:
+        multiplier = 2.5 if self.dex_caught > 600 else 2 if self.dex_caught > 450 else 1.5 if self.dex_caught > 300 \
+            else 1 if self.dex_caught > 150 else 0.5 if self.dex_caught > 30 else 0
+        return floor(self.a * multiplier / 6)
+
+    @property
+    def critical_capture_chance(self) -> float:
+        return self.critical_capture_odds_out_of_256 / 256
+
+    @property
+    def capture_chance(self) -> float:
+        return min(
+            (self.critical_capture_chance * self.shake_check_chance) + \
+            ((1 - self.critical_capture_chance) * self.shake_check_chance ** 4),
+            1
+        )
+
+    def shake_check(self) -> bool:
+        return random.randint(0, 65536) < self.shake_check_odds_out_of_65536
+
+    def chance_after_throws(self, n: int) -> float:
+        return 1 - (1 - self.capture_chance) ** n
+
+    @property
+    def throws_for_95_percent_capture(self) -> int:
+        if self.capture_chance == 1:
+            return 1
+        return ceil(log(0.05, 1 - self.capture_chance))

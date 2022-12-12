@@ -17,7 +17,7 @@ def ball_emol(ball: str = None):
 
 
 def type_emol(s: str):
-    return Emol(zeph.emojis[s], hexcol(pk.typeColors[s]))
+    return Emol(zeph.emojis[s], hexcol(pk.type_colors[s]))
 
 
 def pokeround(n: Union[float, int]):  # for whatever reason, Game Freak rounds down on 0.5
@@ -440,7 +440,7 @@ class Battle:
                 self.inflict(r, max(floor(r.hp / 16), 1), "damage from its burn")
             elif r.status_condition == pk.poisoned:
                 self.inflict(r, max(floor(r.hp / 16), 1), "damage from poison")
-            elif r.status_condition == pk.badlyPoisoned:
+            elif r.status_condition == pk.badly_poisoned:
                 self.inflict(r, max(floor(r.hp * (r.stat_con_time + 1) / 16), 1), "damage from poison")
                 r.stat_con_time += 1
             if r.hpc <= 0:
@@ -801,8 +801,8 @@ class Battle:
             return 0
 
         dam = self.blind_damage(
-            self.invisible_stat(a, a_stat, crit),
-            self.invisible_stat(d, d_stat, crit),
+            self.invisible_stat(a, a_stat, (crit and a.stat_stages[a_stat] < 0)),
+            self.invisible_stat(d, d_stat, (crit and d.stat_stages[d_stat] > 0)),
             m.power, a.level
         )
 
@@ -977,11 +977,11 @@ class Battle:
         if m.status_effect:
             invulnerables = {
                 pk.burned: {pk.fire}, pk.paralyzed: {pk.electric}, pk.poisoned: {pk.poison, pk.steel},
-                pk.badlyPoisoned: {pk.poison, pk.steel}, pk.frozen: {pk.ice}
+                pk.badly_poisoned: {pk.poison, pk.steel}, pk.frozen: {pk.ice}
             }
             can_activate = (not d.status_condition) and \
                 ((not invulnerables.get(m.status_effect.effect, set()).intersection(set(d.types))) or
-                 (a.ability == "Corrosion" and m.status_effect.effect in [pk.poisoned, pk.badlyPoisoned]))
+                 (a.ability == "Corrosion" and m.status_effect.effect in [pk.poisoned, pk.badly_poisoned]))
             # 1) the mon is not already afflicted with something, and 2) either a) is not immune to the status effect,
             # or b) the attacker has the ability that allows them to poison them anyway
             if can_activate:

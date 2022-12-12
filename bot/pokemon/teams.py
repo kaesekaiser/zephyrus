@@ -29,7 +29,7 @@ class Team:
         self.mons.clear()
 
     def copy(self):
-        ret = Team()
+        ret = Team(self.name)
         for mon in self.mons:
             ret.add(Mon.unpack(mon))
         return ret

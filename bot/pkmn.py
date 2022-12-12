@@ -2,10 +2,12 @@ from pkmn_battle import *
 from copy import deepcopy as copy
 
 
-def find_mon(s: str, **kwargs) -> pk.Mon:
+def find_mon(s: Union[str, int, None], **kwargs) -> pk.Mon:
     """Use **kwargs to pass additional arguments to the Mon.__init__() statement."""
     if can_int(s) or isinstance(s, int):
         return pk.Mon(list(pk.nat_dex.keys())[(int(s) - 1) % len(pk.nat_dex)], **kwargs)
+    if s is None or s.lower() == "null":
+        return pk.Mon.null()
     if ret := pk.species_and_forms.get(pk.fix(s)):
         return pk.Mon(ret[0], form=ret[1], **kwargs)
     for mon in pk.nat_dex:
@@ -411,7 +413,7 @@ class DexSearchNavigator(Navigator):
 
 
 @zeph.command(
-    name="pokedex",
+    name="pokedex", hidden=True,
     aliases=["dex"], usage="z!pokedex [pok\u00e9mon | dex number]\nz!pokedex help\nz!pokedex search [terms...]",
     description="Browses the Pok\u00e9dex.",
     help="**NOTE: `z!dex` is being deprecated in favor of `z!pokemon dex`.\n\n"
@@ -431,7 +433,7 @@ async def dex_command(ctx: commands.Context, *mon: str):
 class EffNavigator(Navigator):
     types = (None,) + pk.types
 
-    def __init__(self, type1: str, type2: str = None):
+    def __init__(self, type1: str, type2: str = None, initial_mon: pk.Mon = find_mon("NULL")):
         super().__init__(ball_emol(), [], 1, "", prev="", nxt="")
         self.type1 = type1
         self.type2 = type2
@@ -439,6 +441,7 @@ class EffNavigator(Navigator):
         self.funcs[zeph.emojis["right1"]] = self.type1for
         self.funcs[zeph.emojis["left2"]] = self.type2bac
         self.funcs[zeph.emojis["right2"]] = self.type2for
+        self.initial_mon = initial_mon
 
     @property
     def eff_dict(self):
@@ -469,6 +472,8 @@ class EffNavigator(Navigator):
 
     @property
     def image(self):
+        if (self.type1 or self.type2) and (self.initial_mon.types_with_none == [str(self.type1), str(self.type2)]):
+            return pk.image(self.initial_mon)
         try:
             return pk.image(find_mon(choice(pk.exemplary_mons[frozenset([self.type1, self.type2])])))
         except KeyError:
@@ -502,7 +507,7 @@ async def pokemon_command(ctx: commands.Context, func: str = None, *args):
 
 
 def type_emol(typ: str):
-    return Emol(zeph.emojis[typ.title()], hexcol(pk.typeColors[typ]))
+    return Emol(zeph.emojis[typ.title()], hexcol(pk.type_colors[typ]))
 
 
 class BuildAMonNavigator(Navigator):
@@ -521,9 +526,6 @@ class BuildAMonNavigator(Navigator):
         self.funcs["💾"] = self.save_and_exit
         self.funcs[zeph.emojis["no"]] = self.cancel
         self.delete_on_close = kwargs.get("delete_on_close", False)
-
-    def general_pred(self, m: discord.Message):
-        return m.channel == self.ctx.channel and m.author == self.ctx.author
 
     async def save_and_exit(self):
         self.saved = True
@@ -606,7 +608,7 @@ class BuildAMonNavigator(Navigator):
     async def get_emoji(self, ctx: commands.Context):
         def pred(mr: MR, u: User = self.ctx.author):
             if isinstance(mr, discord.Message):
-                return self.general_pred(mr) and mr.content.lower() in self.editable_properties
+                return general_pred(self.ctx)(mr) and mr.content.lower() in self.editable_properties
             elif isinstance(mr, discord.Reaction):
                 return mr.emoji in self.legal and mr.message.id == self.message.id and u == self.ctx.author
 
@@ -654,7 +656,7 @@ class BuildAMonNavigator(Navigator):
         }
         necessary_check = additional_checks.get(message_type, lambda m: True)
         mess = await zeph.wait_for(
-            "message", check=lambda m: self.general_pred(m) and bool(necessary_check(m.content)), timeout=300
+            "message", check=lambda m: general_pred(self.ctx)(m) and bool(necessary_check(m.content)), timeout=300
         )
         await mess.delete()
         if force_lower:
@@ -896,8 +898,226 @@ class BuildATeamNavigator(Navigator):
         )
 
 
+class CatchRateNavigator(Navigator):
+    editable_parameters = [
+        "species", "level", "ball", "status", "surfing", "dark", "my_level", "my_species", "gender", "my_gender",
+        "fishing", "turn", "repeat", "dex", "badges", "hp"
+    ]
+
+    def __init__(self, **kwargs):
+        super().__init__(ball_emol(), [], 1, "", prev="", nxt="")
+        self.calculator = pk.CatchRate(kwargs.get("ball", "poke"), kwargs.get("mon", find_mon(1)))
+
+    @property
+    def wild_mon(self):
+        return self.calculator.mon
+
+    @property
+    def player_mon(self):
+        return self.calculator.player_mon
+
+    def advance_page(self, direction: int):
+        self.calculator.ball_type = pk.poke_ball_types[
+            (pk.poke_ball_types.index(self.calculator.ball_type) + direction) % len(pk.poke_ball_types)
+        ]
+
+    async def get_emoji(self, ctx: commands.Context):
+        def pred(mr: MR, u: User = ctx.author):
+            if isinstance(mr, discord.Message):
+                return general_pred(ctx)(mr) and mr.content.lower() in self.editable_parameters
+            elif isinstance(mr, discord.Reaction):
+                return mr.emoji in self.legal and mr.message.id == self.message.id and u == ctx.author
+
+        user_input = (await zeph.wait_for("reaction_or_message", check=pred, timeout=300))[0]
+        if isinstance(user_input, discord.Message):
+            await user_input.delete()
+            return user_input.content.lower()
+        elif isinstance(user_input, discord.Reaction):
+            return user_input.emoji
+
+    async def wait_for(self, message_type: str, ctx: commands.Context) -> str:
+        def is_yesno(s: str):
+            return s.lower() in ["y", "yes", "n", "no"]
+
+        additional_checks = {
+            "species": lambda c: find_mon(c, fail_silently=True),
+            "level": lambda c: can_int(c) and (1 <= int(c) <= 100),
+            "ball": lambda c: caseless_match(c.split()[0], pk.poke_ball_types),
+            "status": lambda c: caseless_match(c, pk.status_conditions),
+            "surfing": is_yesno,
+            "dark": is_yesno,
+            "my_level": lambda c: can_int(c) and (1 <= int(c) <= 100),
+            "my_species": lambda c: find_mon(c, fail_silently=True),
+            "gender": lambda c: (c.lower() in ["male", "female"]) and self.wild_mon.default_gender == "random",
+            "my_gender": lambda c: (c.lower() in ["male", "female"]) and self.player_mon.default_gender == "random",
+            "fishing": is_yesno,
+            "turn": lambda c: can_int(c) and int(c) > 0,
+            "repeat": is_yesno,
+            "dex": lambda c: can_int(c) and int(c) >= 0,
+            "badges": is_yesno,
+            "hp": lambda c: can_int(c.strip("%")) and (1 <= int(c.strip("%")) <= 100),
+        }
+        necessary_check = additional_checks.get(message_type, lambda m: True)
+        mess = await zeph.wait_for(
+            "message", check=lambda m: general_pred(ctx)(m) and bool(necessary_check(m.content)), timeout=300
+        )
+        await mess.delete()
+        return mess.content.lower()
+
+    async def run_nonstandard_emoji(self, emoji: Union[discord.Emoji, str], ctx: commands.Context):
+        if emoji in self.legal:
+            return
+
+        if emoji == "gender" and self.wild_mon.default_gender != "random":
+            mess = await self.emol.send(ctx, f"{self.wild_mon.species.name} is {self.wild_mon.default_gender} only.")
+            await asyncio.sleep(2)
+            return await mess.delete()
+        if emoji == "my_gender" and self.player_mon.default_gender != "random":
+            mess = await self.emol.send(
+                ctx, f"{self.player_mon.species.name} is {self.player_mon.default_gender} only."
+            )
+            await asyncio.sleep(2)
+            return await mess.delete()
+
+        messages = {
+            "species": "What species is the wild mon?",
+            "level": "What level is the wild mon?",
+            "ball": "What type of Pok\u00e9 Ball are you using?",
+            "status": "What's the wild mon's status condition, if any?",
+            "surfing": "Are you currently surfing?",
+            "dark": "Are you currently in a cave, or is it nighttime?",
+            "my_level": "What level is your mon?",
+            "my_species": "What species is your mon?",
+            "gender": "What gender is the wild mon?",
+            "my_gender": "What gender is your mon?",
+            "fishing": "Are you currently fishing?",
+            "turn": "What turn is it?",
+            "repeat": "Have you caught this species before?",
+            "dex": "How many species are registered as caught in your dex?",
+            "badges": "Do you have all eight Gym Badges?",
+            "hp": "What's the wild mon's current HP percentage?"
+        }
+        mess = await ball_emol(self.calculator.ball_type).send(
+            ctx, messages[emoji].split("\n")[0], d="\n".join(messages[emoji].split("\n")[1:]),
+        )
+        user_input = await self.wait_for(emoji, ctx)
+        if emoji == "species":
+            mon = find_mon(user_input)
+            pack = self.wild_mon.pack
+            pack["spc"] = mon.species
+            pack["form"] = mon.form
+            self.calculator.mon = pk.Mon.unpack(pack)
+        if emoji == "level":
+            self.calculator.mon.level = int(user_input)
+        if emoji == "ball":
+            self.calculator.ball_type = user_input.split()[0]
+        if emoji == "status":
+            self.calculator.mon.status_condition = caseless_match(user_input, pk.status_conditions)
+        if emoji == "surfing":
+            self.calculator.is_surfing = user_input in ["y", "yes"]
+        if emoji == "dark":
+            self.calculator.is_night = user_input in ["y", "yes"]
+        if emoji == "my_level":
+            self.calculator.player_mon.level = int(user_input)
+        if emoji == "my_species":
+            mon = find_mon(user_input)
+            pack = self.wild_mon.pack
+            pack["spc"] = mon.species
+            pack["form"] = mon.form
+            self.calculator.player_mon = pk.Mon.unpack(pack)
+        if emoji == "gender":
+            self.calculator.mon.gender = user_input
+        if emoji == "my_gender":
+            self.calculator.player_mon.gender = user_input
+        if emoji == "fishing":
+            self.calculator.is_fishing = user_input in ["y", "yes"]
+        if emoji == "turn":
+            self.calculator.turn = int(user_input)
+        if emoji == "repeat":
+            self.calculator.caught_previously = user_input in ["y", "yes"]
+        if emoji == "dex":
+            self.calculator.dex_caught = int(user_input)
+        if emoji == "badges":
+            self.calculator.has_all_badges = user_input in ["y", "yes"]
+        if emoji == "hp":
+            self.calculator.hp_percentage = int(user_input.strip("%"))
+
+        return await mess.delete()
+
+    @property
+    def con(self):
+        descriptions = {
+            "beast": "5x catch rate if used on an Ultra Beast. 0.1x otherwise.",
+            "cherish": "Flat 1x catch rate.",
+            "dive": f"3.5x catch rate if surfing or fishing. 1x otherwise.\n\n"
+                    f"Are you surfing or fishing (`surfing`)?: **{yesno(self.calculator.is_surfing)}**",
+            "dream": "4x catch rate if used on a sleeping mon. 1x otherwise.",
+            "dusk": f"3x catch rate if used in a cave or at night. 1x otherwise.\n\n"
+                    f"Are you in a cave, or is it nighttime (`dark`)?: **{yesno(self.calculator.is_night)}**",
+            "fast": f"4x catch rate if used on a mon with >=100 base Speed. 1x otherwise.\n\n"
+                    f"This mon **does{'' if self.calculator.mon.form.spe >= 100 else ' not'}** have a base Speed "
+                    f"greater than 100.",
+            "friend": "Flat 1x catch rate.",
+            "great": "Flat 1.5x catch rate.",
+            "heal": "Flat 1x catch rate.",
+            "heavy": "-20 added to mon's catch rate if its weight is less than 100 kg.\n"
+                     "0 added if its weight is greater than or equal to 100 kg, but less than 200 kg.\n"
+                     "20 added if its weight is greater than or equal to 200 kg, but less than 300 kg.\n"
+                     "30 added if its weight is greater than or equal to 300 kg.\n"
+                     f"This mon has a weight of **{self.calculator.mon.weight} kg**.",
+            "level": f"8x catch rate if your mon's level is at least four times higher than the wild mon's.\n"
+                     f"4x if your mon's level is at least double, but not quadruple, the wild mon's.\n"
+                     f"2x if your mon's level is higher than, but not twice as high as, the wild mon's.\n"
+                     f"1x if your mon's level is less than or equal to the wild mon's.",
+            "love": f"8x if used on a mon of the same species and opposite gender of your mon.\n\n"
+                    f"What's the wild mon's gender (`gender`)?: **{self.calculator.mon.gender}**\n"
+                    f"What's your mon's species (`my_species`)?: **{self.calculator.mon.species.name}**\n"
+                    f"What's your mon's gender (`my_gender`)?: **{self.calculator.player_mon.gender}**",
+            "lure": f"4x catch rate when fishing. 1x otherwise.\n\n"
+                    f"Are you fishing (`fishing`)?: **{yesno(self.calculator.is_fishing)}**",
+            "luxury": "Flat 1x catch rate.",
+            "master": "Never fails.",
+            "moon": "4x catch rate if used against a mon that evolves by Moon Stone (i.e. any member of the Nidoran, "
+                    "Clefairy, Jigglypuff, Skitty, or Munna families). 1x otherwise.",
+            "nest": "Between 1x and 4x catch rate if the mon's level is below 30, with lower levels giving higher "
+                    "catch rates. 1x otherwise.",
+            "net": "3.5x if the mon is Bug- or Water-type. 1x otherwise.",
+            "park": "Never fails. Unavailable in Scarlet/Violet.",
+            "poke": "Flat 1x catch rate.",
+            "premier": "Flat 1x catch rate.",
+            "quick": f"5x catch rate if used on the first turn. 1x otherwise.\n\n"
+                     f"What's the current turn (`turn`)?: **{self.calculator.turn}**",
+            "repeat": f"3.5x catch rate if used on a previously-caught species. 1x otherwise.\n\n"
+                      f"Have you caught this species before (`repeat`)?: **"
+                      f"{yesno(self.calculator.caught_previously)}**",
+            "safari": "Flat 1x catch rate.",
+            "sport": "Flat 1x catch rate.",
+            "timer": f"Catch rate increases by 0.3x every turn, starting at 1x on turn 1, and going up to a maximum of "
+                     f"4x from turn 11 onward.\n\n"
+                     f"What's the current turn (`turn`)?: **{self.calculator.turn}**",
+            "ultra": "Flat 2x catch rate."
+        }
+        return ball_emol(self.calculator.ball_type).con(
+            "S/V Catch Rate Calculator",
+            d=f"**Species**: {self.calculator.mon.species.name} / **Level**: {self.calculator.mon.level}\n"
+              f"**HP**: {self.calculator.hp_percentage}% / **Status**: {self.calculator.mon.status_condition}\n\n"
+              f"**Ball**: {self.calculator.ball_type.title()} Ball\n"
+              f"{descriptions[self.calculator.ball_type]}\n\n"
+              f"What's your mon's level (`my_level`)?: **{self.calculator.player_mon.level}**\n"
+              f"Do you have all eight Gym Badges (`badges`)?: **{yesno(self.calculator.has_all_badges)}**\n"
+              f"How many species are registered as caught in your dex (`dex`)?: **{self.calculator.dex_caught}**\n\n"
+              f"Capture chance: **{round(100 * self.calculator.capture_chance, 2)}%** per ball.\n"
+              f"Chance to capture within 5 throws: {round(100 * self.calculator.chance_after_throws(5), 2)}%\n"
+              f"Throws needed for 95% capture chance: {self.calculator.throws_for_95_percent_capture}",
+            thumb=pk.image(self.wild_mon),
+            footer="To change any value, say its name in chat."
+        )
+
+
 class PokemonInterpreter(Interpreter):
-    redirects = {"t": "type", "e": "eff", "m": "move", "s": "test", "b": "build"}
+    redirects = {
+        "t": "type", "e": "eff", "m": "move", "s": "test", "b": "build", "c": "catch", "h": "help", "d": "dex"
+    }
 
     @staticmethod
     def move_embed(move: pk.Move):
@@ -910,35 +1130,46 @@ class PokemonInterpreter(Interpreter):
                    f"({zeph.emojis['left1']}{zeph.emojis['right1']}{zeph.emojis['left2']}{zeph.emojis['right2']}) "
                    "to change types.\n`z!pokemon eff <mon...>` shows matchups against a given species or form.\n"
                    "`z!pokemon eff <type1> [type2]` shows matchups against a given type combination.",
-            "move": "`z!pokemon move <move>` shows various information about a move - including type, power, "
-                    "accuracy, etc.",
+            # "move": "`z!pokemon move <move>` shows various information about a move - including type, power, "
+            #         "accuracy, etc.",
             "dex": "`z!pokemon dex [mon...]` opens the dex.\n"
                    "- If `mon` is a number, the dex opens on that number.\n"
                    "- If `mon` is a name, the dex opens on that mon. Form names may also be included, e.g. "
                    "`z!pk dex giratina-origin` or `z!pk dex alolan raichu`.\n"
                    "- If `mon` is not given, the dex opens on #0001 Bulbasaur.\n\n"
                    "`z!pokemon dex search [args...]` allows searching and filtering of the dex based on certain "
-                   "search terms. For more info on these terms, see `z!pk dex search`."
+                   "search terms. For more info on these terms, see `z!pk dex search`.",
+            "catch": "`z!pokemon catch [ball] [species...]` opens the Scarlet/Violet catch rate calculator.\n"
+                     "- If `ball` is given, it must be a valid type of Pok\u00e9 Ball (e.g. Ultra, Quick, Dusk), and "
+                     "it must be the first argument.\n"
+                     "- If `species` is given, it must be a valid species of Pok\u00e9mon.\n"
+                     "- Both arguments are optional.\n\n"
+                     "Note that this calculator is only guaranteed to be accurate for Scarlet and Violet. Some catch "
+                     "rates (e.g. box legendaries) change between generations, and the formula itself has also "
+                     "changed several times."
         }
         desc_dict = {
             "type": "Shows type effectiveness for a type.",
             "eff": "Checks type matchups against a combination of types.",
-            "move": "Shows info about a move.",
-            "dex": "Browses the dex."
+            # "move": "Shows info about a move.",
+            "dex": "Browses the dex.",
+            "catch": "Opens the Scarlet/Violet catch rate calculator."
         }
         shortcuts = {j: g for g, j in self.redirects.items() if len(g) == 1}
 
         def get_command(s: str):
             return f"**`{s}`** (or **`{shortcuts[s]}`**)" if shortcuts.get(s) else f"**`{s}`**"
 
-        if not args or args[0].lower() not in help_dict:
+        if len(args) == 0 or (args[0].lower() not in help_dict and args[0].lower() not in self.redirects):
             return await ball_emol().send(
                 self.ctx, "z!pokemon help",
                 d="Available functions:\n\n" + "\n".join(f"{get_command(g)} - {j}" for g, j in desc_dict.items()) +
                   "\n\nFor information on how to use these, use `z!pokemon help <function>`."
             )
 
-        return await ball_emol().send(self.ctx, f"z!pokemon {args[0].lower()}", d=help_dict[args[0].lower()])
+        ret = self.redirects.get(args[0].lower(), args[0].lower())
+
+        return await ball_emol().send(self.ctx, f"z!pokemon {ret}", d=help_dict[ret])
 
     async def _type(self, *args):
         typ = str(args[0]).title()
@@ -958,15 +1189,16 @@ class PokemonInterpreter(Interpreter):
         )
 
     async def _eff(self, *args):
-        try:
-            types = find_mon(" ".join(args)).types
-        except commands.CommandError:
+        mon = find_mon(" ".join(args), fail_silently=True)
+        if mon:
+            types = mon.types
+        else:
             if set(g.title() for g in args).issubset(set(EffNavigator.types)) and 0 < len(args) < 3:
                 types = [g.title() for g in args]
             else:
                 types = ["Normal"]
 
-        return await EffNavigator(*types).run(self.ctx)
+        return await EffNavigator(*types, initial_mon=mon.name).run(self.ctx)
 
     async def _test(self, *args):
         admin_check(self.ctx)
@@ -1062,6 +1294,19 @@ class PokemonInterpreter(Interpreter):
         nav = DexNavigator(find_mon(mon), starting_mode=("help" if mon.lower() == "help" else None))
         return await nav.run(self.ctx)
 
+    async def _catch(self, *args):
+        if args:
+            if not (ball_type := caseless_match(args[0], pk.poke_ball_types)):
+                ball_type = "poke"
+                starting_mon = find_mon(" ".join(args))
+            else:
+                starting_mon = find_mon(" ".join(args[1:]), return_on_fail=find_mon(1))
+        else:
+            ball_type = "poke"
+            starting_mon = find_mon(1)
+
+        return await CatchRateNavigator(mon=starting_mon, ball=ball_type).run(self.ctx)
+
 
 @zeph.command(hidden=True, aliases=["lm"], usage="z!lm name type category PP power accuracy contact target **kwargs")
 async def loadmove(
@@ -1126,7 +1371,7 @@ async def loadmon_command(ctx: commands.Context, name: str, *args):
         else:
             return
     else:
-        species = pk.Species(name)
+        species = pk.Species(name, 0, [])
     force_exit = False
     while True:
         if args:
