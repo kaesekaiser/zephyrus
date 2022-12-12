@@ -1458,7 +1458,7 @@ async def remind_command(ctx: commands.Context, *text: str):
 
 
 @zeph.command(
-    name="weather", usage="z!weather <location...>",
+    name="weather", aliases=["w"], usage="z!weather <location...>",
     description="Shows the weather somewhere.",
     help="Shows the weather in `<location>` - condition, temperature, highs and lows, rain chance, etc. Weather data "
          "might be delayed by a couple minutes.\n\n"
@@ -1516,7 +1516,7 @@ async def weather_command(ctx: commands.Context, *, location: str):
         f":fire: daily high: {format_kelvin(req['daily'][0]['temp']['max'])} / "
         f":ice_cube: low: {format_kelvin(req['daily'][0]['temp']['min'])}\n"
         f":umbrella: rain chance: **{round(req['daily'][0]['pop'] * 100)}%**",
-        timestamp=datetime.datetime.utcfromtimestamp(req['current']['dt']),
+        timestamp=datetime.datetime.fromtimestamp(req['current']['dt'], datetime.timezone.utc),
         footer=ti.placename(location)
     )
 
