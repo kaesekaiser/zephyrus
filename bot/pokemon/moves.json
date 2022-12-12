@@ -2699,7 +2699,7 @@
             "can_protect": true,
             "can_mirror_move": true,
             "flinch": 20,
-			"aura_and_pulse": true
+            "aura_and_pulse": true
         }
     ],
     "Shadow Claw": [
