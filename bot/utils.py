@@ -249,6 +249,10 @@ async def tconvert(ctx: commands.Context, n: str, *text):
                               d=f"= {n} {cv.add_degree(text[0])}")
 
 
+def apostrophe_feet_to_decimal(s: str) -> float:
+    return int(s.split("'")[0]) + float(s.split("'")[1].strip("\"")) / 12
+
+
 @zeph.command(
     aliases=["c", "conv"], usage="z!convert <number> <unit...> to <unit...>\nz!convert <number> <unit...>",
     description="Converts between non-temperature units of measurement.",
@@ -256,26 +260,54 @@ async def tconvert(ctx: commands.Context, n: str, *text):
          "compatibility reasons; temperature can be converted using `z!tconvert`. More info at "
          "https://github.com/kaesekaiser/zephyrus/blob/master/docs/convert.md."
 )
-async def convert(ctx: commands.Context, n: str, *text):
+async def convert_command(ctx: commands.Context, *, text):
     conv = ClientEmol(":straight_ruler:", hexcol("efc700"), ctx)
 
     if not text:
         raise commands.BadArgument
 
-    # determining number of sig figs
-    if "e" in n:
-        digits_in = len("".join(n.split("e")[0].split(".")))  # number of digits provided to scientific notation
-    elif "." in n:
-        first_significant = [g for g in range(len(n)) if n[g] not in "-+0."][0]
-        digits_in = len("".join(n[first_significant:].split(".")))  # number of significant figures
-    else:
-        digits_in = len(n)  # if it's just an integer
-    digits_in = max(digits_in, 3)  # at least 3 sig figs no matter what
+    user_input = text.split()[0]
+    text = text.split()[1:]
+    
+    if not text:
+        try:
+            apostrophe_feet_to_decimal(user_input)
+        except (ValueError, IndexError):
+            raise commands.BadArgument
 
-    try:
-        n = float(n)
-    except ValueError:
-        raise commands.BadArgument
+    # determining number of sig figs
+    if "/" in user_input:  # fractional input
+        try:
+            digits_in = ceil(log10(float(user_input.split("/")[1])))
+            n = float(user_input.split("/")[0]) / float(user_input.split("/")[1])
+        except (ValueError, IndexError):
+            raise commands.CommandError("Bad fractional input.")
+    elif "'" in user_input:  # 5'11" type feet + inches input
+        try:
+            n = apostrophe_feet_to_decimal(user_input)
+            digits_in = len("".join(user_input.split("'")[1].split(".")[1:])) + len(user_input.split("'")[0]) + 2
+            if "to" in text and text[0] != "to":
+                raise commands.CommandError("When using abbreviated ft/in input, don't specify the unit separately.")
+            text = ["ft", *text]
+        except (ValueError, IndexError):
+            raise commands.BadArgument
+    else:
+        if "e" in user_input:
+            # number of digits provided to scientific notation
+            digits_in = len("".join(user_input.split("e")[0].split(".")))
+        elif "." in user_input:
+            first_significant = [g for g in range(len(user_input)) if user_input[g] not in "-+0."][0]
+            digits_in = len("".join(user_input[first_significant:].split(".")))  # number of significant figures
+        else:
+            digits_in = len(user_input)  # if it's just an integer
+        digits_in = max(digits_in, 3)  # at least 3 sig figs no matter what
+
+        try:
+            n = float(user_input)
+        except ValueError:
+            raise commands.BadArgument
+
+    round_in = (digits_in - floor(log10(n)) - 1) if (digits_in - floor(log10(n)) - 1) > 0 else 0
 
     if "to" in text:
         text = tuple(cv.MultiUnit.from_str(cv.unrulyAbbreviations.get(g, g)) for g in " ".join(text).split(" to "))
@@ -295,7 +327,7 @@ async def convert(ctx: commands.Context, n: str, *text):
         if isclose(inc, int(inc), abs_tol=1e-10) and digits_out == 1:
             inc = round(inc)
         return await conv.say(f"{add_commas(floor(ret[1]))} ft {inc} in",
-                              d=f"= {n} {text[0]}")
+                              d=f"= {round(n, round_in)} {text[0]}")
 
     if ret[1] == int(ret[1]):
         digits_out = -1
@@ -303,7 +335,7 @@ async def convert(ctx: commands.Context, n: str, *text):
         digits_out = digits_in - floor(log10(ret[1])) - 1
 
     return await conv.say(f"{add_commas(round(ret[1], digits_out) if digits_out > 0 else round(ret[1]))} {ret[0]}",
-                          d=f"= {n} {text[0]}")
+                          d=f"= {round(n, round_in)} {text[0]}")
 
 
 @zeph.command(

@@ -332,7 +332,7 @@ unitAbbreviations = {  # full name: abbreviation
     # pressure
     **metric_name_dict("pascal", "Pa"),
     **metric_name_dict("bar", "bar"),
-    "PSI": "psi", "atmosphere": "atm", "mmHg": "mm Hg", "inHg": "in Hg",
+    "PSI": "psi", "PSF": "psf", "atmosphere": "atm", "mmHg": "mm Hg", "inHg": "in Hg",
 
     # energy
     **metric_name_dict("joule", "J"),
@@ -436,7 +436,7 @@ conversionTable = (  # groups of units of the same system
     ),
     ConversionGroup(  # pressure
         {**metric_dict("Pa"), **metric_dict("bar", 100000)},
-        {"psi": 1},
+        {"psi": 1, "psf": 144},
         {"atm": 1, "torr": 1/760},
         {"mm Hg": 1, "in Hg": 25.4},
         base_unit=BaseUnit("Pa", "kg/m*s^2"),
@@ -518,7 +518,7 @@ derived_units = {str(j.baseUnit.val): j.baseUnit.val for j in conversionTable}
 
 defaultUnits = [  # units it's okay to default to if user doesn't give unit to which to convert
     "mm", "cm", "m", "km", "in", "ft", "mi", "mg", "g", "kg", "oz", "lb", "mL", "L", "ML", "tsp", "tbsp", "fl oz",
-    "c", "pt", "qt", "gal", "s", "min", "hr", "d", "yr", "N", "kN", "lbf", "J", "kJ"
+    "c", "pt", "qt", "gal", "s", "min", "hr", "d", "yr", "N", "kN", "lbf", "J", "kJ", "Pa", "MPa", "psi"
 ]
 
 
