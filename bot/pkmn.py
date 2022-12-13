@@ -1198,7 +1198,7 @@ class PokemonInterpreter(Interpreter):
             else:
                 types = ["Normal"]
 
-        return await EffNavigator(*types, initial_mon=mon.name).run(self.ctx)
+        return await EffNavigator(*types, initial_mon=mon).run(self.ctx)
 
     async def _test(self, *args):
         admin_check(self.ctx)
