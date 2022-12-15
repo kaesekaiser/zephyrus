@@ -905,7 +905,7 @@ class CatchRateNavigator(Navigator):
     ]
 
     def __init__(self, **kwargs):
-        super().__init__(ball_emol(), [], 1, "", prev="", nxt="")
+        super().__init__(ball_emol(), [], 1, "", prev="", nxt="", close_on_timeout=True)
         self.calculator = pk.CatchRate(kwargs.get("ball", "poke"), kwargs.get("mon", find_mon(1)))
 
     @property
@@ -934,6 +934,10 @@ class CatchRateNavigator(Navigator):
             return user_input.content.lower()
         elif isinstance(user_input, discord.Reaction):
             return user_input.emoji
+
+    async def close(self):
+        self.closed_elsewhere = True
+        return await self.message.edit(embed=self.con)
 
     async def wait_for(self, message_type: str, ctx: commands.Context) -> str:
         def is_yesno(s: str):
@@ -1005,7 +1009,7 @@ class CatchRateNavigator(Navigator):
             mon = find_mon(user_input)
             pack = self.wild_mon.pack
             pack["spc"] = mon.species
-            pack["form"] = mon.form
+            pack["form"] = mon.form.name
             self.calculator.mon = pk.Mon.unpack(pack)
         if emoji == "level":
             self.calculator.mon.level = int(user_input)
@@ -1099,18 +1103,19 @@ class CatchRateNavigator(Navigator):
         }
         return ball_emol(self.calculator.ball_type).con(
             "S/V Catch Rate Calculator",
-            d=f"**Species**: {self.calculator.mon.species.name} / **Level**: {self.calculator.mon.level}\n"
-              f"**HP**: {self.calculator.hp_percentage}% / **Status**: {self.calculator.mon.status_condition}\n\n"
+            d=f"**Species**: {self.wild_mon.species.name} (catch rate: {self.wild_mon.species.catch_rate}) "
+              f"/ **Level**: {self.wild_mon.level}\n"
+              f"**HP**: {self.calculator.hp_percentage}% / **Status**: {self.wild_mon.status_condition}\n\n"
               f"**Ball**: {self.calculator.ball_type.title()} Ball\n"
               f"{descriptions[self.calculator.ball_type]}\n\n"
-              f"What's your mon's level (`my_level`)?: **{self.calculator.player_mon.level}**\n"
+              f"What's your mon's level (`my_level`)?: **{self.player_mon.level}**\n"
               f"Do you have all eight Gym Badges (`badges`)?: **{yesno(self.calculator.has_all_badges)}**\n"
               f"How many species are registered as caught in your dex (`dex`)?: **{self.calculator.dex_caught}**\n\n"
               f"Capture chance: **{round(100 * self.calculator.capture_chance, 2)}%** per ball.\n"
               f"Chance to capture within 5 throws: {round(100 * self.calculator.chance_after_throws(5), 2)}%\n"
               f"Throws needed for 95% capture chance: {self.calculator.throws_for_95_percent_capture}",
             thumb=pk.image(self.wild_mon),
-            footer="To change any value, say its name in chat."
+            footer="This menu is closed." if self.closed_elsewhere else "To change any value, say its name in chat."
         )
 
 
