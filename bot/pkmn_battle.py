@@ -69,10 +69,18 @@ def display_mon(mon: Union[dict, pk.Mon], mode: str = "default", **kwargs) -> st
     if mode == "team_builder":
         return f"{mon.nickname_and_species} Lv. {mon.level}"
     if mode == "dex":
+        abilities = f"**{'Abilities' if len(mon.regular_abilities) > 1 else 'Ability'}:** " \
+            f"{' / '.join(mon.regular_abilities)}"
+        if mon.hidden_ability:
+            abilities += f"\n**Hidden Ability:** {mon.hidden_ability}"
+        if mon.special_event_ability:
+            abilities += f"\n**Special Event Ability:** {mon.special_event_ability}"
+
         return f"**{mon.species_and_form}**\n" \
                f"{' / '.join([str(zeph.emojis[g]) + ' ' + g for g in mon.types])}\n" \
                f"**Height:** {mon.height} m ({m_to_ft_and_in(mon.height)})\n" \
-               f"**Weight:** {mon.weight} kg ({round(mon.weight * 2.20462262, 1)} lb)\n" \
+               f"**Weight:** {mon.weight} kg ({round(mon.weight * 2.20462262, 1)} lb)\n\n" \
+               f"{abilities}\n\n" \
                f"**Stats:** {' / '.join(str(g) + ' ' + pk.six_stat_names[n] for n, g in enumerate(mon.base_stats))}\n" \
                f"**Total:** {sum(mon.base_stats)}\n\n" \
                f"[Bulbapedia]({mon.bulbapedia}) | [Serebii]({mon.serebii}) | [Pok\u00e9monDB]({mon.pokemondb})"

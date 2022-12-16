@@ -609,7 +609,27 @@ class Mon:
             return f"{self.species.name} ({self.form.name}-type)"
         elif self.species.name == "Furfrou":
             return f"{self.species.name} ({self.form.name} Trim)"
+        elif self.species.name == "Squawkabilly":
+            return f"{self.species.name} ({self.form.name} Plumage)"
         return form_name_styles.get(self.form.name, "{} (" + self.form.name + " Form)").format(self.species.name)
+
+    @property
+    def legal_abilities(self):
+        if self.species_and_form in legal_abilities:
+            return legal_abilities[self.species_and_form]
+        return legal_abilities[self.species.name]
+
+    @property
+    def regular_abilities(self):
+        return [g for g in self.legal_abilities[:2] if g]
+
+    @property
+    def hidden_ability(self):
+        return self.legal_abilities[2] if self.legal_abilities[2] else None
+
+    @property
+    def special_event_ability(self):
+        return self.legal_abilities[3] if self.legal_abilities[3] else None
 
     @property
     def ni(self):
@@ -872,6 +892,10 @@ with open("stats.json" if __name__ == "__main__" else "pokemon/stats.json", "r")
 
 with open("eff.json" if __name__ == "__main__" else "pokemon/eff.json", "r") as file:
     effectiveness = json.load(file)
+
+
+with open("abilities.json" if __name__ == "__main__" else "pokemon/abilities.json", "r") as file:
+    legal_abilities = json.load(file)
 
 
 def fix(s: str, joiner: str = "-"):
