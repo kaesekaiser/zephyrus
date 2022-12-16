@@ -587,7 +587,7 @@ class Mon:
         if not self.form.name:
             return self.species.name
         else:
-            return f"{self.species.name}-{self.form.name}"
+            return f"{self.species.name}-{'-'.join(self.form.name.split())}"
 
     @property
     def full_name(self):
@@ -611,6 +611,8 @@ class Mon:
             return f"{self.species.name} ({self.form.name} Trim)"
         elif self.species.name == "Squawkabilly":
             return f"{self.species.name} ({self.form.name} Plumage)"
+        elif self.species.name == "Tauros":
+            return f"{self.species.name} ({self.form.name} Breed)"
         return form_name_styles.get(self.form.name, "{} (" + self.form.name + " Form)").format(self.species.name)
 
     @property

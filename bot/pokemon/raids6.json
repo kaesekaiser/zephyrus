@@ -1,0 +1,9238 @@
+{
+    "Gengar": {
+        "species": "Gengar",
+        "game": "Both",
+        "battle_level": 90,
+        "catch_level": 75,
+        "type": "Random",
+        "ability": "Standard",
+        "moves": [
+            "Shadow Ball",
+            "Sludge Bomb",
+            "Dazzling Gleam",
+            "Will-O-Wisp"
+        ],
+        "additional_moves": [
+            "Hypnosis"
+        ],
+        "drops": [
+            [
+                "Exp. Candy L",
+                4,
+                100
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                100
+            ],
+            [
+                "Gastly Gas",
+                5,
+                100
+            ],
+            [
+                "Genius Feather",
+                3,
+                100
+            ],
+            [
+                "Gastly Gas",
+                3,
+                "Guest"
+            ],
+            [
+                "Tera Shard",
+                3,
+                100
+            ],
+            [
+                "Tera Shard",
+                3,
+                "Host"
+            ],
+            [
+                "Exp. Candy L",
+                2,
+                36.36
+            ],
+            [
+                "Rare Candy",
+                1,
+                22.73
+            ],
+            [
+                "Genius Feather",
+                2,
+                45.45
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                22.73
+            ],
+            [
+                "Star Piece",
+                1,
+                45.45
+            ],
+            [
+                "Comet Shard",
+                1,
+                9.09
+            ],
+            [
+                "Nugget",
+                1,
+                22.73
+            ],
+            [
+                "Bitter Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Modest Mint",
+                1,
+                13.64
+            ],
+            [
+                "Mild Mint",
+                1,
+                13.64
+            ],
+            [
+                "Rash Mint",
+                1,
+                13.64
+            ],
+            [
+                "Quiet Mint",
+                1,
+                13.64
+            ],
+            [
+                "PP Up",
+                1,
+                22.73
+            ],
+            [
+                "Bottle Cap",
+                1,
+                18.18
+            ],
+            [
+                "Tera Shard",
+                1,
+                22.73
+            ],
+            [
+                "Gastly Gas",
+                2,
+                45.45
+            ],
+            [
+                "Ability Capsule",
+                1,
+                9.09
+            ],
+            [
+                "Ability Patch",
+                1,
+                4.55
+            ]
+        ]
+    },
+    "Tauros-Combat": {
+        "species": "Tauros-Combat",
+        "game": "Both",
+        "battle_level": 90,
+        "catch_level": 75,
+        "type": "Random",
+        "ability": "Hidden Possible",
+        "moves": [
+            "Close Combat",
+            "Thrash",
+            "Zen Headbutt",
+            "Raging Bull"
+        ],
+        "additional_moves": [
+            "Bulk Up",
+            "Screech"
+        ],
+        "drops": [
+            [
+                "Exp. Candy L",
+                4,
+                100
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                100
+            ],
+            [
+                "Tauros Hair",
+                5,
+                100
+            ],
+            [
+                "Muscle Feather",
+                3,
+                100
+            ],
+            [
+                "Tauros Hair",
+                3,
+                "Guest"
+            ],
+            [
+                "Tera Shard",
+                3,
+                100
+            ],
+            [
+                "Tera Shard",
+                3,
+                "Host"
+            ],
+            [
+                "Exp. Candy L",
+                2,
+                36.36
+            ],
+            [
+                "Rare Candy",
+                1,
+                22.73
+            ],
+            [
+                "Muscle Feather",
+                2,
+                45.45
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                22.73
+            ],
+            [
+                "Star Piece",
+                1,
+                45.45
+            ],
+            [
+                "Comet Shard",
+                1,
+                9.09
+            ],
+            [
+                "Nugget",
+                1,
+                22.73
+            ],
+            [
+                "Spicy Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Adamant Mint",
+                1,
+                13.64
+            ],
+            [
+                "Lonely Mint",
+                1,
+                13.64
+            ],
+            [
+                "Naughty Mint",
+                1,
+                13.64
+            ],
+            [
+                "Brave Mint",
+                1,
+                11.36
+            ],
+            [
+                "PP Up",
+                1,
+                22.73
+            ],
+            [
+                "Bottle Cap",
+                1,
+                18.18
+            ],
+            [
+                "Tera Shard",
+                1,
+                22.73
+            ],
+            [
+                "Tauros Hair",
+                2,
+                45.45
+            ],
+            [
+                "Ability Capsule",
+                1,
+                9.09
+            ],
+            [
+                "Ability Patch",
+                1,
+                4.55
+            ]
+        ]
+    },
+    "Tauros-Blaze": {
+        "species": "Tauros-Blaze",
+        "game": "Scarlet",
+        "battle_level": 90,
+        "catch_level": 75,
+        "type": "Random",
+        "ability": "Hidden Possible",
+        "moves": [
+            "Flare Blitz",
+            "Close Combat",
+            "Flamethrower",
+            "Headbutt"
+        ],
+        "additional_moves": [
+            "Sunny Day",
+            "Bulk Up"
+        ],
+        "drops": [
+            [
+                "Exp. Candy L",
+                4,
+                100
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                100
+            ],
+            [
+                "Tauros Hair",
+                5,
+                100
+            ],
+            [
+                "Muscle Feather",
+                3,
+                100
+            ],
+            [
+                "Tauros Hair",
+                3,
+                "Guest"
+            ],
+            [
+                "Tera Shard",
+                3,
+                100
+            ],
+            [
+                "Tera Shard",
+                3,
+                "Host"
+            ],
+            [
+                "Exp. Candy L",
+                2,
+                36.36
+            ],
+            [
+                "Rare Candy",
+                1,
+                22.73
+            ],
+            [
+                "Muscle Feather",
+                2,
+                45.45
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                22.73
+            ],
+            [
+                "Star Piece",
+                1,
+                45.45
+            ],
+            [
+                "Comet Shard",
+                1,
+                9.09
+            ],
+            [
+                "Nugget",
+                1,
+                22.73
+            ],
+            [
+                "Spicy Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Adamant Mint",
+                1,
+                13.64
+            ],
+            [
+                "Lonely Mint",
+                1,
+                13.64
+            ],
+            [
+                "Naughty Mint",
+                1,
+                13.64
+            ],
+            [
+                "Brave Mint",
+                1,
+                11.36
+            ],
+            [
+                "PP Up",
+                1,
+                22.73
+            ],
+            [
+                "Bottle Cap",
+                1,
+                18.18
+            ],
+            [
+                "Tera Shard",
+                1,
+                22.73
+            ],
+            [
+                "Tauros Hair",
+                2,
+                45.45
+            ],
+            [
+                "Ability Capsule",
+                1,
+                9.09
+            ],
+            [
+                "Ability Patch",
+                1,
+                4.55
+            ]
+        ]
+    },
+    "Tauros-Aqua": {
+        "species": "Tauros-Aqua",
+        "game": "Violet",
+        "battle_level": 90,
+        "catch_level": 75,
+        "type": "Random",
+        "ability": "Hidden Possible",
+        "moves": [
+            "Wave Crash",
+            "Close Combat",
+            "Surf",
+            "Headbutt"
+        ],
+        "additional_moves": [
+            "Rain Dance",
+            "Bulk Up"
+        ],
+        "drops": [
+            [
+                "Exp. Candy L",
+                4,
+                100
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                100
+            ],
+            [
+                "Tauros Hair",
+                5,
+                100
+            ],
+            [
+                "Muscle Feather",
+                3,
+                100
+            ],
+            [
+                "Tauros Hair",
+                3,
+                "Guest"
+            ],
+            [
+                "Tera Shard",
+                3,
+                100
+            ],
+            [
+                "Tera Shard",
+                3,
+                "Host"
+            ],
+            [
+                "Exp. Candy L",
+                2,
+                36.36
+            ],
+            [
+                "Rare Candy",
+                1,
+                22.73
+            ],
+            [
+                "Muscle Feather",
+                2,
+                45.45
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                22.73
+            ],
+            [
+                "Star Piece",
+                1,
+                45.45
+            ],
+            [
+                "Comet Shard",
+                1,
+                9.09
+            ],
+            [
+                "Nugget",
+                1,
+                22.73
+            ],
+            [
+                "Spicy Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Adamant Mint",
+                1,
+                13.64
+            ],
+            [
+                "Lonely Mint",
+                1,
+                13.64
+            ],
+            [
+                "Naughty Mint",
+                1,
+                13.64
+            ],
+            [
+                "Brave Mint",
+                1,
+                11.36
+            ],
+            [
+                "PP Up",
+                1,
+                22.73
+            ],
+            [
+                "Bottle Cap",
+                1,
+                18.18
+            ],
+            [
+                "Tera Shard",
+                1,
+                22.73
+            ],
+            [
+                "Tauros Hair",
+                2,
+                45.45
+            ],
+            [
+                "Ability Capsule",
+                1,
+                9.09
+            ],
+            [
+                "Ability Patch",
+                1,
+                4.55
+            ]
+        ]
+    },
+    "Gyarados": {
+        "species": "Gyarados",
+        "game": "Both",
+        "battle_level": 90,
+        "catch_level": 75,
+        "type": "Random",
+        "ability": "Hidden Possible",
+        "moves": [
+            "Aqua Tail",
+            "Crunch",
+            "Hurricane",
+            "Ice Fang"
+        ],
+        "additional_moves": [
+            "Taunt",
+            "Dragon Dance"
+        ],
+        "drops": [
+            [
+                "Exp. Candy L",
+                4,
+                100
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                100
+            ],
+            [
+                "Magikarp Scales",
+                5,
+                100
+            ],
+            [
+                "Muscle Feather",
+                3,
+                100
+            ],
+            [
+                "Magikarp Scales",
+                3,
+                "Guest"
+            ],
+            [
+                "Tera Shard",
+                3,
+                100
+            ],
+            [
+                "Tera Shard",
+                3,
+                "Host"
+            ],
+            [
+                "Exp. Candy L",
+                2,
+                36.36
+            ],
+            [
+                "Rare Candy",
+                1,
+                22.73
+            ],
+            [
+                "Muscle Feather",
+                2,
+                45.45
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                22.73
+            ],
+            [
+                "Star Piece",
+                1,
+                45.45
+            ],
+            [
+                "Comet Shard",
+                1,
+                9.09
+            ],
+            [
+                "Nugget",
+                1,
+                22.73
+            ],
+            [
+                "Spicy Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Adamant Mint",
+                1,
+                13.64
+            ],
+            [
+                "Lonely Mint",
+                1,
+                13.64
+            ],
+            [
+                "Naughty Mint",
+                1,
+                13.64
+            ],
+            [
+                "Brave Mint",
+                1,
+                11.36
+            ],
+            [
+                "PP Up",
+                1,
+                22.73
+            ],
+            [
+                "Bottle Cap",
+                1,
+                18.18
+            ],
+            [
+                "Tera Shard",
+                1,
+                22.73
+            ],
+            [
+                "Magikarp Scales",
+                2,
+                45.45
+            ],
+            [
+                "Ability Capsule",
+                1,
+                9.09
+            ],
+            [
+                "Ability Patch",
+                1,
+                4.55
+            ]
+        ]
+    },
+    "Ditto": {
+        "species": "Ditto",
+        "game": "Both",
+        "battle_level": 90,
+        "catch_level": 75,
+        "type": "Random",
+        "ability": "Hidden Possible",
+        "moves": [
+            "Transform"
+        ],
+        "additional_moves": [],
+        "drops": [
+            [
+                "Exp. Candy L",
+                4,
+                100
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                100
+            ],
+            [
+                "Ditto Goo",
+                5,
+                100
+            ],
+            [
+                "Swift Feather",
+                3,
+                100
+            ],
+            [
+                "Ditto Goo",
+                3,
+                "Guest"
+            ],
+            [
+                "Tera Shard",
+                3,
+                100
+            ],
+            [
+                "Tera Shard",
+                3,
+                "Host"
+            ],
+            [
+                "Exp. Candy L",
+                2,
+                36.36
+            ],
+            [
+                "Rare Candy",
+                1,
+                22.73
+            ],
+            [
+                "Swift Feather",
+                2,
+                45.45
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                22.73
+            ],
+            [
+                "Big Mushroom",
+                1,
+                45.45
+            ],
+            [
+                "Balm Mushroom",
+                1,
+                9.09
+            ],
+            [
+                "Nugget",
+                1,
+                22.73
+            ],
+            [
+                "Sweet Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Jolly Mint",
+                1,
+                13.64
+            ],
+            [
+                "Naive Mint",
+                1,
+                13.64
+            ],
+            [
+                "Hasty Mint",
+                1,
+                13.64
+            ],
+            [
+                "Timid Mint",
+                1,
+                13.64
+            ],
+            [
+                "PP Up",
+                1,
+                22.73
+            ],
+            [
+                "Bottle Cap",
+                1,
+                18.18
+            ],
+            [
+                "Tera Shard",
+                1,
+                22.73
+            ],
+            [
+                "Ditto Goo",
+                2,
+                45.45
+            ],
+            [
+                "Ability Capsule",
+                1,
+                9.09
+            ],
+            [
+                "Ability Patch",
+                1,
+                4.55
+            ]
+        ]
+    },
+    "Vaporeon": {
+        "species": "Vaporeon",
+        "game": "Both",
+        "battle_level": 90,
+        "catch_level": 75,
+        "type": "Random",
+        "ability": "Hidden Possible",
+        "moves": [
+            "Tera Blast",
+            "Surf",
+            "Hyper Voice",
+            "Yawn"
+        ],
+        "additional_moves": [
+            "Rain Dance",
+            "Calm Mind"
+        ],
+        "drops": [
+            [
+                "Exp. Candy L",
+                4,
+                100
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                100
+            ],
+            [
+                "Eevee Fur",
+                5,
+                100
+            ],
+            [
+                "Health Feather",
+                3,
+                100
+            ],
+            [
+                "Eevee Fur",
+                3,
+                "Guest"
+            ],
+            [
+                "Tera Shard",
+                3,
+                100
+            ],
+            [
+                "Tera Shard",
+                3,
+                "Host"
+            ],
+            [
+                "Exp. Candy L",
+                2,
+                36.36
+            ],
+            [
+                "Rare Candy",
+                1,
+                22.73
+            ],
+            [
+                "Health Feather",
+                2,
+                45.45
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                22.73
+            ],
+            [
+                "Big Mushroom",
+                1,
+                45.45
+            ],
+            [
+                "Balm Mushroom",
+                1,
+                9.09
+            ],
+            [
+                "Nugget",
+                1,
+                22.73
+            ],
+            [
+                "Spicy Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Sweet Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Salty Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Bitter Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Sour Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "PP Up",
+                1,
+                22.73
+            ],
+            [
+                "Bottle Cap",
+                1,
+                18.18
+            ],
+            [
+                "Tera Shard",
+                1,
+                22.73
+            ],
+            [
+                "Eevee Fur",
+                2,
+                45.45
+            ],
+            [
+                "Ability Capsule",
+                1,
+                9.09
+            ],
+            [
+                "Ability Patch",
+                1,
+                4.55
+            ]
+        ]
+    },
+    "Jolteon": {
+        "species": "Jolteon",
+        "game": "Both",
+        "battle_level": 90,
+        "catch_level": 75,
+        "type": "Random",
+        "ability": "Hidden Possible",
+        "moves": [
+            "Tera Blast",
+            "Thunderbolt",
+            "Shadow Ball",
+            "Thunder Wave"
+        ],
+        "additional_moves": [
+            "Electric Terrain",
+            "Calm Mind"
+        ],
+        "drops": [
+            [
+                "Exp. Candy L",
+                4,
+                100
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                100
+            ],
+            [
+                "Eevee Fur",
+                5,
+                100
+            ],
+            [
+                "Swift Feather",
+                3,
+                100
+            ],
+            [
+                "Eevee Fur",
+                3,
+                "Guest"
+            ],
+            [
+                "Tera Shard",
+                3,
+                100
+            ],
+            [
+                "Tera Shard",
+                3,
+                "Host"
+            ],
+            [
+                "Exp. Candy L",
+                2,
+                36.36
+            ],
+            [
+                "Rare Candy",
+                1,
+                22.73
+            ],
+            [
+                "Swift Feather",
+                2,
+                45.45
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                22.73
+            ],
+            [
+                "Big Mushroom",
+                1,
+                45.45
+            ],
+            [
+                "Balm Mushroom",
+                1,
+                9.09
+            ],
+            [
+                "Nugget",
+                1,
+                22.73
+            ],
+            [
+                "Sweet Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Jolly Mint",
+                1,
+                13.64
+            ],
+            [
+                "Naive Mint",
+                1,
+                13.64
+            ],
+            [
+                "Hasty Mint",
+                1,
+                13.64
+            ],
+            [
+                "Timid Mint",
+                1,
+                13.64
+            ],
+            [
+                "PP Up",
+                1,
+                22.73
+            ],
+            [
+                "Bottle Cap",
+                1,
+                18.18
+            ],
+            [
+                "Tera Shard",
+                1,
+                22.73
+            ],
+            [
+                "Eevee Fur",
+                2,
+                45.45
+            ],
+            [
+                "Ability Capsule",
+                1,
+                9.09
+            ],
+            [
+                "Ability Patch",
+                1,
+                4.55
+            ]
+        ]
+    },
+    "Flareon": {
+        "species": "Flareon",
+        "game": "Both",
+        "battle_level": 90,
+        "catch_level": 75,
+        "type": "Random",
+        "ability": "Hidden Possible",
+        "moves": [
+            "Tera Blast",
+            "Flare Blitz",
+            "Lava Plume",
+            "Will-O-Wisp"
+        ],
+        "additional_moves": [
+            "Sunny Day",
+            "Curse"
+        ],
+        "drops": [
+            [
+                "Exp. Candy L",
+                4,
+                100
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                100
+            ],
+            [
+                "Eevee Fur",
+                5,
+                100
+            ],
+            [
+                "Muscle Feather",
+                3,
+                100
+            ],
+            [
+                "Eevee Fur",
+                3,
+                "Guest"
+            ],
+            [
+                "Tera Shard",
+                3,
+                100
+            ],
+            [
+                "Tera Shard",
+                3,
+                "Host"
+            ],
+            [
+                "Exp. Candy L",
+                2,
+                36.36
+            ],
+            [
+                "Rare Candy",
+                1,
+                22.73
+            ],
+            [
+                "Muscle Feather",
+                2,
+                45.45
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                22.73
+            ],
+            [
+                "Star Piece",
+                1,
+                45.45
+            ],
+            [
+                "Comet Shard",
+                1,
+                9.09
+            ],
+            [
+                "Nugget",
+                1,
+                22.73
+            ],
+            [
+                "Spicy Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Adamant Mint",
+                1,
+                13.64
+            ],
+            [
+                "Lonely Mint",
+                1,
+                13.64
+            ],
+            [
+                "Naughty Mint",
+                1,
+                13.64
+            ],
+            [
+                "Brave Mint",
+                1,
+                11.36
+            ],
+            [
+                "PP Up",
+                1,
+                22.73
+            ],
+            [
+                "Bottle Cap",
+                1,
+                18.18
+            ],
+            [
+                "Tera Shard",
+                1,
+                22.73
+            ],
+            [
+                "Eevee Fur",
+                2,
+                45.45
+            ],
+            [
+                "Ability Capsule",
+                1,
+                9.09
+            ],
+            [
+                "Ability Patch",
+                1,
+                4.55
+            ]
+        ]
+    },
+    "Dragonite": {
+        "species": "Dragonite",
+        "game": "Both",
+        "battle_level": 90,
+        "catch_level": 75,
+        "type": "Random",
+        "ability": "Hidden Possible",
+        "moves": [
+            "Dragon Rush",
+            "Extreme Speed",
+            "Dragon Dance",
+            "Aqua Tail"
+        ],
+        "additional_moves": [
+            "Light Screen"
+        ],
+        "drops": [
+            [
+                "Exp. Candy L",
+                4,
+                100
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                100
+            ],
+            [
+                "Dratini Scales",
+                5,
+                100
+            ],
+            [
+                "Muscle Feather",
+                3,
+                100
+            ],
+            [
+                "Dratini Scales",
+                3,
+                "Guest"
+            ],
+            [
+                "Tera Shard",
+                3,
+                100
+            ],
+            [
+                "Tera Shard",
+                3,
+                "Host"
+            ],
+            [
+                "Exp. Candy L",
+                2,
+                36.36
+            ],
+            [
+                "Rare Candy",
+                1,
+                22.73
+            ],
+            [
+                "Muscle Feather",
+                2,
+                45.45
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                22.73
+            ],
+            [
+                "Star Piece",
+                1,
+                45.45
+            ],
+            [
+                "Comet Shard",
+                1,
+                9.09
+            ],
+            [
+                "Nugget",
+                1,
+                22.73
+            ],
+            [
+                "Spicy Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Adamant Mint",
+                1,
+                13.64
+            ],
+            [
+                "Lonely Mint",
+                1,
+                13.64
+            ],
+            [
+                "Naughty Mint",
+                1,
+                13.64
+            ],
+            [
+                "Brave Mint",
+                1,
+                11.36
+            ],
+            [
+                "PP Up",
+                1,
+                22.73
+            ],
+            [
+                "Bottle Cap",
+                1,
+                18.18
+            ],
+            [
+                "Tera Shard",
+                1,
+                22.73
+            ],
+            [
+                "Dratini Scales",
+                2,
+                45.45
+            ],
+            [
+                "Ability Capsule",
+                1,
+                9.09
+            ],
+            [
+                "Ability Patch",
+                1,
+                4.55
+            ]
+        ]
+    },
+    "Espeon": {
+        "species": "Espeon",
+        "game": "Both",
+        "battle_level": 90,
+        "catch_level": 75,
+        "type": "Random",
+        "ability": "Hidden Possible",
+        "moves": [
+            "Tera Blast",
+            "Psychic",
+            "Psyshock",
+            "Tickle"
+        ],
+        "additional_moves": [
+            "Psychic Terrain",
+            "Calm Mind"
+        ],
+        "drops": [
+            [
+                "Exp. Candy L",
+                4,
+                100
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                100
+            ],
+            [
+                "Eevee Fur",
+                5,
+                100
+            ],
+            [
+                "Genius Feather",
+                3,
+                100
+            ],
+            [
+                "Eevee Fur",
+                3,
+                "Guest"
+            ],
+            [
+                "Tera Shard",
+                3,
+                100
+            ],
+            [
+                "Tera Shard",
+                3,
+                "Host"
+            ],
+            [
+                "Exp. Candy L",
+                2,
+                36.36
+            ],
+            [
+                "Rare Candy",
+                1,
+                22.73
+            ],
+            [
+                "Genius Feather",
+                2,
+                45.45
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                22.73
+            ],
+            [
+                "Star Piece",
+                1,
+                45.45
+            ],
+            [
+                "Comet Shard",
+                1,
+                9.09
+            ],
+            [
+                "Nugget",
+                1,
+                22.73
+            ],
+            [
+                "Bitter Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Modest Mint",
+                1,
+                13.64
+            ],
+            [
+                "Mild Mint",
+                1,
+                13.64
+            ],
+            [
+                "Rash Mint",
+                1,
+                13.64
+            ],
+            [
+                "Quiet Mint",
+                1,
+                13.64
+            ],
+            [
+                "PP Up",
+                1,
+                22.73
+            ],
+            [
+                "Bottle Cap",
+                1,
+                18.18
+            ],
+            [
+                "Tera Shard",
+                1,
+                22.73
+            ],
+            [
+                "Eevee Fur",
+                2,
+                45.45
+            ],
+            [
+                "Ability Capsule",
+                1,
+                9.09
+            ],
+            [
+                "Ability Patch",
+                1,
+                4.55
+            ]
+        ]
+    },
+    "Umbreon": {
+        "species": "Umbreon",
+        "game": "Both",
+        "battle_level": 90,
+        "catch_level": 75,
+        "type": "Random",
+        "ability": "Hidden Possible",
+        "moves": [
+            "Tera Blast",
+            "Dark Pulse",
+            "Foul Play",
+            "Tickle"
+        ],
+        "additional_moves": [
+            "Calm Mind",
+            "Curse"
+        ],
+        "drops": [
+            [
+                "Exp. Candy L",
+                4,
+                100
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                100
+            ],
+            [
+                "Eevee Fur",
+                5,
+                100
+            ],
+            [
+                "Clever Feather",
+                3,
+                100
+            ],
+            [
+                "Eevee Fur",
+                3,
+                "Guest"
+            ],
+            [
+                "Tera Shard",
+                3,
+                100
+            ],
+            [
+                "Tera Shard",
+                3,
+                "Host"
+            ],
+            [
+                "Exp. Candy L",
+                2,
+                36.36
+            ],
+            [
+                "Rare Candy",
+                1,
+                22.73
+            ],
+            [
+                "Clever Feather",
+                2,
+                45.45
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                22.73
+            ],
+            [
+                "Big Pearl",
+                1,
+                45.45
+            ],
+            [
+                "Pearl String",
+                1,
+                9.09
+            ],
+            [
+                "Nugget",
+                1,
+                22.73
+            ],
+            [
+                "Sour Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Calm Mint",
+                1,
+                13.64
+            ],
+            [
+                "Gentle Mint",
+                1,
+                13.64
+            ],
+            [
+                "Careful Mint",
+                1,
+                13.64
+            ],
+            [
+                "Sassy Mint",
+                1,
+                13.64
+            ],
+            [
+                "PP Up",
+                1,
+                22.73
+            ],
+            [
+                "Bottle Cap",
+                1,
+                18.18
+            ],
+            [
+                "Tera Shard",
+                1,
+                22.73
+            ],
+            [
+                "Eevee Fur",
+                2,
+                45.45
+            ],
+            [
+                "Ability Capsule",
+                1,
+                9.09
+            ],
+            [
+                "Ability Patch",
+                1,
+                4.55
+            ]
+        ]
+    },
+    "Slowking": {
+        "species": "Slowking",
+        "game": "Both",
+        "battle_level": 90,
+        "catch_level": 75,
+        "type": "Random",
+        "ability": "Hidden Possible",
+        "moves": [
+            "Surf",
+            "Psyshock",
+            "Trick Room",
+            "Flamethrower"
+        ],
+        "additional_moves": [
+            "Light Screen",
+            "Rain Dance",
+            "Calm Mind"
+        ],
+        "drops": [
+            [
+                "Exp. Candy L",
+                4,
+                100
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                100
+            ],
+            [
+                "Slowpoke Claw",
+                5,
+                100
+            ],
+            [
+                "Clever Feather",
+                3,
+                100
+            ],
+            [
+                "Slowpoke Claw",
+                3,
+                "Guest"
+            ],
+            [
+                "Tera Shard",
+                3,
+                100
+            ],
+            [
+                "Tera Shard",
+                3,
+                "Host"
+            ],
+            [
+                "Exp. Candy L",
+                2,
+                36.36
+            ],
+            [
+                "Rare Candy",
+                1,
+                22.73
+            ],
+            [
+                "Clever Feather",
+                2,
+                45.45
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                22.73
+            ],
+            [
+                "Big Pearl",
+                1,
+                45.45
+            ],
+            [
+                "Pearl String",
+                1,
+                9.09
+            ],
+            [
+                "Nugget",
+                1,
+                22.73
+            ],
+            [
+                "Sour Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Calm Mint",
+                1,
+                13.64
+            ],
+            [
+                "Gentle Mint",
+                1,
+                13.64
+            ],
+            [
+                "Careful Mint",
+                1,
+                13.64
+            ],
+            [
+                "Sassy Mint",
+                1,
+                13.64
+            ],
+            [
+                "PP Up",
+                1,
+                22.73
+            ],
+            [
+                "Bottle Cap",
+                1,
+                18.18
+            ],
+            [
+                "Tera Shard",
+                1,
+                22.73
+            ],
+            [
+                "Slowpoke Claw",
+                2,
+                45.45
+            ],
+            [
+                "Ability Capsule",
+                1,
+                9.09
+            ],
+            [
+                "Ability Patch",
+                1,
+                4.55
+            ]
+        ]
+    },
+    "Scizor": {
+        "species": "Scizor",
+        "game": "Both",
+        "battle_level": 90,
+        "catch_level": 75,
+        "type": "Random",
+        "ability": "Hidden Possible",
+        "moves": [
+            "X-Scissor",
+            "Bullet Punch",
+            "Close Combat",
+            "Iron Head"
+        ],
+        "additional_moves": [
+            "Iron Defense",
+            "Focus Energy"
+        ],
+        "drops": [
+            [
+                "Exp. Candy L",
+                4,
+                100
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                100
+            ],
+            [
+                "Scyther Claw",
+                5,
+                100
+            ],
+            [
+                "Muscle Feather",
+                3,
+                100
+            ],
+            [
+                "Scyther Claw",
+                3,
+                "Guest"
+            ],
+            [
+                "Tera Shard",
+                3,
+                100
+            ],
+            [
+                "Tera Shard",
+                3,
+                "Host"
+            ],
+            [
+                "Exp. Candy L",
+                2,
+                36.36
+            ],
+            [
+                "Rare Candy",
+                1,
+                22.73
+            ],
+            [
+                "Muscle Feather",
+                2,
+                45.45
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                22.73
+            ],
+            [
+                "Star Piece",
+                1,
+                45.45
+            ],
+            [
+                "Comet Shard",
+                1,
+                9.09
+            ],
+            [
+                "Nugget",
+                1,
+                22.73
+            ],
+            [
+                "Spicy Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Adamant Mint",
+                1,
+                13.64
+            ],
+            [
+                "Lonely Mint",
+                1,
+                13.64
+            ],
+            [
+                "Naughty Mint",
+                1,
+                13.64
+            ],
+            [
+                "Brave Mint",
+                1,
+                11.36
+            ],
+            [
+                "PP Up",
+                1,
+                22.73
+            ],
+            [
+                "Bottle Cap",
+                1,
+                18.18
+            ],
+            [
+                "Tera Shard",
+                1,
+                22.73
+            ],
+            [
+                "Scyther Claw",
+                2,
+                45.45
+            ],
+            [
+                "Ability Capsule",
+                1,
+                9.09
+            ],
+            [
+                "Ability Patch",
+                1,
+                4.55
+            ]
+        ]
+    },
+    "Heracross": {
+        "species": "Heracross",
+        "game": "Both",
+        "battle_level": 90,
+        "catch_level": 75,
+        "type": "Random",
+        "ability": "Hidden Possible",
+        "moves": [
+            "Megahorn",
+            "Close Combat",
+            "Thrash",
+            "Leer"
+        ],
+        "additional_moves": [
+            "Bulk Up"
+        ],
+        "drops": [
+            [
+                "Exp. Candy L",
+                4,
+                100
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                100
+            ],
+            [
+                "Heracross Claw",
+                5,
+                100
+            ],
+            [
+                "Muscle Feather",
+                3,
+                100
+            ],
+            [
+                "Heracross Claw",
+                3,
+                "Guest"
+            ],
+            [
+                "Tera Shard",
+                3,
+                100
+            ],
+            [
+                "Tera Shard",
+                3,
+                "Host"
+            ],
+            [
+                "Exp. Candy L",
+                2,
+                36.36
+            ],
+            [
+                "Rare Candy",
+                1,
+                22.73
+            ],
+            [
+                "Muscle Feather",
+                2,
+                45.45
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                22.73
+            ],
+            [
+                "Star Piece",
+                1,
+                45.45
+            ],
+            [
+                "Comet Shard",
+                1,
+                9.09
+            ],
+            [
+                "Nugget",
+                1,
+                22.73
+            ],
+            [
+                "Spicy Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Adamant Mint",
+                1,
+                13.64
+            ],
+            [
+                "Lonely Mint",
+                1,
+                13.64
+            ],
+            [
+                "Naughty Mint",
+                1,
+                13.64
+            ],
+            [
+                "Brave Mint",
+                1,
+                11.36
+            ],
+            [
+                "PP Up",
+                1,
+                22.73
+            ],
+            [
+                "Bottle Cap",
+                1,
+                18.18
+            ],
+            [
+                "Tera Shard",
+                1,
+                22.73
+            ],
+            [
+                "Heracross Claw",
+                2,
+                45.45
+            ],
+            [
+                "Ability Capsule",
+                1,
+                9.09
+            ],
+            [
+                "Ability Patch",
+                1,
+                4.55
+            ]
+        ]
+    },
+    "Blissey": {
+        "species": "Blissey",
+        "game": "Both",
+        "battle_level": 90,
+        "catch_level": 75,
+        "type": "Random",
+        "ability": "Hidden Possible",
+        "moves": [
+            "Dazzling Gleam",
+            "Hyper Voice",
+            "Sing",
+            "Light Screen"
+        ],
+        "additional_moves": [
+            "Defense Curl"
+        ],
+        "drops": [
+            [
+                "Exp. Candy L",
+                4,
+                100
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                100
+            ],
+            [
+                "Happiny Dust",
+                5,
+                100
+            ],
+            [
+                "Health Feather",
+                3,
+                100
+            ],
+            [
+                "Happiny Dust",
+                3,
+                "Guest"
+            ],
+            [
+                "Tera Shard",
+                3,
+                100
+            ],
+            [
+                "Tera Shard",
+                3,
+                "Host"
+            ],
+            [
+                "Exp. Candy L",
+                2,
+                36.36
+            ],
+            [
+                "Rare Candy",
+                1,
+                22.73
+            ],
+            [
+                "Health Feather",
+                2,
+                45.45
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                22.73
+            ],
+            [
+                "Big Mushroom",
+                1,
+                45.45
+            ],
+            [
+                "Balm Mushroom",
+                1,
+                9.09
+            ],
+            [
+                "Nugget",
+                1,
+                22.73
+            ],
+            [
+                "Spicy Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Sweet Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Salty Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Bitter Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Sour Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "PP Up",
+                1,
+                22.73
+            ],
+            [
+                "Bottle Cap",
+                1,
+                18.18
+            ],
+            [
+                "Tera Shard",
+                1,
+                22.73
+            ],
+            [
+                "Happiny Dust",
+                2,
+                45.45
+            ],
+            [
+                "Ability Capsule",
+                1,
+                9.09
+            ],
+            [
+                "Ability Patch",
+                1,
+                4.55
+            ]
+        ]
+    },
+    "Tyranitar": {
+        "species": "Tyranitar",
+        "game": "Scarlet",
+        "battle_level": 90,
+        "catch_level": 75,
+        "type": "Random",
+        "ability": "Hidden Possible",
+        "moves": [
+            "Stone Edge",
+            "Crunch",
+            "Screech",
+            "Rock Blast"
+        ],
+        "additional_moves": [
+            "Iron Defense"
+        ],
+        "drops": [
+            [
+                "Exp. Candy L",
+                4,
+                100
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                100
+            ],
+            [
+                "Larvitar Claw",
+                5,
+                100
+            ],
+            [
+                "Muscle Feather",
+                3,
+                100
+            ],
+            [
+                "Larvitar Claw",
+                3,
+                "Guest"
+            ],
+            [
+                "Tera Shard",
+                3,
+                100
+            ],
+            [
+                "Tera Shard",
+                3,
+                "Host"
+            ],
+            [
+                "Exp. Candy L",
+                2,
+                36.36
+            ],
+            [
+                "Rare Candy",
+                1,
+                22.73
+            ],
+            [
+                "Muscle Feather",
+                2,
+                45.45
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                22.73
+            ],
+            [
+                "Star Piece",
+                1,
+                45.45
+            ],
+            [
+                "Comet Shard",
+                1,
+                9.09
+            ],
+            [
+                "Nugget",
+                1,
+                22.73
+            ],
+            [
+                "Spicy Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Adamant Mint",
+                1,
+                13.64
+            ],
+            [
+                "Lonely Mint",
+                1,
+                13.64
+            ],
+            [
+                "Naughty Mint",
+                1,
+                13.64
+            ],
+            [
+                "Brave Mint",
+                1,
+                11.36
+            ],
+            [
+                "PP Up",
+                1,
+                22.73
+            ],
+            [
+                "Bottle Cap",
+                1,
+                18.18
+            ],
+            [
+                "Tera Shard",
+                1,
+                22.73
+            ],
+            [
+                "Larvitar Claw",
+                2,
+                45.45
+            ],
+            [
+                "Ability Capsule",
+                1,
+                9.09
+            ],
+            [
+                "Ability Patch",
+                1,
+                4.55
+            ]
+        ]
+    },
+    "Pelipper": {
+        "species": "Pelipper",
+        "game": "Both",
+        "battle_level": 90,
+        "catch_level": 75,
+        "type": "Random",
+        "ability": "Hidden Ability",
+        "moves": [
+            "Hurricane",
+            "Hydro Pump",
+            "Mist",
+            "Supersonic"
+        ],
+        "additional_moves": [
+            "Rain Dance",
+            "Agility"
+        ],
+        "drops": [
+            [
+                "Exp. Candy L",
+                4,
+                100
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                100
+            ],
+            [
+                "Wingull Feather",
+                5,
+                100
+            ],
+            [
+                "Resist Feather",
+                3,
+                100
+            ],
+            [
+                "Wingull Feather",
+                3,
+                "Guest"
+            ],
+            [
+                "Tera Shard",
+                3,
+                100
+            ],
+            [
+                "Tera Shard",
+                3,
+                "Host"
+            ],
+            [
+                "Exp. Candy L",
+                2,
+                36.36
+            ],
+            [
+                "Rare Candy",
+                1,
+                22.73
+            ],
+            [
+                "Resist Feather",
+                2,
+                45.45
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                22.73
+            ],
+            [
+                "Big Pearl",
+                1,
+                45.45
+            ],
+            [
+                "Pearl String",
+                1,
+                9.09
+            ],
+            [
+                "Nugget",
+                1,
+                22.73
+            ],
+            [
+                "Salty Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Bold Mint",
+                1,
+                13.64
+            ],
+            [
+                "Impish Mint",
+                1,
+                13.64
+            ],
+            [
+                "Lax Mint",
+                1,
+                13.64
+            ],
+            [
+                "Relaxed Mint",
+                1,
+                13.64
+            ],
+            [
+                "PP Up",
+                1,
+                22.73
+            ],
+            [
+                "Bottle Cap",
+                1,
+                18.18
+            ],
+            [
+                "Tera Shard",
+                1,
+                22.73
+            ],
+            [
+                "Wingull Feather",
+                2,
+                45.45
+            ],
+            [
+                "Ability Capsule",
+                1,
+                9.09
+            ],
+            [
+                "Ability Patch",
+                1,
+                4.55
+            ]
+        ]
+    },
+    "Gardevoir": {
+        "species": "Gardevoir",
+        "game": "Both",
+        "battle_level": 90,
+        "catch_level": 75,
+        "type": "Random",
+        "ability": "Random",
+        "moves": [
+            "Moonblast",
+            "Psychic",
+            "Calm Mind",
+            "Thunder Wave"
+        ],
+        "additional_moves": [
+            "Misty Terrain",
+            "Psychic Terrain"
+        ],
+        "drops": [
+            [
+                "Exp. Candy L",
+                4,
+                100
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                100
+            ],
+            [
+                "Ralts Dust",
+                5,
+                100
+            ],
+            [
+                "Genius Feather",
+                3,
+                100
+            ],
+            [
+                "Ralts Dust",
+                3,
+                "Guest"
+            ],
+            [
+                "Tera Shard",
+                3,
+                100
+            ],
+            [
+                "Tera Shard",
+                3,
+                "Host"
+            ],
+            [
+                "Exp. Candy L",
+                2,
+                36.36
+            ],
+            [
+                "Rare Candy",
+                1,
+                22.73
+            ],
+            [
+                "Genius Feather",
+                2,
+                45.45
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                22.73
+            ],
+            [
+                "Star Piece",
+                1,
+                45.45
+            ],
+            [
+                "Comet Shard",
+                1,
+                9.09
+            ],
+            [
+                "Nugget",
+                1,
+                22.73
+            ],
+            [
+                "Bitter Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Modest Mint",
+                1,
+                13.64
+            ],
+            [
+                "Mild Mint",
+                1,
+                13.64
+            ],
+            [
+                "Rash Mint",
+                1,
+                13.64
+            ],
+            [
+                "Quiet Mint",
+                1,
+                13.64
+            ],
+            [
+                "PP Up",
+                1,
+                22.73
+            ],
+            [
+                "Bottle Cap",
+                1,
+                18.18
+            ],
+            [
+                "Tera Shard",
+                1,
+                22.73
+            ],
+            [
+                "Ralts Dust",
+                2,
+                45.45
+            ],
+            [
+                "Ability Capsule",
+                1,
+                9.09
+            ],
+            [
+                "Ability Patch",
+                1,
+                4.55
+            ]
+        ]
+    },
+    "Breloom": {
+        "species": "Breloom",
+        "game": "Both",
+        "battle_level": 90,
+        "catch_level": 75,
+        "type": "Random",
+        "ability": "Hidden Possible",
+        "moves": [
+            "Bullet Seed",
+            "Low Sweep",
+            "Spore",
+            "Aerial Ace"
+        ],
+        "additional_moves": [
+            "Grassy Terrain"
+        ],
+        "drops": [
+            [
+                "Exp. Candy L",
+                4,
+                100
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                100
+            ],
+            [
+                "Shroomish Spores",
+                5,
+                100
+            ],
+            [
+                "Muscle Feather",
+                3,
+                100
+            ],
+            [
+                "Shroomish Spores",
+                3,
+                "Guest"
+            ],
+            [
+                "Tera Shard",
+                3,
+                100
+            ],
+            [
+                "Tera Shard",
+                3,
+                "Host"
+            ],
+            [
+                "Exp. Candy L",
+                2,
+                36.36
+            ],
+            [
+                "Rare Candy",
+                1,
+                22.73
+            ],
+            [
+                "Muscle Feather",
+                2,
+                45.45
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                22.73
+            ],
+            [
+                "Star Piece",
+                1,
+                45.45
+            ],
+            [
+                "Comet Shard",
+                1,
+                9.09
+            ],
+            [
+                "Nugget",
+                1,
+                22.73
+            ],
+            [
+                "Spicy Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Adamant Mint",
+                1,
+                13.64
+            ],
+            [
+                "Lonely Mint",
+                1,
+                13.64
+            ],
+            [
+                "Naughty Mint",
+                1,
+                13.64
+            ],
+            [
+                "Brave Mint",
+                1,
+                11.36
+            ],
+            [
+                "PP Up",
+                1,
+                22.73
+            ],
+            [
+                "Bottle Cap",
+                1,
+                18.18
+            ],
+            [
+                "Tera Shard",
+                1,
+                22.73
+            ],
+            [
+                "Shroomish Spores",
+                2,
+                45.45
+            ],
+            [
+                "Ability Capsule",
+                1,
+                9.09
+            ],
+            [
+                "Ability Patch",
+                1,
+                4.55
+            ]
+        ]
+    },
+    "Torkoal": {
+        "species": "Torkoal",
+        "game": "Both",
+        "battle_level": 90,
+        "catch_level": 75,
+        "type": "Random",
+        "ability": "Hidden Ability",
+        "moves": [
+            "Lava Plume",
+            "Yawn",
+            "Clear Smog",
+            "Body Slam"
+        ],
+        "additional_moves": [
+            "Sunny Day",
+            "Iron Defense"
+        ],
+        "drops": [
+            [
+                "Exp. Candy L",
+                4,
+                100
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                100
+            ],
+            [
+                "Torkoal Coal",
+                5,
+                100
+            ],
+            [
+                "Resist Feather",
+                3,
+                100
+            ],
+            [
+                "Torkoal Coal",
+                3,
+                "Guest"
+            ],
+            [
+                "Tera Shard",
+                3,
+                100
+            ],
+            [
+                "Tera Shard",
+                3,
+                "Host"
+            ],
+            [
+                "Exp. Candy L",
+                2,
+                36.36
+            ],
+            [
+                "Rare Candy",
+                1,
+                22.73
+            ],
+            [
+                "Resist Feather",
+                2,
+                45.45
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                22.73
+            ],
+            [
+                "Big Pearl",
+                1,
+                45.45
+            ],
+            [
+                "Pearl String",
+                1,
+                9.09
+            ],
+            [
+                "Nugget",
+                1,
+                22.73
+            ],
+            [
+                "Salty Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Bold Mint",
+                1,
+                13.64
+            ],
+            [
+                "Impish Mint",
+                1,
+                13.64
+            ],
+            [
+                "Lax Mint",
+                1,
+                13.64
+            ],
+            [
+                "Relaxed Mint",
+                1,
+                13.64
+            ],
+            [
+                "PP Up",
+                1,
+                22.73
+            ],
+            [
+                "Bottle Cap",
+                1,
+                18.18
+            ],
+            [
+                "Tera Shard",
+                1,
+                22.73
+            ],
+            [
+                "Torkoal Coal",
+                2,
+                45.45
+            ],
+            [
+                "Ability Capsule",
+                1,
+                9.09
+            ],
+            [
+                "Ability Patch",
+                1,
+                4.55
+            ]
+        ]
+    },
+    "Salamence": {
+        "species": "Salamence",
+        "game": "Violet",
+        "battle_level": 90,
+        "catch_level": 75,
+        "type": "Random",
+        "ability": "Hidden Possible",
+        "moves": [
+            "Outrage",
+            "Dual Wingbeat",
+            "Flamethrower",
+            "Tera Blast"
+        ],
+        "additional_moves": [
+            "Dragon Dance"
+        ],
+        "drops": [
+            [
+                "Exp. Candy L",
+                4,
+                100
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                100
+            ],
+            [
+                "Bagon Scales",
+                5,
+                100
+            ],
+            [
+                "Muscle Feather",
+                3,
+                100
+            ],
+            [
+                "Bagon Scales",
+                3,
+                "Guest"
+            ],
+            [
+                "Tera Shard",
+                3,
+                100
+            ],
+            [
+                "Tera Shard",
+                3,
+                "Host"
+            ],
+            [
+                "Exp. Candy L",
+                2,
+                36.36
+            ],
+            [
+                "Rare Candy",
+                1,
+                22.73
+            ],
+            [
+                "Muscle Feather",
+                2,
+                45.45
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                22.73
+            ],
+            [
+                "Star Piece",
+                1,
+                45.45
+            ],
+            [
+                "Comet Shard",
+                1,
+                9.09
+            ],
+            [
+                "Nugget",
+                1,
+                22.73
+            ],
+            [
+                "Spicy Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Adamant Mint",
+                1,
+                13.64
+            ],
+            [
+                "Lonely Mint",
+                1,
+                13.64
+            ],
+            [
+                "Naughty Mint",
+                1,
+                13.64
+            ],
+            [
+                "Brave Mint",
+                1,
+                11.36
+            ],
+            [
+                "PP Up",
+                1,
+                22.73
+            ],
+            [
+                "Bottle Cap",
+                1,
+                18.18
+            ],
+            [
+                "Tera Shard",
+                1,
+                22.73
+            ],
+            [
+                "Bagon Scales",
+                2,
+                45.45
+            ],
+            [
+                "Ability Capsule",
+                1,
+                9.09
+            ],
+            [
+                "Ability Patch",
+                1,
+                4.55
+            ]
+        ]
+    },
+    "Staraptor": {
+        "species": "Staraptor",
+        "game": "Both",
+        "battle_level": 90,
+        "catch_level": 75,
+        "type": "Random",
+        "ability": "Hidden Possible",
+        "moves": [
+            "Close Combat",
+            "Brave Bird",
+            "Double-Edge",
+            "Feather Dance"
+        ],
+        "additional_moves": [],
+        "drops": [
+            [
+                "Exp. Candy L",
+                4,
+                100
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                100
+            ],
+            [
+                "Starly Feather",
+                5,
+                100
+            ],
+            [
+                "Muscle Feather",
+                3,
+                100
+            ],
+            [
+                "Starly Feather",
+                3,
+                "Guest"
+            ],
+            [
+                "Tera Shard",
+                3,
+                100
+            ],
+            [
+                "Tera Shard",
+                3,
+                "Host"
+            ],
+            [
+                "Exp. Candy L",
+                2,
+                36.36
+            ],
+            [
+                "Rare Candy",
+                1,
+                22.73
+            ],
+            [
+                "Muscle Feather",
+                2,
+                45.45
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                22.73
+            ],
+            [
+                "Star Piece",
+                1,
+                45.45
+            ],
+            [
+                "Comet Shard",
+                1,
+                9.09
+            ],
+            [
+                "Nugget",
+                1,
+                22.73
+            ],
+            [
+                "Spicy Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Adamant Mint",
+                1,
+                13.64
+            ],
+            [
+                "Lonely Mint",
+                1,
+                13.64
+            ],
+            [
+                "Naughty Mint",
+                1,
+                13.64
+            ],
+            [
+                "Brave Mint",
+                1,
+                11.36
+            ],
+            [
+                "PP Up",
+                1,
+                22.73
+            ],
+            [
+                "Bottle Cap",
+                1,
+                18.18
+            ],
+            [
+                "Tera Shard",
+                1,
+                22.73
+            ],
+            [
+                "Starly Feather",
+                2,
+                45.45
+            ],
+            [
+                "Ability Capsule",
+                1,
+                9.09
+            ],
+            [
+                "Ability Patch",
+                1,
+                4.55
+            ]
+        ]
+    },
+    "Garchomp": {
+        "species": "Garchomp",
+        "game": "Both",
+        "battle_level": 90,
+        "catch_level": 75,
+        "type": "Random",
+        "ability": "Hidden Possible",
+        "moves": [
+            "Outrage",
+            "Earthquake",
+            "Flamethrower",
+            "Rock Slide"
+        ],
+        "additional_moves": [
+            "Swords Dance"
+        ],
+        "drops": [
+            [
+                "Exp. Candy L",
+                4,
+                100
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                100
+            ],
+            [
+                "Gible Scales",
+                5,
+                100
+            ],
+            [
+                "Muscle Feather",
+                3,
+                100
+            ],
+            [
+                "Gible Scales",
+                3,
+                "Guest"
+            ],
+            [
+                "Tera Shard",
+                3,
+                100
+            ],
+            [
+                "Tera Shard",
+                3,
+                "Host"
+            ],
+            [
+                "Exp. Candy L",
+                2,
+                36.36
+            ],
+            [
+                "Rare Candy",
+                1,
+                22.73
+            ],
+            [
+                "Muscle Feather",
+                2,
+                45.45
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                22.73
+            ],
+            [
+                "Star Piece",
+                1,
+                45.45
+            ],
+            [
+                "Comet Shard",
+                1,
+                9.09
+            ],
+            [
+                "Nugget",
+                1,
+                22.73
+            ],
+            [
+                "Spicy Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Adamant Mint",
+                1,
+                13.64
+            ],
+            [
+                "Lonely Mint",
+                1,
+                13.64
+            ],
+            [
+                "Naughty Mint",
+                1,
+                13.64
+            ],
+            [
+                "Brave Mint",
+                1,
+                11.36
+            ],
+            [
+                "PP Up",
+                1,
+                22.73
+            ],
+            [
+                "Bottle Cap",
+                1,
+                18.18
+            ],
+            [
+                "Tera Shard",
+                1,
+                22.73
+            ],
+            [
+                "Gible Scales",
+                2,
+                45.45
+            ],
+            [
+                "Ability Capsule",
+                1,
+                9.09
+            ],
+            [
+                "Ability Patch",
+                1,
+                4.55
+            ]
+        ]
+    },
+    "Hippowdon": {
+        "species": "Hippowdon",
+        "game": "Both",
+        "battle_level": 90,
+        "catch_level": 75,
+        "type": "Random",
+        "ability": "Hidden Possible",
+        "moves": [
+            "Earthquake",
+            "Ice Fang",
+            "Yawn",
+            "Rock Slide"
+        ],
+        "additional_moves": [],
+        "drops": [
+            [
+                "Exp. Candy L",
+                4,
+                100
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                100
+            ],
+            [
+                "Hippopotas Sand",
+                5,
+                100
+            ],
+            [
+                "Resist Feather",
+                3,
+                100
+            ],
+            [
+                "Hippopotas Sand",
+                3,
+                "Guest"
+            ],
+            [
+                "Tera Shard",
+                3,
+                100
+            ],
+            [
+                "Tera Shard",
+                3,
+                "Host"
+            ],
+            [
+                "Exp. Candy L",
+                2,
+                36.36
+            ],
+            [
+                "Rare Candy",
+                1,
+                22.73
+            ],
+            [
+                "Resist Feather",
+                2,
+                45.45
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                22.73
+            ],
+            [
+                "Big Pearl",
+                1,
+                45.45
+            ],
+            [
+                "Pearl String",
+                1,
+                9.09
+            ],
+            [
+                "Nugget",
+                1,
+                22.73
+            ],
+            [
+                "Salty Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Bold Mint",
+                1,
+                13.64
+            ],
+            [
+                "Impish Mint",
+                1,
+                13.64
+            ],
+            [
+                "Lax Mint",
+                1,
+                13.64
+            ],
+            [
+                "Relaxed Mint",
+                1,
+                13.64
+            ],
+            [
+                "PP Up",
+                1,
+                22.73
+            ],
+            [
+                "Bottle Cap",
+                1,
+                18.18
+            ],
+            [
+                "Tera Shard",
+                1,
+                22.73
+            ],
+            [
+                "Hippopotas Sand",
+                2,
+                45.45
+            ],
+            [
+                "Ability Capsule",
+                1,
+                9.09
+            ],
+            [
+                "Ability Patch",
+                1,
+                4.55
+            ]
+        ]
+    },
+    "Magnezone": {
+        "species": "Magnezone",
+        "game": "Both",
+        "battle_level": 90,
+        "catch_level": 75,
+        "type": "Random",
+        "ability": "Hidden Possible",
+        "moves": [
+            "Thunder",
+            "Flash Cannon",
+            "Tri Attack",
+            "Thunder Wave"
+        ],
+        "additional_moves": [
+            "Rain Dance",
+            "Iron Defense",
+            "Electric Terrain"
+        ],
+        "drops": [
+            [
+                "Exp. Candy L",
+                4,
+                100
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                100
+            ],
+            [
+                "Magnemite Screw",
+                5,
+                100
+            ],
+            [
+                "Genius Feather",
+                3,
+                100
+            ],
+            [
+                "Magnemite Screw",
+                3,
+                "Guest"
+            ],
+            [
+                "Tera Shard",
+                3,
+                100
+            ],
+            [
+                "Tera Shard",
+                3,
+                "Host"
+            ],
+            [
+                "Exp. Candy L",
+                2,
+                36.36
+            ],
+            [
+                "Rare Candy",
+                1,
+                22.73
+            ],
+            [
+                "Genius Feather",
+                2,
+                45.45
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                22.73
+            ],
+            [
+                "Star Piece",
+                1,
+                45.45
+            ],
+            [
+                "Comet Shard",
+                1,
+                9.09
+            ],
+            [
+                "Nugget",
+                1,
+                22.73
+            ],
+            [
+                "Bitter Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Modest Mint",
+                1,
+                13.64
+            ],
+            [
+                "Mild Mint",
+                1,
+                13.64
+            ],
+            [
+                "Rash Mint",
+                1,
+                13.64
+            ],
+            [
+                "Quiet Mint",
+                1,
+                13.64
+            ],
+            [
+                "PP Up",
+                1,
+                22.73
+            ],
+            [
+                "Bottle Cap",
+                1,
+                18.18
+            ],
+            [
+                "Tera Shard",
+                1,
+                22.73
+            ],
+            [
+                "Magnemite Screw",
+                2,
+                45.45
+            ],
+            [
+                "Ability Capsule",
+                1,
+                9.09
+            ],
+            [
+                "Ability Patch",
+                1,
+                4.55
+            ]
+        ]
+    },
+    "Leafeon": {
+        "species": "Leafeon",
+        "game": "Both",
+        "battle_level": 90,
+        "catch_level": 75,
+        "type": "Random",
+        "ability": "Hidden Possible",
+        "moves": [
+            "Tera Blast",
+            "Leaf Blade",
+            "Double Kick",
+            "Charm"
+        ],
+        "additional_moves": [
+            "Sunny Day",
+            "Swords Dance"
+        ],
+        "drops": [
+            [
+                "Exp. Candy L",
+                4,
+                100
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                100
+            ],
+            [
+                "Eevee Fur",
+                5,
+                100
+            ],
+            [
+                "Muscle Feather",
+                3,
+                100
+            ],
+            [
+                "Eevee Fur",
+                3,
+                "Guest"
+            ],
+            [
+                "Tera Shard",
+                3,
+                100
+            ],
+            [
+                "Tera Shard",
+                3,
+                "Host"
+            ],
+            [
+                "Exp. Candy L",
+                2,
+                36.36
+            ],
+            [
+                "Rare Candy",
+                1,
+                22.73
+            ],
+            [
+                "Muscle Feather",
+                2,
+                45.45
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                22.73
+            ],
+            [
+                "Star Piece",
+                1,
+                45.45
+            ],
+            [
+                "Comet Shard",
+                1,
+                9.09
+            ],
+            [
+                "Nugget",
+                1,
+                22.73
+            ],
+            [
+                "Spicy Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Adamant Mint",
+                1,
+                13.64
+            ],
+            [
+                "Lonely Mint",
+                1,
+                13.64
+            ],
+            [
+                "Naughty Mint",
+                1,
+                13.64
+            ],
+            [
+                "Brave Mint",
+                1,
+                11.36
+            ],
+            [
+                "PP Up",
+                1,
+                22.73
+            ],
+            [
+                "Bottle Cap",
+                1,
+                18.18
+            ],
+            [
+                "Tera Shard",
+                1,
+                22.73
+            ],
+            [
+                "Eevee Fur",
+                2,
+                45.45
+            ],
+            [
+                "Ability Capsule",
+                1,
+                9.09
+            ],
+            [
+                "Ability Patch",
+                1,
+                4.55
+            ]
+        ]
+    },
+    "Glaceon": {
+        "species": "Glaceon",
+        "game": "Both",
+        "battle_level": 90,
+        "catch_level": 75,
+        "type": "Random",
+        "ability": "Hidden Possible",
+        "moves": [
+            "Tera Blast",
+            "Ice Beam",
+            "Blizzard",
+            "Charm"
+        ],
+        "additional_moves": [
+            "Snowscape",
+            "Calm Mind"
+        ],
+        "drops": [
+            [
+                "Exp. Candy L",
+                4,
+                100
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                100
+            ],
+            [
+                "Eevee Fur",
+                5,
+                100
+            ],
+            [
+                "Genius Feather",
+                3,
+                100
+            ],
+            [
+                "Eevee Fur",
+                3,
+                "Guest"
+            ],
+            [
+                "Tera Shard",
+                3,
+                100
+            ],
+            [
+                "Tera Shard",
+                3,
+                "Host"
+            ],
+            [
+                "Exp. Candy L",
+                2,
+                36.36
+            ],
+            [
+                "Rare Candy",
+                1,
+                22.73
+            ],
+            [
+                "Genius Feather",
+                2,
+                45.45
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                22.73
+            ],
+            [
+                "Star Piece",
+                1,
+                45.45
+            ],
+            [
+                "Comet Shard",
+                1,
+                9.09
+            ],
+            [
+                "Nugget",
+                1,
+                22.73
+            ],
+            [
+                "Bitter Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Modest Mint",
+                1,
+                13.64
+            ],
+            [
+                "Mild Mint",
+                1,
+                13.64
+            ],
+            [
+                "Rash Mint",
+                1,
+                13.64
+            ],
+            [
+                "Quiet Mint",
+                1,
+                13.64
+            ],
+            [
+                "PP Up",
+                1,
+                22.73
+            ],
+            [
+                "Bottle Cap",
+                1,
+                18.18
+            ],
+            [
+                "Tera Shard",
+                1,
+                22.73
+            ],
+            [
+                "Eevee Fur",
+                2,
+                45.45
+            ],
+            [
+                "Ability Capsule",
+                1,
+                9.09
+            ],
+            [
+                "Ability Patch",
+                1,
+                4.55
+            ]
+        ]
+    },
+    "Gallade": {
+        "species": "Gallade",
+        "game": "Both",
+        "battle_level": 90,
+        "catch_level": 75,
+        "type": "Random",
+        "ability": "Random",
+        "moves": [
+            "Psycho Cut",
+            "Close Combat",
+            "Will-O-Wisp",
+            "Aerial Ace"
+        ],
+        "additional_moves": [
+            "Hypnosis",
+            "Disable",
+            "Psychic Terrain"
+        ],
+        "drops": [
+            [
+                "Exp. Candy L",
+                4,
+                100
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                100
+            ],
+            [
+                "Ralts Dust",
+                5,
+                100
+            ],
+            [
+                "Muscle Feather",
+                3,
+                100
+            ],
+            [
+                "Ralts Dust",
+                3,
+                "Guest"
+            ],
+            [
+                "Tera Shard",
+                3,
+                100
+            ],
+            [
+                "Tera Shard",
+                3,
+                "Host"
+            ],
+            [
+                "Exp. Candy L",
+                2,
+                36.36
+            ],
+            [
+                "Rare Candy",
+                1,
+                22.73
+            ],
+            [
+                "Muscle Feather",
+                2,
+                45.45
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                22.73
+            ],
+            [
+                "Star Piece",
+                1,
+                45.45
+            ],
+            [
+                "Comet Shard",
+                1,
+                9.09
+            ],
+            [
+                "Nugget",
+                1,
+                22.73
+            ],
+            [
+                "Spicy Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Adamant Mint",
+                1,
+                13.64
+            ],
+            [
+                "Lonely Mint",
+                1,
+                13.64
+            ],
+            [
+                "Naughty Mint",
+                1,
+                13.64
+            ],
+            [
+                "Brave Mint",
+                1,
+                11.36
+            ],
+            [
+                "PP Up",
+                1,
+                22.73
+            ],
+            [
+                "Bottle Cap",
+                1,
+                18.18
+            ],
+            [
+                "Tera Shard",
+                1,
+                22.73
+            ],
+            [
+                "Ralts Dust",
+                2,
+                45.45
+            ],
+            [
+                "Ability Capsule",
+                1,
+                9.09
+            ],
+            [
+                "Ability Patch",
+                1,
+                4.55
+            ]
+        ]
+    },
+    "Amoonguss": {
+        "species": "Amoonguss",
+        "game": "Both",
+        "battle_level": 90,
+        "catch_level": 75,
+        "type": "Random",
+        "ability": "Hidden Possible",
+        "moves": [
+            "Energy Ball",
+            "Foul Play",
+            "Spore",
+            "Sludge Bomb"
+        ],
+        "additional_moves": [
+            "Grassy Terrain"
+        ],
+        "drops": [
+            [
+                "Exp. Candy L",
+                4,
+                100
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                100
+            ],
+            [
+                "Foongus Spores",
+                5,
+                100
+            ],
+            [
+                "Health Feather",
+                3,
+                100
+            ],
+            [
+                "Foongus Spores",
+                3,
+                "Guest"
+            ],
+            [
+                "Tera Shard",
+                3,
+                100
+            ],
+            [
+                "Tera Shard",
+                3,
+                "Host"
+            ],
+            [
+                "Exp. Candy L",
+                2,
+                36.36
+            ],
+            [
+                "Rare Candy",
+                1,
+                22.73
+            ],
+            [
+                "Health Feather",
+                2,
+                45.45
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                22.73
+            ],
+            [
+                "Big Mushroom",
+                1,
+                45.45
+            ],
+            [
+                "Balm Mushroom",
+                1,
+                9.09
+            ],
+            [
+                "Nugget",
+                1,
+                22.73
+            ],
+            [
+                "Spicy Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Sweet Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Salty Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Bitter Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Sour Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "PP Up",
+                1,
+                22.73
+            ],
+            [
+                "Bottle Cap",
+                1,
+                18.18
+            ],
+            [
+                "Tera Shard",
+                1,
+                22.73
+            ],
+            [
+                "Foongus Spores",
+                2,
+                45.45
+            ],
+            [
+                "Ability Capsule",
+                1,
+                9.09
+            ],
+            [
+                "Ability Patch",
+                1,
+                4.55
+            ]
+        ]
+    },
+    "Haxorus": {
+        "species": "Haxorus",
+        "game": "Both",
+        "battle_level": 90,
+        "catch_level": 75,
+        "type": "Random",
+        "ability": "Hidden Possible",
+        "moves": [
+            "Outrage",
+            "Crunch",
+            "Giga Impact",
+            "First Impression"
+        ],
+        "additional_moves": [
+            "Dragon Dance"
+        ],
+        "drops": [
+            [
+                "Exp. Candy L",
+                4,
+                100
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                100
+            ],
+            [
+                "Axew Scales",
+                5,
+                100
+            ],
+            [
+                "Muscle Feather",
+                3,
+                100
+            ],
+            [
+                "Axew Scales",
+                3,
+                "Guest"
+            ],
+            [
+                "Tera Shard",
+                3,
+                100
+            ],
+            [
+                "Tera Shard",
+                3,
+                "Host"
+            ],
+            [
+                "Exp. Candy L",
+                2,
+                36.36
+            ],
+            [
+                "Rare Candy",
+                1,
+                22.73
+            ],
+            [
+                "Muscle Feather",
+                2,
+                45.45
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                22.73
+            ],
+            [
+                "Star Piece",
+                1,
+                45.45
+            ],
+            [
+                "Comet Shard",
+                1,
+                9.09
+            ],
+            [
+                "Nugget",
+                1,
+                22.73
+            ],
+            [
+                "Spicy Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Adamant Mint",
+                1,
+                13.64
+            ],
+            [
+                "Lonely Mint",
+                1,
+                13.64
+            ],
+            [
+                "Naughty Mint",
+                1,
+                13.64
+            ],
+            [
+                "Brave Mint",
+                1,
+                11.36
+            ],
+            [
+                "PP Up",
+                1,
+                22.73
+            ],
+            [
+                "Bottle Cap",
+                1,
+                18.18
+            ],
+            [
+                "Tera Shard",
+                1,
+                22.73
+            ],
+            [
+                "Axew Scales",
+                2,
+                45.45
+            ],
+            [
+                "Ability Capsule",
+                1,
+                9.09
+            ],
+            [
+                "Ability Patch",
+                1,
+                4.55
+            ]
+        ]
+    },
+    "Hydreigon": {
+        "species": "Hydreigon",
+        "game": "Scarlet",
+        "battle_level": 90,
+        "catch_level": 75,
+        "type": "Random",
+        "ability": "Standard",
+        "moves": [
+            "Dark Pulse",
+            "Dragon Pulse",
+            "Crunch",
+            "Taunt"
+        ],
+        "additional_moves": [
+            "Work Up",
+            "Nasty Plot"
+        ],
+        "drops": [
+            [
+                "Exp. Candy L",
+                4,
+                100
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                100
+            ],
+            [
+                "Deino Scales",
+                5,
+                100
+            ],
+            [
+                "Genius Feather",
+                3,
+                100
+            ],
+            [
+                "Deino Scales",
+                3,
+                "Guest"
+            ],
+            [
+                "Tera Shard",
+                3,
+                100
+            ],
+            [
+                "Tera Shard",
+                3,
+                "Host"
+            ],
+            [
+                "Exp. Candy L",
+                2,
+                36.36
+            ],
+            [
+                "Rare Candy",
+                1,
+                22.73
+            ],
+            [
+                "Genius Feather",
+                2,
+                45.45
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                22.73
+            ],
+            [
+                "Star Piece",
+                1,
+                45.45
+            ],
+            [
+                "Comet Shard",
+                1,
+                9.09
+            ],
+            [
+                "Nugget",
+                1,
+                22.73
+            ],
+            [
+                "Bitter Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Modest Mint",
+                1,
+                13.64
+            ],
+            [
+                "Mild Mint",
+                1,
+                13.64
+            ],
+            [
+                "Rash Mint",
+                1,
+                13.64
+            ],
+            [
+                "Quiet Mint",
+                1,
+                13.64
+            ],
+            [
+                "PP Up",
+                1,
+                22.73
+            ],
+            [
+                "Bottle Cap",
+                1,
+                18.18
+            ],
+            [
+                "Tera Shard",
+                1,
+                22.73
+            ],
+            [
+                "Deino Scales",
+                2,
+                45.45
+            ],
+            [
+                "Ability Capsule",
+                1,
+                9.09
+            ],
+            [
+                "Ability Patch",
+                1,
+                4.55
+            ]
+        ]
+    },
+    "Volcarona": {
+        "species": "Volcarona",
+        "game": "Both",
+        "battle_level": 90,
+        "catch_level": 75,
+        "type": "Random",
+        "ability": "Hidden Possible",
+        "moves": [
+            "Bug Buzz",
+            "Flamethrower",
+            "Hurricane",
+            "Tailwind"
+        ],
+        "additional_moves": [
+            "Amnesia",
+            "Sunny Day",
+            "Light Screen",
+            "Quiver Dance"
+        ],
+        "drops": [
+            [
+                "Exp. Candy L",
+                4,
+                100
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                100
+            ],
+            [
+                "Larvesta Fuzz",
+                5,
+                100
+            ],
+            [
+                "Genius Feather",
+                3,
+                100
+            ],
+            [
+                "Larvesta Fuzz",
+                3,
+                "Guest"
+            ],
+            [
+                "Tera Shard",
+                3,
+                100
+            ],
+            [
+                "Tera Shard",
+                3,
+                "Host"
+            ],
+            [
+                "Exp. Candy L",
+                2,
+                36.36
+            ],
+            [
+                "Rare Candy",
+                1,
+                22.73
+            ],
+            [
+                "Genius Feather",
+                2,
+                45.45
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                22.73
+            ],
+            [
+                "Star Piece",
+                1,
+                45.45
+            ],
+            [
+                "Comet Shard",
+                1,
+                9.09
+            ],
+            [
+                "Nugget",
+                1,
+                22.73
+            ],
+            [
+                "Bitter Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Modest Mint",
+                1,
+                13.64
+            ],
+            [
+                "Mild Mint",
+                1,
+                13.64
+            ],
+            [
+                "Rash Mint",
+                1,
+                13.64
+            ],
+            [
+                "Quiet Mint",
+                1,
+                13.64
+            ],
+            [
+                "PP Up",
+                1,
+                22.73
+            ],
+            [
+                "Bottle Cap",
+                1,
+                18.18
+            ],
+            [
+                "Tera Shard",
+                1,
+                22.73
+            ],
+            [
+                "Larvesta Fuzz",
+                2,
+                45.45
+            ],
+            [
+                "Ability Capsule",
+                1,
+                9.09
+            ],
+            [
+                "Ability Patch",
+                1,
+                4.55
+            ]
+        ]
+    },
+    "Talonflame": {
+        "species": "Talonflame",
+        "game": "Both",
+        "battle_level": 90,
+        "catch_level": 75,
+        "type": "Random",
+        "ability": "Hidden Possible",
+        "moves": [
+            "Brave Bird",
+            "Flare Blitz",
+            "Flamethrower",
+            "Tera Blast"
+        ],
+        "additional_moves": [
+            "Sunny Day",
+            "Swords Dance"
+        ],
+        "drops": [
+            [
+                "Exp. Candy L",
+                4,
+                100
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                100
+            ],
+            [
+                "Fletchling Feather",
+                5,
+                100
+            ],
+            [
+                "Swift Feather",
+                3,
+                100
+            ],
+            [
+                "Fletchling Feather",
+                3,
+                "Guest"
+            ],
+            [
+                "Tera Shard",
+                3,
+                100
+            ],
+            [
+                "Tera Shard",
+                3,
+                "Host"
+            ],
+            [
+                "Exp. Candy L",
+                2,
+                36.36
+            ],
+            [
+                "Rare Candy",
+                1,
+                22.73
+            ],
+            [
+                "Swift Feather",
+                2,
+                45.45
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                22.73
+            ],
+            [
+                "Big Mushroom",
+                1,
+                45.45
+            ],
+            [
+                "Balm Mushroom",
+                1,
+                9.09
+            ],
+            [
+                "Nugget",
+                1,
+                22.73
+            ],
+            [
+                "Sweet Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Jolly Mint",
+                1,
+                13.64
+            ],
+            [
+                "Naive Mint",
+                1,
+                13.64
+            ],
+            [
+                "Hasty Mint",
+                1,
+                13.64
+            ],
+            [
+                "Timid Mint",
+                1,
+                13.64
+            ],
+            [
+                "PP Up",
+                1,
+                22.73
+            ],
+            [
+                "Bottle Cap",
+                1,
+                18.18
+            ],
+            [
+                "Tera Shard",
+                1,
+                22.73
+            ],
+            [
+                "Fletchling Feather",
+                2,
+                45.45
+            ],
+            [
+                "Ability Capsule",
+                1,
+                9.09
+            ],
+            [
+                "Ability Patch",
+                1,
+                4.55
+            ]
+        ]
+    },
+    "Dragalge": {
+        "species": "Dragalge",
+        "game": "Scarlet",
+        "battle_level": 90,
+        "catch_level": 75,
+        "type": "Random",
+        "ability": "Hidden Possible",
+        "moves": [
+            "Dragon Pulse",
+            "Sludge Bomb",
+            "Water Pulse",
+            "Toxic"
+        ],
+        "additional_moves": [
+            "Acid Spray",
+            "Draco Meteor"
+        ],
+        "drops": [
+            [
+                "Exp. Candy L",
+                4,
+                100
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                100
+            ],
+            [
+                "Skrelp Kelp",
+                5,
+                100
+            ],
+            [
+                "Genius Feather",
+                3,
+                100
+            ],
+            [
+                "Skrelp Kelp",
+                3,
+                "Guest"
+            ],
+            [
+                "Tera Shard",
+                3,
+                100
+            ],
+            [
+                "Tera Shard",
+                3,
+                "Host"
+            ],
+            [
+                "Exp. Candy L",
+                2,
+                36.36
+            ],
+            [
+                "Rare Candy",
+                1,
+                22.73
+            ],
+            [
+                "Genius Feather",
+                2,
+                45.45
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                22.73
+            ],
+            [
+                "Star Piece",
+                1,
+                45.45
+            ],
+            [
+                "Comet Shard",
+                1,
+                9.09
+            ],
+            [
+                "Nugget",
+                1,
+                22.73
+            ],
+            [
+                "Bitter Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Modest Mint",
+                1,
+                13.64
+            ],
+            [
+                "Mild Mint",
+                1,
+                13.64
+            ],
+            [
+                "Rash Mint",
+                1,
+                13.64
+            ],
+            [
+                "Quiet Mint",
+                1,
+                13.64
+            ],
+            [
+                "PP Up",
+                1,
+                22.73
+            ],
+            [
+                "Bottle Cap",
+                1,
+                18.18
+            ],
+            [
+                "Tera Shard",
+                1,
+                22.73
+            ],
+            [
+                "Skrelp Kelp",
+                2,
+                45.45
+            ],
+            [
+                "Ability Capsule",
+                1,
+                9.09
+            ],
+            [
+                "Ability Patch",
+                1,
+                4.55
+            ]
+        ]
+    },
+    "Clawitzer": {
+        "species": "Clawitzer",
+        "game": "Violet",
+        "battle_level": 90,
+        "catch_level": 75,
+        "type": "Random",
+        "ability": "Standard",
+        "moves": [
+            "Water Pulse",
+            "Dragon Pulse",
+            "Aura Sphere",
+            "Crabhammer"
+        ],
+        "additional_moves": [
+            "Rain Dance"
+        ],
+        "drops": [
+            [
+                "Exp. Candy L",
+                4,
+                100
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                100
+            ],
+            [
+                "Clauncher Claw",
+                5,
+                100
+            ],
+            [
+                "Genius Feather",
+                3,
+                100
+            ],
+            [
+                "Clauncher Claw",
+                3,
+                "Guest"
+            ],
+            [
+                "Tera Shard",
+                3,
+                100
+            ],
+            [
+                "Tera Shard",
+                3,
+                "Host"
+            ],
+            [
+                "Exp. Candy L",
+                2,
+                36.36
+            ],
+            [
+                "Rare Candy",
+                1,
+                22.73
+            ],
+            [
+                "Genius Feather",
+                2,
+                45.45
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                22.73
+            ],
+            [
+                "Star Piece",
+                1,
+                45.45
+            ],
+            [
+                "Comet Shard",
+                1,
+                9.09
+            ],
+            [
+                "Nugget",
+                1,
+                22.73
+            ],
+            [
+                "Bitter Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Modest Mint",
+                1,
+                13.64
+            ],
+            [
+                "Mild Mint",
+                1,
+                13.64
+            ],
+            [
+                "Rash Mint",
+                1,
+                13.64
+            ],
+            [
+                "Quiet Mint",
+                1,
+                13.64
+            ],
+            [
+                "PP Up",
+                1,
+                22.73
+            ],
+            [
+                "Bottle Cap",
+                1,
+                18.18
+            ],
+            [
+                "Tera Shard",
+                1,
+                22.73
+            ],
+            [
+                "Clauncher Claw",
+                2,
+                45.45
+            ],
+            [
+                "Ability Capsule",
+                1,
+                9.09
+            ],
+            [
+                "Ability Patch",
+                1,
+                4.55
+            ]
+        ]
+    },
+    "Sylveon": {
+        "species": "Sylveon",
+        "game": "Both",
+        "battle_level": 90,
+        "catch_level": 75,
+        "type": "Random",
+        "ability": "Hidden Possible",
+        "moves": [
+            "Tera Blast",
+            "Hyper Voice",
+            "Moonblast",
+            "Yawn"
+        ],
+        "additional_moves": [
+            "Misty Terrain",
+            "Calm Mind"
+        ],
+        "drops": [
+            [
+                "Exp. Candy L",
+                4,
+                100
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                100
+            ],
+            [
+                "Eevee Fur",
+                5,
+                100
+            ],
+            [
+                "Genius Feather",
+                3,
+                100
+            ],
+            [
+                "Eevee Fur",
+                3,
+                "Guest"
+            ],
+            [
+                "Tera Shard",
+                3,
+                100
+            ],
+            [
+                "Tera Shard",
+                3,
+                "Host"
+            ],
+            [
+                "Exp. Candy L",
+                2,
+                36.36
+            ],
+            [
+                "Rare Candy",
+                1,
+                22.73
+            ],
+            [
+                "Genius Feather",
+                2,
+                45.45
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                22.73
+            ],
+            [
+                "Star Piece",
+                1,
+                45.45
+            ],
+            [
+                "Comet Shard",
+                1,
+                9.09
+            ],
+            [
+                "Nugget",
+                1,
+                22.73
+            ],
+            [
+                "Bitter Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Modest Mint",
+                1,
+                13.64
+            ],
+            [
+                "Mild Mint",
+                1,
+                13.64
+            ],
+            [
+                "Rash Mint",
+                1,
+                13.64
+            ],
+            [
+                "Quiet Mint",
+                1,
+                13.64
+            ],
+            [
+                "PP Up",
+                1,
+                22.73
+            ],
+            [
+                "Bottle Cap",
+                1,
+                18.18
+            ],
+            [
+                "Tera Shard",
+                1,
+                22.73
+            ],
+            [
+                "Eevee Fur",
+                2,
+                45.45
+            ],
+            [
+                "Ability Capsule",
+                1,
+                9.09
+            ],
+            [
+                "Ability Patch",
+                1,
+                4.55
+            ]
+        ]
+    },
+    "Goodra": {
+        "species": "Goodra",
+        "game": "Both",
+        "battle_level": 90,
+        "catch_level": 75,
+        "type": "Random",
+        "ability": "Hidden Possible",
+        "moves": [
+            "Dragon Pulse",
+            "Surf",
+            "Sludge Bomb",
+            "Power Whip"
+        ],
+        "additional_moves": [
+            "Rain Dance"
+        ],
+        "drops": [
+            [
+                "Exp. Candy L",
+                4,
+                100
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                100
+            ],
+            [
+                "Goomy Goo",
+                5,
+                100
+            ],
+            [
+                "Clever Feather",
+                3,
+                100
+            ],
+            [
+                "Goomy Goo",
+                3,
+                "Guest"
+            ],
+            [
+                "Tera Shard",
+                3,
+                100
+            ],
+            [
+                "Tera Shard",
+                3,
+                "Host"
+            ],
+            [
+                "Exp. Candy L",
+                2,
+                36.36
+            ],
+            [
+                "Rare Candy",
+                1,
+                22.73
+            ],
+            [
+                "Clever Feather",
+                2,
+                45.45
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                22.73
+            ],
+            [
+                "Big Pearl",
+                1,
+                45.45
+            ],
+            [
+                "Pearl String",
+                1,
+                9.09
+            ],
+            [
+                "Nugget",
+                1,
+                22.73
+            ],
+            [
+                "Sour Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Calm Mint",
+                1,
+                13.64
+            ],
+            [
+                "Gentle Mint",
+                1,
+                13.64
+            ],
+            [
+                "Careful Mint",
+                1,
+                13.64
+            ],
+            [
+                "Sassy Mint",
+                1,
+                13.64
+            ],
+            [
+                "PP Up",
+                1,
+                22.73
+            ],
+            [
+                "Bottle Cap",
+                1,
+                18.18
+            ],
+            [
+                "Tera Shard",
+                1,
+                22.73
+            ],
+            [
+                "Goomy Goo",
+                2,
+                45.45
+            ],
+            [
+                "Ability Capsule",
+                1,
+                9.09
+            ],
+            [
+                "Ability Patch",
+                1,
+                4.55
+            ]
+        ]
+    },
+    "Avalugg": {
+        "species": "Avalugg",
+        "game": "Both",
+        "battle_level": 90,
+        "catch_level": 75,
+        "type": "Random",
+        "ability": "Hidden Possible",
+        "moves": [
+            "Icicle Crash",
+            "Heavy Slam",
+            "Snowscape",
+            "Ice Spinner"
+        ],
+        "additional_moves": [
+            "Iron Defense"
+        ],
+        "drops": [
+            [
+                "Exp. Candy L",
+                4,
+                100
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                100
+            ],
+            [
+                "Bergmite Ice",
+                5,
+                100
+            ],
+            [
+                "Resist Feather",
+                3,
+                100
+            ],
+            [
+                "Bergmite Ice",
+                3,
+                "Guest"
+            ],
+            [
+                "Tera Shard",
+                3,
+                100
+            ],
+            [
+                "Tera Shard",
+                3,
+                "Host"
+            ],
+            [
+                "Exp. Candy L",
+                2,
+                36.36
+            ],
+            [
+                "Rare Candy",
+                1,
+                22.73
+            ],
+            [
+                "Resist Feather",
+                2,
+                45.45
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                22.73
+            ],
+            [
+                "Big Pearl",
+                1,
+                45.45
+            ],
+            [
+                "Pearl String",
+                1,
+                9.09
+            ],
+            [
+                "Nugget",
+                1,
+                22.73
+            ],
+            [
+                "Salty Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Bold Mint",
+                1,
+                13.64
+            ],
+            [
+                "Impish Mint",
+                1,
+                13.64
+            ],
+            [
+                "Lax Mint",
+                1,
+                13.64
+            ],
+            [
+                "Relaxed Mint",
+                1,
+                13.64
+            ],
+            [
+                "PP Up",
+                1,
+                22.73
+            ],
+            [
+                "Bottle Cap",
+                1,
+                18.18
+            ],
+            [
+                "Tera Shard",
+                1,
+                22.73
+            ],
+            [
+                "Bergmite Ice",
+                2,
+                45.45
+            ],
+            [
+                "Ability Capsule",
+                1,
+                9.09
+            ],
+            [
+                "Ability Patch",
+                1,
+                4.55
+            ]
+        ]
+    },
+    "Lycanroc": {
+        "species": "Lycanroc",
+        "game": "Both",
+        "battle_level": 90,
+        "catch_level": 75,
+        "type": "Random",
+        "ability": "Hidden Possible",
+        "moves": [
+            "Accelerock",
+            "Rock Slide",
+            "Crunch",
+            "Taunt"
+        ],
+        "additional_moves": [
+            "Sandstorm"
+        ],
+        "drops": [
+            [
+                "Exp. Candy L",
+                4,
+                100
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                100
+            ],
+            [
+                "Rockruff Rock",
+                5,
+                100
+            ],
+            [
+                "Muscle Feather",
+                3,
+                100
+            ],
+            [
+                "Rockruff Rock",
+                3,
+                "Guest"
+            ],
+            [
+                "Tera Shard",
+                3,
+                100
+            ],
+            [
+                "Tera Shard",
+                3,
+                "Host"
+            ],
+            [
+                "Exp. Candy L",
+                2,
+                36.36
+            ],
+            [
+                "Rare Candy",
+                1,
+                22.73
+            ],
+            [
+                "Muscle Feather",
+                2,
+                45.45
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                22.73
+            ],
+            [
+                "Star Piece",
+                1,
+                45.45
+            ],
+            [
+                "Comet Shard",
+                1,
+                9.09
+            ],
+            [
+                "Nugget",
+                1,
+                22.73
+            ],
+            [
+                "Spicy Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Adamant Mint",
+                1,
+                13.64
+            ],
+            [
+                "Lonely Mint",
+                1,
+                13.64
+            ],
+            [
+                "Naughty Mint",
+                1,
+                13.64
+            ],
+            [
+                "Brave Mint",
+                1,
+                11.36
+            ],
+            [
+                "PP Up",
+                1,
+                22.73
+            ],
+            [
+                "Bottle Cap",
+                1,
+                18.18
+            ],
+            [
+                "Tera Shard",
+                1,
+                22.73
+            ],
+            [
+                "Rockruff Rock",
+                2,
+                45.45
+            ],
+            [
+                "Ability Capsule",
+                1,
+                9.09
+            ],
+            [
+                "Ability Patch",
+                1,
+                4.55
+            ]
+        ]
+    },
+    "Toxapex": {
+        "species": "Toxapex",
+        "game": "Both",
+        "battle_level": 90,
+        "catch_level": 75,
+        "type": "Random",
+        "ability": "Hidden Possible",
+        "moves": [
+            "Water Pulse",
+            "Liquidation",
+            "Poison Jab",
+            "Pin Missile"
+        ],
+        "additional_moves": [
+            "Chilling Water",
+            "Toxic"
+        ],
+        "drops": [
+            [
+                "Exp. Candy L",
+                4,
+                100
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                100
+            ],
+            [
+                "Mareanie Spike",
+                5,
+                100
+            ],
+            [
+                "Resist Feather",
+                3,
+                100
+            ],
+            [
+                "Mareanie Spike",
+                3,
+                "Guest"
+            ],
+            [
+                "Tera Shard",
+                3,
+                100
+            ],
+            [
+                "Tera Shard",
+                3,
+                "Host"
+            ],
+            [
+                "Exp. Candy L",
+                2,
+                36.36
+            ],
+            [
+                "Rare Candy",
+                1,
+                22.73
+            ],
+            [
+                "Resist Feather",
+                2,
+                45.45
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                22.73
+            ],
+            [
+                "Big Pearl",
+                1,
+                45.45
+            ],
+            [
+                "Pearl String",
+                1,
+                9.09
+            ],
+            [
+                "Nugget",
+                1,
+                22.73
+            ],
+            [
+                "Salty Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Bold Mint",
+                1,
+                13.64
+            ],
+            [
+                "Impish Mint",
+                1,
+                13.64
+            ],
+            [
+                "Lax Mint",
+                1,
+                13.64
+            ],
+            [
+                "Relaxed Mint",
+                1,
+                13.64
+            ],
+            [
+                "PP Up",
+                1,
+                22.73
+            ],
+            [
+                "Bottle Cap",
+                1,
+                18.18
+            ],
+            [
+                "Tera Shard",
+                1,
+                22.73
+            ],
+            [
+                "Mareanie Spike",
+                2,
+                45.45
+            ],
+            [
+                "Ability Capsule",
+                1,
+                9.09
+            ],
+            [
+                "Ability Patch",
+                1,
+                4.55
+            ]
+        ]
+    },
+    "Mimikyu": {
+        "species": "Mimikyu",
+        "game": "Both",
+        "battle_level": 90,
+        "catch_level": 75,
+        "type": "Random",
+        "ability": "Standard",
+        "moves": [
+            "Play Rough",
+            "Shadow Claw",
+            "Shadow Sneak",
+            "Wood Hammer"
+        ],
+        "additional_moves": [
+            "Misty Terrain",
+            "Swords Dance"
+        ],
+        "drops": [
+            [
+                "Exp. Candy L",
+                4,
+                100
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                100
+            ],
+            [
+                "Mimikyu Scrap",
+                5,
+                100
+            ],
+            [
+                "Clever Feather",
+                3,
+                100
+            ],
+            [
+                "Mimikyu Scrap",
+                3,
+                "Guest"
+            ],
+            [
+                "Tera Shard",
+                3,
+                100
+            ],
+            [
+                "Tera Shard",
+                3,
+                "Host"
+            ],
+            [
+                "Exp. Candy L",
+                2,
+                36.36
+            ],
+            [
+                "Rare Candy",
+                1,
+                22.73
+            ],
+            [
+                "Clever Feather",
+                2,
+                45.45
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                22.73
+            ],
+            [
+                "Big Pearl",
+                1,
+                45.45
+            ],
+            [
+                "Pearl String",
+                1,
+                9.09
+            ],
+            [
+                "Nugget",
+                1,
+                22.73
+            ],
+            [
+                "Sour Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Calm Mint",
+                1,
+                13.64
+            ],
+            [
+                "Gentle Mint",
+                1,
+                13.64
+            ],
+            [
+                "Careful Mint",
+                1,
+                13.64
+            ],
+            [
+                "Sassy Mint",
+                1,
+                13.64
+            ],
+            [
+                "PP Up",
+                1,
+                22.73
+            ],
+            [
+                "Bottle Cap",
+                1,
+                18.18
+            ],
+            [
+                "Tera Shard",
+                1,
+                22.73
+            ],
+            [
+                "Mimikyu Scrap",
+                2,
+                45.45
+            ],
+            [
+                "Ability Capsule",
+                1,
+                9.09
+            ],
+            [
+                "Ability Patch",
+                1,
+                4.55
+            ]
+        ]
+    },
+    "Corviknight": {
+        "species": "Corviknight",
+        "game": "Both",
+        "battle_level": 90,
+        "catch_level": 75,
+        "type": "Random",
+        "ability": "Hidden Possible",
+        "moves": [
+            "Iron Head",
+            "Drill Peck",
+            "Body Press",
+            "Hone Claws"
+        ],
+        "additional_moves": [
+            "Tailwind"
+        ],
+        "drops": [
+            [
+                "Exp. Candy L",
+                4,
+                100
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                100
+            ],
+            [
+                "Rookidee Feather",
+                5,
+                100
+            ],
+            [
+                "Resist Feather",
+                3,
+                100
+            ],
+            [
+                "Rookidee Feather",
+                3,
+                "Guest"
+            ],
+            [
+                "Tera Shard",
+                3,
+                100
+            ],
+            [
+                "Tera Shard",
+                3,
+                "Host"
+            ],
+            [
+                "Exp. Candy L",
+                2,
+                36.36
+            ],
+            [
+                "Rare Candy",
+                1,
+                22.73
+            ],
+            [
+                "Resist Feather",
+                2,
+                45.45
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                22.73
+            ],
+            [
+                "Big Pearl",
+                1,
+                45.45
+            ],
+            [
+                "Pearl String",
+                1,
+                9.09
+            ],
+            [
+                "Nugget",
+                1,
+                22.73
+            ],
+            [
+                "Salty Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Bold Mint",
+                1,
+                13.64
+            ],
+            [
+                "Impish Mint",
+                1,
+                13.64
+            ],
+            [
+                "Lax Mint",
+                1,
+                13.64
+            ],
+            [
+                "Relaxed Mint",
+                1,
+                13.64
+            ],
+            [
+                "PP Up",
+                1,
+                22.73
+            ],
+            [
+                "Bottle Cap",
+                1,
+                18.18
+            ],
+            [
+                "Tera Shard",
+                1,
+                22.73
+            ],
+            [
+                "Rookidee Feather",
+                2,
+                45.45
+            ],
+            [
+                "Ability Capsule",
+                1,
+                9.09
+            ],
+            [
+                "Ability Patch",
+                1,
+                4.55
+            ]
+        ]
+    },
+    "Pincurchin": {
+        "species": "Pincurchin",
+        "game": "Both",
+        "battle_level": 90,
+        "catch_level": 75,
+        "type": "Random",
+        "ability": "Hidden Possible",
+        "moves": [
+            "Zing Zap",
+            "Thunder",
+            "Surf",
+            "Poison Jab"
+        ],
+        "additional_moves": [
+            "Thunder Wave",
+            "Electric Terrain"
+        ],
+        "drops": [
+            [
+                "Exp. Candy L",
+                4,
+                100
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                100
+            ],
+            [
+                "Pincurchin Spines",
+                5,
+                100
+            ],
+            [
+                "Muscle Feather",
+                3,
+                100
+            ],
+            [
+                "Pincurchin Spines",
+                3,
+                "Guest"
+            ],
+            [
+                "Tera Shard",
+                3,
+                100
+            ],
+            [
+                "Tera Shard",
+                3,
+                "Host"
+            ],
+            [
+                "Exp. Candy L",
+                2,
+                36.36
+            ],
+            [
+                "Rare Candy",
+                1,
+                22.73
+            ],
+            [
+                "Muscle Feather",
+                2,
+                45.45
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                22.73
+            ],
+            [
+                "Star Piece",
+                1,
+                45.45
+            ],
+            [
+                "Comet Shard",
+                1,
+                9.09
+            ],
+            [
+                "Nugget",
+                1,
+                22.73
+            ],
+            [
+                "Spicy Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Adamant Mint",
+                1,
+                13.64
+            ],
+            [
+                "Lonely Mint",
+                1,
+                13.64
+            ],
+            [
+                "Naughty Mint",
+                1,
+                13.64
+            ],
+            [
+                "Brave Mint",
+                1,
+                11.36
+            ],
+            [
+                "PP Up",
+                1,
+                22.73
+            ],
+            [
+                "Bottle Cap",
+                1,
+                18.18
+            ],
+            [
+                "Tera Shard",
+                1,
+                22.73
+            ],
+            [
+                "Pincurchin Spines",
+                2,
+                45.45
+            ],
+            [
+                "Ability Capsule",
+                1,
+                9.09
+            ],
+            [
+                "Ability Patch",
+                1,
+                4.55
+            ]
+        ]
+    },
+    "Frosmoth": {
+        "species": "Frosmoth",
+        "game": "Both",
+        "battle_level": 90,
+        "catch_level": 75,
+        "type": "Random",
+        "ability": "Hidden Possible",
+        "moves": [
+            "Blizzard",
+            "Bug Buzz",
+            "Hurricane",
+            "Snowscape"
+        ],
+        "additional_moves": [],
+        "drops": [
+            [
+                "Exp. Candy L",
+                4,
+                100
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                100
+            ],
+            [
+                "Snom Thread",
+                5,
+                100
+            ],
+            [
+                "Clever Feather",
+                3,
+                100
+            ],
+            [
+                "Snom Thread",
+                3,
+                "Guest"
+            ],
+            [
+                "Tera Shard",
+                3,
+                100
+            ],
+            [
+                "Tera Shard",
+                3,
+                "Host"
+            ],
+            [
+                "Exp. Candy L",
+                2,
+                36.36
+            ],
+            [
+                "Rare Candy",
+                1,
+                22.73
+            ],
+            [
+                "Clever Feather",
+                2,
+                45.45
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                22.73
+            ],
+            [
+                "Big Pearl",
+                1,
+                45.45
+            ],
+            [
+                "Pearl String",
+                1,
+                9.09
+            ],
+            [
+                "Nugget",
+                1,
+                22.73
+            ],
+            [
+                "Sour Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Calm Mint",
+                1,
+                13.64
+            ],
+            [
+                "Gentle Mint",
+                1,
+                13.64
+            ],
+            [
+                "Careful Mint",
+                1,
+                13.64
+            ],
+            [
+                "Sassy Mint",
+                1,
+                13.64
+            ],
+            [
+                "PP Up",
+                1,
+                22.73
+            ],
+            [
+                "Bottle Cap",
+                1,
+                18.18
+            ],
+            [
+                "Tera Shard",
+                1,
+                22.73
+            ],
+            [
+                "Snom Thread",
+                2,
+                45.45
+            ],
+            [
+                "Ability Capsule",
+                1,
+                9.09
+            ],
+            [
+                "Ability Patch",
+                1,
+                4.55
+            ]
+        ]
+    },
+    "Dragapult": {
+        "species": "Dragapult",
+        "game": "Violet",
+        "battle_level": 90,
+        "catch_level": 75,
+        "type": "Random",
+        "ability": "Hidden Possible",
+        "moves": [
+            "Shadow Ball",
+            "Dragon Pulse",
+            "Thunderbolt",
+            "Flamethrower"
+        ],
+        "additional_moves": [
+            "Reflect",
+            "Light Screen"
+        ],
+        "drops": [
+            [
+                "Exp. Candy L",
+                4,
+                100
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                100
+            ],
+            [
+                "Dreepy Powder",
+                5,
+                100
+            ],
+            [
+                "Swift Feather",
+                3,
+                100
+            ],
+            [
+                "Dreepy Powder",
+                3,
+                "Guest"
+            ],
+            [
+                "Tera Shard",
+                3,
+                100
+            ],
+            [
+                "Tera Shard",
+                3,
+                "Host"
+            ],
+            [
+                "Exp. Candy L",
+                2,
+                36.36
+            ],
+            [
+                "Rare Candy",
+                1,
+                22.73
+            ],
+            [
+                "Swift Feather",
+                2,
+                45.45
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                22.73
+            ],
+            [
+                "Big Mushroom",
+                1,
+                45.45
+            ],
+            [
+                "Balm Mushroom",
+                1,
+                9.09
+            ],
+            [
+                "Nugget",
+                1,
+                22.73
+            ],
+            [
+                "Sweet Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Jolly Mint",
+                1,
+                13.64
+            ],
+            [
+                "Naive Mint",
+                1,
+                13.64
+            ],
+            [
+                "Hasty Mint",
+                1,
+                13.64
+            ],
+            [
+                "Timid Mint",
+                1,
+                13.64
+            ],
+            [
+                "PP Up",
+                1,
+                22.73
+            ],
+            [
+                "Bottle Cap",
+                1,
+                18.18
+            ],
+            [
+                "Tera Shard",
+                1,
+                22.73
+            ],
+            [
+                "Dreepy Powder",
+                2,
+                45.45
+            ],
+            [
+                "Ability Capsule",
+                1,
+                9.09
+            ],
+            [
+                "Ability Patch",
+                1,
+                4.55
+            ]
+        ]
+    },
+    "Pawmot": {
+        "species": "Pawmot",
+        "game": "Both",
+        "battle_level": 90,
+        "catch_level": 75,
+        "type": "Random",
+        "ability": "Hidden Possible",
+        "moves": [
+            "Wild Charge",
+            "Close Combat",
+            "Double Shock",
+            "Nuzzle"
+        ],
+        "additional_moves": [
+            "Electric Terrain"
+        ],
+        "drops": [
+            [
+                "Exp. Candy L",
+                4,
+                100
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                100
+            ],
+            [
+                "Rellor Mud",
+                5,
+                100
+            ],
+            [
+                "Muscle Feather",
+                3,
+                100
+            ],
+            [
+                "Rellor Mud",
+                3,
+                "Guest"
+            ],
+            [
+                "Tera Shard",
+                3,
+                100
+            ],
+            [
+                "Tera Shard",
+                3,
+                "Host"
+            ],
+            [
+                "Exp. Candy L",
+                2,
+                36.36
+            ],
+            [
+                "Rare Candy",
+                1,
+                22.73
+            ],
+            [
+                "Muscle Feather",
+                2,
+                45.45
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                22.73
+            ],
+            [
+                "Star Piece",
+                1,
+                45.45
+            ],
+            [
+                "Comet Shard",
+                1,
+                9.09
+            ],
+            [
+                "Nugget",
+                1,
+                22.73
+            ],
+            [
+                "Spicy Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Adamant Mint",
+                1,
+                13.64
+            ],
+            [
+                "Lonely Mint",
+                1,
+                13.64
+            ],
+            [
+                "Naughty Mint",
+                1,
+                13.64
+            ],
+            [
+                "Brave Mint",
+                1,
+                11.36
+            ],
+            [
+                "PP Up",
+                1,
+                22.73
+            ],
+            [
+                "Bottle Cap",
+                1,
+                18.18
+            ],
+            [
+                "Tera Shard",
+                1,
+                22.73
+            ],
+            [
+                "Rellor Mud",
+                2,
+                45.45
+            ],
+            [
+                "Ability Capsule",
+                1,
+                9.09
+            ],
+            [
+                "Ability Patch",
+                1,
+                4.55
+            ]
+        ]
+    },
+    "Maushold": {
+        "species": "Maushold",
+        "game": "Both",
+        "battle_level": 90,
+        "catch_level": 75,
+        "type": "Random",
+        "ability": "Hidden Possible",
+        "moves": [
+            "Play Rough",
+            "Take Down",
+            "Low Kick",
+            "Charm"
+        ],
+        "additional_moves": [
+            "Tidy Up"
+        ],
+        "drops": [
+            [
+                "Exp. Candy L",
+                4,
+                100
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                100
+            ],
+            [
+                "Greavard Wax",
+                5,
+                100
+            ],
+            [
+                "Swift Feather",
+                3,
+                100
+            ],
+            [
+                "Greavard Wax",
+                3,
+                "Guest"
+            ],
+            [
+                "Tera Shard",
+                3,
+                100
+            ],
+            [
+                "Tera Shard",
+                3,
+                "Host"
+            ],
+            [
+                "Exp. Candy L",
+                2,
+                36.36
+            ],
+            [
+                "Rare Candy",
+                1,
+                22.73
+            ],
+            [
+                "Swift Feather",
+                2,
+                45.45
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                22.73
+            ],
+            [
+                "Big Mushroom",
+                1,
+                45.45
+            ],
+            [
+                "Balm Mushroom",
+                1,
+                9.09
+            ],
+            [
+                "Nugget",
+                1,
+                22.73
+            ],
+            [
+                "Sweet Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Jolly Mint",
+                1,
+                13.64
+            ],
+            [
+                "Naive Mint",
+                1,
+                13.64
+            ],
+            [
+                "Hasty Mint",
+                1,
+                13.64
+            ],
+            [
+                "Timid Mint",
+                1,
+                13.64
+            ],
+            [
+                "PP Up",
+                1,
+                22.73
+            ],
+            [
+                "Bottle Cap",
+                1,
+                18.18
+            ],
+            [
+                "Tera Shard",
+                1,
+                22.73
+            ],
+            [
+                "Greavard Wax",
+                2,
+                45.45
+            ],
+            [
+                "Ability Capsule",
+                1,
+                9.09
+            ],
+            [
+                "Ability Patch",
+                1,
+                4.55
+            ]
+        ]
+    },
+    "Dachsbun": {
+        "species": "Dachsbun",
+        "game": "Both",
+        "battle_level": 90,
+        "catch_level": 75,
+        "type": "Random",
+        "ability": "Random",
+        "moves": [
+            "Play Rough",
+            "Double-Edge",
+            "Bite",
+            "Baby-Doll Eyes"
+        ],
+        "additional_moves": [],
+        "drops": [
+            [
+                "Exp. Candy L",
+                4,
+                100
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                100
+            ],
+            [
+                "Flittle Down",
+                5,
+                100
+            ],
+            [
+                "Resist Feather",
+                3,
+                100
+            ],
+            [
+                "Flittle Down",
+                3,
+                "Guest"
+            ],
+            [
+                "Tera Shard",
+                3,
+                100
+            ],
+            [
+                "Tera Shard",
+                3,
+                "Host"
+            ],
+            [
+                "Exp. Candy L",
+                2,
+                36.36
+            ],
+            [
+                "Rare Candy",
+                1,
+                22.73
+            ],
+            [
+                "Resist Feather",
+                2,
+                45.45
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                22.73
+            ],
+            [
+                "Big Pearl",
+                1,
+                45.45
+            ],
+            [
+                "Pearl String",
+                1,
+                9.09
+            ],
+            [
+                "Nugget",
+                1,
+                22.73
+            ],
+            [
+                "Salty Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Bold Mint",
+                1,
+                13.64
+            ],
+            [
+                "Impish Mint",
+                1,
+                13.64
+            ],
+            [
+                "Lax Mint",
+                1,
+                13.64
+            ],
+            [
+                "Relaxed Mint",
+                1,
+                13.64
+            ],
+            [
+                "PP Up",
+                1,
+                22.73
+            ],
+            [
+                "Bottle Cap",
+                1,
+                18.18
+            ],
+            [
+                "Tera Shard",
+                1,
+                22.73
+            ],
+            [
+                "Flittle Down",
+                2,
+                45.45
+            ],
+            [
+                "Ability Capsule",
+                1,
+                9.09
+            ],
+            [
+                "Ability Patch",
+                1,
+                4.55
+            ]
+        ]
+    },
+    "Garganacl": {
+        "species": "Garganacl",
+        "game": "Both",
+        "battle_level": 90,
+        "catch_level": 75,
+        "type": "Random",
+        "ability": "Random",
+        "moves": [
+            "Stone Edge",
+            "Heavy Slam",
+            "Salt Cure",
+            "Hammer Arm"
+        ],
+        "additional_moves": [
+            "Sandstorm",
+            "Rock Slide"
+        ],
+        "drops": [
+            [
+                "Exp. Candy L",
+                4,
+                100
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                100
+            ],
+            [
+                "Finizen Mucus",
+                5,
+                100
+            ],
+            [
+                "Resist Feather",
+                3,
+                100
+            ],
+            [
+                "Finizen Mucus",
+                3,
+                "Guest"
+            ],
+            [
+                "Tera Shard",
+                3,
+                100
+            ],
+            [
+                "Tera Shard",
+                3,
+                "Host"
+            ],
+            [
+                "Exp. Candy L",
+                2,
+                36.36
+            ],
+            [
+                "Rare Candy",
+                1,
+                22.73
+            ],
+            [
+                "Resist Feather",
+                2,
+                45.45
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                22.73
+            ],
+            [
+                "Big Pearl",
+                1,
+                45.45
+            ],
+            [
+                "Pearl String",
+                1,
+                9.09
+            ],
+            [
+                "Nugget",
+                1,
+                22.73
+            ],
+            [
+                "Salty Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Bold Mint",
+                1,
+                13.64
+            ],
+            [
+                "Impish Mint",
+                1,
+                13.64
+            ],
+            [
+                "Lax Mint",
+                1,
+                13.64
+            ],
+            [
+                "Relaxed Mint",
+                1,
+                13.64
+            ],
+            [
+                "PP Up",
+                1,
+                22.73
+            ],
+            [
+                "Bottle Cap",
+                1,
+                18.18
+            ],
+            [
+                "Tera Shard",
+                1,
+                22.73
+            ],
+            [
+                "Finizen Mucus",
+                2,
+                45.45
+            ],
+            [
+                "Ability Capsule",
+                1,
+                9.09
+            ],
+            [
+                "Ability Patch",
+                1,
+                4.55
+            ]
+        ]
+    },
+    "Armarouge": {
+        "species": "Armarouge",
+        "game": "Scarlet",
+        "battle_level": 90,
+        "catch_level": 75,
+        "type": "Random",
+        "ability": "Hidden Possible",
+        "moves": [
+            "Armor Cannon",
+            "Psychic",
+            "Night Shade",
+            "Will-O-Wisp"
+        ],
+        "additional_moves": [
+            "Calm Mind",
+            "Sunny Day"
+        ],
+        "drops": [
+            [
+                "Exp. Candy L",
+                4,
+                100
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                100
+            ],
+            [
+                "Smoliv Oil",
+                5,
+                100
+            ],
+            [
+                "Genius Feather",
+                3,
+                100
+            ],
+            [
+                "Smoliv Oil",
+                3,
+                "Guest"
+            ],
+            [
+                "Tera Shard",
+                3,
+                100
+            ],
+            [
+                "Tera Shard",
+                3,
+                "Host"
+            ],
+            [
+                "Exp. Candy L",
+                2,
+                36.36
+            ],
+            [
+                "Rare Candy",
+                1,
+                22.73
+            ],
+            [
+                "Genius Feather",
+                2,
+                45.45
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                22.73
+            ],
+            [
+                "Star Piece",
+                1,
+                45.45
+            ],
+            [
+                "Comet Shard",
+                1,
+                9.09
+            ],
+            [
+                "Nugget",
+                1,
+                22.73
+            ],
+            [
+                "Bitter Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Modest Mint",
+                1,
+                13.64
+            ],
+            [
+                "Mild Mint",
+                1,
+                13.64
+            ],
+            [
+                "Rash Mint",
+                1,
+                13.64
+            ],
+            [
+                "Quiet Mint",
+                1,
+                13.64
+            ],
+            [
+                "PP Up",
+                1,
+                22.73
+            ],
+            [
+                "Bottle Cap",
+                1,
+                18.18
+            ],
+            [
+                "Tera Shard",
+                1,
+                22.73
+            ],
+            [
+                "Smoliv Oil",
+                2,
+                45.45
+            ],
+            [
+                "Ability Capsule",
+                1,
+                9.09
+            ],
+            [
+                "Ability Patch",
+                1,
+                4.55
+            ]
+        ]
+    },
+    "Ceruledge": {
+        "species": "Ceruledge",
+        "game": "Violet",
+        "battle_level": 90,
+        "catch_level": 75,
+        "type": "Random",
+        "ability": "Hidden Possible",
+        "moves": [
+            "Bitter Blade",
+            "Shadow Claw",
+            "Psycho Cut",
+            "Will-O-Wisp"
+        ],
+        "additional_moves": [
+            "Sunny Day"
+        ],
+        "drops": [
+            [
+                "Exp. Candy L",
+                4,
+                100
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                100
+            ],
+            [
+                "Smoliv Oil",
+                5,
+                100
+            ],
+            [
+                "Muscle Feather",
+                3,
+                100
+            ],
+            [
+                "Smoliv Oil",
+                3,
+                "Guest"
+            ],
+            [
+                "Tera Shard",
+                3,
+                100
+            ],
+            [
+                "Tera Shard",
+                3,
+                "Host"
+            ],
+            [
+                "Exp. Candy L",
+                2,
+                36.36
+            ],
+            [
+                "Rare Candy",
+                1,
+                22.73
+            ],
+            [
+                "Muscle Feather",
+                2,
+                45.45
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                22.73
+            ],
+            [
+                "Star Piece",
+                1,
+                45.45
+            ],
+            [
+                "Comet Shard",
+                1,
+                9.09
+            ],
+            [
+                "Nugget",
+                1,
+                22.73
+            ],
+            [
+                "Spicy Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Adamant Mint",
+                1,
+                13.64
+            ],
+            [
+                "Lonely Mint",
+                1,
+                13.64
+            ],
+            [
+                "Naughty Mint",
+                1,
+                13.64
+            ],
+            [
+                "Brave Mint",
+                1,
+                11.36
+            ],
+            [
+                "PP Up",
+                1,
+                22.73
+            ],
+            [
+                "Bottle Cap",
+                1,
+                18.18
+            ],
+            [
+                "Tera Shard",
+                1,
+                22.73
+            ],
+            [
+                "Smoliv Oil",
+                2,
+                45.45
+            ],
+            [
+                "Ability Capsule",
+                1,
+                9.09
+            ],
+            [
+                "Ability Patch",
+                1,
+                4.55
+            ]
+        ]
+    },
+    "Kilowattrel": {
+        "species": "Kilowattrel",
+        "game": "Both",
+        "battle_level": 90,
+        "catch_level": 75,
+        "type": "Random",
+        "ability": "Hidden Possible",
+        "moves": [
+            "Hurricane",
+            "Thunder",
+            "Uproar",
+            "Scary Face"
+        ],
+        "additional_moves": [
+            "Charge",
+            "Rain Dance"
+        ],
+        "drops": [
+            [
+                "Exp. Candy L",
+                4,
+                100
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                100
+            ],
+            [
+                "Tadbulb Mucus",
+                5,
+                100
+            ],
+            [
+                "Swift Feather",
+                3,
+                100
+            ],
+            [
+                "Tadbulb Mucus",
+                3,
+                "Guest"
+            ],
+            [
+                "Tera Shard",
+                3,
+                100
+            ],
+            [
+                "Tera Shard",
+                3,
+                "Host"
+            ],
+            [
+                "Exp. Candy L",
+                2,
+                36.36
+            ],
+            [
+                "Rare Candy",
+                1,
+                22.73
+            ],
+            [
+                "Swift Feather",
+                2,
+                45.45
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                22.73
+            ],
+            [
+                "Big Mushroom",
+                1,
+                45.45
+            ],
+            [
+                "Balm Mushroom",
+                1,
+                9.09
+            ],
+            [
+                "Nugget",
+                1,
+                22.73
+            ],
+            [
+                "Sweet Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Jolly Mint",
+                1,
+                13.64
+            ],
+            [
+                "Naive Mint",
+                1,
+                13.64
+            ],
+            [
+                "Hasty Mint",
+                1,
+                13.64
+            ],
+            [
+                "Timid Mint",
+                1,
+                13.64
+            ],
+            [
+                "PP Up",
+                1,
+                22.73
+            ],
+            [
+                "Bottle Cap",
+                1,
+                18.18
+            ],
+            [
+                "Tera Shard",
+                1,
+                22.73
+            ],
+            [
+                "Tadbulb Mucus",
+                2,
+                45.45
+            ],
+            [
+                "Ability Capsule",
+                1,
+                9.09
+            ],
+            [
+                "Ability Patch",
+                1,
+                4.55
+            ]
+        ]
+    },
+    "Mabosstiff": {
+        "species": "Mabosstiff",
+        "game": "Both",
+        "battle_level": 90,
+        "catch_level": 75,
+        "type": "Random",
+        "ability": "Hidden Possible",
+        "moves": [
+            "Crunch",
+            "Reversal",
+            "Outrage",
+            "Take Down"
+        ],
+        "additional_moves": [
+            "Taunt"
+        ],
+        "drops": [
+            [
+                "Exp. Candy L",
+                4,
+                100
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                100
+            ],
+            [
+                "Varoom Fume",
+                5,
+                100
+            ],
+            [
+                "Muscle Feather",
+                3,
+                100
+            ],
+            [
+                "Varoom Fume",
+                3,
+                "Guest"
+            ],
+            [
+                "Tera Shard",
+                3,
+                100
+            ],
+            [
+                "Tera Shard",
+                3,
+                "Host"
+            ],
+            [
+                "Exp. Candy L",
+                2,
+                36.36
+            ],
+            [
+                "Rare Candy",
+                1,
+                22.73
+            ],
+            [
+                "Muscle Feather",
+                2,
+                45.45
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                22.73
+            ],
+            [
+                "Star Piece",
+                1,
+                45.45
+            ],
+            [
+                "Comet Shard",
+                1,
+                9.09
+            ],
+            [
+                "Nugget",
+                1,
+                22.73
+            ],
+            [
+                "Spicy Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Adamant Mint",
+                1,
+                13.64
+            ],
+            [
+                "Lonely Mint",
+                1,
+                13.64
+            ],
+            [
+                "Naughty Mint",
+                1,
+                13.64
+            ],
+            [
+                "Brave Mint",
+                1,
+                11.36
+            ],
+            [
+                "PP Up",
+                1,
+                22.73
+            ],
+            [
+                "Bottle Cap",
+                1,
+                18.18
+            ],
+            [
+                "Tera Shard",
+                1,
+                22.73
+            ],
+            [
+                "Varoom Fume",
+                2,
+                45.45
+            ],
+            [
+                "Ability Capsule",
+                1,
+                9.09
+            ],
+            [
+                "Ability Patch",
+                1,
+                4.55
+            ]
+        ]
+    },
+    "Cyclizar": {
+        "species": "Cyclizar",
+        "game": "Both",
+        "battle_level": 90,
+        "catch_level": 75,
+        "type": "Random",
+        "ability": "Hidden Possible",
+        "moves": [
+            "Double-Edge",
+            "Dragon Claw",
+            "Dragon Pulse",
+            "Knock Off"
+        ],
+        "additional_moves": [
+            "Shift Gear"
+        ],
+        "drops": [
+            [
+                "Exp. Candy L",
+                4,
+                100
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                100
+            ],
+            [
+                "Glimmet Crystal",
+                5,
+                100
+            ],
+            [
+                "Swift Feather",
+                3,
+                100
+            ],
+            [
+                "Glimmet Crystal",
+                3,
+                "Guest"
+            ],
+            [
+                "Tera Shard",
+                3,
+                100
+            ],
+            [
+                "Tera Shard",
+                3,
+                "Host"
+            ],
+            [
+                "Exp. Candy L",
+                2,
+                36.36
+            ],
+            [
+                "Rare Candy",
+                1,
+                22.73
+            ],
+            [
+                "Swift Feather",
+                2,
+                45.45
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                22.73
+            ],
+            [
+                "Big Mushroom",
+                1,
+                45.45
+            ],
+            [
+                "Balm Mushroom",
+                1,
+                9.09
+            ],
+            [
+                "Nugget",
+                1,
+                22.73
+            ],
+            [
+                "Sweet Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Jolly Mint",
+                1,
+                13.64
+            ],
+            [
+                "Naive Mint",
+                1,
+                13.64
+            ],
+            [
+                "Hasty Mint",
+                1,
+                13.64
+            ],
+            [
+                "Timid Mint",
+                1,
+                13.64
+            ],
+            [
+                "PP Up",
+                1,
+                22.73
+            ],
+            [
+                "Bottle Cap",
+                1,
+                18.18
+            ],
+            [
+                "Tera Shard",
+                1,
+                22.73
+            ],
+            [
+                "Glimmet Crystal",
+                2,
+                45.45
+            ],
+            [
+                "Ability Capsule",
+                1,
+                9.09
+            ],
+            [
+                "Ability Patch",
+                1,
+                4.55
+            ]
+        ]
+    },
+    "Orthworm": {
+        "species": "Orthworm",
+        "game": "Both",
+        "battle_level": 90,
+        "catch_level": 75,
+        "type": "Random",
+        "ability": "Hidden Possible",
+        "moves": [
+            "Iron Head",
+            "Earthquake",
+            "Smack Down",
+            "Sandstorm"
+        ],
+        "additional_moves": [
+            "Coil"
+        ],
+        "drops": [
+            [
+                "Exp. Candy L",
+                4,
+                100
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                100
+            ],
+            [
+                "Shroodle Ink",
+                5,
+                100
+            ],
+            [
+                "Resist Feather",
+                3,
+                100
+            ],
+            [
+                "Shroodle Ink",
+                3,
+                "Guest"
+            ],
+            [
+                "Tera Shard",
+                3,
+                100
+            ],
+            [
+                "Tera Shard",
+                3,
+                "Host"
+            ],
+            [
+                "Exp. Candy L",
+                2,
+                36.36
+            ],
+            [
+                "Rare Candy",
+                1,
+                22.73
+            ],
+            [
+                "Resist Feather",
+                2,
+                45.45
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                22.73
+            ],
+            [
+                "Big Pearl",
+                1,
+                45.45
+            ],
+            [
+                "Pearl String",
+                1,
+                9.09
+            ],
+            [
+                "Nugget",
+                1,
+                22.73
+            ],
+            [
+                "Salty Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Bold Mint",
+                1,
+                13.64
+            ],
+            [
+                "Impish Mint",
+                1,
+                13.64
+            ],
+            [
+                "Lax Mint",
+                1,
+                13.64
+            ],
+            [
+                "Relaxed Mint",
+                1,
+                13.64
+            ],
+            [
+                "PP Up",
+                1,
+                22.73
+            ],
+            [
+                "Bottle Cap",
+                1,
+                18.18
+            ],
+            [
+                "Tera Shard",
+                1,
+                22.73
+            ],
+            [
+                "Shroodle Ink",
+                2,
+                45.45
+            ],
+            [
+                "Ability Capsule",
+                1,
+                9.09
+            ],
+            [
+                "Ability Patch",
+                1,
+                4.55
+            ]
+        ]
+    },
+    "Glimmora": {
+        "species": "Glimmora",
+        "game": "Both",
+        "battle_level": 90,
+        "catch_level": 75,
+        "type": "Random",
+        "ability": "Hidden Possible",
+        "moves": [
+            "Power Gem",
+            "Sludge Wave",
+            "Hyper Beam",
+            "Rock Polish"
+        ],
+        "additional_moves": [
+            "Sandstorm"
+        ],
+        "drops": [
+            [
+                "Exp. Candy L",
+                4,
+                100
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                100
+            ],
+            [
+                "Fidough Fur",
+                5,
+                100
+            ],
+            [
+                "Genius Feather",
+                3,
+                100
+            ],
+            [
+                "Fidough Fur",
+                3,
+                "Guest"
+            ],
+            [
+                "Tera Shard",
+                3,
+                100
+            ],
+            [
+                "Tera Shard",
+                3,
+                "Host"
+            ],
+            [
+                "Exp. Candy L",
+                2,
+                36.36
+            ],
+            [
+                "Rare Candy",
+                1,
+                22.73
+            ],
+            [
+                "Genius Feather",
+                2,
+                45.45
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                22.73
+            ],
+            [
+                "Star Piece",
+                1,
+                45.45
+            ],
+            [
+                "Comet Shard",
+                1,
+                9.09
+            ],
+            [
+                "Nugget",
+                1,
+                22.73
+            ],
+            [
+                "Bitter Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Modest Mint",
+                1,
+                13.64
+            ],
+            [
+                "Mild Mint",
+                1,
+                13.64
+            ],
+            [
+                "Rash Mint",
+                1,
+                13.64
+            ],
+            [
+                "Quiet Mint",
+                1,
+                13.64
+            ],
+            [
+                "PP Up",
+                1,
+                22.73
+            ],
+            [
+                "Bottle Cap",
+                1,
+                18.18
+            ],
+            [
+                "Tera Shard",
+                1,
+                22.73
+            ],
+            [
+                "Fidough Fur",
+                2,
+                45.45
+            ],
+            [
+                "Ability Capsule",
+                1,
+                9.09
+            ],
+            [
+                "Ability Patch",
+                1,
+                4.55
+            ]
+        ]
+    },
+    "Cetitan": {
+        "species": "Cetitan",
+        "game": "Both",
+        "battle_level": 90,
+        "catch_level": 75,
+        "type": "Random",
+        "ability": "Hidden Possible",
+        "moves": [
+            "Ice Spinner",
+            "Body Slam",
+            "Snowscape",
+            "Stomping Tantrum"
+        ],
+        "additional_moves": [
+            "Yawn"
+        ],
+        "drops": [
+            [
+                "Exp. Candy L",
+                4,
+                100
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                100
+            ],
+            [
+                "Bramblin Twig",
+                5,
+                100
+            ],
+            [
+                "Health Feather",
+                3,
+                100
+            ],
+            [
+                "Bramblin Twig",
+                3,
+                "Guest"
+            ],
+            [
+                "Tera Shard",
+                3,
+                100
+            ],
+            [
+                "Tera Shard",
+                3,
+                "Host"
+            ],
+            [
+                "Exp. Candy L",
+                2,
+                36.36
+            ],
+            [
+                "Rare Candy",
+                1,
+                22.73
+            ],
+            [
+                "Health Feather",
+                2,
+                45.45
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                22.73
+            ],
+            [
+                "Big Mushroom",
+                1,
+                45.45
+            ],
+            [
+                "Balm Mushroom",
+                1,
+                9.09
+            ],
+            [
+                "Nugget",
+                1,
+                22.73
+            ],
+            [
+                "Spicy Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Sweet Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Salty Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Bitter Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Sour Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "PP Up",
+                1,
+                22.73
+            ],
+            [
+                "Bottle Cap",
+                1,
+                18.18
+            ],
+            [
+                "Tera Shard",
+                1,
+                22.73
+            ],
+            [
+                "Bramblin Twig",
+                2,
+                45.45
+            ],
+            [
+                "Ability Capsule",
+                1,
+                9.09
+            ],
+            [
+                "Ability Patch",
+                1,
+                4.55
+            ]
+        ]
+    },
+    "Dondozo": {
+        "species": "Dondozo",
+        "game": "Both",
+        "battle_level": 90,
+        "catch_level": 75,
+        "type": "Random",
+        "ability": "Hidden Possible",
+        "moves": [
+            "Wave Crash",
+            "Order Up",
+            "Heavy Slam",
+            "Yawn"
+        ],
+        "additional_moves": [
+            "Rain Dance",
+            "Curse"
+        ],
+        "drops": [
+            [
+                "Exp. Candy L",
+                4,
+                100
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                100
+            ],
+            [
+                "Gimmighoul Coin",
+                5,
+                100
+            ],
+            [
+                "Health Feather",
+                3,
+                100
+            ],
+            [
+                "Gimmighoul Coin",
+                3,
+                "Guest"
+            ],
+            [
+                "Tera Shard",
+                3,
+                100
+            ],
+            [
+                "Tera Shard",
+                3,
+                "Host"
+            ],
+            [
+                "Exp. Candy L",
+                2,
+                36.36
+            ],
+            [
+                "Rare Candy",
+                1,
+                22.73
+            ],
+            [
+                "Health Feather",
+                2,
+                45.45
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                22.73
+            ],
+            [
+                "Big Mushroom",
+                1,
+                45.45
+            ],
+            [
+                "Balm Mushroom",
+                1,
+                9.09
+            ],
+            [
+                "Nugget",
+                1,
+                22.73
+            ],
+            [
+                "Spicy Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Sweet Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Salty Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Bitter Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Sour Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "PP Up",
+                1,
+                22.73
+            ],
+            [
+                "Bottle Cap",
+                1,
+                18.18
+            ],
+            [
+                "Tera Shard",
+                1,
+                22.73
+            ],
+            [
+                "Gimmighoul Coin",
+                2,
+                45.45
+            ],
+            [
+                "Ability Capsule",
+                1,
+                9.09
+            ],
+            [
+                "Ability Patch",
+                1,
+                4.55
+            ]
+        ]
+    },
+    "Annihilape": {
+        "species": "Annihilape",
+        "game": "Both",
+        "battle_level": 90,
+        "catch_level": 75,
+        "type": "Random",
+        "ability": "Hidden Possible",
+        "moves": [
+            "Close Combat",
+            "Shadow Claw",
+            "Assurance",
+            "Focus Energy"
+        ],
+        "additional_moves": [
+            "Bulk Up",
+            "Rage Fist"
+        ],
+        "drops": [
+            [
+                "Exp. Candy L",
+                4,
+                100
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                100
+            ],
+            [
+                "Mankey Fur",
+                5,
+                100
+            ],
+            [
+                "Muscle Feather",
+                3,
+                100
+            ],
+            [
+                "Mankey Fur",
+                3,
+                "Guest"
+            ],
+            [
+                "Tera Shard",
+                3,
+                100
+            ],
+            [
+                "Tera Shard",
+                3,
+                "Host"
+            ],
+            [
+                "Exp. Candy L",
+                2,
+                36.36
+            ],
+            [
+                "Rare Candy",
+                1,
+                22.73
+            ],
+            [
+                "Muscle Feather",
+                2,
+                45.45
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                22.73
+            ],
+            [
+                "Star Piece",
+                1,
+                45.45
+            ],
+            [
+                "Comet Shard",
+                1,
+                9.09
+            ],
+            [
+                "Nugget",
+                1,
+                22.73
+            ],
+            [
+                "Spicy Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Adamant Mint",
+                1,
+                13.64
+            ],
+            [
+                "Lonely Mint",
+                1,
+                13.64
+            ],
+            [
+                "Naughty Mint",
+                1,
+                13.64
+            ],
+            [
+                "Brave Mint",
+                1,
+                11.36
+            ],
+            [
+                "PP Up",
+                1,
+                22.73
+            ],
+            [
+                "Bottle Cap",
+                1,
+                18.18
+            ],
+            [
+                "Tera Shard",
+                1,
+                22.73
+            ],
+            [
+                "Mankey Fur",
+                2,
+                45.45
+            ],
+            [
+                "Ability Capsule",
+                1,
+                9.09
+            ],
+            [
+                "Ability Patch",
+                1,
+                4.55
+            ]
+        ]
+    },
+    "Clodsire": {
+        "species": "Clodsire",
+        "game": "Both",
+        "battle_level": 90,
+        "catch_level": 75,
+        "type": "Random",
+        "ability": "Random",
+        "moves": [
+            "Earthquake",
+            "Poison Jab",
+            "Megahorn",
+            "Yawn"
+        ],
+        "additional_moves": [],
+        "drops": [
+            [
+                "Exp. Candy L",
+                4,
+                100
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                100
+            ],
+            [
+                "Wooper Slime",
+                5,
+                100
+            ],
+            [
+                "Clever Feather",
+                3,
+                100
+            ],
+            [
+                "Wooper Slime",
+                3,
+                "Guest"
+            ],
+            [
+                "Tera Shard",
+                3,
+                100
+            ],
+            [
+                "Tera Shard",
+                3,
+                "Host"
+            ],
+            [
+                "Exp. Candy L",
+                2,
+                36.36
+            ],
+            [
+                "Rare Candy",
+                1,
+                22.73
+            ],
+            [
+                "Clever Feather",
+                2,
+                45.45
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                22.73
+            ],
+            [
+                "Big Pearl",
+                1,
+                45.45
+            ],
+            [
+                "Pearl String",
+                1,
+                9.09
+            ],
+            [
+                "Nugget",
+                1,
+                22.73
+            ],
+            [
+                "Sour Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Calm Mint",
+                1,
+                13.64
+            ],
+            [
+                "Gentle Mint",
+                1,
+                13.64
+            ],
+            [
+                "Careful Mint",
+                1,
+                13.64
+            ],
+            [
+                "Sassy Mint",
+                1,
+                13.64
+            ],
+            [
+                "PP Up",
+                1,
+                22.73
+            ],
+            [
+                "Bottle Cap",
+                1,
+                18.18
+            ],
+            [
+                "Tera Shard",
+                1,
+                22.73
+            ],
+            [
+                "Wooper Slime",
+                2,
+                45.45
+            ],
+            [
+                "Ability Capsule",
+                1,
+                9.09
+            ],
+            [
+                "Ability Patch",
+                1,
+                4.55
+            ]
+        ]
+    },
+    "Farigiraf": {
+        "species": "Farigiraf",
+        "game": "Both",
+        "battle_level": 90,
+        "catch_level": 75,
+        "type": "Random",
+        "ability": "Hidden Possible",
+        "moves": [
+            "Twin Beam",
+            "Hyper Voice",
+            "Low Kick",
+            "Uproar"
+        ],
+        "additional_moves": [
+            "Agility"
+        ],
+        "drops": [
+            [
+                "Exp. Candy L",
+                4,
+                100
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                100
+            ],
+            [
+                "Girafarig Fur",
+                5,
+                100
+            ],
+            [
+                "Health Feather",
+                3,
+                100
+            ],
+            [
+                "Girafarig Fur",
+                3,
+                "Guest"
+            ],
+            [
+                "Tera Shard",
+                3,
+                100
+            ],
+            [
+                "Tera Shard",
+                3,
+                "Host"
+            ],
+            [
+                "Exp. Candy L",
+                2,
+                36.36
+            ],
+            [
+                "Rare Candy",
+                1,
+                22.73
+            ],
+            [
+                "Health Feather",
+                2,
+                45.45
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                22.73
+            ],
+            [
+                "Big Mushroom",
+                1,
+                45.45
+            ],
+            [
+                "Balm Mushroom",
+                1,
+                9.09
+            ],
+            [
+                "Nugget",
+                1,
+                22.73
+            ],
+            [
+                "Spicy Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Sweet Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Salty Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Bitter Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Sour Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "PP Up",
+                1,
+                22.73
+            ],
+            [
+                "Bottle Cap",
+                1,
+                18.18
+            ],
+            [
+                "Tera Shard",
+                1,
+                22.73
+            ],
+            [
+                "Girafarig Fur",
+                2,
+                45.45
+            ],
+            [
+                "Ability Capsule",
+                1,
+                9.09
+            ],
+            [
+                "Ability Patch",
+                1,
+                4.55
+            ]
+        ]
+    },
+    "Kingambit": {
+        "species": "Kingambit",
+        "game": "Both",
+        "battle_level": 90,
+        "catch_level": 75,
+        "type": "Random",
+        "ability": "Hidden Possible",
+        "moves": [
+            "Iron Head",
+            "Night Slash",
+            "Kowtow Cleave",
+            "Thunder Wave"
+        ],
+        "additional_moves": [
+            "Swords Dance"
+        ],
+        "drops": [
+            [
+                "Exp. Candy L",
+                4,
+                100
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                100
+            ],
+            [
+                "Pawniard Blade",
+                5,
+                100
+            ],
+            [
+                "Muscle Feather",
+                3,
+                100
+            ],
+            [
+                "Pawniard Blade",
+                3,
+                "Guest"
+            ],
+            [
+                "Tera Shard",
+                3,
+                100
+            ],
+            [
+                "Tera Shard",
+                3,
+                "Host"
+            ],
+            [
+                "Exp. Candy L",
+                2,
+                36.36
+            ],
+            [
+                "Rare Candy",
+                1,
+                22.73
+            ],
+            [
+                "Muscle Feather",
+                2,
+                45.45
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                22.73
+            ],
+            [
+                "Star Piece",
+                1,
+                45.45
+            ],
+            [
+                "Comet Shard",
+                1,
+                9.09
+            ],
+            [
+                "Nugget",
+                1,
+                22.73
+            ],
+            [
+                "Spicy Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Adamant Mint",
+                1,
+                13.64
+            ],
+            [
+                "Lonely Mint",
+                1,
+                13.64
+            ],
+            [
+                "Naughty Mint",
+                1,
+                13.64
+            ],
+            [
+                "Brave Mint",
+                1,
+                11.36
+            ],
+            [
+                "PP Up",
+                1,
+                22.73
+            ],
+            [
+                "Bottle Cap",
+                1,
+                18.18
+            ],
+            [
+                "Tera Shard",
+                1,
+                22.73
+            ],
+            [
+                "Pawniard Blade",
+                2,
+                45.45
+            ],
+            [
+                "Ability Capsule",
+                1,
+                9.09
+            ],
+            [
+                "Ability Patch",
+                1,
+                4.55
+            ]
+        ]
+    },
+    "Baxcalibur": {
+        "species": "Baxcalibur",
+        "game": "Both",
+        "battle_level": 90,
+        "catch_level": 75,
+        "type": "Random",
+        "ability": "Random",
+        "moves": [
+            "Icicle Spear",
+            "Dragon Rush",
+            "Snowscape",
+            "Body Press"
+        ],
+        "additional_moves": [],
+        "drops": [
+            [
+                "Exp. Candy L",
+                4,
+                100
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                100
+            ],
+            [
+                "Frigibax Scales",
+                5,
+                100
+            ],
+            [
+                "Muscle Feather",
+                3,
+                100
+            ],
+            [
+                "Frigibax Scales",
+                3,
+                "Guest"
+            ],
+            [
+                "Tera Shard",
+                3,
+                100
+            ],
+            [
+                "Tera Shard",
+                3,
+                "Host"
+            ],
+            [
+                "Exp. Candy L",
+                2,
+                36.36
+            ],
+            [
+                "Rare Candy",
+                1,
+                22.73
+            ],
+            [
+                "Muscle Feather",
+                2,
+                45.45
+            ],
+            [
+                "Exp. Candy XL",
+                1,
+                22.73
+            ],
+            [
+                "Star Piece",
+                1,
+                45.45
+            ],
+            [
+                "Comet Shard",
+                1,
+                9.09
+            ],
+            [
+                "Nugget",
+                1,
+                22.73
+            ],
+            [
+                "Spicy Herba Mystica",
+                1,
+                13.64
+            ],
+            [
+                "Adamant Mint",
+                1,
+                13.64
+            ],
+            [
+                "Lonely Mint",
+                1,
+                13.64
+            ],
+            [
+                "Naughty Mint",
+                1,
+                13.64
+            ],
+            [
+                "Brave Mint",
+                1,
+                11.36
+            ],
+            [
+                "PP Up",
+                1,
+                22.73
+            ],
+            [
+                "Bottle Cap",
+                1,
+                18.18
+            ],
+            [
+                "Tera Shard",
+                1,
+                22.73
+            ],
+            [
+                "Frigibax Scales",
+                2,
+                45.45
+            ],
+            [
+                "Ability Capsule",
+                1,
+                9.09
+            ],
+            [
+                "Ability Patch",
+                1,
+                4.55
+            ]
+        ]
+    }
+}

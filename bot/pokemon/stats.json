@@ -2973,7 +2973,7 @@
                 null,
                 1.5,
                 115.0,
-                "Paldean"
+                "Combat"
             ],
             [
                 75,
@@ -2986,7 +2986,7 @@
                 "Fire",
                 1.4,
                 85.0,
-                "Paldean Fire"
+                "Blaze"
             ],
             [
                 75,
@@ -2999,7 +2999,7 @@
                 "Water",
                 1.4,
                 110.0,
-                "Paldean Water"
+                "Aqua"
             ]
         ]
     },

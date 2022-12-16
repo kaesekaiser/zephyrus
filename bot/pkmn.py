@@ -490,6 +490,77 @@ class EffNavigator(Navigator):
         )
 
 
+def display_raid(raid: pk.TeraRaid, mode: str):
+    mon = find_mon(raid.species)
+
+    if mode == "default":
+        ret = []
+        if raid.game != "Both":
+            ret.append(f"Only available in **{raid.game}**.")
+        if raid.type != "Random":
+            ret.append(f"Always **{raid.type}-type**.")
+        if ret:
+            ret.append("")
+
+        if raid.battle_level == raid.catch_level:
+            ret.append(f"**Level:** {raid.battle_level}")
+        else:
+            ret.append(f"**Battled** at Lv. {raid.battle_level}; **caught** at Lv. {raid.catch_level}.")
+
+        if raid.ability == "Hidden Ability":
+            ret.append(f"**Ability:** {mon.hidden_ability} (Hidden Ability)")
+        elif raid.ability == "Standard":
+            ret.append(f"**Ability:** {mon.regular_abilities[0]}")
+        elif raid.ability == "Hidden Possible":
+            ret.append(f"**Possible Abilities:** {grammatical_join([g for g in mon.legal_abilities if g], 'or')}")
+        else:
+            if len(mon.regular_abilities) == 1:
+                ret.append(f"**Ability:** {mon.regular_abilities[0]}")
+            else:
+                ret.append(f"**Possible Abilities:** {grammatical_join(mon.regular_abilities, 'or')}")
+
+        ret.append(f"**Moves:** {', '.join(raid.moves)}")
+        if raid.additional_moves:
+            ret.append(f"**Additional Moves:** {', '.join(raid.additional_moves)}")
+        else:
+            ret.append("No additional moves.")
+
+        return "\n".join(ret)
+
+    elif mode == "drops":
+        return "\n".join(str(g) for g in raid.drops)
+
+    elif mode == "dex":
+        return display_mon(mon, "dex")
+
+
+class RaidNavigator(Navigator):
+    def __init__(self, raid: pk.TeraRaid, **kwargs):
+        super().__init__(
+            kwargs.get("emol", ball_emol("master")), [], 1, raid.name, prev="", nxt=""
+        )
+        self.raid = raid
+        self.mon = find_mon(raid.species)
+        self.mode = "default"
+        self.funcs[zeph.emojis["moves"]] = partial(self.change_mode, "default")
+        self.funcs[zeph.emojis["rare_candy"]] = partial(self.change_mode, "drops")
+        self.funcs[zeph.emojis["poke_ball"]] = partial(self.change_mode, "dex")
+
+    def change_mode(self, mode: str):
+        self.mode = mode
+
+    async def after_timeout(self):
+        await self.remove_buttons()
+
+    @property
+    def con(self):
+        return self.emol.con(
+            f"#{str(self.mon.dex_no).rjust(4, '0')} {self.mon.full_name}" if self.mode == "dex" else
+            f"{self.raid.name} Drops" if self.mode == "drops" else self.raid.name,
+            d=display_raid(self.raid, self.mode), thumb=pk.image(self.mon)
+        )
+
+
 @zeph.command(
     name="pokemon", aliases=["pkmn", "pk"], usage="z!pokemon help",
     description="Performs various Pok\u00e9mon-related functions.",
@@ -1121,7 +1192,8 @@ class CatchRateNavigator(Navigator):
 
 class PokemonInterpreter(Interpreter):
     redirects = {
-        "t": "type", "e": "eff", "m": "move", "s": "test", "b": "build", "c": "catch", "h": "help", "d": "dex"
+        "t": "type", "e": "eff", "m": "move", "s": "test", "b": "build", "c": "catch", "h": "help", "x": "dex",
+        "r": "raid"
     }
 
     @staticmethod
@@ -1151,14 +1223,22 @@ class PokemonInterpreter(Interpreter):
                      "- Both arguments are optional.\n\n"
                      "Note that this calculator is only guaranteed to be accurate for Scarlet and Violet. Some catch "
                      "rates (e.g. box legendaries) change between generations, and the formula itself has also "
-                     "changed several times."
+                     "changed several times.",
+            "raid": "`z!pokemon raid <# stars> <species...>` shows relevant info for a Tera Raid Battle. Note that "
+                    "only 5- and 6-star raids are currently included, and event raids are not included.\n"
+                    f"- {zeph.emojis['moves']} lists the possible abilities and moves for the raid mon.\n"
+                    f"- {zeph.emojis['rare_candy']} lists the raid item drops.\n"
+                    f"- {zeph.emojis['poke_ball']} opens the dex entry for the raid mon.\n\n"
+                    "`z!pk 5` may be used as a shortcut for `z!pokemon raid 5`, e.g. `z!pk 5 grimmsnarl`. The same "
+                    "goes for `z!pk 6`."
         }
         desc_dict = {
             "type": "Shows type effectiveness for a type.",
             "eff": "Checks type matchups against a combination of types.",
             # "move": "Shows info about a move.",
             "dex": "Browses the dex.",
-            "catch": "Opens the Scarlet/Violet catch rate calculator."
+            "catch": "Opens the Scarlet/Violet catch rate calculator.",
+            "raid": "Displays info about a given Tera Raid Battle."
         }
         shortcuts = {j: g for g, j in self.redirects.items() if len(g) == 1}
 
@@ -1311,6 +1391,56 @@ class PokemonInterpreter(Interpreter):
             starting_mon = find_mon(1)
 
         return await CatchRateNavigator(mon=starting_mon, ball=ball_type).run(self.ctx)
+
+    async def specify_raid_form(self, species: str) -> str:
+        async def wait_for(*allowable_responses: str) -> str:
+            try:
+                mess = await zeph.wait_for(
+                    "message", check=lambda c: general_pred(self.ctx)(c) and (pk.fix(c.content) in allowable_responses),
+                    timeout=60
+                )
+            except asyncio.TimeoutError:
+                return allowable_responses[0]
+            else:
+                return pk.fix(mess.content)
+
+        if species == "Tauros":
+            await ball_emol("master").send(self.ctx, "Is this Tauros Combat, Aqua, or Blaze Breed?")
+            return await wait_for("combat", "aqua", "blaze")
+        if species == "Toxtricity":
+            await ball_emol("master").send(self.ctx, "Is this Toxtricity Amped or Low Key?")
+            return await wait_for("amped", "low-key")
+        if species == "Indeedee":
+            await ball_emol("master").send(self.ctx, "Is this Indeedee male or female?")
+            return await wait_for("male", "female")
+
+    async def _raid(self, *args):
+        if (len(args) < 2) or (not can_int(args[0])):
+            raise commands.CommandError("Format: `z!pk raid <# stars> <species...>`")
+
+        stars = int(args[0])
+        if stars not in [5, 6]:
+            raise commands.CommandError("Currently only 5- and 6-star raids are included in this command.")
+
+        mon = find_mon(" ".join(args[1:]))
+        if (mon.species.name in ["Tauros", "Indeedee", "Toxtricity"]) and \
+                (pk.fix(" ".join(args[1:])) != pk.fix(mon.species_and_form)):
+            mon.change_form(await self.specify_raid_form(mon.species.name))
+
+        if mon.species_and_form in pk.raids[stars]:
+            raid = pk.raids[stars][mon.species_and_form]
+        elif mon.species.name in pk.raids[stars]:
+            raid = pk.raids[stars][mon.species.name]
+        else:
+            raise commands.CommandError(f"There is no {stars}\u2605 {mon.species.name} raid.")
+
+        return await RaidNavigator(raid).run(self.ctx)
+
+    async def _5(self, *args):
+        return await self._raid(5, *args)
+
+    async def _6(self, *args):
+        return await self._raid(6, *args)
 
 
 @zeph.command(hidden=True, aliases=["lm"], usage="z!lm name type category PP power accuracy contact target **kwargs")
