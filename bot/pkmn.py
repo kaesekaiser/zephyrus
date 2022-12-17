@@ -1018,7 +1018,7 @@ class CatchRateNavigator(Navigator):
             "species": lambda c: find_mon(c, fail_silently=True),
             "level": lambda c: can_int(c) and (1 <= int(c) <= 100),
             "ball": lambda c: caseless_match(c.split()[0], pk.poke_ball_types),
-            "status": lambda c: caseless_match(c, pk.status_conditions),
+            "status": lambda c: caseless_match(c, ["None", *pk.status_conditions]),
             "surfing": is_yesno,
             "dark": is_yesno,
             "my_level": lambda c: can_int(c) and (1 <= int(c) <= 100),
@@ -1087,6 +1087,8 @@ class CatchRateNavigator(Navigator):
         if emoji == "ball":
             self.calculator.ball_type = user_input.split()[0]
         if emoji == "status":
+            if user_input == "none":
+                self.calculator.mon.status_condition = None
             self.calculator.mon.status_condition = caseless_match(user_input, pk.status_conditions)
         if emoji == "surfing":
             self.calculator.is_surfing = user_input in ["y", "yes"]
@@ -1186,7 +1188,7 @@ class CatchRateNavigator(Navigator):
               f"Chance to capture within 5 throws: {round(100 * self.calculator.chance_after_throws(5), 2)}%\n"
               f"Throws needed for 95% capture chance: {self.calculator.throws_for_95_percent_capture}",
             thumb=pk.image(self.wild_mon),
-            footer="This menu is closed." if self.closed_elsewhere else "To change any value, say its name in chat."
+            footer=None if self.closed_elsewhere else "To change any value, say its name in chat."
         )
 
 
