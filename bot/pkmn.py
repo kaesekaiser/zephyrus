@@ -497,7 +497,7 @@ def display_raid(raid: pk.TeraRaid, mode: str):
         ret = []
         if raid.game != "Both":
             ret.append(f"Only available in **{raid.game}**.")
-        if raid.type != "Random":
+        if raid.type not in ["Random", "Default"]:
             ret.append(f"Always **{raid.type}-type**.")
         if ret:
             ret.append("")
@@ -511,13 +511,11 @@ def display_raid(raid: pk.TeraRaid, mode: str):
             ret.append(f"**Ability:** {mon.hidden_ability} (Hidden Ability)")
         elif raid.ability == "Standard":
             ret.append(f"**Ability:** {mon.regular_abilities[0]}")
-        elif raid.ability == "Hidden Possible":
-            ret.append(f"**Possible Abilities:** {grammatical_join([g for g in mon.legal_abilities if g], 'or')}")
         else:
-            if len(mon.regular_abilities) == 1:
-                ret.append(f"**Ability:** {mon.regular_abilities[0]}")
+            if len(mon.legal_abilities) == 1:
+                ret.append(f"**Ability:** {mon.legal_abilities[0]}")
             else:
-                ret.append(f"**Possible Abilities:** {grammatical_join(mon.regular_abilities, 'or')}")
+                ret.append(f"**Possible Abilities:** {grammatical_join(mon.legal_abilities, 'or')}")
 
         ret.append(f"**Moves:** {', '.join(raid.moves)}")
         if raid.additional_moves:
