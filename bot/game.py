@@ -145,7 +145,8 @@ async def anagrams(ctx: commands.Context):
     message = await ana.say("Picking letters...")
 
     while True:
-        letters = sample(wr.anagramsDist, 8)
+        vowel = choice([g for g in wr.anagramsDist if g in "aeiou"])  # just guarantee at least one vowel
+        letters = [vowel, *sample(wr.anagramsDist, 7)]
         if len(wr.anagrams("".join(letters))) > 20:
             break
 
@@ -505,34 +506,32 @@ class CustomChessNavigator(Navigator):
         )
 
 
-class ChessPlayNavigator(Navigator):
+class ChessNavigator(Navigator):
     """Somewhat in beta."""
 
     fir = re.compile(r"(rook|knight|pawn|king|queen|bishop)\s((from\s[a-h][1-8]\s)?((to|takes?|x)\s))?[a-h][1-8]")
     fir_castle = re.compile(r"castles?(\s(short|long|queen\s?side|king\s?side))?")
+    help_str = "If you don't know how to play chess, you're probably in the wrong place. "\
+        "Maybe read [this](https://www.chess.com/learn-how-to-play-chess) or another article first.\n\n"\
+        "To move a piece, send a message with the type of piece you're moving, and the square you're moving "\
+        "it to (e.g. `pawn to e4`). If a pawn is promoting, you'll be asked what to promote it to, so don't "\
+        "worry about including that information. To castle, say `castle` + `short` or `kingside` to castle "\
+        "on the kingside, or `long` or `queenside` to castle on the queenside.\n\n"\
+        "You can also use [Standard Algebraic Notation]"\
+        "(https://en.wikipedia.org/wiki/Algebraic_notation_(chess)) to input moves."
 
-    def __init__(self, white: User, black: User, board: ch.BoardWrapper, running_score: list = (0, 0)):
+    def __init__(self, white: User, black: User, board: ch.BoardWrapper):
         super().__init__(chess_emol, [], 0, "", prev="", nxt="")
         self.white = white
         self.black = black
         self.board = board
         self.notification = None  # the message displayed above the board
         self.messages = []
-        self.perspectives = [False, True]
-        self.funcs["🔃"] = self.flip_board
-        self.funcs["⏬"] = self.bring_down
-        self.funcs["resign"] = self.resign
-        self.funcs["🏳️"] = self.resign
-        self.funcs["draw"] = self.draw_offer
-        self.funcs[zeph.emojis["draw_offer"]] = self.draw_offer
-        self.funcs[zeph.emojis["help"]] = self.help
-        self.help_mode = False
-        self.turn = True
-        self.running_score = running_score
+        self.mode = "board"
 
     @property
-    def players(self):
-        return self.black, self.white
+    def turn(self):
+        return self.board.turn
 
     @property
     def at_play(self):
@@ -546,89 +545,15 @@ class ChessPlayNavigator(Navigator):
     def is_game_over(self):
         return self.board.inclusive_result() != "*"
 
-    def flip_board(self):
-        self.perspectives[self.turn] = not self.perspectives[self.turn]
-
-    async def bring_down(self):
-        await self.emol.edit(self.message, "This board has been moved. Scroll down a bit.")
-        mess = await self.message.channel.send(embed=self.con)
-        self.messages[self.turn] = mess
-        self.message = mess
-        for button in self.legal:
-            try:
-                await self.message.add_reaction(button)
-            except discord.HTTPException:
-                pass
-
-    async def resign(self):
-        self.board.resignation = self.turn
-
-    async def draw_offer(self):
-        if await confirm(
-            f"{self.at_play.name} offers a draw. Do you accept?", self.not_at_play.dm_channel, caller=self.not_at_play,
-            emol=self.emol, yes="accept a draw", no="decline"
-        ):
-            self.board.draw_offer_accepted = True
+    def set_mode(self, mode: str):
+        if self.mode == mode:
+            self.mode = "board"
         else:
-            await self.emol.send(self.at_play.dm_channel, "Draw offer **declined.** Play continues.")
-
-    def help(self):
-        self.help_mode = not self.help_mode
+            self.mode = mode
 
     async def send_everywhere(self, s: str):
         for mess in self.messages:
             await self.emol.send(mess.channel, s)
-
-    def score_for(self, color: bool):
-        return f"{round(self.running_score[color], 1)}-{round(self.running_score[not color], 1)}"
-
-    def con_for(self, color: bool, force_top: str = None):
-        if force_top:
-            top = force_top + "\n\n"
-        elif self.is_game_over:
-            top = self.board.end_condition() + "\n\n"
-        elif color != self.board.turn:
-            top = f"{'White' if self.board.turn else 'Black'}'s move{'; check.' if self.board.is_check() else '.'}\n\n"
-        else:
-            top = (self.notification + "\n\n") if self.notification else \
-                f"Your move{'; check.' if self.board.is_check() else '.'}\n\n"
-
-        return self.emol.con(
-            f"Chess vs. {self.players[not color].name}" +
-            (f", Round {self.board.round} ({self.score_for(color)})" if self.board.round > 1 else ""),
-            d=top + self.get_emoji_chessboard(self.board, self.perspectives[color]),
-            footer=self.board.footer
-        )
-
-    @property
-    def con(self):
-        if self.help_mode:
-            return self.emol.con(
-                "Help",
-                d="If you don't know how to play chess, you probably shouldn't have accepted this challenge. "
-                "Read [this](https://www.chess.com/learn-how-to-play-chess) or another article though.\n\n"
-                "To move a piece, send a message with the type of piece you're moving, and the square you're moving "
-                "it to (e.g. `pawn to e4`). If a pawn is promoting, you'll be asked what to promote it to, so don't "
-                "worry about including that information. To castle, say `castle` + `short` or `kingside` to castle "
-                "on the kingside, or `long` or `queenside` to castle on the queenside.\n\n"
-                "You can also use [Standard Algebraic Notation]"
-                "(https://en.wikipedia.org/wiki/Algebraic_notation_(chess)) to input moves.\n\n"
-                "🔃 flips the board around.\n"
-                "⏬ re-sends the message with the board, so you don't have to keep scrolling.\n"
-                "🏳️ resigns the game.\n"
-                f"{zeph.emojis['draw_offer']} offers a draw to your opponent.\n"
-                f"{zeph.emojis['help']} opens and closes this menu."
-            )
-        return self.con_for(self.turn)
-
-    def public_con(self):
-        return self.emol.con(
-            f"{self.white.name} vs. {self.black.name}" +
-            (f", Round {self.board.round} ({self.score_for(True)})" if self.board.round > 1 else ""),
-            d=(f"{self.board.end_condition()}\n\n" if self.board.end_condition() else "") +
-            self.get_emoji_chessboard(self.board),
-            footer=self.board.footer
-        )
 
     @staticmethod
     def get_emoji_chessboard(board: ch.BoardWrapper, white_perspective: bool = True):
@@ -645,35 +570,14 @@ class ChessPlayNavigator(Navigator):
         ) + "\n" + ss["__"] + \
             ("".join(ss[f"L{get_followup(g)}"] for g in ("ABCDEFGH" if white_perspective else "HGFEDCBA")))
 
-    async def get_emoji(self, ctx: commands.Context):
-        def pred(mr: MR, u: User):
-            if isinstance(mr, discord.Message) and not self.help_mode:
-                return mr.channel == self.message.channel and u == self.at_play and \
-                       (ch.san_regex.fullmatch(mr.content) or self.fir.fullmatch(mr.content.lower()) or
-                        self.fir_castle.fullmatch(mr.content.lower()) or mr.content.lower() in self.legal)
-            elif isinstance(mr, discord.Reaction):
-                return mr.emoji in self.legal and mr.message == self.message and u == self.at_play
+    def board_con(self, title: str, top: str = None, perspective: bool = True):
+        if top is None:
+            top = f"{self.board.end_condition()}\n\n" if self.board.end_condition() else \
+                f"{self.notification}\n\n" if self.notification else ""
 
-        ret = (await zeph.wait_for('reaction_or_message', timeout=300, check=pred))[0]
+        return self.emol.con(title, d=top+self.get_emoji_chessboard(self.board, perspective), footer=self.board.footer)
 
-        if isinstance(ret, discord.Reaction):
-            return ret.emoji
-        elif isinstance(ret, discord.Message):
-            try:
-                await ret.delete()
-            except discord.HTTPException:
-                pass
-            return ret.content
-
-    async def after_timeout(self):
-        return await self.notify_timeout()
-
-    async def notify_timeout(self):
-        await self.send_everywhere("Chess game timed out.")
-        self.closed_elsewhere = True
-        return await self.close()
-
-    async def parse_input(self, s: str) -> str:
+    async def parse_input(self, s: str, personal: bool = True) -> str:
         def pred(m: discord.Message):
             return m.author == self.at_play and m.channel == self.message.channel
 
@@ -691,9 +595,15 @@ class ChessPlayNavigator(Navigator):
             if from_square:
                 piece_at = self.board.piece_at(ch.chess.SQUARE_NAMES.index(from_square))
                 if piece_at != piece:
-                    raise ValueError(f"You don't control a {piece_type} at {from_square}.")
+                    raise ValueError(
+                        f"You don't control a {piece_type} at {from_square}." if personal else
+                        f"There is no {'white' if piece.color else 'black'} {piece_type} at {from_square}."
+                    )
                 if not self.board.is_pseudo_legal(ch.chess.Move.from_uci(from_square + to_square)):
-                    raise ValueError(f"Your {piece_type} at {from_square} can't reach {to_square}.")
+                    raise ValueError(
+                        f"{'Your' if personal else 'White' if piece.color else 'Black'} "
+                        f"{piece_type} at {from_square} can't reach {to_square}."
+                    )
             else:
                 valid_from = [
                     g for g in ch.chess.SQUARES
@@ -702,9 +612,15 @@ class ChessPlayNavigator(Navigator):
                 if len(valid_from) == 0:
                     rot = "take on" if self.board.piece_at(ch.chess.SQUARE_NAMES.index(to_square)) else "reach"
                     if len([g for g in ch.chess.SQUARES if self.board.piece_at(g) == piece]) == 1:
-                        raise ValueError(f"Your {piece_type} can't {rot} {to_square}.")
+                        raise ValueError(
+                            f"{'Your' if personal else 'White' if piece.color else 'Black'} "
+                            f"{piece_type} can't {rot} {to_square}."
+                        )
                     else:
-                        raise ValueError(f"You don't have a {piece_type} that can {rot} {to_square}.")
+                        raise ValueError(
+                            f"You don't have a {piece_type} that can {rot} {to_square}." if personal else
+                            f"{'White' if piece.color else 'Black'} has no {piece_type} that can {rot} {to_square}."
+                        )
                 elif len(valid_from) == 1:
                     from_square = ch.chess.SQUARE_NAMES[valid_from[0]]
                 else:
@@ -761,6 +677,130 @@ class ChessPlayNavigator(Navigator):
                     pass
                 return {"short": "O-O", "kingside": "O-O", "long": "O-O-O", "queenside": "O-O-O"}[cas.content.lower()]
 
+    async def get_emoji(self, ctx: commands.Context):
+        def pred(mr: MR, u: User):
+            if isinstance(mr, discord.Message) and self.mode == "board":
+                return mr.channel == self.message.channel and u == self.at_play and \
+                       (ch.san_regex.fullmatch(mr.content) or self.fir.fullmatch(mr.content.lower()) or
+                        self.fir_castle.fullmatch(mr.content.lower()) or mr.content.lower() in self.legal)
+            elif isinstance(mr, discord.Reaction):
+                return mr.emoji in self.legal and mr.message == self.message and u == self.at_play
+
+        ret = (await zeph.wait_for('reaction_or_message', timeout=300, check=pred))[0]
+
+        if isinstance(ret, discord.Reaction):
+            return ret.emoji
+        elif isinstance(ret, discord.Message):
+            try:
+                await ret.delete()
+            except discord.HTTPException:
+                pass
+            return ret.content
+
+    async def after_timeout(self):
+        return await self.notify_timeout()
+
+    async def notify_timeout(self):
+        await self.send_everywhere("Chess game timed out.")
+        self.closed_elsewhere = True
+        return await self.close()
+
+    async def close(self):
+        for message in self.messages:
+            await self.remove_buttons(message)
+
+
+class ChessPlayNavigator(ChessNavigator):
+    """For multiplayer use."""
+
+    def __init__(self, white: User, black: User, board: ch.BoardWrapper, running_score: list = (0, 0)):
+        super().__init__(white, black, board)
+        self.perspectives = [False, True]
+        self.funcs["🔃"] = self.flip_board
+        self.funcs["⏬"] = self.bring_down
+        self.funcs["resign"] = self.resign
+        self.funcs["🏳️"] = self.resign
+        self.funcs["draw"] = self.draw_offer
+        self.funcs[zeph.emojis["draw_offer"]] = self.draw_offer
+        self.funcs[zeph.emojis["help"]] = partial(self.set_mode, "help")
+        self.running_score = running_score
+
+    @property
+    def players(self):
+        return self.black, self.white
+
+    def flip_board(self):
+        self.perspectives[self.turn] = not self.perspectives[self.turn]
+
+    async def bring_down(self):
+        await self.emol.edit(self.message, "This board has been moved. Scroll down a bit.")
+        mess = await self.message.channel.send(embed=self.con)
+        self.messages[self.turn] = mess
+        self.message = mess
+        for button in self.legal:
+            try:
+                await self.message.add_reaction(button)
+            except discord.HTTPException:
+                pass
+
+    async def resign(self):
+        self.board.resignation = self.turn
+
+    async def draw_offer(self):
+        if await confirm(
+            f"{self.at_play.name} offers a draw. Do you accept?", self.not_at_play.dm_channel, caller=self.not_at_play,
+            emol=self.emol, yes="accept a draw", no="decline"
+        ):
+            self.board.draw_offer_accepted = True
+        else:
+            await self.emol.send(self.at_play.dm_channel, "Draw offer **declined.** Play continues.")
+
+    def help(self):
+        if self.mode == "help":
+            self.mode = "board"
+        else:
+            self.mode = "help"
+
+    def score_for(self, color: bool):
+        return f"{round(self.running_score[color], 1)}-{round(self.running_score[not color], 1)}"
+
+    def con_for(self, color: bool, force_top: str = None):
+        if force_top:
+            top = force_top + "\n\n"
+        elif self.is_game_over:
+            top = self.board.end_condition() + "\n\n"
+        elif color != self.board.turn:
+            top = f"{'White' if self.board.turn else 'Black'}'s move{'; check.' if self.board.is_check() else '.'}\n\n"
+        else:
+            top = (self.notification + "\n\n") if self.notification else \
+                f"Your move{'; check.' if self.board.is_check() else '.'}\n\n"
+
+        return self.board_con(
+            f"Chess vs. {self.players[not color].name}" +
+            (f", Round {self.board.round} ({self.score_for(color)})" if self.board.round > 1 else ""),
+            top=top, perspective=self.perspectives[color]
+        )
+
+    @property
+    def con(self):
+        if self.mode == "help":
+            return self.emol.con(
+                "Help",
+                d=self.help_str + "\n\n"
+                "🔃 flips the board around.\n"
+                "⏬ re-sends the message with the board, so you don't have to keep scrolling.\n"
+                "🏳️ resigns the game.\n"
+                f"{zeph.emojis['draw_offer']} offers a draw to your opponent.\n"
+                f"{zeph.emojis['help']} opens and closes this menu."
+            )
+        return self.con_for(self.message == self.messages[1])
+
+    def public_con(self):
+        return self.board_con(
+            f"{self.white.name} vs. {self.black.name}" +
+            (f", Round {self.board.round} ({self.score_for(True)})" if self.board.round > 1 else "")
+        )
+
     async def run_nonstandard_emoji(self, emoji: Union[discord.Emoji, str], ctx: commands.Context):
         if emoji in self.legal:
             return
@@ -770,17 +810,15 @@ class ChessPlayNavigator(Navigator):
         except asyncio.TimeoutError:
             return await self.notify_timeout()
         except ValueError as e:
-            self.notification = e
+            self.notification = str(e)
         else:
             try:
                 self.board.move_by_san(move)
-                self.notification = self.board.end_condition()
             except ValueError:
                 self.notification = "Illegal move."
 
     async def post_process(self):
-        if self.turn != self.board.turn:
-            self.turn = self.board.turn
+        if self.message != self.messages[self.turn]:
             self.message = self.messages[self.turn]
             await self.message.edit(embed=self.con)
             await self.messages[2].edit(embed=self.public_con())
@@ -815,11 +853,69 @@ class ChessPlayNavigator(Navigator):
         self.messages.append(await ctx.send(embed=self.public_con()))
         await self.run(ctx, skip_setup=True)
 
-    async def close(self):
-        self.message = self.messages[0]
-        await self.remove_buttons()
-        self.message = self.messages[1]
-        await self.remove_buttons()
+
+class SoloChessNavigator(ChessNavigator):
+    def __init__(self, user: User, board: ch.BoardWrapper):
+        super().__init__(user, user, board)
+        self.title = "Chess"
+        self.perspective = True
+        self.funcs["🔃"] = self.flip_board
+        self.funcs["📥"] = partial(self.set_mode, "save")
+        self.funcs["🆕"] = self.reset
+        self.funcs[zeph.emojis["help"]] = partial(self.set_mode, "help")
+        self.funcs[zeph.emojis["no"]] = self.close
+
+    def standard_pred(self, m: discord.Message):
+        return m.channel == self.message.channel and m.author == self.white
+
+    def flip_board(self):
+        self.perspective = not self.perspective
+
+    async def reset(self):
+        self.board = ch.BoardWrapper(self.board.setup)
+        self.notification = "Board reset."
+
+    @property
+    def con(self):
+        if self.mode == "help":
+            return self.emol.con(
+                "Help",
+                d=self.help_str + "\n\n"
+                "🔃 flips the board around.\n"
+                "📥 displays the FEN and PGN for the board, so you can save it if you need.\n"
+                "🆕 resets the board to the starting position, removing all moves.\n"
+                f"{zeph.emojis['help']} opens and closes this menu.\n"
+                f"{zeph.emojis['no']} exits the board editor."
+            )
+
+        elif self.mode == "save":
+            return self.emol.con(
+                "Board Data",
+                fs={"FEN": f"```{self.board.fen()}```", "PGN": f"```{self.board.san.history_range(space_out=True)}```"},
+            )
+
+        return self.board_con(self.title, perspective=self.perspective)
+
+    async def run_nonstandard_emoji(self, emoji: Union[discord.Emoji, str], ctx: commands.Context):
+        if emoji in self.legal:
+            return
+
+        try:
+            move = await self.parse_input(emoji, personal=False)
+        except asyncio.TimeoutError:
+            return await self.notify_timeout()
+        except ValueError as e:
+            self.notification = e
+        else:
+            try:
+                self.board.move_by_san(move)
+            except ValueError:
+                self.notification = "Illegal move."
+
+    async def play(self, ctx: commands.Context):
+        self.message = await ctx.send(embed=self.board_con(self.title))
+        self.messages = [self.message]
+        await self.run(ctx, on_new_message=False)
 
 
 @zeph.command(
@@ -869,7 +965,17 @@ async def chess_command(ctx: commands.Context, *args):
               "custom initial setup, or continuing from an unfinished game, use `z!chess custom <@opponent>`."
         )
 
-    opponent = await commands.MemberConverter().convert(ctx, args[-1])
+    opponent = args[-1]
+
+    if opponent.lower() == "solo":
+        return await SoloChessNavigator(ctx.author, ch.BoardWrapper()).play(ctx)
+    else:
+        opponent = await commands.MemberConverter().convert(ctx, opponent)
+
+    if opponent == ctx.author:
+        return await chess_emol.send(ctx, "You can't challenge yourself.")
+    if opponent.bot:
+        return await chess_emol.send(ctx, "Bots can't play chess.")
 
     if len(args) == 2:
         if args[0].lower() != "custom":
@@ -889,11 +995,6 @@ async def chess_command(ctx: commands.Context, *args):
 
     else:
         raise commands.BadArgument
-
-    if opponent == ctx.author:
-        return await chess_emol.send(ctx, "You can't challenge yourself.")
-    if opponent.bot:
-        return await chess_emol.send(ctx, "Bots can't play chess.")
 
     if await confirm(
             f"{opponent.name}, do you accept the challenge{' with these rules' if options else ''}?",
