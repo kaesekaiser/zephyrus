@@ -616,22 +616,26 @@ class Mon:
         return form_name_styles.get(self.form.name, "{} (" + self.form.name + " Form)").format(self.species.name)
 
     @property
-    def legal_abilities(self):
+    def raw_legal_abilities(self):
         if self.species_and_form in legal_abilities:
             return legal_abilities[self.species_and_form]
         return legal_abilities[self.species.name]
 
     @property
+    def legal_abilities(self):
+        return [g for g in self.raw_legal_abilities if g]
+
+    @property
     def regular_abilities(self):
-        return [g for g in self.legal_abilities[:2] if g]
+        return [g for g in self.raw_legal_abilities[:2] if g]
 
     @property
     def hidden_ability(self):
-        return self.legal_abilities[2] if self.legal_abilities[2] else None
+        return self.raw_legal_abilities[2] if self.raw_legal_abilities[2] else None
 
     @property
     def special_event_ability(self):
-        return self.legal_abilities[3] if self.legal_abilities[3] else None
+        return self.raw_legal_abilities[3] if self.raw_legal_abilities[3] else None
 
     @property
     def ni(self):
