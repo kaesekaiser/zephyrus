@@ -185,11 +185,11 @@ class DexSearchNavigator(Navigator):
         "weight": lambda m: m.weight,
         "stats": lambda m: sum(m.base_stats),
         "hp": lambda m: m.form.hp,
-        "attack": lambda m: m.form.atk,
-        "defense": lambda m: m.form.dfn,
-        "spattack": lambda m: m.form.spa,
-        "spdefense": lambda m: m.form.spd,
-        "speed": lambda m: m.form.spe
+        "atk": lambda m: m.form.atk,
+        "def": lambda m: m.form.dfn,
+        "spa": lambda m: m.form.spa,
+        "spd": lambda m: m.form.spd,
+        "spe": lambda m: m.form.spe
     }
 
     def __init__(self, **kwargs):
@@ -219,12 +219,12 @@ class DexSearchNavigator(Navigator):
             "height": "Height",
             "weight": "Weight",
             "stats": "Total base stats",
-            "hp": "HP stat",
-            "attack": "Attack stat",
-            "defense": "Defense stat",
-            "spattack": "SpAttack stat",
-            "spdefense": "SpDefense stat",
-            "speed": "Speed stat"
+            "hp": "Base HP",
+            "atk": "Base Attack",
+            "def": "Base Defense",
+            "spa": "Base Sp. Attack",
+            "spd": "Base Sp. Defense",
+            "spe": "Base Speed"
         }[self.sort]
 
     def do_nothing(self):  # control
@@ -275,16 +275,16 @@ class DexSearchNavigator(Navigator):
             return f"{mon_name} (**{sum(mon.base_stats)}** total)"
         elif self.sort == "hp":
             return f"{mon_name} (**{mon.form.hp}** HP)"
-        elif self.sort == "attack":
-            return f"{mon_name} (**{mon.form.atk}** Attack)"
-        elif self.sort == "defense":
-            return f"{mon_name} (**{mon.form.dfn}** Defense)"
-        elif self.sort == "spattack":
-            return f"{mon_name} (**{mon.form.spa}** SpAttack)"
-        elif self.sort == "spdefense":
-            return f"{mon_name} (**{mon.form.spd}** SpDefense)"
-        elif self.sort == "speed":
-            return f"{mon_name} (**{mon.form.spe}** Speed)"
+        elif self.sort == "atk":
+            return f"{mon_name} (**{mon.form.atk}** Atk)"
+        elif self.sort == "def":
+            return f"{mon_name} (**{mon.form.dfn}** Def)"
+        elif self.sort == "spa":
+            return f"{mon_name} (**{mon.form.spa}** SpA)"
+        elif self.sort == "spd":
+            return f"{mon_name} (**{mon.form.spd}** SpD)"
+        elif self.sort == "spe":
+            return f"{mon_name} (**{mon.form.spe}** Spe)"
 
     def reapply_search(self):
         if self.forms:
@@ -307,7 +307,7 @@ class DexSearchNavigator(Navigator):
             return True
 
         if option == "gen":
-            return can_int(value) and int(value) in range(1, 8)  # ALLOW RANGE VALUES ?
+            return can_int(value) and int(value) in range(1, 10)  # ALLOW RANGE VALUES ?
         elif option == "types" or option == "type":
             return all(g.title() in pk.types or g.title() == "None" for g in re.split(r"[/,]", value))
         elif option == "name":
@@ -366,8 +366,8 @@ class DexSearchNavigator(Navigator):
                   "e.g. `name:A`. `name:any` resets the filter.\n\n"
                   "`sort:<method>` - sorts the results in a certain order. `<method>` can be `name`, to sort A→Z; "
                   "`number`, to sort by National Dex number; `height`, to sort by height; `weight`, to sort by "
-                  "weight; `stats`, to sort by total base stats; or any of `hp`, `attack`, `defense`, `spattack`, "
-                  "`spdefense`, or `speed`, to sort by the respective stat. Default is `sort:number`.\n\n"
+                  "weight; `stats`, to sort by total base stats; or any of `hp`, `atk`, `def`, `spa`, "
+                  "`spd`, or `spe`, to sort by the respective stat. Default is `sort:number`.\n\n"
                   "`has:<form>` - filters by species which have a certain form. `<form>` can be `mega` or `alolan`. "
                   "`has:any` resets the filter.\n\n"
                   "`forms:yes` / `forms:no` - includes or excludes alternate forms in the filter. This includes Mega "
