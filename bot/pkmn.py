@@ -1193,7 +1193,7 @@ class CatchRateNavigator(Navigator):
 class PokemonInterpreter(Interpreter):
     redirects = {
         "t": "type", "e": "eff", "m": "move", "s": "test", "b": "build", "c": "catch", "h": "help", "x": "dex",
-        "r": "raid"
+        "r": "raid", "cf": "compare"
     }
 
     @staticmethod
@@ -1230,7 +1230,11 @@ class PokemonInterpreter(Interpreter):
                     f"- {zeph.emojis['rare_candy']} lists the raid item drops.\n"
                     f"- {zeph.emojis['poke_ball']} opens the dex entry for the raid mon.\n\n"
                     "`z!pk 5` may be used as a shortcut for `z!pokemon raid 5`, e.g. `z!pk 5 grimmsnarl`. The same "
-                    "goes for `z!pk 6`."
+                    "goes for `z!pk 6`.",
+            "compare": "`z!pokemon compare <mon1> <mon2>` compares the base stats of two different species. If you "
+                       "want to specify a particular form, use the hyphenated version of the name (e.g. `Raichu-Alola` "
+                       "for Alolan Raichu). If you want to input a species with a space in the name, such as Mr. Mime, "
+                       "surround the name in \"double quotes\", or replace the spaces with hyphens."
         }
         desc_dict = {
             "type": "Shows type effectiveness for a type.",
@@ -1238,9 +1242,10 @@ class PokemonInterpreter(Interpreter):
             # "move": "Shows info about a move.",
             "dex": "Browses the dex.",
             "catch": "Opens the Scarlet/Violet catch rate calculator.",
-            "raid": "Displays info about a given Tera Raid Battle."
+            "raid": "Displays info about a given Tera Raid Battle.",
+            "compare": "Compares the base stats of two species."
         }
-        shortcuts = {j: g for g, j in self.redirects.items() if len(g) == 1}
+        shortcuts = {j: g for g, j in self.redirects.items() if len(g) <= 2}
 
         def get_command(s: str):
             return f"**`{s}`** (or **`{shortcuts[s]}`**)" if shortcuts.get(s) else f"**`{s}`**"
@@ -1441,6 +1446,39 @@ class PokemonInterpreter(Interpreter):
 
     async def _6(self, *args):
         return await self._raid(6, *args)
+
+    async def _compare(self, *args):
+        if len(args) != 2:
+            raise commands.CommandError(
+                "Format: `z!pk cf <mon1> <mon2>`\nTo specify a form, use the hyphenated version (e.g. `Raichu-Alola`)."
+            )
+
+        def stat_comparison(stat: int):
+            if stat == 6:
+                n1 = sum(mon1.base_stats)
+                n2 = sum(mon2.base_stats)
+            else:
+                n1 = mon1.base_stats[stat]
+                n2 = mon2.base_stats[stat]
+            rule = 1 if n1 > n2 else 2 if n1 < n2 else 3
+            return f"{'**' if rule != 2 else ''}{n1}{'**' if rule != 2 else ''} " + \
+                   f"{'>' if rule == 1 else '<' if rule == 2 else '='}" + \
+                   f" {'**' if rule != 1 else ''}{n2}{'**' if rule != 1 else ''}"
+
+        mon1 = find_mon(args[0])
+        mon2 = find_mon(args[1])
+
+        return await ball_emol().send(
+            self.ctx, "Stat Comparison",
+            d=f"**{mon1.species_and_form}** vs. **{mon2.species_and_form}**\n\n"
+              f"**HP:** {stat_comparison(0)}\n"
+              f"**Atk:** {stat_comparison(1)}\n"
+              f"**Def:** {stat_comparison(2)}\n"
+              f"**SpA:** {stat_comparison(3)}\n"
+              f"**SpD:** {stat_comparison(4)}\n"
+              f"**Spe:** {stat_comparison(5)}\n\n"
+              f"**Total:** {stat_comparison(6)}"
+        )
 
 
 @zeph.command(hidden=True, aliases=["lm"], usage="z!lm name type category PP power accuracy contact target **kwargs")
