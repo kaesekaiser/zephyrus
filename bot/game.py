@@ -25,11 +25,11 @@ async def connect4(ctx: commands.Context, opponent: User):
     await asyncio.sleep(2)
     author_roll = randrange(6) + 1
     opponent_roll = randrange(6) + 1
-    await four.edit(init, "Rolling for priority...",
-                    d=f"{ctx.author.display_name} rolled a {zeph.emojis['attack' + str(author_roll)]}.")
+    desc = f"{ctx.author.display_name} rolled a {zeph.emojis['attack' + str(author_roll)]}."
+    await four.edit(init, "Rolling for priority...", d=desc)
     await asyncio.sleep(1)
-    await four.edit(init, "Rolling for priority...", d=init.embeds[0].description +
-                    f"\n{opponent.display_name} rolled a {zeph.emojis['defense' + str(opponent_roll)]}.")
+    desc += f"\n{opponent.display_name} rolled a {zeph.emojis['defense' + str(opponent_roll)]}."
+    await four.edit(init, "Rolling for priority...", d=desc)
     await asyncio.sleep(2)
 
     if author_roll > opponent_roll:
@@ -145,8 +145,8 @@ async def anagrams(ctx: commands.Context):
     message = await ana.say("Picking letters...")
 
     while True:
-        vowel = choice([g for g in wr.anagramsDist if g in "aeiou"])  # just guarantee at least one vowel
-        letters = [vowel, *sample(wr.anagramsDist, 7)]
+        vowels = sample([g for g in wr.anagramsDist if g in "aeiou"], 2)  # just guarantee at least two vowels
+        letters = vowels + sample(wr.anagramsDist, 7)
         if len(wr.anagrams("".join(letters))) > 20:
             break
 
