@@ -145,7 +145,7 @@ async def anagrams(ctx: commands.Context):
     message = await ana.say("Picking letters...")
 
     while True:
-        vowels = sample([g for g in wr.anagramsDist if g in "aeiou"], 2)  # just guarantee at least two vowels
+        vowels = sample([g for g in wr.anagramsDist if g in "aeiou"], 1)  # just guarantee at least two vowels
         letters = vowels + sample(wr.anagramsDist, 7)
         if len(wr.anagrams("".join(letters))) > 20:
             break
