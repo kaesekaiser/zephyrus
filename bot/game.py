@@ -77,7 +77,9 @@ async def connect4(ctx: commands.Context, opponent: User):
             else:
                 move = int(move.content)
                 if board[move - 1].full:
-                    await message.edit(embed=message.embeds[0].set_footer("That column is full."))
+                    warning = await four.say("That column is full.")
+                    await asyncio.sleep(2)
+                    await warning.delete()
                     continue
                 board.drop(move - 1, at_bat)
                 at_bat = -at_bat
@@ -145,7 +147,7 @@ async def anagrams(ctx: commands.Context):
     message = await ana.say("Picking letters...")
 
     while True:
-        vowels = sample([g for g in wr.anagramsDist if g in "aeiou"], 1)  # just guarantee at least two vowels
+        vowels = sample([g for g in wr.anagramsDist if g in "aeiou"], 1)  # just guarantee at least one vowel
         letters = vowels + sample(wr.anagramsDist, 7)
         if len(wr.anagrams("".join(letters))) > 20:
             break
