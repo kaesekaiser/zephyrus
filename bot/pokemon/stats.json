@@ -22413,5 +22413,43 @@
                 ""
             ]
         ]
-    }
+    },
+	"Walking Wake": {
+		"name": "Walking Wake",
+		"catch_rate": 5,
+		"forms": [
+			[
+				99,
+				83,
+				91,
+				125,
+				83,
+				109,
+				"Water",
+				"Dragon",
+				3.5,
+				280.0,
+				""
+			]
+		]
+	},
+	"Iron Leaves": {
+		"name": "Iron Leaves",
+		"catch_rate": 5,
+		"forms": [
+			[
+				90,
+				130,
+				88,
+				70,
+				108,
+				104,
+				"Grass",
+				"Psychic",
+				1.5,
+				125.0,
+				""
+			]
+		],
+	}
 }

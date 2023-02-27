@@ -719,13 +719,13 @@
         "",
         ""
     ],
-    "Calyrex-Ice Rider": [
+    "Calyrex-Ice-Rider": [
         "As One (Ice)",
         "",
         "",
         ""
     ],
-    "Calyrex-Shadow Rider": [
+    "Calyrex-Shadow-Rider": [
         "As One",
         "",
         "",
@@ -857,13 +857,13 @@
         "Solar Power",
         ""
     ],
-    "Charizard-Mega X": [
+    "Charizard-Mega-X": [
         "Tough Claws",
         "",
         "",
         ""
     ],
-    "Charizard-Mega Y": [
+    "Charizard-Mega-Y": [
         "Drought",
         "",
         "",
@@ -1271,13 +1271,13 @@
         "Zen Mode",
         ""
     ],
-    "Darmanitan-Galarian Standard": [
+    "Darmanitan-Galarian-Standard": [
         "Gorilla Tactics",
         "",
         "Zen Mode",
         ""
     ],
-    "Darmanitan-Galarian Zen": [
+    "Darmanitan-Galarian-Zen": [
         "Zen Mode",
         "",
         "",
@@ -2837,6 +2837,12 @@
         "",
         ""
     ],
+	"Iron Leaves": [
+		"Quark Drive",
+		"",
+		"",
+		""
+	],
     "Iron Moth": [
         "Quark Drive",
         "",
@@ -3761,13 +3767,13 @@
         "Unnerve",
         ""
     ],
-    "Mewtwo-Mega X": [
+    "Mewtwo-Mega-X": [
         "Steadfast",
         "",
         "",
         ""
     ],
-    "Mewtwo-Mega Y": [
+    "Mewtwo-Mega-Y": [
         "Insomnia",
         "",
         "",
@@ -5933,13 +5939,13 @@
         "Cud Chew",
         ""
     ],
-    "Tauros-Paldean Fire": [
+    "Tauros-Paldean-Fire": [
         "Intimidate",
         "Anger Point",
         "Cud Chew",
         ""
     ],
-    "Tauros-Paldean Water": [
+    "Tauros-Paldean-Water": [
         "Intimidate",
         "Anger Point",
         "Cud Chew",
@@ -6497,6 +6503,12 @@
         "Pressure",
         ""
     ],
+	"Walking Wake": [
+		"Protosynthesis",
+		"",
+		"",
+		""
+	],
     "Walrein": [
         "Thick Fat",
         "Ice Body",
