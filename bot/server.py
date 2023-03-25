@@ -283,7 +283,8 @@ def load_server_settings():
         json_dict = json.load(f)
 
     for g, j in json_dict.items():
-        zeph.server_settings[int(g)] = ServerSettings(**j)
+        if zeph.get_guild(int(g)):
+            zeph.server_settings[int(g)] = ServerSettings(**j)
 
     for server in zeph.guilds:
         if server.id not in zeph.server_settings:

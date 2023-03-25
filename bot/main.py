@@ -489,6 +489,12 @@ async def on_guild_join(guild: discord.Guild):
         zeph.server_settings[guild.id] = ServerSettings()
 
 
+@zeph.event
+async def on_guild_remove(guild: discord.Guild):
+    if zeph.server_settings.get(guild.id):
+        del zeph.server_settings[guild.id]
+
+
 @zeph.check
 def is_nativity_blocked(ctx: commands.Context):
     for nativity in zeph.nativities:
