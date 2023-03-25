@@ -73,7 +73,10 @@ class Zeph(commands.Bot):
     @property
     def all_emojis(self) -> dict:
         """Emotes from any server Zeph is in."""
-        return {g.name: g for g in self._connection.emojis if g.available}
+        return {
+            g.name: g for g in self._connection.emojis
+            if g.available and zeph.server_settings[g.guild.id].public_emotes
+        }
 
     @property
     def strings(self) -> dict:

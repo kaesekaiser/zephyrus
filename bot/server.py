@@ -310,6 +310,8 @@ class ServerSettings:
 
         self.sampa = kwargs.pop("sampa", True)
 
+        self.public_emotes = kwargs.pop("public_emotes", True)
+
     @property
     def notify_join(self):
         return (self.welcome_channel is not None) and self.notify_join_enabled
@@ -345,7 +347,8 @@ class ServerSettings:
             "autorole_bots": self.autorole_bots,
             "h_default": self.h_default,
             "h_exceptions": self.h_exceptions,
-            "sampa": self.sampa
+            "sampa": self.sampa,
+            "public_emotes": self.public_emotes,
         }
 
     @property
@@ -396,7 +399,8 @@ config = Emol(":gear:", hexcol("66757F"))
 class SConfigInterpreter(Interpreter):
     redirects = {
         "prefix": "prefixes", "w": "welcome", "p": "prefixes", "selfrole": "selfroles", "sr": "selfroles",
-        "autorole": "autoroles", "ar": "autoroles", "h": "help", "x": "sampa", "connie": "sampa"
+        "autorole": "autoroles", "ar": "autoroles", "h": "help", "x": "sampa", "connie": "sampa", "e": "emotes",
+        "emoji": "emotes", "emote": "emotes", "emojis": "emotes"
     }
 
     @property
@@ -435,7 +439,10 @@ class SConfigInterpreter(Interpreter):
                      f"`z!sc aitch channels` allows you to enable or disable the function in specific channels.",
             "sampa": "Controls for Zeph's X- and Z-SAMPA interpretation feature.\n\n"
                      "**`z!sc sampa`** shows the current settings, as well as all controls.\n\n"
-                     "`z!sc sampa enable/disable` enables or disables the feature."
+                     "`z!sc sampa enable/disable` enables or disables the feature.",
+            "emotes": "Privacy settings for the global use of emotes via `z!emote`.\n\n"
+                      "**`z!sc emotes`** shows the current settings, as well as all controls.\n\n"
+                      "`z!sc emotes public/private` sets the server's emotes to publicly available or private."
         }
         desc_dict = {
             "welcome": "Controls for welcome messages.",
@@ -443,7 +450,8 @@ class SConfigInterpreter(Interpreter):
             "selfroles": "Controls for self-assignable roles.",
             "autoroles": "Controls for automatically-assigned roles.",
             "aitch": f"Controls for Zeph's {zeph.emojis['aitch']} feature.",
-            "sampa": "Controls for Zeph's X- and Z-SAMPA interpretation feature."
+            "sampa": "Controls for Zeph's X- and Z-SAMPA interpretation feature.",
+            "emotes": "Controls for Zeph's global emote use feature."
         }
 
         if len(args) == 0 or (args[0].lower() not in help_dict and args[0].lower() not in self.redirects):
@@ -942,6 +950,38 @@ class SConfigInterpreter(Interpreter):
 
         else:
             raise commands.CommandError(f"Invalid argument `{args[0]}`.")
+
+    async def _emotes(self, *args: str):
+        if not args:
+            meaning = "they **can be accessed anywhere** through `z!e` and **are included** in `z!esearch` results" \
+                if self.settings.public_emotes else \
+                "they **cannot be accessed** through `z!e` and **are not included** in `z!esearch results`"
+            return await config.send(
+                self.ctx, "Emote Privacy Settings",
+                d="Discord bots have the ability to use any custom emoji from any server of which they are a member, "
+                  "in any other server. Zephyrus takes advantage of this feature using the commands `z!emoji` and "
+                  "`z!react` to allow users to display or react with an emoji from a different server. If a server's "
+                  "emotes are set to public, the emotes and their names may be seen through the use of `z!emoji` and "
+                  "`z!esearch` in other servers. The server's name is not displayed.\n\n"
+                  "Emotes are public by default, but may be made private at any time.\n\n"
+                  "To change settings:\n`z!sc emotes public/private`\n\n"
+                  f"This server's emotes are currently **{'public' if self.settings.public_emotes else 'private'}**, "
+                  f"meaning {meaning}."
+            )
+
+        elif args[0].lower() == "public":
+            if self.settings.public_emotes:
+                return await config.send(self.ctx, "This server's emotes were already public.")
+            else:
+                self.settings.public_emotes = True
+                return await succ.send(self.ctx, "This server's emotes are now accessible through `z!e`.")
+
+        elif args[0].lower() == "private":
+            if self.settings.public_emotes:
+                self.settings.public_emotes = False
+                return await succ.send(self.ctx, "This server's emotes are no longer accessible through `z!e`.")
+            else:
+                return await config.send(self.ctx, "This server's emotes were already private.")
 
 
 @zeph.command(
