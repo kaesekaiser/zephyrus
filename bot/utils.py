@@ -222,6 +222,10 @@ async def scramble(ctx: commands.Context, *, text: str):
          "https://github.com/kaesekaiser/zephyrus/blob/master/docs/convert.md."
 )
 async def tconvert(ctx: commands.Context, n: str, *text):
+    if re.fullmatch(r"[0-9.°]+[A-Za-z]+", n):
+        text = [re.search(r"[A-Za-z]+", n)[0], *text]
+        n = re.match(r"[0-9.]+", n)[0]
+
     if "." in n:
         digits_in = len(n.split(".")[1])
     else:
@@ -268,7 +272,11 @@ async def convert_command(ctx: commands.Context, *, text):
 
     user_input = text.split()[0]
     text = text.split()[1:]
-    
+
+    if re.fullmatch(r"[0-9.]+[A-Za-z]+", user_input):
+        text = [re.search(r"[A-Za-z]+", user_input)[0], *text]
+        user_input = re.match(r"[0-9.]+", user_input)[0]
+
     if not text:
         try:
             apostrophe_feet_to_decimal(user_input)
