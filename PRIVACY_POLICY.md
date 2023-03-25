@@ -1,5 +1,6 @@
 # Privacy Policy
 This document describes in full detail what data the Discord bot distributed by the author (hereafter referred to as Zephyrus) collects and stores long-term, as well as how to delete said data.
+This document may be changed as the needs and functionalities of the bot change. This file represents the most recent version of this document.
 ## What Zephyrus Doesn't Store
 Under normal circumstances, Zephyrus does not store any usernames, server names, names for server attributes such as channels or emotes, or message content, unless explicitly provided by the user via the use of its commands as described below.
 ## What Zephyrus Stores
@@ -13,7 +14,7 @@ When a user sets a reminder through the use of `z!remindme`, Zephyrus stores the
 Zephyrus stores the snowflake of each server it is in. Each snowflake is keyed to data representing the user-configured server settings for the associated server, including the text of custom command prefixes and welcome messages, and the snowflakes of autoroles or selfroles. If `z!sconfig` has never been used to change the settings of a server, or if settings have been restored to their default values, no data is stored.
 ## What The Author Receives
 * The author sees any text provided through the `z!feedback` command in full, as well as the snowflakes of the user, message, and server.
-* For debugging purposes, Zephyrus displays to the author the server and message snowflakes, and the full message text, when any error is encountered in the software itself - i.e., when a Python error like a `ValueError` is encountered. This does not include user input errors. Such errors are encountered extraordinarily rarely, and are distinguished on the user's end via the preface "`Command encountered an error: `".
+* For debugging purposes, Zephyrus displays to the author the server and message snowflakes, and the full message text, when any error is encountered in the software itself - i.e., when a Python error like a `ValueError` is encountered. This does not include user input errors. Such errors are encountered extraordinarily rarely, and are distinguished on the user's end via the preface "`Command encountered an error: `". The author does not receive any user-identifying data such as snowflakes or usernames.
 ## How to Remove Your Data
 All Zephyrus data can be managed through the bot itself.
 * To delete data associated with the `z!planes` command, use `z!planes restart`. Zephyrus will delete all saved data, including the snowflake of the user.
