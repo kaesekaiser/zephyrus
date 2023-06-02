@@ -1439,6 +1439,10 @@ async def remind_command(ctx: commands.Context, *text: str):
 
     last_in = [g for g in range(len(text)) if text[g] == "in"][-1]
     reminder, elapse = " ".join(text[:last_in]), " " + (" ".join(text[last_in + 1:]))
+    if not reminder:
+        reminder = ctx.message.jump_url
+    else:
+        reminder += f" ({ctx.message.jump_url})"
     time_regexes = {
         "year": r"(?<= )[0-9]+(?= y(ear|r| |$))",
         "month": r"(?<= )[0-9]+(?= mo(nth| |$))",
