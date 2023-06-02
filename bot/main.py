@@ -424,7 +424,7 @@ async def on_message(message: discord.Message):
             await message.channel.send(zeph.emojis.get("aitch", "h"))
 
     if (not message.guild or zeph.server_settings.get(message.guild.id, ServerSettings.null()).sampa) \
-            and message.author != zeph.user:
+            and not message.author.bot:
         sampas = []
         for match in list(re.finditer(r"((?<=[^a-zA-Z0-9/\\_]x)|(?<=^x))(\[[^\s].*?]|/[^\s].*?/)", message.content)):
             sampas.append(convert_x_sampa(match[0]))
