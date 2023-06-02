@@ -197,6 +197,7 @@ class DexSearchNavigator(Navigator):
                          prev=zeph.emojis["dex_prev"], nxt=zeph.emojis["dex_next"])
         self.mode = kwargs.get("mode", None)
         self.dex = copy(pk.nat_dex)
+        self.funcs["⏯"] = self.jump_to_midpoint
         self.funcs[zeph.emojis["settings"]] = self.settings_mode
         self.funcs[zeph.emojis["help"]] = self.help_mode
         self.funcs[zeph.emojis["no"]] = self.close
@@ -208,6 +209,8 @@ class DexSearchNavigator(Navigator):
         self.sort = "number"
         self.forms = False
         self.has = None
+        self.learns = []
+        self.ability = None
 
         self.reapply_search()
 
@@ -254,6 +257,10 @@ class DexSearchNavigator(Navigator):
             funcs.append(lambda m: "Mega " in "".join(m.form_names))
         if self.has == "alolan":
             funcs.append(lambda m: "Alolan " in "".join(m.form_names))
+        if self.learns:
+            funcs.append(lambda m: all(m.can_learn(g) for g in self.learns))
+        if self.ability:
+            funcs.append(lambda m: self.ability in m.legal_abilities)
 
         if not funcs:
             return True
@@ -303,8 +310,10 @@ class DexSearchNavigator(Navigator):
             return False
 
         option, value = s.split(":")
-        if value == "any" and option not in ["forms", "sort"]:
+        if value == "any" and option not in ["forms", "sort", "learns"]:
             return True
+
+        value = str(value.replace("_", " "))
 
         if option == "gen":
             return can_int(value) and int(value) in range(1, 10)  # ALLOW RANGE VALUES ?
@@ -318,11 +327,18 @@ class DexSearchNavigator(Navigator):
             return value in ["yes", "no"]
         elif option == "has":
             return value in ["mega", "alolan"]
+        elif option == "learns":
+            return all(pk.fix(g.strip(", ")) in pk.fixed_legal_moves for g in re.split(r",\s*?(?=[a-z])", value)) or \
+                value == "none"
+        elif option == "ability":
+            return pk.fix(value) in [pk.fix(g) for g in pk.abilities]
         else:
             return False
 
     def apply_settings_change(self, option: str, value: str):
         """Assumes that the string <option>:<value> passes is_valid_setting()."""
+
+        value = str(value.replace("_", " "))
 
         if option == "gen":
             self.gen = None if value == "any" else int(value)
@@ -336,6 +352,13 @@ class DexSearchNavigator(Navigator):
             self.forms = value == "yes"
         if option == "has":
             self.has = None if value == "any" else value
+        if option == "learns":
+            if value == "none":
+                self.learns = []
+            else:
+                self.learns = [pk.fixed_legal_moves[pk.fix(g.strip(", "))] for g in re.split(r",\s*?(?=[a-z])", value)]
+        if option == "ability":
+            self.ability = None if value == "any" else [g for g in pk.abilities if pk.fix(g) == pk.fix(value)][0]
 
     @property
     def con(self):
@@ -351,7 +374,8 @@ class DexSearchNavigator(Navigator):
                 same_line=True,
                 fs={"Generation (`gen`)": ain(self.gen), "Types (`types`)": ain(", ".join(self.types)),
                     "Starts with (`name`)": ain(self.name), "Sort (`sort`)": self.sort_name,
-                    "Has Mega/Alolan? (`has`)": ain(self.has), "Include alt forms? (`forms`)": yesno(self.forms)},
+                    "Has Mega/Alolan? (`has`)": ain(self.has), "Include alt forms? (`forms`)": yesno(self.forms),
+                    "Learns the moves... (`learns`)": none_list(self.learns), "Ability (`ability`)": ain(self.ability)},
                 footer=f"Total Pokémon meeting criteria: {len(self.table)}"
             )
 
@@ -361,8 +385,8 @@ class DexSearchNavigator(Navigator):
                 d="`gen:<n>` - filters by generation. `<n>` must be between 1 and 9, e.g. `gen:4`. `gen:any` resets "
                   "the filter.\n\n"
                   "`type:<types>` (or `types:<types>`) - filters by type. `<types>` can be either one type, or two "
-                  "types separated by a comma, e.g. `type:fire,flying`. `type:any` resets the filter.\n\n"
-                  "`name:<letter>` - filters by first letter the mon's name. `<letter>` must be one letter, "
+                  "types separated by a comma or slash, e.g. `type:fire,flying`. `type:any` resets the filter.\n\n"
+                  "`name:<letter>` - filters by first letter of the mon's name. `<letter>` must be one letter, "
                   "e.g. `name:A`. `name:any` resets the filter.\n\n"
                   "`sort:<method>` - sorts the results in a certain order. `<method>` can be `name`, to sort A→Z; "
                   "`number`, to sort by National Dex number; `height`, to sort by height; `weight`, to sort by "
@@ -373,7 +397,11 @@ class DexSearchNavigator(Navigator):
                   "`forms:yes` / `forms:no` - includes or excludes alternate forms in the filter. This includes Mega "
                   "Evolutions, Alolan forms, Primal forms, Rotom forms, etc., but does *not* include forms which are "
                   "solely aesthetic (like those of Vivillon or Gastrodon) or only change the Pokémon's type (like "
-                  "Arceus and Silvally). Default is `forms:no`."
+                  "Arceus and Silvally). Default is `forms:no`.\n\n"
+                  "`learns:<move(s)>` - filters by mons which can learn a given move or moves. Separate multiple moves "
+                  "using commas, e.g. `learns:earthquake, swords dance`. `learns:none` resets the filter.\n\n"
+                  "`ability:<ability>` - filters by mons which have a given ability, including as a Hidden Ability. "
+                  "`ability:any` resets the filter."
             )
 
         elif not self.mode:
@@ -386,6 +414,9 @@ class DexSearchNavigator(Navigator):
     def advance_page(self, direction: int):
         if direction and not self.mode:
             self.page = (self.page + direction - 1) % self.pgs + 1
+
+    def jump_to_midpoint(self):
+        self.page = ceil(self.pgs / 2)
 
     async def get_emoji(self, ctx: commands.Context):
         if self.mode == "settings":

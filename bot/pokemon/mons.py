@@ -1,5 +1,6 @@
 import random
 from pokemon.field import *
+from pokemon.learnsets import *
 from re import sub
 from pyquery import PyQuery
 from math import floor, log, ceil
@@ -638,6 +639,15 @@ class Mon:
         return self.raw_legal_abilities[3] if self.raw_legal_abilities[3] else None
 
     @property
+    def learnset(self):
+        if self.species_and_form in learnsets:
+            return learnsets[self.species_and_form]
+        return learnsets[self.species.name]
+
+    def can_learn(self, move: str):
+        return move in self.learnset
+
+    @property
     def ni(self):
         return natures.index(self.nature)
 
@@ -912,6 +922,7 @@ fixed_dex = {fix(g): g for g in nat_dex}
 species_and_forms = {
     fix(Mon(g.name, form=j).species_and_form): (g.name, j) for g in nat_dex.values() for j in g.forms
 }
+fixed_legal_moves = {fix(g): g for g in all_legal_moves}
 
 
 def read_url(url: str):
