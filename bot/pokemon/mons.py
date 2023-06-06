@@ -313,6 +313,9 @@ held_items = [
     'Thunder Stone', 'Toxic Orb', 'Upgrade', 'Utility Umbrella', 'Water Stone', 'Wave Incense', 'Weakness Policy',
     'Whipped Dream', 'White Herb', 'Wide Lens', 'Wise Glasses', 'Zoom Lens'
 ]
+weather_extenders = {
+    sun: "Heat Rock", rain: "Damp Rock", hail: "Icy Rock", snow: "Icy Rock", sandstorm: "Smooth Rock"
+}
 poke_ball_types = [
     "beast", "cherish", "dive", "dream", "dusk", "fast", "friend", "great", "heal", "heavy", "level", "love", "lure",
     "luxury", "master", "moon", "nest", "net", "park", "poke", "premier", "quick", "repeat", "safari", "sport",
@@ -390,6 +393,7 @@ class Mon:
         self.selection = None  # normally a PackedMove
         self.last_used = None  # normally a str (move name)
         self.has_activated_ability = False  # for abilities which only activate once per switch-in (e.g. Gen 9 Protean)
+        self.just_manually_switched = False  # Speed Boost doesn't activate if a mon was just manually switched in
 
         # all of these are effects that take multiple turns to transpire and which need to be damage-controlled by
         # having more than two states, and I'd rather use multiple booleans than an int
@@ -638,14 +642,17 @@ class Mon:
     def special_event_ability(self):
         return self.raw_legal_abilities[3] if self.raw_legal_abilities[3] else None
 
-    @property
-    def learnset(self):
-        if self.species_and_form in learnsets:
-            return learnsets[self.species_and_form]
-        return learnsets[self.species.name]
+    def get_learnset(self, gen: str = "SV") -> Learnset:
+        if gen not in learnsets:
+            raise ValueError(f"No such generation {gen}.")
+        if self.species_and_form in learnsets[gen]:
+            return learnsets[gen][self.species_and_form]
+        if self.species.name in learnsets[gen]:
+            return learnsets[gen][self.species.name]
+        return Learnset()
 
-    def can_learn(self, move: str):
-        return move in self.learnset
+    def can_learn(self, move: str, gen: str = "SV"):
+        return move in self.get_learnset(gen)
 
     @property
     def ni(self):

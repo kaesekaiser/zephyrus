@@ -258,7 +258,7 @@ class DexSearchNavigator(Navigator):
         if self.has == "alolan":
             funcs.append(lambda m: "Alolan " in "".join(m.form_names))
         if self.learns:
-            funcs.append(lambda m: all(m.can_learn(g) for g in self.learns))
+            funcs.append(lambda m: all(m.can_learn(g, "SV") for g in self.learns))
         if self.ability:
             funcs.append(lambda m: self.ability in m.legal_abilities)
 
@@ -355,7 +355,7 @@ class DexSearchNavigator(Navigator):
         if option == "learns":
             if value == "none":
                 self.learns = []
-            else:
+            else:  # returns a list of correctly-formatted move names
                 self.learns = [pk.fixed_legal_moves[pk.fix(g.strip(", "))] for g in re.split(r",\s*?(?=[a-z])", value)]
         if option == "ability":
             self.ability = None if value == "any" else [g for g in pk.abilities if pk.fix(g) == pk.fix(value)][0]
@@ -588,6 +588,81 @@ class RaidNavigator(Navigator):
             f"{self.raid.name} Drops" if self.mode == "drops" else self.raid.name,
             d=display_raid(self.raid, self.mode), thumb=pk.image(self.mon)
         )
+
+
+class LearnsetNavigator(Navigator):
+    mode_titles = {
+        "level": "Level-up moves",
+        "evo": "Evolution moves",
+        "prior": "Moves from prior evolutions",
+        "reminder": "Move Reminder moves",
+        "egg": "Egg moves",
+        "tm": "Compatible TMs"
+    }
+
+    def __init__(self, mon: pk.Mon, gen: str = "SV", **kwargs):
+        super().__init__(
+            kwargs.get("emol", ball_emol()), [], 8, "", prev=zeph.emojis["dex_prev"], nxt=zeph.emojis["dex_next"]
+        )
+        self.mon = mon
+        self.gen = gen
+        self.mode = "level"
+        if self.learnset:
+            self.funcs[zeph.emojis["rare_candy"]] = partial(self.change_mode, "level")
+            if self.learnset.evo:
+                self.funcs[zeph.emojis["thunder_stone"]] = partial(self.change_mode, "evo")
+            if self.learnset.prior:
+                self.funcs[zeph.emojis["eviolite"]] = partial(self.change_mode, "prior")
+            if self.learnset.reminder:
+                self.funcs[zeph.emojis["heart_scale"]] = partial(self.change_mode, "reminder")
+            if self.learnset.egg:
+                self.funcs[zeph.emojis["pokemon_egg"]] = partial(self.change_mode, "egg")
+            if self.learnset.tm:
+                self.funcs[zeph.emojis["technical_machine"]] = partial(self.change_mode, "tm")
+        else:
+            self.prev = ""
+            self.next = ""
+
+    def change_mode(self, mode: str):
+        if mode != self.mode:
+            self.page = 1
+        self.mode = mode
+
+    @property
+    def learnset(self):
+        return self.mon.get_learnset(self.gen)
+
+    @property
+    def selected_table(self):
+        return self.learnset.__getattribute__(self.mode)
+
+    @property
+    def pgs(self):
+        return ceil(len(self.selected_table) / self.per)
+
+    @property
+    def formatted_page(self):
+        if self.mode == "level":
+            return "\n".join(f"Lv. {g}: {j}" for g, j in page_list(self.selected_table, self.per, self.page))
+        elif self.mode == "tm":
+            return "\n".join(f"{k}: {v}" for k, v in page_list(list(self.selected_table.items()), self.per, self.page))
+        else:
+            return "\n".join(f"\\- {g}" for g in page_list(self.selected_table, self.per, self.page))
+
+    @property
+    def con(self):
+        if self.learnset:
+            return self.emol.con(
+                f"{self.mon.name} ({self.gen}): {self.mode_titles[self.mode]}",
+                d=self.formatted_page,
+                footer=f"{pk.full_game_names[self.gen]} / page {self.page} of {self.pgs}"
+            )
+        else:
+            self.closed_elsewhere = True  # just end the protocol
+            return self.emol.con(
+                f"{self.mon.name} ({self.gen})",
+                d=f"{self.mon.name} is not available in {pk.full_game_names[self.gen]}."
+            )
 
 
 @zeph.command(
@@ -1224,7 +1299,7 @@ class CatchRateNavigator(Navigator):
 class PokemonInterpreter(Interpreter):
     redirects = {
         "t": "type", "e": "eff", "m": "move", "s": "test", "b": "build", "c": "catch", "h": "help", "x": "dex",
-        "r": "raid", "cf": "compare"
+        "r": "raid", "cf": "compare", "l": "learnset"
     }
 
     @staticmethod
@@ -1257,15 +1332,22 @@ class PokemonInterpreter(Interpreter):
                      "changed several times.",
             "raid": "`z!pokemon raid <# stars> <species...>` shows relevant info for a Tera Raid Battle. Note that "
                     "only 5- and 6-star raids are currently included, and event raids are not included.\n"
-                    f"- {zeph.emojis['moves']} lists the possible abilities and moves for the raid mon.\n"
-                    f"- {zeph.emojis['rare_candy']} lists the raid item drops.\n"
-                    f"- {zeph.emojis['poke_ball']} opens the dex entry for the raid mon.\n\n"
+                    f"\\- {zeph.emojis['moves']} lists the possible abilities and moves for the raid mon.\n"
+                    f"\\- {zeph.emojis['rare_candy']} lists the raid item drops.\n"
+                    f"\\- {zeph.emojis['poke_ball']} opens the dex entry for the raid mon.\n\n"
                     "`z!pk 5` may be used as a shortcut for `z!pokemon raid 5`, e.g. `z!pk 5 grimmsnarl`. The same "
                     "goes for `z!pk 6`.",
             "compare": "`z!pokemon compare <mon1> <mon2>` compares the base stats of two different species. If you "
                        "want to specify a particular form, use the hyphenated version of the name (e.g. `Raichu-Alola` "
                        "for Alolan Raichu). If you want to input a species with a space in the name, such as Mr. Mime, "
-                       "surround the name in \"double quotes\", or replace the spaces with hyphens."
+                       "surround the name in \"double quotes\", or replace the spaces with hyphens.",
+            "learnset": "`z!pokemon learnset <species...>` shows the Scarlet/Violet learnset for a given species.\n"
+                        f"\\- {zeph.emojis['rare_candy']} lists its level-up moves.\n"
+                        f"\\- {zeph.emojis['thunder_stone']} lists its evolution moves.\n"
+                        f"\\- {zeph.emojis['eviolite']} lists moves it only learns as a previous evolution.\n"
+                        f"\\- {zeph.emojis['heart_scale']} lists its Move Reminder moves.\n"
+                        f"\\- {zeph.emojis['pokemon_egg']} lists its egg moves.\n"
+                        f"\\- {zeph.emojis['technical_machine']} lists its compatible TMs."
         }
         desc_dict = {
             "type": "Shows type effectiveness for a type.",
@@ -1274,7 +1356,8 @@ class PokemonInterpreter(Interpreter):
             "dex": "Browses the dex.",
             "catch": "Opens the Scarlet/Violet catch rate calculator.",
             "raid": "Displays info about a given Tera Raid Battle.",
-            "compare": "Compares the base stats of two species."
+            "compare": "Compares the base stats of two species.",
+            "learnset": "Shows the moves learned by a given species."
         }
         shortcuts = {j: g for g, j in self.redirects.items() if len(g) <= 2}
 
@@ -1329,10 +1412,10 @@ class PokemonInterpreter(Interpreter):
         d = pk.Team("Blue Team")
         emol = ball_emol()
         a.add(find_mon("Leafeon", moves=["X-Scissor", "Leaf Blade", "Sunny Day", "Quick Attack"]))
-        d.add(find_mon("Aron", moves=["Flash Cannon", "Earthquake", "Stone Edge", "Ice Punch"]))
+        d.add(find_mon("Aron", moves=["Flash Cannon", "Earthquake", "Stone Edge", "Ice Punch"], ability="Sturdy"))
         d.add(find_mon("Lairon", moves=["Flamethrower", "Thunderbolt", "Ice Beam", "Energy Ball"]))
 
-        if len(args) > 0 and args[0].lower() == "custom":
+        if len(args) > 0 and args[0].lower() in ["custom", "build"]:
             if len(args) > 1 and args[1].lower() == "blank":
                 a.clear()
                 d.clear()
@@ -1510,6 +1593,17 @@ class PokemonInterpreter(Interpreter):
               f"**Spe:** {stat_comparison(5)}\n\n"
               f"**Total:** {stat_comparison(6)}"
         )
+
+    async def _learnset(self, *args):
+        if not args:
+            raise commands.CommandError("Format: `z!pk learnset <species...>`")
+
+        try:
+            mon = find_mon(" ".join(args))
+        except ValueError:
+            raise commands.CommandError(f"Unknown Pok\u00e9mon `{' '.join(args)}`.")
+
+        return await LearnsetNavigator(mon).run(self.ctx)
 
 
 @zeph.command(hidden=True, aliases=["lm"], usage="z!lm name type category PP power accuracy contact target **kwargs")

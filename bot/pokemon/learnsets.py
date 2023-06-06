@@ -1,6 +1,31 @@
 import json
 
 
+full_game_names = {
+    "RB": "Red/Blue",
+    "Y": "Yellow",
+    "GS": "Gold/Silver",
+    "C": "Crystal",
+    "RS": "Ruby/Sapphire",
+    "FRLG": "FireRed/LeafGreen",
+    "E": "Emerald",
+    "DP": "Diamond/Pearl",
+    "Pt": "Platinum",
+    "HGSS": "HeartGold/SoulSilver",
+    "BW": "Black/White",
+    "BW2": "Black 2/White 2",
+    "XY": "X/Y",
+    "ORAS": "Omega Ruby/Alpha Sapphire",
+    "SM": "Sun/Moon",
+    "USUM": "Ultra Sun/Ultra Moon",
+    "LGPE": "Let's Go Pikachu/Eevee",
+    "SwSh": "Sword/Shield",
+    "BDSP": "Brilliant Diamond/Shining Pearl",
+    "LA": "Legends: Arceus",
+    "SV": "Scarlet/Violet"
+}
+
+
 class Learnset:
     def __init__(self, **kwargs):
         self.level = kwargs.get("level", [])
@@ -93,7 +118,7 @@ class Learnset:
 
 
 with open("pokemon/learnsets.json", "r") as fp:
-    learnsets = {k: Learnset.from_json(v) for k, v in json.load(fp).items()}
+    learnsets = {k: {j: Learnset.from_json(g) for j, g in v.items()} for k, v in json.load(fp).items()}
 
 
-all_legal_moves = set(mv for g in learnsets.values() for mv in g.all_moves)
+all_legal_moves = set(mv for g in learnsets.values() for s in g.values() for mv in s.all_moves)
