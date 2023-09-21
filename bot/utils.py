@@ -1578,9 +1578,9 @@ async def role_redirect_command(ctx: commands.Context):
 
 
 class CounterNavigator(Navigator):
-    def __init__(self, start_at: int = 0):
+    def __init__(self, start_at: int = 0, increment: int = 1):
         super().__init__(
-            Emol(":1234:", blue), [], 1, "Counter", prev=zeph.emojis["minus"], nxt=zeph.emojis["plus"]
+            Emol(":1234:", blue), [], increment, "Counter", prev=zeph.emojis["minus"], nxt=zeph.emojis["plus"]
         )
         self.page = start_at
         self.mode = "count"
@@ -1668,15 +1668,15 @@ class CounterNavigator(Navigator):
 
 
 @zeph.command(
-    name="counter", aliases=["count"], usage="z!counter [starting value]",
+    name="counter", aliases=["count"], usage="z!counter [starting value] [increment]",
     description="Runs a counter, so you can count.",
     help="Runs a simple counter. Count up or down by an adjustable value using the reaction buttons. I wouldn't "
          "recommend using this command if you have to repeatedly and *quickly* change the value, however; due to "
-         "Discord's rate limits, some of your clicks might get lost. Optional argument is the value the counter starts "
-         "at; this defaults to 0."
+         "Discord's rate limits, some of your clicks might get lost. Optional arguments are the value the counter "
+         "at, which defaults to 0, and the increment to be counted by, which defaults to 1."
 )
-async def counter_command(ctx: commands.Context, start_value: int = 0):
-    return await CounterNavigator(start_value).run(ctx)
+async def counter_command(ctx: commands.Context, start_value: int = 0, increment: int = 1):
+    return await CounterNavigator(start_value, increment).run(ctx)
 
 
 @zeph.command(
