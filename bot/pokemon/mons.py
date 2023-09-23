@@ -191,7 +191,8 @@ abilities = [
     "Well-Baked Body", "Wind Rider", "Guard Dog", "Rocky Payload", "Wind Power", "Zero to Hero", "Commander",
     "Electromorphosis", "Protosynthesis", "Quark Drive", "Good as Gold", "Vessel of Ruin", "Sword of Ruin",
     "Tablets of Ruin", "Beads of Ruin", "Orichalcum Pulse", "Hadron Engine", "Opportunist", "Cud Chew", "Sharpness",
-    "Supreme Overlord", "Costar", "Toxic Debris", "Armor Tail", "Earth Eater", "Mycelium Might"
+    "Supreme Overlord", "Costar", "Toxic Debris", "Armor Tail", "Earth Eater", "Mycelium Might", "Hospitality",
+    "Mind's Eye", "Embody Aspect", "Toxic Chain", "Supersweet Syrup"
 ]
 berries = [
     'Aguav Berry', 'Apicot Berry', 'Aspear Berry', 'Babiri Berry', 'Belue Berry', 'Bluk Berry', 'Charti Berry',
@@ -321,6 +322,7 @@ poke_ball_types = [
     "luxury", "master", "moon", "nest", "net", "park", "poke", "premier", "quick", "repeat", "safari", "sport",
     "timer", "ultra"
 ]
+
 genderless_mons = [
     'Magnemite', 'Magneton', 'Voltorb', 'Electrode', 'Staryu', 'Starmie', 'Porygon', 'Porygon2', 'Shedinja',
     'Lunatone', 'Solrock', 'Baltoy', 'Claydol', 'Beldum', 'Metang', 'Metagross', 'Bronzor', 'Bronzong', 'Magnezone',
@@ -350,6 +352,10 @@ female_only_mons = [
     'Bounsweet', 'Steenee', 'Tsareena', 'Hatenna', 'Hattrem', 'Hatterene', 'Milcery', 'Alcremie', 'Tinkatink',
     'Tinkatuff', 'Tinkaton'
 ]
+
+weather_speed_abilities = {
+    sun: "Chlorophyll", rain: "Swift Swim", hail: "Slush Rush", snow: "Slush Rush", sandstorm: "Sand Rush"
+}
 
 
 class Mon:
@@ -420,6 +426,8 @@ class Mon:
         self.thrashing = False  # Thrash, Outrage, etc.
         self.thrash_counter = 0
         self.raging = False
+        self.curled_up = False
+        self.focused_energy = False
 
         self.team_position = kwargs.get("pos", 0)
         # STARTS AT 1. set to 0 if not in a team. used as a hash, and does not change after being added to a team.
@@ -458,7 +466,7 @@ class Mon:
 
     def key(self, compressed: bool = True):
         """An alphanumerical string which contains the defining data for a mon in compressed form. It's a password."""
-        moves = [list(moveDex).index(g.name) + 1 for g in self.moves]
+        moves = [list(move_dex).index(g.name) + 1 for g in self.moves]
         if len(moves) < 4:
             moves.extend([0] * (4 - len(moves)))
         ret = f"{rebase(self.dex_no - 1, 10, 32, 2)}" \
@@ -496,7 +504,7 @@ class Mon:
             "ev": [decimal(rebase(decompressed_key[14:24], 32, 16, 12)[g*2:g*2+2], 16) for g in range(6)],
             "ability": abilities[decimal(decompressed_key[24:26], 32)],
             "item": held_items[decimal(decompressed_key[26:28], 32)],
-            "moves": [list(moveDex)[g - 1] for g in moves if g]
+            "moves": [list(move_dex)[g - 1] for g in moves if g]
         })
 
     def add_move(self, move: Union[Move, PackedMove, str]):
@@ -506,7 +514,7 @@ class Mon:
             self.moves.append(move)
         elif isinstance(move, str):
             try:
-                move = [g for g in moveDex.values() if g.name.lower() == move.lower()][0]
+                move = [g for g in move_dex.values() if g.name.lower() == move.lower()][0]
             except IndexError:
                 raise ValueError(f"Invalid move name '{move}'.")
             self.moves.append(move.pack)
@@ -756,10 +764,14 @@ class Mon:
         )
 
     @property
-    def spe(self):
+    def spe_without_sc(self):
         return round(
-            self.spe_base * self.stat_level("spe") * (0.5 if self.status_condition == paralyzed else 1)
+            self.spe_base * (0.5 if self.status_condition == paralyzed else 1)
         )
+
+    @property
+    def spe(self):
+        return round(self.spe_without_sc * self.stat_level("spe"))
 
     @property
     def stats(self):
@@ -775,7 +787,8 @@ class Mon:
 
     @property
     def crt(self):
-        return self.stat_stages["crt"] + (self.ability == "Super Luck") + self.raised_crit_ratio
+        return self.stat_stages["crt"] + (self.ability == "Super Luck") + self.raised_crit_ratio + \
+            2 * self.focused_energy
 
     @property
     def can_move(self):
@@ -890,13 +903,13 @@ class Mon:
 
     def retrieve_move(self, move_name: str) -> PackedMove:
         try:  # first, try for one of the 'system moves' - switching out, exiting, using an item
-            return [j.pack for g, j in systemMoves.items() if fix(g) == fix(move_name)][0]
+            return [j.pack for g, j in system_moves.items() if fix(g) == fix(move_name)][0]
         except IndexError:
             try:  # then, try for one of the mon's learned moves
                 return [g for g in self.moves if fix(g.name) == fix(move_name)][0]
             except IndexError:
                 try:  # finally, try for any move. this will eventually be removed.
-                    return [PackedMove(g.name, 1) for g in moveDex.values() if fix(g.name) == fix(move_name)][0]
+                    return [PackedMove(g.name, 1) for g in move_dex.values() if fix(g.name) == fix(move_name)][0]
                 except IndexError:
                     return PackedMove.null()
 
@@ -995,6 +1008,11 @@ def add_new_mon(species: Species):
 def rewrite_mons():
     with open("stats.json" if __name__ == "__main__" else "pokemon/stats.json", "w") as f:
         json.dump({k: v.json for k, v in nat_dex.items()}, f, indent=4)
+
+
+def rewrite_abilities():
+    with open("abilities.json" if __name__ == "__main__" else "pokemon/abilities.json", "w") as f:
+        json.dump({k: legal_abilities[k] for k in sorted(list(legal_abilities))}, f, indent=4)
 
 
 class CatchRate:

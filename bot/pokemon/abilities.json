@@ -923,6 +923,12 @@
         "Swift Swim",
         ""
     ],
+    "Chi-Yu": [
+        "Beads of Ruin",
+        "",
+        "",
+        ""
+    ],
     "Chien-Pao": [
         "Sword of Ruin",
         "",
@@ -955,12 +961,6 @@
     ],
     "Chingling": [
         "Levitate",
-        "",
-        "",
-        ""
-    ],
-    "Chi-Yu": [
-        "Beads of Ruin",
         "",
         "",
         ""
@@ -1415,6 +1415,12 @@
         "Sand Force",
         ""
     ],
+    "Dipplin": [
+        "Supersweet Syrup",
+        "Gluttony",
+        "Sticky Hold",
+        ""
+    ],
     "Ditto": [
         "Limber",
         "",
@@ -1748,7 +1754,7 @@
     "Empoleon": [
         "Torrent",
         "",
-        "Defiant",
+        "Competitive",
         ""
     ],
     "Enamorus-Incarnate": [
@@ -1887,6 +1893,12 @@
         "Iron Barbs",
         "",
         "Anticipation",
+        ""
+    ],
+    "Fezandipiti": [
+        "Toxic Chain",
+        "",
+        "Technician",
         ""
     ],
     "Fidough": [
@@ -2681,6 +2693,12 @@
         "Steadfast",
         ""
     ],
+    "Ho-Oh": [
+        "Pressure",
+        "",
+        "Regenerator",
+        ""
+    ],
     "Honchkrow": [
         "Insomnia",
         "Super Luck",
@@ -2691,12 +2709,6 @@
         "No Guard",
         "",
         "",
-        ""
-    ],
-    "Ho-Oh": [
-        "Pressure",
-        "",
-        "Regenerator",
         ""
     ],
     "Hoopa": [
@@ -2837,12 +2849,12 @@
         "",
         ""
     ],
-	"Iron Leaves": [
-		"Quark Drive",
-		"",
-		"",
-		""
-	],
+    "Iron Leaves": [
+        "Quark Drive",
+        "",
+        "",
+        ""
+    ],
     "Iron Moth": [
         "Quark Drive",
         "",
@@ -3959,6 +3971,12 @@
         "Gluttony",
         ""
     ],
+    "Munkidori": [
+        "Toxic Chain",
+        "",
+        "Frisk",
+        ""
+    ],
     "Munna": [
         "Forewarn",
         "Synchronize",
@@ -4145,6 +4163,30 @@
         "Run Away",
         ""
     ],
+    "Ogerpon": [
+        "Defiant",
+        "",
+        "",
+        ""
+    ],
+    "Ogerpon-Cornerstone": [
+        "Sturdy",
+        "",
+        "",
+        ""
+    ],
+    "Ogerpon-Hearthflame": [
+        "Mold Breaker",
+        "",
+        "",
+        ""
+    ],
+    "Ogerpon-Wellspring": [
+        "Water Absorb",
+        "",
+        "",
+        ""
+    ],
     "Oinkologne-Female": [
         "Aroma Veil",
         "Gluttony",
@@ -4155,6 +4197,12 @@
         "Lingering Aroma",
         "Gluttony",
         "Thick Fat",
+        ""
+    ],
+    "Okidogi": [
+        "Toxic Chain",
+        "",
+        "Guard Dog",
         ""
     ],
     "Omanyte": [
@@ -4499,6 +4547,12 @@
         "Swift Swim",
         ""
     ],
+    "Poltchageist": [
+        "Hospitality",
+        "",
+        "Heatproof",
+        ""
+    ],
     "Polteageist": [
         "Weak Armor",
         "",
@@ -4535,14 +4589,14 @@
         "Analytic",
         ""
     ],
-    "Porygon2": [
-        "Trace",
+    "Porygon-Z": [
+        "Adaptability",
         "Download",
         "Analytic",
         ""
     ],
-    "Porygon-Z": [
-        "Adaptability",
+    "Porygon2": [
+        "Trace",
         "Download",
         "Analytic",
         ""
@@ -5233,7 +5287,7 @@
     ],
     "Shiftry": [
         "Chlorophyll",
-        "Early Bird",
+        "Wind Rider",
         "Pickpocket",
         ""
     ],
@@ -5313,6 +5367,12 @@
         "Gluttony",
         "",
         "Blaze",
+        ""
+    ],
+    "Sinistcha": [
+        "Hospitality",
+        "",
+        "Heatproof",
         ""
     ],
     "Sinistea": [
@@ -6305,6 +6365,12 @@
         "Unnerve",
         ""
     ],
+    "Ursaluna-Bloodmoon": [
+        "Mind's Eye",
+        "",
+        "",
+        ""
+    ],
     "Ursaring": [
         "Guts",
         "Quick Feet",
@@ -6503,12 +6569,12 @@
         "Pressure",
         ""
     ],
-	"Walking Wake": [
-		"Protosynthesis",
-		"",
-		"",
-		""
-	],
+    "Walking Wake": [
+        "Protosynthesis",
+        "",
+        "",
+        ""
+    ],
     "Walrein": [
         "Thick Fat",
         "Ice Body",
@@ -6617,16 +6683,16 @@
         "",
         ""
     ],
-    "Wobbuffet": [
-        "Shadow Tag",
-        "",
-        "Telepathy",
-        ""
-    ],
     "Wo-Chien": [
         "Tablets of Ruin",
         "",
         "",
+        ""
+    ],
+    "Wobbuffet": [
+        "Shadow Tag",
+        "",
+        "Telepathy",
         ""
     ],
     "Woobat": [

@@ -1,3 +1,5 @@
+import asyncio
+
 from pkmn_battle import *
 from copy import deepcopy as copy
 
@@ -32,9 +34,9 @@ def find_mon(s: Union[str, int, None], **kwargs) -> pk.Mon:
 
 def find_move(s: str) -> pk.Move:
     try:
-        return [j.copy() for g, j in pk.moveDex.items() if pk.fix(g) == pk.fix(s)][0]
+        return [j.copy() for g, j in pk.move_dex.items() if pk.fix(g) == pk.fix(s)][0]
     except IndexError:
-        lis = {pk.fix(g): g for g in pk.moveDex}
+        lis = {pk.fix(g): g for g in pk.move_dex}
         guess = sorted(list(lis), key=lambda c: wr.levenshtein(c, pk.fix(s)))
         raise commands.CommandError(f"`{s}` not found. Did you mean {lis[guess[0]]}?")
 
@@ -1411,9 +1413,35 @@ class PokemonInterpreter(Interpreter):
         a = pk.Team("Red Team")
         d = pk.Team("Blue Team")
         emol = ball_emol()
-        a.add(find_mon("Leafeon", moves=["X-Scissor", "Leaf Blade", "Sunny Day", "Quick Attack"]))
-        d.add(find_mon("Aron", moves=["Flash Cannon", "Earthquake", "Stone Edge", "Ice Punch"], ability="Sturdy"))
-        d.add(find_mon("Lairon", moves=["Flamethrower", "Thunderbolt", "Ice Beam", "Energy Ball"]))
+
+        a.add(find_mon(
+            "Leafeon",
+            moves=["Leaf Blade", "X-Scissor", "Sunny Day", "Quick Attack"],
+            ability="Chlorophyll"
+        ))
+        a.add(find_mon(
+            "Glaceon",
+            moves=["Ice Beam", "Shadow Ball", "Hail", "Calm Mind"],
+            ability="Snow Cloak",
+            tera=pk.ghost
+        ))
+        a.add(find_mon(
+            "Flareon",
+            moves=["Flamethrower", "Trailblaze", "Dig", "Will-O-Wisp"],
+            ability="Flash Fire",
+            tera=pk.grass
+        ))
+
+        d.add(find_mon(
+            "Aron",
+            moves=["Flash Cannon", "Earthquake", "Stone Edge", "Ice Punch"],
+            ability="Sturdy"
+        ))
+        d.add(find_mon(
+            "Lairon",
+            moves=["Flamethrower", "Thunderbolt", "Ice Beam", "Energy Ball"],
+            ability="Sturdy"
+        ))
 
         if len(args) > 0 and args[0].lower() in ["custom", "build"]:
             if len(args) > 1 and args[1].lower() == "blank":
@@ -1636,18 +1664,18 @@ async def loadmove(
 
     if move.category == pk.status and not move.z_effect:
         await ctx.send(embed=Emol(zeph.emojis["yield"], hexcol("DD2E44")).con("This status move has no Z-Effect."))
-    if move.name in pk.moveDex:
+    if move.name in pk.move_dex:
         await ctx.send(embed=Emol(zeph.emojis["yield"], hexcol("DD2E44")).con("This move already exists."))
 
     await ctx.send(f"```py\n{move.json}```", embed=PokemonInterpreter.move_embed(move))
     try:
-        assert await confirm(f"{'Overwrite' if move.name in pk.moveDex else 'Save'} this move?", ctx, yes="save")
+        assert await confirm(f"{'Overwrite' if move.name in pk.move_dex else 'Save'} this move?", ctx, yes="save")
     except AssertionError:
         pass
     else:
-        pk.moveDex[move.name] = move.copy()
+        pk.move_dex[move.name] = move.copy()
         with open("pokemon/moves.json", "w") as f:
-            json.dump({g: j.json for g, j in pk.moveDex.items()}, f, indent=4)
+            json.dump({g: j.json for g, j in pk.move_dex.items()}, f, indent=4)
         return await succ.send(ctx, "Move saved.")
 
 
@@ -1692,9 +1720,29 @@ async def loadmon_command(ctx: commands.Context, name: str, *args):
             form.name = ""
         species.add_form(form)
         mon = pk.Mon(species, form=form.name)
+
+        try:
+            await emol.send(
+                ctx, f"What Abilities does {mon.species_and_form} have?",
+                d="Separate standard Abilities with a comma, and Hidden Abilities with a slash."
+            )
+            ability_input = (await zeph.wait_for("message", check=general_pred(ctx), timeout=300)).content
+        except asyncio.TimeoutError:
+            return await emol.send(ctx, "Request timed out.")
+        if "/" in ability_input:
+            standard_abilities = [g.strip() for g in ability_input.split("/")[0].split(",")]
+            hidden_ability = ability_input.split("/")[1].strip()
+        else:
+            standard_abilities = [g.strip() for g in ability_input.split(",")]
+            hidden_ability = ""
+        if len(standard_abilities) < 2:
+            standard_abilities.append("")
+        pk.legal_abilities[mon.species_and_form] = [*standard_abilities, hidden_ability, ""]
+
         await emol.send(ctx, f"#{existing_mon.dex_no} {name}", d=display_mon(mon, "dex"), thumbnail=pk.image(mon))
         if await confirm("Does this look right?", ctx, desc_override="", allow_text_response=True):
             if force_exit or not (await confirm("Add another form?", ctx, desc_override="", allow_text_response=True)):
+                pk.rewrite_abilities()
                 if existing_mon:
                     pk.rewrite_mons()
                     return await succ.send(ctx, f"{species.name} updated.")
