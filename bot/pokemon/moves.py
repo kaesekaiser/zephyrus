@@ -209,6 +209,12 @@ class Move:
         self.light_screen = kwargs.get("light_screen", False)
         self.aurora_veil = kwargs.get("aurora_veil", False)
         self.trick_room = kwargs.get("trick_room", False)
+        self.belly_drum = kwargs.get("belly_drum", False)
+        self.minimize = kwargs.get("minimize", False)
+        self.curl = kwargs.get("curl", False)
+        self.focus_energy = kwargs.get("focus_energy", False)
+        self.metronome = kwargs.get("metronome", False)
+        self.dream_eater = kwargs.get("dream_eater", False)
         self.tera_blast = kwargs.get("tera_blast", False)
 
         # COMMON ADDITIONAL EFFECTS
@@ -224,6 +230,8 @@ class Move:
         self.add_type = kwargs.get("add_type", None)
         self.change_type = kwargs.get("change_type", None)
         self.ignore_tsc = kwargs.get("ignore_tsc", False)
+        self.switch_self = kwargs.get("switch_self", False)
+        self.fails_if_cant_switch = kwargs.get("fails_if_cant_switch", False)
 
         # STRIKE / TURN CONTROL
         self.multi2 = kwargs.get("multi2", False)
@@ -231,6 +239,8 @@ class Move:
         self.two_turn = kwargs.get("two_turn", False)
         self.must_recharge = kwargs.get("must_recharge", kwargs.get("must_rest", False))  # Giga Impact, etc.
         self.solar = kwargs.get("solar", False)  # Solar Beam + Solar Blade
+        self.triple_kick = kwargs.get("triple_kick", False)  # Triple Kick + Triple Axel
+        self.population_bomb = kwargs.get("population_bomb", False)
 
         # ABSOLUTE POWER / DAMAGE MODS
         self.ohko = kwargs.get("ohko", False)
@@ -261,6 +271,7 @@ class Move:
         self.powder_based = kwargs.get("powder_based", False)  # Grass-types, Safety Goggles, and Overcoat are immune
         self.aura_and_pulse = kwargs.get("aura_and_pulse", False)  # boosted by Mega Launcher
         self.still_typed = kwargs.get("still_typed", False)  # offensive status moves still affected by type
+        self.slicing = kwargs.get("slicing", False)  # Sharpness boosts power
 
     @staticmethod
     def from_json(setup: list):
@@ -285,7 +296,9 @@ class Move:
             "can_hit_dig", "ball_and_bomb", "powder_based", "aura_and_pulse", "removes_barriers", "fake_out", "dig",
             "used_in_succession", "protect", "growth", "weather", "solar", "still_typed", "hits_in_rain", "endure",
             "poison_never_miss", "rage", "mimic", "tera_blast", "half_heal", "reset_target_stats", "reset_all_stats",
-            "add_type", "change_type", "ignore_tsc", "reflect", "light_screen", "aurora_veil", "trick_room"
+            "add_type", "change_type", "ignore_tsc", "reflect", "light_screen", "aurora_veil", "trick_room",
+            "belly_drum", "triple_kick", "population_bomb", "slicing", "switch_self", "fails_if_cant_switch",
+            "minimize", "curl", "focus_energy", "metronome", "dream_eater"
         ]
 
         kwargs = {
@@ -315,6 +328,8 @@ class Move:
     @property
     def description(self):
         ret = []
+        if self.dream_eater:
+            ret.append("- Can only be used on sleeping Pok\u00e9mon.")
         if self.two_turn:
             ret.append("- Strikes on the second turn.")
         if self.solar:
@@ -337,6 +352,11 @@ class Move:
             ret.append("- Hits exactly twice.")
         if self.multi25:
             ret.append("- Hits two to five times.")
+        if self.triple_kick:
+            ret.append(f"- Hits up to three times, with each strike having its own accuracy check. Each successive "
+                       f"strike increases in base power by {self.power}.")
+        if self.population_bomb:
+            ret.append(f"- Hits up to ten times, with each strike having its own accuracy check.")
         if self.absorbent:
             ret.append("- Restores the user's HP by half the damage dealt.")
         if self.recoil:
@@ -444,15 +464,27 @@ class Move:
                        "(or one-third in a Double Battle). Can only be used during hail or snow.")
         if self.trick_room:
             ret.append("- For 5 turns, mons with a lower Speed stat will move first within their priority bracket.")
+        if self.belly_drum:
+            ret.append("- The user loses half its max HP, but maximizes its Attack stat.")
+        if self.minimize:
+            ret.append("- Minimizes the user, causing them to become more vulnerable to moves such as Stomp.")
+        if self.curl:
+            ret.append("- The user curls up, making its subsequent Rollout and Ice Ball attacks twice as powerful.")
+        if self.focus_energy:
+            ret.append("- Raises the user's critical hit rate.")
         if self.tera_blast:
             ret.append("- Changes to the user's Tera type when Terastallized. Becomes a physical move if the user's "
                        "Attack is higher than its Special Attack.")
 
         if self.weather:
             weather_descriptions = {
-                sun: "intense sunlight", rain: "a heavy rain", hail: "a hailstorm", sandstorm: "a sandstorm"
+                sun: "intense sunlight", rain: "a heavy rain", hail: "a hailstorm", sandstorm: "a sandstorm",
+                snow: "snow"
             }
             ret.append(f"- Summons {weather_descriptions[self.weather]} that lasts for five turns.")
+
+        if self.switch_self:
+            ret.append("- Switches the user out.")
 
         if self.used_in_succession:
             ret.append("- Its chance of failing rises if it is used in succession.")
@@ -485,10 +517,10 @@ class PackedMove:
         return bool(self.name)
 
     def unpack(self):
-        if self.name in systemMoves:
-            ret = systemMoves[self.name].copy()
+        if self.name in system_moves:
+            ret = system_moves[self.name].copy()
         else:
-            ret = moveDex[self.name].copy()
+            ret = move_dex[self.name].copy()
         ret.pp = self.pp
         ret.ppc = self.ppc
         assert isinstance(ret, Move)
@@ -496,16 +528,38 @@ class PackedMove:
 
 
 with open("moves.json" if __name__ == "__main__" else "pokemon/moves.json", "r") as fp:
-    moveDex = {g: Move.from_json(j) for g, j in json.load(fp).items()}
+    move_dex = {g: Move.from_json(j) for g, j in json.load(fp).items()}
 
 
-twoTurnTexts = {
+two_turn_texts = {
     "Razor Wind": "{name} whipped up a whirlwind!",
-    "Solar Beam": "{name} absorbed light!"
+    "Solar Beam": "{name} absorbed light!",
+    "Sky Attack": "{name} became cloaked in a harsh light!"
 }
+no_metronome = [
+    'After You', 'Apple Acid', 'Armor Cannon', 'Assist', 'Astral Barrage', 'Aura Wheel', 'Baneful Bunker',
+    'Beak Blast', 'Behemoth Bash', 'Behemoth Blade', 'Belch', 'Bestow', 'Blazing Torque', 'Body Press', 'Branch Poke',
+    'Breaking Swipe', 'Celebrate', 'Chatter', 'Chilling Water', 'Chilly Reception', 'Clangorous Soul',
+    'Collision Course', 'Combat Torque', 'Comeuppance', 'Copycat', 'Counter', 'Covet', 'Crafty Shield', 'Decorate',
+    'Destiny Bond', 'Detect', 'Diamond Storm', 'Doodle', 'Double Iron Bash', 'Double Shock', 'Dragon Ascent',
+    'Dragon Energy', 'Drum Beating', 'Dynamax Cannon', 'Electro Drift', 'Endure', 'Eternabeam', 'False Surrender',
+    'Feint', 'Fiery Wrath', 'Fillet Away', 'Fleur Cannon', 'Focus Punch', 'Follow Me', 'Freeze Shock',
+    'Freezing Glare', 'Glacial Lance', 'Grav Apple', 'Helping Hand', 'Hold Hands', 'Hyper Drill', 'Hyperspace Fury',
+    'Hyperspace Hole', 'Ice Burn', 'Instruct', 'Jet Punch', 'Jungle Healing', "King's Shield", 'Life Dew',
+    'Light of Ruin', 'Make It Rain', 'Magical Torque', 'Mat Block', 'Me First', 'Meteor Assault', 'Mimic',
+    'Mind Blown', 'Mirror Coat', 'Mirror Move', 'Moongeist Beam', 'Nature Power', "Nature's Madness", 'Noxious Torque',
+    'Obstruct', 'Order Up', 'Origin Pulse', 'Overdrive', 'Photon Geyser', 'Plasma Fists', 'Population Bomb', 'Pounce',
+    'Power Shift', 'Precipice Blades', 'Protect', 'Pyro Ball', 'Quash', 'Quick Guard', 'Rage Fist', 'Rage Powder',
+    'Raging Bull', 'Raging Fury', 'Relic Song', 'Revival Blessing', 'Ruination', 'Salt Cure', 'Secret Sword',
+    'Shed Tail', 'Shell Trap', 'Silk Trap', 'Sketch', 'Sleep Talk', 'Snap Trap', 'Snarl', 'Snatch', 'Snore',
+    'Snowscape', 'Spectral Thief', 'Spicy Extract', 'Spiky Shield', 'Spirit Break', 'Spotlight', 'Steam Eruption',
+    'Steel Beam', 'Strange Steam', 'Struggle', 'Sunsteel Strike', 'Surging Strikes', 'Switcheroo', 'Techno Blast',
+    'Thief', 'Thousand Arrows', 'Thousand Waves', 'Thunder Cage', 'Thunderous Kick', 'Tidy Up', 'Trailblaze',
+    'Transform', 'Trick', 'Twin Beam', 'V-create', 'Wicked Blow', 'Wicked Torque', 'Wide Guard'
+]
 
 
-systemMoves = {
+system_moves = {
     "Switch": Move.from_json(["Switch", None, None, 0, 0, 0, False, None, {"switch": True, "priority": 10}]),
     "Team": Move.control("Switch"),
     "Exit": Move.control("Exit"),
