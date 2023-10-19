@@ -13,8 +13,7 @@
             "Will-O-Wisp"
         ],
         "additional_moves": [
-            "Hypnosis",
-            ""
+            "Hypnosis"
         ],
         "drops": [
             [
@@ -732,13 +731,7 @@
         "type": "Random",
         "ability": "Hidden Possible",
         "moves": [
-            "Transform",
-            "",
-            "",
-            "",
-            "",
-            "",
-            ""
+            "Transform"
         ],
         "drops": [
             [
@@ -1317,8 +1310,7 @@
             "Aqua Tail"
         ],
         "additional_moves": [
-            "Light Screen",
-            ""
+            "Light Screen"
         ],
         "drops": [
             [
@@ -1463,8 +1455,7 @@
         ],
         "additional_moves": [
             "Psychic Terrain",
-            "Calm Mind",
-            ""
+            "Calm Mind"
         ],
         "drops": [
             [
@@ -1609,8 +1600,7 @@
         ],
         "additional_moves": [
             "Calm Mind",
-            "Curse",
-            ""
+            "Curse"
         ],
         "drops": [
             [
@@ -1901,8 +1891,7 @@
         ],
         "additional_moves": [
             "Iron Defense",
-            "Focus Energy",
-            ""
+            "Focus Energy"
         ],
         "drops": [
             [
@@ -2046,9 +2035,7 @@
             "Leer"
         ],
         "additional_moves": [
-            "Bulk Up",
-            "",
-            ""
+            "Bulk Up"
         ],
         "drops": [
             [
@@ -2192,8 +2179,7 @@
             "Light Screen"
         ],
         "additional_moves": [
-            "Defense Curl",
-            ""
+            "Defense Curl"
         ],
         "drops": [
             [
@@ -2337,8 +2323,7 @@
             "Rock Blast"
         ],
         "additional_moves": [
-            "Iron Defense",
-            ""
+            "Iron Defense"
         ],
         "drops": [
             [
@@ -2772,8 +2757,7 @@
             "Aerial Ace"
         ],
         "additional_moves": [
-            "Grassy Terrain",
-            ""
+            "Grassy Terrain"
         ],
         "drops": [
             [
@@ -3062,8 +3046,7 @@
             "Tera Blast"
         ],
         "additional_moves": [
-            "Dragon Dance",
-            ""
+            "Dragon Dance"
         ],
         "drops": [
             [
@@ -3204,10 +3187,7 @@
             "Close Combat",
             "Brave Bird",
             "Double-Edge",
-            "Feather Dance",
-            "",
-            "",
-            ""
+            "Feather Dance"
         ],
         "drops": [
             [
@@ -3351,8 +3331,7 @@
             "Rock Slide"
         ],
         "additional_moves": [
-            "Swords Dance",
-            ""
+            "Swords Dance"
         ],
         "drops": [
             [
@@ -3493,10 +3472,7 @@
             "Earthquake",
             "Ice Fang",
             "Yawn",
-            "Rock Slide",
-            "",
-            "",
-            ""
+            "Rock Slide"
         ],
         "drops": [
             [
@@ -3787,8 +3763,7 @@
         ],
         "additional_moves": [
             "Sunny Day",
-            "Swords Dance",
-            ""
+            "Swords Dance"
         ],
         "drops": [
             [
@@ -3933,8 +3908,7 @@
         ],
         "additional_moves": [
             "Snowscape",
-            "Calm Mind",
-            ""
+            "Calm Mind"
         ],
         "drops": [
             [
@@ -4224,9 +4198,7 @@
             "Sludge Bomb"
         ],
         "additional_moves": [
-            "Grassy Terrain",
-            "",
-            ""
+            "Grassy Terrain"
         ],
         "drops": [
             [
@@ -4370,10 +4342,7 @@
             "First Impression"
         ],
         "additional_moves": [
-            "Dragon Dance",
-            "",
-            "",
-            ""
+            "Dragon Dance"
         ],
         "drops": [
             [
@@ -4518,9 +4487,7 @@
         ],
         "additional_moves": [
             "Work Up",
-            "Nasty Plot",
-            "",
-            ""
+            "Nasty Plot"
         ],
         "drops": [
             [
@@ -4812,9 +4779,7 @@
         ],
         "additional_moves": [
             "Sunny Day",
-            "Swords Dance",
-            "",
-            ""
+            "Swords Dance"
         ],
         "drops": [
             [
@@ -4959,9 +4924,7 @@
         ],
         "additional_moves": [
             "Acid Spray",
-            "Draco Meteor",
-            "",
-            ""
+            "Draco Meteor"
         ],
         "drops": [
             [
@@ -5105,8 +5068,7 @@
             "Crabhammer"
         ],
         "additional_moves": [
-            "Rain Dance",
-            ""
+            "Rain Dance"
         ],
         "drops": [
             [
@@ -5395,8 +5357,7 @@
             "Power Whip"
         ],
         "additional_moves": [
-            "Rain Dance",
-            ""
+            "Rain Dance"
         ],
         "drops": [
             [
@@ -5540,8 +5501,7 @@
             "Ice Spinner"
         ],
         "additional_moves": [
-            "Iron Defense",
-            ""
+            "Iron Defense"
         ],
         "drops": [
             [
@@ -5685,8 +5645,7 @@
             "Taunt"
         ],
         "additional_moves": [
-            "Sandstorm",
-            ""
+            "Sandstorm"
         ],
         "drops": [
             [
@@ -6120,8 +6079,7 @@
             "Hone Claws"
         ],
         "additional_moves": [
-            "Tailwind",
-            ""
+            "Tailwind"
         ],
         "drops": [
             [
@@ -6407,10 +6365,7 @@
             "Blizzard",
             "Bug Buzz",
             "Hurricane",
-            "Snowscape",
-            "",
-            "",
-            ""
+            "Snowscape"
         ],
         "drops": [
             [
@@ -6699,8 +6654,7 @@
             "Nuzzle"
         ],
         "additional_moves": [
-            "Electric Terrain",
-            ""
+            "Electric Terrain"
         ],
         "drops": [
             [
@@ -6844,8 +6798,7 @@
             "Charm"
         ],
         "additional_moves": [
-            "Tidy Up",
-            ""
+            "Tidy Up"
         ],
         "drops": [
             [
@@ -6986,10 +6939,7 @@
             "Play Rough",
             "Double-Edge",
             "Bite",
-            "Baby-Doll Eyes",
-            "",
-            "",
-            ""
+            "Baby-Doll Eyes"
         ],
         "drops": [
             [
@@ -7423,8 +7373,7 @@
             "Will-O-Wisp"
         ],
         "additional_moves": [
-            "Sunny Day",
-            ""
+            "Sunny Day"
         ],
         "drops": [
             [
@@ -7713,8 +7662,7 @@
             "Take Down"
         ],
         "additional_moves": [
-            "Taunt",
-            ""
+            "Taunt"
         ],
         "drops": [
             [
@@ -7858,8 +7806,7 @@
             "Flatter"
         ],
         "additional_moves": [
-            "Toxic",
-            ""
+            "Toxic"
         ],
         "drops": [
             [
@@ -8003,8 +7950,7 @@
             "Hex"
         ],
         "additional_moves": [
-            "Grassy Terrain",
-            ""
+            "Grassy Terrain"
         ],
         "drops": [
             [
@@ -8435,10 +8381,7 @@
             "Rock Slide",
             "Acrobatics",
             "Knock Off",
-            "Feather Dance",
-            "",
-            "",
-            ""
+            "Feather Dance"
         ],
         "drops": [
             [
@@ -8727,8 +8670,7 @@
             "Knock Off"
         ],
         "additional_moves": [
-            "Shift Gear",
-            ""
+            "Shift Gear"
         ],
         "drops": [
             [
@@ -8872,8 +8814,7 @@
             "Sandstorm"
         ],
         "additional_moves": [
-            "Coil",
-            ""
+            "Coil"
         ],
         "drops": [
             [
@@ -9017,8 +8958,7 @@
             "Rock Polish"
         ],
         "additional_moves": [
-            "Sandstorm",
-            ""
+            "Sandstorm"
         ],
         "drops": [
             [
@@ -9162,8 +9102,7 @@
             "Stomping Tantrum"
         ],
         "additional_moves": [
-            "Yawn",
-            ""
+            "Yawn"
         ],
         "drops": [
             [
@@ -9594,10 +9533,7 @@
             "Earthquake",
             "Poison Jab",
             "Megahorn",
-            "Yawn",
-            "",
-            "",
-            ""
+            "Yawn"
         ],
         "drops": [
             [
@@ -9741,8 +9677,7 @@
             "Uproar"
         ],
         "additional_moves": [
-            "Agility",
-            ""
+            "Agility"
         ],
         "drops": [
             [
@@ -9886,8 +9821,7 @@
             "Thunder Wave"
         ],
         "additional_moves": [
-            "Swords Dance",
-            ""
+            "Swords Dance"
         ],
         "drops": [
             [
@@ -10028,10 +9962,7 @@
             "Icicle Spear",
             "Dragon Rush",
             "Snowscape",
-            "Body Press",
-            "",
-            "",
-            ""
+            "Body Press"
         ],
         "drops": [
             [
@@ -10772,10 +10703,7 @@
             "Facade",
             "Crunch",
             "Yawn",
-            "Heavy Slam",
-            "",
-            "",
-            ""
+            "Heavy Slam"
         ],
         "drops": [
             [
@@ -10924,9 +10852,7 @@
             "Encore"
         ],
         "additional_moves": [
-            "Amnesia",
-            "",
-            ""
+            "Amnesia"
         ],
         "drops": [
             [
@@ -11076,8 +11002,7 @@
         ],
         "additional_moves": [
             "Curse",
-            "Rain Dance",
-            ""
+            "Rain Dance"
         ],
         "drops": [
             [
@@ -11227,8 +11152,7 @@
         ],
         "additional_moves": [
             "Rain Dance",
-            "Teeter Dance",
-            ""
+            "Teeter Dance"
         ],
         "drops": [
             [
@@ -11529,8 +11453,7 @@
         ],
         "additional_moves": [
             "Leer",
-            "Swords Dance",
-            ""
+            "Swords Dance"
         ],
         "drops": [
             [
@@ -11830,9 +11753,7 @@
             "Thunder Punch"
         ],
         "additional_moves": [
-            "Screech",
-            "",
-            ""
+            "Screech"
         ],
         "drops": [
             [
@@ -11978,11 +11899,7 @@
             "Bug Buzz",
             "Air Slash",
             "Quick Attack",
-            "Ancient Power",
-            "",
-            "",
-            "",
-            ""
+            "Ancient Power"
         ],
         "drops": [
             [
@@ -12132,8 +12049,7 @@
         ],
         "additional_moves": [
             "Sandstorm",
-            "Swords Dance",
-            ""
+            "Swords Dance"
         ],
         "drops": [
             [
@@ -12583,8 +12499,7 @@
             "Slam"
         ],
         "additional_moves": [
-            "Bulk Up",
-            ""
+            "Bulk Up"
         ],
         "drops": [
             [
@@ -13033,8 +12948,7 @@
             "Reversal"
         ],
         "additional_moves": [
-            "Calm Mind",
-            ""
+            "Calm Mind"
         ],
         "drops": [
             [
@@ -13183,8 +13097,7 @@
             "Bone Rush"
         ],
         "additional_moves": [
-            "Snarl",
-            ""
+            "Snarl"
         ],
         "drops": [
             [
