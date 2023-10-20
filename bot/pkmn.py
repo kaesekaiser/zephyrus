@@ -478,16 +478,16 @@ class EffNavigator(Navigator):
 
     @property
     def eff_dict(self):
-        def eff(atk: str, dfn: str):
-            return pk.effectiveness[atk].get(dfn, 1)
+        def eff(atk: str, dfn1: str, dfn2: str = None):
+            return pk.effectiveness[atk].get(dfn1, 1) * pk.effectiveness[atk].get(dfn2, 1)
 
         ret = {
-            "4x": ", ".join([g for g in pk.types if eff(g, self.type1) * eff(g, self.type2) == 4]),
-            "2x": ", ".join([g for g in pk.types if eff(g, self.type1) * eff(g, self.type2) == 2]),
-            "1x": ", ".join([g for g in pk.types if eff(g, self.type1) * eff(g, self.type2) == 1]),
-            "1/2x": ", ".join([g for g in pk.types if eff(g, self.type1) * eff(g, self.type2) == 0.5]),
-            "1/4x": ", ".join([g for g in pk.types if eff(g, self.type1) * eff(g, self.type2) == 0.25]),
-            "0x": ", ".join([g for g in pk.types if eff(g, self.type1) * eff(g, self.type2) == 0])
+            "4x": ", ".join([f"{zeph.emojis[g]} {g}" for g in pk.types if eff(g, self.type1, self.type2) == 4]),
+            "2x": ", ".join([f"{zeph.emojis[g]} {g}" for g in pk.types if eff(g, self.type1, self.type2) == 2]),
+            "1x": ", ".join([f"{zeph.emojis[g]} {g}" for g in pk.types if eff(g, self.type1, self.type2) == 1]),
+            "½x": ", ".join([f"{zeph.emojis[g]} {g}" for g in pk.types if eff(g, self.type1, self.type2) == 0.5]),
+            "¼x": ", ".join([f"{zeph.emojis[g]} {g}" for g in pk.types if eff(g, self.type1, self.type2) == 0.25]),
+            "0x": ", ".join([f"{zeph.emojis[g]} {g}" for g in pk.types if eff(g, self.type1, self.type2) == 0])
         }
         return {g: j for g, j in ret.items() if j}
 
@@ -514,12 +514,12 @@ class EffNavigator(Navigator):
 
     @property
     def con(self):
-        second_type = f"`{self.type2}` {zeph.emojis[self.type2.title()]}" if self.type2 else "`None`"
+        second_type = f"{zeph.emojis[self.type2.title()]} `{self.type2}`" if self.type2 else "`None`"
         return self.emol.con(
             "Type Effectiveness", thumb=self.image,
-            d=f"{zeph.emojis['left1']} [`{self.type1}` {zeph.emojis[self.type1.title()]}] {zeph.emojis['right1']} / "
+            d=f"{zeph.emojis['left1']} [{zeph.emojis[self.type1.title()]} `{self.type1}`] {zeph.emojis['right1']} / "
               f"{zeph.emojis['left2']} [{second_type}] {zeph.emojis['right2']}\n\n" +
-              "\n".join([f"**{g}:** {j}" for g, j in self.eff_dict.items()])
+              "\n\n".join([f"**{g}:** {j}" for g, j in self.eff_dict.items()])
         )
 
 
@@ -1378,28 +1378,32 @@ class PokemonInterpreter(Interpreter):
         return await ball_emol().send(self.ctx, f"z!pokemon {ret}", d=help_dict[ret])
 
     async def _type(self, *args):
+        if not args:
+            raise commands.CommandError("Format: `z!pokemon type <type>`")
         typ = str(args[0]).title()
         if typ.title() not in pk.types:
             raise commands.CommandError(f"{typ} isn't a type.")
 
         eff = {
-            "Super effective against": [g for g in pk.types if pk.effectiveness[typ][g] > 1],
-            "Not very effective against": [g for g in pk.types if 0 < pk.effectiveness[typ][g] < 1],
-            "Ineffective against": [g for g in pk.types if not pk.effectiveness[typ][g]],
-            "Immune to": [g for g in pk.types if not pk.effectiveness[g][typ]],
-            "Resistant to": [g for g in pk.types if 0 < pk.effectiveness[g][typ] < 1],
-            "Weak to": [g for g in pk.types if pk.effectiveness[g][typ] > 1]
+            "2x damage against": [f"{zeph.emojis[g]} {g}" for g in pk.types if pk.effectiveness[typ][g] > 1],
+            "½x damage against": [f"{zeph.emojis[g]} {g}" for g in pk.types if 0 < pk.effectiveness[typ][g] < 1],
+            "0x damage against": [f"{zeph.emojis[g]} {g}" for g in pk.types if not pk.effectiveness[typ][g]],
+            "0x damage from": [f"{zeph.emojis[g]} {g}" for g in pk.types if not pk.effectiveness[g][typ]],
+            "½x damage from": [f"{zeph.emojis[g]} {g}" for g in pk.types if 0 < pk.effectiveness[g][typ] < 1],
+            "2x damage from": [f"{zeph.emojis[g]} {g}" for g in pk.types if pk.effectiveness[g][typ] > 1]
         }
         return await type_emol(typ).send(
-            self.ctx, f"{typ}-type", fs={g: ", ".join(j) for g, j in eff.items() if j}, same_line=True
+            self.ctx, f"{typ}-type", fs={g: "\n".join(j) for g, j in eff.items() if j}, same_line=True
         )
 
     async def _eff(self, *args):
+        args = re.split(r"\s|/", " ".join(args))  # to account for inputs like "grass/steel"
         mon = find_mon(" ".join(args), fail_silently=True)
         if mon:
             types = mon.types
         else:
-            if set(g.title() for g in args).issubset(set(EffNavigator.types)) and 0 < len(args) < 3:
+            if set(g.title() for g in args).issubset(set(EffNavigator.types)) \
+                    and 0 < len(args) < 3:
                 types = [g.title() for g in args]
             else:
                 types = ["Normal"]
