@@ -72,13 +72,13 @@ class Epitaph(ep.Civ):
 
     async def run(self):
         cont = self.contact()
-        zeph.epitaphChannels.append(self.ctx.channel)
+        zeph.epitaph_channels.append(self.ctx.channel)
         await self.yellow.say(f"Stardate {self.stardate}", d=cont)
         self.history.append(f"{self.stardate} - {cont}")
         while not (self.extinct or self.victorious):
             await asyncio.sleep(0.2 if self.handsOff else 0.5)
             await self.tick()
-        zeph.epitaphChannels.remove(self.ctx.channel)
+        zeph.epitaph_channels.remove(self.ctx.channel)
 
 
 @zeph.command(
@@ -91,7 +91,7 @@ class Epitaph(ep.Civ):
 async def epitaph(ctx: commands.Context, *, text: str = ""):
     if text and text.casefold() != "handsoff":
         raise commands.BadArgument
-    if ctx.channel in zeph.epitaphChannels:
+    if ctx.channel in zeph.epitaph_channels:
         raise commands.CommandError("There is already an Epitaph game running in this channel.")
 
     return await Epitaph(ctx, bool(text)).run()

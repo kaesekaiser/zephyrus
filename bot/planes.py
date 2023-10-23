@@ -17,7 +17,7 @@ async def initialize_planes():
     with open("storage/planes.txt", "r") as read:
         for i in read.readlines():
             us = pn.User.from_str(i)
-            zeph.planeUsers[us.id] = us
+            zeph.plane_users[us.id] = us
     return print(f"Planes initialized. ({round(time.time() - start, 1)} s)")
 
 
@@ -54,8 +54,8 @@ class PlanesInterpreter(Interpreter):
     @property
     def user(self):
         try:
-            assert isinstance(zeph.planeUsers[self.au.id], pn.User)
-            return zeph.planeUsers[self.au.id]
+            assert isinstance(zeph.plane_users[self.au.id], pn.User)
+            return zeph.plane_users[self.au.id]
         except KeyError:
             return pn.User(0, {}, [], {}, 0)
 
@@ -205,7 +205,7 @@ class PlanesInterpreter(Interpreter):
         )
 
     async def before_run(self, func: str):
-        if self.au.id in zeph.planeUsers:
+        if self.au.id in zeph.plane_users:
             for craft in self.user.planes.values():
                 if len(craft.path) > 0:  # messy; should only be called if zeph went down while a plane was in the air
                     while craft.next_eta and craft.next_eta < time.time():
@@ -511,12 +511,12 @@ class PlanesInterpreter(Interpreter):
             if os.path.exists(f"storage/minimaps/{city.name}{zoom}.png"):  # avoid unnecessary image generation
                 minimaps[zoom] = await image_url(f"storage/minimaps/{city.name}{zoom}.png")
             else:
-                base = zeph.airportMaps[zoom].copy()
+                base = zeph.airport_maps[zoom].copy()
                 left_bound = max(0, min(city.imageCoords[zoom][0] - 300, 2752 * zoom - 601))
                 upper_bound = max(0, min(city.imageCoords[zoom][1] - 300, 1396 * zoom - 601))
                 right_bound = left_bound + 600
                 lower_bound = upper_bound + 600
-                im.merge_down(zeph.airportIcon, base, *city.imageCoords[zoom], center=True)
+                im.merge_down(zeph.airport_icon, base, *city.imageCoords[zoom], center=True)
                 base = base.crop((left_bound, upper_bound, right_bound, lower_bound))
                 base.save(f"storage/minimaps/{city.name}{zoom}.png")
                 minimaps[zoom] = await image_url(f"storage/minimaps/{city.name}{zoom}.png")
@@ -842,7 +842,7 @@ class PlanesInterpreter(Interpreter):
         else:
             mess = await plane.send(self.ctx, "Alright, one moment...")
             await asyncio.sleep(2 + random() * 2)
-            del zeph.planeUsers[self.au.id]
+            del zeph.plane_users[self.au.id]
             return await succ.edit(mess, "Done.", d="Call `z!planes new` to start anew.")
 
     async def _buy(self, *args):
@@ -973,7 +973,7 @@ class PlanesInterpreter(Interpreter):
                 return await plane.send(self.ctx, "Purchase cancelled.")
 
     async def _new(self, *args):
-        if self.ctx.author.id in zeph.planeUsers:
+        if self.ctx.author.id in zeph.plane_users:
             return await plane.send(
                 self.ctx, "You've already started a game, but you can start over using `z!planes restart` if you want."
             )
@@ -997,7 +997,7 @@ class PlanesInterpreter(Interpreter):
                     cho = cho.content.lower()
                     cit = pn.cities[cho]
                     nam = choice(pn.starter_names)
-                    zeph.planeUsers[self.au.id] = pn.User(
+                    zeph.plane_users[self.au.id] = pn.User(
                         self.au.id, {cit.country: 1}, [cit.name],
                         {nam.lower(): pn.Plane(pn.craft["tyne-647"], nam, pn.Path(0, cit), [], [0, 0])}, 1000000
                     )
@@ -1014,7 +1014,7 @@ class PlanesInterpreter(Interpreter):
 #     async def _ownmap(self, *args):
 #         message = await Emol(zeph.emojis["loading"], hexcol("66757F")).send(self.ctx, "Generating...")
 #
-#         base = zeph.airportMaps[4].copy()
+#         base = zeph.airport_maps[4].copy()
 #         icon = im.Image.open("minigames/minimaps/airport.png").convert("RGBA")
 #
 #         for city in pn.cities.values():
@@ -1041,7 +1041,7 @@ class PlanesInterpreter(Interpreter):
 
             if len(args) > 2 and can_int(args[2]):
                 try:
-                    user = zeph.planeUsers[int(args[2])]
+                    user = zeph.plane_users[int(args[2])]
                 except KeyError:
                     raise commands.CommandError("User ID not found.")
             else:

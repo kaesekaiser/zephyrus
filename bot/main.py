@@ -262,7 +262,7 @@ class ChannelLink:  # just a class to keep track of things. it doesn't really do
 async def link_command(ctx: commands.Context, channel_type: str, idn: int):
     admin_check(ctx)
 
-    if zeph.channelLink is not None:
+    if zeph.channel_link is not None:
         raise commands.CommandError("Zephyrus is already connected somewhere. Try using `z!disconnect` first.")
 
     if channel_type == "channel":
@@ -290,7 +290,7 @@ async def link_command(ctx: commands.Context, channel_type: str, idn: int):
     else:
         raise commands.CommandError("Unknown channel type. Valid inputs are `user` and `channel`.")
 
-    zeph.channelLink = ChannelLink(ctx.channel, channel)
+    zeph.channel_link = ChannelLink(ctx.channel, channel)
 
 
 @zeph.command(
@@ -300,13 +300,13 @@ async def link_command(ctx: commands.Context, channel_type: str, idn: int):
 async def unlink_command(ctx: commands.Context):
     admin_check(ctx)
 
-    if isinstance(zeph.channelLink.to, discord.DMChannel):  # transparency again
+    if isinstance(zeph.channel_link.to, discord.DMChannel):  # transparency again
         await phone.send(
-            zeph.channelLink.to, "DMs unlinked.",
+            zeph.channel_link.to, "DMs unlinked.",
             d="I can no longer read what you say here. Use `z!feedback` if you need anything else."
         )
 
-    zeph.channelLink = None
+    zeph.channel_link = None
     await succ.send(ctx, "Unlinked.")
 
 
@@ -373,8 +373,8 @@ async def on_ready():
 
 @zeph.event
 async def on_command_error(ctx: commands.Context, exception):
-    if ctx.command == epitaph and ctx.channel in zeph.epitaphChannels:
-        zeph.epitaphChannels.remove(ctx.channel)
+    if ctx.command == epitaph and ctx.channel in zeph.epitaph_channels:
+        zeph.epitaph_channels.remove(ctx.channel)
 
     relevant_nativities = [g for g in zeph.nativities if g.ctx == ctx]
     for nativity in relevant_nativities:
@@ -433,11 +433,11 @@ async def on_message(message: discord.Message):
         if sampas:
             await message.channel.send("\n".join(sampas))
 
-    if zeph.channelLink is not None and zeph.channelLink.should_activate(message):
-        if message.channel == zeph.channelLink.to:
-            await zeph.channelLink.fro.send(f"**{message.author}**: {message.content}")
-        if message.channel == zeph.channelLink.fro:
-            await zeph.channelLink.to.send(message.content)
+    if zeph.channel_link is not None and zeph.channel_link.should_activate(message):
+        if message.channel == zeph.channel_link.to:
+            await zeph.channel_link.fro.send(f"**{message.author}**: {message.content}")
+        if message.channel == zeph.channel_link.fro:
+            await zeph.channel_link.to.send(message.content)
 
     await zeph.process_commands(message)
 

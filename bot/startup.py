@@ -30,30 +30,31 @@ class Zeph(commands.Bot):
         # with open("storage/call_channels.txt", "r") as f:
         #     self.phoneNumbers = {int(g.split("|")[0]): int(g.split("|")[1]) for g in f.readlines()}
         #     self.callChannels = {int(g.split("|")[1]): int(g.split("|")[2]) for g in f.readlines()}
-        self.planeUsers = {}
-        self.epitaphChannels = []
+        self.plane_users = {}
+        self.epitaph_channels = []
         self.roman = pjs.RomanizationConversion()
-        self.airportMaps = {
+        self.airport_maps = {
             1: im.Image.open("minigames/minimaps/worldzoom1.png").convert("RGBA"),
             2: im.Image.open("minigames/minimaps/worldzoom2.png").convert("RGBA"),
             4: im.Image.open("minigames/minimaps/worldzoom4.png").convert("RGBA")
         }
-        self.airportIcon = im.Image.open("minigames/minimaps/airport_large.png").convert("RGBA")
-        for i in self.airportMaps.values():
+        self.airport_icon = im.Image.open("minigames/minimaps/airport_large.png").convert("RGBA")
+        for i in self.airport_maps.values():
             assert isinstance(i, im.Image.Image)
-        assert isinstance(self.airportIcon, im.Image.Image)
+        assert isinstance(self.airport_icon, im.Image.Image)
         self.version = self.get_version()
-        self.channelLink = None
+        self.channel_link = None
         self.reminders = []
         self.server_settings = {}
         self.nativities = []
         self.tags = {}
+        self.walker_users = {}
 
     @staticmethod
     def get_version():
         # this is a really gross way of getting the version I know. but shut up
         try:
-            step1 = str(PyQuery("https://github.com/kaesekaiser/zephyrus/releases/latest"))
+            step1 = str(PyQuery(url="https://github.com/kaesekaiser/zephyrus/releases/latest"))
         except requests.exceptions.ConnectionError:
             return "version check failed"
         step2 = re.search(r"octicon octicon-tag.*?</span>", step1, re.S)[0]
@@ -85,9 +86,12 @@ class Zeph(commands.Bot):
     def save(self):
         # with open("storage/call_channels.txt", "w") as f:
         #     f.write("\n".join([f"{g}|{j}|{self.callChannels.get(j, '')}" for g, j in self.phoneNumbers.items()]))
-        if self.planeUsers:  # if planes fails to initialize for some reason, DO NOT overwrite saved data
+        if self.plane_users:  # if planes fails to initialize for some reason, DO NOT overwrite saved data
             with open("storage/planes.txt", "w") as f:
-                f.write("\n".join([str(g) for g in self.planeUsers.values()]))
+                f.write("\n".join([str(g) for g in self.plane_users.values()]))
+        if self.walker_users:
+            with open("storage/walker.txt", "w") as f:
+                f.write("\n".join(str(g) for g in self.walker_users.values()))
         with open("storage/reminders.txt", "w") as f:
             f.write("\n".join(str(g) for g in self.reminders))
         if self.server_settings:  # zephyrus has accidentally erased this before, so only write if it exists
@@ -348,6 +352,7 @@ class Navigator:
         self.next = nxt
         self.closed_elsewhere = False  # to prevent weird loop things if a different method closes the menu
         self.remove_reaction = kwargs.pop("remove_reaction", True)  # whether to remove the user's input reaction
+        self.remove_immediately = kwargs.pop("remove_immediately", False)  # rarely needed
 
     @property
     def pgs(self):
@@ -399,6 +404,9 @@ class Navigator:
             return await self.close()
         return await self.remove_buttons()
 
+    async def update_message(self):
+        await self.message.edit(embed=self.con)
+
     async def run(self, ctx: commands.Context, on_new_message: bool = True, skip_setup: bool = False):
         """This function should never be overwritten."""
         if not skip_setup:
@@ -409,10 +417,11 @@ class Navigator:
                 await self.message.edit(embed=self.con)
 
             for button in self.legal:
-                try:
-                    await self.message.add_reaction(button)
-                except discord.errors.HTTPException:
-                    pass
+                if " " not in button:
+                    try:
+                        await self.message.add_reaction(button)
+                    except discord.errors.HTTPException:
+                        pass
 
         while True:
             try:
@@ -428,6 +437,12 @@ class Navigator:
 
             await self.run_nonstandard_emoji(emoji, ctx)
 
+            if self.remove_immediately:
+                try:
+                    await self.message.remove_reaction(emoji, ctx.author)
+                except discord.HTTPException:
+                    pass
+
             if (self.funcs.get(emoji) == self.close) or self.closed_elsewhere:
                 return
 
@@ -436,9 +451,9 @@ class Navigator:
             except ZeroDivisionError:
                 self.page = 1
 
-            await self.message.edit(embed=self.con)
+            await self.update_message()
 
-            if self.remove_reaction:
+            if self.remove_reaction and not self.remove_immediately:
                 try:
                     await self.message.remove_reaction(emoji, ctx.author)
                 except discord.HTTPException:
@@ -584,7 +599,7 @@ def grammatical_join(ls: list, conj: str = "and"):
 
 
 def admin_check(ctx: commands.Context):
-    if ctx.author.id != 238390171022655489:
+    if ctx.author.id not in [238390171022655489, 474398677599780886]:
         raise commands.CommandError("You don't have permission to run that command.")
 
 
