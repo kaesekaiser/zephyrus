@@ -6,7 +6,7 @@ wikiSearch = "https://en.wikipedia.org/w/index.php?search={}&title=Special%3ASea
 
 
 def readurl(url):
-    return str(PyQuery(url, {'title': 'CSS', 'printable': 'yes'}, encoding="utf8"))
+    return str(PyQuery(url=url, encoding="utf8"))
 
 
 def remove_paren(s: str):
