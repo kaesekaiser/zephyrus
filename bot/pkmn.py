@@ -2780,8 +2780,9 @@ class PokeWalkerInterpreter(Interpreter):
 def load_walker_users():
     with open("storage/walker.txt", "r") as read:
         for i in read.read().split("\n"):
-            us = pk.WalkerUser.from_str(i)
-            zeph.walker_users[us.id] = us
+            if i:
+                us = pk.WalkerUser.from_str(i)
+                zeph.walker_users[us.id] = us
 
 
 @zeph.command(
