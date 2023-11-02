@@ -104,8 +104,8 @@ class Locale:
             "Rare": [g for g, j in self.mons.items() if j <= 1],
         }
 
-    def get_rarity(self, mon: BareMiniMon | str):
-        rarities = {j: k for k, v in self.encounter_table.items() for j in v}
+    def get_rarity(self, mon: BareMiniMon | str, return_exact_odds: bool = False):
+        rarities = {j: (self.mons[j] if return_exact_odds else k) for k, v in self.encounter_table.items() for j in v}
         if isinstance(mon, str):
             mon = get_saf(mon)
         return rarities.get(mon.species_and_form, rarities.get(mon.name, rarities.get(f"{mon.species.name}-Random")))

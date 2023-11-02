@@ -1883,22 +1883,29 @@ class EncounterNavigator(Navigator):
 
 
 class LocaleSelector(NumSelector):
-    def __init__(self, locale_override: list[pk.Locale] = None):
+    def __init__(self, locale_override: list[pk.Locale] = None, caught_by: pk.WalkerUser = None):
         super().__init__(
             ball_emol("safari"), locale_override if locale_override else list(pk.walker_locales.values()), 8
         )
         self.selection = None
+        self.caught_by = caught_by
 
     def select(self, n: int):
         self.selection = self.page_list[n]
         self.closed_elsewhere = True
 
+    def caught_count(self, locale: pk.Locale):
+        if not self.caught_by:
+            return ""
+        else:
+            return f" -- {len([g for g in self.caught_by.dex if locale.get_rarity(g)])} {zeph.emojis['caught']}"
+
     @property
     def con(self):
         return self.emol.con(
             f"Select a locale! [{self.page}/{self.pgs}]",
-            d="\n".join(f"**`[{n+1}]`** {g.name}" for n, g in enumerate(self.page_list)),
-            footer="Say the number in chat to select a stroll destination."
+            d="\n".join(f"**`[{n+1}]`** {g.name}{self.caught_count(g)}" for n, g in enumerate(self.page_list)),
+            footer="Enter the number in chat to select a stroll destination."
         )
 
 
@@ -1981,9 +1988,13 @@ class WalkerBoxNavigator(Navigator):
         else:
             self.mode = "filter"
 
-    def apply_filter(self):
-        self.page = 1
+    def apply_filter(self, force_page_1: bool = True):
         self.table = [g[1] for g in self.filtered_box]
+        if force_page_1:
+            self.page = 1
+        else:
+            if self.page > self.pgs:
+                self.page = self.pgs
 
     def filter_mon(self, mon: pk.BareMiniMon):
         if self.filters["types"] and (self.filters["types"].intersection(set(mon.types)) != self.filters["types"]):
@@ -2000,11 +2011,11 @@ class WalkerBoxNavigator(Navigator):
                 self.mode = "browse"
             else:
                 self.mode = "confirm_transfer"
-        elif self.mode == "confirm_transfer":
+        elif self.mode.startswith("confirm_transfer"):
             for i in sorted(self.transfer_selection, reverse=True):
                 self.user.transfer(i)
             self.just_transferred = len(self.transfer_selection)
-            self.apply_filter()
+            self.apply_filter(force_page_1=not can_int(self.mode[-1]))
             self.back()
         elif self.mode.startswith("view"):
             self.transfer_selection.append(self.box_index(int(self.mode[-1]) - 1))
@@ -2301,7 +2312,7 @@ class WalkerBoxNavigator(Navigator):
                 f"Cypress's PC [{self.page}/{self.pgs}]",
                 d=additional_info + none_list(
                     [f"**`[{n+1}]`**{(' ' + str(checked(self.is_transferred(n)))) if self.mode == 'transfer' else ''} "
-                     f"{display_mon(g, 'typed_list')}{g.shiny_indicator}"
+                     f"{display_mon(g, 'typed_list', saf=True)}{g.shiny_indicator}"
                      for n, g in enumerate(self.page_mons)], "\n", "No mons found."
                 ),
                 footer="Enter the number beside a mon to select or unselect it.\nYou can also select "
@@ -2637,8 +2648,8 @@ class PokeWalkerInterpreter(Interpreter):
     def unlocked_locales(self):
         return {g: j for g, j in pk.walker_locales.items() if self.user.meets_prereqs_for(j)}
 
-    async def select_locale(self):
-        nav = LocaleSelector(list(self.unlocked_locales.values()))
+    async def select_locale(self, include_caught: bool = False):
+        nav = LocaleSelector(list(self.unlocked_locales.values()), caught_by=(self.user if include_caught else None))
         await nav.run(self.ctx)
         if nav.selection is not None:
             return nav.selection
@@ -2674,7 +2685,7 @@ class PokeWalkerInterpreter(Interpreter):
         if len(args) > 0 and args[0].lower() in self.unlocked_locales:
             destination = self.unlocked_locales[args[0].lower()]
         else:
-            destination = await self.select_locale()
+            destination = await self.select_locale(include_caught=True)
 
         log_message = await emol.send(self.ctx, "Logbook")
         encounter_history = []
@@ -2729,7 +2740,7 @@ class PokeWalkerInterpreter(Interpreter):
             tokens = display_tokens(dict(sorted(list(tokens.items()), key=lambda c: -c[1])))
             caught_names = [g.species_and_form for g in caught_mons]
             aggregate_mons = {
-                g: caught_names.count(g) for g in sorted(caught_names, key=lambda m: destination.get_rarity(m))
+                g: caught_names.count(g) for g in sorted(caught_names, key=lambda m: destination.get_rarity(m, True))
             }
             xp = "" if starting_level == len(pk.walker_exp_levels) else \
                 f"\n\n**+{self.user.exp - starting_exp} XP!**\n" \
