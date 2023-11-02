@@ -2680,7 +2680,7 @@ class PokeWalkerInterpreter(Interpreter):
         encounter_history = []
         message = await emol.send(
             self.ctx, f"Let's go for a stroll in {destination.name}!",
-            d=f"**Equipped charms:** {none_list([g.name for g in self.user.equipped_charms])}"
+            d=f"**Equipped Charms:** {none_list([g.name for g in self.user.equipped_charms])}"
               if self.user.owned_charm_ids else None
         )
         for button in [zeph.emojis["safari_ball"], zeph.emojis["razz_berry"], "\U0001f45f", zeph.emojis["no"]]:
@@ -2688,6 +2688,8 @@ class PokeWalkerInterpreter(Interpreter):
 
         stroll = WalkerStroll(self.user, destination)
         token_reward = max([*[g.effects.get("tokens", 1) for g in self.user.equipped_charms], 1])
+        starting_exp = self.user.exp
+        starting_level = self.user.level
         await asyncio.sleep(2)
 
         for i in range(30):
@@ -2729,12 +2731,15 @@ class PokeWalkerInterpreter(Interpreter):
             aggregate_mons = {
                 g: caught_names.count(g) for g in sorted(caught_names, key=lambda m: destination.mons[m])
             }
+            xp = "" if starting_level == len(pk.walker_exp_levels) else \
+                f"\n\n**+{self.user.exp - starting_exp} XP!**\n" \
+                f"Next level: {self.user.exp}/{pk.walker_exp_levels[starting_level]}"
             return await emol.send(
                 self.ctx, "Congratulations!",
                 d="**You caught:**\n" +
                   ("\n".join(f"{zeph.emojis[pk.rarity_stars[destination.get_rarity(m)]]} {m} x{n}"
                              for m, n in aggregate_mons.items())) +
-                  f"\n\n**Tokens collected:**\n{tokens}"
+                  f"\n\n**Tokens collected:**\n{tokens}{xp}"
             )
 
     async def _box(self, *args):
