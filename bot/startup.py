@@ -49,6 +49,7 @@ class Zeph(commands.Bot):
         self.nativities = []
         self.tags = {}
         self.walker_users = {}
+        self.usage_stats = {}
 
     @staticmethod
     def get_version():
@@ -97,6 +98,12 @@ class Zeph(commands.Bot):
         if self.server_settings:  # zephyrus has accidentally erased this before, so only write if it exists
             with open("storage/server_settings.json", "w") as f:
                 json.dump({g: j.minimal_json for g, j in self.server_settings.items()}, f, indent=4)
+        with open("storage/usage.json", "w") as f:
+            json.dump(self.usage_stats, f, indent=4)
+
+    def load_usage_stats(self):
+        with open("storage/usage.json", "r") as f:
+            self.usage_stats = json.load(f)
 
     # async def load_romanization(self):
     #     print("Loading romanizer...")

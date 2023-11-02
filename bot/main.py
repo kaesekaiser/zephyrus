@@ -373,6 +373,11 @@ async def on_ready():
 
 
 @zeph.event
+async def on_command(ctx: commands.Context):
+    zeph.usage_stats[ctx.command.name] = zeph.usage_stats.get(ctx.command.name, 0) + 1
+
+
+@zeph.event
 async def on_command_error(ctx: commands.Context, exception):
     if ctx.command == epitaph and ctx.channel in zeph.epitaph_channels:
         zeph.epitaph_channels.remove(ctx.channel)
