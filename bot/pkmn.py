@@ -2729,7 +2729,7 @@ class PokeWalkerInterpreter(Interpreter):
             tokens = display_tokens(dict(sorted(list(tokens.items()), key=lambda c: -c[1])))
             caught_names = [g.species_and_form for g in caught_mons]
             aggregate_mons = {
-                g: caught_names.count(g) for g in sorted(caught_names, key=lambda m: destination.mons[m])
+                g: caught_names.count(g) for g in sorted(caught_names, key=lambda m: destination.get_rarity(m))
             }
             xp = "" if starting_level == len(pk.walker_exp_levels) else \
                 f"\n\n**+{self.user.exp - starting_exp} XP!**\n" \

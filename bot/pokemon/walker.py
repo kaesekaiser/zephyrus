@@ -104,10 +104,10 @@ class Locale:
             "Rare": [g for g, j in self.mons.items() if j <= 1],
         }
 
-    def get_rarity(self, mon: BareMiniMon):
+    def get_rarity(self, mon: BareMiniMon | str):
         rarities = {j: k for k, v in self.encounter_table.items() for j in v}
         if isinstance(mon, str):
-            return rarities.get(mon)
+            mon = get_saf(mon)
         return rarities.get(mon.species_and_form, rarities.get(mon.name, rarities.get(f"{mon.species.name}-Random")))
 
     def charmed_odds(self, active_charms: list[Charm]) -> dict[BareMiniMon, float]:
