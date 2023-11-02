@@ -31,7 +31,7 @@ specific_patterns = {
 
 
 def readurl(s: str):
-    return str(PyQuery(s, {'title': 'CSS', 'printable': 'yes'}, encoding="utf8"))
+    return str(PyQuery(url=s, title="CSS", printable="yes", encoding="utf8"))
 
 
 def greatcirc(p1: tuple, p2: tuple, unit="km"):
