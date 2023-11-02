@@ -3,7 +3,7 @@ from googlemaps import convert, geocoding
 from datetime import datetime
 import utilities.keys as keys
 
-weather_url = "https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lng}&exclude=minutely&APPID={key}"
+weather_url = "https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lng}&exclude=minutely,hourly&APPID={key}"
 gmaps = googlemaps.Client(key=keys.google_maps)
 days = "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"
 

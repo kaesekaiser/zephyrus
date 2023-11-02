@@ -361,11 +361,12 @@ async def on_ready():
     except NameError:  # a weird error that seems to happen when the bot is still online when I click run?
         print("Bot has not fully shut down. Please z!close, and restart.")
     load_server_settings()
+    load_walker_users()
 
     setattr(zeph, "readyTime", datetime.datetime.now())
     print(f"ready at {getattr(zeph, 'readyTime')}")
     zeph.loop.create_task(initialize_planes())
-    zeph.loop.create_task(zeph.load_romanization())
+    # zeph.loop.create_task(zeph.load_romanization())
     zeph.loop.create_task(zeph.get_channel(activity_channel).send(f":up: **Ready** at `{datetime.datetime.now()}`"))
     await zeph.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name="you ❤"))
     zeph.loop.create_task(one_minute_cycle())

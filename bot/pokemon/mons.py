@@ -32,7 +32,7 @@ def none_list(ls: iter, joiner: str = ", ") -> str:
 
 
 def snip(ls: iter, length: int) -> list:
-    return [ls[g*length:(g+1)*length] for g in range((len(ls) // length) + 1)]
+    return [ls[g*length:(g+1)*length] for g in range((len(ls) // length) + 1) if g*length < len(ls)]
 
 
 def product(ls: iter) -> float:
@@ -101,7 +101,9 @@ form_name_styles = {
     "Dawn Wings": "Dawn Wings {}",
     "Ultra": "Ultra {}",
     "Red-Striped": "Red-Striped {}",
-    "Blue-Striped": "Blue-Striped {}"
+    "Blue-Striped": "Blue-Striped {}",
+    "White-Striped": "White-Striped {}",
+    "Bloodmoon": "Bloodmoon {}"
 }
 castform_weathers = {sun: "Sunny", rain: "Rainy", hail: "Snowy"}
 
@@ -129,11 +131,19 @@ class Species:
     @property
     def notable_forms(self):
         """Forms which change the actual stats of the mon, not just appearance (e.g. Vivillon) or type (e.g. Arceus)."""
-        return {g: j for g, j in self.forms.items() if j.json[:6] != list(self.forms.values())[0].json[:6]}
+        return {
+            g: j for g, j in self.forms.items()
+            if j.json[:6] != list(self.forms.values())[0].json[:6]
+            or j.json[-1] in ["Alolan", "Galarian", "Hisuian", "Paldean"]
+        }
 
     def get_form_name(self, s: str):
+        if isinstance(s, int):
+            return list(self.forms)[s]
         if (not s) or (s.lower() == "base"):
             return list(self.forms)[0]
+        if s.lower() == "random":
+            return random.choice(list(self.forms))
         for g in self.forms:
             if fix(g) == fix(s):
                 return g
@@ -143,6 +153,99 @@ class Species:
     @property
     def json(self):
         return {"name": self.name, "catch_rate": self.catch_rate, "forms": [g.json for g in self.forms.values()]}
+
+
+class Evolution:
+    def __init__(self, into: str, **kwargs):
+        self.into = into
+        self.reqs = kwargs
+
+    @staticmethod
+    def from_json(js: dict):
+        return Evolution(**js)
+
+    @staticmethod
+    def null():
+        return Evolution("NONE")
+
+    @property
+    def method(self):
+        return self["method"]
+
+    @property
+    def first_method(self) -> dict:
+        if self["multiple"]:
+            return self["multiple"][0]
+        return self.reqs
+
+    def __getitem__(self, item):
+        return self.reqs.get(item)
+
+    def __eq__(self, other):
+        return isinstance(other, Evolution) and (self.into == other.into)
+
+    def read_out(self, using_gerund: bool):
+        if self["multiple"]:
+            return "; or, ".join(Evolution(self.into, **g).read_out(using_gerund) for g in self["multiple"])
+
+        if self.method == "specific":
+            return self["by"] if using_gerund else self["desc"]
+
+        if self.method == "level":
+            if self["level"]:
+                ret = f"at level {self['level']}" if using_gerund else f"Level {self['level']}"
+            else:
+                ret = "upon levelling up" if using_gerund else "Level up"
+        elif self.method == "friendship":
+            ret = ("upon levelling" if using_gerund else "Level") + " up with high friendship"
+        elif self.method == "trade":
+            ret = "when traded" if using_gerund else "Trade"
+        elif self.method == "use":
+            ret = ("with" if using_gerund else "Use") + \
+                  f" a{'n' if self['item'][0].lower() in 'aeiou' else ''} {self['item']}"
+        elif self.method == "steps":
+            ret = ("after walking" if using_gerund else "Walk") + " 1000 steps using the Let's Go feature"
+        elif self.method == "move":
+            ret = ("after using" if using_gerund else "Use") + f" {self['move']}"
+        else:
+            return "Not known"
+
+        if self["special_req"]:
+            ret += f" {self['special_req']}"
+
+        if self["holding"]:
+            ret += f" while holding a{'n' if self['holding'][0].lower() in 'aeiou' else ''} {self['holding']}"
+        if self["knowing"]:
+            ret += f" while knowing {self['knowing']}"
+
+        if self["location"]:
+            ret += f" in {self['location']}"
+        if self["time"]:
+            ret += f" at {self['time']}"
+        if self["gender"]:
+            ret += f" ({self['gender']})"
+        if self["game"]:
+            ret += f" (in {self['game']})"
+
+        return ret
+
+    @property
+    def sentence(self):
+        if self.into == "NONE":
+            return "Does not evolve."
+        if self.into == "Shedinja":
+            return f"A **{self.into}** appears in the player's party {self.read_out(True)}."
+        return f"Evolves into **{self.into}** {self.read_out(True)}."
+
+    @property
+    def phrase(self):
+        if self.into == "NONE":
+            return "Does not evolve"
+        return self.read_out(False)
+
+
+with open("pokemon/evolutions.json", "r") as fp:
+    evolutions = {g: [Evolution.from_json(k) for k in j] for g, j in json.load(fp).items()}
 
 
 natures = [
@@ -323,57 +426,365 @@ poke_ball_types = [
     "timer", "ultra"
 ]
 
-genderless_mons = [
-    'Magnemite', 'Magneton', 'Voltorb', 'Electrode', 'Staryu', 'Starmie', 'Porygon', 'Porygon2', 'Shedinja',
-    'Lunatone', 'Solrock', 'Baltoy', 'Claydol', 'Beldum', 'Metang', 'Metagross', 'Bronzor', 'Bronzong', 'Magnezone',
-    'Porygon-Z', 'Rotom', 'Phione', 'Manaphy', 'Klink', 'Klang', 'Klinklang', 'Cryogonal', 'Golett', 'Golurk',
-    'Carbink', 'Minior', 'Dhelmise', 'Sinistea', 'Polteageist', 'Falinks', 'Tandemaus', 'Maushold', 'Ditto',
-    'Articuno', 'Zapdos', 'Moltres', 'Mewtwo', 'Mew', 'Unown', 'Raikou', 'Entei', 'Suicune', 'Lugia', 'Ho-Oh',
-    'Celebi', 'Regirock', 'Regice', 'Registeel', 'Kyogre', 'Groudon', 'Rayquaza', 'Jirachi', 'Deoxys', 'Uxie',
-    'Mesprit', 'Azelf', 'Dialga', 'Palkia', 'Regigigas', 'Giratina', 'Darkrai', 'Shaymin', 'Arceus', 'Victini',
-    'Cobalion', 'Terrakion', 'Virizion', 'Reshiram', 'Zekrom', 'Kyurem', 'Keldeo', 'Meloetta', 'Genesect', 'Xerneas',
-    'Yveltal', 'Zygarde', 'Diancie', 'Hoopa', 'Volcanion', 'Type: Null', 'Silvally', 'Tapu Koko', 'Tapu Lele',
-    'Tapu Bulu', 'Tapu Fini', 'Cosmog', 'Cosmoem', 'Solgaleo', 'Lunala', 'Nihilego', 'Buzzwole', 'Pheromosa',
-    'Xurkitree', 'Celesteela', 'Kartana', 'Guzzlord', 'Necrozma', 'Magearna', 'Marshadow', 'Poipole', 'Naganadel',
-    'Stakataka', 'Blacephalon', 'Zeraora', 'Meltan', 'Melmetal', 'Dracozolt', 'Arctozolt', 'Dracovish', 'Arctovish',
-    'Zacian', 'Zamazenta', 'Eternatus', 'Zarude', 'Regieleki', 'Regidrago', 'Glastrier', 'Spectrier', 'Calyrex',
-    'Gimmighoul', 'Gholdengo', 'Great Tusk', 'Brute Bonnet', 'Sandy Shocks', 'Scream Tail', 'Flutter Mane',
-    'Slither Wing', 'Roaring Moon', 'Iron Treads', 'Iron Moth', 'Iron Hands', 'Iron Jugulis', 'Iron Thorns',
-    'Iron Bundle', 'Iron Valiant', 'Ting-Lu', 'Chien-Pao', 'Wo-Chien', 'Chi-Yu', 'Koraidon', 'Miraidon'
+
+gender_ratios = {
+    "male": [
+        'Nidoran-M', 'Nidorino', 'Nidoking', 'Hitmonlee', 'Hitmonchan', 'Tauros', 'Hitmontop', 'Volbeat', 'Mothim',
+        'Gallade', 'Throh', 'Sawk', 'Rufflet', 'Braviary', 'Impidimp', 'Morgrem', 'Grimmsnarl', 'Tyrogue', 'Latios',
+        'Tornadus', 'Thundurus', 'Landorus', 'Ursaluna-Bloodmoon', 'Greninja-Ash', 'Okidogi', 'Munkidori',
+        'Fezandipiti', 'Basculegion-Male', 'Indeedee-Male', 'Oinkologne-Male', 'Meowstic-Male'
+    ],
+    "1:7": [
+        'Bulbasaur', 'Ivysaur', 'Venusaur', 'Charmander', 'Charmeleon', 'Charizard', 'Squirtle', 'Wartortle',
+        'Blastoise', 'Eevee', 'Vaporeon', 'Jolteon', 'Flareon', 'Omanyte', 'Omastar', 'Kabuto', 'Kabutops',
+        'Aerodactyl', 'Snorlax', 'Chikorita', 'Bayleef', 'Meganium', 'Cyndaquil', 'Quilava', 'Typhlosion', 'Totodile',
+        'Croconaw', 'Feraligatr', 'Togetic', 'Espeon', 'Umbreon', 'Treecko', 'Grovyle', 'Sceptile', 'Torchic',
+        'Combusken', 'Blaziken', 'Mudkip', 'Marshtomp', 'Swampert', 'Lileep', 'Cradily', 'Anorith', 'Armaldo',
+        'Relicanth', 'Turtwig', 'Grotle', 'Torterra', 'Chimchar', 'Monferno', 'Infernape', 'Piplup', 'Prinplup',
+        'Empoleon', 'Cranidos', 'Rampardos', 'Shieldon', 'Bastiodon', 'Combee', 'Lucario', 'Togekiss', 'Leafeon',
+        'Glaceon', 'Snivy', 'Servine', 'Serperior', 'Tepig', 'Pignite', 'Emboar', 'Oshawott', 'Dewott', 'Samurott',
+        'Pansage', 'Simisage', 'Pansear', 'Simisear', 'Panpour', 'Simipour', 'Tirtouga', 'Carracosta', 'Archen',
+        'Archeops', 'Zorua', 'Zoroark', 'Chespin', 'Quilladin', 'Chesnaught', 'Fennekin', 'Braixen', 'Delphox',
+        'Froakie', 'Frogadier', 'Greninja', 'Tyrunt', 'Tyrantrum', 'Amaura', 'Aurorus', 'Sylveon', 'Rowlet', 'Dartrix',
+        'Decidueye', 'Litten', 'Torracat', 'Incineroar', 'Popplio', 'Brionne', 'Primarina', 'Salandit', 'Grookey',
+        'Thwackey', 'Rillaboom', 'Scorbunny', 'Raboot', 'Cinderace', 'Sobble', 'Drizzile', 'Inteleon', 'Sprigatito',
+        'Floragato', 'Meowscarada', 'Fuecoco', 'Crocalor', 'Skeledirge', 'Quaxly', 'Quaxwell', 'Quaquaval', 'Togepi',
+        'Munchlax', 'Riolu', 'Kubfu', 'Urshifu'
+    ],
+    "1:3": [
+        'Growlithe', 'Arcanine', 'Abra', 'Kadabra', 'Alakazam', 'Machop', 'Machoke', 'Machamp', 'Electabuzz', 'Magmar',
+        'Makuhita', 'Hariyama', 'Electivire', 'Magmortar', 'Timburr', 'Gurdurr', 'Conkeldurr', 'Elekid', 'Magby'
+    ],
+    "3:1": [
+        'Clefairy', 'Clefable', 'Vulpix', 'Ninetales', 'Jigglypuff', 'Wigglytuff', 'Snubbull', 'Granbull', 'Corsola',
+        'Skitty', 'Delcatty', 'Luvdisc', 'Glameow', 'Purugly', 'Minccino', 'Cinccino', 'Gothita', 'Gothorita',
+        'Gothitelle', 'Oricorio', 'Comfey', 'Cursola', 'Cleffa', 'Igglybuff', 'Azurill'
+    ],
+    "7:1": ['Litleo', 'Pyroar'],
+    "female": [
+        'Nidoran-F', 'Chansey', 'Kangaskhan', 'Jynx', 'Miltank', 'Blissey', 'Illumise', 'Wormadam', 'Vespiquen',
+        'Froslass', 'Petilil', 'Lilligant', 'Vullaby', 'Mandibuzz', 'Flabébé', 'Floette', 'Florges', 'Salazzle',
+        'Bounsweet', 'Steenee', 'Tsareena', 'Hatenna', 'Hattrem', 'Hatterene', 'Milcery', 'Alcremie', 'Tinkatink',
+        'Tinkatuff', 'Tinkaton', 'Ogerpon', 'Basculegion-Male', 'Indeedee-Female', 'Oinkologne-Female',
+        'Meowstic-Female'
+    ],
+    "genderless": [
+        'Magnemite', 'Magneton', 'Voltorb', 'Electrode', 'Staryu', 'Starmie', 'Porygon', 'Porygon2', 'Shedinja',
+        'Lunatone', 'Solrock', 'Baltoy', 'Claydol', 'Beldum', 'Metang', 'Metagross', 'Bronzor', 'Bronzong', 'Magnezone',
+        'Porygon-Z', 'Rotom', 'Phione', 'Manaphy', 'Klink', 'Klang', 'Klinklang', 'Cryogonal', 'Golett', 'Golurk',
+        'Carbink', 'Minior', 'Dhelmise', 'Sinistea', 'Polteageist', 'Falinks', 'Tandemaus', 'Maushold', 'Ditto',
+        'Articuno', 'Zapdos', 'Moltres', 'Mewtwo', 'Mew', 'Unown', 'Raikou', 'Entei', 'Suicune', 'Lugia', 'Ho-Oh',
+        'Celebi', 'Regirock', 'Regice', 'Registeel', 'Kyogre', 'Groudon', 'Rayquaza', 'Jirachi', 'Deoxys', 'Uxie',
+        'Mesprit', 'Azelf', 'Dialga', 'Palkia', 'Regigigas', 'Giratina', 'Darkrai', 'Shaymin', 'Arceus', 'Victini',
+        'Cobalion', 'Terrakion', 'Virizion', 'Reshiram', 'Zekrom', 'Kyurem', 'Keldeo', 'Meloetta', 'Genesect',
+        'Xerneas', 'Yveltal', 'Zygarde', 'Diancie', 'Hoopa', 'Volcanion', 'Type: Null', 'Silvally', 'Tapu Koko',
+        'Tapu Lele', 'Tapu Bulu', 'Tapu Fini', 'Cosmog', 'Cosmoem', 'Solgaleo', 'Lunala', 'Nihilego', 'Buzzwole',
+        'Pheromosa', 'Xurkitree', 'Celesteela', 'Kartana', 'Guzzlord', 'Necrozma', 'Magearna', 'Marshadow', 'Poipole',
+        'Naganadel', 'Stakataka', 'Blacephalon', 'Zeraora', 'Meltan', 'Melmetal', 'Dracozolt', 'Arctozolt', 'Dracovish',
+        'Arctovish', 'Zacian', 'Zamazenta', 'Eternatus', 'Zarude', 'Regieleki', 'Regidrago', 'Glastrier', 'Spectrier',
+        'Calyrex', 'Gimmighoul', 'Gholdengo', 'Great Tusk', 'Brute Bonnet', 'Sandy Shocks', 'Scream Tail',
+        'Flutter Mane', 'Slither Wing', 'Roaring Moon', 'Iron Treads', 'Iron Moth', 'Iron Hands', 'Iron Jugulis',
+        'Iron Thorns', 'Iron Bundle', 'Iron Valiant', 'Ting-Lu', 'Chien-Pao', 'Wo-Chien', 'Chi-Yu', 'Koraidon',
+        'Miraidon', 'Walking Wake', 'Iron Leaves', 'Poltchageist', 'Sinistcha'
+    ]
+}
+gender_ratio_lookup = {j: k for k, v in gender_ratios.items() for j in v}
+gender_differences = [
+    "Venusaur", "Butterfree", "Rattata", "Raticate", "Pikachu", "Raichu", "Zubat", "Golbat", "Gloom", "Vileplume",
+    "Kadabra", "Alakazam", "Doduo", "Dodrio", "Hypno", "Rhyhorn", "Rhydon", "Goldeen", "Seaking", "Scyther",
+    "Magikarp", "Gyarados", "Eevee", "Meganium", "Ledyba", "Ledian", "Xatu", "Sudowoodo", "Politoed", "Aipom", "Wooper",
+    "Quagsire", "Murkrow", "Wobbuffet", "Girafarig", "Gligar", "Steelix", "Scizor", "Heracross", "Sneasel",
+    "Sneasel-Hisuian", "Ursaring", "Piloswine", "Octillery", "Houndoom", "Donphan", "Torchic", "Combusken", "Blaziken",
+    "Beautifly", "Dustox", "Ludicolo", "Nuzleaf", "Shiftry", "Meditite", "Medicham", "Roselia", "Gulpin", "Swalot",
+    "Numel", "Camerupt", "Cacturne", "Milotic", "Relicanth", "Starly", "Staravia", "Staraptor", "Bidoof", "Bibarel",
+    "Kricketot", "Kricketune", "Shinx", "Luxio", "Luxray", "Roserade", "Combee", "Pachirisu", "Buizel", "Floatzel",
+    "Ambipom", "Gible", "Gabite", "Garchomp", "Hippopotas", "Hippowdon", "Croagunk", "Toxicroak", "Finneon", "Lumineon",
+    "Snover", "Abomasnow", "Weavile", "Rhyperior", "Tangrowth", "Mamoswine", "Unfezant", "Frillish", "Jellicent",
+    "Pyroar"  # Meowstic, Indeedee, Basculegion, Oinkologne not included because the genders are separate forms
 ]
-male_only_mons = [
-    'Nidoran-M', 'Nidorino', 'Nidoking', 'Hitmonlee', 'Hitmonchan', 'Tauros', 'Hitmontop', 'Volbeat', 'Mothim',
-    'Gallade', 'Throh', 'Sawk', 'Rufflet', 'Braviary', 'Impidimp', 'Morgrem', 'Grimmsnarl', 'Tyrogue', 'Latios',
-    'Tornadus', 'Thundurus', 'Landorus'
-]
-female_only_mons = [
-    'Nidoran-F', 'Chansey', 'Kangaskhan', 'Jynx', 'Miltank', 'Blissey', 'Illumise', 'Wormadam', 'Vespiquen',
-    'Froslass', 'Petilil', 'Lilligant', 'Vullaby', 'Mandibuzz', 'Flabébé', 'Floette', 'Florges', 'Salazzle',
-    'Bounsweet', 'Steenee', 'Tsareena', 'Hatenna', 'Hattrem', 'Hatterene', 'Milcery', 'Alcremie', 'Tinkatink',
-    'Tinkatuff', 'Tinkaton'
-]
+
 
 weather_speed_abilities = {
     sun: "Chlorophyll", rain: "Swift Swim", hail: "Slush Rush", snow: "Slush Rush", sandstorm: "Sand Rush"
 }
 
 
-class Mon:
-    """The wieldiest of unwieldy classes."""
-
-    def __init__(self, spc: Union[Species, str], **kwargs):
-        self.nickname = kwargs.get("nickname", None)
+class BareMiniMon:
+    """A lightweight class containing purely biological data about a mon. Used for dex browsing primarily."""
+    def __init__(self, spc: Species | str, **kwargs):
         if isinstance(spc, str):
             self.species = nat_dex[spc]
         else:
             self.species = spc
-        self.givenForm = kwargs.get("form", "")
-        self.form = self.species.forms[self.species.get_form_name(self.givenForm)]
+        self.form = self.species.forms[self.species.get_form_name(kwargs.get("form"))]
         self.type1 = self.form.type1  # need to be changeable bc of moves like Soak
         self.type2 = self.form.type2
+        self.gender = "unknown"
+        if kwargs.get("randomize_gender"):
+            self.randomize_gender()
+        else:
+            if isinstance(kwargs.get("gender"), int):  # pass 1 for female, and 0 for male (or default)
+                if kwargs.get("gender") == 1:
+                    self.set_gender("female")
+                elif self.default_gender != "random":
+                    self.set_gender(self.default_gender)
+                else:
+                    self.set_gender("male")
+            else:
+                self.set_gender(kwargs.get("gender", self.default_gender))
+        self.shiny = bool(kwargs.get("shiny", False))
+
+    @staticmethod
+    def null():
+        return BareMiniMon(Species.null())
+
+    def __bool__(self):
+        return self.species.name != "NULL"
+
+    @property
+    def dex_no(self):
+        try:
+            return nat_dex_order.index(self.species.name) + 1
+        except ValueError:
+            return len(nat_dex) + 1
+
+    @property
+    def generation(self):
+        if self.form.name.startswith("Galarian") or self.form.name.startswith("Hisuian") or \
+                (self.species.name == "Basculin" and self.form.name == "White-Striped"):
+            return 8
+        if self.form.name.startswith("Paldean") or \
+                (self.species.name == "Tauros" and self.form.name in ["Combat", "Aqua", "Blaze"]):
+            return 9
+        return [g + 1 for g in range(9) if self.dex_no > generation_bounds[g]][-1]
+
+    @property
+    def walker_pack(self) -> list:
+        return [self.dex_no, list(self.species.forms).index(self.form.name), self.gender, self.shiny]
+
+    @property
+    def walker_key(self) -> int:
+        pack = self.walker_pack
+        return round(pack[0] + pack[1] * 1100 + (pack[2] == "female") * 33000 + pack[3] * 66000)
+
+    @staticmethod
+    def from_walker_pack(pack: list):
+        return BareMiniMon(nat_dex_order[pack[0] - 1], form=pack[1], gender=pack[2], shiny=pack[3])
+
+    @staticmethod
+    def from_walker_key(key: int):
+        return BareMiniMon.from_walker_pack([key % 1100, (key % 33000) // 1100, (key % 66000) // 33000, key // 66000])
+
+    @property
+    def bulbapedia(self):
+        return f"https://bulbapedia.bulbagarden.net/wiki/{'_'.join(self.species.name.split())}_(Pok\u00e9mon\\)"
+
+    @property
+    def serebii(self):
+        return f"https://serebii.net/pokedex-sm/{self.dex_no}.shtml"
+
+    @property
+    def pokemondb(self):
+        return f"https://pokemondb.net/pokedex/{fix(self.species.name)}"
+
+    @property
+    def home_sprite(self):
+        fem = "-f" if (self.species.name in gender_differences) and (self.gender == "female") else ""
+        if self.shiny:
+            return f"https://img.pokemondb.net/sprites/home/shiny/2x/{fix(self.species_and_form)}{fem}.jpg"
+        else:
+            return f"https://img.pokemondb.net/sprites/home/normal/2x/{fix(self.species_and_form)}{fem}.jpg"
+
+    @property
+    def dex_image(self):
+        if self.form.name and self.species.name != "Dudunsparce":
+            if self.species_and_form == "Minior-Core":
+                suffix = "-" + random.choice(["orange", "yellow", "green", "blue", "indigo", "purple"]) + "-core"
+            elif self.species.name == "Maushold":
+                suffix = {"Three": "-family3", "Four": "-family4"}[self.form.name]
+            elif self.species_and_form == "Tinkaton-Ideal":
+                return "https://cdn.discordapp.com/attachments/582754042527088694/1047738638454231162/tinkaton.png"
+            else:
+                suffix = "-" + fix(self.form.name)
+        else:
+            suffix = ""
+        if self.generation == 9:
+            return f"https://img.pokemondb.net/sprites/scarlet-violet/normal/{fix(self.species.name) + suffix}.png"
+        if self.generation == 8:
+            return f"https://img.pokemondb.net/artwork/large/{fix(self.species.name) + suffix}.jpg"
+        return img_link.format(fix(self.species.name) + suffix)
+
+    @property
+    def shiny_indicator(self):
+        return " :sparkles:" if self.shiny else ""
+
+    @property
+    def form_names(self):
+        return [Mon(self.species, form=g).full_name for g in nat_dex[self.species.name].forms]
+
+    @property
+    def types(self):
+        return (self.type1, self.type2) if self.type2 else (self.type1, )
+
+    @property
+    def types_with_none(self):  # primarily used for dex searching
+        return tuple(str(g) for g in [self.type1, self.type2])
+
+    @property
+    def gender_ratio(self):
+        return gender_ratio_lookup.get(self.species_and_form, gender_ratio_lookup.get(self.species.name, "1:1"))
+
+    @property
+    def default_gender(self):
+        return self.gender_ratio if self.gender_ratio in ["genderless", "male", "female"] else "random"
+
+    def randomize_gender(self):
+        if self.gender_ratio == self.default_gender:
+            self.set_gender(self.default_gender)
+        else:
+            if random.random() < int(self.gender_ratio[0]) / (int(self.gender_ratio[0]) + int(self.gender_ratio[2])):
+                self.set_gender("female")
+            else:
+                self.set_gender("male")
+
+    def set_gender(self, gender: str):
+        self.gender = gender
+        if "Male" in self.species.forms and "Female" in self.species.forms:
+            self.form = self.species.forms.get(self.gender.title(), self.species.forms["Male"])
+
+    @property
+    def base_stats(self):
+        return self.form.hp, self.form.atk, self.form.dfn, self.form.spa, self.form.spd, self.form.spe
+
+    @property
+    def bst(self):
+        return sum(self.base_stats)
+
+    @property
+    def height(self):
+        return self.form.height
+
+    @property
+    def weight(self):
+        return self.form.weight
+
+    @property
+    def name(self):
+        return self.species.name
+
+    @property
+    def species_and_form(self):
+        if not self.form.name:
+            return self.species.name
+        else:
+            return f"{self.species.name}-{'-'.join(self.form.name.split())}"
+
+    @property
+    def full_name(self):
+        if not self.form.name:
+            return self.species.name
+        if self.form.name in formes:
+            return f"{self.species.name} ({self.form.name} Forme)"
+        elif self.species.name == "Vivillon":
+            return f"{self.species.name} ({self.form.name} Pattern)"
+        elif self.species.name in ["Flabébé", "Floette", "Florges"]:
+            return f"{self.species.name} ({self.form.name} Flower)"
+        elif self.species.name == "Oricorio":
+            return f"{self.species.name} ({self.form.name} Style)"
+        elif self.species.name in ["Pumpkaboo", "Gourgeist"]:
+            return f"{self.form.name} Size {self.species.name}"
+        elif self.species.name in ["Burmy", "Wormadam"]:
+            return f"{self.species.name} ({self.form.name} Cloak)"
+        elif self.species.name in ["Silvally", "Arceus"]:
+            return f"{self.species.name} ({self.form.name}-type)"
+        elif self.species.name == "Furfrou":
+            return f"{self.species.name} ({self.form.name} Trim)"
+        elif self.species.name == "Squawkabilly":
+            return f"{self.species.name} ({self.form.name} Plumage)"
+        elif self.species.name == "Tauros":
+            return f"{self.species.name} ({self.form.name} Breed)"
+        return form_name_styles.get(self.form.name, "{} (" + self.form.name + " Form)").format(self.species.name)
+
+    @property
+    def raw_legal_abilities(self):
+        if self.species_and_form in legal_abilities:
+            return legal_abilities[self.species_and_form]
+        return legal_abilities[self.species.name]
+
+    @property
+    def legal_abilities(self):
+        return [g for g in self.raw_legal_abilities if g]
+
+    @property
+    def regular_abilities(self):
+        return [g for g in self.raw_legal_abilities[:2] if g]
+
+    @property
+    def hidden_ability(self):
+        return self.raw_legal_abilities[2] if self.raw_legal_abilities[2] else None
+
+    @property
+    def special_event_ability(self):
+        return self.raw_legal_abilities[3] if self.raw_legal_abilities[3] else None
+
+    @property
+    def evolutions(self) -> dict[str, Evolution]:
+        return {g.into: g for g in evolutions.get(self.species_and_form, evolutions.get(self.species.name, []))}
+
+    @property
+    def accessible_evolutions(self) -> dict[str, Evolution]:
+        return {g: j for g, j in self.evolutions.items() if (j["gender"] is None or self.gender == j["gender"])}
+
+    @property
+    def evolves_from(self):
+        if (evo_from := [g for g, j in evolutions.items() for k in j
+                         if k.into == self.species.name or k.into == self.species_and_form]):
+            return get_saf(evo_from[0])
+        else:
+            return BareMiniMon.null()
+
+    @property
+    def baby_form(self) -> str:
+        if self.evolves_from:
+            if self.evolves_from.evolves_from:
+                return self.evolves_from.evolves_from.species_and_form
+            return self.evolves_from.species_and_form
+        return self.species_and_form
+
+    def get_learnset(self, gen: str = "SV") -> Learnset:
+        if gen not in learnsets:
+            raise ValueError(f"No such generation {gen}.")
+        if self.species_and_form in learnsets[gen]:
+            return learnsets[gen][self.species_and_form]
+        if self.species.name in learnsets[gen]:
+            return learnsets[gen][self.species.name]
+        return Learnset()
+
+    def can_learn(self, move: str, gen: str = "SV"):
+        return move in self.get_learnset(gen)
+
+    def eff(self, typ: str):
+        if typ:
+            return product(effectiveness[typ].get(g, 1) for g in self.types)
+        else:
+            return 1
+
+    def evolve(self, evo: Evolution):
+        new_mon = get_saf(evo.into)
+        self.species = new_mon.species
+        if not evo.reqs.get("preserve_form"):
+            self.form = new_mon.form
+        self.set_gender(self.gender)  # in case only the evolved species has gendered forms (eg Basculin -> Basculegion)
+
+
+class Mon(BareMiniMon):
+    """The wieldiest of unwieldy classes."""
+
+    def __init__(self, spc: Union[Species, str], **kwargs):
+        super().__init__(spc, **kwargs)
+        self.nickname = kwargs.get("nickname", None)
         self.type3 = None  # can be added thru moves like Forest's Curse
         self.level = kwargs.get("level", kwargs.get("lvl", 100))
-        self.gender = kwargs.get("gender", self.default_gender)
         self.nature = kwargs.get("nature", "Hardy")
         self.iv = kwargs.get("iv", [0, 0, 0, 0, 0, 0])
         self.ev = kwargs.get("ev", [0, 0, 0, 0, 0, 0])
@@ -438,9 +849,6 @@ class Mon:
     def null():
         return Mon(Species.null())
 
-    def __bool__(self):
-        return self.species.name != "NULL"
-
     def __eq__(self, other):
         if isinstance(other, Mon):
             return self.pack == other.pack
@@ -456,13 +864,17 @@ class Mon:
             "ev": self.ev, "ability": self.ability, "item": self.held_item, "dmg": round(self.hp - self.hpc),
             "status_condition": self.status_condition, "moves": self.moves, "tera": self.tera_type,
             "terastallized": self.terastallized, "pos": self.team_position, "nickname": self.nickname,
-            "gender": self.gender
+            "gender": self.gender, "shiny": self.shiny
         }
 
     @staticmethod
     def unpack(pack: dict):
         """Given a mon's `pack`, returns a fully-fledged Mon object for use in battle."""
         return Mon(**pack)
+
+    @staticmethod
+    def from_bare(bm: BareMiniMon):
+        return Mon(bm.species, form=bm.form, gender=bm.gender, shiny=bm.shiny)
 
     def key(self, compressed: bool = True):
         """An alphanumerical string which contains the defining data for a mon in compressed form. It's a password."""
@@ -474,11 +886,11 @@ class Mon:
               f"{rebase(self.level, 10, 32, 2)}" \
               f"{rebase(['male', 'female', 'genderless', 'random'].index(self.gender), 10, 32, 1)}" \
               f"{rebase(types.index(self.tera_type), 10, 32, 1)}" \
-              f"{rebase(self.ni, 10, 32, 1)}" \
+              f"{rebase(self.nati, 10, 32, 1)}" \
               f"{''.join(rebase(g, 10, 32) for g in self.iv)}" \
               f"{rebase(''.join(rebase(g, 10, 16, 2) for g in self.ev), 16, 32, 10)}" \
               f"{rebase(abilities.index(self.ability), 10, 32, 2)}" \
-              f"{rebase(held_items.index(self.held_item), 10, 32, 2)}" \
+              f"{rebase(held_items.index(self.held_item) + 512 * self.shiny, 10, 32, 2)}" \
               f"{''.join(rebase(g, 10, 32, 2) for g in moves)}"
         if compressed:
             return rebase(ret, 32, 62)
@@ -491,8 +903,14 @@ class Mon:
             decompressed_key = key
         else:
             decompressed_key = rebase(key, 62, 32, 36)
-        spc = list(nat_dex)[decimal(decompressed_key[0:2], 32)]
+        spc = nat_dex_order[decimal(decompressed_key[0:2], 32)]
         moves = [decimal(g, 32) for g in snip(decompressed_key[28:], 2)]
+        item = decimal(decompressed_key[26:28], 32)
+        if item >= 512:
+            item = item - 512
+            shiny = True
+        else:
+            shiny = False
         return Mon.unpack({
             "spc": spc,
             "form": list(nat_dex[spc].forms)[decimal(decompressed_key[2], 32)],
@@ -503,8 +921,9 @@ class Mon:
             "iv": [decimal(g, 32) for g in decompressed_key[8:14]],
             "ev": [decimal(rebase(decompressed_key[14:24], 32, 16, 12)[g*2:g*2+2], 16) for g in range(6)],
             "ability": abilities[decimal(decompressed_key[24:26], 32)],
-            "item": held_items[decimal(decompressed_key[26:28], 32)],
-            "moves": [list(move_dex)[g - 1] for g in moves if g]
+            "item": held_items[item],
+            "moves": [list(move_dex)[g - 1] for g in moves if g],
+            "shiny": shiny
         })
 
     def add_move(self, move: Union[Move, PackedMove, str]):
@@ -526,66 +945,12 @@ class Mon:
             self.nickname = nickname
 
     @property
-    def dex_no(self):
-        try:
-            return list(nat_dex).index(self.species.name) + 1
-        except ValueError:
-            return len(nat_dex) + 1
-
-    @property
-    def generation(self):
-        if self.form.name.startswith("Galarian") or self.form.name.startswith("Hisuian") or \
-                (self.species.name == "Basculin" and self.form.name == "White-Striped"):
-            return 8
-        if self.form.name.startswith("Paldean") or \
-                (self.species.name == "Tauros" and self.form.name in ["Combat", "Aqua", "Blaze"]):
-            return 9
-        return [g + 1 for g in range(9) if self.dex_no > generation_bounds[g]][-1]
-
-    @property
-    def bulbapedia(self):
-        return f"https://bulbapedia.bulbagarden.net/wiki/{'_'.join(self.species.name.split())}_(Pok\u00e9mon\\)"
-
-    @property
-    def serebii(self):
-        return f"https://serebii.net/pokedex-sm/{self.dex_no}.shtml"
-
-    @property
-    def pokemondb(self):
-        return f"https://pokemondb.net/pokedex/{fix(self.species.name)}"
-
-    @property
-    def form_names(self):
-        return [Mon(self.species, form=g).full_name for g in nat_dex[self.species.name].forms]
-
-    @property
     def types(self):
         return (self.tera_type, ) if self.terastallized else self.original_types
 
     @property
     def original_types(self):
         return tuple(g for g in [self.type1, self.type2, self.type3] if g)
-
-    @property
-    def types_with_none(self):  # primarily used for dex searching
-        return tuple(str(g) for g in [self.type1, self.type2])
-
-    @property
-    def default_gender(self):
-        return "genderless" if self.species.name in genderless_mons else "male" if self.species.name in male_only_mons \
-            else "female" if self.species.name in female_only_mons else "random"
-
-    @property
-    def base_stats(self):
-        return self.form.hp, self.form.atk, self.form.dfn, self.form.spa, self.form.spd, self.form.spe
-
-    @property
-    def height(self):
-        return self.form.height
-
-    @property
-    def weight(self):
-        return self.form.weight
 
     @property
     def name(self):
@@ -596,82 +961,15 @@ class Mon:
         return self.species_and_form if not self.nickname else f"{self.nickname} ({self.species_and_form})"
 
     @property
-    def species_and_form(self):
-        if not self.form.name:
-            return self.species.name
-        else:
-            return f"{self.species.name}-{'-'.join(self.form.name.split())}"
-
-    @property
-    def full_name(self):
-        if not self.form.name:
-            return self.species.name
-        if self.form.name in formes:
-            return f"{self.species.name} ({self.form.name} Forme)"
-        elif self.species.name == "Vivillon":
-            return f"{self.species.name} ({self.form.name} Pattern)"
-        elif self.species.name in ["Flabébé", "Floette", "Florges"]:
-            return f"{self.species.name} ({self.form.name} Flower)"
-        elif self.species.name == "Oricorio":
-            return f"{self.species.name} ({self.form.name} Style)"
-        elif self.species.name in ["Pumpkaboo", "Gourgeist"]:
-            return f"{self.form.name} Size {self.species.name}"
-        elif self.species.name == "Wormadam":
-            return f"{self.form.name} Cloak {self.species.name}"
-        elif self.species.name in ["Silvally", "Arceus"]:
-            return f"{self.species.name} ({self.form.name}-type)"
-        elif self.species.name == "Furfrou":
-            return f"{self.species.name} ({self.form.name} Trim)"
-        elif self.species.name == "Squawkabilly":
-            return f"{self.species.name} ({self.form.name} Plumage)"
-        elif self.species.name == "Tauros":
-            return f"{self.species.name} ({self.form.name} Breed)"
-        return form_name_styles.get(self.form.name, "{} (" + self.form.name + " Form)").format(self.species.name)
-
-    @property
-    def raw_legal_abilities(self):
-        if self.species_and_form in legal_abilities:
-            return legal_abilities[self.species_and_form]
-        return legal_abilities[self.species.name]
-
-    @property
-    def legal_abilities(self):
-        return [g for g in self.raw_legal_abilities if g]
-
-    @property
-    def regular_abilities(self):
-        return [g for g in self.raw_legal_abilities[:2] if g]
-
-    @property
-    def hidden_ability(self):
-        return self.raw_legal_abilities[2] if self.raw_legal_abilities[2] else None
-
-    @property
-    def special_event_ability(self):
-        return self.raw_legal_abilities[3] if self.raw_legal_abilities[3] else None
-
-    def get_learnset(self, gen: str = "SV") -> Learnset:
-        if gen not in learnsets:
-            raise ValueError(f"No such generation {gen}.")
-        if self.species_and_form in learnsets[gen]:
-            return learnsets[gen][self.species_and_form]
-        if self.species.name in learnsets[gen]:
-            return learnsets[gen][self.species.name]
-        return Learnset()
-
-    def can_learn(self, move: str, gen: str = "SV"):
-        return move in self.get_learnset(gen)
-
-    @property
-    def ni(self):
+    def nati(self):
         return natures.index(self.nature)
 
     @property
     def nature_effects(self):
         stat_names = list(six_stats.values())
-        if self.ni % 5 == self.ni // 5:
+        if self.nati % 5 == self.nati // 5:
             return "no effect"
-        return f"+{stat_names[self.ni // 5 + 1]}, -{stat_names[self.ni % 5 + 1]}"
+        return f"+{stat_names[self.nati // 5 + 1]}, -{stat_names[self.nati % 5 + 1]}"
 
     def stat_level(self, stat, add: int = 0):
         n = 3 if stat in ["eva", "acc"] else 2
@@ -689,7 +987,7 @@ class Mon:
     def atk_base(self):
         return floor(
             (floor((2 * self.form.atk + self.iv[1] + floor(self.ev[1] / 4)) * self.level / 100) + 5) *
-            (1 + 0.1 * (self.ni // 5 == 0) - 0.1 * (self.ni % 5 == 0))
+            (1 + 0.1 * (self.nati // 5 == 0) - 0.1 * (self.nati % 5 == 0))
         )
 
     @property
@@ -708,7 +1006,7 @@ class Mon:
     def dfn_base(self):
         return floor(
             (floor((2 * self.form.dfn + self.iv[2] + floor(self.ev[2] / 4)) * self.level / 100) + 5) *
-            (1 + 0.1 * (self.ni // 5 == 1) - 0.1 * (self.ni % 5 == 1))
+            (1 + 0.1 * (self.nati // 5 == 1) - 0.1 * (self.nati % 5 == 1))
         )
 
     @property
@@ -725,7 +1023,7 @@ class Mon:
     def spa_base(self):
         return floor(
             (floor((2 * self.form.spa + self.iv[3] + floor(self.ev[3] / 4)) * self.level / 100) + 5) *
-            (1 + 0.1 * (self.ni // 5 == 2) - 0.1 * (self.ni % 5 == 2))
+            (1 + 0.1 * (self.nati // 5 == 2) - 0.1 * (self.nati % 5 == 2))
         )
 
     @property
@@ -743,7 +1041,7 @@ class Mon:
     def spd_base(self):
         return floor(
             (floor((2 * self.form.spd + self.iv[4] + floor(self.ev[4] / 4)) * self.level / 100) + 5) *
-            (1 + 0.1 * (self.ni // 5 == 3) - 0.1 * (self.ni % 5 == 3))
+            (1 + 0.1 * (self.nati // 5 == 3) - 0.1 * (self.nati % 5 == 3))
         )
 
     @property
@@ -760,7 +1058,7 @@ class Mon:
     def spe_base(self):
         return floor(
             (floor((2 * self.form.spe + self.iv[5] + floor(self.ev[5] / 4)) * self.level / 100) + 5) *
-            (1 + 0.1 * (self.ni // 5 == 4) - 0.1 * (self.ni % 5 == 4))
+            (1 + 0.1 * (self.nati // 5 == 4) - 0.1 * (self.nati % 5 == 4))
         )
 
     @property
@@ -849,12 +1147,6 @@ class Mon:
             f"**Base:** {' / '.join(str(g) + ' ' + six_stat_names[n] for n, g in enumerate(self.base_stats))}\n" \
             f"**Stats:** {' / '.join(str(g) + ' ' + six_stat_names[n] for n, g in enumerate(self.stats))}"
 
-    def eff(self, typ: str):
-        if typ:
-            return product(effectiveness[typ].get(g, 1) for g in self.types)
-        else:
-            return 1
-
     def apply(self, stat: Union[StatChange, StatusEffect]):
         ret = {}
         if random.random() < stat.chance / 100:
@@ -916,6 +1208,14 @@ class Mon:
 
 with open("stats.json" if __name__ == "__main__" else "pokemon/stats.json", "r") as file:
     nat_dex = {g: Species.from_json(j) for g, j in json.load(file).items()}
+nat_dex_order = list(nat_dex)
+
+
+starters = [
+    "Bulbasaur", "Charmander", "Squirtle", "Chikorita", "Cyndaquil", "Totodile", "Treecko", "Torchic", "Mudkip",
+    "Turtwig", "Chimchar", "Piplup", "Snivy", "Tepig", "Oshawott", "Chespin", "Fennekin", "Froaxie",
+    "Rowlet", "Litten", "Popplio", "Grookey", "Scorbunny", "Sobble", "Sprigatito", "Fuecoco", "Quaxly"
+]
 
 
 # with open("dex.json" if __name__ == "__main__" else "pokemon/dex.json", "r") as file:
@@ -940,8 +1240,20 @@ def fix(s: str, joiner: str = "-"):
 
 fixed_dex = {fix(g): g for g in nat_dex}
 species_and_forms = {
-    fix(Mon(g.name, form=j).species_and_form): (g.name, j) for g in nat_dex.values() for j in g.forms
+    fix(Mon(g.name, form=j).species_and_form): BareMiniMon(g, form=j) for g in nat_dex.values() for j in g.forms
 }
+
+
+def get_saf(species_and_form: str, allow_name_only: bool = True) -> BareMiniMon:
+    """Assumes that the given species_and_form is correct. Throws KeyError if not."""
+    if fix(species_and_form) in species_and_forms:
+        return species_and_forms[fix(species_and_form)]
+    if fix(species_and_form).endswith("-random"):
+        return BareMiniMon(fixed_dex[fix(species_and_form)[:-7]], form="random")
+    if allow_name_only:
+        return BareMiniMon(fixed_dex[fix(species_and_form)])
+
+
 fixed_legal_moves = {fix(g): g for g in all_legal_moves}
 
 
@@ -961,7 +1273,7 @@ game_generations = {
 }
 
 
-def image(mon: Mon):
+def image(mon: BareMiniMon):
     if mon.form.name and mon.species.name != "Dudunsparce":
         if mon.species_and_form == "Minior-Core":
             suffix = "-" + random.choice(["orange", "yellow", "green", "blue", "indigo", "purple"]) + "-core"

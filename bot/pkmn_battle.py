@@ -1,5 +1,5 @@
 from utils import *
-from pokemon import raids as pk
+from pokemon import walker as pk
 
 
 ballColors = {
@@ -48,13 +48,53 @@ def display_move(move: Union[pk.PackedMove, pk.Move], mode: str) -> str:
                f"**Target:** {move.target}\n\n{move.description}"
 
 
-def display_mon(mon: Union[dict, pk.Mon], mode: str = "default", **kwargs) -> str:
+def display_mon_types(mon: pk.BareMiniMon, sep: str = "", align: str = "right", include_names: bool = False) -> str:
+    if mon.type2:
+        return f"{zeph.emojis[mon.type1]}{(' ' + mon.type1) if include_names else ''}{sep}" \
+               f"{zeph.emojis[mon.type2]}{(' ' + mon.type2) if include_names else ''}"
+    else:
+        if include_names:
+            return f"{zeph.emojis[mon.type1]} {mon.type1}"
+        if align == "left":
+            return f"{zeph.emojis[mon.type1]}{sep}{zeph.emojis['__']}"
+        return f"{zeph.emojis['__']}{sep}{zeph.emojis[mon.type1]}"
+
+
+def display_mon(mon: Union[dict, pk.BareMiniMon], mode: str = "default", **kwargs) -> str:
     """Displays various attributes of a mon in pretty form, using Zeph's emotes."""
     full_knowledge = True if mode == "builder" else kwargs.get("full_knowledge", True)
     lb = "\n"
 
+    name = mon.species_and_form if kwargs.get("saf") else mon.name
+
     if isinstance(mon, dict):
         mon = pk.Mon.unpack(mon)
+
+    if mode == "typed_list":
+        if mon.type2:
+            return f"{display_mon_types(mon)} {name}"
+        else:
+            return f"{display_mon_types(mon)} {name}"
+    if mode == "dex":
+        abilities = f"**{'Abilities' if len(mon.regular_abilities) > 1 else 'Ability'}:** " \
+            f"{' / '.join(mon.regular_abilities)}"
+        if mon.hidden_ability:
+            abilities += f"\n**Hidden Ability:** {mon.hidden_ability}"
+        if mon.special_event_ability:
+            abilities += f"\n**Special Event Ability:** {mon.special_event_ability}"
+
+        return f"**{mon.species_and_form}**\n" \
+               f"{display_mon_types(mon, sep=' / ', include_names=True)}\n" \
+               f"**Height:** {mon.height} m ({m_to_ft_and_in(mon.height)})\n" \
+               f"**Weight:** {mon.weight} kg ({round(mon.weight * 2.20462262, 1)} lb)\n\n" \
+               f"{abilities}\n\n" \
+               f"**Stats:** {' / '.join(str(g) + ' ' + pk.six_stat_names[n] for n, g in enumerate(mon.base_stats))}\n" \
+               f"**Total:** {sum(mon.base_stats)}\n\n" \
+               f"{lb.join(g.sentence for g in mon.evolutions.values()) if mon.evolutions else 'Does not evolve.'}\n\n" \
+               f"[Bulbapedia]({mon.bulbapedia}) | [Serebii]({mon.serebii}) | [Pok\u00e9monDB]({mon.pokemondb})"
+
+    if not isinstance(mon, pk.Mon):
+        raise TypeError("Full Mon object needed for that display type.")
 
     if mode == "inline":
         return f"{mon.nickname_and_species} - {mon.hp_display(full_knowledge)}" + \
@@ -68,22 +108,6 @@ def display_mon(mon: Union[dict, pk.Mon], mode: str = "default", **kwargs) -> st
         return "\n\u00a0\u00a0\u00a0\u00a0".join(ret)
     if mode == "team_builder":
         return f"{mon.nickname_and_species} Lv. {mon.level}"
-    if mode == "dex":
-        abilities = f"**{'Abilities' if len(mon.regular_abilities) > 1 else 'Ability'}:** " \
-            f"{' / '.join(mon.regular_abilities)}"
-        if mon.hidden_ability:
-            abilities += f"\n**Hidden Ability:** {mon.hidden_ability}"
-        if mon.special_event_ability:
-            abilities += f"\n**Special Event Ability:** {mon.special_event_ability}"
-
-        return f"**{mon.species_and_form}**\n" \
-               f"{' / '.join([str(zeph.emojis[g]) + ' ' + g for g in mon.types])}\n" \
-               f"**Height:** {mon.height} m ({m_to_ft_and_in(mon.height)})\n" \
-               f"**Weight:** {mon.weight} kg ({round(mon.weight * 2.20462262, 1)} lb)\n\n" \
-               f"{abilities}\n\n" \
-               f"**Stats:** {' / '.join(str(g) + ' ' + pk.six_stat_names[n] for n, g in enumerate(mon.base_stats))}\n" \
-               f"**Total:** {sum(mon.base_stats)}\n\n" \
-               f"[Bulbapedia]({mon.bulbapedia}) | [Serebii]({mon.serebii}) | [Pok\u00e9monDB]({mon.pokemondb})"
 
     starter = f"**Species:** {mon.species_and_form}\n**Nickname:** {mon.nickname}\n**Level:** {mon.level}" \
         if mode == "builder" else f"**{mon.name}** (Lv. {mon.level} {mon.species_and_form})"
@@ -97,7 +121,7 @@ def display_mon(mon: Union[dict, pk.Mon], mode: str = "default", **kwargs) -> st
         f"**Gender:** {mon.gender.title()}\n"
         f"**Ability:** {mon.ability if full_knowledge else '?'}\n"
         f"**Item:** {display_item(mon.held_item) if full_knowledge else '?'}" +
-        (f"\n\n{mon.stats_display(kwargs.get('stat_changes', True))}"
+        (f"\n\n{kwargs.get('stats_display', mon.stats_display(kwargs.get('stat_changes', True)))}"
          if kwargs.get('basic_stats', True) and (mode != 'builder') else "") +
         (f"\n{zeph.emojis[mon.status_emoji]} **{mon.status_condition}**" if mon.status_condition else "")
     ]
@@ -122,32 +146,6 @@ def display_team(team: pk.Team) -> str:
     if len(ret) == 1:
         ret.append("- no active status effects")
     return "\n".join(ret)
-
-
-class BattleStatusNavigator(Navigator):
-    def __init__(self, emol: Emol, field: pk.Field, teams: list[pk.Team], mons: list[pk.Mon]):
-        super().__init__(emol, [field, *mons], 1, "")
-        self.field = field
-        self.teams = teams
-        self.mons = mons
-        self.funcs[zeph.emojis["no"]] = self.close
-
-    async def close(self):
-        await self.remove_buttons()
-
-    @property
-    def con(self):
-        sel = self.table[self.page - 1]
-        if isinstance(sel, pk.Field):
-            return self.emol.con(
-                "Field Status",
-                d=f"{sel.status_screen}\n\n{display_team(self.teams[0])}\n\n{display_team(self.teams[1])}"
-            )
-        elif isinstance(sel, pk.Mon):
-            return self.emol.con(
-                sel.name,
-                d=f"{display_mon(sel, 'battle')}\n\n{display_team(self.teams[sel.team_id])}"
-            )
 
 
 class BattleTeamNavigator(Navigator):
@@ -264,23 +262,31 @@ class Battle:
                             return
                         await self.prompt_switch(mon.team_id)
 
-    def send_out_lead_quietly(self, pos: int):
+    def send_out_lead_quietly(self, pos: int, print_recall: bool = True):
         if self.format == "singles":
             team = pos
         else:
             team = pos // 2
         if self.active_mons[pos].hpc and self.active_mons[pos].species.name != "NULL":
-            self.channel.append(f"That's enough, {self.active_mons[pos].name}!")
-        self.active_mons[pos] = pk.Mon.unpack(self.teams[team].lead)
-        self.active_mons[pos].team_id = team
-        self.channel.append(f"Go! {self.active_mons[pos].name}!")
-        self.print_ability(self.active_mons[pos], only_if_needed=True)
+            manual_switch = True
+            if print_recall:
+                self.channel.append(f"That's enough, {self.active_mons[pos].name}!")
+        else:
+            manual_switch = False
+        mon = self.active_mons[pos] = pk.Mon.unpack(self.teams[team].lead)
+        if manual_switch:
+            mon.just_manually_switched = True
+        mon.team_id = team
+        self.channel.append(f"Go! {mon.name}!")
+        self.print_ability(mon, only_if_needed=True)
+        if mon.ability == "Drizzle":
+            self.change_weather(pk.rain, duration=(8 if mon.held_item == "Damp Rock" else 5))
 
-    async def call_out_lead(self, team: int):
-        self.send_out_lead_quietly(team)
+    async def call_out_lead(self, team: int, print_recall: bool = True):
+        self.send_out_lead_quietly(team, print_recall=print_recall)
         await self.print(skip_hp_check=True)
 
-    async def prompt_switch(self, team: int, browsing: bool = False):
+    async def prompt_switch(self, team: int, browsing: bool = False, print_recall: bool = True):
         self.teams[team].update_mon(self.active_mons[team])
         bat = BattleTeamNavigator(self.emol, self.teams[team], True, browsing)
         await bat.run(self.ctx)
@@ -289,7 +295,7 @@ class Battle:
         if (not bat.switched) and (not browsing):
             raise commands.CommandError("Switching is required here.")
         if not browsing:
-            await self.call_out_lead(team)
+            await self.call_out_lead(team, print_recall=print_recall)
         return bat
 
     def can_tera(self, mon: pk.Mon):
@@ -308,7 +314,7 @@ class Battle:
         return (
             move.priority,
             0,  # will eventually include effects which cause a mon to go earlier or later within the priority bracket
-            (-mon.spe if self.field.trick_room else mon.spe),
+            (-self.invisible_stat(mon, "spe") if self.field.trick_room else self.invisible_stat(mon, "spe")),
             random()
         )
 
@@ -325,9 +331,7 @@ class Battle:
                     while True:
                         user_input = await zeph.wait_for("message", timeout=300, check=pred)
                         if (move := r.retrieve_move(user_input.content)).name == "Status":
-                            await BattleStatusNavigator(
-                                self.emol, self.field, self.teams, self.active_mons
-                            ).run(self.ctx)
+                            await BattleStatusNavigator(self).run(self.ctx)
                             mess = await self.ctx.send(embed=self.move_select(r))
                             continue
                         if (move.name == "Terastallize") and self.can_tera(r):
@@ -370,6 +374,11 @@ class Battle:
 
             if self.winner is not None:
                 return self.close()
+
+            if mon.just_manually_switched == -1:
+                self.channel.append(f"{mon.name} went back to its Trainer!")
+                await self.prompt_switch(mon.team_id, print_recall=False)
+                await self.print()
 
         self.end_of_turn()
         await self.print()
@@ -472,6 +481,13 @@ class Battle:
             if r.hpc <= 0:
                 return
 
+            if r.ability == "Speed Boost" and not r.just_manually_switched:
+                self.print_ability(r)
+                self.apply(pk.StatChange(100, {"spe": 1}), r)
+
+            if r.just_manually_switched:
+                r.just_manually_switched = False
+
         if self.field.weather_timer > 0:
             self.field.weather_timer -= 1
             if self.field.weather_timer <= 0:
@@ -563,7 +579,7 @@ class Battle:
     def but_it_failed(self, a: pk.Mon, d: pk.Mon, m: pk.Move):
         """Things that prevent a move from continuing after being called (such as the charging of two-turn moves)."""
         if m.two_turn and not a.charging:
-            self.channel.append(pk.twoTurnTexts[m.name].format(name=a.name))
+            self.channel.append(pk.two_turn_texts[m.name].format(name=a.name))
             if not (m.solar and self.weather == pk.sun):
                 a.charging = True
                 return False
@@ -610,9 +626,21 @@ class Battle:
                 return self.channel.append("But it failed!")
             if self.teams[a.team_id].aurora_veil:
                 return self.channel.append("Aurora Veil is already in effect!")
+        if m.belly_drum:
+            if a.stat_stages["atk"] == 6:
+                return self.channel.append(f"{a.name}'s Attack is already maximized!")
+            if a.hpc <= floor(a.hp / 2):
+                return self.channel.append("But it failed!")
+        if m.switch_self and m.fails_if_cant_switch:
+            if not self.teams[a.team_id].can_fight:
+                return self.channel.append("There are no party Pok\u00e9mon to switch to!")
+        if m.focus_energy and a.focused_energy:
+            return self.channel.append(f"{a.name} is already pumped!")
+        if m.dream_eater and d.status_condition != pk.asleep:
+            return self.channel.append("But it failed!")
         return True
 
-    def accuracy_check(self, a: pk.Mon, d: pk.Mon, m: pk.Move):
+    def accuracy_check(self, a: pk.Mon, d: pk.Mon, m: pk.Move, silent: bool = False):
         if m.hits_in_rain:
             if self.weather == pk.sun:
                 m.accuracy = 50
@@ -629,25 +657,43 @@ class Battle:
         else:
             # SEMI-INVULNERABILITY
             if d.flying and not m.can_hit_fly:
-                self.channel.append(f"{d.name} avoided the attack!")
+                if not silent:
+                    self.channel.append(f"{d.name} avoided the attack!")
                 return False
             if d.digging and not m.can_hit_dig:
-                self.channel.append(f"{d.name} avoided the attack!")
+                if not silent:
+                    self.channel.append(f"{d.name} avoided the attack!")
                 return False
 
+        if d.ability == "Snow Cloak" and self.weather in [pk.snow, pk.hail]:
+            m.accuracy *= 0.8
+        if d.ability == "Sand Veil" and self.weather == pk.sandstorm:
+            m.accuracy *= 0.8
+
         if (m.category != pk.status or m.still_typed) and d.eff(m.type) == 0:
-            self.channel.append(f"It doesn't affect {d.name}...")
+            if not silent:
+                self.channel.append(f"It doesn't affect {d.name}...")
             return False
         if d.protecting and m.can_protect:
-            self.channel.append(f"{d.name} protected itself!")
+            if not silent:
+                self.channel.append(f"{d.name} protected itself!")
             return False
         if m.ohko and (a.level < d.level or random() > (a.level - d.level + 30) / 100):
-            self.channel.append(f"{a.name}'s attack missed!")
+            if not silent:
+                self.channel.append(f"{a.name}'s attack missed!")
             return False
         if m.accuracy and not m.ohko:
-            if random() > m.accuracy / 100 * a.stat_level("acc", -d.stat_stages["eva"]):
-                self.channel.append(f"{a.name}'s attack missed!")
+            if random() > (m.accuracy / 100 * a.stat_level("acc", -d.stat_stages["eva"])):
+                if not silent:
+                    self.channel.append(f"{a.name}'s attack missed!")
                 return False
+
+        if m.type == pk.fire and d.ability == "Flash Fire":
+            if not silent:
+                self.print_ability(d)
+                self.channel.append(f"{d.name}'s Fire-type moves were powered up!")
+            d.has_activated_ability = True
+            return False
 
         return True
 
@@ -682,6 +728,8 @@ class Battle:
             return
 
         if not self.accuracy_check(a, d, m):
+            if m.crash:
+                self.inflict(a, floor(a.hp / 2), "crash damage")
             return
 
         # MOVE CONNECTS
@@ -692,29 +740,48 @@ class Battle:
                 self.channel.append("It's super effective!")
             elif d.eff(m.type) < 1:
                 self.channel.append("It's not very effective...")
+
         if m.multi2:
             strikes = 2
         elif m.multi25:
-            if a.held_item == "Loaded Dice":
+            if a.ability == "Skill Link":
+                strikes = 5
+            elif a.held_item == "Loaded Dice":
                 strikes = choice([4, 5])
             else:
                 strikes = choice([2, 2, 3, 3, 4, 5])
+        elif m.triple_kick:
+            if a.ability == "Skill Link" or a.held_item == "Loaded Dice":
+                strikes = 3
+            else:
+                strikes = 1
+                while strikes < 3 and self.accuracy_check(a, d, m, silent=True):
+                    strikes += 1
+        elif m.population_bomb:
+            if a.ability == "Skill Link":
+                strikes = 10
+            elif a.held_item == "Loaded Dice":
+                strikes = randrange(4, 11)
+            else:
+                strikes = 1
+                while strikes < 10 and self.accuracy_check(a, d, m, silent=True):
+                    strikes += 1
         else:
             strikes = 1
+
         strikes_done = 0
+
         for x in range(strikes):
             if m.category != pk.status:
-                damage = self.strike_damage(a, d, m)
+                if m.triple_kick:
+                    m2 = m.copy()
+                    m2.power = m.power + x * m.power
+                    damage = self.strike_damage(a, d, m2)
+                else:
+                    damage = self.strike_damage(a, d, m)
                 damage_done = self.inflict(d, damage, swipe=m.false_swipe)
 
-                if d.raging and damage_done > 0:
-                    self.apply(pk.StatChange(100, {"atk": 1}), d)
-
-                if m.recoil:
-                    self.inflict(a, max([1, floor(damage_done / m.recoil)]), "recoil damage")
-                if m.absorbent:  # there are no moves that both absorb and have recoil, so order here doesn't matter
-                    self.channel.append(f"{d.name} had its energy drained!")
-                    self.heal(a, max([1, floor(damage_done / 2)]))
+                self.move_user_effects(a, d, m, damage_done)
 
                 strikes_done += 1
 
@@ -725,8 +792,10 @@ class Battle:
                     self.contact(a, d)
                 if d.hpc <= 0 or a.hpc <= 0:
                     return self.hit_x_times(strikes_done, m)  # try to exit again
+            else:
+                self.move_user_effects(a, d, m, 0)
 
-            self.move_effects(a, d, m)
+            self.move_target_effects(a, d, m)
 
         return self.hit_x_times(strikes_done, m)
 
@@ -767,16 +836,19 @@ class Battle:
         if m.tera_blast:
             if a.terastallized:
                 m.type = a.tera_type
-            if a.atk > a.spa:
+            if self.invisible_stat(a, "atk") > self.invisible_stat(a, "spa"):
                 m.category = pk.physical
 
         if m.weight_based:
             cutoffs = {0: 20, 10: 40, 25: 60, 50: 80, 100: 100, 200: 120}
             m.power = cutoffs[max(g for g in cutoffs if d.weight >= g)]
 
+        if a.ability == "Flash Fire" and a.has_activated_ability is True and m.type == pk.fire:
+            m.power *= 1.5  # technically it's more correct to change the mon's attacking stat. but this is easier
+
     def hit_x_times(self, x: int, m: pk.Move):
         """Appends a 'hit x times!' statement to the channel if the move hits more than once. Called on exiting."""
-        if m.multi2 or m.multi25:
+        if any([m.multi2, m.multi25, m.triple_kick, m.population_bomb]):
             self.channel.append(f"Hit {x} {plural('time', x)}!")
 
     @staticmethod
@@ -815,8 +887,9 @@ class Battle:
         )
 
         if crit:
-            self.channel.append("A critical hit!")
-            dam *= 2 if a.ability == "Sniper" else 1.5
+            if d.ability != "Battle Armor":
+                self.channel.append("A critical hit!")
+                dam *= 2 if a.ability == "Sniper" else 1.5
 
         if a.terastallized:
             stab = 1
@@ -849,28 +922,39 @@ class Battle:
         return any(g.ability == ability for g in self.active_mons)
 
     def invisible_stat(self, mon: pk.Mon, stat: str, ignore_stat_changes: bool = False) -> int:
+        mod = 1
         if stat == "atk":
             ret = mon.atk_without_sc if ignore_stat_changes else mon.atk
             if self.ability_on_field("Tablets of Ruin") and mon.ability != "Tablets of Ruin":
-                ret = round(ret * 0.75)
-            return ret
+                mod *= 0.75
+            return round(ret * mod)
         if stat == "spa":
             ret = mon.spa_without_sc if ignore_stat_changes else mon.spa
             if self.ability_on_field("Vessel of Ruin") and mon.ability != "Vessel of Ruin":
-                ret = round(ret * 0.75)
-            return ret
+                mod *= 0.75
+            return round(ret * mod)
         if stat == "def":
             ret = mon.dfn_without_sc if ignore_stat_changes else mon.dfn
             if self.ability_on_field("Sword of Ruin") and mon.ability != "Sword of Ruin":
-                ret = round(ret * 0.75)
-            return ret
+                mod *= 0.75
+            if pk.ice in mon.types and self.weather == pk.snow:
+                mod *= 0.5
+            return round(ret * mod)
         if stat == "spd":
             ret = mon.spd_without_sc if ignore_stat_changes else mon.spd
             if self.ability_on_field("Beads of Ruin") and mon.ability != "Beads of Ruin":
-                ret = round(ret * 0.75)
-            return ret
+                mod *= 0.75
+            return round(ret * mod)
+        if stat == "spe":
+            ret = mon.spe_without_sc if ignore_stat_changes else mon.spe
+            if mon.ability == pk.weather_speed_abilities.get(self.weather, "x"):
+                mod *= 2
+            return round(ret * mod)
 
-    def inflict(self, mon: pk.Mon, dmg: int, s: str = "damage", swipe: bool = False):
+    def stats_display(self, mon: pk.Mon):
+        return " / ".join(f"{self.invisible_stat(mon, g.lower())} {g}" for g in ["Atk", "Def", "SpA", "SpD", "Spe"])
+
+    def inflict(self, mon: pk.Mon, dmg: int, s: str = "damage", swipe: bool = False, **kwargs):
         """Does damage to a mon. Returns the amount of damage done."""
         if mon.hpc <= 0:
             return 0
@@ -883,11 +967,19 @@ class Battle:
             if mon.hpc < 1:
                 mon.hpc = 1
                 self.channel.append(f"{mon.name} endured the hit!")
+        elif start == mon.hp and mon.ability == "Sturdy":
+            if mon.hpc < 1:
+                mon.hpc = 1
+                self.print_ability(mon)
+                self.channel.append(f"{mon.name} endured the hit!")
         else:
             if mon.hpc <= 0:
                 mon.hpc = 0
                 mon.status_condition = pk.fainted
-        self.channel.append(f"{mon.name} took {start - mon.hpc} {s}!")
+        if kwargs.get("message"):
+            self.channel.append(kwargs.get("message"))
+        else:
+            self.channel.append(f"{mon.name} took {start - mon.hpc} {s}!")
         if not mon.hpc:
             self.channel.append(f"{mon.name} fainted!")
         return start - mon.hpc
@@ -905,9 +997,9 @@ class Battle:
     def weather(self):
         return self.field.weather
 
-    def change_weather(self, weather: Union[str, None]):
+    def change_weather(self, weather: Union[str, None], duration: int = 5):
         self.field.weather = weather
-        self.field.weather_timer = 5 if weather else 0
+        self.field.weather_timer = duration if weather else 0
         if weather:
             self.channel.append(pk.weather_start[weather])
         for mon in self.active_mons:
@@ -921,10 +1013,12 @@ class Battle:
         if not (weather := self.weather):
             return
         if weather == pk.hail:
-            if pk.ice not in mon.types:
+            if pk.ice not in mon.types and mon.held_item != "Safety Goggles" and \
+                    mon.ability not in ["Ice Body", "Snow Cloak", "Magic Guard", "Overcoat"]:
                 self.inflict(mon, max(floor(mon.hp / 16), 1), "damage from hail")
         if weather == pk.sandstorm:
-            if not {pk.rock, pk.ground, pk.steel}.intersection(set(mon.types)):
+            if not {pk.rock, pk.ground, pk.steel}.intersection(set(mon.types)) and mon.held_item != "Safety Goggles" \
+                    and mon.ability not in ["Sand Force", "Sand Rush", "Sand Veil", "Magic Guard", "Overcoat"]:
                 self.inflict(mon, max(floor(mon.hp / 16), 1), "damage from the sandstorm")
 
     def print_ability(self, mon: pk.Mon, only_if_needed: bool = False):
@@ -936,21 +1030,26 @@ class Battle:
         }
         if only_if_needed and (mon.ability not in additional_text):
             return
-        self.channel.append(f"- {mon.name}'s **{mon.ability}**! -")
+        self.channel.append(f"= {mon.name}'s **{mon.ability}**! =")
         if mon.ability in additional_text:
             self.channel.append(additional_text[mon.ability])
 
     def print_item(self, mon: pk.Mon, use_up: bool = False):
-        self.channel.append(f"- {mon.name}'s {display_item(mon.held_item)}! -")
+        self.channel.append(f"= {mon.name}'s {display_item(mon.held_item)}! =")
         if use_up:
             mon.held_item = "No Item"
 
     def apply(self, stat: Union[pk.StatChange, pk.StatusEffect], mon: pk.Mon):
-        change = mon.apply(stat)
         if isinstance(stat, pk.StatChange):
+            change = mon.apply(stat)
             for k, v in change.items():
                 self.channel.append(pk.stat_change_text(mon, k, v))
         elif isinstance(stat, pk.StatusEffect):
+            if stat.effect == pk.paralyzed and mon.ability == "Limber":
+                self.print_ability(mon)
+                self.channel.append(f"{mon.name} cannot be paralyzed!")
+                return
+            change = mon.apply(stat)
             if change:
                 self.channel.append(change[0].format(name=mon.name))
                 if mon.status_condition in pk.status_berries.get(mon.held_item, []):
@@ -959,12 +1058,15 @@ class Battle:
                     mon.status_condition = None
 
     def contact(self, a: pk.Mon, d: pk.Mon):
-        pass
+        if d.ability == "Static" and pk.electric not in a.types and random() < 0.3:
+            self.print_ability(d)
+            self.apply(pk.StatusEffect(100, pk.paralyzed), a)
 
-    def move_effects(self, a: pk.Mon, d: pk.Mon, m: pk.Move):
-        """Secondary/status effects applied immediately after a move lands."""
-        if m.target_stat_changes:
-            self.apply(m.target_stat_changes, d)
+    def move_user_effects(self, a: pk.Mon, d: pk.Mon, m: pk.Move, damage: int):
+        """Secondary effects applied as soon as a move connects, even if d has fainted. Mostly self/field effects."""
+        if d.raging and damage > 0:
+            self.apply(pk.StatChange(100, {"atk": 1}), d)
+
         if m.user_stat_changes:
             self.apply(m.user_stat_changes, a)
         if m.reset_low_stats:
@@ -972,46 +1074,21 @@ class Battle:
                 if v < 0:
                     a.stat_stages[k] = 0
             self.channel.append(f"{a.name}'s lowered stats were reset!")
-        if m.reset_target_stats:
-            for k in d.stat_stages:
-                d.stat_stages[k] = 0
-            self.channel.append(f"{d.name}'s stat changes were reset!")
         if m.reset_all_stats:
             for mon in self.active_mons:
                 for k in mon.stat_stages:
                     mon.stat_stages[k] = 0
             self.channel.append("All stat changes were reset!")
-
-        if m.status_effect:
-            invulnerables = {
-                pk.burned: {pk.fire}, pk.paralyzed: {pk.electric}, pk.poisoned: {pk.poison, pk.steel},
-                pk.badly_poisoned: {pk.poison, pk.steel}, pk.frozen: {pk.ice}
-            }
-            can_activate = (not d.status_condition) and \
-                ((not invulnerables.get(m.status_effect.effect, set()).intersection(set(d.types))) or
-                 (a.ability == "Corrosion" and m.status_effect.effect in [pk.poisoned, pk.badly_poisoned]))
-            # 1) the mon is not already afflicted with something, and 2) either a) is not immune to the status effect,
-            # or b) the attacker has the ability that allows them to poison them anyway
-            if can_activate:
-                self.apply(m.status_effect, d)
-        if random() < m.confuse / 100:
-            d.confused = True
-            d.confusion_time = randrange(2, 6)  # snap out after 1-4 attacking turns; if 1 at start of turn, snap out
-            self.channel.append(f"{d.name} became confused!")
-        if random() < m.flinch / 100:
-            d.flinching = True
+        if m.recoil:
+            self.inflict(a, max([1, floor(damage / m.recoil)]), "recoil damage")
+        if m.absorbent:
+            self.channel.append(f"{d.name} had its energy drained!")
+            self.heal(a, max([1, floor(damage / 2)]))
 
         if m.weather:
-            self.change_weather(m.weather)
-
-        if m.leech_seed:
-            d.seeded = True
-            self.channel.append(f"{d.name} was seeded!")
+            self.change_weather(m.weather, duration=(8 if a.held_item == pk.weather_extenders.get(m.weather) else 5))
         if m.must_recharge:  # this triggers if and only if the move lands, so it goes here
             a.resting = True
-        if m.yawn:
-            d.drowsy = True
-            self.channel.append(f"{d.name} grew drowsy!")
         if m.endure:
             a.enduring = True
             self.channel.append(f"{a.name} braced itself!")
@@ -1027,22 +1104,10 @@ class Battle:
                 a.thrashing = False
                 a.thrash_counter = 0
                 self.channel.append(f"{a.name} became confused!")
-        if m.binding and not d.bound:
-            special_descriptions = {
-                "Fire Spin": "became trapped in a whirlwind of fire!"
-            }
-            d.bound = m.name
-            if a.held_item == "Binding Band":
-                d.binding_banded = True
-            if a.held_item == "Grip Claw":
-                d.bind_timer = 7
-            else:
-                d.bind_timer = choice([4, 5])
-            self.channel.append(f"{d.name} {special_descriptions.get(m.name, 'became bound by ' + m.name + '!')}")
         if m.rage:
             a.raging = True
         if m.mimic:
-            new_move = pk.moveDex[d.last_used].pack
+            new_move = pk.move_dex[d.last_used].pack
             if mimic_index := a.has_move("Mimic"):
                 a.moves[mimic_index - 1] = new_move
             a.selection = new_move
@@ -1051,14 +1116,6 @@ class Battle:
             self.heal(a, floor(a.hp / 2))
         if m.full_heal:
             self.heal(a, a.hp)
-        if m.add_type:
-            d.type3 = m.add_type
-            self.channel.append(f"{d.name} became {m.add_type}-type!")
-        if m.change_type:
-            d.type1 = None
-            d.type2 = None
-            d.type3 = m.change_type
-            self.channel.append(f"{d.name} became pure {m.change_type}-type!")
         if m.reflect:
             self.teams[a.team_id].reflect = 5
             self.channel.append(f"Reflect strengthened {a.name}'s team against physical moves!")
@@ -1079,6 +1136,89 @@ class Battle:
             else:
                 self.field.trick_room = 5
                 self.channel.append(f"{a.name} twisted the dimensions!")
+        if m.belly_drum:
+            if a.ability == "Contrary":
+                a.stat_stages["atk"] = -6
+            else:
+                a.stat_stages["atk"] = 6
+            self.inflict(
+                a, floor(a.hp / 2),
+                message=f"{a.name} cut its own HP by {floor(a.hp / 2)} and maximized its Attack!"
+            )
+        if m.minimize:
+            a.minimized = True
+        if m.curl:
+            a.curled_up = True
+        if m.focus_energy:
+            self.channel.append(f"{a.name} is getting pumped!")
+            a.focused_energy = True
+
+        if m.switch_self:  # requires async, must be done outside of this command
+            a.just_manually_switched = -1
+
+    def move_target_effects(self, a: pk.Mon, d: pk.Mon, m: pk.Move):
+        """Secondary/status effects applied at the end of a move. NOT performed if d is fainted."""
+        if m.target_stat_changes:
+            self.apply(m.target_stat_changes, d)
+        if m.reset_target_stats:
+            for k in d.stat_stages:
+                d.stat_stages[k] = 0
+            self.channel.append(f"{d.name}'s stat changes were reset!")
+
+        if m.status_effect:
+            invulnerables = {
+                pk.burned: {pk.fire}, pk.paralyzed: {pk.electric}, pk.poisoned: {pk.poison, pk.steel},
+                pk.badly_poisoned: {pk.poison, pk.steel}, pk.frozen: {pk.ice}
+            }
+            can_activate = (not d.status_condition) and \
+                ((not invulnerables.get(m.status_effect.effect, set()).intersection(set(d.types))) or
+                 (a.ability == "Corrosion" and m.status_effect.effect in [pk.poisoned, pk.badly_poisoned]))
+            # 1) the mon is not already afflicted with something, and 2) either a) is not immune to the status effect,
+            # or b) the attacker has the ability that allows them to poison them anyway
+            if can_activate:
+                self.apply(m.status_effect, d)
+        if random() < m.confuse / 100:
+            d.confused = True
+            d.confusion_time = randrange(2, 6)  # snap out after 1-4 attacking turns; if 1 at start of turn, snap out
+            self.channel.append(f"{d.name} became confused!")
+
+        if d.status_condition not in [pk.asleep, pk.frozen]:  # flinch odds
+            if m.flinch:
+                if random() < m.flinch / 100:
+                    d.flinching = True
+            elif a.held_item in ["King's Rock", "Razor Fang"] and m.category != pk.status:
+                if random() < 0.1:
+                    d.flinching = True
+            elif a.ability == "Stench" and m.category != pk.status:
+                if random() < 0.1:
+                    d.flinching = True
+
+        if m.leech_seed:
+            d.seeded = True
+            self.channel.append(f"{d.name} was seeded!")
+        if m.yawn:
+            d.drowsy = True
+            self.channel.append(f"{d.name} grew drowsy!")
+        if m.binding and not d.bound:
+            special_descriptions = {
+                "Fire Spin": "became trapped in a whirlwind of fire!"
+            }
+            d.bound = m.name
+            if a.held_item == "Binding Band":
+                d.binding_banded = True
+            if a.held_item == "Grip Claw":
+                d.bind_timer = 7
+            else:
+                d.bind_timer = choice([4, 5])
+            self.channel.append(f"{d.name} {special_descriptions.get(m.name, 'became bound by ' + m.name + '!')}")
+        if m.add_type:
+            d.type3 = m.add_type
+            self.channel.append(f"{d.name} became {m.add_type}-type!")
+        if m.change_type:
+            d.type1 = None
+            d.type2 = None
+            d.type3 = m.change_type
+            self.channel.append(f"{d.name} became pure {m.change_type}-type!")
 
     async def run(self):
         for team in self.teams:
@@ -1091,3 +1231,28 @@ class Battle:
 
         while (self.winner is None) and not self.closed:
             await self.turn()
+
+
+class BattleStatusNavigator(Navigator):
+    def __init__(self, battle: Battle):
+        super().__init__(battle.emol, [battle.field, *battle.active_mons], 1, "")
+        self.battle = battle
+        self.funcs[zeph.emojis["no"]] = self.close
+
+    async def close(self):
+        await self.remove_buttons()
+
+    @property
+    def con(self):
+        sel = self.table[self.page - 1]
+        if isinstance(sel, pk.Field):
+            return self.emol.con(
+                "Field Status",
+                d=f"{sel.status_screen}\n\n{display_team(self.battle.teams[0])}\n\n{display_team(self.battle.teams[1])}"
+            )
+        elif isinstance(sel, pk.Mon):
+            return self.emol.con(
+                sel.name,
+                d=f"{display_mon(sel, 'battle', stats_display=self.battle.stats_display(sel))}\n\n"
+                  f"{display_team(self.battle.teams[sel.team_id])}"
+            )

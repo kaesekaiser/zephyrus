@@ -2,7 +2,7 @@ import discord
 import asyncio
 import inspect
 import json
-import pinyin_jyutping_sentence as pjs
+# import pinyin_jyutping_sentence as pjs
 import re
 
 import requests.exceptions
@@ -32,7 +32,7 @@ class Zeph(commands.Bot):
         #     self.callChannels = {int(g.split("|")[1]): int(g.split("|")[2]) for g in f.readlines()}
         self.plane_users = {}
         self.epitaph_channels = []
-        self.roman = pjs.RomanizationConversion()
+        # self.roman = pjs.RomanizationConversion()
         self.airport_maps = {
             1: im.Image.open("minigames/minimaps/worldzoom1.png").convert("RGBA"),
             2: im.Image.open("minigames/minimaps/worldzoom2.png").convert("RGBA"),
@@ -98,16 +98,16 @@ class Zeph(commands.Bot):
             with open("storage/server_settings.json", "w") as f:
                 json.dump({g: j.minimal_json for g, j in self.server_settings.items()}, f, indent=4)
 
-    async def load_romanization(self):
-        print("Loading romanizer...")
-        with open("utilities/rom.json", "r") as f:
-            file = json.load(f)
-        self.roman.jyutping_char_map.update(file["jp_char"])
-        self.roman.jyutping_word_map.update(file["jp_word"])
-        self.roman.pinyin_char_map.update(file["py_char"])
-        self.roman.pinyin_word_map.update(file["py_word"])
-        self.roman.process_sentence_jyutping("你好")
-        print("Romanizer loaded.")
+    # async def load_romanization(self):
+    #     print("Loading romanizer...")
+    #     with open("utilities/rom.json", "r") as f:
+    #         file = json.load(f)
+    #     self.roman.jyutping_char_map.update(file["jp_char"])
+    #     self.roman.jyutping_word_map.update(file["jp_word"])
+    #     self.roman.pinyin_char_map.update(file["py_char"])
+    #     self.roman.pinyin_word_map.update(file["py_word"])
+    #     self.roman.process_sentence_jyutping("你好")
+    #     print("Romanizer loaded.")
 
 
 def get_command_prefix(bot: Zeph, message: discord.Message):
@@ -268,6 +268,10 @@ def plural(s: str, n: Union[float, int], **kwargs):
     return kwargs.get("plural", s + "s") if n != 1 else s
 
 
+def a_or_an(s: str) -> str:
+    return f"a{'n' if s.strip('*_ ')[0].lower() in 'aeiou' else ''} {s}"
+
+
 def none_list(ls: Union[list, tuple], joiner: str = ", ", if_empty: str = "none"):
     return joiner.join(ls) if ls else if_empty
 
@@ -334,10 +338,10 @@ class Navigator:
     for child classes to overwrite large amounts of the run() function without having to overwrite the function
     itself. """
 
-    def __init__(self, emol: Emol, ls: list, per: int, s: str,
+    def __init__(self, emol: Emol, ls: list = (), per: int = 8, s: str = "",
                  prev: Union[discord.Emoji, str] = "◀", nxt: Union[discord.Emoji, str] = "▶",
                  close_on_timeout: bool = False, **kwargs):
-        """KWARGS are passed to Emol.com()"""
+        # kwargs are also passed to Emol.con()
         self.emol = emol
         self.table = ls
         self.per = per
@@ -359,6 +363,10 @@ class Navigator:
         return ceil(len(self.table) / self.per)
 
     @property
+    def page_list(self):
+        return page_list(self.table, self.per, self.page)
+
+    @property
     def legal(self):
         return [self.prev, self.next] + list(self.funcs.keys())
 
@@ -369,7 +377,7 @@ class Navigator:
     def con(self):
         return self.emol.con(
             self.title.format(page=self.page, pgs=self.pgs),
-            d=self.prefix + none_list(page_list(self.table, self.per, self.page), "\n"), **self.kwargs
+            d=self.prefix + none_list(self.page_list, "\n"), **self.kwargs
         )
 
     def advance_page(self, direction: int):
@@ -382,7 +390,7 @@ class Navigator:
             r.message.id == self.message.id and u == ctx.author
         ))[0].emoji
 
-    async def run_nonstandard_emoji(self, emoji: Union[discord.Emoji, str], ctx: commands.Context):
+    async def run_nonstandard_emoji(self, emoji: discord.Emoji | str, ctx: commands.Context):
         # For doing weird things with the input.
         pass
 
@@ -394,10 +402,11 @@ class Navigator:
             from_message = self.message
 
         for button in self.legal.__reversed__():
-            try:
-                await from_message.remove_reaction(button, from_message.author)
-            except discord.errors.HTTPException:
-                pass
+            if "!" not in str(button):
+                try:
+                    await from_message.remove_reaction(button, from_message.author)
+                except discord.errors.HTTPException:
+                    pass
 
     async def after_timeout(self):
         if self.close_on_timeout:
@@ -417,7 +426,7 @@ class Navigator:
                 await self.message.edit(embed=self.con)
 
             for button in self.legal:
-                if " " not in button:
+                if "!" not in button:
                     try:
                         await self.message.add_reaction(button)
                     except discord.errors.HTTPException:
@@ -481,6 +490,47 @@ class FieldNavigator(Navigator):
             d=self.prefix,
             fs=page_dict(self.table, self.per, self.page), **self.kwargs
         )
+
+
+class NumSelector(Navigator):
+    """A Navigator with the option to select one of a numerical list via chat message built-in."""
+    def __init__(self, emol: Emol, ls: list = (), per: int = 8, s: str = "", **kwargs):
+        super().__init__(emol, ls, per, s, **kwargs)
+
+        for n in kwargs.get("allowable_selections", range(self.per)):
+            self.funcs[f"!select {n+1}"] = partial(self.select, n)
+
+    def select(self, n: int):
+        # What to do with the selection. Exists to be overwritten by child classes.
+        pass
+
+    @property
+    def can_select_now(self):
+        # Whether numerical selection is currently permitted.
+        return True
+
+    def is_valid_user_selection(self, n: int):
+        # Whether a given n is a valid number for selection.
+        return 1 <= n <= len(self.page_list)
+
+    async def get_emoji(self, ctx: commands.Context):
+        def pred(mr: MR, u: User):
+            if isinstance(mr, discord.Message) and self.can_select_now:
+                return u == ctx.author and mr.channel == ctx.channel and can_int(mr.content) and \
+                    self.is_valid_user_selection(int(mr.content))
+            else:
+                return u == ctx.author and mr.message == self.message and mr.emoji in self.legal
+
+        mess = (await zeph.wait_for('reaction_or_message', timeout=300, check=pred))[0]
+
+        if isinstance(mess, discord.Message):
+            try:
+                await mess.delete()
+            except discord.HTTPException:
+                pass
+            return f"!select {mess.content}"
+        else:
+            return mess.emoji
 
 
 class Nativity:
@@ -575,6 +625,8 @@ def can_use_without_error(func: callable, arg, error_type=ValueError):
 
 
 def can_int(s: str):
+    if not isinstance(s, str):
+        return False
     return can_use_without_error(int, s)
 
 

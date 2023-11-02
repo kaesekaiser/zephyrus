@@ -1,0 +1,3706 @@
+{
+    "Bulbasaur": [
+        {
+            "into": "Ivysaur",
+            "method": "level",
+            "level": 16
+        }
+    ],
+    "Ivysaur": [
+        {
+            "into": "Venusaur",
+            "method": "level",
+            "level": 32
+        }
+    ],
+    "Charmander": [
+        {
+            "into": "Charmeleon",
+            "method": "level",
+            "level": 16
+        }
+    ],
+    "Charmeleon": [
+        {
+            "into": "Charizard",
+            "method": "level",
+            "level": 36
+        }
+    ],
+    "Squirtle": [
+        {
+            "into": "Wartortle",
+            "method": "level",
+            "level": 16
+        }
+    ],
+    "Wartortle": [
+        {
+            "into": "Blastoise",
+            "method": "level",
+            "level": 36
+        }
+    ],
+    "Caterpie": [
+        {
+            "into": "Metapod",
+            "method": "level",
+            "level": 7
+        }
+    ],
+    "Metapod": [
+        {
+            "into": "Butterfree",
+            "method": "level",
+            "level": 10
+        }
+    ],
+    "Weedle": [
+        {
+            "into": "Kakuna",
+            "method": "level",
+            "level": 7
+        }
+    ],
+    "Kakuna": [
+        {
+            "into": "Beedrill",
+            "method": "level",
+            "level": 10
+        }
+    ],
+    "Pidgey": [
+        {
+            "into": "Pidgeotto",
+            "method": "level",
+            "level": 18
+        }
+    ],
+    "Pidgeotto": [
+        {
+            "into": "Pidgeot",
+            "method": "level",
+            "level": 36
+        }
+    ],
+    "Rattata": [
+        {
+            "into": "Raticate",
+            "method": "level",
+            "level": 20
+        }
+    ],
+    "Rattata-Alolan": [
+        {
+            "into": "Raticate-Alolan",
+            "time": "night",
+            "method": "level",
+            "level": 20
+        }
+    ],
+    "Spearow": [
+        {
+            "into": "Fearow",
+            "method": "level",
+            "level": 20
+        }
+    ],
+    "Ekans": [
+        {
+            "into": "Arbok",
+            "method": "level",
+            "level": 22
+        }
+    ],
+    "Pichu": [
+        {
+            "into": "Pikachu",
+            "method": "friendship"
+        }
+    ],
+    "Pikachu": [
+        {
+            "into": "Raichu",
+            "method": "use",
+            "item": "Thunder Stone"
+        },
+        {
+            "into": "Raichu-Alolan",
+            "location": "Alola",
+            "method": "use",
+            "item": "Thunder Stone"
+        }
+    ],
+    "Sandshrew": [
+        {
+            "into": "Sandslash",
+            "method": "level",
+            "level": 22
+        }
+    ],
+    "Sandshrew-Alolan": [
+        {
+            "into": "Sandslash-Alolan",
+            "method": "use",
+            "item": "Ice Stone"
+        }
+    ],
+    "Nidoran-F": [
+        {
+            "into": "Nidorina",
+            "method": "level",
+            "level": 16
+        }
+    ],
+    "Nidorina": [
+        {
+            "into": "Nidoqueen",
+            "method": "use",
+            "item": "Moon Stone"
+        }
+    ],
+    "Nidoran-M": [
+        {
+            "into": "Nidorino",
+            "method": "level",
+            "level": 16
+        }
+    ],
+    "Nidorino": [
+        {
+            "into": "Nidoking",
+            "method": "use",
+            "item": "Moon Stone"
+        }
+    ],
+    "Cleffa": [
+        {
+            "into": "Clefairy",
+            "method": "friendship"
+        }
+    ],
+    "Clefairy": [
+        {
+            "into": "Clefable",
+            "method": "use",
+            "item": "Moon Stone"
+        }
+    ],
+    "Vulpix": [
+        {
+            "into": "Ninetales",
+            "method": "use",
+            "item": "Fire Stone"
+        }
+    ],
+    "Vulpix-Alolan": [
+        {
+            "into": "Ninetales-Alolan",
+            "method": "use",
+            "item": "Ice Stone"
+        }
+    ],
+    "Igglybuff": [
+        {
+            "into": "Jigglypuff",
+            "method": "friendship"
+        }
+    ],
+    "Jigglypuff": [
+        {
+            "into": "Wigglytuff",
+            "method": "use",
+            "item": "Moon Stone"
+        }
+    ],
+    "Zubat": [
+        {
+            "into": "Golbat",
+            "method": "level",
+            "level": 22
+        }
+    ],
+    "Golbat": [
+        {
+            "into": "Crobat",
+            "method": "friendship"
+        }
+    ],
+    "Oddish": [
+        {
+            "into": "Gloom",
+            "method": "level",
+            "level": 21
+        }
+    ],
+    "Gloom": [
+        {
+            "into": "Vileplume",
+            "method": "use",
+            "item": "Leaf Stone"
+        },
+        {
+            "into": "Bellossom",
+            "method": "use",
+            "item": "Sun Stone"
+        }
+    ],
+    "Paras": [
+        {
+            "into": "Parasect",
+            "method": "level",
+            "level": 24
+        }
+    ],
+    "Venonat": [
+        {
+            "into": "Venomoth",
+            "method": "level",
+            "level": 31
+        }
+    ],
+    "Diglett": [
+        {
+            "into": "Dugtrio",
+            "method": "level",
+            "level": 26
+        }
+    ],
+    "Diglett-Alolan": [
+        {
+            "into": "Dugtrio-Alolan",
+            "method": "level",
+            "level": 26
+        }
+    ],
+    "Meowth": [
+        {
+            "into": "Persian",
+            "method": "level",
+            "level": 28
+        }
+    ],
+    "Meowth-Alolan": [
+        {
+            "into": "Persian-Alolan",
+            "multiple": [
+                {
+                    "method": "friendship"
+                },
+                {
+                    "game": "LGPE",
+                    "method": "level",
+                    "level": 28
+                }
+            ]
+        }
+    ],
+    "Meowth-Galarian": [
+        {
+            "into": "Perrserker",
+            "method": "level",
+            "level": 28
+        }
+    ],
+    "Psyduck": [
+        {
+            "into": "Golduck",
+            "method": "level",
+            "level": 33
+        }
+    ],
+    "Mankey": [
+        {
+            "into": "Primeape",
+            "method": "level",
+            "level": 28
+        }
+    ],
+    "Primeape": [
+        {
+            "into": "Annihilape",
+            "method": "move",
+            "move": "Rage Fist 20 times"
+        }
+    ],
+    "Growlithe": [
+        {
+            "into": "Arcanine",
+            "method": "use",
+            "item": "Fire Stone"
+        }
+    ],
+    "Growlithe-Hisuian": [
+        {
+            "into": "Arcanine-Hisuian",
+            "method": "use",
+            "item": "Fire Stone"
+        }
+    ],
+    "Poliwag": [
+        {
+            "into": "Poliwhirl",
+            "method": "level",
+            "level": 25
+        }
+    ],
+    "Poliwhirl": [
+        {
+            "into": "Poliwrath",
+            "method": "use",
+            "item": "Water Stone"
+        },
+        {
+            "into": "Politoed",
+            "holding": "King's Rock",
+            "method": "trade"
+        }
+    ],
+    "Abra": [
+        {
+            "into": "Kadabra",
+            "method": "level",
+            "level": 16
+        }
+    ],
+    "Kadabra": [
+        {
+            "into": "Alakazam",
+            "method": "trade"
+        }
+    ],
+    "Machop": [
+        {
+            "into": "Machoke",
+            "method": "level",
+            "level": 28
+        }
+    ],
+    "Machoke": [
+        {
+            "into": "Machamp",
+            "method": "trade"
+        }
+    ],
+    "Bellsprout": [
+        {
+            "into": "Weepinbell",
+            "method": "level",
+            "level": 21
+        }
+    ],
+    "Weepinbell": [
+        {
+            "into": "Victreebel",
+            "method": "use",
+            "item": "Leaf Stone"
+        }
+    ],
+    "Tentacool": [
+        {
+            "into": "Tentacruel",
+            "method": "level",
+            "level": 30
+        }
+    ],
+    "Geodude": [
+        {
+            "into": "Graveler",
+            "method": "level",
+            "level": 25
+        }
+    ],
+    "Graveler": [
+        {
+            "into": "Golem",
+            "method": "trade"
+        }
+    ],
+    "Geodude-Alolan": [
+        {
+            "into": "Graveler-Alolan",
+            "method": "level",
+            "level": 25
+        }
+    ],
+    "Graveler-Alolan": [
+        {
+            "into": "Golem-Alolan",
+            "method": "trade"
+        }
+    ],
+    "Ponyta": [
+        {
+            "into": "Rapidash",
+            "method": "level",
+            "level": 40
+        }
+    ],
+    "Ponyta-Galarian": [
+        {
+            "into": "Rapidash-Galarian",
+            "method": "level",
+            "level": 40
+        }
+    ],
+    "Slowpoke": [
+        {
+            "into": "Slowbro",
+            "method": "level",
+            "level": 37
+        },
+        {
+            "into": "Slowking",
+            "holding": "King's Rock",
+            "method": "trade"
+        }
+    ],
+    "Slowpoke-Galarian": [
+        {
+            "into": "Slowbro-Galarian",
+            "method": "use",
+            "item": "Galarica Cuff"
+        },
+        {
+            "into": "Slowking-Galarian",
+            "method": "use",
+            "item": "Galarica Wreath"
+        }
+    ],
+    "Magnemite": [
+        {
+            "into": "Magneton",
+            "method": "level",
+            "level": 30
+        }
+    ],
+    "Magneton": [
+        {
+            "into": "Magnezone",
+            "multiple": [
+                {
+                    "method": "use",
+                    "item": "Thunder Stone"
+                },
+                {
+					"game": "Gen IV-VII",
+                    "location": "a special magnetic field",
+                    "method": "level"
+                }
+            ]
+        }
+    ],
+    "Farfetch'd-Galarian": [
+        {
+            "into": "Sirfetch'd",
+            "method": "specific",
+            "by": "after landing 3 critical hits in a single battle",
+            "desc": "Land 3 critical hits in a single battle"
+        }
+    ],
+    "Doduo": [
+        {
+            "into": "Dodrio",
+            "method": "level",
+            "level": 31
+        }
+    ],
+    "Seel": [
+        {
+            "into": "Dewgong",
+            "method": "level",
+            "level": 34
+        }
+    ],
+    "Grimer": [
+        {
+            "into": "Muk",
+            "method": "level",
+            "level": 38
+        }
+    ],
+    "Grimer-Alolan": [
+        {
+            "into": "Muk-Alolan",
+            "method": "level",
+            "level": 38
+        }
+    ],
+    "Shellder": [
+        {
+            "into": "Cloyster",
+            "method": "use",
+            "item": "Water Stone"
+        }
+    ],
+    "Gastly": [
+        {
+            "into": "Haunter",
+            "method": "level",
+            "level": 25
+        }
+    ],
+    "Haunter": [
+        {
+            "into": "Gengar",
+            "method": "trade"
+        }
+    ],
+    "Onix": [
+        {
+            "into": "Steelix",
+            "holding": "Metal Coat",
+            "method": "trade"
+        }
+    ],
+    "Drowzee": [
+        {
+            "into": "Hypno",
+            "method": "level",
+            "level": 26
+        }
+    ],
+    "Krabby": [
+        {
+            "into": "Kingler",
+            "method": "level",
+            "level": 28
+        }
+    ],
+    "Voltorb": [
+        {
+            "into": "Electrode",
+            "method": "level",
+            "level": 30
+        }
+    ],
+    "Voltorb-Hisuian": [
+        {
+            "into": "Electrode-Hisuian",
+            "method": "use",
+            "item": "Leaf Stone"
+        }
+    ],
+    "Exeggcute": [
+        {
+            "into": "Exeggutor",
+            "method": "use",
+            "item": "Leaf Stone"
+        },
+        {
+            "into": "Exeggutor-Alolan",
+            "location": "Alola",
+            "method": "use",
+            "item": "Leaf Stone"
+        }
+    ],
+    "Cubone": [
+        {
+            "into": "Marowak",
+            "method": "level",
+            "level": 28
+        },
+        {
+            "into": "Marowak-Alolan",
+            "location": "Alola",
+            "time": "night",
+            "method": "level",
+            "level": 28
+        }
+    ],
+    "Tyrogue": [
+        {
+            "into": "Hitmonlee",
+            "special_req": "with higher Attack than Defense",
+            "method": "level",
+            "level": 20
+        },
+        {
+            "into": "Hitmonchan",
+            "special_req": "with higher Defense than Attack",
+            "method": "level",
+            "level": 20
+        },
+        {
+            "into": "Hitmontop",
+            "special_req": "with equal Attack and Defense",
+            "method": "level",
+            "level": 20
+        }
+    ],
+    "Lickitung": [
+        {
+            "into": "Lickilicky",
+            "knowing": "Rollout",
+            "method": "level"
+        }
+    ],
+    "Koffing": [
+        {
+            "into": "Weezing",
+            "method": "level",
+            "level": 35
+        },
+        {
+            "into": "Weezing-Galarian",
+            "location": "Galar",
+            "method": "level",
+            "level": 35
+        }
+    ],
+    "Rhyhorn": [
+        {
+            "into": "Rhydon",
+            "method": "level",
+            "level": 42
+        }
+    ],
+    "Rhydon": [
+        {
+            "into": "Rhyperior",
+            "holding": "Protector",
+            "method": "trade"
+        }
+    ],
+    "Happiny": [
+        {
+            "into": "Chansey",
+            "time": "day",
+            "holding": "Oval Stone",
+            "method": "level"
+        }
+    ],
+    "Chansey": [
+        {
+            "into": "Blissey",
+            "method": "friendship"
+        }
+    ],
+    "Tangela": [
+        {
+            "into": "Tangrowth",
+            "knowing": "Ancient Power",
+            "method": "level"
+        }
+    ],
+    "Horsea": [
+        {
+            "into": "Seadra",
+            "method": "level",
+            "level": 32
+        }
+    ],
+    "Seadra": [
+        {
+            "into": "Kingdra",
+            "holding": "Dragon Scale",
+            "method": "trade"
+        }
+    ],
+    "Goldeen": [
+        {
+            "into": "Seaking",
+            "method": "level",
+            "level": 33
+        }
+    ],
+    "Staryu": [
+        {
+            "into": "Starmie",
+            "method": "use",
+            "item": "Water Stone"
+        }
+    ],
+    "Mime Jr.": [
+        {
+            "into": "Mr. Mime",
+            "knowing": "Mimic",
+            "method": "level"
+        },
+        {
+            "into": "Mr. Mime-Galarian",
+            "location": "Galar",
+            "knowing": "Mimic",
+            "method": "level"
+        }
+    ],
+    "Mr. Mime-Galarian": [
+        {
+            "into": "Mr. Rime",
+            "method": "level",
+            "level": 42
+        }
+    ],
+    "Scyther": [
+        {
+            "into": "Scizor",
+            "holding": "Metal Coat",
+            "method": "trade"
+        },
+        {
+            "into": "Kleavor",
+            "location": "Hisui",
+            "method": "use",
+            "item": "Black Augurite"
+        }
+    ],
+    "Smoochum": [
+        {
+            "into": "Jynx",
+            "method": "level",
+            "level": 30
+        }
+    ],
+    "Elekid": [
+        {
+            "into": "Electabuzz",
+            "method": "level",
+            "level": 30
+        }
+    ],
+    "Electabuzz": [
+        {
+            "into": "Electivire",
+            "holding": "Electirizer",
+            "method": "trade"
+        }
+    ],
+    "Magby": [
+        {
+            "into": "Magmar",
+            "method": "level",
+            "level": 30
+        }
+    ],
+    "Magmar": [
+        {
+            "into": "Magmortar",
+            "holding": "Magmarizer",
+            "method": "trade"
+        }
+    ],
+    "Magikarp": [
+        {
+            "into": "Gyarados",
+            "method": "level",
+            "level": 20
+        }
+    ],
+    "Eevee": [
+        {
+            "into": "Vaporeon",
+            "method": "use",
+            "item": "Water Stone"
+        },
+        {
+            "into": "Jolteon",
+            "method": "use",
+            "item": "Thunder Stone"
+        },
+        {
+            "into": "Flareon",
+            "method": "use",
+            "item": "Fire Stone"
+        },
+        {
+            "into": "Espeon",
+            "time": "day",
+            "method": "friendship"
+        },
+        {
+            "into": "Umbreon",
+            "time": "night",
+            "method": "friendship"
+        },
+        {
+            "into": "Leafeon",
+            "multiple": [
+                {
+                    "method": "use",
+                    "item": "Leaf Stone"
+                },
+                {
+                    "game": "Gen IV-VII",
+                    "special_req": "near a Moss Rock",
+                    "method": "level"
+                }
+            ]
+        },
+        {
+            "into": "Glaceon",
+            "multiple": [
+                {
+                    "method": "use",
+                    "item": "Ice Stone"
+                },
+                {
+                    "game": "Gen IV-VII",
+                    "special_req": "near an Ice Rock",
+                    "method": "level"
+                }
+            ]
+        },
+        {
+            "into": "Sylveon",
+            "multiple": [
+                {
+                    "knowing": "a Fairy-type move",
+                    "method": "friendship"
+                },
+                {
+                    "game": "Gen VI-VII",
+                    "knowing": "a Fairy-type move",
+                    "special_req": "with at least two hearts of affection",
+                    "method": "level"
+                }
+            ]
+        }
+    ],
+    "Porygon": [
+        {
+            "into": "Porygon2",
+            "holding": "Up-Grade",
+            "method": "trade"
+        }
+    ],
+    "Porygon2": [
+        {
+            "into": "Porygon-Z",
+            "holding": "Dubious Disc",
+            "method": "trade"
+        }
+    ],
+    "Omanyte": [
+        {
+            "into": "Omastar",
+            "method": "level",
+            "level": 40
+        }
+    ],
+    "Kabuto": [
+        {
+            "into": "Kabutops",
+            "method": "level",
+            "level": 40
+        }
+    ],
+    "Munchlax": [
+        {
+            "into": "Snorlax",
+            "method": "friendship"
+        }
+    ],
+    "Dratini": [
+        {
+            "into": "Dragonair",
+            "method": "level",
+            "level": 30
+        }
+    ],
+    "Dragonair": [
+        {
+            "into": "Dragonite",
+            "method": "level",
+            "level": 55
+        }
+    ],
+    "Chikorita": [
+        {
+            "into": "Bayleef",
+            "method": "level",
+            "level": 16
+        }
+    ],
+    "Bayleef": [
+        {
+            "into": "Meganium",
+            "method": "level",
+            "level": 32
+        }
+    ],
+    "Cyndaquil": [
+        {
+            "into": "Quilava",
+            "multiple": [
+                {
+                    "method": "level",
+                    "level": 14
+                },
+                {
+                    "game": "PLA",
+                    "method": "level",
+                    "level": 17
+                }
+            ]
+        }
+    ],
+    "Quilava": [
+        {
+            "into": "Typhlosion",
+            "method": "level",
+            "level": 36
+        },
+        {
+            "into": "Typhlosion-Hisuian",
+            "location": "Hisui",
+            "method": "level",
+            "level": 36
+        }
+    ],
+    "Totodile": [
+        {
+            "into": "Croconaw",
+            "method": "level",
+            "level": 18
+        }
+    ],
+    "Croconaw": [
+        {
+            "into": "Feraligatr",
+            "method": "level",
+            "level": 30
+        }
+    ],
+    "Sentret": [
+        {
+            "into": "Furret",
+            "method": "level",
+            "level": 15
+        }
+    ],
+    "Hoothoot": [
+        {
+            "into": "Noctowl",
+            "method": "level",
+            "level": 20
+        }
+    ],
+    "Ledyba": [
+        {
+            "into": "Ledian",
+            "method": "level",
+            "level": 18
+        }
+    ],
+    "Spinarak": [
+        {
+            "into": "Ariados",
+            "method": "level",
+            "level": 22
+        }
+    ],
+    "Chinchou": [
+        {
+            "into": "Lanturn",
+            "method": "level",
+            "level": 27
+        }
+    ],
+    "Togepi": [
+        {
+            "into": "Togetic",
+            "method": "friendship"
+        }
+    ],
+    "Togetic": [
+        {
+            "into": "Togekiss",
+            "method": "use",
+            "item": "Shiny Stone"
+        }
+    ],
+    "Natu": [
+        {
+            "into": "Xatu",
+            "method": "level",
+            "level": 25
+        }
+    ],
+    "Mareep": [
+        {
+            "into": "Flaaffy",
+            "method": "level",
+            "level": 15
+        }
+    ],
+    "Flaaffy": [
+        {
+            "into": "Ampharos",
+            "method": "level",
+            "level": 30
+        }
+    ],
+    "Azurill": [
+        {
+            "into": "Marill",
+            "method": "friendship"
+        }
+    ],
+    "Marill": [
+        {
+            "into": "Azumarill",
+            "method": "level",
+            "level": 18
+        }
+    ],
+    "Bonsly": [
+        {
+            "into": "Sudowoodo",
+            "knowing": "Mimic",
+            "method": "level"
+        }
+    ],
+    "Hoppip": [
+        {
+            "into": "Skiploom",
+            "method": "level",
+            "level": 18
+        }
+    ],
+    "Skiploom": [
+        {
+            "into": "Jumpluff",
+            "method": "level",
+            "level": 27
+        }
+    ],
+    "Aipom": [
+        {
+            "into": "Ambipom",
+            "knowing": "Double Hit",
+            "method": "level"
+        }
+    ],
+    "Sunkern": [
+        {
+            "into": "Sunflora",
+            "method": "use",
+            "item": "Sun Stone"
+        }
+    ],
+    "Yanma": [
+        {
+            "into": "Yanmega",
+            "knowing": "Ancient Power",
+            "method": "level"
+        }
+    ],
+    "Wooper": [
+        {
+            "into": "Quagsire",
+            "method": "level",
+            "level": 20
+        }
+    ],
+    "Wooper-Paldean": [
+        {
+            "into": "Clodsire",
+            "method": "level",
+            "level": 20
+        }
+    ],
+    "Murkrow": [
+        {
+            "into": "Honchkrow",
+            "method": "use",
+            "item": "Dusk Stone"
+        }
+    ],
+    "Misdreavus": [
+        {
+            "into": "Mismagius",
+            "method": "use",
+            "item": "Dusk Stone"
+        }
+    ],
+    "Wynaut": [
+        {
+            "into": "Wobbuffet",
+            "method": "level",
+            "level": 15
+        }
+    ],
+    "Girafarig": [
+        {
+            "into": "Farigiraf",
+            "knowing": "Twin Beam",
+            "method": "level"
+        }
+    ],
+    "Pineco": [
+        {
+            "into": "Forretress",
+            "method": "level",
+            "level": 31
+        }
+    ],
+    "Dunsparce": [
+        {
+            "into": "Dudunsparce",
+            "knowing": "Hyper Drill",
+            "method": "level"
+        }
+    ],
+    "Gligar": [
+        {
+            "into": "Gliscor",
+            "time": "night",
+            "holding": "Razor Fang",
+            "method": "level"
+        }
+    ],
+    "Snubbull": [
+        {
+            "into": "Granbull",
+            "method": "level",
+            "level": 23
+        }
+    ],
+    "Qwilfish-Hisuian": [
+        {
+            "into": "Overqwil",
+            "location": "Hisui",
+            "method": "move",
+            "move": "Barb Barrage in the strong style 20 times"
+        }
+    ],
+    "Sneasel": [
+        {
+            "into": "Weavile",
+            "multiple": [
+                {
+                    "time": "night",
+                    "holding": "Razor Claw",
+                    "method": "level"
+                },
+                {
+                    "game": "PLA",
+                    "time": "night",
+                    "method": "use",
+                    "item": "Razor Claw"
+                }
+            ]
+        }
+    ],
+    "Sneasel-Hisuian": [
+        {
+            "into": "Sneasler",
+            "time": "day",
+            "method": "use",
+            "item": "Razor Claw"
+        }
+    ],
+    "Teddiursa": [
+        {
+            "into": "Ursaring",
+            "method": "level",
+            "level": 30
+        }
+    ],
+    "Ursaring": [
+        {
+            "into": "Ursaluna",
+            "location": "Hisui",
+            "special_req": "during a full moon",
+            "method": "use",
+            "item": "Peat Block"
+        }
+    ],
+    "Slugma": [
+        {
+            "into": "Magcargo",
+            "method": "level",
+            "level": 38
+        }
+    ],
+    "Swinub": [
+        {
+            "into": "Piloswine",
+            "method": "level",
+            "level": 33
+        }
+    ],
+    "Piloswine": [
+        {
+            "into": "Mamoswine",
+            "knowing": "Ancient Power",
+            "method": "level"
+        }
+    ],
+    "Corsola-Galarian": [
+        {
+            "into": "Cursola",
+            "method": "level",
+            "level": 38
+        }
+    ],
+    "Remoraid": [
+        {
+            "into": "Octillery",
+            "method": "level",
+            "level": 25
+        }
+    ],
+    "Mantyke": [
+        {
+            "into": "Mantine",
+            "special_req": "with a Remoraid in the party",
+            "method": "level"
+        }
+    ],
+    "Houndour": [
+        {
+            "into": "Houndoom",
+            "method": "level",
+            "level": 24
+        }
+    ],
+    "Phanpy": [
+        {
+            "into": "Donphan",
+            "method": "level",
+            "level": 25
+        }
+    ],
+    "Stantler": [
+        {
+            "into": "Wyrdeer",
+            "location": "Hisui",
+            "method": "move",
+            "move": "Psyshield Bash in the agile style 20 times"
+        }
+    ],
+    "Larvitar": [
+        {
+            "into": "Pupitar",
+            "method": "level",
+            "level": 30
+        }
+    ],
+    "Pupitar": [
+        {
+            "into": "Tyranitar",
+            "method": "level",
+            "level": 55
+        }
+    ],
+    "Treecko": [
+        {
+            "into": "Grovyle",
+            "method": "level",
+            "level": 16
+        }
+    ],
+    "Grovyle": [
+        {
+            "into": "Sceptile",
+            "method": "level",
+            "level": 36
+        }
+    ],
+    "Torchic": [
+        {
+            "into": "Combusken",
+            "method": "level",
+            "level": 16
+        }
+    ],
+    "Combusken": [
+        {
+            "into": "Blaziken",
+            "method": "level",
+            "level": 36
+        }
+    ],
+    "Mudkip": [
+        {
+            "into": "Marshtomp",
+            "method": "level",
+            "level": 16
+        }
+    ],
+    "Marshtomp": [
+        {
+            "into": "Swampert",
+            "method": "level",
+            "level": 36
+        }
+    ],
+    "Poochyena": [
+        {
+            "into": "Mightyena",
+            "method": "level",
+            "level": 18
+        }
+    ],
+    "Zigzagoon": [
+        {
+            "into": "Linoone",
+            "method": "level",
+            "level": 20
+        }
+    ],
+    "Zigzagoon-Galarian": [
+        {
+            "into": "Linoone-Galarian",
+            "method": "level",
+            "level": 20
+        }
+    ],
+    "Linoone-Galarian": [
+        {
+            "into": "Obstagoon",
+            "time": "night",
+            "method": "level",
+            "level": 35
+        }
+    ],
+    "Wurmple": [
+        {
+            "into": "Silcoon",
+            "method": "level",
+            "level": 7
+        },
+        {
+            "into": "Cascoon",
+            "method": "level",
+            "level": 7
+        }
+    ],
+    "Silcoon": [
+        {
+            "into": "Beautifly",
+            "method": "level",
+            "level": 10
+        }
+    ],
+    "Cascoon": [
+        {
+            "into": "Dustox",
+            "method": "level",
+            "level": 10
+        }
+    ],
+    "Lotad": [
+        {
+            "into": "Lombre",
+            "method": "level",
+            "level": 14
+        }
+    ],
+    "Lombre": [
+        {
+            "into": "Ludicolo",
+            "method": "use",
+            "item": "Water Stone"
+        }
+    ],
+    "Seedot": [
+        {
+            "into": "Nuzleaf",
+            "method": "level",
+            "level": 14
+        }
+    ],
+    "Nuzleaf": [
+        {
+            "into": "Shiftry",
+            "method": "use",
+            "item": "Leaf Stone"
+        }
+    ],
+    "Taillow": [
+        {
+            "into": "Swellow",
+            "method": "level",
+            "level": 22
+        }
+    ],
+    "Wingull": [
+        {
+            "into": "Pelipper",
+            "method": "level",
+            "level": 25
+        }
+    ],
+    "Ralts": [
+        {
+            "into": "Kirlia",
+            "method": "level",
+            "level": 20
+        }
+    ],
+    "Kirlia": [
+        {
+            "into": "Gardevoir",
+            "method": "level",
+            "level": 30
+        },
+        {
+            "into": "Gallade",
+            "gender": "male",
+            "method": "use",
+            "item": "Dawn Stone"
+        }
+    ],
+    "Surskit": [
+        {
+            "into": "Masquerain",
+            "method": "level",
+            "level": 22
+        }
+    ],
+    "Shroomish": [
+        {
+            "into": "Breloom",
+            "method": "level",
+            "level": 23
+        }
+    ],
+    "Slakoth": [
+        {
+            "into": "Vigoroth",
+            "method": "level",
+            "level": 18
+        }
+    ],
+    "Vigoroth": [
+        {
+            "into": "Slaking",
+            "method": "level",
+            "level": 36
+        }
+    ],
+    "Nincada": [
+        {
+            "into": "Ninjask",
+            "method": "level",
+            "level": 20
+        },
+        {
+            "into": "Shedinja",
+            "method": "specific",
+            "by": "if the player has an empty team slot and at least one Pok\u00e9 Ball upon evolving Nincada",
+            "desc": "Evolve Nincada with an empty team slot and at least one Pok\u00e9 Ball"
+        }
+    ],
+    "Whismur": [
+        {
+            "into": "Loudred",
+            "method": "level",
+            "level": 20
+        }
+    ],
+    "Loudred": [
+        {
+            "into": "Exploud",
+            "method": "level",
+            "level": 40
+        }
+    ],
+    "Makuhita": [
+        {
+            "into": "Hariyama",
+            "method": "level",
+            "level": 24
+        }
+    ],
+    "Nosepass": [
+        {
+            "into": "Probopass",
+            "multiple": [
+                {
+                    "method": "use",
+                    "item": "Thunder Stone"
+                },
+                {
+					"game": "Gen IV-VII",
+                    "location": "a special magnetic field",
+                    "method": "level"
+                }
+            ]
+        }
+    ],
+    "Skitty": [
+        {
+            "into": "Delcatty",
+            "method": "use",
+            "item": "Moon Stone"
+        }
+    ],
+    "Aron": [
+        {
+            "into": "Lairon",
+            "method": "level",
+            "level": 32
+        }
+    ],
+    "Lairon": [
+        {
+            "into": "Aggron",
+            "method": "level",
+            "level": 42
+        }
+    ],
+    "Meditite": [
+        {
+            "into": "Medicham",
+            "method": "level",
+            "level": 37
+        }
+    ],
+    "Electrike": [
+        {
+            "into": "Manectric",
+            "method": "level",
+            "level": 26
+        }
+    ],
+    "Budew": [
+        {
+            "into": "Roselia",
+            "time": "day",
+            "method": "friendship"
+        }
+    ],
+    "Roselia": [
+        {
+            "into": "Roserade",
+            "method": "use",
+            "item": "Shiny Stone"
+        }
+    ],
+    "Gulpin": [
+        {
+            "into": "Swalot",
+            "method": "level",
+            "level": 26
+        }
+    ],
+    "Carvanha": [
+        {
+            "into": "Sharpedo",
+            "method": "level",
+            "level": 30
+        }
+    ],
+    "Wailmer": [
+        {
+            "into": "Wailord",
+            "method": "level",
+            "level": 40
+        }
+    ],
+    "Numel": [
+        {
+            "into": "Camerupt",
+            "method": "level",
+            "level": 33
+        }
+    ],
+    "Spoink": [
+        {
+            "into": "Grumpig",
+            "method": "level",
+            "level": 32
+        }
+    ],
+    "Trapinch": [
+        {
+            "into": "Vibrava",
+            "method": "level",
+            "level": 35
+        }
+    ],
+    "Vibrava": [
+        {
+            "into": "Flygon",
+            "method": "level",
+            "level": 45
+        }
+    ],
+    "Cacnea": [
+        {
+            "into": "Cacturne",
+            "method": "level",
+            "level": 32
+        }
+    ],
+    "Swablu": [
+        {
+            "into": "Altaria",
+            "method": "level",
+            "level": 35
+        }
+    ],
+    "Barboach": [
+        {
+            "into": "Whiscash",
+            "method": "level",
+            "level": 30
+        }
+    ],
+    "Corphish": [
+        {
+            "into": "Crawdaunt",
+            "method": "level",
+            "level": 30
+        }
+    ],
+    "Baltoy": [
+        {
+            "into": "Claydol",
+            "method": "level",
+            "level": 36
+        }
+    ],
+    "Lileep": [
+        {
+            "into": "Cradily",
+            "method": "level",
+            "level": 40
+        }
+    ],
+    "Anorith": [
+        {
+            "into": "Armaldo",
+            "method": "level",
+            "level": 40
+        }
+    ],
+    "Feebas": [
+        {
+            "into": "Milotic",
+            "multiple": [
+                {
+                    "holding": "Prism Scale",
+                    "method": "trade"
+                },
+                {
+                    "game": "Gen III-IV",
+                    "special_req": "with the Beauty stat maxed out",
+                    "method": "level"
+                }
+            ]
+        }
+    ],
+    "Shuppet": [
+        {
+            "into": "Banette",
+            "method": "level",
+            "level": 37
+        }
+    ],
+    "Duskull": [
+        {
+            "into": "Dusclops",
+            "method": "level",
+            "level": 37
+        }
+    ],
+    "Dusclops": [
+        {
+            "into": "Dusknoir",
+            "holding": "Reaper Cloth",
+            "method": "trade"
+        }
+    ],
+    "Chingling": [
+        {
+            "into": "Chimecho",
+            "time": "night",
+            "method": "friendship"
+        }
+    ],
+    "Snorunt": [
+        {
+            "into": "Glalie",
+            "method": "level",
+            "level": 42
+        },
+        {
+            "into": "Froslass",
+            "gender": "female",
+            "method": "use",
+            "item": "Dawn Stone"
+        }
+    ],
+    "Spheal": [
+        {
+            "into": "Sealeo",
+            "method": "level",
+            "level": 32
+        }
+    ],
+    "Sealeo": [
+        {
+            "into": "Walrein",
+            "method": "level",
+            "level": 44
+        }
+    ],
+    "Clamperl": [
+        {
+            "into": "Huntail",
+            "holding": "Deep Sea Tooth",
+            "method": "trade"
+        },
+        {
+            "into": "Gorebyss",
+            "holding": "Deep Sea Scale",
+            "method": "trade"
+        }
+    ],
+    "Bagon": [
+        {
+            "into": "Shelgon",
+            "method": "level",
+            "level": 30
+        }
+    ],
+    "Shelgon": [
+        {
+            "into": "Salamence",
+            "method": "level",
+            "level": 50
+        }
+    ],
+    "Beldum": [
+        {
+            "into": "Metang",
+            "method": "level",
+            "level": 20
+        }
+    ],
+    "Metang": [
+        {
+            "into": "Metagross",
+            "method": "level",
+            "level": 45
+        }
+    ],
+    "Turtwig": [
+        {
+            "into": "Grotle",
+            "method": "level",
+            "level": 18
+        }
+    ],
+    "Grotle": [
+        {
+            "into": "Torterra",
+            "method": "level",
+            "level": 32
+        }
+    ],
+    "Chimchar": [
+        {
+            "into": "Monferno",
+            "method": "level",
+            "level": 14
+        }
+    ],
+    "Monferno": [
+        {
+            "into": "Infernape",
+            "method": "level",
+            "level": 36
+        }
+    ],
+    "Piplup": [
+        {
+            "into": "Prinplup",
+            "method": "level",
+            "level": 16
+        }
+    ],
+    "Prinplup": [
+        {
+            "into": "Empoleon",
+            "method": "level",
+            "level": 36
+        }
+    ],
+    "Starly": [
+        {
+            "into": "Staravia",
+            "method": "level",
+            "level": 14
+        }
+    ],
+    "Staravia": [
+        {
+            "into": "Staraptor",
+            "method": "level",
+            "level": 34
+        }
+    ],
+    "Bidoof": [
+        {
+            "into": "Bibarel",
+            "method": "level",
+            "level": 15
+        }
+    ],
+    "Kricketot": [
+        {
+            "into": "Kricketune",
+            "method": "level",
+            "level": 10
+        }
+    ],
+    "Shinx": [
+        {
+            "into": "Luxio",
+            "method": "level",
+            "level": 15
+        }
+    ],
+    "Luxio": [
+        {
+            "into": "Luxray",
+            "method": "level",
+            "level": 30
+        }
+    ],
+    "Cranidos": [
+        {
+            "into": "Rampardos",
+            "method": "level",
+            "level": 30
+        }
+    ],
+    "Shieldon": [
+        {
+            "into": "Bastiodon",
+            "method": "level",
+            "level": 30
+        }
+    ],
+    "Burmy": [
+        {
+            "into": "Wormadam",
+            "gender": "female",
+            "method": "level",
+            "level": 20,
+			"preserve_form": true
+        },
+        {
+            "into": "Mothim",
+            "gender": "male",
+            "method": "level",
+            "level": 20
+        }
+    ],
+    "Combee": [
+        {
+            "into": "Vespiquen",
+            "gender": "female",
+            "method": "level",
+            "level": 21
+        }
+    ],
+    "Buizel": [
+        {
+            "into": "Floatzel",
+            "method": "level",
+            "level": 26
+        }
+    ],
+    "Cherubi": [
+        {
+            "into": "Cherrim",
+            "method": "level",
+            "level": 25
+        }
+    ],
+    "Shellos-West": [
+        {
+            "into": "Gastrodon-West",
+            "method": "level",
+            "level": 30
+        }
+    ],
+    "Shellos-East": [
+        {
+            "into": "Gastrodon-East",
+            "method": "level",
+            "level": 30
+        }
+    ],
+    "Drifloon": [
+        {
+            "into": "Drifblim",
+            "method": "level",
+            "level": 28
+        }
+    ],
+    "Buneary": [
+        {
+            "into": "Lopunny",
+            "method": "friendship"
+        }
+    ],
+    "Glameow": [
+        {
+            "into": "Purugly",
+            "method": "level",
+            "level": 38
+        }
+    ],
+    "Stunky": [
+        {
+            "into": "Skuntank",
+            "method": "level",
+            "level": 34
+        }
+    ],
+    "Bronzor": [
+        {
+            "into": "Bronzong",
+            "method": "level",
+            "level": 33
+        }
+    ],
+    "Gible": [
+        {
+            "into": "Gabite",
+            "method": "level",
+            "level": 24
+        }
+    ],
+    "Gabite": [
+        {
+            "into": "Garchomp",
+            "method": "level",
+            "level": 48
+        }
+    ],
+    "Riolu": [
+        {
+            "into": "Lucario",
+            "time": "day",
+            "method": "friendship"
+        }
+    ],
+    "Hippopotas": [
+        {
+            "into": "Hippowdon",
+            "method": "level",
+            "level": 34
+        }
+    ],
+    "Skorupi": [
+        {
+            "into": "Drapion",
+            "method": "level",
+            "level": 40
+        }
+    ],
+    "Croagunk": [
+        {
+            "into": "Toxicroak",
+            "method": "level",
+            "level": 37
+        }
+    ],
+    "Finneon": [
+        {
+            "into": "Lumineon",
+            "method": "level",
+            "level": 31
+        }
+    ],
+    "Snover": [
+        {
+            "into": "Abomasnow",
+            "method": "level",
+            "level": 40
+        }
+    ],
+    "Snivy": [
+        {
+            "into": "Servine",
+            "method": "level",
+            "level": 17
+        }
+    ],
+    "Servine": [
+        {
+            "into": "Serperior",
+            "method": "level",
+            "level": 36
+        }
+    ],
+    "Tepig": [
+        {
+            "into": "Pignite",
+            "method": "level",
+            "level": 17
+        }
+    ],
+    "Pignite": [
+        {
+            "into": "Emboar",
+            "method": "level",
+            "level": 36
+        }
+    ],
+    "Oshawott": [
+        {
+            "into": "Dewott",
+            "method": "level",
+            "level": 17
+        }
+    ],
+    "Dewott": [
+        {
+            "into": "Samurott",
+            "method": "level",
+            "level": 36
+        },
+        {
+            "into": "Samurott-Hisuian",
+            "location": "Hisui",
+            "method": "level",
+            "level": 36
+        }
+    ],
+    "Patrat": [
+        {
+            "into": "Watchog",
+            "method": "level",
+            "level": 20
+        }
+    ],
+    "Lillipup": [
+        {
+            "into": "Herdier",
+            "method": "level",
+            "level": 16
+        }
+    ],
+    "Herdier": [
+        {
+            "into": "Stoutland",
+            "method": "level",
+            "level": 32
+        }
+    ],
+    "Purrloin": [
+        {
+            "into": "Liepard",
+            "method": "level",
+            "level": 20
+        }
+    ],
+    "Pansage": [
+        {
+            "into": "Simisage",
+            "method": "use",
+            "item": "Leaf Stone"
+        }
+    ],
+    "Pansear": [
+        {
+            "into": "Simisear",
+            "method": "use",
+            "item": "Fire Stone"
+        }
+    ],
+    "Panpour": [
+        {
+            "into": "Simipour",
+            "method": "use",
+            "item": "Water Stone"
+        }
+    ],
+    "Munna": [
+        {
+            "into": "Musharna",
+            "method": "use",
+            "item": "Moon Stone"
+        }
+    ],
+    "Pidove": [
+        {
+            "into": "Tranquill",
+            "method": "level",
+            "level": 21
+        }
+    ],
+    "Tranquill": [
+        {
+            "into": "Unfezant",
+            "method": "level",
+            "level": 32
+        }
+    ],
+    "Blitzle": [
+        {
+            "into": "Zebstrika",
+            "method": "level",
+            "level": 27
+        }
+    ],
+    "Roggenrola": [
+        {
+            "into": "Boldore",
+            "method": "level",
+            "level": 25
+        }
+    ],
+    "Boldore": [
+        {
+            "into": "Gigalith",
+            "method": "trade"
+        }
+    ],
+    "Woobat": [
+        {
+            "into": "Swoobat",
+            "method": "friendship"
+        }
+    ],
+    "Drilbur": [
+        {
+            "into": "Excadrill",
+            "method": "level",
+            "level": 31
+        }
+    ],
+    "Timburr": [
+        {
+            "into": "Gurdurr",
+            "method": "level",
+            "level": 25
+        }
+    ],
+    "Gurdurr": [
+        {
+            "into": "Conkeldurr",
+            "method": "trade"
+        }
+    ],
+    "Tympole": [
+        {
+            "into": "Palpitoad",
+            "method": "level",
+            "level": 25
+        }
+    ],
+    "Palpitoad": [
+        {
+            "into": "Seismitoad",
+            "method": "level",
+            "level": 36
+        }
+    ],
+    "Sewaddle": [
+        {
+            "into": "Swadloon",
+            "method": "level",
+            "level": 20
+        }
+    ],
+    "Swadloon": [
+        {
+            "into": "Leavanny",
+            "method": "friendship"
+        }
+    ],
+    "Venipede": [
+        {
+            "into": "Whirlipede",
+            "method": "level",
+            "level": 22
+        }
+    ],
+    "Whirlipede": [
+        {
+            "into": "Scolipede",
+            "method": "level",
+            "level": 30
+        }
+    ],
+    "Cottonee": [
+        {
+            "into": "Whimsicott",
+            "method": "use",
+            "item": "Sun Stone"
+        }
+    ],
+    "Petilil": [
+        {
+            "into": "Lilligant",
+            "method": "use",
+            "item": "Sun Stone"
+        },
+        {
+            "into": "Lilligant-Hisuian",
+            "location": "Hisui",
+            "method": "use",
+            "item": "Sun Stone"
+        }
+    ],
+    "Basculin-White-Striped": [
+        {
+            "into": "Basculegion",
+            "method": "specific",
+            "by": "after losing at least 294 HP to recoil damage without fainting",
+            "desc": "Lose at least 294 HP to recoil damage without fainting"
+        }
+    ],
+    "Sandile": [
+        {
+            "into": "Krokorok",
+            "method": "level",
+            "level": 29
+        }
+    ],
+    "Krokorok": [
+        {
+            "into": "Krookodile",
+            "method": "level",
+            "level": 40
+        }
+    ],
+    "Darumaka": [
+        {
+            "into": "Darmanitan",
+            "method": "level",
+            "level": 35
+        }
+    ],
+    "Darumaka-Galarian": [
+        {
+            "into": "Darmanitan-Galarian",
+            "method": "use",
+            "item": "Ice Stone"
+        }
+    ],
+    "Dwebble": [
+        {
+            "into": "Crustle",
+            "method": "level",
+            "level": 34
+        }
+    ],
+    "Scraggy": [
+        {
+            "into": "Scrafty",
+            "method": "level",
+            "level": 39
+        }
+    ],
+    "Yamask": [
+        {
+            "into": "Cofagrigus",
+            "method": "level",
+            "level": 34
+        }
+    ],
+    "Yamask-Galarian": [
+        {
+            "into": "Runerigus",
+            "method": "specific",
+            "by": "upon walking under the large rock arch in the Dusty Bowl after taking at least 49 HP damage from attacks without fainting",
+            "desc": "Walk under the large rock arch in the Dusty Bowl after taking at least 49 HP damage from attacks without fainting"
+        }
+    ],
+    "Tirtouga": [
+        {
+            "into": "Carracosta",
+            "method": "level",
+            "level": 37
+        }
+    ],
+    "Archen": [
+        {
+            "into": "Archeops",
+            "method": "level",
+            "level": 37
+        }
+    ],
+    "Trubbish": [
+        {
+            "into": "Garbodor",
+            "method": "level",
+            "level": 36
+        }
+    ],
+    "Zorua": [
+        {
+            "into": "Zoroark",
+            "method": "level",
+            "level": 30
+        }
+    ],
+    "Zorua-Hisuian": [
+        {
+            "into": "Zoroark-Hisuian",
+            "method": "level",
+            "level": 30
+        }
+    ],
+    "Minccino": [
+        {
+            "into": "Cinccino",
+            "method": "use",
+            "item": "Shiny Stone"
+        }
+    ],
+    "Gothita": [
+        {
+            "into": "Gothorita",
+            "method": "level",
+            "level": 32
+        }
+    ],
+    "Gothorita": [
+        {
+            "into": "Gothitelle",
+            "method": "level",
+            "level": 41
+        }
+    ],
+    "Solosis": [
+        {
+            "into": "Duosion",
+            "method": "level",
+            "level": 32
+        }
+    ],
+    "Duosion": [
+        {
+            "into": "Reuniclus",
+            "method": "level",
+            "level": 41
+        }
+    ],
+    "Ducklett": [
+        {
+            "into": "Swanna",
+            "method": "level",
+            "level": 35
+        }
+    ],
+    "Vanillite": [
+        {
+            "into": "Vanillish",
+            "method": "level",
+            "level": 35
+        }
+    ],
+    "Vanillish": [
+        {
+            "into": "Vanilluxe",
+            "method": "level",
+            "level": 47
+        }
+    ],
+    "Deerling-Spring": [
+        {
+            "into": "Sawsbuck-Spring",
+            "method": "level",
+            "level": 34
+        }
+    ],
+    "Deerling-Summer": [
+        {
+            "into": "Sawsbuck-Summer",
+            "method": "level",
+            "level": 34
+        }
+    ],
+    "Deerling-Autumn": [
+        {
+            "into": "Sawsbuck-Autumn",
+            "method": "level",
+            "level": 34
+        }
+    ],
+    "Deerling-Winter": [
+        {
+            "into": "Sawsbuck-Winter",
+            "method": "level",
+            "level": 34
+        }
+    ],
+    "Karrablast": [
+        {
+            "into": "Escavalier",
+            "method": "specific",
+            "by": "when traded for a Shelmet",
+            "desc": "Trade for a Shelmet"
+        }
+    ],
+    "Foongus": [
+        {
+            "into": "Amoonguss",
+            "method": "level",
+            "level": 39
+        }
+    ],
+    "Frillish": [
+        {
+            "into": "Jellicent",
+            "method": "level",
+            "level": 40
+        }
+    ],
+    "Joltik": [
+        {
+            "into": "Galvantula",
+            "method": "level",
+            "level": 36
+        }
+    ],
+    "Ferroseed": [
+        {
+            "into": "Ferrothorn",
+            "method": "level",
+            "level": 40
+        }
+    ],
+    "Klink": [
+        {
+            "into": "Klang",
+            "method": "level",
+            "level": 38
+        }
+    ],
+    "Klang": [
+        {
+            "into": "Klinklang",
+            "method": "level",
+            "level": 49
+        }
+    ],
+    "Tynamo": [
+        {
+            "into": "Eelektrik",
+            "method": "level",
+            "level": 39
+        }
+    ],
+    "Eelektrik": [
+        {
+            "into": "Eelektross",
+            "method": "use",
+            "item": "Thunder Stone"
+        }
+    ],
+    "Elgyem": [
+        {
+            "into": "Beheeyem",
+            "method": "level",
+            "level": 42
+        }
+    ],
+    "Litwick": [
+        {
+            "into": "Lampent",
+            "method": "level",
+            "level": 41
+        }
+    ],
+    "Lampent": [
+        {
+            "into": "Chandelure",
+            "method": "use",
+            "item": "Dusk Stone"
+        }
+    ],
+    "Axew": [
+        {
+            "into": "Fraxure",
+            "method": "level",
+            "level": 38
+        }
+    ],
+    "Fraxure": [
+        {
+            "into": "Haxorus",
+            "method": "level",
+            "level": 48
+        }
+    ],
+    "Cubchoo": [
+        {
+            "into": "Beartic",
+            "method": "level",
+            "level": 37
+        }
+    ],
+    "Shelmet": [
+        {
+            "into": "Accelgor",
+            "method": "specific",
+            "by": "when traded for a Karrablast",
+            "desc": "Trade for a Karrablast"
+        }
+    ],
+    "Mienfoo": [
+        {
+            "into": "Mienshao",
+            "method": "level",
+            "level": 50
+        }
+    ],
+    "Golett": [
+        {
+            "into": "Golurk",
+            "method": "level",
+            "level": 43
+        }
+    ],
+    "Pawniard": [
+        {
+            "into": "Bisharp",
+            "method": "level",
+            "level": 52
+        }
+    ],
+    "Bisharp": [
+        {
+            "into": "Kingambit",
+            "special_req": "after defeating three Bisharp that hold a Leader's Crest",
+            "method": "level"
+        }
+    ],
+    "Rufflet": [
+        {
+            "into": "Braviary",
+            "method": "level",
+            "level": 54
+        },
+        {
+            "into": "Braviary-Hisuian",
+            "location": "Hisui",
+            "method": "level",
+            "level": 54
+        }
+    ],
+    "Vullaby": [
+        {
+            "into": "Mandibuzz",
+            "method": "level",
+            "level": 54
+        }
+    ],
+    "Deino": [
+        {
+            "into": "Zweilous",
+            "method": "level",
+            "level": 50
+        }
+    ],
+    "Zweilous": [
+        {
+            "into": "Hydreigon",
+            "method": "level",
+            "level": 64
+        }
+    ],
+    "Larvesta": [
+        {
+            "into": "Volcarona",
+            "method": "level",
+            "level": 59
+        }
+    ],
+    "Chespin": [
+        {
+            "into": "Quilladin",
+            "method": "level",
+            "level": 16
+        }
+    ],
+    "Quilladin": [
+        {
+            "into": "Chesnaught",
+            "method": "level",
+            "level": 36
+        }
+    ],
+    "Fennekin": [
+        {
+            "into": "Braixen",
+            "method": "level",
+            "level": 16
+        }
+    ],
+    "Braixen": [
+        {
+            "into": "Delphox",
+            "method": "level",
+            "level": 36
+        }
+    ],
+    "Froakie": [
+        {
+            "into": "Frogadier",
+            "method": "level",
+            "level": 16
+        }
+    ],
+    "Frogadier": [
+        {
+            "into": "Greninja",
+            "method": "level",
+            "level": 36
+        }
+    ],
+    "Bunnelby": [
+        {
+            "into": "Diggersby",
+            "method": "level",
+            "level": 20
+        }
+    ],
+    "Fletchling": [
+        {
+            "into": "Fletchinder",
+            "method": "level",
+            "level": 17
+        }
+    ],
+    "Fletchinder": [
+        {
+            "into": "Talonflame",
+            "method": "level",
+            "level": 35
+        }
+    ],
+    "Scatterbug": [
+        {
+            "into": "Spewpa",
+            "method": "level",
+            "level": 9
+        }
+    ],
+    "Spewpa": [
+        {
+            "into": "Vivillon",
+            "method": "level",
+            "level": 12
+        }
+    ],
+    "Litleo": [
+        {
+            "into": "Pyroar",
+            "method": "level",
+            "level": 35
+        }
+    ],
+    "Flab\u00e9b\u00e9": [
+        {
+            "into": "Floette",
+            "method": "level",
+            "level": 19,
+			"preserve_form": true
+        }
+    ],
+    "Floette": [
+        {
+            "into": "Florges",
+            "method": "use",
+            "item": "Shiny Stone",
+			"preserve_form": true
+        }
+    ],
+    "Skiddo": [
+        {
+            "into": "Gogoat",
+            "method": "level",
+            "level": 32
+        }
+    ],
+    "Pancham": [
+        {
+            "into": "Pangoro",
+            "special_req": "with a Dark-type Pok\u00e9mon in the party",
+            "method": "level",
+            "level": 32
+        }
+    ],
+    "Espurr": [
+        {
+            "into": "Meowstic",
+            "method": "level",
+            "level": 25
+        }
+    ],
+    "Honedge": [
+        {
+            "into": "Doublade",
+            "method": "level",
+            "level": 35
+        }
+    ],
+    "Doublade": [
+        {
+            "into": "Aegislash",
+            "method": "use",
+            "item": "Dusk Stone"
+        }
+    ],
+    "Spritzee": [
+        {
+            "into": "Aromatisse",
+            "holding": "Sachet",
+            "method": "trade"
+        }
+    ],
+    "Swirlix": [
+        {
+            "into": "Slurpuff",
+            "holding": "Whipped Dream",
+            "method": "trade"
+        }
+    ],
+    "Inkay": [
+        {
+            "into": "Malamar",
+            "special_req": "with the game system held upside down",
+            "method": "level",
+            "level": 30
+        }
+    ],
+    "Binacle": [
+        {
+            "into": "Barbaracle",
+            "method": "level",
+            "level": 39
+        }
+    ],
+    "Skrelp": [
+        {
+            "into": "Dragalge",
+            "method": "level",
+            "level": 48
+        }
+    ],
+    "Clauncher": [
+        {
+            "into": "Clawitzer",
+            "method": "level",
+            "level": 37
+        }
+    ],
+    "Helioptile": [
+        {
+            "into": "Heliolisk",
+            "method": "use",
+            "item": "Sun Stone"
+        }
+    ],
+    "Tyrunt": [
+        {
+            "into": "Tyrantrum",
+            "time": "day",
+            "method": "level",
+            "level": 39
+        }
+    ],
+    "Amaura": [
+        {
+            "into": "Aurorus",
+            "time": "night",
+            "method": "level",
+            "level": 39
+        }
+    ],
+    "Goomy": [
+        {
+            "into": "Sliggoo",
+            "method": "level",
+            "level": 40
+        },
+        {
+            "into": "Sliggoo-Hisuian",
+            "location": "Hisui",
+            "method": "level",
+            "level": 40
+        }
+    ],
+    "Sliggoo": [
+        {
+            "into": "Goodra",
+            "special_req": "with rain or fog in the overworld",
+            "method": "level",
+            "level": 50
+        }
+    ],
+    "Sliggoo-Hisuian": [
+        {
+            "into": "Goodra-Hisuian",
+            "special_req": "with rain or fog in the overworld",
+            "method": "level",
+            "level": 50
+        }
+    ],
+    "Phantump": [
+        {
+            "into": "Trevenant",
+            "method": "trade"
+        }
+    ],
+    "Pumpkaboo": [
+        {
+            "into": "Gourgeist",
+            "method": "trade"
+        }
+    ],
+    "Bergmite": [
+        {
+            "into": "Avalugg",
+            "method": "level",
+            "level": 37
+        },
+        {
+            "into": "Avalugg-Hisuian",
+            "location": "Hisui",
+            "method": "level",
+            "level": 37
+        }
+    ],
+    "Noibat": [
+        {
+            "into": "Noivern",
+            "method": "level",
+            "level": 48
+        }
+    ],
+    "Rowlet": [
+        {
+            "into": "Dartrix",
+            "method": "level",
+            "level": 17
+        }
+    ],
+    "Dartrix": [
+        {
+            "into": "Decidueye",
+            "method": "level",
+            "level": 34
+        },
+        {
+            "into": "Decidueye-Hisuian",
+            "location": "Hisui",
+            "method": "level",
+            "level": 36
+        }
+    ],
+    "Litten": [
+        {
+            "into": "Torracat",
+            "method": "level",
+            "level": 17
+        }
+    ],
+    "Torracat": [
+        {
+            "into": "Incineroar",
+            "method": "level",
+            "level": 34
+        }
+    ],
+    "Popplio": [
+        {
+            "into": "Brionne",
+            "method": "level",
+            "level": 17
+        }
+    ],
+    "Brionne": [
+        {
+            "into": "Primarina",
+            "method": "level",
+            "level": 34
+        }
+    ],
+    "Pikipek": [
+        {
+            "into": "Trumbeak",
+            "method": "level",
+            "level": 14
+        }
+    ],
+    "Trumbeak": [
+        {
+            "into": "Toucannon",
+            "method": "level",
+            "level": 28
+        }
+    ],
+    "Yungoos": [
+        {
+            "into": "Gumshoos",
+            "time": "day",
+            "method": "level",
+            "level": 20
+        }
+    ],
+    "Grubbin": [
+        {
+            "into": "Charjabug",
+            "method": "level",
+            "level": 20
+        }
+    ],
+    "Charjabug": [
+        {
+            "into": "Vikavolt",
+            "multiple": [
+                {
+                    "location": "a special magnetic field",
+                    "method": "level"
+                },
+                {
+                    "method": "use",
+                    "item": "Thunder Stone"
+                }
+            ]
+        }
+    ],
+    "Crabrawler": [
+        {
+            "into": "Crabominable",
+            "multiple": [
+                {
+                    "method": "use",
+                    "item": "Ice Stone"
+                },
+                {
+                    "game": "Gen VII",
+					"location": "Mount Lanakila",
+                    "method": "level"
+                }
+            ]
+        }
+    ],
+    "Cutiefly": [
+        {
+            "into": "Ribombee",
+            "method": "level",
+            "level": 25
+        }
+    ],
+    "Rockruff": [
+        {
+            "into": "Lycanroc-Midday",
+            "multiple": [
+                {
+                    "time": "day",
+                    "method": "level",
+                    "level": 25
+                },
+                {
+                    "game": "Sun/Ultra Sun",
+                    "method": "level",
+                    "level": 25
+                }
+            ]
+        },
+        {
+            "into": "Lycanroc-Midnight",
+            "multiple": [
+                {
+                    "time": "night",
+                    "method": "level",
+                    "level": 25
+                },
+                {
+                    "game": "Moon/Ultra Moon",
+                    "method": "level",
+                    "level": 25
+                }
+            ]
+        }
+    ],
+    "Rockruff": [
+        {
+            "into": "Lycanroc-Dusk",
+			"special_req": "if it has the ability Own Tempo",
+            "time": "evening",
+            "method": "level",
+            "level": 25
+        }
+    ],
+    "Mareanie": [
+        {
+            "into": "Toxapex",
+            "method": "level",
+            "level": 38
+        }
+    ],
+    "Mudbray": [
+        {
+            "into": "Mudsdale",
+            "method": "level",
+            "level": 30
+        }
+    ],
+    "Dewpider": [
+        {
+            "into": "Araquanid",
+            "method": "level",
+            "level": 22
+        }
+    ],
+    "Fomantis": [
+        {
+            "into": "Lurantis",
+            "time": "day",
+            "method": "level",
+            "level": 34
+        }
+    ],
+    "Morelull": [
+        {
+            "into": "Shiinotic",
+            "method": "level",
+            "level": 24
+        }
+    ],
+    "Salandit": [
+        {
+            "into": "Salazzle",
+            "gender": "female",
+            "method": "level",
+            "level": 33
+        }
+    ],
+    "Stufful": [
+        {
+            "into": "Bewear",
+            "method": "level",
+            "level": 27
+        }
+    ],
+    "Bounsweet": [
+        {
+            "into": "Steenee",
+            "method": "level",
+            "level": 18
+        }
+    ],
+    "Steenee": [
+        {
+            "into": "Tsareena",
+            "knowing": "Stomp",
+            "method": "level"
+        }
+    ],
+    "Wimpod": [
+        {
+            "into": "Golisopod",
+            "method": "level",
+            "level": 30
+        }
+    ],
+    "Sandygast": [
+        {
+            "into": "Palossand",
+            "method": "level",
+            "level": 42
+        }
+    ],
+    "Type: Null": [
+        {
+            "into": "Silvally",
+            "method": "friendship"
+        }
+    ],
+    "Jangmo-o": [
+        {
+            "into": "Hakamo-o",
+            "method": "level",
+            "level": 35
+        }
+    ],
+    "Hakamo-o": [
+        {
+            "into": "Kommo-o",
+            "method": "level",
+            "level": 45
+        }
+    ],
+    "Cosmog": [
+        {
+            "into": "Cosmoem",
+            "method": "level",
+            "level": 43
+        }
+    ],
+    "Cosmoem": [
+        {
+            "into": "Solgaleo",
+            "game": "Sun/Ultra Sun/Sword",
+            "method": "level",
+            "level": 53
+        },
+        {
+            "into": "Lunala",
+            "game": "Moon/Ultra Moon/Shield",
+            "method": "level",
+            "level": 53
+        }
+    ],
+    "Poipole": [
+        {
+            "into": "Naganadel",
+            "knowing": "Dragon Pulse",
+            "method": "level"
+        }
+    ],
+    "Grookey": [
+        {
+            "into": "Thwackey",
+            "method": "level",
+            "level": 16
+        }
+    ],
+    "Thwackey": [
+        {
+            "into": "Rillaboom",
+            "method": "level",
+            "level": 35
+        }
+    ],
+    "Scorbunny": [
+        {
+            "into": "Raboot",
+            "method": "level",
+            "level": 16
+        }
+    ],
+    "Raboot": [
+        {
+            "into": "Cinderace",
+            "method": "level",
+            "level": 35
+        }
+    ],
+    "Sobble": [
+        {
+            "into": "Drizzile",
+            "method": "level",
+            "level": 16
+        }
+    ],
+    "Drizzile": [
+        {
+            "into": "Inteleon",
+            "method": "level",
+            "level": 35
+        }
+    ],
+    "Skwovet": [
+        {
+            "into": "Greedent",
+            "method": "level",
+            "level": 24
+        }
+    ],
+    "Rookidee": [
+        {
+            "into": "Corvisquire",
+            "method": "level",
+            "level": 18
+        }
+    ],
+    "Corvisquire": [
+        {
+            "into": "Corviknight",
+            "method": "level",
+            "level": 38
+        }
+    ],
+    "Blipbug": [
+        {
+            "into": "Dottler",
+            "method": "level",
+            "level": 10
+        }
+    ],
+    "Dottler": [
+        {
+            "into": "Orbeetle",
+            "method": "level",
+            "level": 30
+        }
+    ],
+    "Nickit": [
+        {
+            "into": "Thievul",
+            "method": "level",
+            "level": 18
+        }
+    ],
+    "Gossifleur": [
+        {
+            "into": "Eldegoss",
+            "method": "level",
+            "level": 20
+        }
+    ],
+    "Wooloo": [
+        {
+            "into": "Dubwool",
+            "method": "level",
+            "level": 24
+        }
+    ],
+    "Chewtle": [
+        {
+            "into": "Drednaw",
+            "method": "level",
+            "level": 22
+        }
+    ],
+    "Yamper": [
+        {
+            "into": "Boltund",
+            "method": "level",
+            "level": 25
+        }
+    ],
+    "Rolycoly": [
+        {
+            "into": "Carkol",
+            "method": "level",
+            "level": 18
+        }
+    ],
+    "Carkol": [
+        {
+            "into": "Coalossal",
+            "method": "level",
+            "level": 34
+        }
+    ],
+    "Applin": [
+        {
+            "into": "Flapple",
+            "method": "use",
+            "item": "Tart Apple"
+        },
+        {
+            "into": "Appletun",
+            "method": "use",
+            "item": "Sweet Apple"
+        },
+        {
+            "into": "Dipplin",
+            "method": "use",
+            "item": "Syrupy Apple"
+        }
+    ],
+    "Silicobra": [
+        {
+            "into": "Sandaconda",
+            "method": "level",
+            "level": 36
+        }
+    ],
+    "Arrokuda": [
+        {
+            "into": "Barraskewda",
+            "method": "level",
+            "level": 26
+        }
+    ],
+    "Toxel": [
+        {
+            "into": "Toxtricity",
+            "method": "level",
+            "level": 30
+        }
+    ],
+    "Sizzlipede": [
+        {
+            "into": "Centiskorch",
+            "method": "level",
+            "level": 28
+        }
+    ],
+    "Clobbopus": [
+        {
+            "into": "Grapploct",
+            "knowing": "Taunt",
+            "method": "level"
+        }
+    ],
+    "Sinistea": [
+        {
+            "into": "Polteageist",
+            "method": "use",
+            "item": "Chipped Pot or Cracked Pot"
+        }
+    ],
+    "Hatenna": [
+        {
+            "into": "Hattrem",
+            "method": "level",
+            "level": 32
+        }
+    ],
+    "Hattrem": [
+        {
+            "into": "Hatterene",
+            "method": "level",
+            "level": 42
+        }
+    ],
+    "Impidimp": [
+        {
+            "into": "Morgrem",
+            "method": "level",
+            "level": 32
+        }
+    ],
+    "Morgrem": [
+        {
+            "into": "Grimmsnarl",
+            "method": "level",
+            "level": 42
+        }
+    ],
+    "Milcery": [
+        {
+            "into": "Alcremie",
+            "special_req": "when its Trainer spins and strikes a pose",
+            "method": "use",
+            "item": "Sweet"
+        }
+    ],
+    "Snom": [
+        {
+            "into": "Frosmoth",
+            "time": "night",
+            "method": "friendship"
+        }
+    ],
+    "Cufant": [
+        {
+            "into": "Copperajah",
+            "method": "level",
+            "level": 34
+        }
+    ],
+    "Dreepy": [
+        {
+            "into": "Drakloak",
+            "method": "level",
+            "level": 50
+        }
+    ],
+    "Drakloak": [
+        {
+            "into": "Dragapult",
+            "method": "level",
+            "level": 60
+        }
+    ],
+    "Kubfu": [
+        {
+            "into": "Urshifu-Single-Strike",
+            "method": "use",
+            "item": "Scroll of Darkness"
+        },
+        {
+            "into": "Urshifu-Rapid-Strike",
+            "method": "use",
+            "item": "Scroll of Waters"
+        }
+    ],
+    "Sprigatito": [
+        {
+            "into": "Floragato",
+            "method": "level",
+            "level": 16
+        }
+    ],
+    "Floragato": [
+        {
+            "into": "Meowscarada",
+            "method": "level",
+            "level": 36
+        }
+    ],
+    "Fuecoco": [
+        {
+            "into": "Crocalor",
+            "method": "level",
+            "level": 16
+        }
+    ],
+    "Crocalor": [
+        {
+            "into": "Skeledirge",
+            "method": "level",
+            "level": 36
+        }
+    ],
+    "Quaxly": [
+        {
+            "into": "Quaxwell",
+            "method": "level",
+            "level": 16
+        }
+    ],
+    "Quaxwell": [
+        {
+            "into": "Quaquaval",
+            "method": "level",
+            "level": 36
+        }
+    ],
+    "Lechonk": [
+        {
+            "into": "Oinkologne",
+            "method": "level",
+            "level": 18
+        }
+    ],
+    "Tarountula": [
+        {
+            "into": "Spidops",
+            "method": "level",
+            "level": 15
+        }
+    ],
+    "Nymble": [
+        {
+            "into": "Lokix",
+            "method": "level",
+            "level": 24
+        }
+    ],
+    "Pawmi": [
+        {
+            "into": "Pawmo",
+            "method": "level",
+            "level": 18
+        }
+    ],
+    "Pawmo": [
+        {
+            "into": "Pawmot",
+            "method": "steps"
+        }
+    ],
+    "Tandemaus": [
+        {
+            "into": "Maushold",
+            "special_req": "in a battle",
+            "method": "level",
+            "level": 25
+        }
+    ],
+    "Fidough": [
+        {
+            "into": "Dachsbun",
+            "method": "level",
+            "level": 26
+        }
+    ],
+    "Smoliv": [
+        {
+            "into": "Dolliv",
+            "method": "level",
+            "level": 25
+        }
+    ],
+    "Dolliv": [
+        {
+            "into": "Arboliva",
+            "method": "level",
+            "level": 35
+        }
+    ],
+    "Nacli": [
+        {
+            "into": "Naclstack",
+            "method": "level",
+            "level": 24
+        }
+    ],
+    "Naclstack": [
+        {
+            "into": "Garganacl",
+            "method": "level",
+            "level": 38
+        }
+    ],
+    "Charcadet": [
+        {
+            "into": "Armarouge",
+            "method": "use",
+            "item": "Auspicious Armor"
+        },
+        {
+            "into": "Ceruledge",
+            "method": "use",
+            "item": "Malicious Armor"
+        }
+    ],
+    "Tadbulb": [
+        {
+            "into": "Bellibolt",
+            "method": "use",
+            "item": "Thunder Stone"
+        }
+    ],
+    "Wattrel": [
+        {
+            "into": "Kilowattrel",
+            "method": "level",
+            "level": 25
+        }
+    ],
+    "Maschiff": [
+        {
+            "into": "Mabosstiff",
+            "method": "level",
+            "level": 30
+        }
+    ],
+    "Shroodle": [
+        {
+            "into": "Grafaiai",
+            "method": "level",
+            "level": 28
+        }
+    ],
+    "Bramblin": [
+        {
+            "into": "Brambleghast",
+            "method": "steps"
+        }
+    ],
+    "Toedscool": [
+        {
+            "into": "Toedscruel",
+            "method": "level",
+            "level": 30
+        }
+    ],
+    "Capsakid": [
+        {
+            "into": "Scovillain",
+            "method": "use",
+            "item": "Fire Stone"
+        }
+    ],
+    "Rellor": [
+        {
+            "into": "Rabsca",
+            "method": "steps"
+        }
+    ],
+    "Flittle": [
+        {
+            "into": "Espathra",
+            "method": "level",
+            "level": 35
+        }
+    ],
+    "Tinkatink": [
+        {
+            "into": "Tinkatuff",
+            "method": "level",
+            "level": 24
+        }
+    ],
+    "Tinkatuff": [
+        {
+            "into": "Tinkaton",
+            "method": "level",
+            "level": 38
+        }
+    ],
+    "Wiglett": [
+        {
+            "into": "Wugtrio",
+            "method": "level",
+            "level": 26
+        }
+    ],
+    "Finizen": [
+        {
+            "into": "Palafin",
+            "special_req": "while in a Union Circle group",
+            "method": "level",
+            "level": 38
+        }
+    ],
+    "Varoom": [
+        {
+            "into": "Revavroom",
+            "method": "level",
+            "level": 40
+        }
+    ],
+    "Glimmet": [
+        {
+            "into": "Glimmora",
+            "method": "level",
+            "level": 35
+        }
+    ],
+    "Greavard": [
+        {
+            "into": "Houndstone",
+            "time": "night",
+            "method": "level",
+            "level": 30
+        }
+    ],
+    "Cetoddle": [
+        {
+            "into": "Cetitan",
+            "method": "use",
+            "item": "Ice Stone"
+        }
+    ],
+    "Frigibax": [
+        {
+            "into": "Arctibax",
+            "method": "level",
+            "level": 35
+        }
+    ],
+    "Arctibax": [
+        {
+            "into": "Baxcalibur",
+            "method": "level",
+            "level": 54
+        }
+    ],
+    "Gimmighoul-Chest": [
+        {
+            "into": "Gholdengo",
+            "special_req": "with 999 Gimmighoul Coins in the bag",
+            "method": "level"
+        }
+    ],
+    "Poltchageist": [
+        {
+            "into": "Sinistcha",
+            "method": "use",
+            "item": "Unremarkable Teacup or Masterpiece Teacup"
+        }
+    ],
+    "Meltan": [
+        {
+            "into": "Melmetal",
+            "method": "specific",
+            "by": "when given 400 Meltan Candy",
+            "desc": "Give 400 Meltan Candy"
+        }
+    ]
+}

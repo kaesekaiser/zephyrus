@@ -3,7 +3,7 @@ from utilities import dice as di, weed as wd, timein as ti, wiki as wk, convert 
 from unicodedata import name as uni_name
 from urllib.error import HTTPError
 import hanziconv
-import pycantonese
+# import pycantonese
 import datetime
 import requests
 from math import log10, isclose, floor, log
@@ -462,6 +462,7 @@ async def timein(ctx: commands.Context, *, place: str):
     return await ClientEmol(emoji, hexcol("b527e5"), ctx).say(ret, footer=address)
 
 
+"""
 def chinese_punctuate(s: str):
     chinese_punctuation = {
         "？": "? ", "！": "! ", "。": ". ", "，": ", ", "：": ": ", "；": "; ", "【": " [", "】": "] ", "（": " (", "）": ") ",
@@ -488,38 +489,44 @@ def get_yale(s: str):
     for i in re.findall(r"[a-z]+[0-9]", get_jyutping(s)):
         yale = yale.replace(i, pycantonese.jyutping2yale(i))
     return yale
+"""
+
+
+pjy_deprecation = "This command has been deprecated.\nUnfortunately I can't get the Pinyin/Jyutping romanization " \
+                  "module to work on Zephyrus's new hardware. If I find a workaround, it'll come back. Thank you " \
+                  "for understanding."
 
 
 @zeph.command(
-    name="pinyin", aliases=["py"], usage="z!pinyin <Mandarin text...>",
+    name="pinyin", aliases=["py"], usage="z!pinyin <Mandarin text...>", hidden=True,
     description="Romanizes Chinese text using Hanyu Pinyin.",
     help="Romanizes Chinese text according to the Hanyu Pinyin romanization scheme - that is, it turns the "
          "Chinese characters into Latin syllables that sound like their Mandarin pronunciations.\n\n"
          "`z!pinyin 你好` → `nǐhǎo`"
 )
-async def pinyin_command(ctx: commands.Context, *, chinese: str):
-    return await ctx.send(get_pinyin(chinese))
+async def pinyin_command(ctx: commands.Context):
+    raise commands.CommandError(pjy_deprecation)
 
 
 @zeph.command(
-    name="jyutping", aliases=["jp"], usage="z!jyutping <Cantonese text...>",
+    name="jyutping", aliases=["jp"], usage="z!jyutping <Cantonese text...>", hidden=True,
     description="Romanizes Cantonese text using Jyutping.",
     help="Romanizes Cantonese text according to the Jyutping romanization scheme.\n\n"
          "`z!jyutping 你好` → `nei5hou2`"
 )
-async def jyutping_command(ctx: commands.Context, *, cantonese: str):
-    return await ctx.send(get_jyutping(cantonese))
+async def jyutping_command(ctx: commands.Context):
+    raise commands.CommandError(pjy_deprecation)
 
 
 @zeph.command(
-    name="yale", usage="z!yale <Cantonese text...>",
+    name="yale", usage="z!yale <Cantonese text...>", hidden=True,
     description="Romanizes Cantonese text using the Yale scheme.",
     help="Romanizes Cantonese text according to the Yale romanization scheme. There's also a Yale romanization "
          "scheme for Mandarin text, but this isn't that, and that's not on this bot.\n\n"
          "`z!yale 你好` → `néihhóu`"
 )
-async def yale_command(ctx: commands.Context, *, cantonese: str):
-    return await ctx.send(get_yale(cantonese))
+async def yale_command(ctx: commands.Context):
+    raise commands.CommandError(pjy_deprecation)
 
 
 @zeph.command(
@@ -1531,8 +1538,26 @@ async def weather_command(ctx: commands.Context, *, location: str):
     except IndexError:
         raise commands.CommandError("Location not found.")
 
-    req = requests.get(ti.weather_url.format(**lat_long, key=keys.open_weather)).json()
-    title = f"Weather in {ti.short_placename(location)}"
+    mess = await Emol(zeph.emojis["loading"], hexcol("65747E")).send(ctx, "Fetching weather data...")
+
+    attempts = 0
+    while True:
+        attempts += 1
+        req = requests.get(ti.weather_url.format(**lat_long, key=keys.open_weather))
+        if req.status_code >= 500:
+            if attempts == 3:
+                raise commands.CommandError(f"Something went wrong.\nHTTP status: `{req.status_code}`")
+            await Emol(zeph.emojis["loading"], hexcol("65747E")).edit(
+                mess, "Something went wrong. Trying again...",
+                d=f"In the words of Google, don't fret - it's not your fault. I'll try {3 - attempts} more "
+                  f"{plural('time', 3 - attempts)}."
+            )
+            continue
+        elif req.status_code >= 300:
+            raise commands.CommandError("Something went wrong.\nHTTP status: `{req.status_code}`")
+        else:
+            break
+    req = req.json()
 
     weather_emotes = {  # weather condition codes to emotes
         ":sunny:": (800, ),
@@ -1549,8 +1574,8 @@ async def weather_command(ctx: commands.Context, *, location: str):
         ":tornado:": (781, )  # self-explanatory
     }
 
-    return await ClientEmol(":umbrella2:", hexcol("9266CC"), ctx).say(
-        title,
+    return await Emol(":umbrella2:", hexcol("9266CC")).edit(
+        mess, f"Weather in {ti.short_placename(location)}",
         d=f"**{conditions(req)}** / :thermometer: {format_kelvin(req['current']['temp'])}\n---\n"
         f":sweat_drops: humidity: **{req['current']['humidity']}%** / "
         f":thought_balloon: feels like: {format_kelvin(req['current']['feels_like'])}\n"
