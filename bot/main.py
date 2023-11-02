@@ -362,6 +362,7 @@ async def on_ready():
         print("Bot has not fully shut down. Please z!close, and restart.")
     load_server_settings()
     load_walker_users()
+    zeph.load_usage_stats()
 
     setattr(zeph, "readyTime", datetime.datetime.now())
     print(f"ready at {getattr(zeph, 'readyTime')}")
