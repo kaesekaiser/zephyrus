@@ -2687,7 +2687,7 @@ class PokeWalkerInterpreter(Interpreter):
             await message.add_reaction(button)
 
         stroll = WalkerStroll(self.user, destination)
-        token_reward = max(*[g.effects.get("tokens", 1) for g in self.user.equipped_charms], 1)
+        token_reward = max([*[g.effects.get("tokens", 1) for g in self.user.equipped_charms], 1])
         await asyncio.sleep(2)
 
         for i in range(30):
