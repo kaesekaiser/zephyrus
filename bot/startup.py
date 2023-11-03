@@ -632,12 +632,14 @@ def can_use_without_error(func: callable, arg, error_type=ValueError):
 
 
 def can_int(s: str):
-    if not isinstance(s, str):
+    if not isinstance(s, (str, int, float)):
         return False
     return can_use_without_error(int, s)
 
 
 def can_float(s: str):
+    if not isinstance(s, (str, int, float)):
+        return False
     return can_use_without_error(float, s)
 
 
