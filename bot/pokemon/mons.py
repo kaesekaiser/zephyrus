@@ -591,9 +591,9 @@ class BareMiniMon:
     def home_sprite(self):
         fem = "-f" if (self.species.name in gender_differences) and (self.gender == "female") else ""
         if self.shiny:
-            return f"https://img.pokemondb.net/sprites/home/shiny/2x/{fix(self.species_and_form)}{fem}.jpg"
+            return f"https://img.pokemondb.net/sprites/home/shiny/2x/{fix(self.overworld_saf)}{fem}.jpg"
         else:
-            return f"https://img.pokemondb.net/sprites/home/normal/2x/{fix(self.species_and_form)}{fem}.jpg"
+            return f"https://img.pokemondb.net/sprites/home/normal/2x/{fix(self.overworld_saf)}{fem}.jpg"
 
     @property
     def dex_image(self):
