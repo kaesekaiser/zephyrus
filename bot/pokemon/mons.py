@@ -588,31 +588,45 @@ class BareMiniMon:
         return f"https://pokemondb.net/pokedex/{fix(self.species.name)}"
 
     @property
+    def image_suffix(self):
+        if self.species.name == "Unown":
+            if self.form.name == "Question":
+                return "-qm"
+            elif self.form.name == "Exclamation":
+                return "-em"
+            else:
+                return f"-{self.form.name.lower()}"
+        elif self.species.name == "Maushold":
+            if self.form.name == "Three":
+                return "-family3"
+            else:
+                return "-family4"
+        else:
+            if self.form.name and self.species.name != "Dudunsparce":
+                return f"-{fix(self.form.name)}"
+            else:
+                return ""
+
+    @property
     def home_sprite(self):
         fem = "-f" if (self.species.name in gender_differences) and (self.gender == "female") else ""
-        if self.shiny:
-            return f"https://img.pokemondb.net/sprites/home/shiny/2x/{fix(self.overworld_saf)}{fem}.jpg"
+        if self.species.name in ["Unown", "Maushold"]:
+            saf = fix(self.species.name) + self.image_suffix
         else:
-            return f"https://img.pokemondb.net/sprites/home/normal/2x/{fix(self.overworld_saf)}{fem}.jpg"
+            saf = fix(self.overworld_saf)
+        if self.shiny:
+            return f"https://img.pokemondb.net/sprites/home/shiny/2x/{saf}{fem}.jpg"
+        else:
+            return f"https://img.pokemondb.net/sprites/home/normal/2x/{saf}{fem}.jpg"
 
     @property
     def dex_image(self):
-        if self.form.name and self.species.name != "Dudunsparce":
-            if self.species_and_form == "Minior-Core":
-                suffix = "-" + random.choice(["orange", "yellow", "green", "blue", "indigo", "purple"]) + "-core"
-            elif self.species.name == "Maushold":
-                suffix = {"Three": "-family3", "Four": "-family4"}[self.form.name]
-            elif self.species_and_form == "Tinkaton-Ideal":
-                return "https://cdn.discordapp.com/attachments/582754042527088694/1047738638454231162/tinkaton.png"
-            else:
-                suffix = "-" + fix(self.form.name)
-        else:
-            suffix = ""
         if self.generation == 9:
-            return f"https://img.pokemondb.net/sprites/scarlet-violet/normal/{fix(self.species.name) + suffix}.png"
+            return f"https://img.pokemondb.net/sprites/scarlet-violet/normal/" \
+                   f"{fix(self.species.name) + self.image_suffix}.png"
         if self.generation == 8:
-            return f"https://img.pokemondb.net/artwork/large/{fix(self.species.name) + suffix}.jpg"
-        return img_link.format(fix(self.species.name) + suffix)
+            return f"https://img.pokemondb.net/artwork/large/{fix(self.species.name) + self.image_suffix}.jpg"
+        return img_link.format(fix(self.species.name) + self.image_suffix)
 
     @property
     def shiny_indicator(self):
@@ -714,6 +728,8 @@ class BareMiniMon:
             return f"{self.species.name} ({self.form.name} Breed)"
         elif self.species.name == "Eiscue":
             return f"{self.species.name} ({self.form.name} Face)"
+        elif self.species.name == "Maushold":
+            return f"{self.species.name} (Family of {self.form.name})"
         return form_name_styles.get(self.form.name, "{} (" + self.form.name + " Form)").format(self.species.name)
 
     @property
