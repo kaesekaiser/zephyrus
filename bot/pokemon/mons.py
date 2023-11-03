@@ -680,6 +680,15 @@ class BareMiniMon:
             return f"{self.species.name}-{'-'.join(self.form.name.split())}"
 
     @property
+    def overworld_saf(self):
+        """Display name for multi-form mons who can only appear in one form outside of battle. Unchanged for most."""
+        if self.species.name in [
+            "Aegislash", "Wishiwashi", "Minior", "Mimikyu", "Eiscue", "Morpeko", "Gimmighoul", "Palafin"
+        ]:
+            return self.species.name
+        return self.species_and_form
+
+    @property
     def full_name(self):
         if not self.form.name:
             return self.species.name
@@ -703,6 +712,8 @@ class BareMiniMon:
             return f"{self.species.name} ({self.form.name} Plumage)"
         elif self.species.name == "Tauros":
             return f"{self.species.name} ({self.form.name} Breed)"
+        elif self.species.name == "Eiscue":
+            return f"{self.species.name} ({self.form.name} Face)"
         return form_name_styles.get(self.form.name, "{} (" + self.form.name + " Form)").format(self.species.name)
 
     @property

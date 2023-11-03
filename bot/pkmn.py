@@ -2274,7 +2274,7 @@ class WalkerBoxNavigator(Navigator):
             selected_types = [t for m in selected_mons for t in m.types]
             tokens = {g: selected_types.count(g) for g in pk.types if g in selected_types}
             tokens = display_tokens(dict(sorted(list(tokens.items()), key=lambda c: -c[1])))
-            selected_names = [g.species_and_form for g in selected_mons if not g.shiny]
+            selected_names = [g.overworld_saf for g in selected_mons if not g.shiny]
             aggregate_mons = {
                 g: selected_names.count(g) for g in sorted(selected_names, key=lambda m: -selected_names.count(m))
             }
@@ -2282,7 +2282,7 @@ class WalkerBoxNavigator(Navigator):
                 f"{display_mon(pk.get_saf(g), 'typed_list', saf=True)} x{j}"
                 for g, j in list(aggregate_mons.items())[:10]
             ) + (f"\n*...and {len(aggregate_mons) - 10} more species*" if len(aggregate_mons) > 10 else "")
-            selected_shiny = [g.species_and_form for g in selected_mons if g.shiny]
+            selected_shiny = [g.overworld_saf for g in selected_mons if g.shiny]
             aggregate_shiny = {
                 g: selected_shiny.count(g) for g in sorted(selected_shiny, key=lambda m: -selected_shiny.count(m))
             }
@@ -2738,7 +2738,7 @@ class PokeWalkerInterpreter(Interpreter):
             caught_types = [t for m in caught_mons for t in m.types]
             tokens = {g: round(caught_types.count(g) * token_reward) for g in pk.types if g in caught_types}
             tokens = display_tokens(dict(sorted(list(tokens.items()), key=lambda c: -c[1])))
-            caught_names = [g.species_and_form for g in caught_mons]
+            caught_names = [g.overworld_saf for g in caught_mons]
             aggregate_mons = {
                 g: caught_names.count(g) for g in sorted(caught_names, key=lambda m: destination.get_rarity(m, True))
             }

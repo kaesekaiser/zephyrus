@@ -65,7 +65,7 @@ def display_mon(mon: Union[dict, pk.BareMiniMon], mode: str = "default", **kwarg
     full_knowledge = True if mode == "builder" else kwargs.get("full_knowledge", True)
     lb = "\n"
 
-    name = mon.species_and_form if kwargs.get("saf") else mon.name
+    name = mon.overworld_saf if kwargs.get("saf") else mon.name
 
     if isinstance(mon, dict):
         mon = pk.Mon.unpack(mon)
