@@ -1,12 +1,5 @@
 from random import choice
 
-"""
-A bit of an explanation - this oddly-named file contains a list of
-out-of-touch ways to say no to drugs, specifically weed, found on a sign
-likely produced by an equally out-of-touch DARE campaign. To be clear, I
-do not condone dangerous drug use, I just thought these were funny.
-"""
-
 sayings = ["Are you kidding me? Grow up!", "I was raised right, I won't light.",
            "Ganja is for goons, no thanks.", "I'd like to keep my job, thanks.",
            "Get a job you hippie wastoid.", "You wish, pot junker! Back off!",

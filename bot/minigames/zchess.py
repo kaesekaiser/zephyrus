@@ -108,7 +108,7 @@ class BoardWrapper(chess.Board):
         super().__init__(fen=fen)
         self.setup = self.fen()
         self.fen_history = [self.repetition_fen]
-        self.san = SAN(["..."] if not self.turn else [])
+        self.san = SAN([])
         self.opening = None
         self.date = datetime.date.today()
         self.track_opening = bool(kwargs.pop("track_opening", self.setup == chess.STARTING_FEN))

@@ -1,0 +1,14 @@
+bot/run.py
+bot/utilities/keys.py
+bot/images
+bot/storage
+bot/dependencies.txt
+.idea
+*.pyc
+bot/pokemon/hypothetical_dex.txt
+bot/pokemon/known_form_codes.json
+bot/pokemon/loader archive
+bot/pokemon/old
+bot/pokemon/update*
+bot/testing.py
+bot/utilities/words.txt

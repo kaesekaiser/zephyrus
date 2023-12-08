@@ -25,7 +25,7 @@ def invert_colors(im: Image.Image):
     return Image.fromarray(data, "RGBA")
 
 
-def merge_down(top: Image.Image, bottom: Image.Image, x: int=0, y: int=0, center: bool=False):
+def merge_down(top: Image.Image, bottom: Image.Image, x: int = 0, y: int = 0, center: bool = False):
     if center:
         x -= round(top.width / 2)
         y -= round(top.height / 2)
