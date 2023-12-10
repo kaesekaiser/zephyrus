@@ -258,7 +258,8 @@ def apostrophe_feet_to_decimal(s: str) -> float:
 
 
 @zeph.command(
-    aliases=["c", "conv"], usage="z!convert <number> <unit...> to <unit...>\nz!convert <number> <unit...>",
+    name="convert", aliases=["c", "conv"],
+    usage="z!convert <number> <unit...> to <unit...>\nz!convert <number> <unit...>",
     description="Converts between non-temperature units of measurement.",
     help="Converts between units of measurement. Note that this does **not** include temperature, for unit "
          "compatibility reasons; temperature can be converted using `z!tconvert`. More info at "
