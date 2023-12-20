@@ -9385,7 +9385,7 @@
                 3.4,
                 "Plant"
             ],
-			[
+            [
                 40,
                 29,
                 45,
@@ -9398,7 +9398,7 @@
                 3.4,
                 "Sandy"
             ],
-			[
+            [
                 40,
                 29,
                 45,
@@ -13309,7 +13309,7 @@
                 19.5,
                 "Autumn"
             ],
-			[
+            [
                 60,
                 60,
                 50,
@@ -22935,7 +22935,7 @@
     },
     "Dipplin": {
         "name": "Dipplin",
-        "catch_rate": 0,
+        "catch_rate": 45,
         "forms": [
             [
                 80,
@@ -22954,7 +22954,7 @@
     },
     "Poltchageist": {
         "name": "Poltchageist",
-        "catch_rate": 0,
+        "catch_rate": 120,
         "forms": [
             [
                 40,
@@ -22973,7 +22973,7 @@
     },
     "Sinistcha": {
         "name": "Sinistcha",
-        "catch_rate": 0,
+        "catch_rate": 60,
         "forms": [
             [
                 71,
@@ -22992,7 +22992,7 @@
     },
     "Okidogi": {
         "name": "Okidogi",
-        "catch_rate": 0,
+        "catch_rate": 3,
         "forms": [
             [
                 88,
@@ -23011,7 +23011,7 @@
     },
     "Munkidori": {
         "name": "Munkidori",
-        "catch_rate": 0,
+        "catch_rate": 3,
         "forms": [
             [
                 88,
@@ -23030,7 +23030,7 @@
     },
     "Fezandipiti": {
         "name": "Fezandipiti",
-        "catch_rate": 0,
+        "catch_rate": 3,
         "forms": [
             [
                 88,
@@ -23049,7 +23049,7 @@
     },
     "Ogerpon": {
         "name": "Ogerpon",
-        "catch_rate": 0,
+        "catch_rate": 5,
         "forms": [
             [
                 80,
@@ -23102,6 +23102,184 @@
                 1.2,
                 39.8,
                 "Cornerstone"
+            ]
+        ]
+    },
+    "Archaludon": {
+        "name": "Archaludon",
+        "catch_rate": 10,
+        "forms": [
+            [
+                90,
+                105,
+                130,
+                125,
+                65,
+                85,
+                "Steel",
+                "Dragon",
+                2.0,
+                60.0,
+                ""
+            ]
+        ]
+    },
+    "Hydrapple": {
+        "name": "Hydrapple",
+        "catch_rate": 10,
+        "forms": [
+            [
+                106,
+                80,
+                110,
+                120,
+                80,
+                44,
+                "Grass",
+                "Dragon",
+                1.8,
+                93.0,
+                ""
+            ]
+        ]
+    },
+    "Gouging Fire": {
+        "name": "Gouging Fire",
+        "catch_rate": 10,
+        "forms": [
+            [
+                105,
+                115,
+                121,
+                65,
+                93,
+                91,
+                "Fire",
+                "Dragon",
+                3.5,
+                590.0,
+                ""
+            ]
+        ]
+    },
+    "Raging Bolt": {
+        "name": "Raging Bolt",
+        "catch_rate": 10,
+        "forms": [
+            [
+                125,
+                73,
+                91,
+                137,
+                89,
+                75,
+                "Electric",
+                "Dragon",
+                5.2,
+                480.0,
+                ""
+            ]
+        ]
+    },
+    "Iron Boulder": {
+        "name": "Iron Boulder",
+        "catch_rate": 10,
+        "forms": [
+            [
+                90,
+                120,
+                80,
+                68,
+                108,
+                124,
+                "Rock",
+                "Psychic",
+                1.5,
+                162.5,
+                ""
+            ]
+        ]
+    },
+    "Iron Crown": {
+        "name": "Iron Crown",
+        "catch_rate": 10,
+        "forms": [
+            [
+                90,
+                72,
+                100,
+                122,
+                108,
+                98,
+                "Steel",
+                "Psychic",
+                1.6,
+                156.0,
+                ""
+            ]
+        ]
+    },
+    "Terapagos": {
+        "name": "Terapagos",
+        "catch_rate": 255,
+        "forms": [
+            [
+                90,
+                65,
+                85,
+                65,
+                85,
+                60,
+                "Normal",
+                null,
+                0.2,
+                6.5,
+                "Normal"
+            ],
+            [
+                95,
+                95,
+                110,
+                105,
+                110,
+                85,
+                "Normal",
+                null,
+                0.3,
+                16.0,
+                "Terastal"
+            ],
+            [
+                160,
+                105,
+                110,
+                130,
+                110,
+                85,
+                "Normal",
+                null,
+                1.7,
+                77.0,
+                "Stellar"
+            ]
+        ]
+    },
+    "Pecharunt": {
+        "name": "Pecharunt",
+        "catch_rate": 3,
+        "forms": [
+            [
+                88,
+                88,
+                160,
+                88,
+                88,
+                88,
+                "Poison",
+                "Ghost",
+                0.3,
+                0.3,
+                ""
             ]
         ]
     }

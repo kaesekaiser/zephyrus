@@ -197,6 +197,12 @@
         "",
         ""
     ],
+    "Archaludon": [
+        "Stamina",
+        "Sturdy",
+        "",
+        ""
+    ],
     "Archen": [
         "Defeatist",
         "",
@@ -2393,6 +2399,12 @@
         "Shadow Tag",
         ""
     ],
+    "Gouging Fire": [
+        "Protosynthesis",
+        "",
+        "",
+        ""
+    ],
     "Gourgeist": [
         "Pickup",
         "Frisk",
@@ -2765,6 +2777,12 @@
         "Water Veil",
         ""
     ],
+    "Hydrapple": [
+        "Supersweet Syrup",
+        "Regenerator",
+        "Sticky Hold",
+        ""
+    ],
     "Hydreigon": [
         "Levitate",
         "",
@@ -2831,7 +2849,19 @@
         "Sniper",
         ""
     ],
+    "Iron Boulder": [
+        "Quark Drive",
+        "",
+        "",
+        ""
+    ],
     "Iron Bundle": [
+        "Quark Drive",
+        "",
+        "",
+        ""
+    ],
+    "Iron Crown": [
         "Quark Drive",
         "",
         "",
@@ -4367,6 +4397,12 @@
         "Pressure",
         ""
     ],
+    "Pecharunt": [
+        "Poison Puppeteer",
+        "",
+        "",
+        ""
+    ],
     "Pelipper": [
         "Keen Eye",
         "Drizzle",
@@ -4725,6 +4761,12 @@
         "Synchronize",
         "",
         "Telepathy",
+        ""
+    ],
+    "Raging Bolt": [
+        "Protosynthesis",
+        "",
+        "",
         ""
     ],
     "Raichu": [
@@ -6033,6 +6075,24 @@
         "Blaze",
         "",
         "Thick Fat",
+        ""
+    ],
+    "Terapagos-Normal": [
+        "Tera Shift",
+        "",
+        "",
+        ""
+    ],
+    "Terapagos-Stellar": [
+        "Teraform Zero",
+        "",
+        "",
+        ""
+    ],
+    "Terapagos-Terastal": [
+        "Tera Shell",
+        "",
+        "",
         ""
     ],
     "Terrakion": [

@@ -295,7 +295,8 @@ abilities = [
     "Electromorphosis", "Protosynthesis", "Quark Drive", "Good as Gold", "Vessel of Ruin", "Sword of Ruin",
     "Tablets of Ruin", "Beads of Ruin", "Orichalcum Pulse", "Hadron Engine", "Opportunist", "Cud Chew", "Sharpness",
     "Supreme Overlord", "Costar", "Toxic Debris", "Armor Tail", "Earth Eater", "Mycelium Might", "Hospitality",
-    "Mind's Eye", "Embody Aspect", "Toxic Chain", "Supersweet Syrup"
+    "Mind's Eye", "Embody Aspect", "Toxic Chain", "Supersweet Syrup", "Tera Shift", "Tera Shell", "Teraform Zero",
+    "Poison Puppeteer"
 ]
 berries = [
     'Aguav Berry', 'Apicot Berry', 'Aspear Berry', 'Babiri Berry', 'Belue Berry', 'Bluk Berry', 'Charti Berry',

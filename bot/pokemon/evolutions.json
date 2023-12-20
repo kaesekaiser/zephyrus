@@ -3702,5 +3702,19 @@
             "by": "when given 400 Meltan Candy",
             "desc": "Give 400 Meltan Candy"
         }
+    ],
+    "Duraludon": [
+        {
+            "into": "Archaludon",
+            "method": "use",
+            "item": "Metal Alloy"
+        }
+    ],
+    "Dipplin": [
+        {
+            "into": "Hydrapple",
+            "method": "level",
+            "knowing": "Dragon Cheer"
+        }
     ]
 }
