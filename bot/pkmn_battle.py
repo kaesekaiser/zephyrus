@@ -48,13 +48,16 @@ def display_move(move: Union[pk.PackedMove, pk.Move], mode: str) -> str:
                f"**Target:** {move.target}\n\n{move.description}"
 
 
+def display_type(s: str, include_name: bool = True) -> str:
+    return f"{zeph.emojis[s]}{(' ' + s) if include_name else ''}"
+
+
 def display_mon_types(mon: pk.BareMiniMon, sep: str = "", align: str = "right", include_names: bool = False) -> str:
-    if mon.type2:
-        return f"{zeph.emojis[mon.type1]}{(' ' + mon.type1) if include_names else ''}{sep}" \
-               f"{zeph.emojis[mon.type2]}{(' ' + mon.type2) if include_names else ''}"
+    if len(mon.types) > 1:
+        return sep.join(display_type(g, include_name=include_names) for g in mon.types)
     else:
         if include_names:
-            return f"{zeph.emojis[mon.type1]} {mon.type1}"
+            return display_type(mon.type1)
         if align == "left":
             return f"{zeph.emojis[mon.type1]}{sep}{zeph.emojis['__']}"
         return f"{zeph.emojis['__']}{sep}{zeph.emojis[mon.type1]}"

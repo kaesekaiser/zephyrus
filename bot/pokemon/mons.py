@@ -108,6 +108,18 @@ form_name_styles = {
 castform_weathers = {sun: "Sunny", rain: "Rainy", hail: "Snowy"}
 
 
+form_shortcuts = {
+    "a": "Alolan",
+    "alola": "Alolan",
+    "g": "Galarian",
+    "galar": "Galarian",
+    "h": "Hisuian",
+    "hisui": "Hisuian",
+    "p": "Paldean",
+    "paldea": "Paldean"
+}
+
+
 class Species:
     def __init__(self, name: str, catch_rate: int, forms: list[Form]):
         self.name = name
@@ -134,7 +146,7 @@ class Species:
         return {
             g: j for g, j in self.forms.items()
             if j.json[:6] != list(self.forms.values())[0].json[:6]
-            or j.json[-1] in ["Alolan", "Galarian", "Hisuian", "Paldean"]
+            or j.name in ["Alolan", "Galarian", "Hisuian", "Paldean"]
         }
 
     def get_form_name(self, s: str):
@@ -146,6 +158,8 @@ class Species:
             return random.choice(list(self.forms))
         for g in self.forms:
             if fix(g) == fix(s):
+                return g
+            if form_shortcuts.get(fix(s)) == g:
                 return g
         else:
             raise ValueError("Form not found.")

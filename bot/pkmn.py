@@ -18,26 +18,29 @@ def find_mon(s: Union[str, int, None], **kwargs) -> pk.BareMiniMon | pk.Mon:
         return return_class(list(pk.nat_dex.keys())[int(s) - 1], **kwargs)
     if s is None or s.lower() == "null":
         return return_class.null()
+
     if ret := pk.species_and_forms.get(pk.fix(s)):
         return return_class(ret.species.name, form=ret.form.name, **kwargs)
+
     for mon in pk.nat_dex:
-        if set(pk.fix(mon, "_").split("_")) <= set(pk.fix(s, "_").split("_")):
-            ret = mon, pk.fix("-".join(re.split(pk.fix(mon), pk.fix(s))))
+        if set(pk.fix(mon).split("-")) <= set(pk.fix(s).split("-")):
+            ret = mon
             break
     else:
         if pk.fix(s) == "nidoran":
-            ret = "Nidoran-F", ""
+            ret = "Nidoran-F"
         else:
             if kwargs.get("fail_silently") or kwargs.get("return_on_fail"):
                 return kwargs.get("return_on_fail", return_class.null())
             else:
                 guess = sorted(list(pk.fixed_dex), key=lambda c: wr.levenshtein(c, pk.fix(s)))
                 raise commands.CommandError(f"`{s}` not found. Did you mean {pk.fixed_dex[guess[0]]}?")
-    for form in pk.nat_dex[ret[0]].forms:
-        if set(pk.fix(form, "_").split("_")) <= set(pk.fix(s, "_").split("_")):
-            return return_class(ret[0], form=form, **kwargs)
-    else:
-        return return_class(ret[0], **kwargs)
+
+    other_info = "-".join(g for g in pk.fix(s).split("-") if g not in pk.fix(ret).split("-"))
+    try:
+        return return_class(ret, form=pk.nat_dex[ret].get_form_name(other_info), **kwargs)
+    except ValueError:
+        return return_class(ret, **kwargs)
 
 
 def find_move(s: str) -> pk.Move:
@@ -51,7 +54,7 @@ def find_move(s: str) -> pk.Move:
 
 def scroll_list(ls: iter, at: int, curved: bool = False, wrap: bool = True) -> str:
     def format_item(index: int):
-        return f"**\\> {ls[index].upper()}**" if index == at else f"- {smallcaps(ls[index].lower())}"
+        return f"**\\> {ls[index].upper()}**" if index == at else f"\\- {smallcaps(ls[index].lower())}"
 
     if len(ls) <= 7:
         if curved:
@@ -193,7 +196,7 @@ class DexSearchNavigator(Navigator):
         "name": lambda m: m.species.name + m.form.name,  # prioritize species name; list forms alphabetically
         "height": lambda m: m.height,
         "weight": lambda m: m.weight,
-        "stats": lambda m: sum(m.base_stats),
+        "bst": lambda m: m.bst,
         "hp": lambda m: m.form.hp,
         "atk": lambda m: m.form.atk,
         "def": lambda m: m.form.dfn,
@@ -217,7 +220,7 @@ class DexSearchNavigator(Navigator):
         self.types = ()
         self.name = None
         self.sort = "number"
-        self.forms = False
+        self.forms = True
         self.has = None
         self.learns = []
         self.ability = None
@@ -231,7 +234,7 @@ class DexSearchNavigator(Navigator):
             "name": "Alphabetical",
             "height": "Height",
             "weight": "Weight",
-            "stats": "Total base stats",
+            "bst": "Base stat total",
             "hp": "Base HP",
             "atk": "Base Attack",
             "def": "Base Defense",
@@ -288,8 +291,8 @@ class DexSearchNavigator(Navigator):
             return f"{mon_name} (**{mon.height}** m)"
         elif self.sort == "weight":
             return f"{mon_name} (**{mon.weight}** kg)"
-        elif self.sort == "stats":
-            return f"{mon_name} (**{sum(mon.base_stats)}** total)"
+        elif self.sort == "bst":
+            return f"{mon_name} (**{sum(mon.base_stats)}** BST)"
         elif self.sort == "hp":
             return f"{mon_name} (**{mon.form.hp}** HP)"
         elif self.sort == "atk":
@@ -382,7 +385,8 @@ class DexSearchNavigator(Navigator):
                   f"Hit {zeph.emojis['help']} for more info on each filter. "
                   f"Hit {zeph.emojis['settings']} again to go to the search results.",
                 same_line=True,
-                fs={"Generation (`gen`)": ain(self.gen), "Types (`types`)": ain(", ".join(self.types)),
+                fs={"Generation (`gen`)": ain(self.gen),
+                    "Types (`types`)": ain(" / ".join(display_type(g) for g in self.types)),
                     "Starts with (`name`)": ain(self.name), "Sort (`sort`)": self.sort_name,
                     "Has Mega/Alolan? (`has`)": ain(self.has), "Include alt forms? (`forms`)": yesno(self.forms),
                     "Learns the moves... (`learns`)": none_list(self.learns), "Ability (`ability`)": ain(self.ability)},
@@ -395,19 +399,19 @@ class DexSearchNavigator(Navigator):
                 d="`gen:<n>` - filters by generation. `<n>` must be between 1 and 9, e.g. `gen:4`. `gen:any` resets "
                   "the filter.\n\n"
                   "`type:<types>` (or `types:<types>`) - filters by type. `<types>` can be either one type, or two "
-                  "types separated by a comma or slash, e.g. `type:fire,flying`. `type:any` resets the filter.\n\n"
+                  "types separated by a comma or slash, e.g. `type:fire/flying`. `type:any` resets the filter.\n\n"
                   "`name:<letter>` - filters by first letter of the mon's name. `<letter>` must be one letter, "
                   "e.g. `name:A`. `name:any` resets the filter.\n\n"
                   "`sort:<method>` - sorts the results in a certain order. `<method>` can be `name`, to sort A→Z; "
                   "`number`, to sort by National Dex number; `height`, to sort by height; `weight`, to sort by "
-                  "weight; `stats`, to sort by total base stats; or any of `hp`, `atk`, `def`, `spa`, "
+                  "weight; `bst`, to sort by base stat total; or any of `hp`, `atk`, `def`, `spa`, "
                   "`spd`, or `spe`, to sort by the respective stat. Default is `sort:number`.\n\n"
                   "`has:<form>` - filters by species which have a certain form. `<form>` can be `mega` or `alolan`. "
                   "`has:any` resets the filter.\n\n"
                   "`forms:yes` / `forms:no` - includes or excludes alternate forms in the filter. This includes Mega "
                   "Evolutions, Alolan forms, Primal forms, Rotom forms, etc., but does *not* include forms which are "
                   "solely aesthetic (like those of Vivillon or Gastrodon) or only change the Pokémon's type (like "
-                  "Arceus and Silvally). Default is `forms:no`.\n\n"
+                  "Arceus and Silvally). Default is `forms:yes`.\n\n"
                   "`learns:<move(s)>` - filters by mons which can learn a given move or moves. Separate multiple moves "
                   "using commas, e.g. `learns:earthquake, swords dance`. `learns:none` resets the filter.\n\n"
                   "`ability:<ability>` - filters by mons which have a given ability, including as a Hidden Ability. "
@@ -663,7 +667,7 @@ class LearnsetNavigator(Navigator):
     def con(self):
         if self.learnset:
             return self.emol.con(
-                f"{self.mon.name} ({self.gen}): {self.mode_titles[self.mode]}",
+                f"{self.mon.species_and_form} ({self.gen}): {self.mode_titles[self.mode]}",
                 d=self.formatted_page,
                 footer=f"{pk.full_game_names[self.gen]} / page {self.page} of {self.pgs}"
             )
