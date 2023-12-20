@@ -1530,6 +1530,9 @@
             ]
         },
         "Raichu-Alolan": {
+            "evo": [
+                "Psychic"
+            ],
             "tm": {
                 "TM01": "Take Down",
                 "TM02": "Charm",
@@ -1799,6 +1802,86 @@
             }
         },
         "Sandshrew-Alolan": {
+            "level": [
+                [
+                    1,
+                    "Defense Curl"
+                ],
+                [
+                    1,
+                    "Scratch"
+                ],
+                [
+                    3,
+                    "Mist"
+                ],
+                [
+                    6,
+                    "Powder Snow"
+                ],
+                [
+                    9,
+                    "Rollout"
+                ],
+                [
+                    12,
+                    "Fury Cutter"
+                ],
+                [
+                    15,
+                    "Rapid Spin"
+                ],
+                [
+                    18,
+                    "Metal Claw"
+                ],
+                [
+                    21,
+                    "Swift"
+                ],
+                [
+                    24,
+                    "Fury Swipes"
+                ],
+                [
+                    27,
+                    "Iron Defense"
+                ],
+                [
+                    30,
+                    "Slash"
+                ],
+                [
+                    33,
+                    "Iron Head"
+                ],
+                [
+                    36,
+                    "Gyro Ball"
+                ],
+                [
+                    39,
+                    "Swords Dance"
+                ],
+                [
+                    42,
+                    "Snowscape"
+                ],
+                [
+                    45,
+                    "Blizzard"
+                ]
+            ],
+            "egg": [
+                "Counter",
+                "Crush Claw",
+                "Curse",
+                "Flail",
+                "Hone Claws",
+                "Ice Shard",
+                "Mirror Coat",
+                "Night Slash"
+            ],
             "tm": {
                 "TM01": "Take Down",
                 "TM07": "Protect",
@@ -1975,6 +2058,44 @@
             }
         },
         "Sandslash-Alolan": {
+            "level": [
+                [
+                    1,
+                    "Icicle Crash"
+                ],
+                [
+                    1,
+                    "Metal Claw"
+                ],
+                [
+                    1,
+                    "Slash"
+                ],
+                [
+                    1,
+                    "Swords Dance"
+                ]
+            ],
+            "evo": [
+                "Icicle Spear"
+            ],
+            "reminder": [
+                "Blizzard",
+                "Defense Curl",
+                "Fury Cutter",
+                "Fury Swipes",
+                "Gyro Ball",
+                "Iron Defense",
+                "Iron Head",
+                "Metal Burst",
+                "Mist",
+                "Powder Snow",
+                "Rapid Spin",
+                "Rollout",
+                "Scratch",
+                "Snowscape",
+                "Swift"
+            ],
             "tm": {
                 "TM01": "Take Down",
                 "TM04": "Agility",
@@ -2418,6 +2539,76 @@
             }
         },
         "Vulpix-Alolan": {
+            "level": [
+                [
+                    1,
+                    "Powder Snow"
+                ],
+                [
+                    1,
+                    "Tail Whip"
+                ],
+                [
+                    4,
+                    "Disable"
+                ],
+                [
+                    8,
+                    "Ice Shard"
+                ],
+                [
+                    12,
+                    "Spite"
+                ],
+                [
+                    16,
+                    "Icy Wind"
+                ],
+                [
+                    20,
+                    "Confuse Ray"
+                ],
+                [
+                    24,
+                    "Aurora Beam"
+                ],
+                [
+                    28,
+                    "Extrasensory"
+                ],
+                [
+                    32,
+                    "Ice Beam"
+                ],
+                [
+                    36,
+                    "Imprison"
+                ],
+                [
+                    40,
+                    "Mist"
+                ],
+                [
+                    44,
+                    "Aurora Veil"
+                ],
+                [
+                    48,
+                    "Freeze-Dry"
+                ],
+                [
+                    52,
+                    "Blizzard"
+                ]
+            ],
+            "egg": [
+                "Baby-Doll Eyes",
+                "Flail",
+                "Howl",
+                "Hypnosis",
+                "Moonblast",
+                "Roar"
+            ],
             "tm": {
                 "TM01": "Take Down",
                 "TM02": "Charm",
@@ -2542,6 +2733,41 @@
             }
         },
         "Ninetales-Alolan": {
+            "level": [
+                [
+                    1,
+                    "Blizzard"
+                ],
+                [
+                    1,
+                    "Icy Wind"
+                ],
+                [
+                    1,
+                    "Imprison"
+                ],
+                [
+                    1,
+                    "Tail Whip"
+                ]
+            ],
+            "evo": [
+                "Dazzling Gleam"
+            ],
+            "reminder": [
+                "Aurora Beam",
+                "Aurora Veil",
+                "Confuse Ray",
+                "Disable",
+                "Extrasensory",
+                "Freeze-Dry",
+                "Ice Beam",
+                "Ice Shard",
+                "Mist",
+                "Nasty Plot",
+                "Powder Snow",
+                "Spite"
+            ],
             "tm": {
                 "TM01": "Take Down",
                 "TM02": "Charm",
@@ -3520,6 +3746,69 @@
             }
         },
         "Diglett-Alolan": {
+            "level": [
+                [
+                    1,
+                    "Metal Claw"
+                ],
+                [
+                    1,
+                    "Sand Attack"
+                ],
+                [
+                    4,
+                    "Growl"
+                ],
+                [
+                    8,
+                    "Astonish"
+                ],
+                [
+                    12,
+                    "Mud-Slap"
+                ],
+                [
+                    16,
+                    "Bulldoze"
+                ],
+                [
+                    20,
+                    "Sucker Punch"
+                ],
+                [
+                    24,
+                    "Iron Head"
+                ],
+                [
+                    28,
+                    "Sandstorm"
+                ],
+                [
+                    32,
+                    "Dig"
+                ],
+                [
+                    36,
+                    "Earth Power"
+                ],
+                [
+                    40,
+                    "Earthquake"
+                ],
+                [
+                    44,
+                    "Fissure"
+                ]
+            ],
+            "egg": [
+                "Ancient Power",
+                "Final Gambit",
+                "Headbutt",
+                "Hone Claws",
+                "Memento",
+                "Metal Sound",
+                "Thrash"
+            ],
             "tm": {
                 "TM01": "Take Down",
                 "TM02": "Charm",
@@ -3671,6 +3960,77 @@
             ]
         },
         "Dugtrio-Alolan": {
+            "level": [
+                [
+                    1,
+                    "Astonish"
+                ],
+                [
+                    1,
+                    "Growl"
+                ],
+                [
+                    1,
+                    "Metal Claw"
+                ],
+                [
+                    1,
+                    "Night Slash"
+                ],
+                [
+                    1,
+                    "Sand Attack"
+                ],
+                [
+                    1,
+                    "Tri Attack"
+                ],
+                [
+                    12,
+                    "Mud-Slap"
+                ],
+                [
+                    16,
+                    "Bulldoze"
+                ],
+                [
+                    20,
+                    "Sucker Punch"
+                ],
+                [
+                    24,
+                    "Iron Head"
+                ],
+                [
+                    30,
+                    "Sandstorm"
+                ],
+                [
+                    36,
+                    "Dig"
+                ],
+                [
+                    42,
+                    "Earth Power"
+                ],
+                [
+                    48,
+                    "Earthquake"
+                ],
+                [
+                    54,
+                    "Fissure"
+                ]
+            ],
+            "egg": [
+                "Ancient Power",
+                "Final Gambit",
+                "Headbutt",
+                "Hone Claws",
+                "Memento",
+                "Metal Sound",
+                "Thrash"
+            ],
             "tm": {
                 "TM01": "Take Down",
                 "TM02": "Charm",
@@ -3825,6 +4185,68 @@
             }
         },
         "Meowth-Alolan": {
+            "level": [
+                [
+                    1,
+                    "Fake Out"
+                ],
+                [
+                    1,
+                    "Growl"
+                ],
+                [
+                    4,
+                    "Feint"
+                ],
+                [
+                    8,
+                    "Scratch"
+                ],
+                [
+                    12,
+                    "Pay Day"
+                ],
+                [
+                    16,
+                    "Bite"
+                ],
+                [
+                    20,
+                    "Taunt"
+                ],
+                [
+                    24,
+                    "Assurance"
+                ],
+                [
+                    29,
+                    "Fury Swipes"
+                ],
+                [
+                    32,
+                    "Screech"
+                ],
+                [
+                    36,
+                    "Night Slash"
+                ],
+                [
+                    40,
+                    "Nasty Plot"
+                ],
+                [
+                    44,
+                    "Play Rough"
+                ]
+            ],
+            "egg": [
+                "Covet",
+                "Flail",
+                "Flatter",
+                "Hypnosis",
+                "Parting Shot",
+                "Spite"
+            ],
             "tm": {
                 "TM01": "Take Down",
                 "TM02": "Charm",
@@ -3870,6 +4292,68 @@
             }
         },
         "Meowth-Galarian": {
+            "level": [
+                [
+                    1,
+                    "Fake Out"
+                ],
+                [
+                    1,
+                    "Growl"
+                ],
+                [
+                    4,
+                    "Hone Claws"
+                ],
+                [
+                    8,
+                    "Scratch"
+                ],
+                [
+                    12,
+                    "Pay Day"
+                ],
+                [
+                    16,
+                    "Metal Claw"
+                ],
+                [
+                    20,
+                    "Taunt"
+                ],
+                [
+                    24,
+                    "Swagger"
+                ],
+                [
+                    29,
+                    "Fury Swipes"
+                ],
+                [
+                    32,
+                    "Screech"
+                ],
+                [
+                    36,
+                    "Slash"
+                ],
+                [
+                    40,
+                    "Metal Sound"
+                ],
+                [
+                    44,
+                    "Thrash"
+                ]
+            ],
+            "egg": [
+                "Covet",
+                "Curse",
+                "Double-Edge",
+                "Flail",
+                "Night Slash",
+                "Spite"
+            ],
             "tm": {
                 "TM01": "Take Down",
                 "TM02": "Charm",
@@ -4035,6 +4519,76 @@
             ]
         },
         "Persian-Alolan": {
+            "level": [
+                [
+                    1,
+                    "Fake Out"
+                ],
+                [
+                    1,
+                    "Feint"
+                ],
+                [
+                    1,
+                    "Growl"
+                ],
+                [
+                    1,
+                    "Quash"
+                ],
+                [
+                    1,
+                    "Scratch"
+                ],
+                [
+                    1,
+                    "Switcheroo"
+                ],
+                [
+                    12,
+                    "Pay Day"
+                ],
+                [
+                    16,
+                    "Bite"
+                ],
+                [
+                    20,
+                    "Taunt"
+                ],
+                [
+                    24,
+                    "Assurance"
+                ],
+                [
+                    31,
+                    "Fury Swipes"
+                ],
+                [
+                    36,
+                    "Screech"
+                ],
+                [
+                    42,
+                    "Night Slash"
+                ],
+                [
+                    48,
+                    "Nasty Plot"
+                ],
+                [
+                    54,
+                    "Play Rough"
+                ]
+            ],
+            "egg": [
+                "Covet",
+                "Flail",
+                "Flatter",
+                "Hypnosis",
+                "Parting Shot",
+                "Spite"
+            ],
             "tm": {
                 "TM01": "Take Down",
                 "TM02": "Charm",
@@ -4697,6 +5251,76 @@
             }
         },
         "Growlithe-Hisuian": {
+            "level": [
+                [
+                    1,
+                    "Ember"
+                ],
+                [
+                    1,
+                    "Leer"
+                ],
+                [
+                    4,
+                    "Howl"
+                ],
+                [
+                    8,
+                    "Bite"
+                ],
+                [
+                    12,
+                    "Flame Wheel"
+                ],
+                [
+                    16,
+                    "Helping Hand"
+                ],
+                [
+                    24,
+                    "Fire Fang"
+                ],
+                [
+                    28,
+                    "Retaliate"
+                ],
+                [
+                    32,
+                    "Crunch"
+                ],
+                [
+                    36,
+                    "Take Down"
+                ],
+                [
+                    40,
+                    "Flamethrower"
+                ],
+                [
+                    44,
+                    "Roar"
+                ],
+                [
+                    48,
+                    "Rock Slide"
+                ],
+                [
+                    52,
+                    "Reversal"
+                ],
+                [
+                    56,
+                    "Flare Blitz"
+                ]
+            ],
+            "egg": [
+                "Covet",
+                "Double-Edge",
+                "Double Kick",
+                "Head Smash",
+                "Morning Sun",
+                "Thrash"
+            ],
             "tm": {
                 "TM01": "Take Down",
                 "TM04": "Agility",
@@ -4862,6 +5486,88 @@
             ]
         },
         "Arcanine-Hisuian": {
+            "level": [
+                [
+                    1,
+                    "Agility"
+                ],
+                [
+                    1,
+                    "Bite"
+                ],
+                [
+                    1,
+                    "Crunch"
+                ],
+                [
+                    1,
+                    "Ember"
+                ],
+                [
+                    1,
+                    "Fire Fang"
+                ],
+                [
+                    1,
+                    "Flame Wheel"
+                ],
+                [
+                    1,
+                    "Flare Blitz"
+                ],
+                [
+                    1,
+                    "Helping Hand"
+                ],
+                [
+                    1,
+                    "Howl"
+                ],
+                [
+                    1,
+                    "Leer"
+                ],
+                [
+                    1,
+                    "Retaliate"
+                ],
+                [
+                    1,
+                    "Reversal"
+                ],
+                [
+                    1,
+                    "Roar"
+                ],
+                [
+                    1,
+                    "Rock Slide"
+                ],
+                [
+                    1,
+                    "Rock Throw"
+                ],
+                [
+                    1,
+                    "Take Down"
+                ],
+                [
+                    5,
+                    "Flamethrower"
+                ],
+                [
+                    64,
+                    "Raging Fury"
+                ]
+            ],
+            "egg": [
+                "Covet",
+                "Double-Edge",
+                "Double Kick",
+                "Head Smash",
+                "Morning Sun",
+                "Thrash"
+            ],
             "tm": {
                 "TM01": "Take Down",
                 "TM04": "Agility",
@@ -5799,6 +6505,82 @@
             }
         },
         "Geodude-Alolan": {
+            "level": [
+                [
+                    1,
+                    "Defense Curl"
+                ],
+                [
+                    1,
+                    "Tackle"
+                ],
+                [
+                    4,
+                    "Charge"
+                ],
+                [
+                    6,
+                    "Rock Polish"
+                ],
+                [
+                    10,
+                    "Rollout"
+                ],
+                [
+                    12,
+                    "Spark"
+                ],
+                [
+                    16,
+                    "Rock Throw"
+                ],
+                [
+                    18,
+                    "Smack Down"
+                ],
+                [
+                    22,
+                    "Thunder Punch"
+                ],
+                [
+                    24,
+                    "Self-Destruct"
+                ],
+                [
+                    28,
+                    "Stealth Rock"
+                ],
+                [
+                    30,
+                    "Rock Blast"
+                ],
+                [
+                    34,
+                    "Discharge"
+                ],
+                [
+                    36,
+                    "Explosion"
+                ],
+                [
+                    40,
+                    "Double-Edge"
+                ],
+                [
+                    42,
+                    "Stone Edge"
+                ]
+            ],
+            "egg": [
+                "Block",
+                "Counter",
+                "Curse",
+                "Endure",
+                "Flail",
+                "Screech",
+                "Wide Guard",
+                "Zap Cannon"
+            ],
             "tm": {
                 "TM01": "Take Down",
                 "TM05": "Mud-Slap",
@@ -5944,6 +6726,72 @@
             }
         },
         "Graveler-Alolan": {
+            "level": [
+                [
+                    1,
+                    "Charge"
+                ],
+                [
+                    1,
+                    "Defense Curl"
+                ],
+                [
+                    1,
+                    "Rock Polish"
+                ],
+                [
+                    1,
+                    "Tackle"
+                ],
+                [
+                    10,
+                    "Rollout"
+                ],
+                [
+                    12,
+                    "Spark"
+                ],
+                [
+                    16,
+                    "Rock Throw"
+                ],
+                [
+                    18,
+                    "Smack Down"
+                ],
+                [
+                    22,
+                    "Thunder Punch"
+                ],
+                [
+                    24,
+                    "Self-Destruct"
+                ],
+                [
+                    30,
+                    "Stealth Rock"
+                ],
+                [
+                    34,
+                    "Rock Blast"
+                ],
+                [
+                    40,
+                    "Discharge"
+                ],
+                [
+                    44,
+                    "Explosion"
+                ],
+                [
+                    50,
+                    "Double-Edge"
+                ],
+                [
+                    54,
+                    "Stone Edge"
+                ]
+            ],
             "tm": {
                 "TM01": "Take Down",
                 "TM05": "Mud-Slap",
@@ -6098,6 +6946,72 @@
             }
         },
         "Golem-Alolan": {
+            "level": [
+                [
+                    1,
+                    "Charge"
+                ],
+                [
+                    1,
+                    "Defense Curl"
+                ],
+                [
+                    1,
+                    "Heavy Slam"
+                ],
+                [
+                    1,
+                    "Rock Polish"
+                ],
+                [
+                    1,
+                    "Tackle"
+                ],
+                [
+                    12,
+                    "Spark"
+                ],
+                [
+                    16,
+                    "Rock Throw"
+                ],
+                [
+                    18,
+                    "Smack Down"
+                ],
+                [
+                    22,
+                    "Thunder Punch"
+                ],
+                [
+                    24,
+                    "Self-Destruct"
+                ],
+                [
+                    30,
+                    "Stealth Rock"
+                ],
+                [
+                    34,
+                    "Rock Blast"
+                ],
+                [
+                    40,
+                    "Discharge"
+                ],
+                [
+                    44,
+                    "Explosion"
+                ],
+                [
+                    50,
+                    "Double-Edge"
+                ],
+                [
+                    54,
+                    "Stone Edge"
+                ]
+            ],
             "tm": {
                 "TM01": "Take Down",
                 "TM05": "Mud-Slap",
@@ -6553,6 +7467,89 @@
             ]
         },
         "Slowbro-Galarian": {
+            "level": [
+                [
+                    1,
+                    "Acid"
+                ],
+                [
+                    1,
+                    "Curse"
+                ],
+                [
+                    1,
+                    "Growl"
+                ],
+                [
+                    1,
+                    "Tackle"
+                ],
+                [
+                    1,
+                    "Withdraw"
+                ],
+                [
+                    9,
+                    "Yawn"
+                ],
+                [
+                    12,
+                    "Confusion"
+                ],
+                [
+                    15,
+                    "Disable"
+                ],
+                [
+                    18,
+                    "Water Pulse"
+                ],
+                [
+                    21,
+                    "Headbutt"
+                ],
+                [
+                    24,
+                    "Zen Headbutt"
+                ],
+                [
+                    27,
+                    "Amnesia"
+                ],
+                [
+                    30,
+                    "Surf"
+                ],
+                [
+                    33,
+                    "Slack Off"
+                ],
+                [
+                    36,
+                    "Psychic"
+                ],
+                [
+                    39,
+                    "Psych Up"
+                ],
+                [
+                    42,
+                    "Rain Dance"
+                ],
+                [
+                    45,
+                    "Heal Pulse"
+                ]
+            ],
+            "evo": [
+                "Shell Side Arm"
+            ],
+            "egg": [
+                "Belch",
+                "Belly Drum",
+                "Block",
+                "Stomp"
+            ],
             "tm": {
                 "TM01": "Take Down",
                 "TM06": "Scary Face",
@@ -7396,6 +8393,72 @@
             }
         },
         "Grimer-Alolan": {
+            "level": [
+                [
+                    1,
+                    "Poison Gas"
+                ],
+                [
+                    1,
+                    "Pound"
+                ],
+                [
+                    4,
+                    "Harden"
+                ],
+                [
+                    7,
+                    "Bite"
+                ],
+                [
+                    12,
+                    "Disable"
+                ],
+                [
+                    15,
+                    "Acid Spray"
+                ],
+                [
+                    18,
+                    "Poison Fang"
+                ],
+                [
+                    21,
+                    "Minimize"
+                ],
+                [
+                    26,
+                    "Toxic"
+                ],
+                [
+                    29,
+                    "Knock Off"
+                ],
+                [
+                    32,
+                    "Crunch"
+                ],
+                [
+                    37,
+                    "Screech"
+                ],
+                [
+                    40,
+                    "Gunk Shot"
+                ],
+                [
+                    43,
+                    "Acid Armor"
+                ],
+                [
+                    46,
+                    "Belch"
+                ],
+                [
+                    48,
+                    "Memento"
+                ]
+            ],
             "tm": {
                 "TM01": "Take Down",
                 "TM05": "Mud-Slap",
@@ -7579,6 +8642,72 @@
             }
         },
         "Muk-Alolan": {
+            "level": [
+                [
+                    1,
+                    "Bite"
+                ],
+                [
+                    1,
+                    "Harden"
+                ],
+                [
+                    1,
+                    "Poison Gas"
+                ],
+                [
+                    1,
+                    "Pound"
+                ],
+                [
+                    12,
+                    "Disable"
+                ],
+                [
+                    15,
+                    "Acid Spray"
+                ],
+                [
+                    18,
+                    "Poison Fang"
+                ],
+                [
+                    21,
+                    "Minimize"
+                ],
+                [
+                    26,
+                    "Toxic"
+                ],
+                [
+                    29,
+                    "Knock Off"
+                ],
+                [
+                    32,
+                    "Crunch"
+                ],
+                [
+                    37,
+                    "Screech"
+                ],
+                [
+                    40,
+                    "Gunk Shot"
+                ],
+                [
+                    46,
+                    "Acid Armor"
+                ],
+                [
+                    52,
+                    "Belch"
+                ],
+                [
+                    57,
+                    "Memento"
+                ]
+            ],
             "tm": {
                 "TM01": "Take Down",
                 "TM05": "Mud-Slap",
@@ -8573,6 +9702,81 @@
             }
         },
         "Voltorb-Hisuian": {
+            "level": [
+                [
+                    1,
+                    "Charge"
+                ],
+                [
+                    1,
+                    "Tackle"
+                ],
+                [
+                    4,
+                    "Thunder Shock"
+                ],
+                [
+                    6,
+                    "Stun Spore"
+                ],
+                [
+                    9,
+                    "Bullet Seed"
+                ],
+                [
+                    11,
+                    "Rollout"
+                ],
+                [
+                    13,
+                    "Screech"
+                ],
+                [
+                    16,
+                    "Charge Beam"
+                ],
+                [
+                    20,
+                    "Swift"
+                ],
+                [
+                    22,
+                    "Electro Ball"
+                ],
+                [
+                    26,
+                    "Self-Destruct"
+                ],
+                [
+                    29,
+                    "Energy Ball"
+                ],
+                [
+                    34,
+                    "Discharge"
+                ],
+                [
+                    34,
+                    "Seed Bomb"
+                ],
+                [
+                    41,
+                    "Explosion"
+                ],
+                [
+                    46,
+                    "Gyro Ball"
+                ],
+                [
+                    50,
+                    "Grassy Terrain"
+                ]
+            ],
+            "egg": [
+                "Leech Seed",
+                "Recycle",
+                "Worry Seed"
+            ],
             "tm": {
                 "TM01": "Take Down",
                 "TM04": "Agility",
@@ -8718,6 +9922,84 @@
             }
         },
         "Electrode-Hisuian": {
+            "level": [
+                [
+                    1,
+                    "Charge"
+                ],
+                [
+                    1,
+                    "Tackle"
+                ],
+                [
+                    4,
+                    "Thunder Shock"
+                ],
+                [
+                    6,
+                    "Stun Spore"
+                ],
+                [
+                    9,
+                    "Bullet Seed"
+                ],
+                [
+                    11,
+                    "Rollout"
+                ],
+                [
+                    13,
+                    "Screech"
+                ],
+                [
+                    16,
+                    "Charge Beam"
+                ],
+                [
+                    20,
+                    "Swift"
+                ],
+                [
+                    22,
+                    "Electro Ball"
+                ],
+                [
+                    26,
+                    "Self-Destruct"
+                ],
+                [
+                    29,
+                    "Energy Ball"
+                ],
+                [
+                    34,
+                    "Discharge"
+                ],
+                [
+                    34,
+                    "Seed Bomb"
+                ],
+                [
+                    41,
+                    "Explosion"
+                ],
+                [
+                    46,
+                    "Gyro Ball"
+                ],
+                [
+                    50,
+                    "Grassy Terrain"
+                ]
+            ],
+            "evo": [
+                "Chloroblast"
+            ],
+            "egg": [
+                "Leech Seed",
+                "Recycle",
+                "Worry Seed"
+            ],
             "tm": {
                 "TM01": "Take Down",
                 "TM04": "Agility",
@@ -8990,6 +10272,9 @@
             ]
         },
         "Exeggutor-Alolan": {
+            "evo": [
+                "Dragon Hammer"
+            ],
             "tm": {
                 "TM01": "Take Down",
                 "TM07": "Protect",
@@ -9599,6 +10884,92 @@
             ]
         },
         "Weezing-Galarian": {
+            "level": [
+                [
+                    1,
+                    "Aromatic Mist"
+                ],
+                [
+                    1,
+                    "Defog"
+                ],
+                [
+                    1,
+                    "Haze"
+                ],
+                [
+                    1,
+                    "Heat Wave"
+                ],
+                [
+                    1,
+                    "Poison Gas"
+                ],
+                [
+                    1,
+                    "Smog"
+                ],
+                [
+                    1,
+                    "Smokescreen"
+                ],
+                [
+                    1,
+                    "Strange Steam"
+                ],
+                [
+                    1,
+                    "Tackle"
+                ],
+                [
+                    12,
+                    "Clear Smog"
+                ],
+                [
+                    16,
+                    "Assurance"
+                ],
+                [
+                    20,
+                    "Sludge"
+                ],
+                [
+                    24,
+                    "Fairy Wind"
+                ],
+                [
+                    28,
+                    "Self-Destruct"
+                ],
+                [
+                    32,
+                    "Sludge Bomb"
+                ],
+                [
+                    38,
+                    "Toxic"
+                ],
+                [
+                    44,
+                    "Belch"
+                ],
+                [
+                    50,
+                    "Explosion"
+                ],
+                [
+                    56,
+                    "Memento"
+                ],
+                [
+                    62,
+                    "Destiny Bond"
+                ],
+                [
+                    68,
+                    "Misty Terrain"
+                ]
+            ],
             "tm": {
                 "TM01": "Take Down",
                 "TM06": "Scary Face",
@@ -11872,6 +13243,68 @@
             }
         },
         "Articuno-Galarian": {
+            "level": [
+                [
+                    1,
+                    "Gust"
+                ],
+                [
+                    5,
+                    "Confusion"
+                ],
+                [
+                    10,
+                    "Reflect"
+                ],
+                [
+                    15,
+                    "Hypnosis"
+                ],
+                [
+                    20,
+                    "Agility"
+                ],
+                [
+                    25,
+                    "Ancient Power"
+                ],
+                [
+                    30,
+                    "Tailwind"
+                ],
+                [
+                    35,
+                    "Psycho Cut"
+                ],
+                [
+                    40,
+                    "Recover"
+                ],
+                [
+                    45,
+                    "Freezing Glare"
+                ],
+                [
+                    50,
+                    "Dream Eater"
+                ],
+                [
+                    55,
+                    "Hurricane"
+                ],
+                [
+                    60,
+                    "Double Team"
+                ],
+                [
+                    65,
+                    "Future Sight"
+                ],
+                [
+                    70,
+                    "Trick Room"
+                ]
+            ],
             "tm": {
                 "TM01": "Take Down",
                 "TM04": "Agility",
@@ -12018,6 +13451,72 @@
             }
         },
         "Zapdos-Galarian": {
+            "level": [
+                [
+                    1,
+                    "Focus Energy"
+                ],
+                [
+                    1,
+                    "Peck"
+                ],
+                [
+                    5,
+                    "Rock Smash"
+                ],
+                [
+                    10,
+                    "Light Screen"
+                ],
+                [
+                    15,
+                    "Pluck"
+                ],
+                [
+                    20,
+                    "Agility"
+                ],
+                [
+                    25,
+                    "Ancient Power"
+                ],
+                [
+                    30,
+                    "Brick Break"
+                ],
+                [
+                    35,
+                    "Drill Peck"
+                ],
+                [
+                    40,
+                    "Quick Guard"
+                ],
+                [
+                    45,
+                    "Thunderous Kick"
+                ],
+                [
+                    50,
+                    "Bulk Up"
+                ],
+                [
+                    55,
+                    "Counter"
+                ],
+                [
+                    60,
+                    "Detect"
+                ],
+                [
+                    65,
+                    "Close Combat"
+                ],
+                [
+                    70,
+                    "Reversal"
+                ]
+            ],
             "tm": {
                 "TM01": "Take Down",
                 "TM04": "Agility",
@@ -12160,6 +13659,72 @@
             }
         },
         "Moltres-Galarian": {
+            "level": [
+                [
+                    1,
+                    "Gust"
+                ],
+                [
+                    1,
+                    "Leer"
+                ],
+                [
+                    5,
+                    "Payback"
+                ],
+                [
+                    10,
+                    "Safeguard"
+                ],
+                [
+                    15,
+                    "Wing Attack"
+                ],
+                [
+                    20,
+                    "Agility"
+                ],
+                [
+                    25,
+                    "Ancient Power"
+                ],
+                [
+                    30,
+                    "Sucker Punch"
+                ],
+                [
+                    35,
+                    "Air Slash"
+                ],
+                [
+                    40,
+                    "After You"
+                ],
+                [
+                    45,
+                    "Fiery Wrath"
+                ],
+                [
+                    50,
+                    "Nasty Plot"
+                ],
+                [
+                    55,
+                    "Hurricane"
+                ],
+                [
+                    60,
+                    "Endure"
+                ],
+                [
+                    65,
+                    "Memento"
+                ],
+                [
+                    70,
+                    "Sky Attack"
+                ]
+            ],
             "tm": {
                 "TM01": "Take Down",
                 "TM04": "Agility",
@@ -13602,6 +15167,9 @@
             ]
         },
         "Typhlosion-Hisuian": {
+            "evo": [
+                "Infernal Parade"
+            ],
             "tm": {
                 "TM01": "Take Down",
                 "TM07": "Protect",
@@ -17767,6 +19335,96 @@
             ]
         },
         "Slowking-Galarian": {
+            "level": [
+                [
+                    1,
+                    "Acid"
+                ],
+                [
+                    1,
+                    "Curse"
+                ],
+                [
+                    1,
+                    "Growl"
+                ],
+                [
+                    1,
+                    "Nasty Plot"
+                ],
+                [
+                    1,
+                    "Power Gem"
+                ],
+                [
+                    1,
+                    "Swagger"
+                ],
+                [
+                    1,
+                    "Tackle"
+                ],
+                [
+                    9,
+                    "Yawn"
+                ],
+                [
+                    12,
+                    "Confusion"
+                ],
+                [
+                    15,
+                    "Disable"
+                ],
+                [
+                    18,
+                    "Water Pulse"
+                ],
+                [
+                    21,
+                    "Headbutt"
+                ],
+                [
+                    24,
+                    "Zen Headbutt"
+                ],
+                [
+                    27,
+                    "Amnesia"
+                ],
+                [
+                    30,
+                    "Surf"
+                ],
+                [
+                    33,
+                    "Slack Off"
+                ],
+                [
+                    36,
+                    "Psychic"
+                ],
+                [
+                    39,
+                    "Psych Up"
+                ],
+                [
+                    42,
+                    "Rain Dance"
+                ],
+                [
+                    45,
+                    "Heal Pulse"
+                ]
+            ],
+            "evo": [
+                "Eerie Spell"
+            ],
+            "reminder": [
+                "Chilly Reception",
+                "Future Sight",
+                "Toxic"
+            ],
             "tm": {
                 "TM01": "Take Down",
                 "TM06": "Scary Face",
@@ -19002,6 +20660,88 @@
             }
         },
         "Qwilfish-Hisuian": {
+            "level": [
+                [
+                    1,
+                    "Poison Sting"
+                ],
+                [
+                    1,
+                    "Tackle"
+                ],
+                [
+                    4,
+                    "Harden"
+                ],
+                [
+                    8,
+                    "Bite"
+                ],
+                [
+                    12,
+                    "Fell Stinger"
+                ],
+                [
+                    16,
+                    "Minimize"
+                ],
+                [
+                    20,
+                    "Spikes"
+                ],
+                [
+                    24,
+                    "Brine"
+                ],
+                [
+                    28,
+                    "Barb Barrage"
+                ],
+                [
+                    32,
+                    "Pin Missile"
+                ],
+                [
+                    36,
+                    "Toxic Spikes"
+                ],
+                [
+                    40,
+                    "Spit Up"
+                ],
+                [
+                    40,
+                    "Stockpile"
+                ],
+                [
+                    44,
+                    "Toxic"
+                ],
+                [
+                    48,
+                    "Crunch"
+                ],
+                [
+                    52,
+                    "Acupressure"
+                ],
+                [
+                    56,
+                    "Destiny Bond"
+                ]
+            ],
+            "egg": [
+                "Acid Spray",
+                "Aqua Jet",
+                "Aqua Tail",
+                "Astonish",
+                "Bubble Beam",
+                "Flail",
+                "Haze",
+                "Self-Destruct",
+                "Supersonic",
+                "Water Pulse"
+            ],
             "tm": {
                 "TM01": "Take Down",
                 "TM04": "Agility",
@@ -19392,6 +21132,69 @@
             }
         },
         "Sneasel-Hisuian": {
+            "level": [
+                [
+                    1,
+                    "Leer"
+                ],
+                [
+                    1,
+                    "Rock Smash"
+                ],
+                [
+                    1,
+                    "Scratch"
+                ],
+                [
+                    6,
+                    "Taunt"
+                ],
+                [
+                    12,
+                    "Quick Attack"
+                ],
+                [
+                    18,
+                    "Metal Claw"
+                ],
+                [
+                    24,
+                    "Poison Jab"
+                ],
+                [
+                    30,
+                    "Brick Break"
+                ],
+                [
+                    36,
+                    "Hone Claws"
+                ],
+                [
+                    42,
+                    "Slash"
+                ],
+                [
+                    48,
+                    "Agility"
+                ],
+                [
+                    54,
+                    "Screech"
+                ],
+                [
+                    60,
+                    "Close Combat"
+                ]
+            ],
+            "egg": [
+                "Counter",
+                "Double Hit",
+                "Fake Out",
+                "Feint",
+                "Night Slash",
+                "Quick Guard",
+                "Switcheroo"
+            ],
             "tm": {
                 "TM01": "Take Down",
                 "TM04": "Agility",
@@ -32822,6 +34625,64 @@
             }
         },
         "Deoxys-Attack": {
+            "level": [
+                [
+                    1,
+                    "Leer"
+                ],
+                [
+                    1,
+                    "Wrap"
+                ],
+                [
+                    7,
+                    "Night Shade"
+                ],
+                [
+                    13,
+                    "Teleport"
+                ],
+                [
+                    19,
+                    "Taunt"
+                ],
+                [
+                    25,
+                    "Psyshock"
+                ],
+                [
+                    31,
+                    "Psychic"
+                ],
+                [
+                    37,
+                    "Superpower"
+                ],
+                [
+                    43,
+                    "Skill Swap"
+                ],
+                [
+                    49,
+                    "Zen Headbutt"
+                ],
+                [
+                    55,
+                    "Cosmic Power"
+                ],
+                [
+                    61,
+                    "Zap Cannon"
+                ],
+                [
+                    67,
+                    "Psycho Boost"
+                ],
+                [
+                    73,
+                    "Hyper Beam"
+                ]
+            ],
             "tm": {
                 "TM01": "Take Down",
                 "TM04": "Agility",
@@ -32894,6 +34755,72 @@
             }
         },
         "Deoxys-Defense": {
+            "level": [
+                [
+                    1,
+                    "Leer"
+                ],
+                [
+                    1,
+                    "Wrap"
+                ],
+                [
+                    7,
+                    "Night Shade"
+                ],
+                [
+                    13,
+                    "Teleport"
+                ],
+                [
+                    19,
+                    "Knock Off"
+                ],
+                [
+                    25,
+                    "Spikes"
+                ],
+                [
+                    31,
+                    "Psychic"
+                ],
+                [
+                    37,
+                    "Protect"
+                ],
+                [
+                    43,
+                    "Skill Swap"
+                ],
+                [
+                    49,
+                    "Zen Headbutt"
+                ],
+                [
+                    55,
+                    "Amnesia"
+                ],
+                [
+                    55,
+                    "Iron Defense"
+                ],
+                [
+                    61,
+                    "Recover"
+                ],
+                [
+                    67,
+                    "Psycho Boost"
+                ],
+                [
+                    73,
+                    "Counter"
+                ],
+                [
+                    73,
+                    "Mirror Coat"
+                ]
+            ],
             "tm": {
                 "TM01": "Take Down",
                 "TM04": "Agility",
@@ -32968,6 +34895,64 @@
             }
         },
         "Deoxys-Speed": {
+            "level": [
+                [
+                    1,
+                    "Leer"
+                ],
+                [
+                    1,
+                    "Wrap"
+                ],
+                [
+                    7,
+                    "Night Shade"
+                ],
+                [
+                    13,
+                    "Double Team"
+                ],
+                [
+                    19,
+                    "Knock Off"
+                ],
+                [
+                    25,
+                    "Psyshock"
+                ],
+                [
+                    31,
+                    "Psychic"
+                ],
+                [
+                    37,
+                    "Swift"
+                ],
+                [
+                    43,
+                    "Skill Swap"
+                ],
+                [
+                    49,
+                    "Zen Headbutt"
+                ],
+                [
+                    55,
+                    "Agility"
+                ],
+                [
+                    61,
+                    "Recover"
+                ],
+                [
+                    67,
+                    "Psycho Boost"
+                ],
+                [
+                    73,
+                    "Extreme Speed"
+                ]
+            ],
             "tm": {
                 "TM01": "Take Down",
                 "TM04": "Agility",
@@ -43638,6 +45623,79 @@
             ]
         },
         "Samurott-Hisuian": {
+            "level": [
+                [
+                    1,
+                    "Megahorn"
+                ],
+                [
+                    1,
+                    "Slash"
+                ],
+                [
+                    1,
+                    "Sucker Punch"
+                ],
+                [
+                    1,
+                    "Tackle"
+                ],
+                [
+                    1,
+                    "Tail Whip"
+                ],
+                [
+                    1,
+                    "Water Gun"
+                ],
+                [
+                    13,
+                    "Focus Energy"
+                ],
+                [
+                    18,
+                    "Razor Shell"
+                ],
+                [
+                    21,
+                    "Fury Cutter"
+                ],
+                [
+                    25,
+                    "Water Pulse"
+                ],
+                [
+                    29,
+                    "Aerial Ace"
+                ],
+                [
+                    34,
+                    "Aqua Jet"
+                ],
+                [
+                    39,
+                    "Encore"
+                ],
+                [
+                    46,
+                    "Aqua Tail"
+                ],
+                [
+                    51,
+                    "Retaliate"
+                ],
+                [
+                    58,
+                    "Swords Dance"
+                ],
+                [
+                    63,
+                    "Hydro Pump"
+                ]
+            ],
+            "evo": [
+                "Ceaseless Edge"
+            ],
             "tm": {
                 "TM01": "Take Down",
                 "TM06": "Scary Face",
@@ -45145,6 +47203,99 @@
             ]
         },
         "Lilligant-Hisuian": {
+            "level": [
+                [
+                    1,
+                    "Absorb"
+                ],
+                [
+                    1,
+                    "After You"
+                ],
+                [
+                    1,
+                    "Defog"
+                ],
+                [
+                    1,
+                    "Energy Ball"
+                ],
+                [
+                    1,
+                    "Entrainment"
+                ],
+                [
+                    1,
+                    "Giga Drain"
+                ],
+                [
+                    1,
+                    "Growth"
+                ],
+                [
+                    1,
+                    "Helping Hand"
+                ],
+                [
+                    1,
+                    "Leaf Blade"
+                ],
+                [
+                    1,
+                    "Leaf Storm"
+                ],
+                [
+                    1,
+                    "Leech Seed"
+                ],
+                [
+                    1,
+                    "Magical Leaf"
+                ],
+                [
+                    1,
+                    "Mega Drain"
+                ],
+                [
+                    1,
+                    "Mega Kick"
+                ],
+                [
+                    1,
+                    "Petal Blizzard"
+                ],
+                [
+                    1,
+                    "Sleep Powder"
+                ],
+                [
+                    1,
+                    "Solar Blade"
+                ],
+                [
+                    1,
+                    "Stun Spore"
+                ],
+                [
+                    1,
+                    "Sunny Day"
+                ],
+                [
+                    1,
+                    "Synthesis"
+                ],
+                [
+                    1,
+                    "Teeter Dance"
+                ],
+                [
+                    5,
+                    "Axe Kick"
+                ]
+            ],
+            "evo": [
+                "Victory Dance"
+            ],
             "tm": {
                 "TM01": "Take Down",
                 "TM02": "Charm",
@@ -45298,6 +47449,76 @@
             }
         },
         "Basculin-Blue-Striped": {
+            "level": [
+                [
+                    1,
+                    "Tail Whip"
+                ],
+                [
+                    1,
+                    "Water Gun"
+                ],
+                [
+                    4,
+                    "Tackle"
+                ],
+                [
+                    8,
+                    "Flail"
+                ],
+                [
+                    12,
+                    "Aqua Jet"
+                ],
+                [
+                    16,
+                    "Bite"
+                ],
+                [
+                    20,
+                    "Scary Face"
+                ],
+                [
+                    24,
+                    "Headbutt"
+                ],
+                [
+                    28,
+                    "Soak"
+                ],
+                [
+                    32,
+                    "Crunch"
+                ],
+                [
+                    36,
+                    "Take Down"
+                ],
+                [
+                    40,
+                    "Final Gambit"
+                ],
+                [
+                    44,
+                    "Wave Crash"
+                ],
+                [
+                    48,
+                    "Thrash"
+                ],
+                [
+                    52,
+                    "Double-Edge"
+                ],
+                [
+                    56,
+                    "Head Smash"
+                ]
+            ],
+            "egg": [
+                "Bubble Beam",
+                "Endeavor"
+            ],
             "tm": {
                 "TM01": "Take Down",
                 "TM04": "Agility",
@@ -45333,6 +47554,76 @@
             }
         },
         "Basculin-White-Striped": {
+            "level": [
+                [
+                    1,
+                    "Tail Whip"
+                ],
+                [
+                    1,
+                    "Water Gun"
+                ],
+                [
+                    4,
+                    "Tackle"
+                ],
+                [
+                    8,
+                    "Flail"
+                ],
+                [
+                    12,
+                    "Aqua Jet"
+                ],
+                [
+                    16,
+                    "Bite"
+                ],
+                [
+                    20,
+                    "Scary Face"
+                ],
+                [
+                    24,
+                    "Headbutt"
+                ],
+                [
+                    28,
+                    "Soak"
+                ],
+                [
+                    32,
+                    "Crunch"
+                ],
+                [
+                    36,
+                    "Take Down"
+                ],
+                [
+                    40,
+                    "Uproar"
+                ],
+                [
+                    44,
+                    "Wave Crash"
+                ],
+                [
+                    48,
+                    "Thrash"
+                ],
+                [
+                    52,
+                    "Double-Edge"
+                ],
+                [
+                    56,
+                    "Head Smash"
+                ]
+            ],
+            "egg": [
+                "Endeavor",
+                "Last Respects"
+            ],
             "tm": {
                 "TM01": "Take Down",
                 "TM04": "Agility",
@@ -46099,6 +48390,70 @@
             }
         },
         "Zorua-Hisuian": {
+            "level": [
+                [
+                    1,
+                    "Leer"
+                ],
+                [
+                    1,
+                    "Scratch"
+                ],
+                [
+                    4,
+                    "Torment"
+                ],
+                [
+                    8,
+                    "Hone Claws"
+                ],
+                [
+                    12,
+                    "Shadow Sneak"
+                ],
+                [
+                    16,
+                    "Curse"
+                ],
+                [
+                    20,
+                    "Taunt"
+                ],
+                [
+                    24,
+                    "Knock Off"
+                ],
+                [
+                    28,
+                    "Spite"
+                ],
+                [
+                    32,
+                    "Agility"
+                ],
+                [
+                    36,
+                    "Shadow Ball"
+                ],
+                [
+                    40,
+                    "Bitter Malice"
+                ],
+                [
+                    44,
+                    "Nasty Plot"
+                ],
+                [
+                    48,
+                    "Foul Play"
+                ]
+            ],
+            "egg": [
+                "Comeuppance",
+                "Detect",
+                "Extrasensory",
+                "Memento"
+            ],
             "tm": {
                 "TM01": "Take Down",
                 "TM03": "Fake Tears",
@@ -46259,6 +48614,77 @@
             }
         },
         "Zoroark-Hisuian": {
+            "level": [
+                [
+                    1,
+                    "Hone Claws"
+                ],
+                [
+                    1,
+                    "Leer"
+                ],
+                [
+                    1,
+                    "Scratch"
+                ],
+                [
+                    1,
+                    "Torment"
+                ],
+                [
+                    1,
+                    "U-turn"
+                ],
+                [
+                    12,
+                    "Shadow Sneak"
+                ],
+                [
+                    16,
+                    "Curse"
+                ],
+                [
+                    20,
+                    "Taunt"
+                ],
+                [
+                    24,
+                    "Knock Off"
+                ],
+                [
+                    28,
+                    "Spite"
+                ],
+                [
+                    34,
+                    "Agility"
+                ],
+                [
+                    40,
+                    "Shadow Ball"
+                ],
+                [
+                    46,
+                    "Bitter Malice"
+                ],
+                [
+                    52,
+                    "Nasty Plot"
+                ],
+                [
+                    58,
+                    "Foul Play"
+                ]
+            ],
+            "evo": [
+                "Shadow Claw"
+            ],
+            "egg": [
+                "Comeuppance",
+                "Detect",
+                "Extrasensory",
+                "Memento"
+            ],
             "tm": {
                 "TM01": "Take Down",
                 "TM03": "Fake Tears",
@@ -50307,6 +52733,75 @@
             ]
         },
         "Braviary-Hisuian": {
+            "level": [
+                [
+                    1,
+                    "Hone Claws"
+                ],
+                [
+                    1,
+                    "Leer"
+                ],
+                [
+                    1,
+                    "Peck"
+                ],
+                [
+                    1,
+                    "Sky Attack"
+                ],
+                [
+                    1,
+                    "Superpower"
+                ],
+                [
+                    1,
+                    "Wing Attack"
+                ],
+                [
+                    18,
+                    "Tailwind"
+                ],
+                [
+                    24,
+                    "Scary Face"
+                ],
+                [
+                    30,
+                    "Aerial Ace"
+                ],
+                [
+                    36,
+                    "Slash"
+                ],
+                [
+                    42,
+                    "Whirlwind"
+                ],
+                [
+                    48,
+                    "Crush Claw"
+                ],
+                [
+                    57,
+                    "Air Slash"
+                ],
+                [
+                    64,
+                    "Defog"
+                ],
+                [
+                    72,
+                    "Thrash"
+                ],
+                [
+                    80,
+                    "Hurricane"
+                ]
+            ],
+            "evo": [
+                "Esper Wing"
+            ],
             "tm": {
                 "TM01": "Take Down",
                 "TM04": "Agility",
@@ -55225,7 +57720,85 @@
                 "TM228": "Psychic Noise"
             }
         },
-        "Meowstic-Male": {
+        "Meowstic-Female": {
+            "level": [
+                [
+                    1,
+                    "Disarming Voice"
+                ],
+                [
+                    1,
+                    "Fake Out"
+                ],
+                [
+                    1,
+                    "Leer"
+                ],
+                [
+                    1,
+                    "Magical Leaf"
+                ],
+                [
+                    1,
+                    "Scratch"
+                ],
+                [
+                    9,
+                    "Confusion"
+                ],
+                [
+                    12,
+                    "Stored Power"
+                ],
+                [
+                    15,
+                    "Charge Beam"
+                ],
+                [
+                    18,
+                    "Covet"
+                ],
+                [
+                    21,
+                    "Psybeam"
+                ],
+                [
+                    24,
+                    "Sucker Punch"
+                ],
+                [
+                    29,
+                    "Role Play"
+                ],
+                [
+                    34,
+                    "Light Screen"
+                ],
+                [
+                    34,
+                    "Reflect"
+                ],
+                [
+                    39,
+                    "Psyshock"
+                ],
+                [
+                    44,
+                    "Extrasensory"
+                ],
+                [
+                    49,
+                    "Shadow Ball"
+                ],
+                [
+                    54,
+                    "Psychic"
+                ],
+                [
+                    59,
+                    "Future Sight"
+                ]
+            ],
             "tm": {
                 "TM02": "Charm",
                 "TM03": "Fake Tears",
@@ -56578,6 +59151,63 @@
             ]
         },
         "Sliggoo-Hisuian": {
+            "level": [
+                [
+                    1,
+                    "Absorb"
+                ],
+                [
+                    1,
+                    "Acid Armor"
+                ],
+                [
+                    1,
+                    "Dragon Breath"
+                ],
+                [
+                    1,
+                    "Tackle"
+                ],
+                [
+                    1,
+                    "Water Gun"
+                ],
+                [
+                    15,
+                    "Protect"
+                ],
+                [
+                    20,
+                    "Flail"
+                ],
+                [
+                    25,
+                    "Water Pulse"
+                ],
+                [
+                    30,
+                    "Rain Dance"
+                ],
+                [
+                    35,
+                    "Dragon Pulse"
+                ],
+                [
+                    43,
+                    "Curse"
+                ],
+                [
+                    49,
+                    "Iron Head"
+                ],
+                [
+                    56,
+                    "Muddy Water"
+                ]
+            ],
+            "evo": [
+                "Shelter"
+            ],
             "tm": {
                 "TM01": "Take Down",
                 "TM02": "Charm",
@@ -56736,6 +59366,83 @@
             ]
         },
         "Goodra-Hisuian": {
+            "level": [
+                [
+                    1,
+                    "Absorb"
+                ],
+                [
+                    1,
+                    "Acid Spray"
+                ],
+                [
+                    1,
+                    "Dragon Breath"
+                ],
+                [
+                    1,
+                    "Feint"
+                ],
+                [
+                    1,
+                    "Shelter"
+                ],
+                [
+                    1,
+                    "Tackle"
+                ],
+                [
+                    1,
+                    "Tearful Look"
+                ],
+                [
+                    1,
+                    "Water Gun"
+                ],
+                [
+                    15,
+                    "Protect"
+                ],
+                [
+                    20,
+                    "Flail"
+                ],
+                [
+                    25,
+                    "Water Pulse"
+                ],
+                [
+                    30,
+                    "Rain Dance"
+                ],
+                [
+                    35,
+                    "Dragon Pulse"
+                ],
+                [
+                    43,
+                    "Curse"
+                ],
+                [
+                    49,
+                    "Body Slam"
+                ],
+                [
+                    49,
+                    "Iron Head"
+                ],
+                [
+                    58,
+                    "Muddy Water"
+                ],
+                [
+                    67,
+                    "Heavy Slam"
+                ]
+            ],
+            "evo": [
+                "Iron Tail"
+            ],
             "tm": {
                 "TM01": "Take Down",
                 "TM02": "Charm",
@@ -57347,6 +60054,87 @@
             ]
         },
         "Avalugg-Hisuian": {
+            "level": [
+                [
+                    1,
+                    "Harden"
+                ],
+                [
+                    1,
+                    "Powder Snow"
+                ],
+                [
+                    1,
+                    "Rapid Spin"
+                ],
+                [
+                    1,
+                    "Tackle"
+                ],
+                [
+                    1,
+                    "Wide Guard"
+                ],
+                [
+                    9,
+                    "Curse"
+                ],
+                [
+                    12,
+                    "Icy Wind"
+                ],
+                [
+                    15,
+                    "Protect"
+                ],
+                [
+                    18,
+                    "Avalanche"
+                ],
+                [
+                    21,
+                    "Bite"
+                ],
+                [
+                    24,
+                    "Ice Fang"
+                ],
+                [
+                    27,
+                    "Iron Defense"
+                ],
+                [
+                    30,
+                    "Recover"
+                ],
+                [
+                    33,
+                    "Crunch"
+                ],
+                [
+                    36,
+                    "Take Down"
+                ],
+                [
+                    41,
+                    "Blizzard"
+                ],
+                [
+                    46,
+                    "Double-Edge"
+                ],
+                [
+                    51,
+                    "Stone Edge"
+                ],
+                [
+                    61,
+                    "Mountain Gale"
+                ]
+            ],
+            "evo": [
+                "Rock Slide"
+            ],
             "tm": {
                 "TM01": "Take Down",
                 "TM06": "Scary Face",
@@ -58445,6 +61233,71 @@
             ]
         },
         "Decidueye-Hisuian": {
+            "level": [
+                [
+                    1,
+                    "Growl"
+                ],
+                [
+                    1,
+                    "Leaf Storm"
+                ],
+                [
+                    1,
+                    "Leafage"
+                ],
+                [
+                    1,
+                    "Tackle"
+                ],
+                [
+                    1,
+                    "U-turn"
+                ],
+                [
+                    9,
+                    "Peck"
+                ],
+                [
+                    12,
+                    "Shadow Sneak"
+                ],
+                [
+                    15,
+                    "Razor Leaf"
+                ],
+                [
+                    20,
+                    "Synthesis"
+                ],
+                [
+                    25,
+                    "Pluck"
+                ],
+                [
+                    30,
+                    "Bulk Up"
+                ],
+                [
+                    37,
+                    "Sucker Punch"
+                ],
+                [
+                    44,
+                    "Leaf Blade"
+                ],
+                [
+                    51,
+                    "Feather Dance"
+                ],
+                [
+                    58,
+                    "Brave Bird"
+                ]
+            ],
+            "evo": [
+                "Triple Arrows"
+            ],
             "tm": {
                 "TM01": "Take Down",
                 "TM06": "Scary Face",
@@ -60681,6 +63534,84 @@
             }
         },
         "Lycanroc-Midnight": {
+            "level": [
+                [
+                    1,
+                    "Double Team"
+                ],
+                [
+                    1,
+                    "Endure"
+                ],
+                [
+                    1,
+                    "Leer"
+                ],
+                [
+                    1,
+                    "Reversal"
+                ],
+                [
+                    1,
+                    "Sand Attack"
+                ],
+                [
+                    1,
+                    "Tackle"
+                ],
+                [
+                    1,
+                    "Taunt"
+                ],
+                [
+                    12,
+                    "Rock Throw"
+                ],
+                [
+                    16,
+                    "Howl"
+                ],
+                [
+                    20,
+                    "Bite"
+                ],
+                [
+                    24,
+                    "Rock Tomb"
+                ],
+                [
+                    30,
+                    "Roar"
+                ],
+                [
+                    36,
+                    "Rock Slide"
+                ],
+                [
+                    42,
+                    "Crunch"
+                ],
+                [
+                    48,
+                    "Scary Face"
+                ],
+                [
+                    54,
+                    "Stealth Rock"
+                ],
+                [
+                    60,
+                    "Stone Edge"
+                ]
+            ],
+            "evo": [
+                "Counter"
+            ],
+            "egg": [
+                "Endeavor",
+                "Last Resort",
+                "Thrash"
+            ],
             "tm": {
                 "TM01": "Take Down",
                 "TM02": "Charm",
@@ -60734,6 +63665,99 @@
             }
         },
         "Lycanroc-Dusk": {
+            "level": [
+                [
+                    1,
+                    "Accelerock"
+                ],
+                [
+                    1,
+                    "Counter"
+                ],
+                [
+                    1,
+                    "Double Team"
+                ],
+                [
+                    1,
+                    "Endure"
+                ],
+                [
+                    1,
+                    "Leer"
+                ],
+                [
+                    1,
+                    "Quick Attack"
+                ],
+                [
+                    1,
+                    "Quick Guard"
+                ],
+                [
+                    1,
+                    "Reversal"
+                ],
+                [
+                    1,
+                    "Sand Attack"
+                ],
+                [
+                    1,
+                    "Sucker Punch"
+                ],
+                [
+                    1,
+                    "Tackle"
+                ],
+                [
+                    1,
+                    "Taunt"
+                ],
+                [
+                    12,
+                    "Rock Throw"
+                ],
+                [
+                    16,
+                    "Howl"
+                ],
+                [
+                    20,
+                    "Bite"
+                ],
+                [
+                    24,
+                    "Rock Tomb"
+                ],
+                [
+                    30,
+                    "Roar"
+                ],
+                [
+                    36,
+                    "Rock Slide"
+                ],
+                [
+                    42,
+                    "Crunch"
+                ],
+                [
+                    48,
+                    "Scary Face"
+                ],
+                [
+                    54,
+                    "Stealth Rock"
+                ],
+                [
+                    60,
+                    "Stone Edge"
+                ]
+            ],
+            "evo": [
+                "Crush Claw"
+            ],
             "tm": {
                 "TM01": "Take Down",
                 "TM02": "Charm",
@@ -68443,6 +71467,61 @@
             }
         },
         "Indeedee-Female": {
+            "level": [
+                [
+                    1,
+                    "Play Nice"
+                ],
+                [
+                    1,
+                    "Stored Power"
+                ],
+                [
+                    5,
+                    "Baton Pass"
+                ],
+                [
+                    10,
+                    "Disarming Voice"
+                ],
+                [
+                    15,
+                    "Psybeam"
+                ],
+                [
+                    20,
+                    "Helping Hand"
+                ],
+                [
+                    25,
+                    "Follow Me"
+                ],
+                [
+                    30,
+                    "Healing Wish"
+                ],
+                [
+                    35,
+                    "Psychic"
+                ],
+                [
+                    40,
+                    "Calm Mind"
+                ],
+                [
+                    45,
+                    "Guard Split"
+                ],
+                [
+                    50,
+                    "Psychic Terrain"
+                ]
+            ],
+            "egg": [
+                "Fake Out",
+                "Heal Pulse",
+                "Psych Up"
+            ],
             "tm": {
                 "TM01": "Take Down",
                 "TM02": "Charm",
@@ -69734,6 +72813,75 @@
             }
         },
         "Urshifu-Rapid Strike": {
+            "level": [
+                [
+                    1,
+                    "Aqua Jet"
+                ],
+                [
+                    1,
+                    "Endure"
+                ],
+                [
+                    1,
+                    "Focus Energy"
+                ],
+                [
+                    1,
+                    "Leer"
+                ],
+                [
+                    1,
+                    "Rock Smash"
+                ],
+                [
+                    12,
+                    "Aerial Ace"
+                ],
+                [
+                    16,
+                    "Scary Face"
+                ],
+                [
+                    20,
+                    "Headbutt"
+                ],
+                [
+                    24,
+                    "Brick Break"
+                ],
+                [
+                    28,
+                    "Detect"
+                ],
+                [
+                    32,
+                    "Bulk Up"
+                ],
+                [
+                    36,
+                    "Iron Head"
+                ],
+                [
+                    40,
+                    "Dynamic Punch"
+                ],
+                [
+                    44,
+                    "Counter"
+                ],
+                [
+                    48,
+                    "Close Combat"
+                ],
+                [
+                    52,
+                    "Focus Punch"
+                ]
+            ],
+            "evo": [
+                "Surging Strikes"
+            ],
             "tm": {
                 "TM01": "Take Down",
                 "TM06": "Scary Face",
@@ -70391,6 +73539,132 @@
             }
         },
         "Calyrex-Ice Rider": {
+            "level": [
+                [
+                    1,
+                    "Avalanche"
+                ],
+                [
+                    1,
+                    "Confusion"
+                ],
+                [
+                    1,
+                    "Double-Edge"
+                ],
+                [
+                    1,
+                    "Double Kick"
+                ],
+                [
+                    1,
+                    "Glacial Lance"
+                ],
+                [
+                    1,
+                    "Growth"
+                ],
+                [
+                    1,
+                    "Icicle Crash"
+                ],
+                [
+                    1,
+                    "Iron Defense"
+                ],
+                [
+                    1,
+                    "Mega Drain"
+                ],
+                [
+                    1,
+                    "Mist"
+                ],
+                [
+                    1,
+                    "Pound"
+                ],
+                [
+                    1,
+                    "Stomp"
+                ],
+                [
+                    1,
+                    "Swords Dance"
+                ],
+                [
+                    1,
+                    "Tackle"
+                ],
+                [
+                    1,
+                    "Tail Whip"
+                ],
+                [
+                    1,
+                    "Take Down"
+                ],
+                [
+                    1,
+                    "Taunt"
+                ],
+                [
+                    1,
+                    "Thrash"
+                ],
+                [
+                    1,
+                    "Torment"
+                ],
+                [
+                    8,
+                    "Life Dew"
+                ],
+                [
+                    16,
+                    "Giga Drain"
+                ],
+                [
+                    24,
+                    "Psyshock"
+                ],
+                [
+                    32,
+                    "Helping Hand"
+                ],
+                [
+                    40,
+                    "Aromatherapy"
+                ],
+                [
+                    40,
+                    "Grassy Terrain"
+                ],
+                [
+                    48,
+                    "Energy Ball"
+                ],
+                [
+                    56,
+                    "Psychic"
+                ],
+                [
+                    64,
+                    "Leech Seed"
+                ],
+                [
+                    72,
+                    "Heal Pulse"
+                ],
+                [
+                    80,
+                    "Solar Beam"
+                ],
+                [
+                    88,
+                    "Future Sight"
+                ]
+            ],
             "tm": {
                 "TM01": "Take Down",
                 "TM04": "Agility",
@@ -70457,6 +73731,132 @@
             }
         },
         "Calyrex-Shadow Rider": {
+            "level": [
+                [
+                    1,
+                    "Agility"
+                ],
+                [
+                    1,
+                    "Astral Barrage"
+                ],
+                [
+                    1,
+                    "Confuse Ray"
+                ],
+                [
+                    1,
+                    "Confusion"
+                ],
+                [
+                    1,
+                    "Disable"
+                ],
+                [
+                    1,
+                    "Double-Edge"
+                ],
+                [
+                    1,
+                    "Double Kick"
+                ],
+                [
+                    1,
+                    "Growth"
+                ],
+                [
+                    1,
+                    "Haze"
+                ],
+                [
+                    1,
+                    "Hex"
+                ],
+                [
+                    1,
+                    "Mega Drain"
+                ],
+                [
+                    1,
+                    "Nasty Plot"
+                ],
+                [
+                    1,
+                    "Pound"
+                ],
+                [
+                    1,
+                    "Shadow Ball"
+                ],
+                [
+                    1,
+                    "Stomp"
+                ],
+                [
+                    1,
+                    "Tackle"
+                ],
+                [
+                    1,
+                    "Tail Whip"
+                ],
+                [
+                    1,
+                    "Take Down"
+                ],
+                [
+                    1,
+                    "Thrash"
+                ],
+                [
+                    8,
+                    "Life Dew"
+                ],
+                [
+                    16,
+                    "Giga Drain"
+                ],
+                [
+                    24,
+                    "Psyshock"
+                ],
+                [
+                    32,
+                    "Helping Hand"
+                ],
+                [
+                    40,
+                    "Grassy Terrain"
+                ],
+                [
+                    40,
+                    "Psychic Terrain"
+                ],
+                [
+                    48,
+                    "Energy Ball"
+                ],
+                [
+                    56,
+                    "Psychic"
+                ],
+                [
+                    64,
+                    "Leech Seed"
+                ],
+                [
+                    72,
+                    "Heal Pulse"
+                ],
+                [
+                    80,
+                    "Solar Beam"
+                ],
+                [
+                    88,
+                    "Future Sight"
+                ]
+            ],
             "tm": {
                 "TM01": "Take Down",
                 "TM04": "Agility",
