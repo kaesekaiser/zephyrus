@@ -1,5 +1,10 @@
 from typing import Union
+from re import sub
 import json
+
+
+def fix(s: str, joiner: str = "-"):
+    return sub(f"{joiner}+", joiner, sub(f"[^a-z0-9{joiner}]+", "", sub(r"\s+", joiner, s.lower().replace("é", "e"))))
 
 
 types = normal, fire, water, electric, grass, ice, fighting, poison, ground, flying, psychic, bug, rock, ghost, \
@@ -520,15 +525,14 @@ class PackedMove:
         if self.name in system_moves:
             ret = system_moves[self.name].copy()
         else:
-            ret = move_dex[self.name].copy()
+            ret = battle_moves[self.name].copy()
         ret.pp = self.pp
         ret.ppc = self.ppc
         assert isinstance(ret, Move)
         return ret
 
 
-with open("moves.json" if __name__ == "__main__" else "pokemon/moves.json", "r") as fp:
-    move_dex = {g: Move.from_json(j) for g, j in json.load(fp).items()}
+battle_moves = {g: Move.from_json(j) for g, j in json.load(open("pokemon/moves.json", "r")).items()}
 
 
 two_turn_texts = {
@@ -568,3 +572,38 @@ system_moves = {
     "Terastallize": Move.control("Terastallize"),
     "Tera": Move.control("Terastallize")
 }
+
+
+class WikiMove:
+    def __init__(self, **kwargs):
+        self.name = kwargs.pop("name")
+        self.type = kwargs.pop("type")
+        self.category = kwargs.pop("category")
+        self.pp = kwargs.pop("pp")
+        self.power = kwargs.pop("power")
+        self.accuracy = kwargs.pop("accuracy")
+        self.description = kwargs.pop("description")
+
+    @property
+    def accuracy_str(self):
+        return f"{self.accuracy}%" if self.accuracy else "—"
+
+    @property
+    def power_str(self):
+        return self.power if self.power else "—"
+
+    @property
+    def bulbapedia(self):
+        return "https://bulbapedia.bulbagarden.net/wiki/" + ('_'.join(self.name.split()).replace("'", "%27")) \
+            + "_(move)"
+
+    @property
+    def serebii(self):
+        return f"https://www.serebii.net/attackdex-sv/{''.join(self.name.lower().split())}.shtml"
+
+    @property
+    def pokemondb(self):
+        return f"https://pokemondb.net/move/{fix(self.name)}"
+
+
+wiki_moves = {g: WikiMove(**j) for g, j in json.load(open("pokemon/wikimoves.json", "r")).items()}

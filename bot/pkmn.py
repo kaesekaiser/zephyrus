@@ -43,11 +43,13 @@ def find_mon(s: Union[str, int, None], **kwargs) -> pk.BareMiniMon | pk.Mon:
         return return_class(ret, **kwargs)
 
 
-def find_move(s: str) -> pk.Move:
+def find_move(s: str, return_wiki: bool = False) -> pk.Move | pk.WikiMove:
     try:
-        return [j.copy() for g, j in pk.move_dex.items() if pk.fix(g) == pk.fix(s)][0]
+        if return_wiki:
+            return [j for g, j in pk.wiki_moves.items() if pk.fix(g) == pk.fix(s)][0]
+        return [j.copy() for g, j in pk.battle_moves.items() if pk.fix(g) == pk.fix(s)][0]
     except IndexError:
-        lis = {pk.fix(g): g for g in pk.move_dex}
+        lis = {pk.fix(g): g for g in (pk.wiki_moves if return_wiki else pk.battle_moves)}
         guess = sorted(list(lis), key=lambda c: wr.levenshtein(c, pk.fix(s)))
         raise commands.CommandError(f"`{s}` not found. Did you mean {lis[guess[0]]}?")
 
@@ -657,11 +659,20 @@ class LearnsetNavigator(Navigator):
     @property
     def formatted_page(self):
         if self.mode == "level":
-            return "\n".join(f"Lv. {g}: {j}" for g, j in page_list(self.selected_table, self.per, self.page))
+            return "\n".join(
+                f"`Lv.{str(g).rjust(2, ' ')}:` **{display_move(find_move(j, True), 'list')}**"
+                for g, j in page_list(self.selected_table, self.per, self.page)
+            )
         elif self.mode == "tm":
-            return "\n".join(f"{k}: {v}" for k, v in page_list(list(self.selected_table.items()), self.per, self.page))
+            return "\n".join(
+                f"`{k}` **{display_move(find_move(v, True), 'list')}**"
+                for k, v in page_list(list(self.selected_table.items()), self.per, self.page)
+            )
         else:
-            return "\n".join(f"\\- {g}" for g in page_list(self.selected_table, self.per, self.page))
+            return "\n".join(
+                f"\\- **{display_move(find_move(g, True), 'list')}**"
+                for g in page_list(self.selected_table, self.per, self.page)
+            )
 
     @property
     def con(self):
@@ -1318,7 +1329,7 @@ class PokemonInterpreter(Interpreter):
 
     @staticmethod
     def move_embed(move: pk.Move):
-        return type_emol(move.type).con(move.name, d=display_move(move, "full"))
+        return type_emol(move.type).con(move.name, d=display_move(move, "wiki"))
 
     async def _help(self, *args):
         help_dict = {
@@ -1507,9 +1518,7 @@ class PokemonInterpreter(Interpreter):
             return
 
     async def _move(self, *args):
-        admin_check(self.ctx)
-
-        move = find_move(" ".join(args))
+        move = find_move(" ".join(args), return_wiki=True)
         return await self.ctx.send(embed=self.move_embed(move))
 
     async def _team(self, *args):
@@ -1680,18 +1689,18 @@ async def loadmove(
 
     if move.category == pk.status and not move.z_effect:
         await ctx.send(embed=Emol(zeph.emojis["yield"], hexcol("DD2E44")).con("This status move has no Z-Effect."))
-    if move.name in pk.move_dex:
+    if move.name in pk.battle_moves:
         await ctx.send(embed=Emol(zeph.emojis["yield"], hexcol("DD2E44")).con("This move already exists."))
 
     await ctx.send(f"```py\n{move.json}```", embed=PokemonInterpreter.move_embed(move))
     try:
-        assert await confirm(f"{'Overwrite' if move.name in pk.move_dex else 'Save'} this move?", ctx, yes="save")
+        assert await confirm(f"{'Overwrite' if move.name in pk.battle_moves else 'Save'} this move?", ctx, yes="save")
     except AssertionError:
         pass
     else:
-        pk.move_dex[move.name] = move.copy()
+        pk.battle_moves[move.name] = move.copy()
         with open("pokemon/moves.json", "w") as f:
-            json.dump({g: j.json for g, j in pk.move_dex.items()}, f, indent=4)
+            json.dump({g: j.json for g, j in pk.battle_moves.items()}, f, indent=4)
         return await succ.send(ctx, "Move saved.")
 
 

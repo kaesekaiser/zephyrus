@@ -29,10 +29,12 @@ def m_to_ft_and_in(m: float) -> str:
     return f"{inches // 12}'{str(inches % 12).rjust(2, '0')}\""
 
 
-def display_move(move: Union[pk.PackedMove, pk.Move], mode: str) -> str:
+def display_move(move: pk.PackedMove | pk.Move | pk.WikiMove, mode: str) -> str:
     if isinstance(move, pk.PackedMove):
         move = move.unpack()
 
+    if mode == "list":
+        return f"{zeph.emojis[move.type]} {move.name}"
     if mode == "inline":
         nbsp = "\u00a0"
         return f"[ {zeph.emojis[move.type]} **`{move.name.ljust(16, nbsp)} [{str(move.ppc).rjust(2)}" \
@@ -40,12 +42,19 @@ def display_move(move: Union[pk.PackedMove, pk.Move], mode: str) -> str:
     if mode == "partial":
         return f"{display_move(move, 'inline')}\n" \
                f"{zeph.emojis['__']} Power: {move.power_str} / Accuracy: {move.accuracy_str}"
-    if mode == "full":
-        priority = f" / **Priority:** {move.priority}" if move.priority else ""
+    if mode == "wiki":
         return f"**Type:** {zeph.emojis[move.type]} {move.type} / " \
                f"**Category:** {zeph.emojis[move.category]} {move.category}\n" \
-               f"**Power:** {move.power_str} / **Accuracy:** {move.accuracy_str} / **PP:** {move.pp}{priority}\n" \
-               f"**Target:** {move.target}\n\n{move.description}"
+               f"**Power:** {move.power_str} / **Accuracy:** {move.accuracy_str} / **PP:** {move.pp}" \
+               f"\n\n{move.description}\n\n" \
+               f"[Bulbapedia]({move.bulbapedia}) | [Serebii]({move.serebii}) | [Pok\u00e9monDB]({move.pokemondb})"
+    if mode == "full":
+        priority = f" / **Priority:** {move.priority}" if (isinstance(move, pk.Move) and move.priority) else ""
+        return f"**Type:** {zeph.emojis[move.type]} {move.type} / " \
+               f"**Category:** {zeph.emojis[move.category]} {move.category}\n" \
+               f"**Power:** {move.power_str} / **Accuracy:** {move.accuracy_str} / **PP:** {move.pp}{priority}" \
+               + (f"\n**Target:** {move.target}" if isinstance(move, pk.Move) else "") + \
+               f"\n\n{move.description}"
 
 
 def display_type(s: str, include_name: bool = True) -> str:
@@ -1110,7 +1119,7 @@ class Battle:
         if m.rage:
             a.raging = True
         if m.mimic:
-            new_move = pk.move_dex[d.last_used].pack
+            new_move = pk.battle_moves[d.last_used].pack
             if mimic_index := a.has_move("Mimic"):
                 a.moves[mimic_index - 1] = new_move
             a.selection = new_move

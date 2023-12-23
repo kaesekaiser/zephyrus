@@ -1,7 +1,6 @@
 import random
 from pokemon.field import *
 from pokemon.learnsets import *
-from re import sub
 from pyquery import PyQuery
 from math import floor, log, ceil
 
@@ -596,7 +595,7 @@ class BareMiniMon:
 
     @property
     def serebii(self):
-        return f"https://serebii.net/pokedex-sm/{self.dex_no}.shtml"
+        return f"https://serebii.net/pokedex-sv/{self.dex_no}.shtml"
 
     @property
     def pokemondb(self):
@@ -920,7 +919,7 @@ class Mon(BareMiniMon):
 
     def key(self, compressed: bool = True):
         """An alphanumerical string which contains the defining data for a mon in compressed form. It's a password."""
-        moves = [list(move_dex).index(g.name) + 1 for g in self.moves]
+        moves = [list(battle_moves).index(g.name) + 1 for g in self.moves]
         if len(moves) < 4:
             moves.extend([0] * (4 - len(moves)))
         ret = f"{rebase(self.dex_no - 1, 10, 32, 2)}" \
@@ -964,7 +963,7 @@ class Mon(BareMiniMon):
             "ev": [decimal(rebase(decompressed_key[14:24], 32, 16, 12)[g*2:g*2+2], 16) for g in range(6)],
             "ability": abilities[decimal(decompressed_key[24:26], 32)],
             "item": held_items[item],
-            "moves": [list(move_dex)[g - 1] for g in moves if g],
+            "moves": [list(battle_moves)[g - 1] for g in moves if g],
             "shiny": shiny
         })
 
@@ -975,7 +974,7 @@ class Mon(BareMiniMon):
             self.moves.append(move)
         elif isinstance(move, str):
             try:
-                move = [g for g in move_dex.values() if g.name.lower() == move.lower()][0]
+                move = [g for g in battle_moves.values() if g.name.lower() == move.lower()][0]
             except IndexError:
                 raise ValueError(f"Invalid move name '{move}'.")
             self.moves.append(move.pack)
@@ -1243,13 +1242,12 @@ class Mon(BareMiniMon):
                 return [g for g in self.moves if fix(g.name) == fix(move_name)][0]
             except IndexError:
                 try:  # finally, try for any move. this will eventually be removed.
-                    return [PackedMove(g.name, 1) for g in move_dex.values() if fix(g.name) == fix(move_name)][0]
+                    return [PackedMove(g.name, 1) for g in battle_moves.values() if fix(g.name) == fix(move_name)][0]
                 except IndexError:
                     return PackedMove.null()
 
 
-with open("stats.json" if __name__ == "__main__" else "pokemon/stats.json", "r") as file:
-    nat_dex = {g: Species.from_json(j) for g, j in json.load(file).items()}
+nat_dex = {g: Species.from_json(j) for g, j in json.load(open("pokemon/stats.json", "r")).items()}
 nat_dex_order = list(nat_dex)
 
 
@@ -1268,16 +1266,8 @@ starters = [
 #     species = json.load(file)
 
 
-with open("eff.json" if __name__ == "__main__" else "pokemon/eff.json", "r") as file:
-    effectiveness = json.load(file)
-
-
-with open("abilities.json" if __name__ == "__main__" else "pokemon/abilities.json", "r") as file:
-    legal_abilities = json.load(file)
-
-
-def fix(s: str, joiner: str = "-"):
-    return sub(f"{joiner}+", joiner, sub(f"[^a-z0-9{joiner}]+", "", sub(r"\s+", joiner, s.lower().replace("é", "e"))))
+effectiveness = json.load(open("pokemon/eff.json", "r"))
+legal_abilities = json.load(open("pokemon/abilities.json", "r"))
 
 
 fixed_dex = {fix(g): g for g in nat_dex}
