@@ -72,7 +72,7 @@ def display_mon_types(mon: pk.BareMiniMon, sep: str = "", align: str = "right", 
         return f"{zeph.emojis['__']}{sep}{zeph.emojis[mon.type1]}"
 
 
-def display_mon(mon: Union[dict, pk.BareMiniMon], mode: str = "default", **kwargs) -> str:
+def display_mon(mon: dict | pk.BareMiniMon, mode: str = "default", **kwargs) -> str:
     """Displays various attributes of a mon in pretty form, using Zeph's emotes."""
     full_knowledge = True if mode == "builder" else kwargs.get("full_knowledge", True)
     lb = "\n"

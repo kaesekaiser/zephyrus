@@ -24,7 +24,8 @@ class TeraRaidDrop:
 
 class TeraRaid:
     def __init__(self, stars: int, species: str, game: str, battle_level: int, catch_level: int, tera_type: str,
-                 ability: str, moves: list[str], additional_moves: list[str], drops: list[TeraRaidDrop]):
+                 ability: str, moves: list[str], hp_actions: list[list], time_actions: list[list],
+                 drops: list[TeraRaidDrop]):
         self.stars = stars
         self.species = species
         self.game = game
@@ -33,14 +34,16 @@ class TeraRaid:
         self.type = tera_type
         self.ability = ability
         self.moves = moves
-        self.additional_moves = additional_moves
+        self.hp_actions = hp_actions
+        self.time_actions = time_actions
         self.drops = drops
 
     @staticmethod
     def from_json(js: dict, stars: int = 5):
         return TeraRaid(
-            stars, js["species"], js["game"], js["battle_level"], js["catch_level"], js["type"], js["ability"],
-            js["moves"], js.get("additional_moves", []), [TeraRaidDrop.from_json(g) for g in js["drops"]]
+            stars, js["species"], js["game"], js["battle_level"], js["catch_level"], js["type"],
+            js["ability"], js["moves"], js.get("hp_actions", []), js.get("time_actions", []),
+            [TeraRaidDrop.from_json(g) for g in js["drops"]]
         )
 
     @property
@@ -48,12 +51,7 @@ class TeraRaid:
         return f"{self.stars}\u2605 {self.species}"
 
 
-raids = {}
-
-
-with open("pokemon/raids5.json", "r") as fp:
-    raids[5] = {g: TeraRaid.from_json(j, 5) for g, j in json.load(fp).items()}
-
-
-with open("pokemon/raids6.json", "r") as fp:
-    raids[6] = {g: TeraRaid.from_json(j, 6) for g, j in json.load(fp).items()}
+raids = {
+    5: {g: TeraRaid.from_json(j, 5) for g, j in json.load(open("pokemon/raids5.json", "r")).items()},
+    6: {g: TeraRaid.from_json(j, 6) for g, j in json.load(open("pokemon/raids6.json", "r")).items()}
+}

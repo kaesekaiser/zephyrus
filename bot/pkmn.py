@@ -2,7 +2,7 @@ from pkmn_battle import *
 from copy import deepcopy as copy
 
 
-def find_mon(s: Union[str, int, None], **kwargs) -> pk.BareMiniMon | pk.Mon:
+def find_mon(s: str | int | None, **kwargs) -> pk.BareMiniMon | pk.Mon:
     """Use **kwargs to pass additional arguments to the Mon.__init__() statement."""
     if kwargs.get("use_bare"):
         return_class = pk.BareMiniMon
@@ -43,15 +43,16 @@ def find_mon(s: Union[str, int, None], **kwargs) -> pk.BareMiniMon | pk.Mon:
         return return_class(ret, **kwargs)
 
 
-def find_move(s: str, return_wiki: bool = False) -> pk.Move | pk.WikiMove:
+def find_move(s: str, return_wiki: bool = True, fail_silently: bool = False) -> pk.Move | pk.WikiMove:
     try:
         if return_wiki:
             return [j for g, j in pk.wiki_moves.items() if pk.fix(g) == pk.fix(s)][0]
         return [j.copy() for g, j in pk.battle_moves.items() if pk.fix(g) == pk.fix(s)][0]
     except IndexError:
-        lis = {pk.fix(g): g for g in (pk.wiki_moves if return_wiki else pk.battle_moves)}
-        guess = sorted(list(lis), key=lambda c: wr.levenshtein(c, pk.fix(s)))
-        raise commands.CommandError(f"`{s}` not found. Did you mean {lis[guess[0]]}?")
+        if not fail_silently:
+            lis = {pk.fix(g): g for g in (pk.wiki_moves if return_wiki else pk.battle_moves)}
+            guess = sorted(list(lis), key=lambda c: wr.levenshtein(c, pk.fix(s)))
+            raise commands.CommandError(f"`{s}` not found. Did you mean {lis[guess[0]]}?")
 
 
 def scroll_list(ls: iter, at: int, curved: bool = False, wrap: bool = True) -> str:
@@ -545,7 +546,7 @@ def display_raid(raid: pk.TeraRaid, mode: str):
         if raid.game != "Both":
             ret.append(f"Only available in **{raid.game}**.")
         if raid.type not in ["Random", "Default"]:
-            ret.append(f"Always **{raid.type}-type**.")
+            ret.append(f"Always **{display_type(raid.type)}-type**.")
         if ret:
             ret.append("")
 
@@ -564,11 +565,7 @@ def display_raid(raid: pk.TeraRaid, mode: str):
             else:
                 ret.append(f"**Possible Abilities:** {grammatical_join(mon.legal_abilities, 'or')}")
 
-        ret.append(f"**Moves:** {', '.join(raid.moves)}")
-        if raid.additional_moves:
-            ret.append(f"**Additional Moves:** {', '.join(raid.additional_moves)}")
-        else:
-            ret.append("No additional moves.")
+        ret.append(f"**Moves:** {', '.join(display_move(find_move(g), 'list') for g in raid.moves)}")
 
         return "\n".join(ret)
 
@@ -597,12 +594,37 @@ class RaidNavigator(Navigator):
     async def after_timeout(self):
         await self.remove_buttons()
 
+    @staticmethod
+    def display_action(action: str) -> str:
+        if action == "reset self":
+            return "Resets own stats"
+        elif action == "reset player":
+            return "Resets player stats"
+        elif action == "tera charge":
+            return "Steals Tera Orb charge"
+        elif move := find_move(action, fail_silently=True):
+            return display_move(move, 'list')
+        else:
+            return action
+
+    @property
+    def action_fields(self):
+        return {
+            ":heart: HP Thresholds": none_list(
+                [f"**{g}%:** {self.display_action(j)}" for g, j in self.raid.hp_actions], "\n"
+            ),
+            ":hourglass: Time Thresholds": none_list(
+                [f"**{g}%:** {self.display_action(j)}" for g, j in self.raid.time_actions], "\n"
+            )
+        }
+
     @property
     def con(self):
         return self.emol.con(
             f"#{str(self.mon.dex_no).rjust(4, '0')} {self.mon.full_name}" if self.mode == "dex" else
             f"{self.raid.name} Drops" if self.mode == "drops" else self.raid.name,
-            d=display_raid(self.raid, self.mode), thumb=self.mon.dex_image
+            d=display_raid(self.raid, self.mode), fs=(self.action_fields if self.mode == "default" else {}),
+            same_line=True, thumb=self.mon.dex_image
         )
 
 
@@ -660,17 +682,17 @@ class LearnsetNavigator(Navigator):
     def formatted_page(self):
         if self.mode == "level":
             return "\n".join(
-                f"`Lv.{str(g).rjust(2, ' ')}:` **{display_move(find_move(j, True), 'list')}**"
+                f"`Lv.{str(g).rjust(2, ' ')}:` **{display_move(find_move(j), 'list')}**"
                 for g, j in page_list(self.selected_table, self.per, self.page)
             )
         elif self.mode == "tm":
             return "\n".join(
-                f"`{k}` **{display_move(find_move(v, True), 'list')}**"
+                f"`{k}` **{display_move(find_move(v), 'list')}**"
                 for k, v in page_list(list(self.selected_table.items()), self.per, self.page)
             )
         else:
             return "\n".join(
-                f"\\- **{display_move(find_move(g, True), 'list')}**"
+                f"\\- **{display_move(find_move(g), 'list')}**"
                 for g in page_list(self.selected_table, self.per, self.page)
             )
 
@@ -980,7 +1002,7 @@ class BuildAMonNavigator(Navigator):
                         self.mon.moves[swap[0] - 1] = self.mon.moves[swap[1] - 1]
                         self.mon.moves[swap[1] - 1] = temp
             else:
-                move = find_move(move_name).pack
+                move = find_move(move_name, False).pack
                 if len(self.mon.moves) < 4:
                     self.mon.add_move(move)
                     await self.emol.edit(mess, f"{self.mon.name} learned {move.name}!")
@@ -1324,7 +1346,7 @@ class CatchRateNavigator(Navigator):
 class PokemonInterpreter(Interpreter):
     redirects = {
         "t": "type", "e": "eff", "m": "move", "s": "test", "b": "build", "c": "catch", "h": "help", "x": "dex",
-        "r": "raid", "cf": "compare", "l": "learnset"
+        "r": "raid", "cf": "compare", "l": "learnset", "learn": "learnset", "moves": "learnset", "moveset": "learnset"
     }
 
     @staticmethod
@@ -1338,26 +1360,26 @@ class PokemonInterpreter(Interpreter):
                    f"({zeph.emojis['left1']}{zeph.emojis['right1']}{zeph.emojis['left2']}{zeph.emojis['right2']}) "
                    "to change types.\n`z!pokemon eff <mon...>` shows matchups against a given species or form.\n"
                    "`z!pokemon eff <type1> [type2]` shows matchups against a given type combination.",
-            # "move": "`z!pokemon move <move>` shows various information about a move - including type, power, "
-            #         "accuracy, etc.",
+            "move": "`z!pokemon move <move>` shows various information about a move - including type, power, "
+                    "accuracy, etc.",
             "dex": "`z!pokemon dex [mon...]` opens the dex.\n"
-                   "- If `mon` is a number, the dex opens on that number.\n"
-                   "- If `mon` is a name, the dex opens on that mon. Form names may also be included, e.g. "
+                   "\\- If `mon` is a number, the dex opens on that number.\n"
+                   "\\- If `mon` is a name, the dex opens on that mon. Form names may also be included, e.g. "
                    "`z!pk dex giratina-origin` or `z!pk dex alolan raichu`.\n"
-                   "- If `mon` is not given, the dex opens on #0001 Bulbasaur.\n\n"
+                   "\\- If `mon` is not given, the dex opens on #0001 Bulbasaur.\n\n"
                    "`z!pokemon dex search [args...]` allows searching and filtering of the dex based on certain "
                    "search terms. For more info on these terms, see `z!pk dex search`.",
             "catch": "`z!pokemon catch [ball] [species...]` opens the Scarlet/Violet catch rate calculator.\n"
-                     "- If `ball` is given, it must be a valid type of Pok\u00e9 Ball (e.g. Ultra, Quick, Dusk), and "
+                     "\\- If `ball` is given, it must be a valid type of Pok\u00e9 Ball (e.g. Ultra, Quick, Dusk), and "
                      "it must be the first argument.\n"
-                     "- If `species` is given, it must be a valid species of Pok\u00e9mon.\n"
-                     "- Both arguments are optional.\n\n"
+                     "\\- If `species` is given, it must be a valid species of Pok\u00e9mon.\n"
+                     "\\- Both arguments are optional.\n\n"
                      "Note that this calculator is only guaranteed to be accurate for Scarlet and Violet. Some catch "
                      "rates (e.g. box legendaries) change between generations, and the formula itself has also "
                      "changed several times.",
             "raid": "`z!pokemon raid <# stars> <species...>` shows relevant info for a Tera Raid Battle. Note that "
                     "only 5- and 6-star raids are currently included, and event raids are not included.\n"
-                    f"\\- {zeph.emojis['moves']} lists the possible abilities and moves for the raid mon.\n"
+                    f"\\- {zeph.emojis['moves']} lists the raid mon's possible abilities, moves, and extra actions.\n"
                     f"\\- {zeph.emojis['rare_candy']} lists the raid item drops.\n"
                     f"\\- {zeph.emojis['poke_ball']} opens the dex entry for the raid mon.\n\n"
                     "`z!pk 5` may be used as a shortcut for `z!pokemon raid 5`, e.g. `z!pk 5 grimmsnarl`. The same "
@@ -1366,7 +1388,8 @@ class PokemonInterpreter(Interpreter):
                        "want to specify a particular form, use the hyphenated version of the name (e.g. `Raichu-Alola` "
                        "for Alolan Raichu). If you want to input a species with a space in the name, such as Mr. Mime, "
                        "surround the name in \"double quotes\", or replace the spaces with hyphens.",
-            "learnset": "`z!pokemon learnset <species...>` shows the Scarlet/Violet learnset for a given species.\n"
+            "learnset": "`z!pokemon learnset <species...>` shows the Scarlet/Violet learnset for a given species. "
+                        "Depending on the Pok\u00e9mon, you may see any of the following buttons:\n"
                         f"\\- {zeph.emojis['rare_candy']} lists its level-up moves.\n"
                         f"\\- {zeph.emojis['thunder_stone']} lists its evolution moves.\n"
                         f"\\- {zeph.emojis['eviolite']} lists moves it only learns as a previous evolution.\n"
@@ -1375,9 +1398,9 @@ class PokemonInterpreter(Interpreter):
                         f"\\- {zeph.emojis['technical_machine']} lists its compatible TMs."
         }
         desc_dict = {
-            "type": "Shows type effectiveness for a type.",
-            "eff": "Checks type matchups against a combination of types.",
-            # "move": "Shows info about a move.",
+            "type": "Shows offensive and defensive matchups for a single type.",
+            "eff": "Shows defensive matchups for a pair of types.",
+            "move": "Shows info about a move.",
             "dex": "Browses the dex.",
             "catch": "Opens the Scarlet/Violet catch rate calculator.",
             "raid": "Displays info about a given Tera Raid Battle.",
@@ -1518,7 +1541,7 @@ class PokemonInterpreter(Interpreter):
             return
 
     async def _move(self, *args):
-        move = find_move(" ".join(args), return_wiki=True)
+        move = find_move(" ".join(args))
         return await self.ctx.send(embed=self.move_embed(move))
 
     async def _team(self, *args):
