@@ -315,22 +315,29 @@ class Opening:
 
     @staticmethod
     def from_tsv(tsv: str):
-        return Opening(*tsv.split("\t"))
+        s = tsv.split("\t")
+        return Opening(s[0], s[1], BoardWrapper.from_san(s[2], track_opening=False).repetition_fen, s[2])
 
 
-eco = {}
-opening_fen_dict = {}
-
-
-for book in "ABCDE":  # openings taken from github.com/niklasf/eco
-    with open(f"eco/{book.lower()}.tsv" if __name__ == "__main__" else f"minigames/eco/{book.lower()}.tsv", "r") as fp:
-        book_openings = [Opening.from_tsv(g) for g in fp.read().splitlines()[1:]]
-        eco[book] = {
+def load_eco() -> tuple[dict[str, dict[str, list[Opening]]], dict[str, Opening]]:
+    codes = {}
+    fen = {}
+    for book in "ABCDE":  # openings taken from github.com/niklasf/eco
+        book_openings = [
+            Opening.from_tsv(g)
+            for g in open(f"minigames/eco/{book.lower()}.tsv", "r", encoding="utf8").read().splitlines()[1:]
+        ]
+        codes[book] = {
             f"{book}{str(g).rjust(2, '0')}":
                 [j for j in book_openings if j.eco == f"{book}{str(g).rjust(2, '0')}"]
             for g in range(100)
         }
-        opening_fen_dict.update({g.fen: g for g in book_openings})
+        fen.update({g.fen: g for g in book_openings})
+
+    return codes, fen
+
+
+eco, opening_fen_dict = load_eco()
 
 
 if __name__ == "__main__":
