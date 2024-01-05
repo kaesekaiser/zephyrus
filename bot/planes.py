@@ -607,7 +607,7 @@ class PlanesInterpreter(Interpreter):
             city.job_reset = reset
 
         await JobNavigator(
-            self, city, fil, fil_str, close_on_timeout=True,
+            self, city, fil, fil_str,
             browse_only=nativity_special_case_match(self.ctx, "zip jobs"),
             footer=f"new jobs in {self.form_et(((tm // 900 + 1) * 900 - tm) // 60)} min"
         ).run(self.ctx)
@@ -1076,7 +1076,7 @@ class JobNavigator(Navigator):
     launch_commands = ["launch", "go", "g"]
 
     def __init__(self, inter: PlanesInterpreter, city: pn.City, fil: callable, fil_str: str, **kwargs):
-        super().__init__(plane, [], 8, fil_str + "obs in " + city.name + " [{page}/{pgs}]", **kwargs)
+        super().__init__(plane, [], 8, fil_str + "obs in " + city.name + " [{page}/{pgs}]", timeout=180, **kwargs)
         self.interpreter = inter
         self.city = city
         self.fil = fil
@@ -1189,7 +1189,7 @@ class JobNavigator(Navigator):
             elif isinstance(mr, discord.Reaction):
                 return mr.emoji in self.legal and mr.message == self.message and u == self.interpreter.au
 
-        ret = (await zeph.wait_for('reaction_or_message', timeout=300, check=pred))[0]
+        ret = (await zeph.wait_for('reaction_or_message', timeout=self.timeout, check=pred))[0]
 
         if isinstance(ret, discord.Reaction):
             return ret.emoji
@@ -1299,7 +1299,6 @@ class JobNavigator(Navigator):
                 else:
                     return await self.close()
 
-    @property
     def con(self):
         if self.mode == "terminal":
             if not self.raw_jobs:
@@ -1369,7 +1368,7 @@ class JobNavigator(Navigator):
 
 class AirportNavigator(Navigator):
     def __init__(self, inter: PlanesInterpreter, city: pn.City, message: discord.Message, minimaps: dict):
-        super().__init__(plane, [], 0, f"{city.name} Airport", prev="", nxt="")
+        super().__init__(plane, title=f"{city.name} Airport", prev="", nxt="")
         self.interpreter = inter
         self.city = city
         self.funcs["🔍"] = self.zoom
@@ -1380,7 +1379,6 @@ class AirportNavigator(Navigator):
     def zoom(self):
         self.zoom_level = {1: 2, 2: 4, 4: 1}[self.zoom_level]
 
-    @property
     def con(self):
         return self.emol.con(
             self.city.name + " Airport", same_line=True,
@@ -1391,7 +1389,7 @@ class AirportNavigator(Navigator):
 
 class AirportSearchNavigator(Navigator):
     def __init__(self, inter: PlanesInterpreter, *args):
-        super().__init__(plane, [], 5, "Airport Search [{page}/{pgs}]", prev="", nxt="")
+        super().__init__(plane, [], 5, "Airport Search [{page}/{pgs}]", prev="", nxt="", timeout=120)
         self.interpreter = inter
         self.funcs["⏪"] = self.back_five
         self.funcs["◀"] = self.back_one
@@ -1557,7 +1555,7 @@ class AirportSearchNavigator(Navigator):
 
 class LicenseUpgradeNavigator(Navigator):
     def __init__(self, inter: PlanesInterpreter, country: pn.Country):
-        super().__init__(plane, list(range(1, 10)), 1, f"{country.name} License Upgrades", close_on_timeout=True)
+        super().__init__(plane, list(range(1, 10)), 1, f"{country.name} License Upgrades", timeout=180)
         self.interpreter = inter
         self.country = country
         self.current_level = self.interpreter.user.countries[country.name]
@@ -1584,7 +1582,6 @@ class LicenseUpgradeNavigator(Navigator):
         await plane.edit(self.message, "This menu has closed.")
         await self.remove_buttons()
 
-    @property
     def con(self):
         desc = f"**License Level {self.page} [{zeph.emojis['ziplv' + str(self.page)]}]:**\n" \
             f"Job payout boost: **+{round(25 * (self.page - 1))}%**\n" \

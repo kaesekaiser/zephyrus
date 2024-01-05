@@ -3,7 +3,6 @@ from sys import version_info
 
 
 class HelpNavigator(Navigator):
-    @property
     def con(self):
         return self.emol.con(
             self.title.format(page=self.page, pgs=self.pgs),

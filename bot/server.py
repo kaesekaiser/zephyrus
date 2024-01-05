@@ -16,7 +16,7 @@ def sorted_assignable_roles(guild: discord.Guild, filter_selfroles: bool = False
 class PrefixNavigator(Navigator):
     def __init__(self, ctx: commands.Context):
         self.ctx = ctx
-        super().__init__(config, self.prefixes, 8, "Custom Prefixes [{page}/{pgs}]", close_on_timeout=True)
+        super().__init__(config, self.prefixes, 8, "Custom Prefixes [{page}/{pgs}]", timeout=120)
         self.funcs[zeph.emojis["no"]] = self.close
         for g in range(self.per):
             self.funcs[f"remove {g+1}"] = partial(self.remove_prefix, g)
@@ -45,7 +45,6 @@ class PrefixNavigator(Navigator):
                 self.page -= 1
             return await asyncio.sleep(2)
 
-    @property
     def con(self):
         return self.emol.con(
             self.title.format(page=self.page, pgs=self.pgs),
@@ -63,7 +62,7 @@ class PrefixNavigator(Navigator):
             else:
                 return u == ctx.author and mr.message == self.message and mr.emoji in self.legal
 
-        mess = (await zeph.wait_for('reaction_or_message', timeout=300, check=pred))[0]
+        mess = (await zeph.wait_for('reaction_or_message', timeout=self.timeout, check=pred))[0]
 
         if isinstance(mess, discord.Message):
             try:
@@ -83,7 +82,7 @@ class SelfRoleNavigator(Navigator):
     def __init__(self, roles: list, ctx: commands.Context, mode: str = "view"):
         """mode can be "self", "auto", "assign", or "view". the mode edits the list of selfroles, edits the list of
         autoroles, assigns selfroles to the user, or just browses the list, respectively."""
-        super().__init__(config, roles, 8, "Selfroles List", close_on_timeout=True)
+        super().__init__(config, roles, 8, "Selfroles List", timeout=120)
         self.mode = mode
         self.ctx = ctx
         self.user = ctx.author
@@ -177,7 +176,6 @@ class SelfRoleNavigator(Navigator):
             for n, g in enumerate(self.roles_table, 1)
         )
 
-    @property
     def con(self):
         return self.emol.con(f"{self.title} [{self.page}/{self.pgs}]", d=self.prefix + self.mentions_table)
 
@@ -195,7 +193,7 @@ class SelfRoleNavigator(Navigator):
                 return u == ctx.author and mr.emoji in self.legal and mr.message.id == self.message.id
 
         mess = (await zeph.wait_for(
-            'reaction_or_message', timeout=300, check=pred
+            'reaction_or_message', timeout=self.timeout, check=pred
         ))[0]
 
         if isinstance(mess, discord.Message):
@@ -210,7 +208,7 @@ class SelfRoleNavigator(Navigator):
 
 class AitchNavigator(Navigator):
     def __init__(self, ctx: commands.Context):
-        super().__init__(config, ctx.guild.text_channels, 8, "Aitch Settings", close_on_timeout=True)
+        super().__init__(config, ctx.guild.text_channels, 8, "Aitch Settings", timeout=120)
         self.ctx = ctx
         self.prefix = f"To toggle {zeph.emojis['aitch']} on or off in a channel, just say the number. " \
             f"{zeph.emojis['checked']} indicates which channels it is currently enabled in. " \
@@ -246,7 +244,6 @@ class AitchNavigator(Navigator):
     def mentions_table(self):
         return "\n".join(f"**`{n}.`** {self.check(g)} {g.mention}" for n, g in enumerate(self.channels_table, 1))
 
-    @property
     def con(self):
         return self.emol.con(f"{self.title} [{self.page}/{self.pgs}]", d=self.prefix + self.mentions_table)
 
@@ -264,7 +261,7 @@ class AitchNavigator(Navigator):
                 return u == ctx.author and mr.emoji in self.legal and mr.message.id == self.message.id
 
         mess = (await zeph.wait_for(
-            'reaction_or_message', timeout=300, check=pred
+            'reaction_or_message', timeout=self.timeout, check=pred
         ))[0]
 
         if isinstance(mess, discord.Message):

@@ -714,9 +714,8 @@ async def sheriff(ctx: commands.Context, emote: str):
 class WikiNavigator(Navigator):
     def __init__(self, *results: wk.Result):
         self.results = results
-        super().__init__(wiki, [g.desc for g in results], 1, "")
+        super().__init__(wiki, [g.desc for g in results], 1)
 
-    @property
     def con(self):
         return self.emol.con(
             self.results[self.page - 1].title.replace("****", ""), footer=f"{self.page}/{self.pgs}",
@@ -1336,7 +1335,7 @@ class RemindNavigator(Navigator):
         self.user = user
         rems = sorted([g for g in zeph.reminders if g.author == self.user.id], key=lambda c: c.time)
         super().__init__(
-            Emol(":alarm_clock:", hexcol("DD2E44")), rems, 4, "Reminders [{page}/{pgs}]", close_on_timeout=True
+            Emol(":alarm_clock:", hexcol("DD2E44")), rems, 4, "Reminders [{page}/{pgs}]", timeout=180
         )
         self.funcs[zeph.emojis["no"]] = self.close
         for g in range(self.per):
@@ -1376,7 +1375,6 @@ class RemindNavigator(Navigator):
         self.closed_elsewhere = True
         return await self.close()
 
-    @property
     def con(self):
         now = datetime.datetime.now()
 
@@ -1396,7 +1394,7 @@ class RemindNavigator(Navigator):
             else:
                 return u == ctx.author and mr.message == self.message and mr.emoji in self.legal
 
-        mess = (await zeph.wait_for('reaction_or_message', timeout=300, check=pred))[0]
+        mess = (await zeph.wait_for('reaction_or_message', timeout=self.timeout, check=pred))[0]
 
         if isinstance(mess, discord.Message):
             try:
@@ -1606,7 +1604,7 @@ async def role_redirect_command(ctx: commands.Context):
 class CounterNavigator(Navigator):
     def __init__(self, start_at: int = 0, increment: int = 1):
         super().__init__(
-            Emol(":1234:", blue), [], increment, "Counter", prev=zeph.emojis["minus"], nxt=zeph.emojis["plus"]
+            Emol(":1234:", blue), per=increment, prev=zeph.emojis["minus"], nxt=zeph.emojis["plus"], timeout=300
         )
         self.page = start_at
         self.mode = "count"
@@ -1618,11 +1616,10 @@ class CounterNavigator(Navigator):
         else:
             self.mode = "count"
 
-    @property
     def con(self):
         if self.mode == "count":
             return self.emol.con(
-                self.title, d=f"**{add_commas(self.page)}**",
+                "Counter", d=f"**{add_commas(self.page)}**",
                 footer="Use the buttons to count up or down."
             )
         else:
@@ -1678,7 +1675,7 @@ class CounterNavigator(Navigator):
                     return u == ctx.author and mr.emoji in self.funcs and mr.message.id == self.message.id
 
             mess = (await zeph.wait_for(
-                'reaction_or_message', timeout=300, check=pred
+                'reaction_or_message', timeout=self.timeout, check=pred
             ))[0]
             if isinstance(mess, discord.Message):
                 await mess.delete()
@@ -1688,7 +1685,7 @@ class CounterNavigator(Navigator):
                 return mess.emoji
 
         return (await zeph.wait_for(
-            'reaction_add', timeout=300, check=lambda r, u: r.emoji in self.legal and
+            'reaction_add', timeout=self.timeout, check=lambda r, u: r.emoji in self.legal and
             r.message.id == self.message.id and u == ctx.author
         ))[0].emoji
 

@@ -340,7 +340,7 @@ class CustomChessNavigator(Navigator):
     moves = None
 
     def __init__(self, author: User):
-        super().__init__(chess_emol, [], 0, "", prev="", nxt="")
+        super().__init__(chess_emol, prev="", nxt="", timeout=300)
         self.author = author
         self.view_mode = False
         self.funcs[zeph.emojis["yes"]] = self.close
@@ -348,9 +348,6 @@ class CustomChessNavigator(Navigator):
         self.funcs["color"] = self.change_color
         self.funcs["setup"] = self.change_setup
         self.funcs["moves"] = self.change_moves
-
-    async def close(self):
-        return await self.remove_buttons()
 
     def standard_pred(self, m: discord.Message):
         return m.channel == self.message.channel and m.author == self.author
@@ -388,7 +385,7 @@ class CustomChessNavigator(Navigator):
             footer="Say \"cancel\" to cancel."
         )
         try:
-            col = await zeph.wait_for("message", timeout=300, check=self.standard_pred)
+            col = await zeph.wait_for("message", timeout=60, check=self.standard_pred)
         except asyncio.TimeoutError:
             await self.emol.edit(self.message, "Custom challenge timed out.")
             self.closed_elsewhere = True
@@ -424,7 +421,7 @@ class CustomChessNavigator(Navigator):
         )
         try:
             col = await zeph.wait_for(
-                "message", timeout=300,
+                "message", timeout=60,
                 check=lambda m: self.standard_pred(m) and (ch.seems_san(m.content) or m.content.lower() == "cancel")
             )
         except asyncio.TimeoutError:
@@ -464,7 +461,7 @@ class CustomChessNavigator(Navigator):
             elif isinstance(mr, discord.Reaction):
                 return mr.emoji in self.legal and mr.message == self.message and u == self.author
 
-        ret = (await zeph.wait_for('reaction_or_message', timeout=300, check=pred))[0]
+        ret = (await zeph.wait_for('reaction_or_message', timeout=self.timeout, check=pred))[0]
 
         if isinstance(ret, discord.Reaction):
             return ret.emoji
@@ -482,7 +479,6 @@ class CustomChessNavigator(Navigator):
         else:
             return ch.BoardWrapper(fen=self.starting_fen)
 
-    @property
     def con(self):
         if self.view_mode:
             return chess_emol.con(
@@ -523,7 +519,7 @@ class ChessNavigator(Navigator):
         "(https://en.wikipedia.org/wiki/Algebraic_notation_(chess)) to input moves."
 
     def __init__(self, white: User, black: User, board: ch.BoardWrapper):
-        super().__init__(chess_emol, [], 0, "", prev="", nxt="")
+        super().__init__(chess_emol, prev="", nxt="", timeout=300)
         self.white = white
         self.black = black
         self.board = board
@@ -688,7 +684,7 @@ class ChessNavigator(Navigator):
             elif isinstance(mr, discord.Reaction):
                 return mr.emoji in self.legal and mr.message == self.message and u == self.at_play
 
-        ret = (await zeph.wait_for('reaction_or_message', timeout=300, check=pred))[0]
+        ret = (await zeph.wait_for('reaction_or_message', timeout=self.timeout, check=pred))[0]
 
         if isinstance(ret, discord.Reaction):
             return ret.emoji
@@ -783,7 +779,6 @@ class ChessPlayNavigator(ChessNavigator):
             top=top, perspective=self.perspectives[color]
         )
 
-    @property
     def con(self):
         if self.mode == "help":
             return self.emol.con(
@@ -877,7 +872,6 @@ class SoloChessNavigator(ChessNavigator):
         self.board = ch.BoardWrapper(self.board.setup)
         self.notification = "Board reset."
 
-    @property
     def con(self):
         if self.mode == "help":
             return self.emol.con(

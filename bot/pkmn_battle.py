@@ -162,7 +162,7 @@ def display_team(team: pk.Team) -> str:
 
 class BattleTeamNavigator(Navigator):
     def __init__(self, emol: Emol, team: pk.Team, close_on_switch: bool = False, allow_manual_close: bool = True):
-        super().__init__(emol, team.mons, 1, "", prev="🔼", nxt="🔽")
+        super().__init__(emol, team.mons, 1, prev="🔼", nxt="🔽", timeout=180)
         self.team = team
         self.funcs["🔀"] = self.switch
         self.funcs[zeph.emojis["search"]] = self.view_summary
@@ -188,9 +188,6 @@ class BattleTeamNavigator(Navigator):
         self.timed_out = True
         return await self.close()
 
-    async def close(self):
-        await self.remove_buttons()
-
     def view_summary(self):
         if self.mode == "summary":
             self.mode = "list"
@@ -213,7 +210,6 @@ class BattleTeamNavigator(Navigator):
             f"{display_mon(mon, 'inline')}" \
             f"{'**' if team_index == self.page - 1 else ''}"
 
-    @property
     def con(self):
         mon = self.mon
         if self.mode == "summary":
@@ -1247,14 +1243,10 @@ class Battle:
 
 class BattleStatusNavigator(Navigator):
     def __init__(self, battle: Battle):
-        super().__init__(battle.emol, [battle.field, *battle.active_mons], 1, "")
+        super().__init__(battle.emol, [battle.field, *battle.active_mons], 1, timeout=180)
         self.battle = battle
         self.funcs[zeph.emojis["no"]] = self.close
 
-    async def close(self):
-        await self.remove_buttons()
-
-    @property
     def con(self):
         sel = self.table[self.page - 1]
         if isinstance(sel, pk.Field):

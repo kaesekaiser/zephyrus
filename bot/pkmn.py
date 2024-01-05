@@ -79,10 +79,7 @@ def scroll_list(ls: iter, at: int, curved: bool = False, wrap: bool = True) -> s
 
 class DexNavigator(Navigator):
     def __init__(self, start: pk.BareMiniMon, **kwargs):
-        super().__init__(
-            kwargs.get("emol", ball_emol()), [], 1, "",
-            prev=zeph.emojis["dex_prev"], nxt=zeph.emojis["dex_next"], close_on_timeout=True
-        )
+        super().__init__(kwargs.get("emol", ball_emol()), prev=zeph.emojis["dex_prev"], nxt=zeph.emojis["dex_next"])
         self.mon = start
         self.mode = kwargs.get("starting_mode")
         self.jumpDest = None
@@ -96,9 +93,6 @@ class DexNavigator(Navigator):
 
     def do_nothing(self):
         pass
-
-    async def close(self):
-        return await self.remove_buttons()
 
     def forms_mode(self):
         self.mode = "forms" if self.mode != "forms" else None
@@ -118,7 +112,6 @@ class DexNavigator(Navigator):
         self.mode = None
         self.last_guess = None
 
-    @property
     def con(self):
         if not self.mode:
             return self.emol.con(
@@ -171,7 +164,7 @@ class DexNavigator(Navigator):
                     return u == ctx.author and mr.emoji in self.funcs and mr.message.id == self.message.id
 
             mess = (await zeph.wait_for(
-                'reaction_or_message', timeout=300, check=pred
+                'reaction_or_message', timeout=self.timeout, check=pred
             ))[0]
             if isinstance(mess, discord.Message):
                 await mess.delete()
@@ -188,7 +181,7 @@ class DexNavigator(Navigator):
             elif isinstance(mess, discord.Reaction):
                 return mess.emoji
         return (await zeph.wait_for(
-            'reaction_add', timeout=300, check=lambda r, u: r.emoji in self.legal and
+            'reaction_add', timeout=self.timeout, check=lambda r, u: r.emoji in self.legal and
             r.message.id == self.message.id and u == ctx.author
         ))[0].emoji
 
@@ -209,8 +202,7 @@ class DexSearchNavigator(Navigator):
     }
 
     def __init__(self, **kwargs):
-        super().__init__(ball_emol(), [], 8, "",  # only the `per` param matters; the table gets rewritten
-                         prev=zeph.emojis["dex_prev"], nxt=zeph.emojis["dex_next"])
+        super().__init__(ball_emol(), per=8, prev=zeph.emojis["dex_prev"], nxt=zeph.emojis["dex_next"], timeout=180)
         self.mode = kwargs.get("mode", None)
         self.dex = copy(pk.nat_dex)
         self.funcs["⏯"] = self.jump_to_midpoint
@@ -254,10 +246,6 @@ class DexSearchNavigator(Navigator):
 
     def help_mode(self):
         self.mode = "help" if self.mode != "help" else None
-
-    async def close(self):
-        self.closed_elsewhere = True
-        return await self.remove_buttons()
 
     def filter(self, mon: pk.Mon):
         """Returns true if the species should be included in the list, false otherwise."""
@@ -376,7 +364,6 @@ class DexSearchNavigator(Navigator):
         if option == "ability":
             self.ability = None if value == "any" else [g for g in pk.abilities if pk.fix(g) == pk.fix(value)][0]
 
-    @property
     def con(self):
         def ain(x):
             return "any" if x is None or len(str(x)) == 0 else x
@@ -444,7 +431,7 @@ class DexSearchNavigator(Navigator):
                     return u == ctx.author and mr.emoji in self.funcs and mr.message.id == self.message.id
 
             mess = (await zeph.wait_for(
-                'reaction_or_message', timeout=300, check=pred
+                'reaction_or_message', timeout=self.timeout, check=pred
             ))[0]
             if isinstance(mess, discord.Message):
                 await mess.delete()
@@ -455,7 +442,7 @@ class DexSearchNavigator(Navigator):
                 return mess.emoji
 
         return (await zeph.wait_for(
-            'reaction_add', timeout=300, check=lambda r, u: r.emoji in self.legal and
+            'reaction_add', timeout=self.timeout, check=lambda r, u: r.emoji in self.legal and
             r.message.id == self.message.id and u == ctx.author
         ))[0].emoji
 
@@ -482,7 +469,7 @@ class EffNavigator(Navigator):
     types = (None,) + pk.types
 
     def __init__(self, type1: str, type2: str = None, initial_mon: pk.Mon = find_mon("NULL")):
-        super().__init__(ball_emol(), [], 1, "", prev="", nxt="")
+        super().__init__(ball_emol(), prev="", nxt="")
         self.type1 = type1
         self.type2 = type2
         self.funcs[zeph.emojis["left1"]] = self.type1bac
@@ -527,7 +514,6 @@ class EffNavigator(Navigator):
         except KeyError:
             return None
 
-    @property
     def con(self):
         second_type = f"{zeph.emojis[self.type2.title()]} `{self.type2}`" if self.type2 else "`None`"
         return self.emol.con(
@@ -579,7 +565,7 @@ def display_raid(raid: pk.TeraRaid, mode: str):
 class RaidNavigator(Navigator):
     def __init__(self, raid: pk.TeraRaid, **kwargs):
         super().__init__(
-            kwargs.get("emol", ball_emol("master")), [], 1, raid.name, prev="", nxt=""
+            kwargs.get("emol", ball_emol("master")), title=raid.name, prev="", nxt="", timeout=120
         )
         self.raid = raid
         self.mon = find_mon(raid.species, use_bare=True)
@@ -590,9 +576,6 @@ class RaidNavigator(Navigator):
 
     def change_mode(self, mode: str):
         self.mode = mode
-
-    async def after_timeout(self):
-        await self.remove_buttons()
 
     @staticmethod
     def display_action(action: str) -> str:
@@ -618,7 +601,6 @@ class RaidNavigator(Navigator):
             )
         }
 
-    @property
     def con(self):
         return self.emol.con(
             f"#{str(self.mon.dex_no).rjust(4, '0')} {self.mon.full_name}" if self.mode == "dex" else
@@ -640,7 +622,8 @@ class LearnsetNavigator(Navigator):
 
     def __init__(self, mon: pk.Mon, gen: str = "SV", **kwargs):
         super().__init__(
-            kwargs.get("emol", ball_emol()), [], 8, "", prev=zeph.emojis["dex_prev"], nxt=zeph.emojis["dex_next"]
+            kwargs.get("emol", ball_emol()), per=8,
+            prev=zeph.emojis["dex_prev"], nxt=zeph.emojis["dex_next"], timeout=120
         )
         self.mon = mon
         self.gen = gen
@@ -696,7 +679,6 @@ class LearnsetNavigator(Navigator):
                 for g in page_list(self.selected_table, self.per, self.page)
             )
 
-    @property
     def con(self):
         if self.learnset:
             return self.emol.con(
@@ -739,7 +721,7 @@ class BuildAMonNavigator(Navigator):
     ]
 
     def __init__(self, ctx: commands.Context, title: str = "Build-A-Mon", **kwargs):
-        super().__init__(kwargs.get("emol", ball_emol()), [], 0, "", prev="", nxt="")
+        super().__init__(kwargs.get("emol", ball_emol()), prev="", nxt="", timeout=300)
         self.ctx = ctx
         self.title = title
         self.mon = kwargs.get("starting_mon", find_mon("Bulbasaur"))
@@ -834,7 +816,7 @@ class BuildAMonNavigator(Navigator):
             elif isinstance(mr, discord.Reaction):
                 return mr.emoji in self.legal and mr.message.id == self.message.id and u == self.ctx.author
 
-        user_input = (await zeph.wait_for("reaction_or_message", check=pred, timeout=300))[0]
+        user_input = (await zeph.wait_for("reaction_or_message", check=pred, timeout=self.timeout))[0]
         if isinstance(user_input, discord.Message):
             await user_input.delete()
             return user_input.content.lower()
@@ -878,7 +860,8 @@ class BuildAMonNavigator(Navigator):
         }
         necessary_check = additional_checks.get(message_type, lambda m: True)
         mess = await zeph.wait_for(
-            "message", check=lambda m: general_pred(self.ctx)(m) and bool(necessary_check(m.content)), timeout=300
+            "message", check=lambda m: general_pred(self.ctx)(m) and bool(necessary_check(m.content)),
+            timeout=self.timeout
         )
         await mess.delete()
         if force_lower:
@@ -1023,7 +1006,6 @@ class BuildAMonNavigator(Navigator):
                     self.mon.moves[rep] = move
                     await asyncio.sleep(1)
 
-    @property
     def con(self):
         return self.emol.con(
             self.title, d=display_mon(self.mon, "builder"),
@@ -1035,8 +1017,8 @@ class BuildAMonNavigator(Navigator):
 class BuildATeamNavigator(Navigator):
     def __init__(self, ctx: commands.Context, team: pk.Team = pk.Team("Build-A-Team"), **kwargs):
         super().__init__(
-            kwargs.get("emol", ball_emol()), [], 1, kwargs.get("title", "Build-A-Team"), prev="🔼", nxt="🔽",
-            close_on_timeout=True
+            kwargs.get("emol", ball_emol()), per=1, title=kwargs.get("title", "Build-A-Team"), prev="🔼", nxt="🔽",
+            timeout=300
         )
         self.ctx = ctx
         self.team = team
@@ -1095,15 +1077,10 @@ class BuildATeamNavigator(Navigator):
             self.team.switch(0, self.page - 1, update_pos_values=True)
             self.page = 1
 
-    async def close(self):
-        self.closed_elsewhere = True
-        return await self.remove_buttons()
-
     @property
     def pgs(self):
         return len(self.team.mons)
 
-    @property
     def con(self):
         bs = "\\"
         return self.emol.con(
@@ -1127,7 +1104,7 @@ class CatchRateNavigator(Navigator):
     ]
 
     def __init__(self, **kwargs):
-        super().__init__(ball_emol(), [], 1, "", prev="", nxt="", close_on_timeout=True)
+        super().__init__(ball_emol(), timeout=120)
         self.calculator = pk.CatchRate(kwargs.get("ball", "poke"), kwargs.get("mon", find_mon(1)))
 
     @property
@@ -1150,7 +1127,7 @@ class CatchRateNavigator(Navigator):
             elif isinstance(mr, discord.Reaction):
                 return mr.emoji in self.legal and mr.message.id == self.message.id and u == ctx.author
 
-        user_input = (await zeph.wait_for("reaction_or_message", check=pred, timeout=300))[0]
+        user_input = (await zeph.wait_for("reaction_or_message", check=pred, timeout=self.timeout))[0]
         if isinstance(user_input, discord.Message):
             await user_input.delete()
             return user_input.content.lower()
@@ -1159,7 +1136,7 @@ class CatchRateNavigator(Navigator):
 
     async def close(self):
         self.closed_elsewhere = True
-        return await self.message.edit(embed=self.con)
+        return await self.message.edit(embed=self.con())
 
     async def wait_for(self, message_type: str, ctx: commands.Context) -> str:
         def is_yesno(s: str):
@@ -1272,7 +1249,6 @@ class CatchRateNavigator(Navigator):
 
         return await mess.delete()
 
-    @property
     def con(self):
         descriptions = {
             "beast": "5x catch rate if used on an Ultra Beast. 0.1x otherwise.",
@@ -1832,7 +1808,7 @@ def display_tokens(tokens: dict[str, int], joiner: str = " // ", if_empty: str =
 
 class EncounterNavigator(Navigator):
     def __init__(self, mon: pk.BareMiniMon, stroll: WalkerStroll, message: discord.Message):
-        super().__init__(ball_emol("safari"), [], 0, f"Encounter: {mon.name}!", remove_immediately=True)
+        super().__init__(ball_emol("safari"), remove_immediately=True, timeout=300)
         self.mon = mon
         self.stroll = stroll
         self.berry_level = 0
@@ -1904,7 +1880,6 @@ class EncounterNavigator(Navigator):
         self.last_action = "exit"
         self.closed_elsewhere = True
 
-    @property
     def con(self):
         action = "Out of Safari Balls! Come back another time." if not self.stroll.balls else \
             (f"Throw a {zeph.emojis['safari_ball']} **ball** (x{self.stroll.balls}), "
@@ -1936,7 +1911,6 @@ class LocaleSelector(NumSelector):
         else:
             return f" -- {len([g for g in self.caught_by.dex if locale.get_rarity(g)])} {zeph.emojis['caught']}"
 
-    @property
     def con(self):
         return self.emol.con(
             f"Select a locale! [{self.page}/{self.pgs}]",
@@ -1947,7 +1921,7 @@ class LocaleSelector(NumSelector):
 
 class WalkerBoxNavigator(Navigator):
     def __init__(self, user: pk.WalkerUser):
-        super().__init__(Emol(":desktop:", hexcol("5DADEC")), user.box)
+        super().__init__(Emol(":desktop:", hexcol("5DADEC")), user.box, timeout=300)
         self.user = user
         self.mode = "browse"
         self.filters = {"types": set(), "shiny": False, "sort": "date"}
@@ -1963,9 +1937,6 @@ class WalkerBoxNavigator(Navigator):
 
         for g in range(8):
             self.funcs[f"!evolve {g+1}"] = partial(self.select_evolution, g)
-
-    async def close(self):
-        await self.remove_buttons()
 
     def view_mon(self, n: int):
         if n + 1 > len(self.page_mons):
@@ -2130,7 +2101,7 @@ class WalkerBoxNavigator(Navigator):
     async def get_emoji(self, ctx: commands.Context):
         if self.mode.startswith("confirm_transfer"):
             reaction = (await zeph.wait_for(
-                'reaction_add', timeout=300, check=lambda r, u: r.emoji in self.legal and
+                'reaction_add', timeout=self.timeout, check=lambda r, u: r.emoji in self.legal and
                 r.message.id == self.message.id and u == ctx.author
             ))[0].emoji
             if reaction != zeph.emojis["transfer"]:
@@ -2151,7 +2122,7 @@ class WalkerBoxNavigator(Navigator):
                     return u == ctx.author and mr.emoji in self.funcs and mr.message.id == self.message.id
 
             mess = (await zeph.wait_for(
-                'reaction_or_message', timeout=300, check=pred
+                'reaction_or_message', timeout=self.timeout, check=pred
             ))[0]
             if isinstance(mess, discord.Message):
                 await mess.delete()
@@ -2167,7 +2138,7 @@ class WalkerBoxNavigator(Navigator):
                 else:
                     return u == ctx.author and mr.message == self.message and mr.emoji in self.legal
 
-            mess = (await zeph.wait_for('reaction_or_message', timeout=300, check=pred))[0]
+            mess = (await zeph.wait_for('reaction_or_message', timeout=self.timeout, check=pred))[0]
 
             if isinstance(mess, discord.Message):
                 try:
@@ -2185,7 +2156,7 @@ class WalkerBoxNavigator(Navigator):
                 else:
                     return u == ctx.author and mr.message == self.message and mr.emoji in self.legal
 
-            mess = (await zeph.wait_for('reaction_or_message', timeout=300, check=pred))[0]
+            mess = (await zeph.wait_for('reaction_or_message', timeout=self.timeout, check=pred))[0]
 
             if isinstance(mess, discord.Message):
                 try:
@@ -2204,7 +2175,7 @@ class WalkerBoxNavigator(Navigator):
             else:
                 return u == ctx.author and mr.message == self.message and mr.emoji in self.legal
 
-        mess = (await zeph.wait_for('reaction_or_message', timeout=300, check=pred))[0]
+        mess = (await zeph.wait_for('reaction_or_message', timeout=self.timeout, check=pred))[0]
 
         if isinstance(mess, discord.Message):
             try:
@@ -2272,7 +2243,6 @@ class WalkerBoxNavigator(Navigator):
             self.filters["shiny"] = not self.filters["shiny"]
             self.apply_filter()
 
-    @property
     def con(self):
         if self.mode == "filter":
             return self.emol.con(
@@ -2367,7 +2337,6 @@ class WalkerLevelNavigator(Navigator):
     def pgs(self):
         return len(pk.walker_exp_levels)
 
-    @property
     def con(self):
         return self.emol.con(
             f"Trainer Level {self.page}",
@@ -2393,9 +2362,6 @@ class WalkerCharmNavigator(NumSelector):
         self.replacing_id = -1
         self.selected_id = -1
         self.last_equipped_ids = []
-
-    async def close(self):
-        await self.remove_buttons()
 
     @property
     def charm_in_slot(self) -> pk.Charm | None:
@@ -2445,7 +2411,6 @@ class WalkerCharmNavigator(NumSelector):
                 self.user.equipped_charm_ids.append(selection)
                 self.selected_id = selection
 
-    @property
     def con(self):
         if self.slot == 0:
             equipped = [self.user.equipped_charms[n] if len(self.user.equipped_charms) > n else "" for n in range(3)]
@@ -2477,7 +2442,7 @@ class WalkerCharmNavigator(NumSelector):
 
 class WalkerMarketNavigator(NumSelector):
     def __init__(self, user: pk.WalkerUser):
-        super().__init__(ball_emol("safari"), s="Pok\u00e9Marketplace")
+        super().__init__(ball_emol("safari"), s="Pok\u00e9Marketplace", timeout=180)
         self.user = user
         self.mode = "main"
         self.buying_item = {}
@@ -2559,7 +2524,6 @@ class WalkerMarketNavigator(NumSelector):
     def page_list(self) -> list:
         return page_list(self.item_list, self.section_per, self.page)
 
-    @property
     def con(self):
         if self.mode == "main":
             return self.emol.con(

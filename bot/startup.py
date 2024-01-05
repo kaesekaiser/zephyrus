@@ -345,17 +345,16 @@ class Navigator:
     for child classes to overwrite large amounts of the run() function without having to overwrite the function
     itself. """
 
-    def __init__(self, emol: Emol, ls: list = (), per: int = 8, s: str = "",
-                 prev: Union[discord.Emoji, str] = "◀", nxt: Union[discord.Emoji, str] = "▶",
-                 close_on_timeout: bool = False, **kwargs):
+    def __init__(self, emol: Emol, ls: list = (), per: int = 8, title: str = "",
+                 prev: [discord.Emoji, str] = "◀", nxt: [discord.Emoji, str] = "▶", **kwargs):
         # kwargs are also passed to Emol.con()
         self.emol = emol
         self.table = ls
         self.per = per
         self.page = 1
-        self.title = s
+        self.title = kwargs.get("s", title)
         self.message = None
-        self.close_on_timeout = close_on_timeout
+        self.timeout = kwargs.pop("timeout", 60)
         self.prefix = kwargs.pop("prefix", "")
         self.kwargs = kwargs
         self.funcs = {}
@@ -380,7 +379,6 @@ class Navigator:
     def post_process(self):  # runs on page change!
         pass
 
-    @property
     def con(self):
         return self.emol.con(
             self.title.format(page=self.page, pgs=self.pgs),
@@ -393,7 +391,7 @@ class Navigator:
     async def get_emoji(self, ctx: commands.Context):
         """Detects a button press, and returns the emoji that was pressed."""
         return (await zeph.wait_for(
-            'reaction_add', timeout=300, check=lambda r, u: r.emoji in self.legal and
+            'reaction_add', timeout=self.timeout, check=lambda r, u: r.emoji in self.legal and
             r.message.id == self.message.id and u == ctx.author
         ))[0].emoji
 
@@ -402,7 +400,8 @@ class Navigator:
         pass
 
     async def close(self):
-        await self.message.delete()
+        self.closed_elsewhere = True  # may be called outside of a button press
+        return await self.remove_buttons()
 
     async def remove_buttons(self, from_message: discord.Message = None):
         if not from_message:
@@ -416,21 +415,19 @@ class Navigator:
                     pass
 
     async def after_timeout(self):
-        if self.close_on_timeout:
-            return await self.close()
-        return await self.remove_buttons()
+        return await self.close()
 
     async def update_message(self):
-        await self.message.edit(embed=self.con)
+        await self.message.edit(embed=self.con())
 
     async def run(self, ctx: commands.Context, on_new_message: bool = True, skip_setup: bool = False):
         """This function should never be overwritten."""
         if not skip_setup:
             if on_new_message:
-                self.message = await ctx.channel.send(embed=self.con)
+                self.message = await ctx.channel.send(embed=self.con())
             else:
                 assert isinstance(self.message, discord.Message)
-                await self.message.edit(embed=self.con)
+                await self.message.edit(embed=self.con())
 
             for button in self.legal:
                 if "!" not in button:
@@ -490,7 +487,6 @@ class FieldNavigator(Navigator):
         super().__init__(emol, [], per, s, **kwargs)
         self.table = d
 
-    @property
     def con(self):
         return self.emol.con(
             self.title.format(page=self.page, pgs=self.pgs),
@@ -528,7 +524,7 @@ class NumSelector(Navigator):
             else:
                 return u == ctx.author and mr.message == self.message and mr.emoji in self.legal
 
-        mess = (await zeph.wait_for('reaction_or_message', timeout=300, check=pred))[0]
+        mess = (await zeph.wait_for('reaction_or_message', timeout=self.timeout, check=pred))[0]
 
         if isinstance(mess, discord.Message):
             try:
