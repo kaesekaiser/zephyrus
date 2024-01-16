@@ -216,12 +216,13 @@ async def scramble(ctx: commands.Context, *, text: str):
 
 
 @zeph.command(
+    name="tconvert",
     aliases=["tc", "tconv"], usage="z!tconvert <temperature> <unit> to <unit>\nz!tconvert <temperature> <unit>",
     description="Converts between units of temperature.",
     help="Converts between units of temperature: C, F, K, and R. More info at "
          "https://github.com/kaesekaiser/zephyrus/blob/master/docs/convert.md."
 )
-async def tconvert(ctx: commands.Context, n: str, *text):
+async def tconvert_command(ctx: commands.Context, n: str, *text):
     if re.fullmatch(r"[0-9.°]+[A-Za-z]+", n):
         text = [re.search(r"[A-Za-z]+", n)[0], *text]
         n = re.match(r"[0-9.]+", n)[0]
@@ -261,8 +262,7 @@ def apostrophe_feet_to_decimal(s: str) -> float:
     name="convert", aliases=["c", "conv"],
     usage="z!convert <number> <unit...> to <unit...>\nz!convert <number> <unit...>",
     description="Converts between non-temperature units of measurement.",
-    help="Converts between units of measurement. Note that this does **not** include temperature, for unit "
-         "compatibility reasons; temperature can be converted using `z!tconvert`. More info at "
+    help="Converts between units of measurement. More info at "
          "https://github.com/kaesekaiser/zephyrus/blob/master/docs/convert.md."
 )
 async def convert_command(ctx: commands.Context, *, text):
@@ -283,6 +283,12 @@ async def convert_command(ctx: commands.Context, *, text):
             apostrophe_feet_to_decimal(user_input)
         except (ValueError, IndexError):
             raise commands.BadArgument
+
+    if text[0].lower().strip("°") in ("c", "f", "k", "r"):
+        if len(text) == 1:
+            return await tconvert_command(ctx, user_input, text[0])
+        elif text[-1].lower().strip("°") in ("c", "f", "k", "r"):
+            return await tconvert_command(ctx, user_input, text[0], "to", text[-1])
 
     # determining number of sig figs
     if "/" in user_input:  # fractional input
@@ -316,6 +322,9 @@ async def convert_command(ctx: commands.Context, *, text):
         except ValueError:
             raise commands.BadArgument
 
+    if n < 0:
+        n = -n
+
     round_in = (digits_in - floor(log10(n)) - 1) if (digits_in - floor(log10(n)) - 1) > 0 else 0
 
     if "to" in text:
@@ -324,9 +333,6 @@ async def convert_command(ctx: commands.Context, *, text):
             raise commands.BadArgument
     else:
         text = (cv.MultiUnit.from_str(cv.unrulyAbbreviations.get(" ".join(text), " ".join(text))), )
-
-    if n < 0:
-        raise commands.CommandError(f"Can't have negative measurements.")
 
     ret = cv.convert_multi(n, *text)
 
