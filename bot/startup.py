@@ -499,6 +499,7 @@ class NumSelector(Navigator):
     """A Navigator with the option to select one of a numerical list via chat message built-in."""
     def __init__(self, emol: Emol, ls: list = (), per: int = 8, s: str = "", **kwargs):
         super().__init__(emol, ls, per, s, **kwargs)
+        self.can_multi_select = bool(kwargs.get("multi", False))
 
         for n in kwargs.get("allowable_selections", range(self.per)):
             self.funcs[f"!select {n+1}"] = partial(self.select, n)
@@ -516,11 +517,26 @@ class NumSelector(Navigator):
         # Whether a given n is a valid number for selection.
         return 1 <= n <= len(self.page_list)
 
+    async def run_nonstandard_emoji(self, emoji: discord.Emoji | str, ctx: commands.Context):
+        if self.can_multi_select:
+            if str(emoji).startswith("!select ") and len(str(emoji)) > 9:
+                for c in emoji[8:]:
+                    if can_int(c):
+                        if should_await(self.select):
+                            await self.select(int(c) - 1)
+                        else:
+                            self.select(int(c) - 1)
+
     async def get_emoji(self, ctx: commands.Context):
         def pred(mr: MR, u: User):
             if isinstance(mr, discord.Message) and self.can_select_now:
-                return u == ctx.author and mr.channel == ctx.channel and can_int(mr.content) and \
-                    self.is_valid_user_selection(int(mr.content))
+                if self.can_multi_select:
+                    return u == ctx.author and mr.channel == ctx.channel and \
+                        all(can_int(c) or c == " " for c in mr.content) and \
+                        [self.is_valid_user_selection(int(c)) for c in mr.content if can_int(c)]
+                else:
+                    return u == ctx.author and mr.channel == ctx.channel and can_int(mr.content) and \
+                        self.is_valid_user_selection(int(mr.content))
             else:
                 return u == ctx.author and mr.message == self.message and mr.emoji in self.legal
 

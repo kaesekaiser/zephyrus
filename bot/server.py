@@ -78,11 +78,11 @@ class PrefixNavigator(Navigator):
         await self.remove_buttons()
 
 
-class SelfRoleNavigator(Navigator):
+class SelfRoleNavigator(NumSelector):
     def __init__(self, roles: list, ctx: commands.Context, mode: str = "view"):
         """mode can be "self", "auto", "assign", or "view". the mode edits the list of selfroles, edits the list of
         autoroles, assigns selfroles to the user, or just browses the list, respectively."""
-        super().__init__(config, roles, 8, "Selfroles List", timeout=120)
+        super().__init__(config, roles, 8, "Selfroles List", timeout=120, multi=True)
         self.mode = mode
         self.ctx = ctx
         self.user = ctx.author
@@ -115,18 +115,12 @@ class SelfRoleNavigator(Navigator):
         if self.mode != "view":
             zeph.nativities.append(self.nativity)
         self.funcs[zeph.emojis["no"]] = self.close
-        for g in range(8):
-            self.funcs[str(g + 1)] = partial(self.toggle_role, g)
 
     @property
     def settings(self):
         return zeph.server_settings[self.ctx.guild.id]
 
-    @property
-    def legal(self):  # overwriting this so it doesn't try to add all the numbers as reactions, delaying startup
-        return [self.prev, self.next, zeph.emojis["no"]]
-
-    async def toggle_role(self, n: int):
+    async def select(self, n: int):
         role = self.roles_table[n]
 
         if self.mode == "self":
@@ -184,31 +178,10 @@ class SelfRoleNavigator(Navigator):
         await self.emol.edit(self.message, "This menu has closed.")
         await self.remove_buttons()
 
-    async def get_emoji(self, ctx: commands.Context):
-        def pred(mr: MR, u: User):
-            if isinstance(mr, discord.Message):
-                return can_int(mr.content) and int(mr.content) - 1 in range(len(self.roles_table)) and \
-                    u == ctx.author and mr.channel == ctx.channel
-            else:
-                return u == ctx.author and mr.emoji in self.legal and mr.message.id == self.message.id
 
-        mess = (await zeph.wait_for(
-            'reaction_or_message', timeout=self.timeout, check=pred
-        ))[0]
-
-        if isinstance(mess, discord.Message):
-            try:
-                await mess.delete()
-            except discord.HTTPException:
-                pass
-            return mess.content
-        else:
-            return mess.emoji
-
-
-class AitchNavigator(Navigator):
+class AitchNavigator(NumSelector):
     def __init__(self, ctx: commands.Context):
-        super().__init__(config, ctx.guild.text_channels, 8, "Aitch Settings", timeout=120)
+        super().__init__(config, ctx.guild.text_channels, 8, "Aitch Settings", timeout=120, multi=True)
         self.ctx = ctx
         self.prefix = f"To toggle {zeph.emojis['aitch']} on or off in a channel, just say the number. " \
             f"{zeph.emojis['checked']} indicates which channels it is currently enabled in. " \
@@ -217,10 +190,8 @@ class AitchNavigator(Navigator):
         self.nativity = Nativity(ctx, block_all=True)
         zeph.nativities.append(self.nativity)
         self.funcs[zeph.emojis["no"]] = self.close
-        for g in range(8):
-            self.funcs[str(g + 1)] = partial(self.toggle_channel, g)
 
-    async def toggle_channel(self, n: int):
+    def select(self, n: int):
         channel = self.channels_table[n]
 
         if channel.id in self.settings.h_exceptions:
@@ -251,27 +222,6 @@ class AitchNavigator(Navigator):
         zeph.nativities.remove(self.nativity)
         await self.emol.edit(self.message, "This menu has closed.")
         await self.remove_buttons()
-
-    async def get_emoji(self, ctx: commands.Context):
-        def pred(mr: MR, u: User):
-            if isinstance(mr, discord.Message):
-                return can_int(mr.content) and int(mr.content) - 1 in range(len(self.channels_table)) and \
-                    u == ctx.author and mr.channel == ctx.channel
-            else:
-                return u == ctx.author and mr.emoji in self.legal and mr.message.id == self.message.id
-
-        mess = (await zeph.wait_for(
-            'reaction_or_message', timeout=self.timeout, check=pred
-        ))[0]
-
-        if isinstance(mess, discord.Message):
-            try:
-                await mess.delete()
-            except discord.HTTPException:
-                pass
-            return mess.content
-        else:
-            return mess.emoji
 
 
 def load_server_settings():
