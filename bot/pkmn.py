@@ -1399,6 +1399,14 @@ class PokemonInterpreter(Interpreter):
 
         return await ball_emol().send(self.ctx, f"z!pokemon {ret}", d=help_dict[ret])
 
+    async def fallback(self, *args):
+        if find_mon(" ".join(args), fail_silently=True):
+            return await self.run("dex", *args)
+        else:
+            raise commands.CommandError(
+                f"Unrecognized command `{args[0]}`.\nSee **`z!pokemon help`** for a list of valid commands."
+            )
+
     async def _type(self, *args):
         if not args:
             raise commands.CommandError("Format: `z!pokemon type <type>`")

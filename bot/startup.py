@@ -607,11 +607,10 @@ class Interpreter:
         try:
             functions["_" + self.redirects.get(func, func)]
         except KeyError:
-            if asyncio.iscoroutinefunction(self.fallback):
-                await self.fallback(*[func, *args])
+            if should_await(self.fallback):
+                return await self.fallback(func, *args)
             else:
-                self.fallback(*[func, *args])
-            raise commands.CommandError(f"Unrecognized function `{func}`.")
+                return self.fallback(func, *args)
         else:
             func = self.redirects.get(func, func)
             if asyncio.iscoroutinefunction(self.before_run):
@@ -626,7 +625,9 @@ class Interpreter:
 
     def fallback(self, *args):
         """Called if argument given is not a valid function."""
-        raise commands.CommandError(f"Unrecognized function `{args[0]}`.")
+        raise commands.CommandError(
+            f"Unrecognized command `{args[0]}`.\nSee **`z!{self.ctx.command.name} help`** for a list of valid commands."
+        )
 
 
 def lower(ls: Union[list, tuple]):
