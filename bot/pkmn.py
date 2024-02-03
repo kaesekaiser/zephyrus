@@ -1168,9 +1168,6 @@ class CatchRateNavigator(Navigator):
         return mess.content.lower()
 
     async def run_nonstandard_emoji(self, emoji: Union[discord.Emoji, str], ctx: commands.Context):
-        if emoji in self.legal:
-            return
-
         if emoji == "gender" and self.wild_mon.default_gender != "random":
             mess = await self.emol.send(ctx, f"{self.wild_mon.species.name} is {self.wild_mon.default_gender} only.")
             await asyncio.sleep(2)

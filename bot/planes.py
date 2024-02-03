@@ -155,8 +155,7 @@ class PlanesInterpreter(Interpreter):
             city.job_reset = reset
         jobs = [g for g in city.jobs if (g.code not in self.user.jobs or g.code in exclusion_exceptions) and fil(g)]
         jobs = {
-            g.code: f"**`[{g.code}]`** {self.pretty_city(g.destination, True)} "
-            f"(Ȼ{pn.addcomm(self.job_pay(g))})" for g in jobs
+            g.code: f"{self.pretty_city(g.destination, True)} (Ȼ{pn.addcomm(self.job_pay(g))})" for g in jobs
         }
         return {
             "job_ids": jobs,
@@ -1072,22 +1071,21 @@ class PlanesInterpreter(Interpreter):
         return await Navigator(plane, licenses, 4, "Flight Licenses [{page}/{pgs}]").run(self.ctx)
 
 
-class JobNavigator(Navigator):
+class JobNavigator(NumSelector):
     launch_commands = ["launch", "go", "g"]
 
     def __init__(self, inter: PlanesInterpreter, city: pn.City, fil: callable, fil_str: str, **kwargs):
-        super().__init__(plane, [], 8, fil_str + "obs in " + city.name + " [{page}/{pgs}]", timeout=180, **kwargs)
+        super().__init__(plane, s=f"{fil_str}obs in {city.name}" + " [{page}/{pgs}]", timeout=180, multi=True, **kwargs)
         self.interpreter = inter
         self.city = city
-        self.fil = fil
-        self.fil_str = fil_str
+        self.filter = fil
         self.is_browse_only = kwargs.pop("browse_only", False)
         if self.available_planes:
             self.plane = list(self.available_planes.values())[0]
         else:
             self.plane = None
         self.mode = "terminal"
-        self.raw_jobs = {}
+        self.all_jobs = {}  # keys are IDs, values are display strings; output of PlanesInterpreter.filter_jobs()
         self.update_jobs()
         self.funcs["🔄"] = self.update_jobs
         self.funcs["✈"] = self.switch_planes
@@ -1100,7 +1098,7 @@ class JobNavigator(Navigator):
 
     @property
     def pgs(self):
-        return (len(self.raw_jobs) - 1) // self.per + 1
+        return (len(self.all_jobs) - 1) // self.per + 1
 
     @property
     def ctx(self):
@@ -1121,11 +1119,15 @@ class JobNavigator(Navigator):
             return []
         return self.plane.jobs
 
+    @property
+    def page_list(self):
+        return page_list(list(self.all_jobs.items()), self.per, self.page)
+
     def update_jobs(self, reload: bool = True):
         self.check_plane()
         self.page = 1
-        ret = self.interpreter.filter_jobs(self.city, self.fil, self.loaded_jobs, reload=reload)
-        self.raw_jobs = ret["job_ids"]
+        ret = self.interpreter.filter_jobs(self.city, self.filter, self.loaded_jobs, reload=reload)
+        self.all_jobs = ret["job_ids"]
         self.kwargs["footer"] = ret["footer"]
 
     def check_plane(self):
@@ -1176,47 +1178,21 @@ class JobNavigator(Navigator):
                 else:
                     self.plane = list(available_planes.values())[pos]
 
-    async def get_emoji(self, ctx: commands.Context):
-        def is_1thru8(s: str):
-            return len(s) == 1 and 49 <= ord(s) <= 56
+    def is_valid_nonnumerical_input(self, s: str):
+        return s.split()[0].lower() in self.launch_commands or s.lower() == "exit"
 
-        def pred(mr: MR, u: User):
-            if isinstance(mr, discord.Message) and self.mode == "terminal":
-                return mr.channel == self.message.channel and u == self.interpreter.au and not self.is_browse_only and \
-                    (all(is_1thru8(g) for g in mr.content.split()) or
-                     mr.content.split()[0].lower() in self.launch_commands or
-                     mr.content.lower() == "exit")
-            elif isinstance(mr, discord.Reaction):
-                return mr.emoji in self.legal and mr.message == self.message and u == self.interpreter.au
+    async def run_nonnumerical_input(self, user_input: str, ctx: commands.Context):
+        if user_input.split()[0].lower() in self.launch_commands:
+            return await self.launch_protocol(*user_input.split()[1:])
 
-        ret = (await zeph.wait_for('reaction_or_message', timeout=self.timeout, check=pred))[0]
-
-        if isinstance(ret, discord.Reaction):
-            return ret.emoji
-        elif isinstance(ret, discord.Message):
-            try:
-                await ret.delete()
-            except discord.HTTPException:
-                pass
-            return ret.content
-
-    async def run_nonstandard_emoji(self, emoji: Union[discord.Emoji, str], ctx: commands.Context):
-        if emoji in self.legal:
-            return
-        else:
-            if emoji.split()[0].lower() in self.launch_commands:
-                return await self.launch_protocol(*emoji.split()[1:])
-            for job in emoji.split():
-                self.load_job(int(job))
-
-    def load_job(self, job_no: int):
+    def select(self, job_no: int):
         if not self.plane:
             return
         if self.plane.landed_at != self.city:
             self.reset_loading_plane()
             return
         try:
-            job = page_list(list(self.raw_jobs.keys()), 8, self.page)[job_no - 1]
+            job = page_list(list(self.all_jobs.keys()), self.per, self.page)[job_no]
         except IndexError:
             return
         if job in self.plane.jobs:
@@ -1301,32 +1277,36 @@ class JobNavigator(Navigator):
 
     def con(self):
         if self.mode == "terminal":
-            if not self.raw_jobs:
+            if not self.all_jobs:
                 prefix = ""
             elif self.is_browse_only:
-                prefix = "This list is in **browse-only mode**. Hit ✈ for more info.\n\n"
+                prefix = "This list is in **browse-only mode**. Hit ✈ for more info."
             elif not self.available_planes:
-                prefix = f"You have no planes at this city to load jobs onto.\n\n"
+                prefix = f"You have no planes at this city to load jobs onto."
             else:
                 prefix = f"You are currently loading jobs onto **{self.plane.name}**. " \
                     f"This plane has **{self.plane.pass_cap - len(self.plane.jobs)}** available cargo slots."
                 if len(self.available_planes) > 1:
-                    prefix += " Hit the ✈ button to switch loading planes.\n\n"
-                else:
-                    prefix += "\n\n"
+                    prefix += " Hit the ✈ button to switch loading planes."
 
-            display_table = none_list(page_list([
-                v + (" 📦" if k in self.loaded_jobs else "") for k, v in self.raw_jobs.items()
-            ], self.per, self.page), "\n")
+            display_table = none_list(
+                [f"**`[{n+1}]`** {g[1]} {'📦' if g[0] in self.loaded_jobs else ''}"
+                 for n, g in enumerate(self.page_list)], joiner="\n"
+            )
 
-            appendix = f"\n\n*new jobs <t:{round(self.city.job_reset + 900)}:R>*"
+            appendix = f"\nNew jobs available <t:{round(self.city.job_reset + 900)}:R>.\n\n"
             if time.time() > self.city.job_reset + 900:
-                appendix += " *(hit 🔄 to refresh)*"
+                appendix = "\n:sparkles: **New jobs available!** Hit 🔄 to refresh.\n\n"
 
             return plane.con(
                 self.title.format(page=self.page, pgs=self.pgs),
-                d=prefix + display_table + appendix
+                d=prefix + appendix + display_table,
+                footer="Enter the number beside a job to load or unload it.\n"
+                       "You can also load multiple at once, e.g. \"123\" or \"3 6 8\".\n"
+                       "To depart, enter \"go\" followed by a city or path, e.g. \"go london paris berlin\"."
+                       if prefix.startswith("You are") else None
             )
+
         elif self.mode == "hangar":
             available_planes = self.available_planes  # preallocate for speed
 
@@ -1362,6 +1342,7 @@ class JobNavigator(Navigator):
                 ), "\n")
 
             return plane.con(f"Planes landed at {self.city.name}" + title_suffix, d=desc)
+
         else:
             return err.con("Something has gone horribly wrong.")
 

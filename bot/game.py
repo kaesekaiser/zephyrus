@@ -799,9 +799,6 @@ class ChessPlayNavigator(ChessNavigator):
         )
 
     async def run_nonstandard_emoji(self, emoji: Union[discord.Emoji, str], ctx: commands.Context):
-        if emoji in self.legal:
-            return
-
         try:
             move = await self.parse_input(emoji)
         except asyncio.TimeoutError:
@@ -893,9 +890,6 @@ class SoloChessNavigator(ChessNavigator):
         return self.board_con(self.title, perspective=self.perspective)
 
     async def run_nonstandard_emoji(self, emoji: Union[discord.Emoji, str], ctx: commands.Context):
-        if emoji in self.legal:
-            return
-
         try:
             move = await self.parse_input(emoji, personal=False)
         except asyncio.TimeoutError:

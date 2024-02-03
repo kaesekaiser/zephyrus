@@ -442,19 +442,20 @@ class Navigator:
             except asyncio.TimeoutError:
                 return await self.after_timeout()
 
+            if self.remove_immediately:
+                try:
+                    await self.message.remove_reaction(emoji, ctx.author)
+                except discord.HTTPException:
+                    pass
+
             if emoji in self.funcs:
                 if should_await(self.funcs[emoji]):
                     await self.funcs[emoji]()
                 else:
                     self.funcs[emoji]()
 
-            await self.run_nonstandard_emoji(emoji, ctx)
-
-            if self.remove_immediately:
-                try:
-                    await self.message.remove_reaction(emoji, ctx.author)
-                except discord.HTTPException:
-                    pass
+            if emoji not in self.legal:
+                await self.run_nonstandard_emoji(emoji, ctx)
 
             if (self.funcs.get(emoji) == self.close) or self.closed_elsewhere:
                 return
@@ -517,6 +518,10 @@ class NumSelector(Navigator):
         # Whether a given n is a valid number for selection.
         return 1 <= n <= len(self.page_list)
 
+    def is_valid_nonnumerical_input(self, s: str):
+        # Whether an input message s is a valid non-numerical input. Exists to be overwritten by child classes.
+        return False
+
     async def run_nonstandard_emoji(self, emoji: discord.Emoji | str, ctx: commands.Context):
         if self.can_multi_select:
             if str(emoji).startswith("!select ") and len(str(emoji)) > 9:
@@ -526,17 +531,25 @@ class NumSelector(Navigator):
                             await self.select(int(c) - 1)
                         else:
                             self.select(int(c) - 1)
+        if isinstance(emoji, str):
+            await self.run_nonnumerical_input(emoji, ctx)
+
+    async def run_nonnumerical_input(self, user_input: str, ctx: commands.Context):
+        pass
 
     async def get_emoji(self, ctx: commands.Context):
         def pred(mr: MR, u: User):
-            if isinstance(mr, discord.Message) and self.can_select_now:
-                if self.can_multi_select:
-                    return u == ctx.author and mr.channel == ctx.channel and \
-                        all(can_int(c) or c == " " for c in mr.content) and \
-                        [self.is_valid_user_selection(int(c)) for c in mr.content if can_int(c)]
-                else:
-                    return u == ctx.author and mr.channel == ctx.channel and can_int(mr.content) and \
-                        self.is_valid_user_selection(int(mr.content))
+            if isinstance(mr, discord.Message) and mr.content:
+                if self.is_valid_nonnumerical_input(mr.content):
+                    return u == ctx.author and mr.channel == ctx.channel
+                elif self.can_select_now:
+                    if self.can_multi_select:
+                        return u == ctx.author and mr.channel == ctx.channel and \
+                            all(can_int(c) or c == " " for c in mr.content) and \
+                            [self.is_valid_user_selection(int(c)) for c in mr.content if can_int(c)]
+                    else:
+                        return u == ctx.author and mr.channel == ctx.channel and can_int(mr.content) and \
+                            self.is_valid_user_selection(int(mr.content))
             else:
                 return u == ctx.author and mr.message == self.message and mr.emoji in self.legal
 
@@ -547,7 +560,12 @@ class NumSelector(Navigator):
                 await mess.delete()
             except discord.HTTPException:
                 pass
-            return f"!select {mess.content}"
+
+            if self.is_valid_nonnumerical_input(mess.content):
+                return mess.content
+            else:
+                return f"!select {mess.content}"
+
         else:
             return mess.emoji
 
