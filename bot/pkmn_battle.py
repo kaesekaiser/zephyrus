@@ -75,7 +75,6 @@ def display_mon_types(mon: pk.BareMiniMon, sep: str = "", align: str = "right", 
 def display_mon(mon: dict | pk.BareMiniMon, mode: str = "default", **kwargs) -> str:
     """Displays various attributes of a mon in pretty form, using Zeph's emotes."""
     full_knowledge = True if mode == "builder" else kwargs.get("full_knowledge", True)
-    lb = "\n"
 
     name = mon.overworld_saf if kwargs.get("saf") else mon.name
 
@@ -94,6 +93,13 @@ def display_mon(mon: dict | pk.BareMiniMon, mode: str = "default", **kwargs) -> 
             abilities += f"\n**Hidden Ability:** {mon.hidden_ability}"
         if mon.special_event_ability:
             abilities += f"\n**Special Event Ability:** {mon.special_event_ability}"
+        if mon.evolutions or mon.evolves_from:
+            evo = "\n".join(
+                ([mon.evolved_by.sentence("from")] if mon.evolved_by else []) +
+                [g.sentence() for g in mon.evolutions.values()]
+            )
+        else:
+            evo = "Does not evolve."
 
         return f"**{mon.species_and_form}**\n" \
                f"{display_mon_types(mon, sep=' / ', include_names=True)}\n" \
@@ -102,7 +108,7 @@ def display_mon(mon: dict | pk.BareMiniMon, mode: str = "default", **kwargs) -> 
                f"{abilities}\n\n" \
                f"**Stats:** {' / '.join(str(g) + ' ' + pk.six_stat_names[n] for n, g in enumerate(mon.base_stats))}\n" \
                f"**Total:** {sum(mon.base_stats)}\n\n" \
-               f"{lb.join(g.sentence for g in mon.evolutions.values()) if mon.evolutions else 'Does not evolve.'}\n\n" \
+               f"{evo}\n\n" \
                f"[Bulbapedia]({mon.bulbapedia}) | [Serebii]({mon.serebii}) | [Pok\u00e9monDB]({mon.pokemondb})"
 
     if not isinstance(mon, pk.Mon):

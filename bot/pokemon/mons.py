@@ -197,6 +197,9 @@ class Evolution:
     def __eq__(self, other):
         return isinstance(other, Evolution) and (self.into == other.into)
 
+    def __bool__(self):
+        return self.into != "NONE"
+
     def read_out(self, using_gerund: bool):
         if self["multiple"]:
             return "; or, ".join(Evolution(self.into, **g).read_out(using_gerund) for g in self["multiple"])
@@ -242,13 +245,12 @@ class Evolution:
 
         return ret
 
-    @property
-    def sentence(self):
+    def sentence(self, preposition: str = "into"):
         if self.into == "NONE":
             return "Does not evolve."
         if self.into == "Shedinja":
             return f"A **{self.into}** appears in the player's party {self.read_out(True)}."
-        return f"Evolves into **{self.into}** {self.read_out(True)}."
+        return f"Evolves {preposition} **{self.into}** {self.read_out(True)}."
 
     @property
     def phrase(self):
@@ -783,6 +785,15 @@ class BareMiniMon:
             return get_saf(evo_from[0])
         else:
             return BareMiniMon.null()
+
+    @property
+    def evolved_by(self) -> Evolution:
+        """Uses the Evolution.into attribute to store the species-and-form this mon evolved from."""
+        if (evo_from := [Evolution(g, **k.reqs) for g, j in evolutions.items() for k in j
+                         if k.into == self.species.name or k.into == self.species_and_form]):
+            return evo_from[0]
+        else:
+            return Evolution.null()
 
     @property
     def baby_form(self) -> str:
