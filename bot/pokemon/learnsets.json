@@ -169,6 +169,12 @@
                     "Solar Beam"
                 ]
             ],
+            "egg": [
+                "Curse",
+                "Ingrain",
+                "Petal Dance",
+                "Toxic"
+            ],
             "tm": {
                 "TM001": "Take Down",
                 "TM002": "Charm",
@@ -276,6 +282,12 @@
             ],
             "evo": [
                 "Petal Blizzard"
+            ],
+            "egg": [
+                "Curse",
+                "Ingrain",
+                "Petal Dance",
+                "Toxic"
             ],
             "tm": {
                 "TM001": "Take Down",
@@ -825,6 +837,17 @@
                     "Wave Crash"
                 ]
             ],
+            "egg": [
+                "Aqua Jet",
+                "Aqua Ring",
+                "Fake Out",
+                "Flail",
+                "Life Dew",
+                "Mirror Coat",
+                "Mist",
+                "Water Spout",
+                "Yawn"
+            ],
             "tm": {
                 "TM001": "Take Down",
                 "TM007": "Protect",
@@ -925,6 +948,17 @@
             ],
             "evo": [
                 "Flash Cannon"
+            ],
+            "egg": [
+                "Aqua Jet",
+                "Aqua Ring",
+                "Fake Out",
+                "Flail",
+                "Life Dew",
+                "Mirror Coat",
+                "Mist",
+                "Water Spout",
+                "Yawn"
             ],
             "tm": {
                 "TM001": "Take Down",
@@ -1203,6 +1237,14 @@
             "evo": [
                 "Crunch"
             ],
+            "egg": [
+                "Poison Fang",
+                "Poison Tail",
+                "Scary Face",
+                "Spite",
+                "Sucker Punch",
+                "Switcheroo"
+            ],
             "tm": {
                 "TM001": "Take Down",
                 "TM005": "Mud-Slap",
@@ -1390,53 +1432,6 @@
             }
         },
         "Raichu": {
-            "evo": [
-                "Thunder Punch"
-            ],
-            "tm": {
-                "TM001": "Take Down",
-                "TM002": "Charm",
-                "TM004": "Agility",
-                "TM007": "Protect",
-                "TM018": "Thief",
-                "TM019": "Disarming Voice",
-                "TM020": "Trailblaze",
-                "TM023": "Charge Beam",
-                "TM025": "Facade",
-                "TM032": "Swift",
-                "TM037": "Draining Kiss",
-                "TM043": "Fling",
-                "TM047": "Endure",
-                "TM048": "Volt Switch",
-                "TM050": "Rain Dance",
-                "TM055": "Dig",
-                "TM058": "Brick Break",
-                "TM066": "Body Slam",
-                "TM068": "Thunder Punch",
-                "TM070": "Sleep Talk",
-                "TM072": "Electro Ball",
-                "TM074": "Reflect",
-                "TM075": "Light Screen",
-                "TM081": "Grass Knot",
-                "TM082": "Thunder Wave",
-                "TM085": "Rest",
-                "TM096": "Eerie Impulse",
-                "TM103": "Substitute",
-                "TM122": "Encore",
-                "TM123": "Surf",
-                "TM126": "Thunderbolt",
-                "TM127": "Play Rough",
-                "TM130": "Helping Hand",
-                "TM134": "Reversal",
-                "TM136": "Electric Terrain",
-                "TM140": "Nasty Plot",
-                "TM147": "Wild Charge",
-                "TM152": "Giga Impact",
-                "TM158": "Focus Blast",
-                "TM163": "Hyper Beam",
-                "TM166": "Thunder",
-                "TM171": "Tera Blast"
-            },
             "level": [
                 [
                     1,
@@ -1519,6 +1514,9 @@
                     "Thunderbolt"
                 ]
             ],
+            "evo": [
+                "Thunder Punch"
+            ],
             "egg": [
                 "Charge",
                 "Disarming Voice",
@@ -1527,11 +1525,146 @@
                 "Present",
                 "Tickle",
                 "Wish"
-            ]
+            ],
+            "tm": {
+                "TM001": "Take Down",
+                "TM002": "Charm",
+                "TM004": "Agility",
+                "TM007": "Protect",
+                "TM018": "Thief",
+                "TM019": "Disarming Voice",
+                "TM020": "Trailblaze",
+                "TM023": "Charge Beam",
+                "TM025": "Facade",
+                "TM032": "Swift",
+                "TM037": "Draining Kiss",
+                "TM043": "Fling",
+                "TM047": "Endure",
+                "TM048": "Volt Switch",
+                "TM050": "Rain Dance",
+                "TM055": "Dig",
+                "TM058": "Brick Break",
+                "TM066": "Body Slam",
+                "TM068": "Thunder Punch",
+                "TM070": "Sleep Talk",
+                "TM072": "Electro Ball",
+                "TM074": "Reflect",
+                "TM075": "Light Screen",
+                "TM081": "Grass Knot",
+                "TM082": "Thunder Wave",
+                "TM085": "Rest",
+                "TM096": "Eerie Impulse",
+                "TM103": "Substitute",
+                "TM122": "Encore",
+                "TM123": "Surf",
+                "TM126": "Thunderbolt",
+                "TM127": "Play Rough",
+                "TM130": "Helping Hand",
+                "TM134": "Reversal",
+                "TM136": "Electric Terrain",
+                "TM140": "Nasty Plot",
+                "TM147": "Wild Charge",
+                "TM152": "Giga Impact",
+                "TM158": "Focus Blast",
+                "TM163": "Hyper Beam",
+                "TM166": "Thunder",
+                "TM171": "Tera Blast"
+            }
         },
         "Raichu-Alolan": {
+            "level": [
+                [
+                    1,
+                    "Agility"
+                ],
+                [
+                    1,
+                    "Charm"
+                ],
+                [
+                    1,
+                    "Discharge"
+                ],
+                [
+                    1,
+                    "Double Team"
+                ],
+                [
+                    1,
+                    "Electro Ball"
+                ],
+                [
+                    1,
+                    "Feint"
+                ],
+                [
+                    1,
+                    "Growl"
+                ],
+                [
+                    1,
+                    "Iron Tail"
+                ],
+                [
+                    1,
+                    "Light Screen"
+                ],
+                [
+                    1,
+                    "Nasty Plot"
+                ],
+                [
+                    1,
+                    "Nuzzle"
+                ],
+                [
+                    1,
+                    "Play Nice"
+                ],
+                [
+                    1,
+                    "Quick Attack"
+                ],
+                [
+                    1,
+                    "Spark"
+                ],
+                [
+                    1,
+                    "Sweet Kiss"
+                ],
+                [
+                    1,
+                    "Tail Whip"
+                ],
+                [
+                    1,
+                    "Thunder"
+                ],
+                [
+                    1,
+                    "Thunder Shock"
+                ],
+                [
+                    1,
+                    "Thunder Wave"
+                ],
+                [
+                    5,
+                    "Thunderbolt"
+                ]
+            ],
             "evo": [
                 "Psychic"
+            ],
+            "egg": [
+                "Charge",
+                "Disarming Voice",
+                "Fake Out",
+                "Flail",
+                "Present",
+                "Tickle",
+                "Wish"
             ],
             "tm": {
                 "TM001": "Take Down",
@@ -1581,98 +1714,7 @@
                 "TM163": "Hyper Beam",
                 "TM166": "Thunder",
                 "TM171": "Tera Blast"
-            },
-            "level": [
-                [
-                    1,
-                    "Agility"
-                ],
-                [
-                    1,
-                    "Charm"
-                ],
-                [
-                    1,
-                    "Discharge"
-                ],
-                [
-                    1,
-                    "Double Team"
-                ],
-                [
-                    1,
-                    "Electro Ball"
-                ],
-                [
-                    1,
-                    "Feint"
-                ],
-                [
-                    1,
-                    "Growl"
-                ],
-                [
-                    1,
-                    "Iron Tail"
-                ],
-                [
-                    1,
-                    "Light Screen"
-                ],
-                [
-                    1,
-                    "Nasty Plot"
-                ],
-                [
-                    1,
-                    "Nuzzle"
-                ],
-                [
-                    1,
-                    "Play Nice"
-                ],
-                [
-                    1,
-                    "Quick Attack"
-                ],
-                [
-                    1,
-                    "Spark"
-                ],
-                [
-                    1,
-                    "Sweet Kiss"
-                ],
-                [
-                    1,
-                    "Tail Whip"
-                ],
-                [
-                    1,
-                    "Thunder"
-                ],
-                [
-                    1,
-                    "Thunder Shock"
-                ],
-                [
-                    1,
-                    "Thunder Wave"
-                ],
-                [
-                    5,
-                    "Thunderbolt"
-                ]
-            ],
-            "egg": [
-                "Charge",
-                "Disarming Voice",
-                "Fake Out",
-                "Flail",
-                "Present",
-                "Tickle",
-                "Wish"
-            ]
+            }
         },
         "Sandshrew": {
             "level": [
@@ -2004,6 +2046,14 @@
                     "Earthquake"
                 ]
             ],
+            "egg": [
+                "Counter",
+                "Flail",
+                "Hone Claws",
+                "Metal Claw",
+                "Mud-Slap",
+                "Night Slash"
+            ],
             "tm": {
                 "TM001": "Take Down",
                 "TM004": "Agility",
@@ -2095,6 +2145,14 @@
                 "Scratch",
                 "Snowscape",
                 "Swift"
+            ],
+            "egg": [
+                "Counter",
+                "Flail",
+                "Hone Claws",
+                "Metal Claw",
+                "Mud-Slap",
+                "Night Slash"
             ],
             "tm": {
                 "TM001": "Take Down",
@@ -2243,6 +2301,12 @@
                     "Healing Wish"
                 ]
             ],
+            "egg": [
+                "Heal Pulse",
+                "Present",
+                "Tickle",
+                "Wish"
+            ],
             "tm": {
                 "TM001": "Take Down",
                 "TM002": "Charm",
@@ -2350,6 +2414,12 @@
                 "Splash",
                 "Stored Power",
                 "Sweet Kiss"
+            ],
+            "egg": [
+                "Heal Pulse",
+                "Present",
+                "Tickle",
+                "Wish"
             ],
             "tm": {
                 "TM001": "Take Down",
@@ -2682,6 +2752,16 @@
                 "Spite",
                 "Will-O-Wisp"
             ],
+            "egg": [
+                "Baby-Doll Eyes",
+                "Flail",
+                "Flame Charge",
+                "Healing Wish",
+                "Howl",
+                "Hypnosis",
+                "Memento",
+                "Roar"
+            ],
             "tm": {
                 "TM001": "Take Down",
                 "TM002": "Charm",
@@ -2767,6 +2847,16 @@
                 "Nasty Plot",
                 "Powder Snow",
                 "Spite"
+            ],
+            "egg": [
+                "Baby-Doll Eyes",
+                "Flail",
+                "Flame Charge",
+                "Healing Wish",
+                "Howl",
+                "Hypnosis",
+                "Memento",
+                "Roar"
             ],
             "tm": {
                 "TM001": "Take Down",
@@ -3305,6 +3395,17 @@
                     "Petal Dance"
                 ]
             ],
+            "egg": [
+                "After You",
+                "Flail",
+                "Ingrain",
+                "Leech Seed",
+                "Razor Leaf",
+                "Strength Sap",
+                "Synthesis",
+                "Teeter Dance",
+                "Tickle"
+            ],
             "tm": {
                 "TM002": "Charm",
                 "TM007": "Protect",
@@ -3397,6 +3498,17 @@
             ],
             "evo": [
                 "Petal Blizzard"
+            ],
+            "egg": [
+                "After You",
+                "Flail",
+                "Ingrain",
+                "Leech Seed",
+                "Razor Leaf",
+                "Strength Sap",
+                "Synthesis",
+                "Teeter Dance",
+                "Tickle"
             ],
             "tm": {
                 "TM002": "Charm",
@@ -3913,6 +4025,9 @@
                     "Fissure"
                 ]
             ],
+            "evo": [
+                "Sand Tomb"
+            ],
             "egg": [
                 "Ancient Power",
                 "Final Gambit",
@@ -3954,10 +4069,7 @@
                 "TM152": "Giga Impact",
                 "TM163": "Hyper Beam",
                 "TM171": "Tera Blast"
-            },
-            "evo": [
-                "Sand Tomb"
-            ]
+            }
         },
         "Dugtrio-Alolan": {
             "level": [
@@ -4022,6 +4134,9 @@
                     "Fissure"
                 ]
             ],
+            "evo": [
+                "Sand Tomb"
+            ],
             "egg": [
                 "Ancient Power",
                 "Final Gambit",
@@ -4072,10 +4187,7 @@
                 "TM163": "Hyper Beam",
                 "TM170": "Steel Beam",
                 "TM171": "Tera Blast"
-            },
-            "evo": [
-                "Sand Tomb"
-            ]
+            }
         },
         "Meowth": {
             "level": [
@@ -4461,6 +4573,9 @@
                     "Play Rough"
                 ]
             ],
+            "evo": [
+                "Power Gem"
+            ],
             "egg": [
                 "Covet",
                 "Flail",
@@ -4513,10 +4628,7 @@
                 "TM163": "Hyper Beam",
                 "TM166": "Thunder",
                 "TM171": "Tera Blast"
-            },
-            "evo": [
-                "Power Gem"
-            ]
+            }
         },
         "Persian-Alolan": {
             "level": [
@@ -4581,6 +4693,9 @@
                     "Play Rough"
                 ]
             ],
+            "evo": [
+                "Power Gem"
+            ],
             "egg": [
                 "Covet",
                 "Flail",
@@ -4633,10 +4748,7 @@
                 "TM163": "Hyper Beam",
                 "TM166": "Thunder",
                 "TM171": "Tera Blast"
-            },
-            "evo": [
-                "Power Gem"
-            ]
+            }
         },
         "Psyduck": {
             "level": [
@@ -5428,6 +5540,9 @@
                     "Flamethrower"
                 ]
             ],
+            "evo": [
+                "Extreme Speed"
+            ],
             "egg": [
                 "Covet",
                 "Double-Edge",
@@ -5480,10 +5595,7 @@
                 "TM167": "Close Combat",
                 "TM168": "Solar Beam",
                 "TM171": "Tera Blast"
-            },
-            "evo": [
-                "Extreme Speed"
-            ]
+            }
         },
         "Arcanine-Hisuian": {
             "level": [
@@ -5560,6 +5672,9 @@
                     "Raging Fury"
                 ]
             ],
+            "evo": [
+                "Extreme Speed"
+            ],
             "egg": [
                 "Covet",
                 "Double-Edge",
@@ -5617,10 +5732,7 @@
                 "TM167": "Close Combat",
                 "TM168": "Solar Beam",
                 "TM171": "Tera Blast"
-            },
-            "evo": [
-                "Extreme Speed"
-            ]
+            }
         },
         "Poliwag": {
             "level": [
@@ -5760,6 +5872,13 @@
                     "Double-Edge"
                 ]
             ],
+            "egg": [
+                "Endeavor",
+                "Mist",
+                "Muddy Water",
+                "Splash",
+                "Water Pulse"
+            ],
             "tm": {
                 "TM001": "Take Down",
                 "TM005": "Mud-Slap",
@@ -5831,6 +5950,13 @@
                 "Pound",
                 "Rain Dance",
                 "Water Gun"
+            ],
+            "egg": [
+                "Endeavor",
+                "Mist",
+                "Muddy Water",
+                "Splash",
+                "Water Pulse"
             ],
             "tm": {
                 "TM001": "Take Down",
@@ -6060,6 +6186,15 @@
                     "Power Whip"
                 ]
             ],
+            "egg": [
+                "Clear Smog",
+                "Ingrain",
+                "Strength Sap",
+                "Sucker Punch",
+                "Synthesis",
+                "Tickle",
+                "Worry Seed"
+            ],
             "tm": {
                 "TM007": "Protect",
                 "TM013": "Acid Spray",
@@ -6131,6 +6266,15 @@
                 "Spit Up",
                 "Stockpile",
                 "Swallow"
+            ],
+            "egg": [
+                "Clear Smog",
+                "Ingrain",
+                "Strength Sap",
+                "Sucker Punch",
+                "Synthesis",
+                "Tickle",
+                "Worry Seed"
             ],
             "tm": {
                 "TM006": "Scary Face",
@@ -6348,6 +6492,17 @@
                     58,
                     "Hydro Pump"
                 ]
+            ],
+            "egg": [
+                "Acupressure",
+                "Aqua Ring",
+                "Aurora Beam",
+                "Confuse Ray",
+                "Haze",
+                "Knock Off",
+                "Mirror Coat",
+                "Rapid Spin",
+                "Tickle"
             ],
             "tm": {
                 "TM006": "Scary Face",
@@ -6683,6 +6838,15 @@
                     "Stone Edge"
                 ]
             ],
+            "egg": [
+                "Block",
+                "Curse",
+                "Dynamic Punch",
+                "Flail",
+                "Hammer Arm",
+                "Mega Punch",
+                "Wide Guard"
+            ],
             "tm": {
                 "TM001": "Take Down",
                 "TM005": "Mud-Slap",
@@ -6792,6 +6956,15 @@
                     "Stone Edge"
                 ]
             ],
+            "egg": [
+                "Block",
+                "Curse",
+                "Dynamic Punch",
+                "Flail",
+                "Hammer Arm",
+                "Mega Punch",
+                "Wide Guard"
+            ],
             "tm": {
                 "TM001": "Take Down",
                 "TM005": "Mud-Slap",
@@ -6898,6 +7071,15 @@
                     54,
                     "Stone Edge"
                 ]
+            ],
+            "egg": [
+                "Block",
+                "Curse",
+                "Dynamic Punch",
+                "Flail",
+                "Hammer Arm",
+                "Mega Punch",
+                "Wide Guard"
             ],
             "tm": {
                 "TM001": "Take Down",
@@ -7011,6 +7193,15 @@
                     54,
                     "Stone Edge"
                 ]
+            ],
+            "egg": [
+                "Block",
+                "Curse",
+                "Dynamic Punch",
+                "Flail",
+                "Hammer Arm",
+                "Mega Punch",
+                "Wide Guard"
             ],
             "tm": {
                 "TM001": "Take Down",
@@ -7396,6 +7587,9 @@
                     "Heal Pulse"
                 ]
             ],
+            "reminder": [
+                "Future Sight"
+            ],
             "egg": [
                 "Belch",
                 "Belly Drum",
@@ -7461,10 +7655,7 @@
                 "TM161": "Trick Room",
                 "TM163": "Hyper Beam",
                 "TM171": "Tera Blast"
-            },
-            "reminder": [
-                "Future Sight"
-            ]
+            }
         },
         "Slowbro-Galarian": {
             "level": [
@@ -7544,6 +7735,9 @@
             "evo": [
                 "Shell Side Arm"
             ],
+            "reminder": [
+                "Future Sight"
+            ],
             "egg": [
                 "Belch",
                 "Belly Drum",
@@ -7619,10 +7813,7 @@
                 "TM161": "Trick Room",
                 "TM163": "Hyper Beam",
                 "TM171": "Tera Blast"
-            },
-            "reminder": [
-                "Future Sight"
-            ]
+            }
         },
         "Magnemite": {
             "level": [
@@ -7985,6 +8176,12 @@
             "evo": [
                 "Tri Attack"
             ],
+            "egg": [
+                "Assurance",
+                "Flail",
+                "Sky Attack",
+                "Whirlwind"
+            ],
             "tm": {
                 "TM001": "Take Down",
                 "TM004": "Agility",
@@ -8220,6 +8417,18 @@
             ],
             "evo": [
                 "Sheer Cold"
+            ],
+            "egg": [
+                "Belch",
+                "Disable",
+                "Entrainment",
+                "Fake Out",
+                "Horn Drill",
+                "Lick",
+                "Perish Song",
+                "Spit Up",
+                "Stockpile",
+                "Swallow"
             ],
             "tm": {
                 "TM001": "Take Down",
@@ -8707,6 +8916,17 @@
                     57,
                     "Memento"
                 ]
+            ],
+            "egg": [
+                "Acid Spray",
+                "Curse",
+                "Haze",
+                "Mean Look",
+                "Shadow Punch",
+                "Shadow Sneak",
+                "Spit Up",
+                "Stockpile",
+                "Swallow"
             ],
             "tm": {
                 "TM001": "Take Down",
@@ -10141,62 +10361,6 @@
             }
         },
         "Exeggutor": {
-            "evo": [
-                "Stomp"
-            ],
-            "tm": {
-                "TM001": "Take Down",
-                "TM007": "Protect",
-                "TM012": "Low Kick",
-                "TM016": "Psybeam",
-                "TM018": "Thief",
-                "TM025": "Facade",
-                "TM028": "Bulldoze",
-                "TM033": "Magical Leaf",
-                "TM041": "Stored Power",
-                "TM047": "Endure",
-                "TM049": "Sunny Day",
-                "TM054": "Psyshock",
-                "TM056": "Bullet Seed",
-                "TM059": "Zen Headbutt",
-                "TM066": "Body Slam",
-                "TM070": "Sleep Talk",
-                "TM071": "Seed Bomb",
-                "TM074": "Reflect",
-                "TM075": "Light Screen",
-                "TM081": "Grass Knot",
-                "TM084": "Stomping Tantrum",
-                "TM085": "Rest",
-                "TM088": "Swords Dance",
-                "TM092": "Imprison",
-                "TM098": "Skill Swap",
-                "TM103": "Substitute",
-                "TM109": "Trick",
-                "TM111": "Giga Drain",
-                "TM119": "Energy Ball",
-                "TM120": "Psychic",
-                "TM129": "Calm Mind",
-                "TM130": "Helping Hand",
-                "TM137": "Grassy Terrain",
-                "TM138": "Psychic Terrain",
-                "TM148": "Sludge Bomb",
-                "TM149": "Earthquake",
-                "TM152": "Giga Impact",
-                "TM159": "Leaf Storm",
-                "TM161": "Trick Room",
-                "TM163": "Hyper Beam",
-                "TM168": "Solar Beam",
-                "TM171": "Tera Blast",
-                "TM178": "Gravity",
-                "TM191": "Uproar",
-                "TM194": "Grassy Glide",
-                "TM203": "Psych Up",
-                "TM204": "Double-Edge",
-                "TM217": "Future Sight",
-                "TM218": "Expanding Force",
-                "TM224": "Curse",
-                "TM228": "Psychic Noise"
-            },
             "level": [
                 [
                     1,
@@ -10267,13 +10431,162 @@
                     "Worry Seed"
                 ]
             ],
+            "evo": [
+                "Stomp"
+            ],
             "reminder": [
                 "Growth"
-            ]
+            ],
+            "egg": [
+                "Ancient Power",
+                "Block",
+                "Curse",
+                "Ingrain",
+                "Moonlight",
+                "Poison Powder",
+                "Sleep Powder",
+                "Stun Spore"
+            ],
+            "tm": {
+                "TM001": "Take Down",
+                "TM007": "Protect",
+                "TM012": "Low Kick",
+                "TM016": "Psybeam",
+                "TM018": "Thief",
+                "TM025": "Facade",
+                "TM028": "Bulldoze",
+                "TM033": "Magical Leaf",
+                "TM041": "Stored Power",
+                "TM047": "Endure",
+                "TM049": "Sunny Day",
+                "TM054": "Psyshock",
+                "TM056": "Bullet Seed",
+                "TM059": "Zen Headbutt",
+                "TM066": "Body Slam",
+                "TM070": "Sleep Talk",
+                "TM071": "Seed Bomb",
+                "TM074": "Reflect",
+                "TM075": "Light Screen",
+                "TM081": "Grass Knot",
+                "TM084": "Stomping Tantrum",
+                "TM085": "Rest",
+                "TM088": "Swords Dance",
+                "TM092": "Imprison",
+                "TM098": "Skill Swap",
+                "TM103": "Substitute",
+                "TM109": "Trick",
+                "TM111": "Giga Drain",
+                "TM119": "Energy Ball",
+                "TM120": "Psychic",
+                "TM129": "Calm Mind",
+                "TM130": "Helping Hand",
+                "TM137": "Grassy Terrain",
+                "TM138": "Psychic Terrain",
+                "TM148": "Sludge Bomb",
+                "TM149": "Earthquake",
+                "TM152": "Giga Impact",
+                "TM159": "Leaf Storm",
+                "TM161": "Trick Room",
+                "TM163": "Hyper Beam",
+                "TM168": "Solar Beam",
+                "TM171": "Tera Blast",
+                "TM178": "Gravity",
+                "TM191": "Uproar",
+                "TM194": "Grassy Glide",
+                "TM203": "Psych Up",
+                "TM204": "Double-Edge",
+                "TM217": "Future Sight",
+                "TM218": "Expanding Force",
+                "TM224": "Curse",
+                "TM228": "Psychic Noise"
+            }
         },
         "Exeggutor-Alolan": {
+            "level": [
+                [
+                    1,
+                    "Absorb"
+                ],
+                [
+                    1,
+                    "Bullet Seed"
+                ],
+                [
+                    1,
+                    "Confusion"
+                ],
+                [
+                    1,
+                    "Extrasensory"
+                ],
+                [
+                    1,
+                    "Giga Drain"
+                ],
+                [
+                    1,
+                    "Hypnosis"
+                ],
+                [
+                    1,
+                    "Leaf Storm"
+                ],
+                [
+                    1,
+                    "Leech Seed"
+                ],
+                [
+                    1,
+                    "Mega Drain"
+                ],
+                [
+                    1,
+                    "Psyshock"
+                ],
+                [
+                    1,
+                    "Reflect"
+                ],
+                [
+                    1,
+                    "Seed Bomb"
+                ],
+                [
+                    1,
+                    "Solar Beam"
+                ],
+                [
+                    1,
+                    "Synthesis"
+                ],
+                [
+                    1,
+                    "Uproar"
+                ],
+                [
+                    1,
+                    "Wood Hammer"
+                ],
+                [
+                    1,
+                    "Worry Seed"
+                ]
+            ],
             "evo": [
                 "Dragon Hammer"
+            ],
+            "reminder": [
+                "Growth"
+            ],
+            "egg": [
+                "Ancient Power",
+                "Block",
+                "Curse",
+                "Ingrain",
+                "Moonlight",
+                "Poison Powder",
+                "Sleep Powder",
+                "Stun Spore"
             ],
             "tm": {
                 "TM001": "Take Down",
@@ -10336,80 +10649,7 @@
                 "TM224": "Curse",
                 "TM226": "Dragon Cheer",
                 "TM228": "Psychic Noise"
-            },
-            "level": [
-                [
-                    1,
-                    "Absorb"
-                ],
-                [
-                    1,
-                    "Bullet Seed"
-                ],
-                [
-                    1,
-                    "Confusion"
-                ],
-                [
-                    1,
-                    "Extrasensory"
-                ],
-                [
-                    1,
-                    "Giga Drain"
-                ],
-                [
-                    1,
-                    "Hypnosis"
-                ],
-                [
-                    1,
-                    "Leaf Storm"
-                ],
-                [
-                    1,
-                    "Leech Seed"
-                ],
-                [
-                    1,
-                    "Mega Drain"
-                ],
-                [
-                    1,
-                    "Psyshock"
-                ],
-                [
-                    1,
-                    "Reflect"
-                ],
-                [
-                    1,
-                    "Seed Bomb"
-                ],
-                [
-                    1,
-                    "Solar Beam"
-                ],
-                [
-                    1,
-                    "Synthesis"
-                ],
-                [
-                    1,
-                    "Uproar"
-                ],
-                [
-                    1,
-                    "Wood Hammer"
-                ],
-                [
-                    1,
-                    "Worry Seed"
-                ]
-            ],
-            "reminder": [
-                "Growth"
-            ]
+            }
         },
         "Cubone": {},
         "Marowak": {},
@@ -10486,6 +10726,15 @@
             ],
             "evo": [
                 "Brick Break"
+            ],
+            "egg": [
+                "Bullet Punch",
+                "Counter",
+                "Feint",
+                "High Jump Kick",
+                "Mach Punch",
+                "Rapid Spin",
+                "Vacuum Wave"
             ],
             "tm": {
                 "TM001": "Take Down",
@@ -10613,6 +10862,15 @@
             ],
             "evo": [
                 "Drain Punch"
+            ],
+            "egg": [
+                "Bullet Punch",
+                "Counter",
+                "Feint",
+                "High Jump Kick",
+                "Mach Punch",
+                "Rapid Spin",
+                "Vacuum Wave"
             ],
             "tm": {
                 "TM000": "Mega Punch",
@@ -10843,6 +11101,17 @@
                     "Destiny Bond"
                 ]
             ],
+            "evo": [
+                "Double Hit"
+            ],
+            "egg": [
+                "Curse",
+                "Pain Split",
+                "Spit Up",
+                "Spite",
+                "Stockpile",
+                "Swallow"
+            ],
             "tm": {
                 "TM001": "Take Down",
                 "TM006": "Scary Face",
@@ -10878,10 +11147,7 @@
                 "TM175": "Toxic",
                 "TM177": "Spite",
                 "TM180": "Gyro Ball"
-            },
-            "evo": [
-                "Double Hit"
-            ]
+            }
         },
         "Weezing-Galarian": {
             "level": [
@@ -10970,6 +11236,17 @@
                     "Misty Terrain"
                 ]
             ],
+            "evo": [
+                "Double Hit"
+            ],
+            "egg": [
+                "Curse",
+                "Pain Split",
+                "Spit Up",
+                "Spite",
+                "Stockpile",
+                "Swallow"
+            ],
             "tm": {
                 "TM001": "Take Down",
                 "TM006": "Scary Face",
@@ -11010,10 +11287,7 @@
                 "TM177": "Spite",
                 "TM180": "Gyro Ball",
                 "TM201": "Misty Explosion"
-            },
-            "evo": [
-                "Double Hit"
-            ]
+            }
         },
         "Rhyhorn": {
             "level": [
@@ -11200,6 +11474,14 @@
             ],
             "evo": [
                 "Hammer Arm"
+            ],
+            "egg": [
+                "Counter",
+                "Curse",
+                "Dragon Rush",
+                "Guard Split",
+                "Metal Burst",
+                "Rock Polish"
             ],
             "tm": {
                 "TM001": "Take Down",
@@ -11577,6 +11859,13 @@
                     "Rain Dance"
                 ]
             ],
+            "egg": [
+                "Aurora Beam",
+                "Clear Smog",
+                "Disable",
+                "Flail",
+                "Splash"
+            ],
             "tm": {
                 "TM004": "Agility",
                 "TM006": "Scary Face",
@@ -11781,6 +12070,14 @@
                     "Giga Impact"
                 ]
             ],
+            "egg": [
+                "Cross Chop",
+                "Dynamic Punch",
+                "Feint",
+                "Focus Punch",
+                "Follow Me",
+                "Hammer Arm"
+            ],
             "tm": {
                 "TM001": "Take Down",
                 "TM007": "Protect",
@@ -11892,6 +12189,15 @@
                     64,
                     "Hyper Beam"
                 ]
+            ],
+            "egg": [
+                "Belch",
+                "Belly Drum",
+                "Cross Chop",
+                "Dynamic Punch",
+                "Focus Punch",
+                "Follow Me",
+                "Mach Punch"
             ],
             "tm": {
                 "TM001": "Take Down",
@@ -13076,6 +13382,13 @@
                     56,
                     "Giga Impact"
                 ]
+            ],
+            "egg": [
+                "Belch",
+                "Counter",
+                "Curse",
+                "Double-Edge",
+                "Fissure"
             ],
             "tm": {
                 "TM001": "Take Down",
@@ -14671,6 +14984,14 @@
                     "Solar Beam"
                 ]
             ],
+            "egg": [
+                "Ancient Power",
+                "Counter",
+                "Flail",
+                "Heal Pulse",
+                "Ingrain",
+                "Vine Whip"
+            ],
             "tm": {
                 "TM001": "Take Down",
                 "TM002": "Charm",
@@ -14774,6 +15095,14 @@
             ],
             "evo": [
                 "Petal Dance"
+            ],
+            "egg": [
+                "Ancient Power",
+                "Counter",
+                "Flail",
+                "Heal Pulse",
+                "Ingrain",
+                "Vine Whip"
             ],
             "tm": {
                 "TM001": "Take Down",
@@ -15039,54 +15368,6 @@
             }
         },
         "Typhlosion": {
-            "tm": {
-                "TM001": "Take Down",
-                "TM007": "Protect",
-                "TM008": "Fire Fang",
-                "TM012": "Low Kick",
-                "TM024": "Fire Spin",
-                "TM025": "Facade",
-                "TM027": "Aerial Ace",
-                "TM028": "Bulldoze",
-                "TM032": "Swift",
-                "TM036": "Rock Tomb",
-                "TM038": "Flame Charge",
-                "TM043": "Fling",
-                "TM047": "Endure",
-                "TM049": "Sunny Day",
-                "TM055": "Dig",
-                "TM058": "Brick Break",
-                "TM059": "Zen Headbutt",
-                "TM061": "Shadow Claw",
-                "TM066": "Body Slam",
-                "TM067": "Fire Punch",
-                "TM068": "Thunder Punch",
-                "TM070": "Sleep Talk",
-                "TM084": "Stomping Tantrum",
-                "TM085": "Rest",
-                "TM086": "Rock Slide",
-                "TM099": "Iron Head",
-                "TM103": "Substitute",
-                "TM107": "Will-O-Wisp",
-                "TM114": "Shadow Ball",
-                "TM118": "Heat Wave",
-                "TM125": "Flamethrower",
-                "TM127": "Play Rough",
-                "TM130": "Helping Hand",
-                "TM134": "Reversal",
-                "TM141": "Fire Blast",
-                "TM144": "Fire Pledge",
-                "TM147": "Wild Charge",
-                "TM149": "Earthquake",
-                "TM152": "Giga Impact",
-                "TM153": "Blast Burn",
-                "TM157": "Overheat",
-                "TM158": "Focus Blast",
-                "TM163": "Hyper Beam",
-                "TM165": "Flare Blitz",
-                "TM168": "Solar Beam",
-                "TM171": "Tera Blast"
-            },
             "level": [
                 [
                     1,
@@ -15164,11 +15445,137 @@
                 "Extrasensory",
                 "Howl",
                 "Reversal"
-            ]
+            ],
+            "tm": {
+                "TM001": "Take Down",
+                "TM007": "Protect",
+                "TM008": "Fire Fang",
+                "TM012": "Low Kick",
+                "TM024": "Fire Spin",
+                "TM025": "Facade",
+                "TM027": "Aerial Ace",
+                "TM028": "Bulldoze",
+                "TM032": "Swift",
+                "TM036": "Rock Tomb",
+                "TM038": "Flame Charge",
+                "TM043": "Fling",
+                "TM047": "Endure",
+                "TM049": "Sunny Day",
+                "TM055": "Dig",
+                "TM058": "Brick Break",
+                "TM059": "Zen Headbutt",
+                "TM061": "Shadow Claw",
+                "TM066": "Body Slam",
+                "TM067": "Fire Punch",
+                "TM068": "Thunder Punch",
+                "TM070": "Sleep Talk",
+                "TM084": "Stomping Tantrum",
+                "TM085": "Rest",
+                "TM086": "Rock Slide",
+                "TM099": "Iron Head",
+                "TM103": "Substitute",
+                "TM107": "Will-O-Wisp",
+                "TM114": "Shadow Ball",
+                "TM118": "Heat Wave",
+                "TM125": "Flamethrower",
+                "TM127": "Play Rough",
+                "TM130": "Helping Hand",
+                "TM134": "Reversal",
+                "TM141": "Fire Blast",
+                "TM144": "Fire Pledge",
+                "TM147": "Wild Charge",
+                "TM149": "Earthquake",
+                "TM152": "Giga Impact",
+                "TM153": "Blast Burn",
+                "TM157": "Overheat",
+                "TM158": "Focus Blast",
+                "TM163": "Hyper Beam",
+                "TM165": "Flare Blitz",
+                "TM168": "Solar Beam",
+                "TM171": "Tera Blast"
+            }
         },
         "Typhlosion-Hisuian": {
+            "level": [
+                [
+                    1,
+                    "Double-Edge"
+                ],
+                [
+                    1,
+                    "Ember"
+                ],
+                [
+                    1,
+                    "Eruption"
+                ],
+                [
+                    1,
+                    "Gyro Ball"
+                ],
+                [
+                    1,
+                    "Leer"
+                ],
+                [
+                    1,
+                    "Smokescreen"
+                ],
+                [
+                    1,
+                    "Tackle"
+                ],
+                [
+                    13,
+                    "Quick Attack"
+                ],
+                [
+                    20,
+                    "Flame Wheel"
+                ],
+                [
+                    24,
+                    "Defense Curl"
+                ],
+                [
+                    31,
+                    "Swift"
+                ],
+                [
+                    35,
+                    "Flame Charge"
+                ],
+                [
+                    43,
+                    "Lava Plume"
+                ],
+                [
+                    48,
+                    "Flamethrower"
+                ],
+                [
+                    56,
+                    "Inferno"
+                ],
+                [
+                    61,
+                    "Rollout"
+                ],
+                [
+                    74,
+                    "Overheat"
+                ]
+            ],
             "evo": [
                 "Infernal Parade"
+            ],
+            "egg": [
+                "Covet",
+                "Curse",
+                "Double Kick",
+                "Extrasensory",
+                "Howl",
+                "Reversal"
             ],
             "tm": {
                 "TM001": "Take Down",
@@ -15218,85 +15625,7 @@
                 "TM165": "Flare Blitz",
                 "TM168": "Solar Beam",
                 "TM171": "Tera Blast"
-            },
-            "level": [
-                [
-                    1,
-                    "Double-Edge"
-                ],
-                [
-                    1,
-                    "Ember"
-                ],
-                [
-                    1,
-                    "Eruption"
-                ],
-                [
-                    1,
-                    "Gyro Ball"
-                ],
-                [
-                    1,
-                    "Leer"
-                ],
-                [
-                    1,
-                    "Smokescreen"
-                ],
-                [
-                    1,
-                    "Tackle"
-                ],
-                [
-                    13,
-                    "Quick Attack"
-                ],
-                [
-                    20,
-                    "Flame Wheel"
-                ],
-                [
-                    24,
-                    "Defense Curl"
-                ],
-                [
-                    31,
-                    "Swift"
-                ],
-                [
-                    35,
-                    "Flame Charge"
-                ],
-                [
-                    43,
-                    "Lava Plume"
-                ],
-                [
-                    48,
-                    "Flamethrower"
-                ],
-                [
-                    56,
-                    "Inferno"
-                ],
-                [
-                    61,
-                    "Rollout"
-                ],
-                [
-                    74,
-                    "Overheat"
-                ]
-            ],
-            "egg": [
-                "Covet",
-                "Curse",
-                "Double Kick",
-                "Extrasensory",
-                "Howl",
-                "Reversal"
-            ]
+            }
         },
         "Totodile": {
             "level": [
@@ -15475,6 +15804,13 @@
                     "Hydro Pump"
                 ]
             ],
+            "egg": [
+                "Ancient Power",
+                "Aqua Jet",
+                "Block",
+                "Counter",
+                "Flatter"
+            ],
             "tm": {
                 "TM001": "Take Down",
                 "TM003": "Fake Tears",
@@ -15591,6 +15927,13 @@
                     70,
                     "Hydro Pump"
                 ]
+            ],
+            "egg": [
+                "Ancient Power",
+                "Aqua Jet",
+                "Block",
+                "Counter",
+                "Flatter"
             ],
             "tm": {
                 "TM001": "Take Down",
@@ -15837,6 +16180,14 @@
             "evo": [
                 "Agility"
             ],
+            "egg": [
+                "Baby-Doll Eyes",
+                "Focus Energy",
+                "Last Resort",
+                "Reversal",
+                "Slash",
+                "Tidy Up"
+            ],
             "tm": {
                 "TM001": "Take Down",
                 "TM002": "Charm",
@@ -16067,6 +16418,13 @@
                     53,
                     "Dream Eater"
                 ]
+            ],
+            "egg": [
+                "Feather Dance",
+                "Night Shade",
+                "Supersonic",
+                "Whirlwind",
+                "Wing Attack"
             ],
             "tm": {
                 "TM001": "Take Down",
@@ -16311,6 +16669,13 @@
             "evo": [
                 "Swords Dance"
             ],
+            "egg": [
+                "Disable",
+                "Lunge",
+                "Megahorn",
+                "Night Slash",
+                "Rage Powder"
+            ],
             "tm": {
                 "TM004": "Agility",
                 "TM006": "Scary Face",
@@ -16522,6 +16887,13 @@
                 "Spit Up",
                 "Stockpile",
                 "Swallow"
+            ],
+            "egg": [
+                "Mist",
+                "Psybeam",
+                "Soak",
+                "Sucker Punch",
+                "Water Pulse"
             ],
             "tm": {
                 "TM001": "Take Down",
@@ -17237,6 +17609,17 @@
             "evo": [
                 "Petal Blizzard"
             ],
+            "egg": [
+                "After You",
+                "Flail",
+                "Ingrain",
+                "Leech Seed",
+                "Razor Leaf",
+                "Strength Sap",
+                "Synthesis",
+                "Teeter Dance",
+                "Tickle"
+            ],
             "tm": {
                 "TM002": "Charm",
                 "TM007": "Protect",
@@ -17703,6 +18086,13 @@
                 "Perish Song",
                 "Swagger",
                 "Water Gun"
+            ],
+            "egg": [
+                "Endeavor",
+                "Mist",
+                "Muddy Water",
+                "Splash",
+                "Water Pulse"
             ],
             "tm": {
                 "TM001": "Take Down",
@@ -19263,6 +19653,12 @@
                 "Chilly Reception",
                 "Future Sight"
             ],
+            "egg": [
+                "Belch",
+                "Belly Drum",
+                "Block",
+                "Stomp"
+            ],
             "tm": {
                 "TM001": "Take Down",
                 "TM007": "Protect",
@@ -19326,13 +19722,7 @@
                 "TM161": "Trick Room",
                 "TM163": "Hyper Beam",
                 "TM171": "Tera Blast"
-            },
-            "egg": [
-                "Belch",
-                "Belly Drum",
-                "Block",
-                "Stomp"
-            ]
+            }
         },
         "Slowking-Galarian": {
             "level": [
@@ -19425,6 +19815,12 @@
                 "Future Sight",
                 "Toxic"
             ],
+            "egg": [
+                "Belch",
+                "Belly Drum",
+                "Block",
+                "Stomp"
+            ],
             "tm": {
                 "TM001": "Take Down",
                 "TM006": "Scary Face",
@@ -19495,13 +19891,7 @@
                 "TM161": "Trick Room",
                 "TM163": "Hyper Beam",
                 "TM171": "Tera Blast"
-            },
-            "egg": [
-                "Belch",
-                "Belly Drum",
-                "Block",
-                "Stomp"
-            ]
+            }
         },
         "Misdreavus": {
             "level": [
@@ -20459,6 +20849,13 @@
                     59,
                     "Crunch"
                 ]
+            ],
+            "egg": [
+                "Counter",
+                "Mimic",
+                "Present",
+                "Retaliate",
+                "Snore"
             ],
             "tm": {
                 "TM001": "Take Down",
@@ -21675,6 +22072,16 @@
             "evo": [
                 "Shell Smash"
             ],
+            "egg": [
+                "Acid Armor",
+                "Curse",
+                "Guard Swap",
+                "Inferno",
+                "Memento",
+                "Rollout",
+                "Smokescreen",
+                "Stockpile"
+            ],
             "tm": {
                 "TM001": "Take Down",
                 "TM005": "Mud-Slap",
@@ -21884,6 +22291,15 @@
             ],
             "evo": [
                 "Ice Fang"
+            ],
+            "egg": [
+                "Ancient Power",
+                "Bite",
+                "Curse",
+                "Double-Edge",
+                "Fissure",
+                "Freeze-Dry",
+                "Icicle Crash"
             ],
             "tm": {
                 "TM001": "Take Down",
@@ -22431,6 +22847,13 @@
                     72,
                     "Wave Crash"
                 ]
+            ],
+            "egg": [
+                "Aurora Beam",
+                "Clear Smog",
+                "Disable",
+                "Flail",
+                "Splash"
             ],
             "tm": {
                 "TM001": "Take Down",
@@ -23054,6 +23477,15 @@
             ],
             "evo": [
                 "Triple Kick"
+            ],
+            "egg": [
+                "Bullet Punch",
+                "Counter",
+                "Feint",
+                "High Jump Kick",
+                "Mach Punch",
+                "Rapid Spin",
+                "Vacuum Wave"
             ],
             "tm": {
                 "TM001": "Take Down",
@@ -24680,6 +25112,16 @@
                 "Fury Cutter",
                 "X-Scissor"
             ],
+            "egg": [
+                "Absorb",
+                "Double Kick",
+                "Dragon Breath",
+                "Leech Seed",
+                "Night Slash",
+                "Slash",
+                "Synthesis",
+                "Worry Seed"
+            ],
             "tm": {
                 "TM001": "Take Down",
                 "TM004": "Agility",
@@ -24797,6 +25239,16 @@
                 "Fury Cutter",
                 "Shed Tail",
                 "X-Scissor"
+            ],
+            "egg": [
+                "Absorb",
+                "Double Kick",
+                "Dragon Breath",
+                "Leech Seed",
+                "Night Slash",
+                "Slash",
+                "Synthesis",
+                "Worry Seed"
             ],
             "tm": {
                 "TM001": "Take Down",
@@ -25044,6 +25496,14 @@
                 "Feather Dance",
                 "Flamethrower"
             ],
+            "egg": [
+                "Counter",
+                "Crush Claw",
+                "Feint",
+                "Last Resort",
+                "Night Slash",
+                "Peck"
+            ],
             "tm": {
                 "TM001": "Take Down",
                 "TM004": "Agility",
@@ -25167,6 +25627,14 @@
                 "Feather Dance",
                 "Fire Punch",
                 "Flamethrower"
+            ],
+            "egg": [
+                "Counter",
+                "Crush Claw",
+                "Feint",
+                "Last Resort",
+                "Night Slash",
+                "Peck"
             ],
             "tm": {
                 "TM001": "Take Down",
@@ -25418,6 +25886,19 @@
             "reminder": [
                 "Rock Smash"
             ],
+            "egg": [
+                "Ancient Power",
+                "Bite",
+                "Counter",
+                "Curse",
+                "Double-Edge",
+                "Mirror Coat",
+                "Mud-Slap",
+                "Sludge",
+                "Stomp",
+                "Wide Guard",
+                "Yawn"
+            ],
             "tm": {
                 "TM001": "Take Down",
                 "TM005": "Mud-Slap",
@@ -25535,6 +26016,19 @@
                 "Hammer Arm",
                 "Rock Smash",
                 "Surf"
+            ],
+            "egg": [
+                "Ancient Power",
+                "Bite",
+                "Counter",
+                "Curse",
+                "Double-Edge",
+                "Mirror Coat",
+                "Mud-Slap",
+                "Sludge",
+                "Stomp",
+                "Wide Guard",
+                "Yawn"
             ],
             "tm": {
                 "TM001": "Take Down",
@@ -25790,6 +26284,11 @@
             "evo": [
                 "Snarl"
             ],
+            "egg": [
+                "Astonish",
+                "Covet",
+                "Poison Fang"
+            ],
             "tm": {
                 "TM001": "Take Down",
                 "TM002": "Charm",
@@ -26008,6 +26507,14 @@
                     "Hydro Pump"
                 ]
             ],
+            "egg": [
+                "Counter",
+                "Razor Leaf",
+                "Sweet Scent",
+                "Synthesis",
+                "Teeter Dance",
+                "Tickle"
+            ],
             "tm": {
                 "TM001": "Take Down",
                 "TM007": "Protect",
@@ -26086,6 +26593,14 @@
                 "Teeter Dance",
                 "Water Gun",
                 "Zen Headbutt"
+            ],
+            "egg": [
+                "Counter",
+                "Razor Leaf",
+                "Sweet Scent",
+                "Synthesis",
+                "Teeter Dance",
+                "Tickle"
             ],
             "tm": {
                 "TM001": "Take Down",
@@ -26317,6 +26832,14 @@
             "evo": [
                 "Razor Leaf"
             ],
+            "egg": [
+                "Defog",
+                "Leech Seed",
+                "Night Slash",
+                "Quick Attack",
+                "Take Down",
+                "Worry Seed"
+            ],
             "tm": {
                 "TM001": "Take Down",
                 "TM006": "Scary Face",
@@ -26408,6 +26931,14 @@
                 "Tackle",
                 "Torment",
                 "Whirlwind"
+            ],
+            "egg": [
+                "Defog",
+                "Leech Seed",
+                "Night Slash",
+                "Quick Attack",
+                "Take Down",
+                "Worry Seed"
             ],
             "tm": {
                 "TM001": "Take Down",
@@ -30325,6 +30856,15 @@
                 "Superpower",
                 "Supersonic"
             ],
+            "egg": [
+                "Bug Bite",
+                "Feint",
+                "First Impression",
+                "Flail",
+                "Fury Cutter",
+                "Gust",
+                "Quick Attack"
+            ],
             "tm": {
                 "TM001": "Take Down",
                 "TM005": "Mud-Slap",
@@ -30450,6 +30990,15 @@
                 "Feint",
                 "Fissure",
                 "Superpower"
+            ],
+            "egg": [
+                "Bug Bite",
+                "Feint",
+                "First Impression",
+                "Flail",
+                "Fury Cutter",
+                "Gust",
+                "Quick Attack"
             ],
             "tm": {
                 "TM001": "Take Down",
@@ -31626,6 +32175,14 @@
             "evo": [
                 "Swift"
             ],
+            "egg": [
+                "Ancient Power",
+                "Aqua Jet",
+                "Double-Edge",
+                "Metal Claw",
+                "Slash",
+                "Switcheroo"
+            ],
             "tm": {
                 "TM001": "Take Down",
                 "TM006": "Scary Face",
@@ -31808,6 +32365,15 @@
             ],
             "evo": [
                 "Water Pulse"
+            ],
+            "egg": [
+                "Confuse Ray",
+                "Dragon Breath",
+                "Haze",
+                "Hypnosis",
+                "Mirror Coat",
+                "Mist",
+                "Tickle"
             ],
             "tm": {
                 "TM001": "Take Down",
@@ -32242,6 +32808,11 @@
             "evo": [
                 "Shadow Punch"
             ],
+            "egg": [
+                "Haze",
+                "Memento",
+                "Pain Split"
+            ],
             "tm": {
                 "TM007": "Protect",
                 "TM017": "Confuse Ray",
@@ -32462,6 +33033,16 @@
                     47,
                     "Heal Pulse"
                 ]
+            ],
+            "egg": [
+                "Ally Switch",
+                "Cosmic Power",
+                "Curse",
+                "Disable",
+                "Hypnosis",
+                "Recover",
+                "Recycle",
+                "Wish"
             ],
             "tm": {
                 "TM001": "Take Down",
@@ -35181,6 +35762,19 @@
                     "Leaf Storm"
                 ]
             ],
+            "egg": [
+                "Double-Edge",
+                "Growth",
+                "Shell Smash",
+                "Spit Up",
+                "Stockpile",
+                "Superpower",
+                "Swallow",
+                "Thrash",
+                "Tickle",
+                "Wide Guard",
+                "Worry Seed"
+            ],
             "tm": {
                 "TM001": "Take Down",
                 "TM005": "Mud-Slap",
@@ -35283,6 +35877,19 @@
             ],
             "evo": [
                 "Earthquake"
+            ],
+            "egg": [
+                "Double-Edge",
+                "Growth",
+                "Shell Smash",
+                "Spit Up",
+                "Stockpile",
+                "Superpower",
+                "Swallow",
+                "Thrash",
+                "Tickle",
+                "Wide Guard",
+                "Worry Seed"
             ],
             "tm": {
                 "TM001": "Take Down",
@@ -35521,6 +36128,18 @@
             "evo": [
                 "Mach Punch"
             ],
+            "egg": [
+                "Counter",
+                "Double Kick",
+                "Encore",
+                "Fake Out",
+                "Fire Punch",
+                "Focus Energy",
+                "Heat Wave",
+                "Helping Hand",
+                "Switcheroo",
+                "Thunder Punch"
+            ],
             "tm": {
                 "TM001": "Take Down",
                 "TM003": "Fake Tears",
@@ -35643,6 +36262,18 @@
             "reminder": [
                 "Slack Off",
                 "Taunt"
+            ],
+            "egg": [
+                "Counter",
+                "Double Kick",
+                "Encore",
+                "Fake Out",
+                "Fire Punch",
+                "Focus Energy",
+                "Heat Wave",
+                "Helping Hand",
+                "Switcheroo",
+                "Thunder Punch"
             ],
             "tm": {
                 "TM001": "Take Down",
@@ -35872,6 +36503,15 @@
             "evo": [
                 "Metal Claw"
             ],
+            "egg": [
+                "Aqua Ring",
+                "Feather Dance",
+                "Power Trip",
+                "Roost",
+                "Snore",
+                "Supersonic",
+                "Yawn"
+            ],
             "tm": {
                 "TM001": "Take Down",
                 "TM002": "Charm",
@@ -35976,6 +36616,15 @@
             ],
             "evo": [
                 "Aqua Jet"
+            ],
+            "egg": [
+                "Aqua Ring",
+                "Feather Dance",
+                "Power Trip",
+                "Roost",
+                "Snore",
+                "Supersonic",
+                "Yawn"
             ],
             "tm": {
                 "TM001": "Take Down",
@@ -36909,6 +37558,12 @@
             "evo": [
                 "Endeavor"
             ],
+            "egg": [
+                "Hammer Arm",
+                "Stomp",
+                "Thrash",
+                "Whirlwind"
+            ],
             "tm": {
                 "TM001": "Take Down",
                 "TM005": "Mud-Slap",
@@ -37137,6 +37792,14 @@
             ],
             "reminder": [
                 "Wide Guard"
+            ],
+            "egg": [
+                "Counter",
+                "Fissure",
+                "Focus Energy",
+                "Guard Split",
+                "Headbutt",
+                "Screech"
             ],
             "tm": {
                 "TM001": "Take Down",
@@ -37955,6 +38618,17 @@
                     43,
                     "Last Resort"
                 ]
+            ],
+            "egg": [
+                "Beat Up",
+                "Bounce",
+                "Counter",
+                "Covet",
+                "Fake Out",
+                "Iron Tail",
+                "Quick Guard",
+                "Slam",
+                "Switcheroo"
             ],
             "tm": {
                 "TM001": "Take Down",
@@ -41187,6 +41861,14 @@
                     "Rock Wrecker"
                 ]
             ],
+            "egg": [
+                "Counter",
+                "Curse",
+                "Dragon Rush",
+                "Guard Split",
+                "Metal Burst",
+                "Rock Polish"
+            ],
             "tm": {
                 "TM001": "Take Down",
                 "TM005": "Mud-Slap",
@@ -41332,6 +42014,14 @@
                     "Giga Impact"
                 ]
             ],
+            "egg": [
+                "Cross Chop",
+                "Dynamic Punch",
+                "Feint",
+                "Focus Punch",
+                "Follow Me",
+                "Hammer Arm"
+            ],
             "tm": {
                 "TM001": "Take Down",
                 "TM007": "Protect",
@@ -41452,6 +42142,15 @@
                     64,
                     "Hyper Beam"
                 ]
+            ],
+            "egg": [
+                "Belch",
+                "Belly Drum",
+                "Cross Chop",
+                "Dynamic Punch",
+                "Focus Punch",
+                "Follow Me",
+                "Mach Punch"
             ],
             "tm": {
                 "TM001": "Take Down",
@@ -41574,6 +42273,11 @@
                     49,
                     "U-turn"
                 ]
+            ],
+            "egg": [
+                "Double-Edge",
+                "Feint",
+                "Whirlwind"
             ],
             "tm": {
                 "TM001": "Take Down",
@@ -41967,6 +42671,14 @@
                     "Swords Dance"
                 ]
             ],
+            "egg": [
+                "Counter",
+                "Cross Poison",
+                "Double-Edge",
+                "Feint",
+                "Night Slash",
+                "Wing Attack"
+            ],
             "tm": {
                 "TM001": "Take Down",
                 "TM004": "Agility",
@@ -42093,6 +42805,15 @@
             ],
             "evo": [
                 "Double Hit"
+            ],
+            "egg": [
+                "Ancient Power",
+                "Bite",
+                "Curse",
+                "Double-Edge",
+                "Fissure",
+                "Freeze-Dry",
+                "Icicle Crash"
             ],
             "tm": {
                 "TM001": "Take Down",
@@ -42565,6 +43286,12 @@
             "evo": [
                 "Tri Attack"
             ],
+            "egg": [
+                "Double-Edge",
+                "Head Smash",
+                "Rollout",
+                "Wide Guard"
+            ],
             "tm": {
                 "TM001": "Take Down",
                 "TM007": "Protect",
@@ -42693,6 +43420,11 @@
                     54,
                     "Destiny Bond"
                 ]
+            ],
+            "egg": [
+                "Haze",
+                "Memento",
+                "Pain Split"
             ],
             "tm": {
                 "TM007": "Protect",
@@ -44761,6 +45493,15 @@
                     "Leaf Storm"
                 ]
             ],
+            "egg": [
+                "Glare",
+                "Iron Tail",
+                "Mean Look",
+                "Mirror Coat",
+                "Sweet Scent",
+                "Synthesis",
+                "Twister"
+            ],
             "tm": {
                 "TM001": "Take Down",
                 "TM007": "Protect",
@@ -44854,6 +45595,15 @@
                     56,
                     "Leaf Storm"
                 ]
+            ],
+            "egg": [
+                "Glare",
+                "Iron Tail",
+                "Mean Look",
+                "Mirror Coat",
+                "Sweet Scent",
+                "Synthesis",
+                "Twister"
             ],
             "tm": {
                 "TM001": "Take Down",
@@ -45077,6 +45827,12 @@
             "evo": [
                 "Arm Thrust"
             ],
+            "egg": [
+                "Sucker Punch",
+                "Superpower",
+                "Thrash",
+                "Yawn"
+            ],
             "tm": {
                 "TM001": "Take Down",
                 "TM005": "Mud-Slap",
@@ -45204,6 +45960,12 @@
             "reminder": [
                 "Endure",
                 "Hammer Arm"
+            ],
+            "egg": [
+                "Sucker Punch",
+                "Superpower",
+                "Thrash",
+                "Yawn"
             ],
             "tm": {
                 "TM001": "Take Down",
@@ -45566,6 +46328,16 @@
             "evo": [
                 "Slash"
             ],
+            "egg": [
+                "Air Slash",
+                "Aqua Cutter",
+                "Copycat",
+                "Detect",
+                "Knock Off",
+                "Night Slash",
+                "Sacred Sword",
+                "Screech"
+            ],
             "tm": {
                 "TM001": "Take Down",
                 "TM006": "Scary Face",
@@ -45610,17 +46382,7 @@
                 "TM154": "Hydro Cannon",
                 "TM163": "Hyper Beam",
                 "TM171": "Tera Blast"
-            },
-            "egg": [
-                "Air Slash",
-                "Aqua Cutter",
-                "Copycat",
-                "Detect",
-                "Knock Off",
-                "Night Slash",
-                "Sacred Sword",
-                "Screech"
-            ]
+            }
         },
         "Samurott-Hisuian": {
             "level": [
@@ -45696,6 +46458,16 @@
             "evo": [
                 "Ceaseless Edge"
             ],
+            "egg": [
+                "Air Slash",
+                "Aqua Cutter",
+                "Copycat",
+                "Detect",
+                "Knock Off",
+                "Night Slash",
+                "Sacred Sword",
+                "Screech"
+            ],
             "tm": {
                 "TM001": "Take Down",
                 "TM006": "Scary Face",
@@ -45742,17 +46514,7 @@
                 "TM154": "Hydro Cannon",
                 "TM163": "Hyper Beam",
                 "TM171": "Tera Blast"
-            },
-            "egg": [
-                "Air Slash",
-                "Aqua Cutter",
-                "Copycat",
-                "Detect",
-                "Knock Off",
-                "Night Slash",
-                "Sacred Sword",
-                "Screech"
-            ]
+            }
         },
         "Patrat": {},
         "Watchog": {},
@@ -45917,6 +46679,12 @@
                     53,
                     "Thrash"
                 ]
+            ],
+            "egg": [
+                "Double Kick",
+                "Feint",
+                "Sand Attack",
+                "Screech"
             ],
             "tm": {
                 "TM001": "Take Down",
@@ -46133,6 +46901,10 @@
             "evo": [
                 "Horn Drill"
             ],
+            "egg": [
+                "Metal Sound",
+                "Slash"
+            ],
             "tm": {
                 "TM001": "Take Down",
                 "TM005": "Mud-Slap",
@@ -46347,6 +47119,13 @@
                     "Focus Punch"
                 ]
             ],
+            "egg": [
+                "Counter",
+                "Defog",
+                "Detect",
+                "Mach Punch",
+                "Wide Guard"
+            ],
             "tm": {
                 "TM001": "Take Down",
                 "TM006": "Scary Face",
@@ -46444,6 +47223,13 @@
                     60,
                     "Focus Punch"
                 ]
+            ],
+            "egg": [
+                "Counter",
+                "Defog",
+                "Detect",
+                "Mach Punch",
+                "Wide Guard"
             ],
             "tm": {
                 "TM001": "Take Down",
@@ -46614,6 +47400,13 @@
             "evo": [
                 "Protect"
             ],
+            "egg": [
+                "Screech",
+                "Snore",
+                "Switcheroo",
+                "Synthesis",
+                "Worry Seed"
+            ],
             "tm": {
                 "TM001": "Take Down",
                 "TM002": "Charm",
@@ -46701,6 +47494,13 @@
             ],
             "reminder": [
                 "Bug Bite"
+            ],
+            "egg": [
+                "Screech",
+                "Snore",
+                "Switcheroo",
+                "Synthesis",
+                "Worry Seed"
             ],
             "tm": {
                 "TM001": "Take Down",
@@ -46949,6 +47749,13 @@
                     "Tailwind"
                 ]
             ],
+            "egg": [
+                "Beat Up",
+                "Memento",
+                "Switcheroo",
+                "Tickle",
+                "Worry Seed"
+            ],
             "tm": {
                 "TM002": "Charm",
                 "TM003": "Fake Tears",
@@ -47167,6 +47974,12 @@
             "evo": [
                 "Petal Dance"
             ],
+            "egg": [
+                "Healing Wish",
+                "Ingrain",
+                "Sweet Scent",
+                "Worry Seed"
+            ],
             "tm": {
                 "TM002": "Charm",
                 "TM007": "Protect",
@@ -47194,13 +48007,7 @@
                 "TM163": "Hyper Beam",
                 "TM168": "Solar Beam",
                 "TM171": "Tera Blast"
-            },
-            "egg": [
-                "Healing Wish",
-                "Ingrain",
-                "Sweet Scent",
-                "Worry Seed"
-            ]
+            }
         },
         "Lilligant-Hisuian": {
             "level": [
@@ -47296,6 +48103,12 @@
             "evo": [
                 "Victory Dance"
             ],
+            "egg": [
+                "Healing Wish",
+                "Ingrain",
+                "Sweet Scent",
+                "Worry Seed"
+            ],
             "tm": {
                 "TM001": "Take Down",
                 "TM002": "Charm",
@@ -47335,13 +48148,7 @@
                 "TM167": "Close Combat",
                 "TM168": "Solar Beam",
                 "TM171": "Tera Blast"
-            },
-            "egg": [
-                "Healing Wish",
-                "Ingrain",
-                "Sweet Scent",
-                "Worry Seed"
-            ]
+            }
         },
         "Basculin": {
             "level": [
@@ -48201,6 +49008,12 @@
                     "Head Smash"
                 ]
             ],
+            "egg": [
+                "Counter",
+                "Detect",
+                "Fake Out",
+                "Quick Guard"
+            ],
             "tm": {
                 "TM001": "Take Down",
                 "TM003": "Fake Tears",
@@ -48881,6 +49694,13 @@
                 "Swift",
                 "Tickle"
             ],
+            "egg": [
+                "Aqua Tail",
+                "Flail",
+                "Knock Off",
+                "Tail Whip",
+                "Tidy Up"
+            ],
             "tm": {
                 "TM001": "Take Down",
                 "TM002": "Charm",
@@ -49433,6 +50253,11 @@
                     "Wonder Room"
                 ]
             ],
+            "egg": [
+                "Acid Armor",
+                "Astonish",
+                "Confuse Ray"
+            ],
             "tm": {
                 "TM002": "Charm",
                 "TM007": "Protect",
@@ -49544,6 +50369,11 @@
             ],
             "evo": [
                 "Hammer Arm"
+            ],
+            "egg": [
+                "Acid Armor",
+                "Astonish",
+                "Confuse Ray"
             ],
             "tm": {
                 "TM002": "Charm",
@@ -49757,6 +50587,14 @@
                     55,
                     "Hurricane"
                 ]
+            ],
+            "egg": [
+                "Aqua Jet",
+                "Brine",
+                "Dive",
+                "Endeavor",
+                "Gust",
+                "Steel Wing"
             ],
             "tm": {
                 "TM007": "Protect",
@@ -50464,6 +51302,13 @@
             "evo": [
                 "Sticky Web"
             ],
+            "egg": [
+                "Double Team",
+                "Infestation",
+                "Lunge",
+                "Poison Sting",
+                "Struggle Bug"
+            ],
             "tm": {
                 "TM004": "Agility",
                 "TM007": "Protect",
@@ -50905,6 +51750,12 @@
                     "Memento"
                 ]
             ],
+            "egg": [
+                "Acid Armor",
+                "Clear Smog",
+                "Haze",
+                "Power Split"
+            ],
             "tm": {
                 "TM007": "Protect",
                 "TM017": "Confuse Ray",
@@ -51009,6 +51860,12 @@
                     1,
                     "Will-O-Wisp"
                 ]
+            ],
+            "egg": [
+                "Acid Armor",
+                "Clear Smog",
+                "Haze",
+                "Power Split"
             ],
             "tm": {
                 "TM007": "Protect",
@@ -51984,6 +52841,11 @@
                     "High Jump Kick"
                 ]
             ],
+            "egg": [
+                "Feint",
+                "Focus Punch",
+                "Knock Off"
+            ],
             "tm": {
                 "TM001": "Take Down",
                 "TM004": "Agility",
@@ -52689,6 +53551,10 @@
             "evo": [
                 "Superpower"
             ],
+            "egg": [
+                "Rock Smash",
+                "Roost"
+            ],
             "tm": {
                 "TM001": "Take Down",
                 "TM004": "Agility",
@@ -52726,11 +53592,7 @@
                 "TM164": "Brave Bird",
                 "TM167": "Close Combat",
                 "TM171": "Tera Blast"
-            },
-            "egg": [
-                "Rock Smash",
-                "Roost"
-            ]
+            }
         },
         "Braviary-Hisuian": {
             "level": [
@@ -52802,6 +53664,10 @@
             "evo": [
                 "Esper Wing"
             ],
+            "egg": [
+                "Rock Smash",
+                "Roost"
+            ],
             "tm": {
                 "TM001": "Take Down",
                 "TM004": "Agility",
@@ -52851,11 +53717,7 @@
                 "TM164": "Brave Bird",
                 "TM167": "Close Combat",
                 "TM171": "Tera Blast"
-            },
-            "egg": [
-                "Rock Smash",
-                "Roost"
-            ]
+            }
         },
         "Vullaby": {
             "level": [
@@ -53028,6 +53890,11 @@
             ],
             "evo": [
                 "Bone Rush"
+            ],
+            "egg": [
+                "Mean Look",
+                "Roost",
+                "Toxic"
             ],
             "tm": {
                 "TM001": "Take Down",
@@ -57671,6 +58538,10 @@
                     "Misty Terrain"
                 ]
             ],
+            "egg": [
+                "Tickle",
+                "Yawn"
+            ],
             "tm": {
                 "TM002": "Charm",
                 "TM003": "Fake Tears",
@@ -57798,6 +58669,10 @@
                     59,
                     "Future Sight"
                 ]
+            ],
+            "egg": [
+                "Tickle",
+                "Yawn"
             ],
             "tm": {
                 "TM002": "Charm",
@@ -58034,6 +58909,11 @@
                     47,
                     "Superpower"
                 ]
+            ],
+            "egg": [
+                "Acupressure",
+                "Destiny Bond",
+                "Disable"
             ],
             "tm": {
                 "TM003": "Fake Tears",
@@ -59118,6 +59998,10 @@
             "evo": [
                 "Acid Spray"
             ],
+            "egg": [
+                "Counter",
+                "Life Dew"
+            ],
             "tm": {
                 "TM001": "Take Down",
                 "TM002": "Charm",
@@ -59144,11 +60028,7 @@
                 "TM166": "Thunder",
                 "TM169": "Draco Meteor",
                 "TM171": "Tera Blast"
-            },
-            "egg": [
-                "Counter",
-                "Life Dew"
-            ]
+            }
         },
         "Sliggoo-Hisuian": {
             "level": [
@@ -59208,6 +60088,10 @@
             "evo": [
                 "Shelter"
             ],
+            "egg": [
+                "Counter",
+                "Life Dew"
+            ],
             "tm": {
                 "TM001": "Take Down",
                 "TM002": "Charm",
@@ -59241,11 +60125,7 @@
                 "TM169": "Draco Meteor",
                 "TM170": "Steel Beam",
                 "TM171": "Tera Blast"
-            },
-            "egg": [
-                "Counter",
-                "Life Dew"
-            ]
+            }
         },
         "Goodra": {
             "level": [
@@ -59317,6 +60197,10 @@
             "evo": [
                 "Aqua Tail"
             ],
+            "egg": [
+                "Counter",
+                "Life Dew"
+            ],
             "tm": {
                 "TM001": "Take Down",
                 "TM002": "Charm",
@@ -59359,11 +60243,7 @@
                 "TM166": "Thunder",
                 "TM169": "Draco Meteor",
                 "TM171": "Tera Blast"
-            },
-            "egg": [
-                "Counter",
-                "Life Dew"
-            ]
+            }
         },
         "Goodra-Hisuian": {
             "level": [
@@ -59443,6 +60323,10 @@
             "evo": [
                 "Iron Tail"
             ],
+            "egg": [
+                "Counter",
+                "Life Dew"
+            ],
             "tm": {
                 "TM001": "Take Down",
                 "TM002": "Charm",
@@ -59491,11 +60375,7 @@
                 "TM169": "Draco Meteor",
                 "TM170": "Steel Beam",
                 "TM171": "Tera Blast"
-            },
-            "egg": [
-                "Counter",
-                "Life Dew"
-            ]
+            }
         },
         "Klefki": {
             "level": [
@@ -59773,6 +60653,11 @@
             "evo": [
                 "Shadow Claw"
             ],
+            "egg": [
+                "Ally Switch",
+                "Disable",
+                "Sucker Punch"
+            ],
             "tm": {
                 "TM001": "Take Down",
                 "TM006": "Scary Face",
@@ -60010,6 +60895,11 @@
             "evo": [
                 "Body Slam"
             ],
+            "egg": [
+                "Aurora Veil",
+                "Mirror Coat",
+                "Mist"
+            ],
             "tm": {
                 "TM001": "Take Down",
                 "TM006": "Scary Face",
@@ -60046,12 +60936,7 @@
                 "TM152": "Giga Impact",
                 "TM163": "Hyper Beam",
                 "TM171": "Tera Blast"
-            },
-            "egg": [
-                "Aurora Veil",
-                "Mirror Coat",
-                "Mist"
-            ]
+            }
         },
         "Avalugg-Hisuian": {
             "level": [
@@ -60135,6 +61020,11 @@
             "evo": [
                 "Rock Slide"
             ],
+            "egg": [
+                "Aurora Veil",
+                "Mirror Coat",
+                "Mist"
+            ],
             "tm": {
                 "TM001": "Take Down",
                 "TM006": "Scary Face",
@@ -60172,12 +61062,7 @@
                 "TM152": "Giga Impact",
                 "TM163": "Hyper Beam",
                 "TM171": "Tera Blast"
-            },
-            "egg": [
-                "Aurora Veil",
-                "Mirror Coat",
-                "Mist"
-            ]
+            }
         },
         "Noibat": {
             "level": [
@@ -61174,6 +62059,13 @@
             "evo": [
                 "Spirit Shackle"
             ],
+            "egg": [
+                "Confuse Ray",
+                "Defog",
+                "Double Team",
+                "Knock Off",
+                "Roost"
+            ],
             "tm": {
                 "TM001": "Take Down",
                 "TM007": "Protect",
@@ -61223,14 +62115,7 @@
                 "TM164": "Brave Bird",
                 "TM168": "Solar Beam",
                 "TM171": "Tera Blast"
-            },
-            "egg": [
-                "Confuse Ray",
-                "Defog",
-                "Double Team",
-                "Knock Off",
-                "Roost"
-            ]
+            }
         },
         "Decidueye-Hisuian": {
             "level": [
@@ -61298,6 +62183,13 @@
             "evo": [
                 "Triple Arrows"
             ],
+            "egg": [
+                "Confuse Ray",
+                "Defog",
+                "Double Team",
+                "Knock Off",
+                "Roost"
+            ],
             "tm": {
                 "TM001": "Take Down",
                 "TM006": "Scary Face",
@@ -61347,14 +62239,7 @@
                 "TM167": "Close Combat",
                 "TM168": "Solar Beam",
                 "TM171": "Tera Blast"
-            },
-            "egg": [
-                "Confuse Ray",
-                "Defog",
-                "Double Team",
-                "Knock Off",
-                "Roost"
-            ]
+            }
         },
         "Litten": {
             "level": [
@@ -61519,6 +62404,11 @@
                     "Flare Blitz"
                 ]
             ],
+            "egg": [
+                "Fake Out",
+                "Parting Shot",
+                "Power Trip"
+            ],
             "tm": {
                 "TM001": "Take Down",
                 "TM006": "Scary Face",
@@ -61625,6 +62515,11 @@
                 "Growl",
                 "Scratch",
                 "Throat Chop"
+            ],
+            "egg": [
+                "Fake Out",
+                "Parting Shot",
+                "Power Trip"
             ],
             "tm": {
                 "TM001": "Take Down",
@@ -61854,6 +62749,11 @@
                     "Hydro Pump"
                 ]
             ],
+            "egg": [
+                "Aqua Ring",
+                "Life Dew",
+                "Perish Song"
+            ],
             "tm": {
                 "TM002": "Charm",
                 "TM007": "Protect",
@@ -61952,6 +62852,11 @@
             ],
             "evo": [
                 "Sparkling Aria"
+            ],
+            "egg": [
+                "Aqua Ring",
+                "Life Dew",
+                "Perish Song"
             ],
             "tm": {
                 "TM002": "Charm",
@@ -62162,6 +63067,11 @@
             "reminder": [
                 "Echoed Voice"
             ],
+            "egg": [
+                "Boomburst",
+                "Gunk Shot",
+                "Sky Attack"
+            ],
             "tm": {
                 "TM001": "Take Down",
                 "TM007": "Protect",
@@ -62260,6 +63170,11 @@
             ],
             "evo": [
                 "Beak Blast"
+            ],
+            "egg": [
+                "Boomburst",
+                "Gunk Shot",
+                "Sky Attack"
             ],
             "tm": {
                 "TM001": "Take Down",
@@ -62655,6 +63570,10 @@
             "evo": [
                 "Charge"
             ],
+            "egg": [
+                "Discharge",
+                "Harden"
+            ],
             "tm": {
                 "TM001": "Take Down",
                 "TM005": "Mud-Slap",
@@ -62751,6 +63670,10 @@
                 "Mud-Slap",
                 "Vise Grip",
                 "X-Scissor"
+            ],
+            "egg": [
+                "Discharge",
+                "Harden"
             ],
             "tm": {
                 "TM001": "Take Down",
@@ -63257,6 +64180,11 @@
             "evo": [
                 "Pollen Puff"
             ],
+            "egg": [
+                "Aromatic Mist",
+                "Moonblast",
+                "Sticky Web"
+            ],
             "tm": {
                 "TM001": "Take Down",
                 "TM002": "Charm",
@@ -63757,6 +64685,11 @@
             ],
             "evo": [
                 "Crush Claw"
+            ],
+            "egg": [
+                "Endeavor",
+                "Last Resort",
+                "Thrash"
             ],
             "tm": {
                 "TM001": "Take Down",
@@ -64333,6 +65266,12 @@
                     62,
                     "Mirror Coat"
                 ]
+            ],
+            "egg": [
+                "Power Split",
+                "Spit Up",
+                "Sticky Web",
+                "Stockpile"
             ],
             "tm": {
                 "TM006": "Scary Face",
@@ -66216,6 +67155,11 @@
                     "Close Combat"
                 ]
             ],
+            "egg": [
+                "Counter",
+                "Dragon Breath",
+                "Focus Punch"
+            ],
             "tm": {
                 "TM001": "Take Down",
                 "TM006": "Scary Face",
@@ -66334,6 +67278,11 @@
             ],
             "reminder": [
                 "Belly Drum"
+            ],
+            "egg": [
+                "Counter",
+                "Dragon Breath",
+                "Focus Punch"
             ],
             "tm": {
                 "TM001": "Take Down",
@@ -70811,6 +71760,10 @@
             ],
             "evo": [
                 "Decorate"
+            ],
+            "egg": [
+                "Baby-Doll Eyes",
+                "Last Resort"
             ],
             "tm": {
                 "TM002": "Charm",
@@ -86082,6 +87035,12 @@
             "reminder": [
                 "Infestation"
             ],
+            "egg": [
+                "Defense Curl",
+                "Recycle",
+                "Rollout",
+                "Sucker Punch"
+            ],
             "tm": {
                 "TM001": "Take Down",
                 "TM007": "Protect",
@@ -86783,6 +87742,11 @@
             "evo": [
                 "Electro Shot"
             ],
+            "egg": [
+                "Mirror Coat",
+                "Night Slash",
+                "Slash"
+            ],
             "tm": {
                 "TM001": "Take Down",
                 "TM006": "Scary Face",
@@ -86906,6 +87870,12 @@
                 "Double Hit",
                 "Infestation",
                 "Yawn"
+            ],
+            "egg": [
+                "Defense Curl",
+                "Recycle",
+                "Rollout",
+                "Sucker Punch"
             ],
             "tm": {
                 "TM001": "Take Down",
