@@ -130,6 +130,7 @@ def display_mon(mon: dict | pk.BareMiniMon, mode: str = "default", **kwargs) -> 
     starter = f"**Species:** {mon.species_and_form}\n**Nickname:** {mon.nickname}\n**Level:** {mon.level}" \
         if mode == "builder" else f"**{mon.name}** (Lv. {mon.level} {mon.species_and_form})"
 
+    lb = "\n"
     ret = [
         f"{starter}"
         f"{(' - ' + mon.hp_display(full_knowledge)) if kwargs.get('hp', True) and (mode != 'builder') else ''}\n"
