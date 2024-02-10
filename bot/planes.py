@@ -130,7 +130,9 @@ class PlanesInterpreter(Interpreter):
                 craft.unload(i)
                 pay = self.job_pay(job)
                 self.user.credits += pay
+                self.user.lifetime_credits += pay
                 jobs_delivered += 1
+                self.user.lifetime_jobs += 1
                 payout += pay
         return jobs_delivered, payout
 
@@ -379,7 +381,9 @@ class PlanesInterpreter(Interpreter):
             fs={"Licenses": NewLine(licenses),
                 "Credits": f"Ȼ{pn.addcomm(self.user.credits)}",
                 "Airports": len(self.user.cities),
-                "Airline Value": f"Ȼ{pn.addcomm(airline_value)}"}
+                "Airline Value": f"Ȼ{pn.addcomm(airline_value)}",
+                "Jobs Delivered": self.user.lifetime_jobs,
+                "Lifetime Revenue": f"Ȼ{pn.illion_suffix(self.user.lifetime_credits, '')}"}
         )
 
     async def _fleet(self, *args):
@@ -453,7 +457,7 @@ class PlanesInterpreter(Interpreter):
             return await LicenseUpgradeNavigator(self, country).run(self.ctx)
 
         fields = {
-            "Traffic": pn.suff(sum([g.passengers for g in country.cities])),
+            "Traffic": pn.illion_suffix(sum([g.passengers for g in country.cities])),
             "Cities": f"{len(country.cities)} ({owned} owned)",
             "License Value": f"Ȼ{pn.addcomm(country.worth)}",
             "Owned": ["No", "Yes"][country.name in self.user.countries],
@@ -1474,7 +1478,8 @@ class AirportSearchNavigator(Navigator):
             dist = ""
         cost = f"Ȼ{pn.addcomm(self.interpreter.airport_price(city))}" if city.name not in self.interpreter.user.cities \
             else "owned"
-        return f"**{self.interpreter.pretty_city(city, True, False)}**\n- {pn.suff(city.passengers)} / {cost}{dist}"
+        return f"**{self.interpreter.pretty_city(city, True, False)}**\n- " \
+               f"{pn.illion_suffix(city.passengers)} / {cost}{dist}"
 
     def read_criteria(self, args: str):
         possible_params = ["in", "near", "sort", "startswith", "priority"]

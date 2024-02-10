@@ -78,13 +78,13 @@ def addcomm(n):
     return ret + add
 
 
-def suff(n):
+def illion_suffix(n: [int | float], joiner: str = " "):
     if n < 1000:
         return n
-    sfs, digs = str(n)[:3], floor(log10(n) - 3)
-    ret = sfs if digs % 3 == 2 else str(float(sfs) / 10) if digs % 3 == 1 else twodig(float(sfs) / 100)
+    sig_figs, digs = str(n)[:3], floor(log10(n) - 3)
+    ret = sig_figs if digs % 3 == 2 else str(float(sig_figs) / 10) if digs % 3 == 1 else twodig(float(sig_figs) / 100)
     suf = ["K", "M", "B", "T", "Q"][int(digs // 3)]
-    return "{} {}".format(ret, suf)
+    return f"{ret}{joiner}{suf}"
 
 
 def base36(n: int):
@@ -188,7 +188,7 @@ class City:
             save_city_countries()
         self.country = country
         self.dict = {"Coordinates": f"({twodig(self.coords[0])}, {twodig(self.coords[1])})",
-                     "Country": country, "Annual Passengers": suff(val),
+                     "Country": country, "Annual Passengers": illion_suffix(val),
                      "Base Value": "Ȼ{}".format(addcomm(self.value))}
         self.jobs = []
         self.job_reset = 0
@@ -430,12 +430,15 @@ class Job:  # tbh kind of a dummy class. doesn't really do anything other than s
 
 
 class User:
-    def __init__(self, no: int, licenses: dict, cits: list, pns: dict, creds: float):
+    def __init__(self, no: int, licenses: dict, cits: list, pns: dict, creds: int,
+                 lifetime_jobs: int = 0, lifetime_credits: int = 0):
         self.id = no
         self.countries = licenses
         self.cities = cits
         self.planes = pns
         self.credits = creds
+        self.lifetime_jobs = lifetime_jobs
+        self.lifetime_credits = lifetime_credits
 
     @staticmethod
     def from_str(s: str):
@@ -445,16 +448,17 @@ class User:
             else:
                 return code_countries[country[:2]], int(country[2:])
 
-        j = s.split("|")  # id|countries|cities|planes|credits
+        j = s.split("|")  # id|countries|cities|planes|credits|lifetime-jobs|lifetime-credits
         p = [Plane.from_str(g) for g in j[3].split("~")]
         c = [code_city(g).name for g in j[2].split("~")]
         k = dict(failsafe_country_load(g) for g in j[1].split("~"))
-        return User(int(j[0]), k, c, {g.name.lower(): g for g in p}, int(j[4]))
+        return User(int(j[0]), k, c, {g.name.lower(): g for g in p}, int(j[4]), *[int(g) for g in j[5:7]])
 
     def __str__(self):
         return f"{self.id}|{'~'.join(country_codes[k] + str(v) for k, v in self.countries.items())}|" \
                f"{'~'.join(cities[g.lower()].code for g in self.cities)}|" \
-               f"{'~'.join(str(g) for g in self.planes.values())}|{round(self.credits)}"
+               f"{'~'.join(str(g) for g in self.planes.values())}|{self.credits}|" \
+               f"{self.lifetime_jobs}|{self.lifetime_credits}"
 
     @property
     def jobs(self):
