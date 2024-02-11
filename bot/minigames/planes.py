@@ -282,13 +282,13 @@ class Country:
 
     @property
     def worth(self):
-        return round(0.03 * sum([i.value for i in self.cities]))
+        return round(0.06 * sum([i.value for i in self.cities]))
 
     def upgrade_price(self, to_lvl: int, from_lvl: int = 1):
         ret = 0
         if from_lvl < to_lvl:
-            for i in range(from_lvl, to_lvl):
-                ret += round(self.worth * 0.5 * (i + 1))
+            for i in range(from_lvl + 1, to_lvl + 1):
+                ret += round(self.worth * i)
             return ret
         else:
             return 0
@@ -430,7 +430,7 @@ class Job:  # tbh kind of a dummy class. doesn't really do anything other than s
 
 
 class User:
-    def __init__(self, no: int, licenses: dict, cits: list, pns: dict, creds: int,
+    def __init__(self, no: int, licenses: dict[str, int], cits: list[str], pns: dict[str, Plane], creds: int,
                  lifetime_jobs: int = 0, lifetime_credits: int = 0):
         self.id = no
         self.countries = licenses
@@ -470,7 +470,7 @@ class User:
         self.planes[new_name.lower()].name = new_name
 
 
-def find_city(s: str):
+def find_city(s: str) -> City:
     return cities[c_alias.get(s.lower(), s.lower())]
 
 
@@ -480,14 +480,13 @@ def from_flag(s: str):  # gets country code from regional indicators
     return s
 
 
-def find_country(s: str):
+def find_country(s: str) -> Country:
     return countries[k_alias.get(s.lower(), code_countries.get(from_flag(s.lower()), s.lower())).lower()]
 
 
-def code_city(s: str):
+def code_city(s: str) -> City:
     try:
         ret = list(cities.values())[int(s, 36)]
-        assert isinstance(ret, City)
         return ret
     except IndexError:
         raise ValueError("invalid city code")

@@ -45,7 +45,7 @@ async def planes(ctx: commands.Context, func: str = None, *args: str):
 
 class PlanesInterpreter(Interpreter):
     redirects = {
-        "offload": "unload", "city": "airport", "airports": "cities",
+        "offload": "unload", "city": "airport", "airports": "cities", "license": "licenses",
         "p": "profile", "f": "fleet", "j": "jobs", "l": "load", "g": "launch", "a": "airport", "c": "country",
         "k": "market", "m": "model", "h": "help", "u": "upgrade", "d": "dist", "e": "eta", "s": "search",
         "b": "buy", "o": "buyout", "r": "rename", "x": "specs", "n": "unload", "t": "tutorial", "y": "licenses"
@@ -225,11 +225,7 @@ class PlanesInterpreter(Interpreter):
                      "`z!planes fleet <plane>` shows specs for a specific plane.\n\n"
                      "`z!planes fleet sell <plane>` sells a plane for 25% of its purchase value, including "
                      "money spent on upgrades.",
-            "country": "`z!planes country <country>` shows information for a country.\n\n"
-                       "`z!planes country upgrade <country>` upgrades your license in a country. An upgraded license "
-                       "increases the payout for jobs headed to that country, and decreases the price of airports in "
-                       "that country. Licenses start at level 1, and may be upgraded up to level 9. You can also "
-                       "use the shortcut `z!p c u`.",
+            "country": "`z!planes country <country>` shows information for a country.",
             "airport": "`z!planes airport <airport>` shows information for an airport. You can use the :mag: button "
                        "to toggle the zoom on the minimap that appears.\n\n"
                        "`z!planes airport sell <airport>` sells the airport for 25% of its purchase value.",
@@ -313,7 +309,10 @@ class PlanesInterpreter(Interpreter):
             # "ownmap": "`z!planes ownmap` generates + links an image showing every airport you own on a map. It does "
             #           "not yet show names, unfortunately. The technology will get there eventually.",
             "licenses": "`z!planes licenses` lists your owned flight licenses, their levels, and how many airports "
-                        "you own in their countries."
+                        "you own in their countries.\n\n"
+                        "`z!planes license <country>` upgrades your license in a country. An upgraded license "
+                        "increases the payout for jobs headed to that country, and decreases the price of airports in "
+                        "that country. Licenses start at level 1, and may be upgraded up to level 9."
         }
         desc_dict = {
             "new": "Starts a brand new game.",
@@ -338,7 +337,7 @@ class PlanesInterpreter(Interpreter):
             "upgrade": "Upgrades a plane's engine or fuel tank.",
             "buyout": "Buys all unowned airports in a country you can afford.",
             # "ownmap": "Shows every airport you own on a map.",
-            "licenses": "Lists your country licenses in more detail."
+            "licenses": "Lists and upgrades your country licenses."
         }
         shortcuts = {j: g for g, j in self.redirects.items() if len(g) == 1}
 
@@ -440,20 +439,12 @@ class PlanesInterpreter(Interpreter):
         except KeyError:
             raise commands.CommandError("Invalid country.")
 
-        assert isinstance(country, pn.Country)
-
         owned = len([g for g in pn.cities.values() if g.country == country.name
                      and g.name in self.user.cities])
 
         license_level = self.user.countries.get(country.name, 0)
 
         if len(args) > 1 and args[1] in ["upgrade", "u", "--u"]:
-            if country.name not in self.user.countries:
-                raise commands.CommandError(f"You must buy the license to {country.name} first.")
-
-            if license_level == 9:
-                raise commands.CommandError("Licenses may not be upgraded past level 9.")
-
             return await LicenseUpgradeNavigator(self, country).run(self.ctx)
 
         fields = {
@@ -469,10 +460,10 @@ class PlanesInterpreter(Interpreter):
                 f"Your license is **Level {license_level}** [{zeph.emojis['ziplv' + str(license_level)]}]. "
                 f"Jobs headed for this country are worth **{round(25 * (license_level - 1))}%** more, "
                 f"and airports in this country are **{round(10 * (license_level - 1))}%** cheaper.\n\n"
-                f"Your license may be upgraded using `z!p country upgrade {country.name}`." if license_level > 1 else
+                f"Your license may be upgraded using `z!p license {country.name}`." if license_level > 1 else
                 f"Your license is **Level 1** [{zeph.emojis['ziplv1']}]. "
                 f"This provides no additional bonuses. "
-                f"Your license may be upgraded using `z!p country upgrade {country.name}`."
+                f"Your license may be upgraded using `z!p license {country.name}`."
             )
 
         return await plane.send(self.ctx, country.name, same_line=True, fs=fields)
@@ -1066,6 +1057,14 @@ class PlanesInterpreter(Interpreter):
             return await succ.send(self.ctx, "Job cache cleared.")
 
     async def _licenses(self, *args):
+        if args:
+            try:
+                country = pn.find_country(args[0])
+            except KeyError:
+                raise commands.CommandError(f"Invalid country `{args[0]}`.")
+            else:
+                return await LicenseUpgradeNavigator(self, country).run(self.ctx)
+
         nat_counts = {nat: len([g for g in pn.cities.values() if g.country == nat]) for nat in self.user.countries}
         licenses = [
             f":flag_{pn.country_codes[k]}: **{k}**: Level {v} [{zeph.emojis['ziplv' + str(v)]}]\n"
@@ -1544,8 +1543,8 @@ class LicenseUpgradeNavigator(Navigator):
         super().__init__(plane, list(range(1, 10)), 1, f"{country.name} License Upgrades", timeout=180)
         self.interpreter = inter
         self.country = country
-        self.current_level = self.interpreter.user.countries[country.name]
-        self.page = self.current_level
+        self.current_level = self.interpreter.user.countries.get(country.name, 0)
+        self.page = max(1, self.current_level)
         self.funcs[zeph.emojis["yes"]] = self.purchase_upgrade
         self.funcs[zeph.emojis["no"]] = self.close
 
@@ -1578,12 +1577,18 @@ class LicenseUpgradeNavigator(Navigator):
         if self.current_level > self.page:
             desc += f"\n\nYou already have a higher-level license. Your license is Level {self.current_level}."
         elif self.current_level == self.page:
-            desc += "\n\nThis is your current license level."
-        else:
-            desc += f"\n\nUpgrading to this level will cost **Ȼ{pn.addcomm(price)}**.\n"
-            if price <= self.interpreter.user.credits:
-                desc += f"Hit the {zeph.emojis['yes']} button to confirm upgrade."
+            if self.current_level == self.pgs:
+                desc += "\n\nThis is the maximum license level."
             else:
-                desc += "You do not have enough credits for this upgrade."
+                desc += "\n\nThis is your current license level."
+        else:
+            desc += f"\n\n{'Purchasing this license' if self.current_level == 0 else 'Upgrading to this level'} " \
+                f"will cost **Ȼ{pn.addcomm(price)}**.\n"
+            if price <= self.interpreter.user.credits:
+                desc += f"Hit the {zeph.emojis['yes']} button to confirm " \
+                    f"{'purchase' if self.current_level == 0 else 'upgrade'}."
+            else:
+                desc += f"You do not have enough credits for this " \
+                    f"{'license' if self.current_level == 0 else 'upgrade'}."
 
         return plane.con(self.title, d=desc)
