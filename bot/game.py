@@ -226,69 +226,93 @@ async def anagrams(ctx: commands.Context):
                 await ana.resend_if_dm(message, f"Scored '{guess}'!", **embed())
 
 
+class BoggleGame(Navigator):
+    def __init__(self):
+        super().__init__(Emol(":hourglass:", hexcol("ffac33")), title="Boggle", prev=None, nxt=None)
+        self.board = bg.Board()
+        self.possible_words = self.find_possible_words()
+        self.timeout = 180
+        self.last_action_time = time.time()
+        self.paused = False
+        self.funcs["⏬"] = self.resend
+        self.funcs["⏸️"] = self.pause
+        self.funcs["⏹️"] = self.close
+
+    def find_possible_words(self) -> list[str]:
+        possible = [
+            g for g in wr.wordList if set(c.upper() for c in re.sub("qu", "q", g)) <= set(self.board.board)
+            and g[0].upper() in self.board.board and len(g) >= 3
+        ]
+        return [g for g in possible if self.board.find(g)]
+
+    def missed(self) -> list[str]:
+        return [g for g in self.possible_words if g not in self.board.guessed]
+
+    async def resend(self):
+        self.title = "Boggle"
+        await self.emol.edit(self.message, "This game has been moved. Scroll down.")
+        self.message = await self.message.channel.send(embed=self.con())
+        await self.add_buttons()
+
+    def pause(self):
+        self.paused = not self.paused
+
+    def pre_process(self):
+        current_time = time.time()
+        if not self.paused:
+            self.timeout -= current_time - self.last_action_time
+        self.last_action_time = current_time
+
+    def dynamic_timeout(self) -> int | float:
+        return 600 if self.paused else self.timeout
+
+    def is_valid_non_emoji(self, emoji: str):
+        return self.board.find(emoji) or emoji.lower() == "forfeit"
+
+    async def run_nonstandard_emoji(self, emoji: discord.Emoji | str, ctx: commands.Context):
+        if not self.paused:
+            if emoji.lower() == "forfeit":
+                return await self.close()
+            elif emoji.lower() not in self.possible_words:
+                self.title = f"`{emoji.upper()}` isn't a word."
+            elif emoji.lower() in self.board.guessed:
+                self.title = f"You've already guessed `{emoji.upper()}`."
+            else:
+                self.board.guess(emoji.lower())
+                self.title = f"Scored `{emoji.upper()}` for {bg.score(emoji)} {plural('point', bg.score(emoji))}!"
+
+    async def close(self):
+        self.closed_elsewhere = True
+        await self.emol.send(
+            self.message.channel, "Game over!",
+            d=f"You scored **{self.board.points}** points!\n\n"
+              f"Words you missed: {none_list(self.missed())} ({len(self.missed())})"
+        )
+
+    def con(self):
+        board_state = "|            |\n|   PAUSED   |\n|            |\n|            |" if self.paused else \
+            str(self.board)
+        return self.emol.con(
+            self.title,
+            d=("This menu will time out after 10 minutes.\n\n" if self.paused else "") +
+            f"```ml\n{board_state}```\nTime remaining: {round(self.timeout)} s",
+            footer=f"Words found: {none_list(sorted(self.board.guessed))}"
+        )
+
+
 @zeph.command(
     aliases=["bg"], usage="z!boggle",
     description="Play a game of Boggle.",
     help="Plays a game of Boggle. I'll generate a board by rolling some letter dice, and you name as many "
          "words as possible that you can spell by stringing those letters together. The letters have to be next "
          "to each other on the board, and you can't use the same die more than once in a word.\n\n"
-         "For example, you could use these letters to string together `ears`, `car`, `ran`, or `sac`, but not `scare` "
-         "or `near`, because those letters aren't adjacent.\n"
+         "In the board below, `EARS`, `CAR`, `RAN`, or `SAC` would all be valid guesses. `SCARE` "
+         "and `NEAR` would be invalid because those letters aren't adjacent. `REAR` would be invalid because it "
+         "reuses a square.\n"
          "```\nE R N\nS A C```"
 )
 async def boggle(ctx: commands.Context):
-    bog = ClientEmol(":hourglass:", hexcol("ffac33"), ctx)
-
-    board = bg.Board()
-    possible = [g for g in wr.wordList if set(c.upper() for c in "q".join(g.split("qu"))) <= set(board.board)
-                and g[0].upper() in board.board and len(g) >= 3]
-    possible = [g for g in possible if board.find(g)]
-
-    def timer():
-        return 180 + start - time.time()
-
-    def missed():
-        return sorted([g for g in possible if g not in board.guessed])
-
-    def embed():
-        return {"d": f"```ml\n{str(board)}```\nTime remaining: {round(timer())} s",
-                "footer": f"Used words: {none_list(sorted(board.guessed))}"}
-
-    def is_guess(s: str):
-        return board.find(s.lower()) or s.lower() == "forfeit"  # there's only one die with an F, so this is fine
-
-    def pred(m: discord.Message):
-        return m.channel == ctx.channel and m.author == ctx.author and is_guess(m.content)
-
-    screen = await bog.say("Boggle", d=f'```ml\n{str(board)}```\nYou have three minutes. Go!')
-    start = time.time()
-
-    while True:
-        try:
-            guess = await zeph.wait_for("message", timeout=timer(), check=pred)
-        except asyncio.TimeoutError:
-            return await bog.say("Time's up!", d=f"You scored **{board.points}** points!\n\n"
-                                                 f"Words you missed: {none_list(missed())} ({len(missed())})")
-        else:
-            try:
-                await guess.delete()
-            except discord.HTTPException:
-                pass
-            guess = guess.content.lower()
-            if guess == "forfeit":
-                return await bog.say("Game over!", d=f"You scored **{board.points}** points!\n\n"
-                                                     f"Words you missed: {none_list(missed())} ({len(missed())})")
-            if guess not in possible:
-                await bog.resend_if_dm(screen, f"`{guess}` isn't a word.", **embed())
-                continue
-            if guess in board.guessed:
-                await bog.resend_if_dm(screen, f"You've already used '{guess}'.", **embed())
-                continue
-
-            board.guess(guess)
-            await bog.resend_if_dm(
-                screen, f"Scored '{guess}' for {bg.score(guess)} {plural('point', bg.score(guess))}!", **embed()
-            )
+    return await BoggleGame().run(ctx)
 
 
 @zeph.command(

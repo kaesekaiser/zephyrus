@@ -346,7 +346,7 @@ class Navigator:
     itself. """
 
     def __init__(self, emol: Emol, ls: list = (), per: int = 8, title: str = "",
-                 prev: [discord.Emoji, str] = "◀", nxt: [discord.Emoji, str] = "▶", **kwargs):
+                 prev: discord.Emoji | str | None = "◀", nxt: discord.Emoji | str | None = "▶", **kwargs):
         # kwargs are also passed to Emol.con()
         self.emol = emol
         self.table = ls
@@ -374,7 +374,21 @@ class Navigator:
 
     @property
     def legal(self):
-        return [self.prev, self.next] + list(self.funcs.keys())
+        return [g for g in [self.prev, self.next] + list(self.funcs.keys()) if g]
+
+    async def add_buttons(self, to_message: discord.Message = None):
+        if not to_message:
+            to_message = self.message
+
+        for button in self.legal:
+            if "!" not in str(button):
+                try:
+                    await to_message.add_reaction(button)
+                except discord.errors.HTTPException:
+                    pass
+
+    def pre_process(self):  # runs immediately before calling the main function
+        pass
 
     def post_process(self):  # runs on page change!
         pass
@@ -388,12 +402,30 @@ class Navigator:
     def advance_page(self, direction: int):
         self.page = (self.page + direction - 1) % self.pgs + 1
 
+    def dynamic_timeout(self) -> int | float:
+        return self.timeout
+
     async def get_emoji(self, ctx: commands.Context):
         """Detects a button press, and returns the emoji that was pressed."""
-        return (await zeph.wait_for(
-            'reaction_add', timeout=self.timeout, check=lambda r, u: r.emoji in self.legal and
-            r.message.id == self.message.id and u == ctx.author
-        ))[0].emoji
+        def pred(mr: MR, u: User):
+            if isinstance(mr, discord.Message):
+                return u == ctx.author and mr.channel == ctx.channel and self.is_valid_non_emoji(mr.content)
+            else:
+                return u == ctx.author and mr.message == self.message and mr.emoji in self.legal
+
+        mess = (await zeph.wait_for('reaction_or_message', timeout=self.dynamic_timeout(), check=pred))[0]
+
+        if isinstance(mess, discord.Message):
+            try:
+                await mess.delete()
+            except discord.HTTPException:
+                pass
+            return mess.content
+        else:
+            return mess.emoji
+
+    def is_valid_non_emoji(self, emoji: str):
+        pass
 
     async def run_nonstandard_emoji(self, emoji: discord.Emoji | str, ctx: commands.Context):
         # For doing weird things with the input.
@@ -429,12 +461,7 @@ class Navigator:
                 assert isinstance(self.message, discord.Message)
                 await self.message.edit(embed=self.con())
 
-            for button in self.legal:
-                if "!" not in button:
-                    try:
-                        await self.message.add_reaction(button)
-                    except discord.errors.HTTPException:
-                        pass
+            await self.add_buttons()
 
         while True:
             try:
@@ -447,6 +474,11 @@ class Navigator:
                     await self.message.remove_reaction(emoji, ctx.author)
                 except discord.HTTPException:
                     pass
+
+            if asyncio.iscoroutinefunction(self.pre_process):
+                await self.pre_process()
+            else:
+                self.pre_process()
 
             if emoji in self.funcs:
                 if should_await(self.funcs[emoji]):
@@ -474,7 +506,6 @@ class Navigator:
                     pass
 
             if asyncio.iscoroutinefunction(self.post_process):
-                # noinspection PyUnresolvedReferences
                 await self.post_process()
             else:
                 self.post_process()
