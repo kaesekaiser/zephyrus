@@ -481,8 +481,8 @@ gender_ratios = {
         'Nidoran-F', 'Chansey', 'Kangaskhan', 'Jynx', 'Miltank', 'Blissey', 'Illumise', 'Wormadam', 'Vespiquen',
         'Froslass', 'Petilil', 'Lilligant', 'Vullaby', 'Mandibuzz', 'Flabébé', 'Floette', 'Florges', 'Salazzle',
         'Bounsweet', 'Steenee', 'Tsareena', 'Hatenna', 'Hattrem', 'Hatterene', 'Milcery', 'Alcremie', 'Tinkatink',
-        'Tinkatuff', 'Tinkaton', 'Ogerpon', 'Basculegion-Male', 'Indeedee-Female', 'Oinkologne-Female',
-        'Meowstic-Female'
+        'Tinkatuff', 'Tinkaton', 'Ogerpon', 'Basculegion-Female', 'Indeedee-Female', 'Oinkologne-Female',
+        'Meowstic-Female', 'Nidorina', 'Nidoqueen'
     ],
     "genderless": [
         'Magnemite', 'Magneton', 'Voltorb', 'Electrode', 'Staryu', 'Starmie', 'Porygon', 'Porygon2', 'Shedinja',
