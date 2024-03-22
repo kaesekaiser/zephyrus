@@ -1431,17 +1431,12 @@ class RemindNavigator(Navigator):
          "e.g. `z!remindme eat food in 2 hours`, `z!rme work on essay in 5 hours 30 minutes`, or "
          "`z!remind talk to Sam in 3 days`."
 )
-async def remind_command(ctx: commands.Context, *text: str):
-    # leaving input text as a list, rather than a single string like usual, to make splitting easier
+async def remind_command(ctx: commands.Context, *, text: str):
+    if text.lower() in ["list", "edit", "remove", "delete"]:
+        if not [g for g in zeph.reminders if g.author == ctx.author.id]:
+            return await Emol(":alarm_clock:", hexcol("DD2E44")).send(ctx, "You have no reminders set currently.")
 
-    if "in" not in text:
-        if " ".join(text).lower() in ["list", "edit", "remove", "delete"]:
-            if not [g for g in zeph.reminders if g.author == ctx.author.id]:
-                return await Emol(":alarm_clock:", hexcol("DD2E44")).send(ctx, "You have no reminders set currently.")
-
-            return await RemindNavigator(ctx.author).run(ctx)
-
-        raise commands.BadArgument
+        return await RemindNavigator(ctx.author).run(ctx)
 
     if not ctx.author.dm_channel:
         try:
@@ -1449,36 +1444,30 @@ async def remind_command(ctx: commands.Context, *text: str):
         except discord.HTTPException:
             raise commands.CommandError("I can't DM you! Are your DMs open?\n`z!remindme` uses DMs to send reminders.")
 
-    last_in = [g for g in range(len(text)) if text[g] == "in"][-1]
-    reminder, elapse = " ".join(text[:last_in]), " " + (" ".join(text[last_in + 1:]))
+    # https://regex101.com/r/exJpFT/1
+    regex = r"(in |^)((?P<years>[0-9]+) ?y(ear|r|)s?(,? |$))?((?P<months>[0-9]+) ?m(onth|o)s?(,? |$))?" \
+            r"((?P<weeks>[0-9]+) ?w(eek|k|)s?(,? |$))?((?P<days>[0-9]+) ?d(ay|)s?(,? |$))?" \
+            r"((?P<hours>[0-9]+) ?h(our|r|)s?(,? |$))?((?P<minutes>[0-9]+) ?m(inute|in|)s?( |$))?"
+
+    for match in re.finditer(regex, text):
+        if len(match[0]) > 3:
+            groups = match.groupdict(default=0)
+            print(match[0], groups)
+            years = int(groups.get("years", 0))
+            months = int(groups.get("months", 0))
+            weeks = int(groups.get("weeks", 0))
+            days = int(groups.get("days", 0))
+            hours = int(groups.get("hours", 0))
+            minutes = int(groups.get("minutes", 0))
+            reminder = text[:match.start()] + text[match.end():]
+            break
+    else:
+        raise commands.CommandError("No time given.")
+
     if not reminder:
         reminder = ctx.message.jump_url
     else:
         reminder += f" ({ctx.message.jump_url})"
-    time_regexes = {
-        "year": r"(?<= )[0-9]+(?= y(ear|r| |$))",
-        "month": r"(?<= )[0-9]+(?= mo(nth| |$))",
-        "week": r"(?<= )[0-9]+(?= w(eek|k| |$))",
-        "day": r"(?<= )[0-9]+(?= d(ay| |$))",
-        "hour": r"(?<= )[0-9]+(?= h(our|r| |$))",
-        "minute": r"(?<= )[0-9]+(?= m(inute|in| |$))"
-    }
-
-    if not elapse:
-        raise commands.BadArgument
-
-    if not any(bool(re.search(g, elapse)) for g in time_regexes.values()):
-        raise commands.CommandError(
-            "Invalid time.\nTime arg accepts years, months, weeks, days, hours, and minutes."
-        )
-
-    def zero(x): return int(x[0]) if x else 0
-    years = zero(re.search(time_regexes["year"], elapse))
-    months = zero(re.search(time_regexes["month"], elapse))
-    weeks = zero(re.search(time_regexes["week"], elapse))
-    days = zero(re.search(time_regexes["day"], elapse))
-    hours = zero(re.search(time_regexes["hour"], elapse))
-    minutes = zero(re.search(time_regexes["minute"], elapse))
 
     from_datetime = datetime.datetime.now()
     if months or years:
@@ -1493,9 +1482,6 @@ async def remind_command(ctx: commands.Context, *text: str):
         from_datetime = from_datetime.replace(year=future_date.year, month=future_date.month, day=future_date.day)
 
     timestamp = round(from_datetime.timestamp() + weeks * 604800 + days * 86400 + hours * 3600 + minutes * 60)
-
-    if timestamp > 2147483648:
-        raise commands.CommandError("That's too far out.")
 
     reminder = Reminder(ctx.author.id, reminder, timestamp)
 
