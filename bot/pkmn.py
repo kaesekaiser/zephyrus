@@ -1399,6 +1399,8 @@ class PokemonInterpreter(Interpreter):
     async def fallback(self, *args):
         if find_mon(" ".join(args), fail_silently=True):
             return await self.run("dex", *args)
+        elif find_move(" ".join(args), fail_silently=True):
+            return await self.run("move", *args)
         else:
             raise commands.CommandError(
                 f"Unrecognized command `{args[0]}`.\nSee **`z!pokemon help`** for a list of valid commands."
