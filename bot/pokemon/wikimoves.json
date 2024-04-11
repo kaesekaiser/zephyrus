@@ -6,7 +6,7 @@
         "pp": 1,
         "power": 195,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user, Pikachu wearing a cap, powers up a jolt of electricity using its Z-Power and unleashes it. Critical hits land more easily."
     },
     "Absorb": {
         "name": "Absorb",
@@ -51,7 +51,7 @@
         "pp": 1,
         "power": 0,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user creates a poisonous swamp using its Z-Power and sinks the target into it at full force. The power varies, depending on the original move."
     },
     "Acid Spray": {
         "name": "Acid Spray",
@@ -141,7 +141,7 @@
         "pp": 1,
         "power": 0,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user rams an energy orb created by its Z-Power into the target with full force. The power varies, depending on the original move."
     },
     "Alluring Voice": {
         "name": "Alluring Voice",
@@ -267,7 +267,7 @@
         "pp": 5,
         "power": 0,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user releases a soothing scent that heals all status conditions affecting the user's party."
     },
     "Aromatic Mist": {
         "name": "Aromatic Mist",
@@ -285,7 +285,7 @@
         "pp": 20,
         "power": 0,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user hurriedly and randomly uses a move among those known by ally Pok\u00e9mon."
     },
     "Assurance": {
         "name": "Assurance",
@@ -375,7 +375,7 @@
         "pp": 15,
         "power": 0,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user sheds part of its body to make itself lighter and sharply raise its Speed stat."
     },
     "Avalanche": {
         "name": "Avalanche",
@@ -411,7 +411,7 @@
         "pp": 15,
         "power": 80,
         "accuracy": 95,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user acts bad and attacks the target. A wondrous wall of light is put up to weaken the power of the opposing Pok\u00e9mon's physical moves."
     },
     "Baneful Bunker": {
         "name": "Baneful Bunker",
@@ -438,7 +438,7 @@
         "pp": 20,
         "power": 15,
         "accuracy": 85,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "Round objects are hurled at the target to strike two to five times in a row."
     },
     "Barrier": {
         "name": "Barrier",
@@ -447,7 +447,7 @@
         "pp": 20,
         "power": 0,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user throws up a sturdy wall that sharply raises its Defense stat."
     },
     "Baton Pass": {
         "name": "Baton Pass",
@@ -519,7 +519,7 @@
         "pp": 15,
         "power": 0,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user passes its held item to the target when the target isn't holding an item."
     },
     "Bide": {
         "name": "Bide",
@@ -528,7 +528,7 @@
         "pp": 10,
         "power": 0,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user endures attacks for two turns, then strikes back to cause double the damage taken."
     },
     "Bind": {
         "name": "Bind",
@@ -573,7 +573,7 @@
         "pp": 1,
         "power": 0,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user gathers dark energy using its Z-Power and sucks the target into it. The power varies, depending on the original move."
     },
     "Blast Burn": {
         "name": "Blast Burn",
@@ -645,7 +645,7 @@
         "pp": 1,
         "power": 0,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user collects energy from plants using its Z-Power and attacks the target with full force. The power varies, depending on the original move."
     },
     "Blue Flare": {
         "name": "Blue Flare",
@@ -699,7 +699,7 @@
         "pp": 20,
         "power": 65,
         "accuracy": 85,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user clubs the target with a bone. This may also make the target flinch."
     },
     "Bone Rush": {
         "name": "Bone Rush",
@@ -744,7 +744,7 @@
         "pp": 20,
         "power": 60,
         "accuracy": 100,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user attacks by shooting water bubbles at the target. It then absorbs water and restores its HP by half the damage taken by the target."
     },
     "Branch Poke": {
         "name": "Branch Poke",
@@ -780,7 +780,7 @@
         "pp": 1,
         "power": 0,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user builds up its momentum using its Z-Power and crashes into the target at full speed. The power varies, depending on the original move."
     },
     "Brick Break": {
         "name": "Brick Break",
@@ -816,7 +816,7 @@
         "pp": 30,
         "power": 40,
         "accuracy": 100,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "A spray of countless bubbles is jetted at the opposing Pok\u00e9mon. This may also lower their Speed stat."
     },
     "Bubble Beam": {
         "name": "Bubble Beam",
@@ -915,7 +915,7 @@
         "pp": 20,
         "power": 60,
         "accuracy": 100,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user shoots a jolt of electricity to attack the target. This also leaves the target with paralysis."
     },
     "Calm Mind": {
         "name": "Calm Mind",
@@ -933,7 +933,7 @@
         "pp": 20,
         "power": 0,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user's type is changed depending on its environment, such as at water's edge, in grass, or in a cave."
     },
     "Captivate": {
         "name": "Captivate",
@@ -942,7 +942,7 @@
         "pp": 20,
         "power": 0,
         "accuracy": 100,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "If any opposing Pok\u00e9mon is the opposite gender of the user, it is charmed, which harshly lowers its Sp. Atk stat."
     },
     "Catastropika": {
         "name": "Catastropika",
@@ -951,7 +951,7 @@
         "pp": 1,
         "power": 210,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user, Pikachu, surrounds itself with the maximum amount of electricity using its Z-Power and pounces on its target with full force."
     },
     "Ceaseless Edge": {
         "name": "Ceaseless Edge",
@@ -1032,7 +1032,7 @@
         "pp": 20,
         "power": 70,
         "accuracy": 100,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "Looking for an opening, the user strikes consistently. The target's stat changes don't affect this attack's damage."
     },
     "Chloroblast": {
         "name": "Chloroblast",
@@ -1059,7 +1059,7 @@
         "pp": 15,
         "power": 35,
         "accuracy": 85,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The target is clamped and squeezed by the user's very thick and sturdy shell for four to five turns."
     },
     "Clanging Scales": {
         "name": "Clanging Scales",
@@ -1086,7 +1086,7 @@
         "pp": 1,
         "power": 185,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "After obtaining Z-Power, the user, Kommo-o, attacks the opposing Pok\u00e9mon with full force. This move boosts the user's stats."
     },
     "Clear Smog": {
         "name": "Clear Smog",
@@ -1149,7 +1149,7 @@
         "pp": 15,
         "power": 18,
         "accuracy": 85,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The target is hit with a flurry of punches that strike two to five times in a row."
     },
     "Comeuppance": {
         "name": "Comeuppance",
@@ -1194,7 +1194,7 @@
         "pp": 35,
         "power": 10,
         "accuracy": 100,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The target is attacked with long, creeping tentacles, vines, or the like. This may also lower the target's Speed stat."
     },
     "Continental Crush": {
         "name": "Continental Crush",
@@ -1203,7 +1203,7 @@
         "pp": 1,
         "power": 0,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user summons a huge rock mountain using its Z-Power and drops it onto the target with full force. The power varies, depending on the original move."
     },
     "Conversion": {
         "name": "Conversion",
@@ -1248,7 +1248,7 @@
         "pp": 1,
         "power": 0,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user spins very fast and rams into the target with the full force of its Z-Power. The power varies, depending on the original move."
     },
     "Corrosive Gas": {
         "name": "Corrosive Gas",
@@ -1329,7 +1329,7 @@
         "pp": 10,
         "power": 0,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user protects itself and its allies from status moves with a mysterious power. This does not stop moves that do damage."
     },
     "Cross Chop": {
         "name": "Cross Chop",
@@ -1491,7 +1491,7 @@
         "pp": 1,
         "power": 0,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user materializes its aura using its Z-Power and attacks the target with full force. The power varies, depending on the original move."
     },
     "Diamond Storm": {
         "name": "Diamond Storm",
@@ -1563,7 +1563,7 @@
         "pp": 10,
         "power": 70,
         "accuracy": 100,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The target is hit with rhythmically launched punches. This may also leave the target confused."
     },
     "Doodle": {
         "name": "Doodle",
@@ -1626,7 +1626,7 @@
         "pp": 10,
         "power": 15,
         "accuracy": 85,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The target is slapped repeatedly, back and forth, two to five times in a row."
     },
     "Double Team": {
         "name": "Double Team",
@@ -1743,7 +1743,7 @@
         "pp": 10,
         "power": 0,
         "accuracy": 100,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "This attack hits the target with a shock wave of pure rage. This attack always inflicts 40 HP damage."
     },
     "Dragon Rush": {
         "name": "Dragon Rush",
@@ -1824,7 +1824,7 @@
         "pp": 15,
         "power": 40,
         "accuracy": 90,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user attacks its target by hitting it with brutal strikes. The target is hit twice in a row."
     },
     "Dual Wingbeat": {
         "name": "Dual Wingbeat",
@@ -1905,7 +1905,7 @@
         "pp": 10,
         "power": 100,
         "accuracy": 75,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "A large egg is hurled at the target with maximum force to inflict damage."
     },
     "Electric Terrain": {
         "name": "Electric Terrain",
@@ -1968,7 +1968,7 @@
         "pp": 15,
         "power": 0,
         "accuracy": 100,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "This move prevents the target from using its held item for five turns. Its Trainer is also prevented from using items on it."
     },
     "Ember": {
         "name": "Ember",
@@ -2049,7 +2049,7 @@
         "pp": 5,
         "power": 160,
         "accuracy": 90,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "This is Eternatus's most powerful attack in its original form. The user can't move on the next turn."
     },
     "Expanding Force": {
         "name": "Expanding Force",
@@ -2085,7 +2085,7 @@
         "pp": 1,
         "power": 0,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "After obtaining Z-Power, the user, Eevee, gets energy from its evolved friends and boosts its stats sharply."
     },
     "Extreme Speed": {
         "name": "Extreme Speed",
@@ -2184,7 +2184,7 @@
         "pp": 20,
         "power": 60,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user approaches the target disarmingly, then throws a sucker punch. This attack never misses."
     },
     "Fell Stinger": {
         "name": "Fell Stinger",
@@ -2337,7 +2337,7 @@
         "pp": 15,
         "power": 70,
         "accuracy": 100,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user attacks the target with a bursting flame. The bursting flame damages Pok\u00e9mon next to the target as well."
     },
     "Flame Charge": {
         "name": "Flame Charge",
@@ -2382,7 +2382,7 @@
         "pp": 20,
         "power": 0,
         "accuracy": 100,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user flashes a light that lowers the target’s accuracy. It can also be used to illuminate caves."
     },
     "Flash Cannon": {
         "name": "Flash Cannon",
@@ -2436,7 +2436,7 @@
         "pp": 15,
         "power": 90,
         "accuracy": 95,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user floats in the air, and then dives at a steep angle to attack the target. This may also make the target flinch."
     },
     "Floral Healing": {
         "name": "Floral Healing",
@@ -2454,7 +2454,7 @@
         "pp": 10,
         "power": 0,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user raises the Defense stats of all Grass-type Pok\u00e9mon in battle with a mysterious power."
     },
     "Flower Trick": {
         "name": "Flower Trick",
@@ -2535,7 +2535,7 @@
         "pp": 40,
         "power": 0,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "Enables a Ghost-type target to be hit by Normal- and Fighting-type attacks. This also enables an evasive target to be hit."
     },
     "Forest's Curse": {
         "name": "Forest's Curse",
@@ -2589,7 +2589,7 @@
         "pp": 10,
         "power": 100,
         "accuracy": 90,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user attacks with a crystal made of cold frozen haze. It eliminates every stat change among all the Pok\u00e9mon engaged in battle."
     },
     "Frenzy Plant": {
         "name": "Frenzy Plant",
@@ -2616,7 +2616,7 @@
         "pp": 20,
         "power": 0,
         "accuracy": 100,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "This full-power attack grows more powerful the less the user likes its Trainer."
     },
     "Fury Attack": {
         "name": "Fury Attack",
@@ -2697,7 +2697,7 @@
         "pp": 20,
         "power": 0,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user engages its gears to raise the Attack and Sp. Atk stats of ally Pok\u00e9mon with the Plus or Minus Ability."
     },
     "Genesis Supernova": {
         "name": "Genesis Supernova",
@@ -2706,7 +2706,7 @@
         "pp": 1,
         "power": 185,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "After obtaining Z-Power, the user, Mew, attacks the target with full force. The terrain will be charged with psychic energy."
     },
     "Geomancy": {
         "name": "Geomancy",
@@ -2751,7 +2751,7 @@
         "pp": 1,
         "power": 0,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user hits the target with a powerful electric current collected by its Z-Power. The power varies, depending on the original move."
     },
     "Glacial Lance": {
         "name": "Glacial Lance",
@@ -2796,7 +2796,7 @@
         "pp": 15,
         "power": 80,
         "accuracy": 95,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user bombards the target with telekinetic force. A wondrous wall of light is put up to weaken the power of the opposing Pok\u00e9mon's special moves."
     },
     "Grass Knot": {
         "name": "Grass Knot",
@@ -2823,7 +2823,7 @@
         "pp": 15,
         "power": 0,
         "accuracy": 55,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user plays a pleasant melody that lulls the target into a deep sleep."
     },
     "Grassy Glide": {
         "name": "Grassy Glide",
@@ -2886,7 +2886,7 @@
         "pp": 5,
         "power": 0,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "If the user faints, the user's grudge fully depletes the PP of the opponent's move that knocked it out."
     },
     "Guard Split": {
         "name": "Guard Split",
@@ -2913,7 +2913,7 @@
         "pp": 1,
         "power": 0,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user, the Land Spirit Pok\u00e9mon, obtains Alola's energy using its Z-Power and attacks the target with full force. This reduces the target's HP greatly."
     },
     "Guillotine": {
         "name": "Guillotine",
@@ -2958,7 +2958,7 @@
         "pp": 10,
         "power": 0,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user summons a hailstorm lasting five turns. It damages all Pok\u00e9mon except Ice types."
     },
     "Hammer Arm": {
         "name": "Hammer Arm",
@@ -3057,7 +3057,7 @@
         "pp": 15,
         "power": 0,
         "accuracy": 100,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "For five turns, the user prevents the opposing team from using any moves, Abilities, or held items that recover HP."
     },
     "Heal Order": {
         "name": "Heal Order",
@@ -3066,7 +3066,7 @@
         "pp": 10,
         "power": 0,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user calls out its underlings to heal it. The user regains up to half of its max HP."
     },
     "Heal Pulse": {
         "name": "Heal Pulse",
@@ -3093,7 +3093,7 @@
         "pp": 25,
         "power": 60,
         "accuracy": 100,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user unleashes a vicious blow after its cute act makes the target less wary. This may also make the target flinch."
     },
     "Heart Swap": {
         "name": "Heart Swap",
@@ -3156,7 +3156,7 @@
         "pp": 15,
         "power": 60,
         "accuracy": 100,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "A unique attack that varies in type depending on the Pok\u00e9mon using it."
     },
     "High Horsepower": {
         "name": "High Horsepower",
@@ -3282,7 +3282,7 @@
         "pp": 1,
         "power": 0,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user creates a huge whirling current using its Z-Power to swallow the target with full force. The power varies, depending on the original move."
     },
     "Hyper Beam": {
         "name": "Hyper Beam",
@@ -3309,7 +3309,7 @@
         "pp": 15,
         "power": 80,
         "accuracy": 90,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user bites hard on the target with its sharp front fangs. This may also make the target flinch."
     },
     "Hyper Voice": {
         "name": "Hyper Voice",
@@ -3354,7 +3354,7 @@
         "pp": 20,
         "power": 30,
         "accuracy": 90,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user attacks the target for five turns. The move's power increases each time it hits."
     },
     "Ice Beam": {
         "name": "Ice Beam",
@@ -3489,7 +3489,7 @@
         "pp": 1,
         "power": 0,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user breathes a stream of intense fire toward the target with the full force of its Z-Power. The power varies depending on the original move."
     },
     "Infestation": {
         "name": "Infestation",
@@ -3525,7 +3525,7 @@
         "pp": 25,
         "power": 0,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user disperses electrically charged particles, which changes Normal-type moves to Electric-type moves."
     },
     "Iron Defense": {
         "name": "Iron Defense",
@@ -3597,7 +3597,7 @@
         "pp": 10,
         "power": 100,
         "accuracy": 95,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user jumps up high, then strikes with a kick. If the kick misses, the user hurts itself."
     },
     "Jungle Healing": {
         "name": "Jungle Healing",
@@ -3615,7 +3615,7 @@
         "pp": 25,
         "power": 50,
         "accuracy": 100,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The target is attacked with a sharp chop. Critical hits land more easily."
     },
     "Kinesis": {
         "name": "Kinesis",
@@ -3669,7 +3669,7 @@
         "pp": 30,
         "power": 0,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user concentrates intensely. The attack on the next turn always results in a critical hit."
     },
     "Lash Out": {
         "name": "Lash Out",
@@ -3732,7 +3732,7 @@
         "pp": 10,
         "power": 65,
         "accuracy": 90,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user attacks its target by encircling it in sharp leaves. This attack may also lower the target's accuracy."
     },
     "Leafage": {
         "name": "Leafage",
@@ -3777,7 +3777,7 @@
         "pp": 1,
         "power": 190,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "After obtaining Z-Power, the user, Mimikyu, punches the target with full force."
     },
     "Lick": {
         "name": "Lick",
@@ -3822,7 +3822,7 @@
         "pp": 1,
         "power": 200,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "This attack inflicts Attack or Sp. Atk damage—whichever stat is higher for the user, Necrozma. This move ignores the target's Ability."
     },
     "Liquidation": {
         "name": "Liquidation",
@@ -3876,7 +3876,7 @@
         "pp": 30,
         "power": 0,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user chants an incantation toward the sky, preventing opposing Pok\u00e9mon from landing critical hits for five turns."
     },
     "Lumina Crash": {
         "name": "Lumina Crash",
@@ -3939,7 +3939,7 @@
         "pp": 15,
         "power": 0,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "Moves like Leech Seed and moves that inflict status conditions are blocked by a barrier and reflected back to the user of those moves."
     },
     "Magic Powder": {
         "name": "Magic Powder",
@@ -3993,7 +3993,7 @@
         "pp": 20,
         "power": 60,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user launches steel bombs that stick to the target. This attack never misses."
     },
     "Magnet Rise": {
         "name": "Magnet Rise",
@@ -4020,7 +4020,7 @@
         "pp": 30,
         "power": 0,
         "accuracy": 100,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user attacks everything around it with a ground-shaking quake. Its power varies."
     },
     "Make It Rain": {
         "name": "Make It Rain",
@@ -4038,7 +4038,7 @@
         "pp": 1,
         "power": 180,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user, Incineroar, strengthens its body using its Z-Power and crashes into the target with full force."
     },
     "Malignant Chain": {
         "name": "Malignant Chain",
@@ -4056,7 +4056,7 @@
         "pp": 10,
         "power": 0,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "Using a pulled-up mat as a shield, the user protects itself and its allies from damaging moves. This does not stop status moves."
     },
     "Matcha Gotcha": {
         "name": "Matcha Gotcha",
@@ -4245,7 +4245,7 @@
         "pp": 20,
         "power": 0,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user cuts ahead of the target to copy and use the target's intended move with greater power. This move fails if it isn't used first."
     },
     "Mean Look": {
         "name": "Mean Look",
@@ -4263,7 +4263,7 @@
         "pp": 40,
         "power": 0,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user meditates to awaken the power deep within its body and raise its Attack stat."
     },
     "Mega Drain": {
         "name": "Mega Drain",
@@ -4317,7 +4317,7 @@
         "pp": 1,
         "power": 200,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "After obtaining Z-Power, the user, Lunala, attacks the target with full force. This move can ignore the effect of the target's Ability."
     },
     "Metal Burst": {
         "name": "Metal Burst",
@@ -4425,7 +4425,7 @@
         "pp": 5,
         "power": 0,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user senses the target's movements with its mind to ensure its next attack does not miss the target."
     },
     "Minimize": {
         "name": "Minimize",
@@ -4443,7 +4443,7 @@
         "pp": 40,
         "power": 0,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "Enables a Dark-type target to be hit by Psychic-type attacks. This also enables an evasive target to be hit."
     },
     "Mirror Coat": {
         "name": "Mirror Coat",
@@ -4461,7 +4461,7 @@
         "pp": 20,
         "power": 0,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user counters the target by mimicking the target's last move."
     },
     "Mirror Shot": {
         "name": "Mirror Shot",
@@ -4470,7 +4470,7 @@
         "pp": 10,
         "power": 65,
         "accuracy": 85,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user lets loose a flash of energy at the target from its polished body. This may also lower the target's accuracy."
     },
     "Mist": {
         "name": "Mist",
@@ -4569,7 +4569,7 @@
         "pp": 10,
         "power": 65,
         "accuracy": 85,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user launches a hard-packed mud ball to attack. This may also lower the target's accuracy."
     },
     "Mud Shot": {
         "name": "Mud Shot",
@@ -4587,7 +4587,7 @@
         "pp": 15,
         "power": 0,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user kicks up mud on the battlefield. This weakens Electric-type moves for five turns."
     },
     "Mud-Slap": {
         "name": "Mud-Slap",
@@ -4650,7 +4650,7 @@
         "pp": 15,
         "power": 0,
         "accuracy": 100,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user draws power to attack by using its held Berry. The Berry determines the move's type and power."
     },
     "Nature Power": {
         "name": "Nature Power",
@@ -4659,7 +4659,7 @@
         "pp": 20,
         "power": 0,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "This attack makes use of nature's power. Its effects vary depending on the user's environment."
     },
     "Nature's Madness": {
         "name": "Nature's Madness",
@@ -4677,7 +4677,7 @@
         "pp": 15,
         "power": 60,
         "accuracy": 100,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user attacks by wildly swinging its thorny arms. This may also make the target flinch."
     },
     "Never-Ending Nightmare": {
         "name": "Never-Ending Nightmare",
@@ -4686,7 +4686,7 @@
         "pp": 1,
         "power": 0,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "Deep-seated grudges summoned by the user's Z-Power trap the target. The power varies, depending on the original move."
     },
     "Night Daze": {
         "name": "Night Daze",
@@ -4722,7 +4722,7 @@
         "pp": 15,
         "power": 0,
         "accuracy": 100,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "A sleeping target sees a nightmare that inflicts some damage every turn."
     },
     "No Retreat": {
         "name": "No Retreat",
@@ -4785,7 +4785,7 @@
         "pp": 1,
         "power": 195,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user, Primarina, summons a massive amount of water using its Z-Power and attacks the target with full force."
     },
     "Octazooka": {
         "name": "Octazooka",
@@ -4812,7 +4812,7 @@
         "pp": 40,
         "power": 0,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "Enables a Ghost-type target to be hit by Normal- and Fighting-type attacks. This also enables an evasive target to be hit."
     },
     "Ominous Wind": {
         "name": "Ominous Wind",
@@ -4821,7 +4821,7 @@
         "pp": 5,
         "power": 60,
         "accuracy": 100,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user blasts the target with a gust of repulsive wind. This may also raise all the user's stats at once."
     },
     "Order Up": {
         "name": "Order Up",
@@ -4974,7 +4974,7 @@
         "pp": 20,
         "power": 0,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The more Pikachu loves its Trainer, the greater the move's power. It never misses."
     },
     "Pin Missile": {
         "name": "Pin Missile",
@@ -5127,7 +5127,7 @@
         "pp": 20,
         "power": 0,
         "accuracy": 100,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user covers the target in a combustible powder. If the target uses a Fire-type move, the powder explodes and damages the target."
     },
     "Powder Snow": {
         "name": "Powder Snow",
@@ -5208,7 +5208,7 @@
         "pp": 20,
         "power": 40,
         "accuracy": 100,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "Striking opponents over and over makes the user's fists harder. Hitting a target raises the Attack stat."
     },
     "Precipice Blades": {
         "name": "Precipice Blades",
@@ -5334,7 +5334,7 @@
         "pp": 10,
         "power": 0,
         "accuracy": 100,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "Using its psychic power of suggestion, the user transfers its status conditions to the target."
     },
     "Psyshield Bash": {
         "name": "Psyshield Bash",
@@ -5370,7 +5370,7 @@
         "pp": 15,
         "power": 0,
         "accuracy": 100,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The target is attacked with an odd psychic wave. The attack varies in intensity."
     },
     "Pulverizing Pancake": {
         "name": "Pulverizing Pancake",
@@ -5379,7 +5379,7 @@
         "pp": 1,
         "power": 210,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "Z-Power brings out the true capabilities of the user, Snorlax. The Pok\u00e9mon moves its enormous body energetically and attacks the target with full force."
     },
     "Punishment": {
         "name": "Punishment",
@@ -5388,7 +5388,7 @@
         "pp": 5,
         "power": 0,
         "accuracy": 100,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The more the target has powered up with stat changes, the greater the move's power."
     },
     "Purify": {
         "name": "Purify",
@@ -5406,7 +5406,7 @@
         "pp": 20,
         "power": 40,
         "accuracy": 100,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The power of this attack move is doubled if it's used on a target that's switching out of battle."
     },
     "Pyro Ball": {
         "name": "Pyro Ball",
@@ -5460,7 +5460,7 @@
         "pp": 20,
         "power": 20,
         "accuracy": 100,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "As long as this move is in use, the power of rage raises the Attack stat each time the user is hit in battle."
     },
     "Rage Fist": {
         "name": "Rage Fist",
@@ -5541,7 +5541,7 @@
         "pp": 10,
         "power": 80,
         "accuracy": 100,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "In this two-turn attack, blades of wind hit opposing Pok\u00e9mon on the second turn. Critical hits land more easily."
     },
     "Recover": {
         "name": "Recover",
@@ -5586,7 +5586,7 @@
         "pp": 20,
         "power": 0,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user rests to cure itself of poisoning, a burn, or paralysis."
     },
     "Relic Song": {
         "name": "Relic Song",
@@ -5622,7 +5622,7 @@
         "pp": 20,
         "power": 0,
         "accuracy": 100,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "This full-power attack grows more powerful the more the user likes its Trainer."
     },
     "Revelation Dance": {
         "name": "Revelation Dance",
@@ -5640,7 +5640,7 @@
         "pp": 10,
         "power": 60,
         "accuracy": 100,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "This attack move's power is doubled if the user has been hurt by the opponent in the same turn."
     },
     "Reversal": {
         "name": "Reversal",
@@ -5703,7 +5703,7 @@
         "pp": 20,
         "power": 90,
         "accuracy": 85,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user attacks the target by smashing into it with incredible force. This may also confuse the target."
     },
     "Rock Polish": {
         "name": "Rock Polish",
@@ -5775,7 +5775,7 @@
         "pp": 15,
         "power": 60,
         "accuracy": 85,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user lashes out with a quick, spinning kick. This may also make the target flinch."
     },
     "Rollout": {
         "name": "Rollout",
@@ -5802,7 +5802,7 @@
         "pp": 10,
         "power": 0,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "Tilling the soil, the user makes it easier for plants to grow. This raises the Attack and Sp. Atk stats of Grass-type Pok\u00e9mon."
     },
     "Round": {
         "name": "Round",
@@ -5901,7 +5901,7 @@
         "pp": 10,
         "power": 100,
         "accuracy": 90,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user grows a gigantic stalk that scatters seeds to attack the target. The seeds drain the target's HP every turn."
     },
     "Savage Spin-Out": {
         "name": "Savage Spin-Out",
@@ -5910,7 +5910,7 @@
         "pp": 1,
         "power": 0,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user binds the target with full force with threads of silk that the user spits using its Z-Power. The power varies, depending on the original move."
     },
     "Scald": {
         "name": "Scald",
@@ -5982,7 +5982,7 @@
         "pp": 1,
         "power": 200,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "After obtaining Z-Power, the user, Solgaleo, attacks the target with full force. This move can ignore the effect of the target's Ability."
     },
     "Secret Power": {
         "name": "Secret Power",
@@ -5991,7 +5991,7 @@
         "pp": 20,
         "power": 70,
         "accuracy": 100,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The additional effects of this attack depend upon where it was used."
     },
     "Secret Sword": {
         "name": "Secret Sword",
@@ -6099,7 +6099,7 @@
         "pp": 30,
         "power": 0,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user makes its edges more jagged, which raises its Attack stat."
     },
     "Shattered Psyche": {
         "name": "Shattered Psyche",
@@ -6108,7 +6108,7 @@
         "pp": 1,
         "power": 0,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user controls the target with its Z-Power and hurts the target with full force. The power varies, depending on the original move."
     },
     "Shed Tail": {
         "name": "Shed Tail",
@@ -6198,7 +6198,7 @@
         "pp": 15,
         "power": 75,
         "accuracy": 100,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user attacks with a sinister beam of light. This may also confuse the target."
     },
     "Silk Trap": {
         "name": "Silk Trap",
@@ -6216,7 +6216,7 @@
         "pp": 5,
         "power": 60,
         "accuracy": 100,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The target is attacked with powdery scales blown by the wind. This may also raise all the user's stats."
     },
     "Simple Beam": {
         "name": "Simple Beam",
@@ -6243,7 +6243,7 @@
         "pp": 1,
         "power": 180,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user, Decidueye, creates countless arrows using its Z-Power and shoots the target with full force."
     },
     "Sizzly Slide": {
         "name": "Sizzly Slide",
@@ -6252,7 +6252,7 @@
         "pp": 20,
         "power": 60,
         "accuracy": 100,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user cloaks itself in fire and charges at the target. This also leaves the target with a burn."
     },
     "Sketch": {
         "name": "Sketch",
@@ -6288,7 +6288,7 @@
         "pp": 10,
         "power": 130,
         "accuracy": 100,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user tucks in its head to raise its Defense stat on the first turn, then rams the target on the next turn."
     },
     "Sky Attack": {
         "name": "Sky Attack",
@@ -6306,7 +6306,7 @@
         "pp": 10,
         "power": 60,
         "accuracy": 100,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user takes the target into the sky, then drops it during the next turn. The target cannot attack while in the sky."
     },
     "Sky Uppercut": {
         "name": "Sky Uppercut",
@@ -6315,7 +6315,7 @@
         "pp": 15,
         "power": 85,
         "accuracy": 90,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user attacks the target with an uppercut thrown skyward with force."
     },
     "Slack Off": {
         "name": "Slack Off",
@@ -6414,7 +6414,7 @@
         "pp": 10,
         "power": 70,
         "accuracy": 100,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "This attack's power is doubled when used on a target with paralysis. This also cures the target's paralysis, however."
     },
     "Smog": {
         "name": "Smog",
@@ -6459,7 +6459,7 @@
         "pp": 10,
         "power": 0,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user steals the effects of any attempts to use a healing or stat-changing move."
     },
     "Snipe Shot": {
         "name": "Snipe Shot",
@@ -6531,7 +6531,7 @@
         "pp": 20,
         "power": 0,
         "accuracy": 90,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The target is hit with a destructive shock wave that always inflicts 20 HP damage."
     },
     "Soul-Stealing 7-Star Strike": {
         "name": "Soul-Stealing 7-Star Strike",
@@ -6540,7 +6540,7 @@
         "pp": 1,
         "power": 195,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "After obtaining Z-Power, the user, Marshadow, punches and kicks the target consecutively with full force."
     },
     "Spacial Rend": {
         "name": "Spacial Rend",
@@ -6576,7 +6576,7 @@
         "pp": 5,
         "power": 120,
         "accuracy": 85,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user attacks the target by wrapping it with a whirlwind of an overpowering scent. This also heals all status conditions of the user's party."
     },
     "Spectral Thief": {
         "name": "Spectral Thief",
@@ -6612,7 +6612,7 @@
         "pp": 10,
         "power": 0,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user ensnares the target with thin, gooey silk so it can't flee from battle."
     },
     "Spike Cannon": {
         "name": "Spike Cannon",
@@ -6621,7 +6621,7 @@
         "pp": 15,
         "power": 20,
         "accuracy": 100,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "Sharp spikes are shot at the target in rapid succession. They hit two to five times in a row."
     },
     "Spikes": {
         "name": "Spikes",
@@ -6702,7 +6702,7 @@
         "pp": 1,
         "power": 190,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "After obtaining Z-Power, the user, Lycanroc, attacks the target with full force. This move negates the effect on the battlefield."
     },
     "Splishy Splash": {
         "name": "Splishy Splash",
@@ -6711,7 +6711,7 @@
         "pp": 15,
         "power": 90,
         "accuracy": 100,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user charges a huge wave with electricity and hits the opposing Pok\u00e9mon with the wave. This may also leave the opposing Pok\u00e9mon with paralysis."
     },
     "Spore": {
         "name": "Spore",
@@ -6729,7 +6729,7 @@
         "pp": 15,
         "power": 0,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user shines a spotlight on the target so that only the target will be attacked during the turn."
     },
     "Springtide Storm": {
         "name": "Springtide Storm",
@@ -6765,7 +6765,7 @@
         "pp": 20,
         "power": 65,
         "accuracy": 100,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user crushes its target by rolling over the target with its rolled-up body. This may also make the target flinch."
     },
     "Steel Beam": {
         "name": "Steel Beam",
@@ -6819,7 +6819,7 @@
         "pp": 1,
         "power": 175,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "After obtaining Z-Power, the user, Alolan Raichu, attacks the target with full force. This move leaves the target with paralysis."
     },
     "Stomp": {
         "name": "Stomp",
@@ -6954,7 +6954,7 @@
         "pp": 20,
         "power": 80,
         "accuracy": 80,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user grabs the target and recklessly dives for the ground. This also damages the user a little."
     },
     "Substitute": {
         "name": "Substitute",
@@ -6972,7 +6972,7 @@
         "pp": 1,
         "power": 0,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user dramatically drops the temperature using its Z-Power and freezes the target with full force. The power varies, depending on the original move."
     },
     "Sucker Punch": {
         "name": "Sucker Punch",
@@ -7044,7 +7044,7 @@
         "pp": 1,
         "power": 0,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user soars up with its Z-Power and plummets toward the target at full speed. The power varies, depending on the original move."
     },
     "Surf": {
         "name": "Surf",
@@ -7134,7 +7134,7 @@
         "pp": 10,
         "power": 120,
         "accuracy": 100,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "Using an odd shock wave, the user inflicts damage on any Pok\u00e9mon of the same type in the area around it."
     },
     "Synthesis": {
         "name": "Synthesis",
@@ -7278,7 +7278,7 @@
         "pp": 1,
         "power": 0,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user burrows deep into the ground and slams into the target with the full force of its Z-Power. The power varies, depending on the original move."
     },
     "Teeter Dance": {
         "name": "Teeter Dance",
@@ -7296,7 +7296,7 @@
         "pp": 15,
         "power": 0,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user makes the target float with its psychic power. The target is easier to hit for three turns."
     },
     "Teleport": {
         "name": "Teleport",
@@ -7647,7 +7647,7 @@
         "pp": 5,
         "power": 0,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The fewer PP this move has, the greater its power."
     },
     "Twin Beam": {
         "name": "Twin Beam",
@@ -7665,7 +7665,7 @@
         "pp": 20,
         "power": 25,
         "accuracy": 100,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user damages the target twice in succession by jabbing it with two spikes. This may also poison the target."
     },
     "Twinkle Tackle": {
         "name": "Twinkle Tackle",
@@ -7674,7 +7674,7 @@
         "pp": 1,
         "power": 0,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user creates a very charming space using its Z-Power and totally toys with the target. The power varies, depending on the original move."
     },
     "Twister": {
         "name": "Twister",
@@ -7737,7 +7737,7 @@
         "pp": 20,
         "power": 0,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The more Eevee loves its Trainer, the greater the move's power. It never misses."
     },
     "Venom Drench": {
         "name": "Venom Drench",
@@ -7746,7 +7746,7 @@
         "pp": 20,
         "power": 0,
         "accuracy": 100,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "Opposing Pok\u00e9mon are drenched in an odd poisonous liquid. This lowers the Attack, Sp. Atk, and Speed stats of a poisoned target."
     },
     "Venoshock": {
         "name": "Venoshock",
@@ -7791,7 +7791,7 @@
         "pp": 10,
         "power": 70,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user attacks last. In return, this throw move never misses."
     },
     "Volt Switch": {
         "name": "Volt Switch",
@@ -7818,7 +7818,7 @@
         "pp": 10,
         "power": 70,
         "accuracy": 100,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "This attack inflicts big damage on a sleeping target. This also wakes the target up, however."
     },
     "Water Gun": {
         "name": "Water Gun",
@@ -7863,7 +7863,7 @@
         "pp": 15,
         "power": 0,
         "accuracy": 0,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user soaks the battlefield with water. This weakens Fire-type moves for five turns."
     },
     "Water Spout": {
         "name": "Water Spout",
@@ -8052,7 +8052,7 @@
         "pp": 5,
         "power": 0,
         "accuracy": 100,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user powerfully wrings the target. The more HP the target has, the greater the move's power."
     },
     "X-Scissor": {
         "name": "X-Scissor",
@@ -8106,6 +8106,6 @@
         "pp": 10,
         "power": 80,
         "accuracy": 100,
-        "description": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered."
+        "description": "The user attacks the target with bursts of electricity at high speed. This move always goes first and results in a critical hit."
     }
 }

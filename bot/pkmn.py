@@ -46,8 +46,8 @@ def find_mon(s: str | int | None, **kwargs) -> pk.BareMiniMon | pk.Mon:
 def find_move(s: str, return_wiki: bool = True, fail_silently: bool = False) -> pk.Move | pk.WikiMove:
     try:
         if return_wiki:
-            return [j for g, j in pk.wiki_moves.items() if pk.fix(g) == pk.fix(s)][0]
-        return [j.copy() for g, j in pk.battle_moves.items() if pk.fix(g) == pk.fix(s)][0]
+            return [j for g, j in pk.wiki_moves.items() if pk.fix(g, joiner="") == pk.fix(s, joiner="")][0]
+        return [j.copy() for g, j in pk.battle_moves.items() if pk.fix(g, joiner="") == pk.fix(s, joiner="")][0]
     except IndexError:
         if not fail_silently:
             lis = {pk.fix(g): g for g in (pk.wiki_moves if return_wiki else pk.battle_moves)}
