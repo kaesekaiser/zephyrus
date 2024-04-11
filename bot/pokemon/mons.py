@@ -1256,7 +1256,7 @@ def get_saf(species_and_form: str, allow_name_only: bool = True) -> BareMiniMon:
         return BareMiniMon(fixed_dex[fix(species_and_form)])
 
 
-fixed_legal_moves = {fix(g): g for g in all_legal_moves}
+fixed_move_names = {fix(g): g for g in wiki_moves}
 
 
 def read_url(url: str):

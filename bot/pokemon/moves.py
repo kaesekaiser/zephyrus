@@ -7,6 +7,10 @@ def fix(s: str, joiner: str = "-"):
     return sub(f"{joiner}+", joiner, sub(f"[^a-z0-9{joiner}]+", "", sub(r"\s+", joiner, s.lower().replace("é", "e"))))
 
 
+def alpha_fix(s: str) -> str:
+    return sub(r"[^A-Za-z0-9]", "", fix(s))
+
+
 def bulba_format(s: str):
     return '_'.join(s.split()).replace("'", "%27")
 

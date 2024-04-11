@@ -119,6 +119,3 @@ class Learnset:
 
 with open("pokemon/learnsets.json", "r") as fp:
     learnsets = {k: {j: Learnset.from_json(g) for j, g in v.items()} for k, v in json.load(fp).items()}
-
-
-all_legal_moves = set(mv for g in learnsets.values() for s in g.values() for mv in s.all_moves)

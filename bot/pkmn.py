@@ -23,7 +23,7 @@ def find_mon(s: str | int | None, **kwargs) -> pk.BareMiniMon | pk.Mon:
         return return_class(ret.species.name, form=ret.form.name, **kwargs)
 
     for mon in pk.nat_dex:
-        if set(pk.fix(mon).split("-")) <= set(pk.fix(s).split("-")):
+        if set(pk.fix(mon).split("-")) <= set(pk.fix(s).split("-")) or pk.alpha_fix(mon) == pk.alpha_fix(s):
             ret = mon
             break
     else:
@@ -46,8 +46,8 @@ def find_mon(s: str | int | None, **kwargs) -> pk.BareMiniMon | pk.Mon:
 def find_move(s: str, return_wiki: bool = True, fail_silently: bool = False) -> pk.Move | pk.WikiMove:
     try:
         if return_wiki:
-            return [j for g, j in pk.wiki_moves.items() if pk.fix(g, joiner="") == pk.fix(s, joiner="")][0]
-        return [j.copy() for g, j in pk.battle_moves.items() if pk.fix(g, joiner="") == pk.fix(s, joiner="")][0]
+            return [j for g, j in pk.wiki_moves.items() if pk.alpha_fix(g) == pk.alpha_fix(s)][0]
+        return [j.copy() for g, j in pk.battle_moves.items() if pk.alpha_fix(g) == pk.alpha_fix(s)][0]
     except IndexError:
         if not fail_silently:
             lis = {pk.fix(g): g for g in (pk.wiki_moves if return_wiki else pk.battle_moves)}
@@ -210,6 +210,10 @@ class DexSearchNavigator(Navigator):
         "spd": lambda m: m.form.spd,
         "spe": lambda m: m.form.spe
     }
+    sort_redirects = {
+        "attack": "atk", "defense": "def", "spatk": "spa", "spattack": "spa", "specialattack": "spa",
+        "spdef": "spd", "spdefense": "spd", "specialdefense": "spd", "speed": "spe", "stats": "bst", "dex": "number"
+    }
 
     def __init__(self, **kwargs):
         super().__init__(ball_emol(), per=8, prev=zeph.emojis["dex_prev"], nxt=zeph.emojis["dex_next"], timeout=180)
@@ -225,8 +229,6 @@ class DexSearchNavigator(Navigator):
         self.types = ()
         self.name = None
         self.sort = "number"
-        self.forms = True
-        self.has = None
         self.learns = []
         self.ability = None
 
@@ -266,11 +268,7 @@ class DexSearchNavigator(Navigator):
         if self.types:
             funcs.append(lambda m: set(self.types) <= set(m.types_with_none))
         if self.name:
-            funcs.append(lambda m: m.species.name.startswith(self.name))
-        if self.has == "mega":
-            funcs.append(lambda m: "Mega " in "".join(m.form_names))
-        if self.has == "alolan":
-            funcs.append(lambda m: "Alolan " in "".join(m.form_names))
+            funcs.append(lambda m: pk.alpha_fix(m.species.name).startswith(self.name.lower()))
         if self.learns:
             funcs.append(lambda m: all(m.can_learn(g, "SV") for g in self.learns))
         if self.ability:
@@ -281,7 +279,7 @@ class DexSearchNavigator(Navigator):
         return all(f(mon) for f in funcs)
 
     def mon_display(self, mon: pk.Mon):
-        mon_name = mon.species_and_form if (self.forms and mon.species.notable_forms) else mon.species.name
+        mon_name = mon.species_and_form if mon.species.notable_forms else mon.species.name
         dex_no = str(mon.dex_no).rjust(4, '0')
 
         if self.sort == "number":
@@ -308,10 +306,7 @@ class DexSearchNavigator(Navigator):
             return f"{mon_name} (**{mon.form.spe}** Spe)"
 
     def reapply_search(self):
-        if self.forms:
-            dex = [pk.Mon(j, form=f) for j in pk.nat_dex.values() for f in [None, *j.notable_forms]]
-        else:
-            dex = [pk.Mon(j) for j in pk.nat_dex.values()]
+        dex = [pk.Mon(j, form=f) for j in pk.nat_dex.values() for f in [None, *j.notable_forms]]
         self.dex = filter(self.filter, dex)
         order = sorted(list(self.dex), key=self.sorts[self.sort])
         self.table = [self.mon_display(g) for g in order]
@@ -324,7 +319,7 @@ class DexSearchNavigator(Navigator):
             return False
 
         option, value = s.split(":")
-        if value == "any" and option not in ["forms", "sort", "learns"]:
+        if value == "any" and option not in ["sort"]:
             return True
 
         value = str(value.replace("_", " "))
@@ -334,15 +329,11 @@ class DexSearchNavigator(Navigator):
         elif option == "types" or option == "type":
             return all(g.title() in pk.types or g.title() == "None" for g in re.split(r"[/,]", value))
         elif option == "name":
-            return len(value) == 1 and value.isalpha()
+            return value.isalpha()
         elif option == "sort":
-            return value in DexSearchNavigator.sorts
-        elif option == "forms":
-            return value in ["yes", "no"]
-        elif option == "has":
-            return value in ["mega", "alolan"]
+            return DexSearchNavigator.sort_redirects.get(value, value) in DexSearchNavigator.sorts
         elif option == "learns":
-            return all(pk.fix(g.strip(", ")) in pk.fixed_legal_moves for g in re.split(r",\s*?(?=[a-z])", value)) or \
+            return all(find_move(g, fail_silently=True) is not None for g in re.split(r",\s*?(?=[a-z])", value)) or \
                 value == "none"
         elif option == "ability":
             return pk.fix(value) in [pk.fix(g) for g in pk.abilities]
@@ -361,16 +352,12 @@ class DexSearchNavigator(Navigator):
         if option == "name":
             self.name = None if value == "any" else value.upper()
         if option == "sort":
-            self.sort = value
-        if option == "forms":
-            self.forms = value == "yes"
-        if option == "has":
-            self.has = None if value == "any" else value
+            self.sort = self.sort_redirects.get(value, value)
         if option == "learns":
-            if value == "none":
+            if value == "none" or value == "any":
                 self.learns = []
             else:  # returns a list of correctly-formatted move names
-                self.learns = [pk.fixed_legal_moves[pk.fix(g.strip(", "))] for g in re.split(r",\s*?(?=[a-z])", value)]
+                self.learns = [find_move(g, fail_silently=True).name for g in re.split(r",\s*?(?=[a-z])", value)]
         if option == "ability":
             self.ability = None if value == "any" else [g for g in pk.abilities if pk.fix(g) == pk.fix(value)][0]
 
@@ -388,7 +375,6 @@ class DexSearchNavigator(Navigator):
                 fs={"Generation (`gen`)": ain(self.gen),
                     "Types (`types`)": ain(" / ".join(display_type(g) for g in self.types)),
                     "Starts with (`name`)": ain(self.name), "Sort (`sort`)": self.sort_name,
-                    "Has Mega/Alolan? (`has`)": ain(self.has), "Include alt forms? (`forms`)": yesno(self.forms),
                     "Learns the moves... (`learns`)": none_list(self.learns), "Ability (`ability`)": ain(self.ability)},
                 footer=f"Total Pokémon meeting criteria: {len(self.table)}"
             )
@@ -400,18 +386,12 @@ class DexSearchNavigator(Navigator):
                   "the filter.\n\n"
                   "`type:<types>` (or `types:<types>`) - filters by type. `<types>` can be either one type, or two "
                   "types separated by a comma or slash, e.g. `type:fire/flying`. `type:any` resets the filter.\n\n"
-                  "`name:<letter>` - filters by first letter of the mon's name. `<letter>` must be one letter, "
-                  "e.g. `name:A`. `name:any` resets the filter.\n\n"
+                  "`name:<letters>` - filters by first letter(s) of the mon's name, e.g. `name:A`. "
+                  "`name:any` resets the filter.\n\n"
                   "`sort:<method>` - sorts the results in a certain order. `<method>` can be `name`, to sort A→Z; "
                   "`number`, to sort by National Dex number; `height`, to sort by height; `weight`, to sort by "
                   "weight; `bst`, to sort by base stat total; or any of `hp`, `atk`, `def`, `spa`, "
                   "`spd`, or `spe`, to sort by the respective stat. Default is `sort:number`.\n\n"
-                  "`has:<form>` - filters by species which have a certain form. `<form>` can be `mega` or `alolan`. "
-                  "`has:any` resets the filter.\n\n"
-                  "`forms:yes` / `forms:no` - includes or excludes alternate forms in the filter. This includes Mega "
-                  "Evolutions, Alolan forms, Primal forms, Rotom forms, etc., but does *not* include forms which are "
-                  "solely aesthetic (like those of Vivillon or Gastrodon) or only change the Pokémon's type (like "
-                  "Arceus and Silvally). Default is `forms:yes`.\n\n"
                   "`learns:<move(s)>` - filters by mons which can learn a given move or moves. Separate multiple moves "
                   "using commas, e.g. `learns:earthquake, swords dance`. `learns:none` resets the filter.\n\n"
                   "`ability:<ability>` - filters by mons which have a given ability, including as a Hidden Ability. "
@@ -1328,7 +1308,7 @@ class CatchRateNavigator(Navigator):
 
 class PokemonInterpreter(Interpreter):
     redirects = {
-        "t": "type", "e": "eff", "m": "move", "s": "test", "b": "build", "c": "catch", "h": "help", "x": "dex",
+        "t": "type", "e": "eff", "m": "move", "s": "search", "b": "build", "c": "catch", "h": "help", "x": "dex",
         "r": "raid", "cf": "compare", "l": "learnset", "learn": "learnset", "moves": "learnset", "moveset": "learnset",
         "ls": "learnset", "a": "ability"
     }
@@ -1350,9 +1330,21 @@ class PokemonInterpreter(Interpreter):
                    "\\- If `mon` is a number, the dex opens on that number.\n"
                    "\\- If `mon` is a name, the dex opens on that mon. Form names may also be included, e.g. "
                    "`z!pk dex giratina-origin` or `z!pk dex alolan raichu`.\n"
-                   "\\- If `mon` is not given, the dex opens on #0001 Bulbasaur.\n\n"
-                   "`z!pokemon dex search [args...]` allows searching and filtering of the dex based on certain "
-                   "search terms. For more info on these terms, see `z!pk dex search`.",
+                   "\\- If `mon` is not given, the dex opens on #0001 Bulbasaur.",
+            "search": "`z!pokemon search [filters...]` opens a dialog that allows searching and filtering of the "
+                      "Pok\u00e9dex. The search terms may be changed using the **settings button "
+                      f"{zeph.emojis['settings']}** or passed as arguments in the initial command. In either case, "
+                      "they should be formatted as `<name>:<value>`, and spaces should be replaced with dashes `-`. "
+                      "Some filters may take multiple arguments; these should be separated by a comma, e.g. "
+                      "`learns:ice-beam,thunderbolt`. For more details, use the **help button "
+                      f"{zeph.emojis['help']}**.\n\n"
+                      f"Valid search terms:\n"
+                      f"\\- `gen`: generation of release (e.g. `5`)\n"
+                      f"\\- `type` or `types`: Pok\u00e9mon type (e.g. `grass`)\n"
+                      f"\\- `name`: first letter(s) of name (e.g. `Ab`)\n"
+                      f"\\- `learns`: move(s) learned (e.g. `leaf-blade`)\n"
+                      f"\\- `ability`: legal Ability (e.g. `intimidate`)\n"
+                      f"\\- `sort`: sorting method (e.g. `name`, `height`, `BST`)",
             "catch": "`z!pokemon catch [ball] [species...]` opens the Scarlet/Violet catch rate calculator.\n"
                      "\\- If `ball` is given, it must be a valid type of Pok\u00e9 Ball (e.g. Ultra, Quick, Dusk), and "
                      "it must be the first argument.\n"
@@ -1387,7 +1379,8 @@ class PokemonInterpreter(Interpreter):
             "type": "Shows offensive and defensive matchups for a single type.",
             "eff": "Shows defensive matchups for a pair of types.",
             "move": "Shows info about a move.",
-            "dex": "Browses the dex.",
+            "dex": "Shows info about a Pok\u00e9mon.",
+            "search": "Searches and filters the Pok\u00e9dex.",
             "catch": "Opens the Scarlet/Violet catch rate calculator.",
             "raid": "Displays info about a given Tera Raid Battle.",
             "compare": "Compares the base stats of two species.",
@@ -1563,19 +1556,20 @@ class PokemonInterpreter(Interpreter):
     async def _dex(self, *args):
         mon = " ".join(args) if args else "1"
         if mon.lower().split()[0] == "search":
-            search_args = mon.lower().split()[1:]
-
-            nav = DexSearchNavigator(mode=None if search_args else "settings")
-            for arg in search_args:
-                if not nav.is_valid_setting(arg):
-                    raise commands.CommandError(f"Invalid search term `{arg}`.")
-                else:
-                    nav.apply_settings_change(*arg.split(":"))
-
-            nav.reapply_search()
-            return await nav.run(self.ctx)
+            return await self._search(*args[1:])
 
         nav = DexNavigator(find_mon(mon, use_bare=True), starting_mode=("help" if mon.lower() == "help" else None))
+        return await nav.run(self.ctx)
+
+    async def _search(self, *args):
+        nav = DexSearchNavigator(mode=None if args else "settings")
+        for arg in args:
+            if not nav.is_valid_setting(arg):
+                raise commands.CommandError(f"Invalid search term `{arg}`.")
+            else:
+                nav.apply_settings_change(*arg.split(":"))
+
+        nav.reapply_search()
         return await nav.run(self.ctx)
 
     async def _catch(self, *args):
