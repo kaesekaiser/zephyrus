@@ -7,6 +7,10 @@ def fix(s: str, joiner: str = "-"):
     return sub(f"{joiner}+", joiner, sub(f"[^a-z0-9{joiner}]+", "", sub(r"\s+", joiner, s.lower().replace("é", "e"))))
 
 
+def bulba_format(s: str):
+    return '_'.join(s.split()).replace("'", "%27")
+
+
 types = normal, fire, water, electric, grass, ice, fighting, poison, ground, flying, psychic, bug, rock, ghost, \
     dragon, dark, steel, fairy = "Normal", "Fire", "Water", "Electric", "Grass", "Ice", "Fighting", "Poison", \
     "Ground", "Flying", "Psychic", "Bug", "Rock", "Ghost", "Dragon", "Dark", "Steel", "Fairy"
@@ -594,8 +598,7 @@ class WikiMove:
 
     @property
     def bulbapedia(self):
-        return "https://bulbapedia.bulbagarden.net/wiki/" + ('_'.join(self.name.split()).replace("'", "%27")) \
-            + "_(move)"
+        return f"https://bulbapedia.bulbagarden.net/wiki/{bulba_format(self.name)}_(move)"
 
     @property
     def serebii(self):

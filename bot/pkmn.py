@@ -55,6 +55,16 @@ def find_move(s: str, return_wiki: bool = True, fail_silently: bool = False) -> 
             raise commands.CommandError(f"`{s}` not found. Did you mean {lis[guess[0]]}?")
 
 
+def find_ability(s: str, fail_silently: bool = False) -> str:
+    try:
+        return [g for g in pk.abilities if pk.fix(g) == pk.fix(s)][0]
+    except IndexError:
+        if not fail_silently:
+            lis = {pk.fix(g): g for g in pk.abilities}
+            guess = sorted(list(lis), key=lambda c: wr.levenshtein(c, pk.fix(s)))
+            raise commands.CommandError(f"`{s}` not found. Did you mean {lis[guess[0]]}?")
+
+
 def scroll_list(ls: iter, at: int, curved: bool = False, wrap: bool = True) -> str:
     def format_item(index: int):
         return f"**\\> {ls[index].upper()}**" if index == at else f"\\- {smallcaps(ls[index].lower())}"
@@ -1319,7 +1329,8 @@ class CatchRateNavigator(Navigator):
 class PokemonInterpreter(Interpreter):
     redirects = {
         "t": "type", "e": "eff", "m": "move", "s": "test", "b": "build", "c": "catch", "h": "help", "x": "dex",
-        "r": "raid", "cf": "compare", "l": "learnset", "learn": "learnset", "moves": "learnset", "moveset": "learnset"
+        "r": "raid", "cf": "compare", "l": "learnset", "learn": "learnset", "moves": "learnset", "moveset": "learnset",
+        "ls": "learnset", "a": "ability"
     }
 
     @staticmethod
@@ -1368,7 +1379,9 @@ class PokemonInterpreter(Interpreter):
                         f"\\- {zeph.emojis['eviolite']} lists moves it only learns as a previous evolution.\n"
                         f"\\- {zeph.emojis['heart_scale']} lists its Move Reminder moves.\n"
                         f"\\- {zeph.emojis['pokemon_egg']} lists its egg moves.\n"
-                        f"\\- {zeph.emojis['technical_machine']} lists its compatible TMs."
+                        f"\\- {zeph.emojis['technical_machine']} lists its compatible TMs.",
+            "ability": "`z!pokemon ability <ability name...>` gives the in-game description of an Ability, and links "
+                       "relevant wiki pages for more details."
         }
         desc_dict = {
             "type": "Shows offensive and defensive matchups for a single type.",
@@ -1378,9 +1391,13 @@ class PokemonInterpreter(Interpreter):
             "catch": "Opens the Scarlet/Violet catch rate calculator.",
             "raid": "Displays info about a given Tera Raid Battle.",
             "compare": "Compares the base stats of two species.",
-            "learnset": "Shows the moves learned by a given species."
+            "learnset": "Shows the moves learned by a given species.",
+            "ability": "Shows info about an Ability."
         }
-        shortcuts = {j: g for g, j in self.redirects.items() if len(g) <= 2}
+        shortcuts = {
+            j: g for g, j in self.redirects.items()
+            if len(g) == 1 or (len(g) == 2 and not any(len(k) == 1 for k, v in self.redirects.items() if v == j))
+        }
 
         def get_command(s: str):
             return f"**`{s}`** (or **`{shortcuts[s]}`**)" if shortcuts.get(s) else f"**`{s}`**"
@@ -1401,6 +1418,8 @@ class PokemonInterpreter(Interpreter):
             return await self.run("dex", *args)
         elif find_move(" ".join(args), fail_silently=True):
             return await self.run("move", *args)
+        elif find_ability(" ".join(args), fail_silently=True):
+            return await self.run("ability", *args)
         else:
             raise commands.CommandError(
                 f"Unrecognized command `{args[0]}`.\nSee **`z!pokemon help`** for a list of valid commands."
@@ -1524,6 +1543,8 @@ class PokemonInterpreter(Interpreter):
             return
 
     async def _move(self, *args):
+        if not args:
+            raise commands.CommandError("Format: `z!pk move <move name...>`")
         move = find_move(" ".join(args))
         return await self.ctx.send(embed=self.move_embed(move))
 
@@ -1663,6 +1684,28 @@ class PokemonInterpreter(Interpreter):
             raise commands.CommandError(f"Unknown Pok\u00e9mon `{' '.join(args)}`.")
 
         return await LearnsetNavigator(mon).run(self.ctx)
+
+    async def _ability(self, *args):
+        if not args:
+            raise commands.CommandError("Format: `z!pk ability <ability name...>`")
+
+        ability = find_ability(" ".join(args))
+        description = pk.ability_descriptions[ability]
+        if isinstance(description, dict):
+            description = "\n\n".join(f"__**{k}**__\n{v}" for k, v in description.items())
+        serebii = ''.join(ability.lower().split())
+        if ability == "As One":
+            serebii += "-unnervechillingneigh"
+        elif ability == "Embody Aspect":
+            serebii += "-tealmask"
+
+        return await ball_emol().send(
+            self.ctx, ability,
+            d=f"{description}\n\n"
+              f"[Bulbapedia](https://bulbapedia.bulbagarden.net/wiki/{pk.bulba_format(ability)}_(Ability)) | "
+              f"[Serebii](https://www.serebii.net/abilitydex/{serebii}.shtml) | "
+              f"[Pok\u00e9monDB](https://pokemondb.net/ability/{pk.fix(ability)})"
+        )
 
 
 @zeph.command(hidden=True, aliases=["lm"], usage="z!lm name type category PP power accuracy contact target **kwargs")
