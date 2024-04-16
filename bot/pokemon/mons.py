@@ -1217,7 +1217,7 @@ class Mon(BareMiniMon):
                     return PackedMove.null()
 
 
-nat_dex = {g: Species.from_json(j) for g, j in json.load(open("pokemon/stats.json", "r")).items()}
+nat_dex = {g: Species.from_json(j) for g, j in json.load(open("pokemon/mons.json", "r")).items()}
 nat_dex_order = list(nat_dex)
 
 
@@ -1226,14 +1226,6 @@ starters = [
     "Turtwig", "Chimchar", "Piplup", "Snivy", "Tepig", "Oshawott", "Chespin", "Fennekin", "Froaxie",
     "Rowlet", "Litten", "Popplio", "Grookey", "Scorbunny", "Sobble", "Sprigatito", "Fuecoco", "Quaxly"
 ]
-
-
-# with open("dex.json" if __name__ == "__main__" else "pokemon/dex.json", "r") as file:
-#     dex_entries = json.load(file)
-
-
-# with open("species.json" if __name__ == "__main__" else "pokemon/species.json", "r") as file:
-#     species = json.load(file)
 
 
 effectiveness = json.load(open("pokemon/eff.json", "r"))
@@ -1320,7 +1312,7 @@ def add_new_mon(species: Species):
 
 
 def rewrite_mons():
-    with open("stats.json" if __name__ == "__main__" else "pokemon/stats.json", "w") as f:
+    with open("mons.json" if __name__ == "__main__" else "pokemon/mons.json", "w") as f:
         json.dump({k: v.json for k, v in nat_dex.items()}, f, indent=4)
 
 

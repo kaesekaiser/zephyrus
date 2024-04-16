@@ -1742,7 +1742,7 @@ async def loadmove(
         pass
     else:
         pk.battle_moves[move.name] = move.copy()
-        with open("pokemon/moves.json", "w") as f:
+        with open("pokemon/data/moves.json", "w") as f:
             json.dump({g: j.json for g, j in pk.battle_moves.items()}, f, indent=4)
         return await succ.send(ctx, "Move saved.")
 

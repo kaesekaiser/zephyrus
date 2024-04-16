@@ -1,0 +1,3873 @@
+{
+    "Pound": [
+        "Pound",
+        "Normal",
+        "Physical",
+        35,
+        40,
+        100,
+        true,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true
+        }
+    ],
+    "Karate Chop": [
+        "Karate Chop",
+        "Fighting",
+        "Physical",
+        25,
+        50,
+        100,
+        true,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "raised_crit_ratio": true
+        }
+    ],
+    "Double Slap": [
+        "Double Slap",
+        "Normal",
+        "Physical",
+        10,
+        15,
+        85,
+        true,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "multi25": true
+        }
+    ],
+    "Comet Punch": [
+        "Comet Punch",
+        "Normal",
+        "Physical",
+        15,
+        18,
+        85,
+        true,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "multi25": true
+        }
+    ],
+    "Mega Punch": [
+        "Mega Punch",
+        "Normal",
+        "Physical",
+        20,
+        80,
+        85,
+        true,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true
+        }
+    ],
+    "Pay Day": [
+        "Pay Day",
+        "Normal",
+        "Physical",
+        20,
+        40,
+        100,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "payday": true
+        }
+    ],
+    "Fire Punch": [
+        "Fire Punch",
+        "Fire",
+        "Physical",
+        15,
+        75,
+        100,
+        true,
+        "any adjacent Pok\u00e9mon",
+        {
+            "status_effect": [
+                10,
+                "Burned"
+            ],
+            "can_protect": true,
+            "can_mirror_move": true
+        }
+    ],
+    "Ice Punch": [
+        "Ice Punch",
+        "Ice",
+        "Physical",
+        15,
+        75,
+        100,
+        true,
+        "any adjacent Pok\u00e9mon",
+        {
+            "status_effect": [
+                10,
+                "Frozen"
+            ],
+            "can_protect": true,
+            "can_mirror_move": true
+        }
+    ],
+    "Thunder Punch": [
+        "Thunder Punch",
+        "Electric",
+        "Physical",
+        15,
+        75,
+        100,
+        true,
+        "any adjacent Pok\u00e9mon",
+        {
+            "status_effect": [
+                10,
+                "Paralyzed"
+            ],
+            "can_protect": true,
+            "can_mirror_move": true
+        }
+    ],
+    "Scratch": [
+        "Scratch",
+        "Normal",
+        "Physical",
+        35,
+        40,
+        100,
+        true,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true
+        }
+    ],
+    "Vise Grip": [
+        "Vise Grip",
+        "Normal",
+        "Physical",
+        30,
+        55,
+        100,
+        true,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true
+        }
+    ],
+    "Guillotine": [
+        "Guillotine",
+        "Normal",
+        "Physical",
+        5,
+        0,
+        30,
+        true,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "ohko": true
+        }
+    ],
+    "Razor Wind": [
+        "Razor Wind",
+        "Normal",
+        "Special",
+        10,
+        80,
+        100,
+        false,
+        "all adjacent foes",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "raised_crit_ratio": true,
+            "two_turn": true
+        }
+    ],
+    "Swords Dance": [
+        "Swords Dance",
+        "Normal",
+        "Status",
+        20,
+        0,
+        0,
+        false,
+        "the user",
+        {
+            "user_stat_changes": [
+                100,
+                {
+                    "atk": 2
+                }
+            ],
+            "z_effect": {
+                "reset_low_stats": true
+            },
+            "can_snatch": true
+        }
+    ],
+    "Cut": [
+        "Cut",
+        "Normal",
+        "Physical",
+        30,
+        50,
+        95,
+        true,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "slicing": true
+        }
+    ],
+    "Gust": [
+        "Gust",
+        "Flying",
+        "Special",
+        35,
+        40,
+        100,
+        false,
+        "any Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "can_hit_fly": true
+        }
+    ],
+    "Wing Attack": [
+        "Wing Attack",
+        "Flying",
+        "Physical",
+        35,
+        60,
+        100,
+        true,
+        "any Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true
+        }
+    ],
+    "Whirlwind": [
+        "Whirlwind",
+        "Normal",
+        "Status",
+        20,
+        0,
+        0,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "z_effect": {
+                "user_stat_changes": [
+                    100,
+                    {
+                        "spd": 1
+                    }
+                ]
+            },
+            "priority": -6,
+            "can_magic_coat": true,
+            "can_mirror_move": true,
+            "force_out": true
+        }
+    ],
+    "Fly": [
+        "Fly",
+        "Flying",
+        "Physical",
+        15,
+        90,
+        95,
+        true,
+        "any Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "fly": true
+        }
+    ],
+    "Bind": [
+        "Bind",
+        "Normal",
+        "Physical",
+        20,
+        15,
+        85,
+        true,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "binding": true
+        }
+    ],
+    "Slam": [
+        "Slam",
+        "Normal",
+        "Physical",
+        20,
+        80,
+        75,
+        true,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true
+        }
+    ],
+    "Vine Whip": [
+        "Vine Whip",
+        "Grass",
+        "Physical",
+        25,
+        45,
+        100,
+        true,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true
+        }
+    ],
+    "Stomp": [
+        "Stomp",
+        "Normal",
+        "Physical",
+        20,
+        65,
+        100,
+        true,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "flinch": 30,
+            "stomp": true
+        }
+    ],
+    "Double Kick": [
+        "Double Kick",
+        "Fighting",
+        "Physical",
+        30,
+        30,
+        100,
+        true,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "multi2": true
+        }
+    ],
+    "Mega Kick": [
+        "Mega Kick",
+        "Normal",
+        "Physical",
+        5,
+        120,
+        75,
+        true,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true
+        }
+    ],
+    "Jump Kick": [
+        "Jump Kick",
+        "Fighting",
+        "Physical",
+        10,
+        100,
+        95,
+        true,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "crash": true
+        }
+    ],
+    "Rolling Kick": [
+        "Rolling Kick",
+        "Fighting",
+        "Physical",
+        15,
+        60,
+        85,
+        true,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "flinch": 30
+        }
+    ],
+    "Sand Attack": [
+        "Sand Attack",
+        "Ground",
+        "Status",
+        15,
+        0,
+        100,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "target_stat_changes": [
+                100,
+                {
+                    "acc": -1
+                }
+            ],
+            "z_effect": {
+                "user_stat_changes": [
+                    100,
+                    {
+                        "eva": 1
+                    }
+                ]
+            },
+            "can_protect": true,
+            "can_magic_coat": true,
+            "can_mirror_move": true
+        }
+    ],
+    "Headbutt": [
+        "Headbutt",
+        "Normal",
+        "Physical",
+        15,
+        70,
+        100,
+        true,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "flinch": 30
+        }
+    ],
+    "Horn Attack": [
+        "Horn Attack",
+        "Normal",
+        "Physical",
+        25,
+        65,
+        100,
+        true,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true
+        }
+    ],
+    "Fury Attack": [
+        "Fury Attack",
+        "Normal",
+        "Physical",
+        20,
+        15,
+        85,
+        true,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "multi25": true
+        }
+    ],
+    "Horn Drill": [
+        "Horn Drill",
+        "Normal",
+        "Physical",
+        5,
+        0,
+        30,
+        true,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "ohko": true
+        }
+    ],
+    "Tackle": [
+        "Tackle",
+        "Normal",
+        "Physical",
+        35,
+        40,
+        100,
+        true,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true
+        }
+    ],
+    "Body Slam": [
+        "Body Slam",
+        "Normal",
+        "Physical",
+        15,
+        85,
+        100,
+        true,
+        "any adjacent Pok\u00e9mon",
+        {
+            "status_effect": [
+                30,
+                "Paralyzed"
+            ],
+            "can_protect": true,
+            "can_mirror_move": true,
+            "stomp": true
+        }
+    ],
+    "Wrap": [
+        "Wrap",
+        "Normal",
+        "Physical",
+        20,
+        15,
+        90,
+        true,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "binding": true
+        }
+    ],
+    "Take Down": [
+        "Take Down",
+        "Normal",
+        "Physical",
+        20,
+        90,
+        85,
+        true,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "recoil": 4
+        }
+    ],
+    "Thrash": [
+        "Thrash",
+        "Normal",
+        "Physical",
+        10,
+        120,
+        100,
+        true,
+        "the user",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "thrash": true
+        }
+    ],
+    "Double-Edge": [
+        "Double-Edge",
+        "Normal",
+        "Physical",
+        15,
+        120,
+        100,
+        true,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "recoil": 3
+        }
+    ],
+    "Tail Whip": [
+        "Tail Whip",
+        "Normal",
+        "Status",
+        30,
+        0,
+        100,
+        false,
+        "all adjacent foes",
+        {
+            "target_stat_changes": [
+                100,
+                {
+                    "def": -1
+                }
+            ],
+            "z_effect": {
+                "user_stat_changes": [
+                    100,
+                    {
+                        "atk": 1
+                    }
+                ]
+            },
+            "can_protect": true,
+            "can_magic_coat": true,
+            "can_mirror_move": true
+        }
+    ],
+    "Poison Sting": [
+        "Poison Sting",
+        "Poison",
+        "Physical",
+        35,
+        15,
+        100,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "status_effect": [
+                20,
+                "Poisoned"
+            ],
+            "can_protect": true,
+            "can_mirror_move": true
+        }
+    ],
+    "Twineedle": [
+        "Twineedle",
+        "Bug",
+        "Physical",
+        20,
+        25,
+        100,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "status_effect": [
+                20,
+                "Poisoned"
+            ],
+            "can_protect": true,
+            "can_mirror_move": true,
+            "multi2": true
+        }
+    ],
+    "Pin Missile": [
+        "Pin Missile",
+        "Bug",
+        "Physical",
+        20,
+        25,
+        95,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "multi25": true
+        }
+    ],
+    "Leer": [
+        "Leer",
+        "Normal",
+        "Status",
+        30,
+        0,
+        100,
+        false,
+        "all adjacent foes",
+        {
+            "target_stat_changes": [
+                100,
+                {
+                    "def": -1
+                }
+            ],
+            "z_effect": {
+                "user_stat_changes": [
+                    100,
+                    {
+                        "atk": 1
+                    }
+                ]
+            },
+            "can_protect": true,
+            "can_mirror_move": true
+        }
+    ],
+    "Bite": [
+        "Bite",
+        "Dark",
+        "Physical",
+        25,
+        60,
+        100,
+        true,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "flinch": 30
+        }
+    ],
+    "Growl": [
+        "Growl",
+        "Normal",
+        "Status",
+        40,
+        0,
+        100,
+        false,
+        "all adjacent foes",
+        {
+            "target_stat_changes": [
+                100,
+                {
+                    "atk": -1
+                }
+            ],
+            "z_effect": {
+                "user_stat_changes": [
+                    100,
+                    {
+                        "def": 1
+                    }
+                ]
+            },
+            "can_protect": true,
+            "can_magic_coat": true,
+            "can_mirror_move": true,
+            "sound_based": true
+        }
+    ],
+    "Roar": [
+        "Roar",
+        "Normal",
+        "Status",
+        20,
+        0,
+        0,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "z_effect": {
+                "user_stat_changes": [
+                    100,
+                    {
+                        "def": 1
+                    }
+                ]
+            },
+            "priority": -6,
+            "can_magic_coat": true,
+            "can_mirror_move": true,
+            "force_out": true,
+            "sound_based": true
+        }
+    ],
+    "Sing": [
+        "Sing",
+        "Normal",
+        "Status",
+        15,
+        0,
+        55,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "status_effect": [
+                100,
+                "Asleep"
+            ],
+            "z_effect": {
+                "user_stat_changes": [
+                    100,
+                    {
+                        "spd": 1
+                    }
+                ]
+            },
+            "can_protect": true,
+            "can_magic_coat": true,
+            "can_mirror_move": true,
+            "sound_based": true
+        }
+    ],
+    "Supersonic": [
+        "Supersonic",
+        "Normal",
+        "Status",
+        20,
+        0,
+        55,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "z_effect": {
+                "usc": [
+                    100,
+                    {
+                        "spe": 1
+                    }
+                ]
+            },
+            "can_protect": true,
+            "can_magic_coat": true,
+            "can_mirror_move": true,
+            "confuse": 100,
+            "sound_based": true
+        }
+    ],
+    "Sonic Boom": [
+        "Sonic Boom",
+        "Normal",
+        "Special",
+        20,
+        0,
+        90,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "exact_damage": 20
+        }
+    ],
+    "Disable": [
+        "Disable",
+        "Normal",
+        "Status",
+        20,
+        0,
+        100,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "z_effect": {
+                "reset_low_stats": true
+            },
+            "can_protect": true,
+            "can_magic_coat": true,
+            "can_mirror_move": true,
+            "disable": true
+        }
+    ],
+    "Acid": [
+        "Acid",
+        "Poison",
+        "Special",
+        30,
+        40,
+        100,
+        false,
+        "all adjacent foes",
+        {
+            "target_stat_changes": [
+                10,
+                {
+                    "spd": -1
+                }
+            ],
+            "can_protect": true,
+            "can_mirror_move": true
+        }
+    ],
+    "Ember": [
+        "Ember",
+        "Fire",
+        "Special",
+        25,
+        40,
+        100,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "status_effect": [
+                10,
+                "Burned"
+            ],
+            "can_protect": true,
+            "can_mirror_move": true
+        }
+    ],
+    "Flamethrower": [
+        "Flamethrower",
+        "Fire",
+        "Special",
+        15,
+        90,
+        100,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "status_effect": [
+                10,
+                "Burned"
+            ],
+            "can_protect": true,
+            "can_mirror_move": true
+        }
+    ],
+    "Mist": [
+        "Mist",
+        "Ice",
+        "Status",
+        30,
+        0,
+        0,
+        false,
+        "the user and all allies",
+        {
+            "z_effect": {
+                "full_heal": true
+            },
+            "can_snatch": true,
+            "mist": true
+        }
+    ],
+    "Water Gun": [
+        "Water Gun",
+        "Water",
+        "Special",
+        25,
+        40,
+        100,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true
+        }
+    ],
+    "Hydro Pump": [
+        "Hydro Pump",
+        "Water",
+        "Special",
+        5,
+        110,
+        80,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true
+        }
+    ],
+    "Surf": [
+        "Surf",
+        "Water",
+        "Special",
+        15,
+        90,
+        100,
+        false,
+        "all adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "can_hit_dive": true
+        }
+    ],
+    "Ice Beam": [
+        "Ice Beam",
+        "Ice",
+        "Special",
+        15,
+        90,
+        100,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "status_effect": [
+                10,
+                "Frozen"
+            ],
+            "can_protect": true,
+            "can_mirror_move": true
+        }
+    ],
+    "Blizzard": [
+        "Blizzard",
+        "Ice",
+        "Special",
+        5,
+        110,
+        70,
+        false,
+        "all adjacent foes",
+        {
+            "status_effect": [
+                10,
+                "Frozen"
+            ],
+            "can_protect": true,
+            "can_mirror_move": true,
+            "hits_in_hail": true
+        }
+    ],
+    "Psybeam": [
+        "Psybeam",
+        "Psychic",
+        "Special",
+        20,
+        65,
+        100,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "confuse": 10
+        }
+    ],
+    "Bubble Beam": [
+        "Bubble Beam",
+        "Water",
+        "Special",
+        20,
+        65,
+        100,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "target_stat_changes": [
+                10,
+                {
+                    "spe": -1
+                }
+            ],
+            "can_protect": true,
+            "can_mirror_move": true
+        }
+    ],
+    "Aurora Beam": [
+        "Aurora Beam",
+        "Ice",
+        "Special",
+        20,
+        65,
+        100,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "target_stat_changes": [
+                10,
+                {
+                    "atk": -1
+                }
+            ],
+            "can_protect": true,
+            "can_mirror_move": true
+        }
+    ],
+    "Peck": [
+        "Peck",
+        "Flying",
+        "Physical",
+        35,
+        35,
+        100,
+        true,
+        "any Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true
+        }
+    ],
+    "Drill Peck": [
+        "Drill Peck",
+        "Flying",
+        "Physical",
+        20,
+        80,
+        100,
+        true,
+        "any Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true
+        }
+    ],
+    "Submission": [
+        "Submission",
+        "Fighting",
+        "Physical",
+        20,
+        80,
+        80,
+        true,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "recoil": 4
+        }
+    ],
+    "Low Kick": [
+        "Low Kick",
+        "Fighting",
+        "Physical",
+        20,
+        0,
+        100,
+        true,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "weight_based": true
+        }
+    ],
+    "Counter": [
+        "Counter",
+        "Fighting",
+        "Physical",
+        20,
+        0,
+        100,
+        true,
+        "the user",
+        {
+            "priority": -5,
+            "can_protect": true,
+            "counter": true
+        }
+    ],
+    "Seismic Toss": [
+        "Seismic Toss",
+        "Fighting",
+        "Physical",
+        20,
+        0,
+        100,
+        true,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "level_damage": true
+        }
+    ],
+    "Strength": [
+        "Strength",
+        "Normal",
+        "Physical",
+        15,
+        80,
+        100,
+        true,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true
+        }
+    ],
+    "Absorb": [
+        "Absorb",
+        "Grass",
+        "Special",
+        15,
+        40,
+        100,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "absorbent": true
+        }
+    ],
+    "Mega Drain": [
+        "Mega Drain",
+        "Grass",
+        "Special",
+        15,
+        40,
+        100,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "absorbent": true
+        }
+    ],
+    "Thunderbolt": [
+        "Thunderbolt",
+        "Electric",
+        "Special",
+        15,
+        90,
+        100,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "status_effect": [
+                10,
+                "Paralyzed"
+            ],
+            "can_protect": true,
+            "can_mirror_move": true
+        }
+    ],
+    "Shadow Ball": [
+        "Shadow Ball",
+        "Ghost",
+        "Special",
+        15,
+        80,
+        100,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "target_stat_changes": [
+                20,
+                {
+                    "spd": -1
+                }
+            ],
+            "can_protect": true,
+            "can_mirror_move": true,
+            "ball_and_bomb": true
+        }
+    ],
+    "Iron Tail": [
+        "Iron Tail",
+        "Steel",
+        "Physical",
+        15,
+        100,
+        75,
+        true,
+        "any adjacent Pok\u00e9mon",
+        {
+            "target_stat_changes": [
+                30,
+                {
+                    "def": -1
+                }
+            ],
+            "can_protect": true,
+            "can_mirror_move": true
+        }
+    ],
+    "Volt Tackle": [
+        "Volt Tackle",
+        "Electric",
+        "Physical",
+        15,
+        120,
+        100,
+        true,
+        "any adjacent Pok\u00e9mon",
+        {
+            "status_effect": [
+                10,
+                "Paralyzed"
+            ],
+            "can_protect": true,
+            "can_mirror_move": true,
+            "recoil": 2
+        }
+    ],
+    "Quick Attack": [
+        "Quick Attack",
+        "Normal",
+        "Physical",
+        30,
+        40,
+        100,
+        true,
+        "any adjacent Pok\u00e9mon",
+        {
+            "priority": 1,
+            "can_protect": true,
+            "can_mirror_move": true
+        }
+    ],
+    "Agility": [
+        "Agility",
+        "Psychic",
+        "Status",
+        30,
+        0,
+        0,
+        false,
+        "the user",
+        {
+            "user_stat_changes": [
+                100,
+                {
+                    "spe": 2
+                }
+            ],
+            "z_effect": {
+                "reset_low_stats": true
+            },
+            "can_snatch": true
+        }
+    ],
+    "Close Combat": [
+        "Close Combat",
+        "Fighting",
+        "Physical",
+        5,
+        120,
+        100,
+        true,
+        "any adjacent Pok\u00e9mon",
+        {
+            "user_stat_changes": [
+                100,
+                {
+                    "def": -1,
+                    "spd": -1
+                }
+            ],
+            "can_protect": true,
+            "can_mirror_move": true
+        }
+    ],
+    "Solar Beam": [
+        "Solar Beam",
+        "Grass",
+        "Special",
+        10,
+        120,
+        100,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "two_turn": true,
+            "solar": true
+        }
+    ],
+    "Leech Seed": [
+        "Leech Seed",
+        "Grass",
+        "Status",
+        10,
+        0,
+        90,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "z_effect": {
+                "reset_low_stats": true
+            },
+            "can_protect": true,
+            "can_magic_coat": true,
+            "can_mirror_move": true,
+            "leech_seed": true
+        }
+    ],
+    "X-Scissor": [
+        "X-Scissor",
+        "Bug",
+        "Physical",
+        15,
+        80,
+        100,
+        true,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "slicing": true
+        }
+    ],
+    "Leaf Blade": [
+        "Leaf Blade",
+        "Grass",
+        "Physical",
+        15,
+        90,
+        100,
+        true,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "raised_crit_ratio": true,
+            "slicing": true
+        }
+    ],
+    "Grass Whistle": [
+        "Grass Whistle",
+        "Grass",
+        "Status",
+        15,
+        0,
+        55,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "status_effect": [
+                100,
+                "Asleep"
+            ],
+            "z_effect": {
+                "usc": [
+                    100,
+                    {
+                        "spe": 1
+                    }
+                ]
+            },
+            "can_protect": true,
+            "can_magic_coat": true,
+            "can_mirror_move": true,
+            "sound_based": true
+        }
+    ],
+    "Giga Impact": [
+        "Giga Impact",
+        "Normal",
+        "Physical",
+        5,
+        150,
+        90,
+        true,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "must_recharge": true
+        }
+    ],
+    "Yawn": [
+        "Yawn",
+        "Normal",
+        "Status",
+        10,
+        0,
+        0,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "z_effect": {
+                "usc": [
+                    100,
+                    {
+                        "spe": 1
+                    }
+                ]
+            },
+            "can_protect": true,
+            "can_magic_coat": true,
+            "can_mirror_move": true,
+            "yawn": true
+        }
+    ],
+    "Brine": [
+        "Brine",
+        "Water",
+        "Special",
+        10,
+        65,
+        100,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "brine": true
+        }
+    ],
+    "Earthquake": [
+        "Earthquake",
+        "Ground",
+        "Physical",
+        10,
+        100,
+        100,
+        false,
+        "all adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "can_hit_dig": true
+        }
+    ],
+    "Psychic": [
+        "Psychic",
+        "Psychic",
+        "Special",
+        10,
+        90,
+        100,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "target_stat_changes": [
+                10,
+                {
+                    "spd": -1
+                }
+            ],
+            "can_protect": true,
+            "can_mirror_move": true
+        }
+    ],
+    "Crunch": [
+        "Crunch",
+        "Dark",
+        "Physical",
+        15,
+        80,
+        100,
+        true,
+        "any adjacent Pok\u00e9mon",
+        {
+            "target_stat_changes": [
+                20,
+                {
+                    "def": -1
+                }
+            ],
+            "can_protect": true,
+            "can_mirror_move": true
+        }
+    ],
+    "Frenzy Plant": [
+        "Frenzy Plant",
+        "Grass",
+        "Special",
+        5,
+        150,
+        90,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "must_recharge": true
+        }
+    ],
+    "Blast Burn": [
+        "Blast Burn",
+        "Fire",
+        "Special",
+        5,
+        150,
+        90,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "must_recharge": true
+        }
+    ],
+    "Hydro Cannon": [
+        "Hydro Cannon",
+        "Water",
+        "Special",
+        5,
+        150,
+        90,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "must_recharge": true
+        }
+    ],
+    "Giga Drain": [
+        "Giga Drain",
+        "Grass",
+        "Special",
+        10,
+        75,
+        100,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "absorbent": true
+        }
+    ],
+    "Sludge Bomb": [
+        "Sludge Bomb",
+        "Poison",
+        "Special",
+        10,
+        90,
+        100,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "status_effect": [
+                30,
+                "Poisoned"
+            ],
+            "can_protect": true,
+            "can_mirror_move": true,
+            "ball_and_bomb": true
+        }
+    ],
+    "Sleep Powder": [
+        "Sleep Powder",
+        "Grass",
+        "Status",
+        15,
+        0,
+        75,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "status_effect": [
+                100,
+                "Asleep"
+            ],
+            "z_effect": {
+                "usc": [
+                    100,
+                    {
+                        "spe": 1
+                    }
+                ]
+            },
+            "can_protect": true,
+            "can_magic_coat": true,
+            "can_mirror_move": true,
+            "powder_based": true
+        }
+    ],
+    "Flare Blitz": [
+        "Flare Blitz",
+        "Fire",
+        "Physical",
+        15,
+        120,
+        100,
+        true,
+        "any adjacent Pok\u00e9mon",
+        {
+            "status_effect": [
+                10,
+                "Burned"
+            ],
+            "can_protect": true,
+            "can_mirror_move": true,
+            "recoil": 3
+        }
+    ],
+    "Air Slash": [
+        "Air Slash",
+        "Flying",
+        "Special",
+        15,
+        75,
+        95,
+        false,
+        "any Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "flinch": 30,
+            "slicing": true
+        }
+    ],
+    "Dragon Pulse": [
+        "Dragon Pulse",
+        "Dragon",
+        "Special",
+        10,
+        85,
+        100,
+        false,
+        "any Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "aura_and_pulse": true
+        }
+    ],
+    "Flash Cannon": [
+        "Flash Cannon",
+        "Steel",
+        "Special",
+        10,
+        80,
+        100,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "target_stat_changes": [
+                10,
+                {
+                    "spd": -1
+                }
+            ],
+            "can_protect": true,
+            "can_mirror_move": true
+        }
+    ],
+    "Focus Blast": [
+        "Focus Blast",
+        "Fighting",
+        "Special",
+        5,
+        120,
+        70,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "target_stat_changes": [
+                10,
+                {
+                    "spd": -1
+                }
+            ],
+            "can_protect": true,
+            "can_mirror_move": true,
+            "ball_and_bomb": true
+        }
+    ],
+    "Brick Break": [
+        "Brick Break",
+        "Fighting",
+        "Physical",
+        15,
+        75,
+        100,
+        true,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "removes_barriers": true
+        }
+    ],
+    "Fake Out": [
+        "Fake Out",
+        "Normal",
+        "Physical",
+        10,
+        40,
+        100,
+        true,
+        "any adjacent Pok\u00e9mon",
+        {
+            "priority": 3,
+            "can_protect": true,
+            "can_mirror_move": true,
+            "flinch": 100,
+            "fake_out": true
+        }
+    ],
+    "Leaf Storm": [
+        "Leaf Storm",
+        "Grass",
+        "Special",
+        5,
+        130,
+        90,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "user_stat_changes": [
+                100,
+                {
+                    "spa": -2
+                }
+            ],
+            "can_protect": true,
+            "can_mirror_move": true
+        }
+    ],
+    "Fire Blast": [
+        "Fire Blast",
+        "Fire",
+        "Special",
+        5,
+        110,
+        85,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "status_effect": [
+                10,
+                "Burned"
+            ],
+            "can_protect": true,
+            "can_mirror_move": true
+        }
+    ],
+    "Dig": [
+        "Dig",
+        "Ground",
+        "Physical",
+        10,
+        80,
+        100,
+        true,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "dig": true
+        }
+    ],
+    "Endure": [
+        "Endure",
+        "Normal",
+        "Status",
+        10,
+        0,
+        0,
+        false,
+        "the user",
+        {
+            "z_effect": {
+                "reset_low_stats": true
+            },
+            "priority": 4,
+            "used_in_succession": true,
+            "endure": true
+        }
+    ],
+    "Protect": [
+        "Protect",
+        "Normal",
+        "Status",
+        10,
+        0,
+        0,
+        false,
+        "the user",
+        {
+            "z_effect": {
+                "reset_low_stats": true
+            },
+            "priority": 4,
+            "used_in_succession": true,
+            "protect": true
+        }
+    ],
+    "Dragon Claw": [
+        "Dragon Claw",
+        "Dragon",
+        "Physical",
+        15,
+        80,
+        100,
+        true,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true
+        }
+    ],
+    "Swagger": [
+        "Swagger",
+        "Normal",
+        "Status",
+        15,
+        0,
+        85,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "target_stat_changes": [
+                100,
+                {
+                    "atk": 2
+                }
+            ],
+            "z_effect": {
+                "reset_low_stats": true
+            },
+            "can_protect": true,
+            "can_magic_coat": true,
+            "can_mirror_move": true,
+            "confuse": 100
+        }
+    ],
+    "Confuse Ray": [
+        "Confuse Ray",
+        "Ghost",
+        "Status",
+        10,
+        0,
+        100,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "z_effect": {
+                "usc": [
+                    100,
+                    {
+                        "spa": 1
+                    }
+                ]
+            },
+            "can_protect": true,
+            "can_magic_coat": true,
+            "can_mirror_move": true,
+            "confuse": 100
+        }
+    ],
+    "Rock Slide": [
+        "Rock Slide",
+        "Rock",
+        "Physical",
+        10,
+        75,
+        90,
+        false,
+        "all adjacent foes",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "flinch": 30
+        }
+    ],
+    "Draco Meteor": [
+        "Draco Meteor",
+        "Dragon",
+        "Special",
+        5,
+        130,
+        90,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "user_stat_changes": [
+                100,
+                {
+                    "spa": -2
+                }
+            ],
+            "can_protect": true,
+            "can_mirror_move": true
+        }
+    ],
+    "Earth Power": [
+        "Earth Power",
+        "Ground",
+        "Special",
+        10,
+        90,
+        100,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "target_stat_changes": [
+                10,
+                {
+                    "spd": -1
+                }
+            ],
+            "can_protect": true,
+            "can_mirror_move": true
+        }
+    ],
+    "Dragon Rush": [
+        "Dragon Rush",
+        "Dragon",
+        "Physical",
+        10,
+        100,
+        75,
+        true,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "flinch": 20
+        }
+    ],
+    "Stone Edge": [
+        "Stone Edge",
+        "Rock",
+        "Physical",
+        5,
+        100,
+        80,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "raised_crit_ratio": 1
+        }
+    ],
+    "Growth": [
+        "Growth",
+        "Grass",
+        "Status",
+        20,
+        0,
+        0,
+        false,
+        "the user",
+        {
+            "z_effect": {
+                "usc": [
+                    100,
+                    {
+                        "spa": 1
+                    }
+                ]
+            },
+            "growth": true
+        }
+    ],
+    "Sunny Day": [
+        "Sunny Day",
+        "Fire",
+        "Status",
+        5,
+        0,
+        0,
+        false,
+        "the user",
+        {
+            "z_effect": {
+                "usc": [
+                    100,
+                    {
+                        "spe": 1
+                    }
+                ]
+            },
+            "weather": "Harsh sunlight"
+        }
+    ],
+    "Rain Dance": [
+        "Rain Dance",
+        "Water",
+        "Status",
+        5,
+        0,
+        0,
+        false,
+        "the user",
+        {
+            "z_effect": {
+                "usc": [
+                    100,
+                    {
+                        "spe": 1
+                    }
+                ]
+            },
+            "weather": "Rain"
+        }
+    ],
+    "Hail": [
+        "Hail",
+        "Ice",
+        "Status",
+        10,
+        0,
+        0,
+        false,
+        "the user",
+        {
+            "z_effect": {
+                "usc": [
+                    100,
+                    {
+                        "spe": 1
+                    }
+                ]
+            },
+            "weather": "Hail"
+        }
+    ],
+    "Sandstorm": [
+        "Sandstorm",
+        "Rock",
+        "Status",
+        10,
+        0,
+        0,
+        false,
+        "the user",
+        {
+            "z_effect": {
+                "usc": [
+                    100,
+                    {
+                        "spe": 1
+                    }
+                ]
+            },
+            "weather": "Sandstorm"
+        }
+    ],
+    "Razor Leaf": [
+        "Razor Leaf",
+        "Grass",
+        "Physical",
+        25,
+        55,
+        95,
+        false,
+        "all adjacent foes",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "raised_crit_ratio": true,
+            "slicing": true
+        }
+    ],
+    "Poison Powder": [
+        "Poison Powder",
+        "Poison",
+        "Status",
+        35,
+        0,
+        75,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "status_effect": [
+                100,
+                "Poisoned"
+            ],
+            "z_effect": {
+                "usc": [
+                    100,
+                    {
+                        "def": 1
+                    }
+                ]
+            },
+            "can_protect": true,
+            "can_magic_coat": true,
+            "can_mirror_move": true,
+            "powder_based": true
+        }
+    ],
+    "Stun Spore": [
+        "Stun Spore",
+        "Grass",
+        "Status",
+        30,
+        0,
+        75,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "status_effect": [
+                100,
+                "Paralyzed"
+            ],
+            "z_effect": {
+                "usc": [
+                    100,
+                    {
+                        "spd": 1
+                    }
+                ]
+            },
+            "can_protect": true,
+            "can_magic_coat": true,
+            "can_mirror_move": true,
+            "powder_based": true
+        }
+    ],
+    "Solar Blade": [
+        "Solar Blade",
+        "Grass",
+        "Physical",
+        10,
+        125,
+        100,
+        true,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "two_turn": true,
+            "solar": true,
+            "slicing": true
+        }
+    ],
+    "Petal Dance": [
+        "Petal Dance",
+        "Grass",
+        "Special",
+        10,
+        120,
+        100,
+        true,
+        "the user",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "thrash": true
+        }
+    ],
+    "String Shot": [
+        "String Shot",
+        "Bug",
+        "Status",
+        40,
+        0,
+        95,
+        false,
+        "all adjacent foes",
+        {
+            "target_stat_changes": [
+                100,
+                {
+                    "spe": -2
+                }
+            ],
+            "z_effect": {
+                "usc": [
+                    100,
+                    {
+                        "spe": 1
+                    }
+                ]
+            },
+            "can_protect": true,
+            "can_magic_coat": true,
+            "can_mirror_move": true
+        }
+    ],
+    "Dragon Rage": [
+        "Dragon Rage",
+        "Dragon",
+        "Special",
+        10,
+        0,
+        100,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "exact_damage": 40
+        }
+    ],
+    "Fire Spin": [
+        "Fire Spin",
+        "Fire",
+        "Special",
+        15,
+        35,
+        85,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "binding": true
+        }
+    ],
+    "Thunder Shock": [
+        "Thunder Shock",
+        "Electric",
+        "Special",
+        30,
+        40,
+        100,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "status_effect": [
+                10,
+                "Paralyzed"
+            ],
+            "can_protect": true,
+            "can_mirror_move": true
+        }
+    ],
+    "Thunder Wave": [
+        "Thunder Wave",
+        "Electric",
+        "Status",
+        20,
+        0,
+        90,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "status_effect": [
+                100,
+                "Paralyzed"
+            ],
+            "z_effect": {
+                "usc": [
+                    100,
+                    {
+                        "spd": 1
+                    }
+                ]
+            },
+            "can_protect": true,
+            "can_magic_coat": true,
+            "can_mirror_move": true,
+            "still_typed": true
+        }
+    ],
+    "Thunder": [
+        "Thunder",
+        "Electric",
+        "Special",
+        10,
+        110,
+        70,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "status_effect": [
+                10,
+                "Paralyzed"
+            ],
+            "can_protect": true,
+            "can_mirror_move": true,
+            "hits_in_rain": true
+        }
+    ],
+    "Rock Throw": [
+        "Rock Throw",
+        "Rock",
+        "Physical",
+        15,
+        50,
+        90,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true
+        }
+    ],
+    "Fissure": [
+        "Fissure",
+        "Ground",
+        "Physical",
+        5,
+        0,
+        30,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "ohko": true,
+            "can_hit_dig": true
+        }
+    ],
+    "Confusion": [
+        "Confusion",
+        "Psychic",
+        "Special",
+        25,
+        50,
+        100,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "confuse": 10
+        }
+    ],
+    "Hypnosis": [
+        "Hypnosis",
+        "Psychic",
+        "Status",
+        20,
+        0,
+        60,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "status_effect": [
+                100,
+                "Asleep"
+            ],
+            "z_effect": {
+                "usc": [
+                    100,
+                    {
+                        "spe": 1
+                    }
+                ]
+            },
+            "can_protect": true,
+            "can_magic_coat": true,
+            "can_mirror_move": true
+        }
+    ],
+    "Meditate": [
+        "Meditate",
+        "Psychic",
+        "Status",
+        40,
+        0,
+        0,
+        false,
+        "the user",
+        {
+            "user_stat_changes": [
+                100,
+                {
+                    "atk": 1
+                }
+            ],
+            "z_effect": {
+                "usc": [
+                    100,
+                    {
+                        "atk": 1
+                    }
+                ]
+            },
+            "can_snatch": true
+        }
+    ],
+    "Rage": [
+        "Rage",
+        "Normal",
+        "Physical",
+        20,
+        20,
+        100,
+        true,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "rage": true
+        }
+    ],
+    "Night Shade": [
+        "Night Shade",
+        "Ghost",
+        "Special",
+        15,
+        0,
+        100,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "level_damage": true
+        }
+    ],
+    "Mimic": [
+        "Mimic",
+        "Normal",
+        "Status",
+        10,
+        0,
+        0,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "z_effect": {
+                "usc": [
+                    100,
+                    {
+                        "acc": 1
+                    }
+                ]
+            },
+            "can_protect": true,
+            "mimic": true
+        }
+    ],
+    "Tera Blast": [
+        "Tera Blast",
+        "Normal",
+        "Special",
+        10,
+        80,
+        100,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "tera_blast": true
+        }
+    ],
+    "Screech": [
+        "Screech",
+        "Normal",
+        "Status",
+        40,
+        0,
+        85,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "target_stat_changes": [
+                100,
+                {
+                    "def": -2
+                }
+            ],
+            "z_effect": {
+                "usc": [
+                    100,
+                    {
+                        "atk": 1
+                    }
+                ]
+            },
+            "can_protect": true,
+            "can_magic_coat": true,
+            "can_mirror_move": true,
+            "sound_based": true
+        }
+    ],
+    "Double Team": [
+        "Double Team",
+        "Normal",
+        "Status",
+        15,
+        0,
+        0,
+        false,
+        "the user",
+        {
+            "user_stat_changes": [
+                100,
+                {
+                    "eva": 1
+                }
+            ],
+            "z_effect": {
+                "reset_low_stats": true
+            },
+            "can_snatch": true
+        }
+    ],
+    "Recover": [
+        "Recover",
+        "Normal",
+        "Status",
+        5,
+        0,
+        0,
+        false,
+        "the user",
+        {
+            "z_effect": {
+                "reset_low_stats": true
+            },
+            "can_snatch": true,
+            "half_heal": true
+        }
+    ],
+    "Night Slash": [
+        "Night Slash",
+        "Dark",
+        "Physical",
+        15,
+        70,
+        100,
+        true,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "raised_crit_ratio": true,
+            "slicing": true
+        }
+    ],
+    "Energy Ball": [
+        "Energy Ball",
+        "Grass",
+        "Special",
+        10,
+        90,
+        100,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "target_stat_changes": [
+                10,
+                {
+                    "spd": -1
+                }
+            ],
+            "can_protect": true,
+            "can_mirror_move": true,
+            "ball_and_bomb": true
+        }
+    ],
+    "Waterfall": [
+        "Waterfall",
+        "Water",
+        "Physical",
+        15,
+        80,
+        100,
+        true,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "flinch": 20
+        }
+    ],
+    "Clear Smog": [
+        "Clear Smog",
+        "Poison",
+        "Special",
+        15,
+        50,
+        0,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "reset_target_stats": true
+        }
+    ],
+    "Haze": [
+        "Haze",
+        "Ice",
+        "Status",
+        30,
+        0,
+        0,
+        false,
+        "all Pok\u00e9mon",
+        {
+            "z_effect": {
+                "full_heal": true
+            },
+            "reset_all_stats": true
+        }
+    ],
+    "Iron Head": [
+        "Iron Head",
+        "Steel",
+        "Physical",
+        15,
+        80,
+        100,
+        true,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "flinch": 30
+        }
+    ],
+    "Aerial Ace": [
+        "Aerial Ace",
+        "Flying",
+        "Physical",
+        20,
+        60,
+        0,
+        true,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "slicing": true
+        }
+    ],
+    "Dark Pulse": [
+        "Dark Pulse",
+        "Dark",
+        "Special",
+        15,
+        80,
+        100,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "flinch": 20,
+            "aura_and_pulse": true
+        }
+    ],
+    "Shadow Claw": [
+        "Shadow Claw",
+        "Ghost",
+        "Physical",
+        15,
+        70,
+        100,
+        true,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "raised_crit_ratio": true
+        }
+    ],
+    "Psycho Cut": [
+        "Psycho Cut",
+        "Psychic",
+        "Physical",
+        20,
+        70,
+        100,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "raised_crit_ratio": true,
+            "slicing": true
+        }
+    ],
+    "Dazzling Gleam": [
+        "Dazzling Gleam",
+        "Fairy",
+        "Special",
+        10,
+        80,
+        100,
+        false,
+        "all adjacent foes",
+        {
+            "can_protect": true,
+            "can_mirror_move": true
+        }
+    ],
+    "Moonblast": [
+        "Moonblast",
+        "Fairy",
+        "Special",
+        15,
+        95,
+        100,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "target_stat_changes": [
+                30,
+                {
+                    "spa": -1
+                }
+            ],
+            "can_protect": true,
+            "can_mirror_move": true
+        }
+    ],
+    "Play Rough": [
+        "Play Rough",
+        "Fairy",
+        "Physical",
+        10,
+        90,
+        90,
+        true,
+        "any adjacent Pok\u00e9mon",
+        {
+            "target_stat_changes": [
+                10,
+                {
+                    "atk": -1
+                }
+            ],
+            "can_protect": true,
+            "can_mirror_move": true
+        }
+    ],
+    "Poison Jab": [
+        "Poison Jab",
+        "Poison",
+        "Physical",
+        20,
+        80,
+        100,
+        true,
+        "any adjacent Pok\u00e9mon",
+        {
+            "status_effect": [
+                30,
+                "Poisoned"
+            ],
+            "can_protect": true,
+            "can_mirror_move": true
+        }
+    ],
+    "Sudo Freeze": [
+        "Sudo Freeze",
+        "Ice",
+        "Status",
+        40,
+        0,
+        0,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "status_effect": [
+                100,
+                "Frozen"
+            ],
+            "can_hit_fly": true,
+            "can_hit_dive": true,
+            "can_hit_dig": true
+        }
+    ],
+    "Toxic": [
+        "Toxic",
+        "Poison",
+        "Status",
+        10,
+        0,
+        90,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "status_effect": [
+                100,
+                "Badly poisoned"
+            ],
+            "z_effect": {
+                "usc": [
+                    100,
+                    {
+                        "def": 1
+                    }
+                ]
+            },
+            "can_protect": true,
+            "can_magic_coat": true,
+            "can_mirror_move": true,
+            "poison_never_miss": true
+        }
+    ],
+    "Trick-or-Treat": [
+        "Trick-or-Treat",
+        "Ghost",
+        "Status",
+        20,
+        0,
+        100,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "z_effect": {
+                "usc": [
+                    100,
+                    {
+                        "atk": 1,
+                        "def": 1,
+                        "spa": 1,
+                        "spd": 1,
+                        "spe": 1
+                    }
+                ]
+            },
+            "can_protect": true,
+            "can_magic_coat": true,
+            "can_mirror_move": true,
+            "add_type": "Ghost"
+        }
+    ],
+    "Forest's Curse": [
+        "Forest's Curse",
+        "Grass",
+        "Status",
+        20,
+        0,
+        100,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "z_effect": {
+                "usc": [
+                    100,
+                    {
+                        "atk": 1,
+                        "def": 1,
+                        "spa": 1,
+                        "spd": 1,
+                        "spe": 1
+                    }
+                ]
+            },
+            "can_protect": true,
+            "can_magic_coat": true,
+            "can_mirror_move": true,
+            "add_type": "Grass"
+        }
+    ],
+    "Soak": [
+        "Soak",
+        "Water",
+        "Status",
+        20,
+        0,
+        100,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "z_effect": {
+                "usc": [
+                    100,
+                    {
+                        "spa": 1
+                    }
+                ]
+            },
+            "can_protect": true,
+            "can_magic_coat": true,
+            "can_mirror_move": true,
+            "change_type": "Water"
+        }
+    ],
+    "Dragon Dance": [
+        "Dragon Dance",
+        "Dragon",
+        "Status",
+        20,
+        0,
+        0,
+        false,
+        "the user",
+        {
+            "user_stat_changes": [
+                100,
+                {
+                    "atk": 1,
+                    "spe": 1
+                }
+            ],
+            "z_effect": {
+                "reset_low_stats": true
+            },
+            "can_snatch": true
+        }
+    ],
+    "Power Gem": [
+        "Power Gem",
+        "Rock",
+        "Special",
+        20,
+        80,
+        100,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true
+        }
+    ],
+    "Reflect": [
+        "Reflect",
+        "Psychic",
+        "Status",
+        20,
+        0,
+        0,
+        false,
+        "the user and all allies",
+        {
+            "z_effect": {
+                "usc": [
+                    100,
+                    {
+                        "def": 1
+                    }
+                ]
+            },
+            "can_snatch": true,
+            "reflect": true
+        }
+    ],
+    "Light Screen": [
+        "Light Screen",
+        "Psychic",
+        "Status",
+        30,
+        0,
+        0,
+        false,
+        "the user and all allies",
+        {
+            "z_effect": {
+                "usc": [
+                    100,
+                    {
+                        "spd": 1
+                    }
+                ]
+            },
+            "can_snatch": true,
+            "light_screen": true
+        }
+    ],
+    "Aurora Veil": [
+        "Aurora Veil",
+        "Ice",
+        "Status",
+        20,
+        0,
+        0,
+        false,
+        "the user and all allies",
+        {
+            "z_effect": {
+                "usc": [
+                    100,
+                    {
+                        "spe": 1
+                    }
+                ]
+            },
+            "can_snatch": true,
+            "aurora_veil": true
+        }
+    ],
+    "Trick Room": [
+        "Trick Room",
+        "Psychic",
+        "Status",
+        5,
+        0,
+        0,
+        false,
+        "all Pok\u00e9mon",
+        {
+            "z_effect": {
+                "usc": [
+                    100,
+                    {
+                        "acc": 1
+                    }
+                ]
+            },
+            "priority": -7,
+            "can_mirror_move": true,
+            "trick_room": true
+        }
+    ],
+    "Hyper Beam": [
+        "Hyper Beam",
+        "Normal",
+        "Special",
+        5,
+        150,
+        90,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "must_recharge": true
+        }
+    ],
+    "Belly Drum": [
+        "Belly Drum",
+        "Normal",
+        "Status",
+        10,
+        0,
+        0,
+        false,
+        "the user",
+        {
+            "z_effect": {
+                "full_heal": true
+            },
+            "can_snatch": true,
+            "belly_drum": true
+        }
+    ],
+    "Triple Kick": [
+        "Triple Kick",
+        "Fighting",
+        "Physical",
+        10,
+        10,
+        90,
+        true,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "triple_kick": true
+        }
+    ],
+    "Triple Axel": [
+        "Triple Axel",
+        "Ice",
+        "Physical",
+        10,
+        20,
+        90,
+        true,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "triple_kick": true
+        }
+    ],
+    "Population Bomb": [
+        "Population Bomb",
+        "Normal",
+        "Physical",
+        10,
+        20,
+        90,
+        true,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "population_bomb": true,
+            "slicing": true
+        }
+    ],
+    "Teleport": [
+        "Teleport",
+        "Psychic",
+        "Status",
+        20,
+        0,
+        0,
+        false,
+        "the user",
+        {
+            "z_effect": {
+                "full_heal": true
+            },
+            "priority": -6,
+            "switch_self": true,
+            "fails_if_cant_switch": true
+        }
+    ],
+    "Volt Switch": [
+        "Volt Switch",
+        "Electric",
+        "Special",
+        20,
+        70,
+        100,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "switch_self": true
+        }
+    ],
+    "U-turn": [
+        "U-turn",
+        "Bug",
+        "Physical",
+        20,
+        70,
+        100,
+        true,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "switch_self": true
+        }
+    ],
+    "Flip Turn": [
+        "Flip Turn",
+        "Water",
+        "Physical",
+        20,
+        60,
+        100,
+        true,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "switch_self": true
+        }
+    ],
+    "Harden": [
+        "Harden",
+        "Normal",
+        "Status",
+        30,
+        0,
+        0,
+        false,
+        "the user",
+        {
+            "user_stat_changes": [
+                100,
+                {
+                    "def": 1
+                }
+            ],
+            "z_effect": {
+                "usc": [
+                    100,
+                    {
+                        "def": 1
+                    }
+                ]
+            },
+            "can_snatch": true
+        }
+    ],
+    "Minimize": [
+        "Minimize",
+        "Normal",
+        "Status",
+        10,
+        0,
+        0,
+        false,
+        "the user",
+        {
+            "user_stat_changes": [
+                100,
+                {
+                    "eva": 2
+                }
+            ],
+            "z_effect": {
+                "reset_low_stats": true
+            },
+            "can_snatch": true,
+            "minimize": true
+        }
+    ],
+    "Smokescreen": [
+        "Smokescreen",
+        "Normal",
+        "Status",
+        20,
+        0,
+        100,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "target_stat_changes": [
+                100,
+                {
+                    "acc": -1
+                }
+            ],
+            "z_effect": {
+                "usc": [
+                    100,
+                    {
+                        "eva": 1
+                    }
+                ]
+            },
+            "can_protect": true,
+            "can_magic_coat": true,
+            "can_mirror_move": true
+        }
+    ],
+    "Withdraw": [
+        "Withdraw",
+        "Water",
+        "Status",
+        40,
+        0,
+        0,
+        false,
+        "the user",
+        {
+            "user_stat_changes": [
+                100,
+                {
+                    "def": 1
+                }
+            ],
+            "z_effect": {
+                "usc": [
+                    100,
+                    {
+                        "def": 1
+                    }
+                ]
+            },
+            "can_snatch": true
+        }
+    ],
+    "Defense Curl": [
+        "Defense Curl",
+        "Normal",
+        "Status",
+        40,
+        0,
+        0,
+        false,
+        "the user",
+        {
+            "user_stat_changes": [
+                100,
+                {
+                    "def": 1
+                }
+            ],
+            "z_effect": {
+                "usc": [
+                    100,
+                    {
+                        "acc": 1
+                    }
+                ]
+            },
+            "can_snatch": true,
+            "curl": true
+        }
+    ],
+    "Barrier": [
+        "Barrier",
+        "Psychic",
+        "Status",
+        20,
+        0,
+        0,
+        false,
+        "the user",
+        {
+            "user_stat_changes": [
+                100,
+                {
+                    "def": 2
+                }
+            ],
+            "z_effect": {
+                "reset_low_stats": true
+            },
+            "can_snatch": true
+        }
+    ],
+    "Focus Energy": [
+        "Focus Energy",
+        "Normal",
+        "Status",
+        30,
+        0,
+        0,
+        false,
+        "the user",
+        {
+            "z_effect": {
+                "usc": [
+                    100,
+                    {
+                        "acc": 1
+                    }
+                ]
+            },
+            "can_snatch": true,
+            "focus_energy": true
+        }
+    ],
+    "Chilling Water": [
+        "Chilling Water",
+        "Water",
+        "Special",
+        20,
+        50,
+        100,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "target_stat_changes": [
+                100,
+                {
+                    "atk": -1
+                }
+            ],
+            "can_protect": true,
+            "can_mirror_move": true
+        }
+    ],
+    "Snowscape": [
+        "Snowscape",
+        "Ice",
+        "Status",
+        10,
+        0,
+        0,
+        false,
+        "all Pok\u00e9mon",
+        {
+            "weather": "Snow"
+        }
+    ],
+    "Trailblaze": [
+        "Trailblaze",
+        "Grass",
+        "Physical",
+        20,
+        50,
+        100,
+        true,
+        "any adjacent Pok\u00e9mon",
+        {
+            "user_stat_changes": [
+                100,
+                {
+                    "spe": 1
+                }
+            ],
+            "can_protect": true,
+            "can_mirror_move": true
+        }
+    ],
+    "Will-O-Wisp": [
+        "Will-O-Wisp",
+        "Fire",
+        "Status",
+        15,
+        0,
+        85,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "status_effect": [
+                100,
+                "Burned"
+            ],
+            "z_effect": {
+                "usc": [
+                    100,
+                    {
+                        "atk": 1
+                    }
+                ]
+            },
+            "can_protect": true,
+            "can_magic_coat": true,
+            "can_mirror_move": true
+        }
+    ],
+    "Calm Mind": [
+        "Calm Mind",
+        "Psychic",
+        "Status",
+        20,
+        0,
+        0,
+        false,
+        "the user",
+        {
+            "user_stat_changes": [
+                100,
+                {
+                    "spa": 1,
+                    "spd": 1
+                }
+            ],
+            "z_effect": {
+                "reset_low_stats": true
+            },
+            "can_snatch": true
+        }
+    ],
+    "Lick": [
+        "Lick",
+        "Ghost",
+        "Physical",
+        30,
+        30,
+        100,
+        true,
+        "any adjacent Pok\u00e9mon",
+        {
+            "status_effect": [
+                20,
+                "Paralyzed"
+            ],
+            "can_protect": true,
+            "can_mirror_move": true
+        }
+    ],
+    "Smog": [
+        "Smog",
+        "Poison",
+        "Special",
+        20,
+        30,
+        70,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "status_effect": [
+                40,
+                "Poisoned"
+            ],
+            "can_protect": true,
+            "can_mirror_move": true
+        }
+    ],
+    "Sludge": [
+        "Sludge",
+        "Poison",
+        "Special",
+        20,
+        65,
+        100,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "status_effect": [
+                30,
+                "Poisoned"
+            ],
+            "can_protect": true,
+            "can_mirror_move": true
+        }
+    ],
+    "Egg Bomb": [
+        "Egg Bomb",
+        "Normal",
+        "Physical",
+        10,
+        100,
+        75,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "ball_and_bomb": true
+        }
+    ],
+    "Bone Club": [
+        "Bone Club",
+        "Ground",
+        "Physical",
+        20,
+        65,
+        85,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "flinch": 10
+        }
+    ],
+    "Swift": [
+        "Swift",
+        "Normal",
+        "Special",
+        20,
+        60,
+        0,
+        false,
+        "all adjacent foes",
+        {
+            "can_protect": true,
+            "can_mirror_move": true
+        }
+    ],
+    "Amnesia": [
+        "Amnesia",
+        "Psychic",
+        "Status",
+        20,
+        0,
+        0,
+        false,
+        "the user",
+        {
+            "user_stat_changes": [
+                100,
+                {
+                    "spd": 2
+                }
+            ],
+            "z_effect": {
+                "reset_low_stats": true
+            },
+            "can_snatch": true
+        }
+    ],
+    "Soft-Boiled": [
+        "Soft-Boiled",
+        "Normal",
+        "Status",
+        5,
+        0,
+        0,
+        false,
+        "the user",
+        {
+            "z_effect": {
+                "reset_low_stats": true
+            },
+            "half_heal": true
+        }
+    ],
+    "High Jump Kick": [
+        "High Jump Kick",
+        "Fighting",
+        "Physical",
+        10,
+        130,
+        90,
+        true,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "crash": true
+        }
+    ],
+    "Glare": [
+        "Glare",
+        "Normal",
+        "Status",
+        30,
+        0,
+        100,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "status_effect": [
+                100,
+                "Paralyzed"
+            ],
+            "z_effect": {
+                "usc": [
+                    100,
+                    {
+                        "def": 1
+                    }
+                ]
+            },
+            "can_protect": true,
+            "can_magic_coat": true,
+            "can_mirror_move": true
+        }
+    ],
+    "Dream Eater": [
+        "Dream Eater",
+        "Psychic",
+        "Special",
+        15,
+        100,
+        100,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "absorbent": true,
+            "dream_eater": true
+        }
+    ],
+    "Poison Gas": [
+        "Poison Gas",
+        "Poison",
+        "Status",
+        40,
+        0,
+        90,
+        false,
+        "all adjacent foes",
+        {
+            "status_effect": [
+                100,
+                "Poisoned"
+            ],
+            "z_effect": {
+                "usc": [
+                    100,
+                    {
+                        "def": 1
+                    }
+                ]
+            },
+            "can_protect": true,
+            "can_magic_coat": true,
+            "can_mirror_move": true
+        }
+    ],
+    "Barrage": [
+        "Barrage",
+        "Normal",
+        "Physical",
+        20,
+        15,
+        85,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "multi25": true
+        }
+    ],
+    "Leech Life": [
+        "Leech Life",
+        "Bug",
+        "Physical",
+        10,
+        80,
+        100,
+        true,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "absorbent": true
+        }
+    ],
+    "Lovely Kiss": [
+        "Lovely Kiss",
+        "Normal",
+        "Status",
+        10,
+        0,
+        75,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "status_effect": [
+                100,
+                "Asleep"
+            ],
+            "z_effect": {
+                "usc": [
+                    100,
+                    {
+                        "spe": 1
+                    }
+                ]
+            },
+            "can_protect": true,
+            "can_magic_coat": true,
+            "can_mirror_move": true
+        }
+    ],
+    "Sky Attack": [
+        "Sky Attack",
+        "Flying",
+        "Physical",
+        5,
+        140,
+        90,
+        false,
+        "any Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "flinch": 30,
+            "raised_crit_ratio": true,
+            "two_turn": true
+        }
+    ],
+    "Bubble": [
+        "Bubble",
+        "Water",
+        "Special",
+        30,
+        40,
+        100,
+        false,
+        "all adjacent foes",
+        {
+            "target_stat_changes": [
+                10,
+                {
+                    "spe": -1
+                }
+            ],
+            "can_protect": true,
+            "can_mirror_move": true
+        }
+    ],
+    "Dizzy Punch": [
+        "Dizzy Punch",
+        "Normal",
+        "Physical",
+        10,
+        70,
+        100,
+        true,
+        "any adjacent Pok\u00e9mon",
+        {
+            "can_protect": true,
+            "can_mirror_move": true,
+            "confuse": 20
+        }
+    ],
+    "Spore": [
+        "Spore",
+        "Grass",
+        "Status",
+        15,
+        0,
+        100,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "status_effect": [
+                100,
+                "Asleep"
+            ],
+            "z_effect": {
+                "reset_low_stats": true
+            },
+            "can_protect": true,
+            "can_magic_coat": true,
+            "can_mirror_move": true,
+            "powder_based": true
+        }
+    ],
+    "Flash": [
+        "Flash",
+        "Normal",
+        "Status",
+        20,
+        0,
+        100,
+        false,
+        "any adjacent Pok\u00e9mon",
+        {
+            "target_stat_changes": [
+                100,
+                {
+                    "acc": -1
+                }
+            ],
+            "z_effect": {
+                "usc": [
+                    100,
+                    {
+                        "eva": 1
+                    }
+                ]
+            },
+            "can_protect": true,
+            "can_magic_coat": true,
+            "can_mirror_move": true
+        }
+    ]
+}
