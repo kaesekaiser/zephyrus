@@ -52,6 +52,6 @@ class TeraRaid:
 
 
 raids = {
-    5: {g: TeraRaid.from_json(j, 5) for g, j in json.load(open("pokemon/raids5.json", "r")).items()},
-    6: {g: TeraRaid.from_json(j, 6) for g, j in json.load(open("pokemon/raids6.json", "r")).items()}
+    5: {g: TeraRaid.from_json(j, 5) for g, j in json.load(open("pokemon/data/raids5.json", "r")).items()},
+    6: {g: TeraRaid.from_json(j, 6) for g, j in json.load(open("pokemon/data/raids6.json", "r")).items()}
 }

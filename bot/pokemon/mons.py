@@ -259,7 +259,7 @@ class Evolution:
         return self.read_out(False)
 
 
-with open("pokemon/evolutions.json", "r") as fp:
+with open("pokemon/data/evolutions.json", "r") as fp:
     evolutions = {g: [Evolution.from_json(k) for k in j] for g, j in json.load(fp).items()}
 
 
@@ -270,7 +270,7 @@ natures = [
     'Calm', 'Gentle', 'Careful', 'Quirky', 'Sassy',
     'Timid', 'Hasty', 'Jolly', 'Naive', 'Serious'
 ]
-ability_descriptions = json.load(open("pokemon/ability_descriptions.json"))
+ability_descriptions = json.load(open("pokemon/data/ability_descriptions.json"))
 abilities = list(ability_descriptions.keys())
 berries = [
     'Aguav Berry', 'Apicot Berry', 'Aspear Berry', 'Babiri Berry', 'Belue Berry', 'Bluk Berry', 'Charti Berry',
@@ -1217,7 +1217,7 @@ class Mon(BareMiniMon):
                     return PackedMove.null()
 
 
-nat_dex = {g: Species.from_json(j) for g, j in json.load(open("pokemon/mons.json", "r")).items()}
+nat_dex = {g: Species.from_json(j) for g, j in json.load(open("pokemon/data/mons.json", "r")).items()}
 nat_dex_order = list(nat_dex)
 
 
@@ -1228,8 +1228,8 @@ starters = [
 ]
 
 
-effectiveness = json.load(open("pokemon/eff.json", "r"))
-legal_abilities = json.load(open("pokemon/abilities.json", "r"))
+effectiveness = json.load(open("pokemon/data/eff.json", "r"))
+legal_abilities = json.load(open("pokemon/data/abilities.json", "r"))
 
 
 fixed_dex = {fix(g): g for g in nat_dex}
@@ -1312,12 +1312,12 @@ def add_new_mon(species: Species):
 
 
 def rewrite_mons():
-    with open("mons.json" if __name__ == "__main__" else "pokemon/mons.json", "w") as f:
+    with open("pokemon/data/mons.json", "w") as f:
         json.dump({k: v.json for k, v in nat_dex.items()}, f, indent=4)
 
 
 def rewrite_abilities():
-    with open("abilities.json" if __name__ == "__main__" else "pokemon/abilities.json", "w") as f:
+    with open("pokemon/data/abilities.json", "w") as f:
         json.dump({k: legal_abilities[k] for k in sorted(list(legal_abilities))}, f, indent=4)
 
 

@@ -540,7 +540,7 @@ class PackedMove:
         return ret
 
 
-battle_moves = {g: Move.from_json(j) for g, j in json.load(open("pokemon/moves.json", "r")).items()}
+battle_moves = {g: Move.from_json(j) for g, j in json.load(open("pokemon/data/moves.json", "r")).items()}
 
 
 two_turn_texts = {
@@ -613,4 +613,4 @@ class WikiMove:
         return f"https://pokemondb.net/move/{fix(self.name)}"
 
 
-wiki_moves = {g: WikiMove(**j) for g, j in json.load(open("pokemon/wikimoves.json", "r")).items()}
+wiki_moves = {g: WikiMove(**j) for g, j in json.load(open("pokemon/data/wikimoves.json", "r")).items()}

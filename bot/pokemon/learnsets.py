@@ -117,5 +117,5 @@ class Learnset:
         }
 
 
-with open("pokemon/learnsets.json", "r") as fp:
+with open("pokemon/data/learnsets.json", "r") as fp:
     learnsets = {k: {j: Learnset.from_json(g) for j, g in v.items()} for k, v in json.load(fp).items()}

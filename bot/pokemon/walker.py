@@ -275,12 +275,12 @@ class WalkerUser:
         return WalkerUser(no, [], [], {g: 0 for g in types}, [], [], {}, 0)
 
 
-with open("pokemon/locales.json", "r") as fp:
+with open("pokemon/walker/locales.json", "r") as fp:
     walker_locales = {g: Locale.from_json(j) for g, j in json.load(fp).items()}
 walker_locale_ids = {g.id: g for g in walker_locales.values()}
 
 
-with open("pokemon/charms.json", "r") as fp:
+with open("pokemon/walker/charms.json", "r") as fp:
     charms = {g: Charm.from_json(j) for g, j in json.load(fp).items()}
 charm_ids = {g.id: g for g in charms.values()}
 
