@@ -284,7 +284,7 @@ async def convert_command(ctx: commands.Context, *, text):
         except (ValueError, IndexError):
             raise commands.BadArgument
 
-    if text[0].lower().strip("°") in ("c", "f", "k", "r"):
+    elif text[0].lower().strip("°") in ("c", "f", "k", "r"):
         if len(text) == 1:
             return await tconvert_command(ctx, user_input, text[0])
         elif text[-1].lower().strip("°") in ("c", "f", "k", "r"):
