@@ -11,4 +11,3 @@ bot/pokemon/loader archive
 bot/pokemon/old
 bot/pokemon/update*
 bot/testing.py
-bot/utilities/words.txt
