@@ -1452,7 +1452,6 @@ async def remind_command(ctx: commands.Context, *, text: str):
     for match in re.finditer(regex, text):
         if len(match[0]) > 3:
             groups = match.groupdict(default=0)
-            print(match[0], groups)
             years = int(groups.get("years", 0))
             months = int(groups.get("months", 0))
             weeks = int(groups.get("weeks", 0))

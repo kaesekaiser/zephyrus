@@ -64,7 +64,7 @@ def subset_words(letters: str) -> list[str]:
 
 
 def pangrams(letters: str) -> list[str]:
-    return [g for g in spellable_words(letters) if all(c in letters for c in g)]
+    return [g for g in spellable_words(letters) if all(c in g for c in letters)]
 
 
 def format_letter_count(d: dict, length: int):
