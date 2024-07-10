@@ -102,7 +102,7 @@ async def connect4(ctx: commands.Context, opponent: User):
 async def jotto(ctx: commands.Context):
     jot = ClientEmol(":green_book:", hexcol("65c245"), ctx)
 
-    game = jo.Jotto(choice(wr.wordDict[4]))
+    game = jo.Jotto(choice(wr.word_dict[4]))
     await jot.say("The word has been chosen. Start guessing!",
                   d="To guess, reply with a four-letter word. To see your guess history, say **`history`**. "
                     "To forfeit, say **`forfeit`**. If you don't know what this is, do **`z!help jotto`**.")
@@ -122,7 +122,7 @@ async def jotto(ctx: commands.Context):
                 continue
             if guess == "forfeit":
                 return await jot.say(f"The word was **{game.word}**.")
-            if guess not in wr.wordDict[4]:
+            if guess not in wr.word_dict[4]:
                 await jot.say("That's not a valid word.")
                 continue
             if guess in game.history:
@@ -147,9 +147,9 @@ async def anagrams(ctx: commands.Context):
     message = await ana.say("Picking letters...")
 
     while True:
-        vowels = sample([g for g in wr.anagramsDist if g in "aeiou"], 1)  # just guarantee at least one vowel
-        letters = vowels + sample(wr.anagramsDist, 7)
-        if len(wr.anagrams("".join(letters))) > 20:
+        vowels = sample([g for g in wr.anagrams_dist if g in "aeiou"], 1)  # just guarantee at least one vowel
+        letters = vowels + sample(wr.anagrams_dist, 7)
+        if len(wr.subset_words("".join(letters))) > 20:
             break
 
     def form(lts: list):
@@ -168,7 +168,7 @@ async def anagrams(ctx: commands.Context):
         return {"d": f"{form(letters)}Time remaining: {round(timer())} s",
                 "footer": f"Used words: {none_list(sorted(guesses))} ({len(guesses)}/{len(words)})"}
 
-    words = wr.anagrams("".join(letters))
+    words = wr.subset_words("".join(letters))
     guesses = []
     start = time.time()
     await ana.edit(
@@ -240,7 +240,7 @@ class BoggleGame(Navigator):
 
     def find_possible_words(self) -> list[str]:
         possible = [
-            g for g in wr.wordList if set(c.upper() for c in re.sub("qu", "q", g)) <= set(self.board.board)
+            g for g in wr.word_list if set(c.upper() for c in re.sub("qu", "q", g)) <= set(self.board.board)
             and g[0].upper() in self.board.board and len(g) >= 3
         ]
         return [g for g in possible if self.board.find(g)]

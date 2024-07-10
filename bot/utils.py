@@ -560,7 +560,7 @@ def modified_lcs(s1: str, query: str):
     if query.lower() in s1.lower():  # name contains string, prioritizing shorter names + names that start with string
         return 0 + (len(s1) - len(query)) / 32 + (s1.lower().index(query.lower()) != 0)  # 0 < result < 2
     # sort remainder by longest common subsequence, shorter names first
-    return 32 - wr.lcs(s1.lower(), query.lower()) + len(s1) / 32 + 2  # result > 2
+    return 32 - wr.longest_common_subsequence(s1.lower(), query.lower()) + len(s1) / 32 + 2  # result > 2
 
 
 def find_user(guild: discord.Guild, s: str):

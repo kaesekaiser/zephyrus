@@ -92,18 +92,18 @@ async def wordlist_command(ctx: commands.Context, aor: str, *words: str):
         raise commands.CommandError("no words input")
     if aor == "check":
         words = sorted(list(set(g.lower() for g in words)))
-        in_words = [g for g in words if g in wr.wordList]
+        in_words = [g for g in words if g in wr.word_list]
         out_words = [g for g in words if g not in in_words]
         in_words = f"{zeph.emojis['yes']} In word list: `{' '.join(in_words)}`\n" if in_words else ""
         out_words = f"{zeph.emojis['no']} Not in word list: `{' '.join(out_words)}`" if out_words else ""
         return await ClientEmol(":blue_book:", hexcol("55acee"), ctx).say("Word Check", d=in_words + out_words)
 
     if aor == "add":
-        words = sorted(list(set(g.lower() for g in words if g.lower() not in wr.wordList)))
+        words = sorted(list(set(g.lower() for g in words if g.lower() not in wr.word_list)))
         if not words:
             raise commands.CommandError("Word(s) already in word list.")
     if aor == "remove":
-        words = sorted(list(set(g.lower() for g in words if g.lower() in wr.wordList)))
+        words = sorted(list(set(g.lower() for g in words if g.lower() in wr.word_list)))
         if not words:
             raise commands.CommandError("Word(s) not in word list.")
 
@@ -116,16 +116,16 @@ async def wordlist_command(ctx: commands.Context, aor: str, *words: str):
         return await succ.send(ctx, "Suggestion sent.")
     else:
         if aor == "add":
-            wr.wordList.extend(words)
+            wr.word_list.extend(words)
         else:
             for g in words:
                 try:
-                    wr.wordList.remove(g)
+                    wr.word_list.remove(g)
                 except ValueError:
                     pass
-        wr.wordDict.update({n: tuple(g for g in wr.wordList if len(g) == n) for n in range(1, 23)})
+        wr.word_dict.update({n: tuple(g for g in wr.word_list if len(g) == n) for n in range(1, 23)})
         with open("utilities/words.txt", "w") as f:
-            f.writelines("\n".join(sorted(wr.wordList)))
+            f.writelines("\n".join(sorted(wr.word_list)))
         return await succ.send(ctx, "Word list updated.")
 
 
