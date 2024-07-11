@@ -273,6 +273,8 @@ class BoggleGame(Navigator):
         if not self.paused:
             if emoji.lower() == "forfeit":
                 return await self.close()
+            elif len(emoji) < 3:
+                self.title = f"`{emoji.upper()}` is too short to score."
             elif emoji.lower() not in self.possible_words:
                 self.title = f"`{emoji.upper()}` isn't a word."
             elif emoji.lower() in self.board.guessed:
