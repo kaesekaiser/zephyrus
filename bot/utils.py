@@ -342,12 +342,6 @@ class Reminder:
         self.text = text
         self.time = int(timestamp)
 
-    async def send(self, bot: Zeph):
-        try:
-            await bot.get_user(self.author).send(f"**Reminder:** {self.text}")
-        except AttributeError:
-            print(f"A reminder failed to send: {str(self)}")
-
     def __str__(self):
         return f"{self.author}|{self.time}|{self.text}"
 
