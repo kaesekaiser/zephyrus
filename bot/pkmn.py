@@ -1,67 +1,29 @@
-from pkmn_battle import *
+import asyncio
+import datetime
+import discord
+import json
+import re
+import time
+from classes.bot import Zeph
+from classes.embeds import Emol, success
+from classes.interpreter import Interpreter
+from classes.menus import Navigator, Nativity, NumSelector, page_list
 from copy import deepcopy as copy
+from discord.ext import commands
+from functions import (a_or_an, admin_check, best_guess, can_int, caseless_match, fix, general_pred, hex_to_color,
+                       levenshtein, none_list, smallcaps, yesno)
 
-
-def find_mon(s: str | int | None, **kwargs) -> pk.BareMiniMon | pk.Mon:
-    """Use **kwargs to pass additional arguments to the Mon.__init__() statement."""
-    if kwargs.get("use_bare"):
-        return_class = pk.BareMiniMon
-    else:
-        return_class = pk.Mon
-
-    if isinstance(s, pk.BareMiniMon):
-        return s
-
-    if can_int(s) or isinstance(s, int):
-        if int(s) < 1 or int(s) > len(pk.nat_dex):
-            raise commands.CommandError(f"Use a dex number between 1 and {len(pk.nat_dex)}.")
-        return return_class(list(pk.nat_dex.keys())[int(s) - 1], **kwargs)
-    if s is None or s.lower() == "null":
-        return return_class.null()
-
-    if ret := pk.species_and_forms.get(pk.fix(s)):
-        return return_class(ret.species.name, form=ret.form.name, **kwargs)
-
-    for mon in pk.nat_dex:
-        if set(pk.fix(mon).split("-")) <= set(pk.fix(s).split("-")) or pk.alpha_fix(mon) == pk.alpha_fix(s):
-            ret = mon
-            break
-    else:
-        if pk.fix(s) == "nidoran":
-            ret = "Nidoran-F"
-        else:
-            if kwargs.get("fail_silently") or kwargs.get("return_on_fail"):
-                return kwargs.get("return_on_fail", return_class.null())
-            else:
-                guess = sorted(list(pk.fixed_dex), key=lambda c: wr.levenshtein(c, pk.fix(s)))
-                raise commands.CommandError(f"`{s}` not found. Did you mean {pk.fixed_dex[guess[0]]}?")
-
-    other_info = "-".join(g for g in pk.fix(s).split("-") if g not in pk.fix(ret).split("-"))
-    try:
-        return return_class(ret, form=pk.nat_dex[ret].get_form_name(other_info), **kwargs)
-    except ValueError:
-        return return_class(ret, **kwargs)
-
-
-def find_move(s: str, return_wiki: bool = True, fail_silently: bool = False) -> pk.Move | pk.WikiMove:
-    try:
-        if return_wiki:
-            return [j for g, j in pk.wiki_moves.items() if pk.alpha_fix(g) == pk.alpha_fix(s)][0]
-        return [j.copy() for g, j in pk.battle_moves.items() if pk.alpha_fix(g) == pk.alpha_fix(s)][0]
-    except IndexError:
-        if not fail_silently:
-            lis = {pk.fix(g): g for g in (pk.wiki_moves if return_wiki else pk.battle_moves)}
-            guess = sorted(list(lis), key=lambda c: wr.levenshtein(c, pk.fix(s)))
-            raise commands.CommandError(f"`{s}` not found. Did you mean {lis[guess[0]]}?")
+from pokemon import walker as pk
+from pkmn_battle import Battle
 
 
 def find_ability(s: str, fail_silently: bool = False) -> str:
     try:
-        return [g for g in pk.abilities if pk.fix(g) == pk.fix(s)][0]
+        return [g for g in pk.abilities if fix(g) == fix(s)][0]
     except IndexError:
         if not fail_silently:
-            lis = {pk.fix(g): g for g in pk.abilities}
-            guess = sorted(list(lis), key=lambda c: wr.levenshtein(c, pk.fix(s)))
+            lis = {fix(g): g for g in pk.abilities}
+            guess = sorted(list(lis), key=lambda c: levenshtein(c, fix(s)))
             raise commands.CommandError(f"`{s}` not found. Did you mean {lis[guess[0]]}?")
 
 
@@ -88,15 +50,15 @@ def scroll_list(ls: iter, at: int, curved: bool = False, wrap: bool = True) -> s
 
 
 class DexNavigator(Navigator):
-    def __init__(self, start: pk.BareMiniMon, **kwargs):
-        super().__init__(kwargs.get("emol", ball_emol()), prev=zeph.emojis["dex_prev"], nxt=zeph.emojis["dex_next"])
+    def __init__(self, bot: Zeph, start: pk.BareMiniMon, **kwargs):
+        super().__init__(bot, kwargs.get("emol", bot.ball_emol()), prev=bot.emojis["dex_prev"], nxt=bot.emojis["dex_next"])
         self.mon = start
         self.mode = kwargs.get("starting_mode")
         self.jumpDest = None
-        self.funcs[zeph.emojis["forms"]] = self.forms_mode
-        self.funcs[zeph.emojis["search"]] = self.jump_mode
-        self.funcs[zeph.emojis["help"]] = self.help_mode
-        self.funcs[zeph.emojis["no"]] = self.close
+        self.funcs[self.bot.emojis["forms"]] = self.forms_mode
+        self.funcs[self.bot.emojis["search"]] = self.jump_mode
+        self.funcs[self.bot.emojis["help"]] = self.help_mode
+        self.funcs[self.bot.emojis["no"]] = self.close
         self.funcs["!jump"] = self.jump
         self.funcs["!wait"] = self.do_nothing
         self.last_guess = None
@@ -117,7 +79,7 @@ class DexNavigator(Navigator):
         if isinstance(self.jumpDest, pk.Mon):
             self.mon = self.jumpDest
         else:
-            self.mon = find_mon(self.jumpDest, use_bare=True)
+            self.mon = pk.find_mon(self.jumpDest, use_bare=True)
         self.jumpDest = None
         self.mode = None
         self.last_guess = None
@@ -126,7 +88,7 @@ class DexNavigator(Navigator):
         if not self.mode:
             return self.emol.con(
                 f"#{str(self.mon.dex_no).rjust(4, '0')} {self.mon.full_name}",
-                thumb=self.mon.dex_image, d=display_mon(self.mon, "dex")
+                thumb=self.mon.dex_image, d=self.bot.display_mon(self.mon, "dex")
             )
         elif self.mode == "forms":
             return self.emol.con(
@@ -141,19 +103,21 @@ class DexNavigator(Navigator):
             )
         elif self.mode == "help":
             return self.emol.con(
-                "Help", d=f"Use the reactions as buttons to navigate the Pok\u00e9dex!\n\n"
-                          f"{zeph.emojis['dex_prev']} and {zeph.emojis['dex_next']} scroll between different "
-                          f"Pok\u00e9mon or menu options.\n"
-                          f"{zeph.emojis['forms']} lets you change between different forms of a Pok\u00e9mon.\n"
-                          f"{zeph.emojis['search']} lets you find a specific Pok\u00e9mon.\n{zeph.emojis['help']} "
-                          f"brings you here.\n{zeph.emojis['no']} closes the Pok\u00e9dex."
-                          f"\n\nHitting the same button again will take you back to the Pok\u00e9mon data screen."
+                "Help",
+                d=f"Use the reactions as buttons to navigate the Pok\u00e9dex!\n\n"
+                  f"{self.bot.emojis['dex_prev']} and {self.bot.emojis['dex_next']} scroll between different "
+                  f"Pok\u00e9mon or menu options.\n"
+                  f"{self.bot.emojis['forms']} lets you change between different forms of a Pok\u00e9mon.\n"
+                  f"{self.bot.emojis['search']} lets you find a specific Pok\u00e9mon.\n"
+                  f"{self.bot.emojis['help']} brings you here.\n"
+                  f"{self.bot.emojis['no']} closes the Pok\u00e9dex."
+                  f"\n\nHitting the same button again will take you back to the Pok\u00e9mon data screen."
             )
 
     def advance_page(self, direction: int):
         if direction:
             if not self.mode:
-                self.mon = find_mon(self.mon.dex_no + direction, use_bare=True)
+                self.mon = pk.find_mon(self.mon.dex_no + direction, use_bare=True)
             elif self.mode == "forms":
                 self.mon = pk.Mon(
                     self.mon.species, form=list(self.mon.species.forms)[
@@ -164,7 +128,7 @@ class DexNavigator(Navigator):
 
     async def get_emoji(self, ctx: commands.Context):
         if self.mode == "jump":
-            def pred(mr: MR, u: User):
+            def pred(mr: discord.Message | discord.Reaction, u: discord.User):
                 if isinstance(mr, discord.Message):
                     if can_int(mr.content):
                         return u == ctx.author and int(mr.content) in range(1, len(pk.nat_dex) + 1) \
@@ -173,7 +137,7 @@ class DexNavigator(Navigator):
                 else:
                     return u == ctx.author and mr.emoji in self.funcs and mr.message.id == self.message.id
 
-            mess = (await zeph.wait_for(
+            mess = (await self.bot.wait_for(
                 'reaction_or_message', timeout=self.timeout, check=pred
             ))[0]
             if isinstance(mess, discord.Message):
@@ -182,7 +146,7 @@ class DexNavigator(Navigator):
                     self.jumpDest = int(mess.content)
                 except ValueError:
                     try:
-                        self.jumpDest = find_mon(mess.content, use_bare=True)
+                        self.jumpDest = pk.find_mon(mess.content, use_bare=True)
                     except commands.CommandError as e:
                         self.last_guess = str(e)
                         return "!wait"
@@ -190,7 +154,7 @@ class DexNavigator(Navigator):
                 return "!jump"
             elif isinstance(mess, discord.Reaction):
                 return mess.emoji
-        return (await zeph.wait_for(
+        return (await self.bot.wait_for(
             'reaction_add', timeout=self.timeout, check=lambda r, u: r.emoji in self.legal and
             r.message.id == self.message.id and u == ctx.author
         ))[0].emoji
@@ -215,14 +179,14 @@ class DexSearchNavigator(Navigator):
         "spdef": "spd", "spdefense": "spd", "specialdefense": "spd", "speed": "spe", "stats": "bst", "dex": "number"
     }
 
-    def __init__(self, **kwargs):
-        super().__init__(ball_emol(), per=8, prev=zeph.emojis["dex_prev"], nxt=zeph.emojis["dex_next"], timeout=180)
+    def __init__(self, bot: Zeph, **kwargs):
+        super().__init__(bot, bot.ball_emol(), per=8, prev=bot.emojis["dex_prev"], nxt=bot.emojis["dex_next"], timeout=180)
         self.mode = kwargs.get("mode", None)
         self.dex = copy(pk.nat_dex)
         self.funcs["⏯"] = self.jump_to_midpoint
-        self.funcs[zeph.emojis["settings"]] = self.settings_mode
-        self.funcs[zeph.emojis["help"]] = self.help_mode
-        self.funcs[zeph.emojis["no"]] = self.close
+        self.funcs[self.bot.emojis["settings"]] = self.settings_mode
+        self.funcs[self.bot.emojis["help"]] = self.help_mode
+        self.funcs[self.bot.emojis["no"]] = self.close
         self.funcs["!wait"] = self.do_nothing
 
         self.gen = None
@@ -333,10 +297,10 @@ class DexSearchNavigator(Navigator):
         elif option == "sort":
             return DexSearchNavigator.sort_redirects.get(value, value) in DexSearchNavigator.sorts
         elif option == "learns":
-            return all(find_move(g, fail_silently=True) is not None for g in re.split(r",\s*?(?=[a-z])", value)) or \
-                value == "none"
+            return all(pk.find_move(g, fail_silently=True) is not None for g in re.split(r",\s*?(?=[a-z])", value)) \
+                or value == "none"
         elif option == "ability":
-            return pk.fix(value) in [pk.fix(g) for g in pk.abilities]
+            return fix(value) in [fix(g) for g in pk.abilities]
         else:
             return False
 
@@ -357,9 +321,9 @@ class DexSearchNavigator(Navigator):
             if value == "none" or value == "any":
                 self.learns = []
             else:  # returns a list of correctly-formatted move names
-                self.learns = [find_move(g, fail_silently=True).name for g in re.split(r",\s*?(?=[a-z])", value)]
+                self.learns = [pk.find_move(g, fail_silently=True).name for g in re.split(r",\s*?(?=[a-z])", value)]
         if option == "ability":
-            self.ability = None if value == "any" else [g for g in pk.abilities if pk.fix(g) == pk.fix(value)][0]
+            self.ability = None if value == "any" else [g for g in pk.abilities if fix(g) == fix(value)][0]
 
     def con(self):
         def ain(x):
@@ -369,11 +333,11 @@ class DexSearchNavigator(Navigator):
             return self.emol.con(
                 "Search Settings",
                 d=f"To change a setting, say `<option>:<value>` - for example, `gen:7`. "
-                  f"Hit {zeph.emojis['help']} for more info on each filter. "
-                  f"Hit {zeph.emojis['settings']} again to go to the search results.",
+                  f"Hit {self.bot.emojis['help']} for more info on each filter. "
+                  f"Hit {self.bot.emojis['settings']} again to go to the search results.",
                 same_line=True,
                 fs={"Generation (`gen`)": ain(self.gen),
-                    "Types (`types`)": ain(" / ".join(display_type(g) for g in self.types)),
+                    "Types (`types`)": ain(" / ".join(self.bot.display_type(g) for g in self.types)),
                     "Starts with (`name`)": ain(self.name), "Sort (`sort`)": self.sort_name,
                     "Learns the moves... (`learns`)": none_list(self.learns), "Ability (`ability`)": ain(self.ability)},
                 footer=f"Total Pokémon meeting criteria: {len(self.table)}"
@@ -414,13 +378,13 @@ class DexSearchNavigator(Navigator):
 
     async def get_emoji(self, ctx: commands.Context):
         if self.mode == "settings":
-            def pred(mr: MR, u: User):
+            def pred(mr: discord.Message | discord.Reaction, u: discord.User):
                 if isinstance(mr, discord.Message):
                     return u == ctx.author and mr.channel == ctx.channel and self.is_valid_setting(mr.content.lower())
                 else:
                     return u == ctx.author and mr.emoji in self.funcs and mr.message.id == self.message.id
 
-            mess = (await zeph.wait_for(
+            mess = (await self.bot.wait_for(
                 'reaction_or_message', timeout=self.timeout, check=pred
             ))[0]
             if isinstance(mess, discord.Message):
@@ -431,41 +395,23 @@ class DexSearchNavigator(Navigator):
             elif isinstance(mess, discord.Reaction):
                 return mess.emoji
 
-        return (await zeph.wait_for(
+        return (await self.bot.wait_for(
             'reaction_add', timeout=self.timeout, check=lambda r, u: r.emoji in self.legal and
             r.message.id == self.message.id and u == ctx.author
         ))[0].emoji
 
 
-@zeph.command(
-    name="pokedex", hidden=True,
-    aliases=["dex"], usage="z!pokedex [pok\u00e9mon | dex number]\nz!pokedex help\nz!pokedex search [terms...]",
-    description="Browses the Pok\u00e9dex.",
-    help="**NOTE: `z!dex` is being deprecated in favor of `z!pokemon dex`.\n\n"
-         "Opens the Pok\u00e9dex! `z!dex [pok\u00e9mon...]` or `z!dex [dex number]` will start you at a "
-         "specific Pok\u00e9mon; otherwise, it starts at everyone's favorite, Bulbasaur. "
-         "`z!dex help` gives help with navigating the dex.\n\nYou can even name a specific form of a "
-         "Pok\u00e9mon - e.g. `z!dex giratina origin` starts at Giratina, in Origin Forme.\n\n"
-         "`z!dex search` will lead you to a separate menu which lets you sort and filter through the Pok\u00e9dex. "
-         "You can change search terms from there; you can also include the search terms in your command, e.g. "
-         "`z!dex search type:fire gen:5`."
-)
-async def dex_command(ctx: commands.Context, *mon: str):
-    await err.send(ctx, "`z!dex` is being deprecated. Use `z!pokemon dex` instead.")
-    return await PokemonInterpreter(ctx).run("dex", *mon)
-
-
 class EffNavigator(Navigator):
     types = (None,) + pk.types
 
-    def __init__(self, type1: str, type2: str = None, initial_mon: pk.Mon = find_mon("NULL")):
-        super().__init__(ball_emol(), prev="", nxt="")
+    def __init__(self, bot: Zeph, type1: str, type2: str = None, initial_mon: pk.Mon = pk.find_mon("NULL")):
+        super().__init__(bot, bot.ball_emol(), prev="", nxt="")
         self.type1 = type1
         self.type2 = type2
-        self.funcs[zeph.emojis["left1"]] = self.type1bac
-        self.funcs[zeph.emojis["right1"]] = self.type1for
-        self.funcs[zeph.emojis["left2"]] = self.type2bac
-        self.funcs[zeph.emojis["right2"]] = self.type2for
+        self.funcs[self.bot.emojis["left1"]] = self.type1bac
+        self.funcs[self.bot.emojis["right1"]] = self.type1for
+        self.funcs[self.bot.emojis["left2"]] = self.type2bac
+        self.funcs[self.bot.emojis["right2"]] = self.type2for
         self.initial_mon = initial_mon
 
     @property
@@ -474,12 +420,12 @@ class EffNavigator(Navigator):
             return pk.effectiveness[atk].get(dfn1, 1) * pk.effectiveness[atk].get(dfn2, 1)
 
         ret = {
-            "4x": ", ".join([f"{zeph.emojis[g]} {g}" for g in pk.types if eff(g, self.type1, self.type2) == 4]),
-            "2x": ", ".join([f"{zeph.emojis[g]} {g}" for g in pk.types if eff(g, self.type1, self.type2) == 2]),
-            "1x": ", ".join([f"{zeph.emojis[g]} {g}" for g in pk.types if eff(g, self.type1, self.type2) == 1]),
-            "½x": ", ".join([f"{zeph.emojis[g]} {g}" for g in pk.types if eff(g, self.type1, self.type2) == 0.5]),
-            "¼x": ", ".join([f"{zeph.emojis[g]} {g}" for g in pk.types if eff(g, self.type1, self.type2) == 0.25]),
-            "0x": ", ".join([f"{zeph.emojis[g]} {g}" for g in pk.types if eff(g, self.type1, self.type2) == 0])
+            "4x": ", ".join([f"{self.bot.emojis[g]} {g}" for g in pk.types if eff(g, self.type1, self.type2) == 4]),
+            "2x": ", ".join([f"{self.bot.emojis[g]} {g}" for g in pk.types if eff(g, self.type1, self.type2) == 2]),
+            "1x": ", ".join([f"{self.bot.emojis[g]} {g}" for g in pk.types if eff(g, self.type1, self.type2) == 1]),
+            "½x": ", ".join([f"{self.bot.emojis[g]} {g}" for g in pk.types if eff(g, self.type1, self.type2) == 0.5]),
+            "¼x": ", ".join([f"{self.bot.emojis[g]} {g}" for g in pk.types if eff(g, self.type1, self.type2) == 0.25]),
+            "0x": ", ".join([f"{self.bot.emojis[g]} {g}" for g in pk.types if eff(g, self.type1, self.type2) == 0])
         }
         return {g: j for g, j in ret.items() if j}
 
@@ -505,78 +451,40 @@ class EffNavigator(Navigator):
             return None
 
     def con(self):
-        second_type = f"{zeph.emojis[self.type2.title()]} `{self.type2}`" if self.type2 else "`None`"
+        second_type = f"{self.bot.emojis[self.type2.title()]} `{self.type2}`" if self.type2 else "`None`"
         return self.emol.con(
             "Type Effectiveness", thumb=self.image,
-            d=f"{zeph.emojis['left1']} [{zeph.emojis[self.type1.title()]} `{self.type1}`] {zeph.emojis['right1']} / "
-              f"{zeph.emojis['left2']} [{second_type}] {zeph.emojis['right2']}\n\n" +
+            d=f"{self.bot.emojis['left1']} [{self.bot.emojis[self.type1.title()]} `{self.type1}`] "
+              f"{self.bot.emojis['right1']} / "
+              f"{self.bot.emojis['left2']} [{second_type}] {self.bot.emojis['right2']}\n\n" +
               "\n\n".join([f"**{g}:** {j}" for g, j in self.eff_dict.items()])
         )
 
 
-def display_raid(raid: pk.TeraRaid, mode: str):
-    mon = find_mon(raid.species, use_bare=True)
-
-    if mode == "default":
-        ret = []
-        if raid.game != "Both":
-            ret.append(f"Only available in **{raid.game}**.")
-        if raid.type not in ["Random", "Default"]:
-            ret.append(f"Always **{display_type(raid.type)}-type**.")
-        if ret:
-            ret.append("")
-
-        if raid.battle_level == raid.catch_level:
-            ret.append(f"**Level:** {raid.battle_level}")
-        else:
-            ret.append(f"**Battled** at Lv. {raid.battle_level}; **caught** at Lv. {raid.catch_level}.")
-
-        if raid.ability == "Hidden Ability":
-            ret.append(f"**Ability:** {mon.hidden_ability} (Hidden Ability)")
-        elif raid.ability == "Standard":
-            ret.append(f"**Ability:** {mon.regular_abilities[0]}")
-        else:
-            if len(mon.legal_abilities) == 1:
-                ret.append(f"**Ability:** {mon.legal_abilities[0]}")
-            else:
-                ret.append(f"**Possible Abilities:** {grammatical_join(mon.legal_abilities, 'or')}")
-
-        ret.append(f"**Moves:** {', '.join(display_move(find_move(g), 'list') for g in raid.moves)}")
-
-        return "\n".join(ret)
-
-    elif mode == "drops":
-        return "\n".join(str(g) for g in raid.drops)
-
-    elif mode == "dex":
-        return display_mon(mon, "dex")
-
-
 class RaidNavigator(Navigator):
-    def __init__(self, raid: pk.TeraRaid, **kwargs):
+    def __init__(self, bot: Zeph, raid: pk.TeraRaid, **kwargs):
         super().__init__(
-            kwargs.get("emol", ball_emol("master")), title=raid.name, prev="", nxt="", timeout=120
+            bot, kwargs.get("emol", bot.ball_emol("master")), title=raid.name, prev="", nxt="", timeout=120
         )
         self.raid = raid
-        self.mon = find_mon(raid.species, use_bare=True)
+        self.mon = pk.find_mon(raid.species, use_bare=True)
         self.mode = "default"
-        self.funcs[zeph.emojis["moves"]] = partial(self.change_mode, "default")
-        self.funcs[zeph.emojis["rare_candy"]] = partial(self.change_mode, "drops")
-        self.funcs[zeph.emojis["poke_ball"]] = partial(self.change_mode, "dex")
+        self.funcs[self.bot.emojis["moves"]] = partial(self.change_mode, "default")
+        self.funcs[self.bot.emojis["rare_candy"]] = partial(self.change_mode, "drops")
+        self.funcs[self.bot.emojis["poke_ball"]] = partial(self.change_mode, "dex")
 
     def change_mode(self, mode: str):
         self.mode = mode
 
-    @staticmethod
-    def display_action(action: str) -> str:
+    def display_action(self, action: str) -> str:
         if action == "reset self":
             return "Resets own stats"
         elif action == "reset player":
             return "Resets player stats"
         elif action == "tera charge":
             return "Steals Tera Orb charge"
-        elif move := find_move(action, fail_silently=True):
-            return display_move(move, 'list')
+        elif move := pk.find_move(action, fail_silently=True):
+            return self.bot.display_move(move, 'list')
         else:
             return action
 
@@ -595,7 +503,7 @@ class RaidNavigator(Navigator):
         return self.emol.con(
             f"#{str(self.mon.dex_no).rjust(4, '0')} {self.mon.full_name}" if self.mode == "dex" else
             f"{self.raid.name} Drops" if self.mode == "drops" else self.raid.name,
-            d=display_raid(self.raid, self.mode), fs=(self.action_fields if self.mode == "default" else {}),
+            d=self.bot.display_raid(self.raid, self.mode), fs=(self.action_fields if self.mode == "default" else {}),
             same_line=True, thumb=self.mon.dex_image
         )
 
@@ -610,26 +518,26 @@ class LearnsetNavigator(Navigator):
         "tm": "Compatible TMs"
     }
 
-    def __init__(self, mon: pk.Mon, gen: str = "SV", **kwargs):
+    def __init__(self, bot: Zeph, mon: pk.Mon, gen: str = "SV", **kwargs):
         super().__init__(
-            kwargs.get("emol", ball_emol()), per=8,
-            prev=zeph.emojis["dex_prev"], nxt=zeph.emojis["dex_next"], timeout=120
+            bot, kwargs.get("emol", ball_emol()), per=8,
+            prev=bot.emojis["dex_prev"], nxt=bot.emojis["dex_next"], timeout=120
         )
         self.mon = mon
         self.gen = gen
         self.mode = "level"
         if self.learnset:
-            self.funcs[zeph.emojis["rare_candy"]] = partial(self.change_mode, "level")
+            self.funcs[self.bot.emojis["rare_candy"]] = partial(self.change_mode, "level")
             if self.learnset.evo:
-                self.funcs[zeph.emojis["thunder_stone"]] = partial(self.change_mode, "evo")
+                self.funcs[self.bot.emojis["thunder_stone"]] = partial(self.change_mode, "evo")
             if self.learnset.prior:
-                self.funcs[zeph.emojis["eviolite"]] = partial(self.change_mode, "prior")
+                self.funcs[self.bot.emojis["eviolite"]] = partial(self.change_mode, "prior")
             if self.learnset.reminder:
-                self.funcs[zeph.emojis["heart_scale"]] = partial(self.change_mode, "reminder")
+                self.funcs[self.bot.emojis["heart_scale"]] = partial(self.change_mode, "reminder")
             if self.learnset.egg:
-                self.funcs[zeph.emojis["pokemon_egg"]] = partial(self.change_mode, "egg")
+                self.funcs[self.bot.emojis["pokemon_egg"]] = partial(self.change_mode, "egg")
             if self.learnset.tm:
-                self.funcs[zeph.emojis["technical_machine"]] = partial(self.change_mode, "tm")
+                self.funcs[self.bot.emojis["technical_machine"]] = partial(self.change_mode, "tm")
         else:
             self.prev = ""
             self.next = ""
@@ -655,17 +563,17 @@ class LearnsetNavigator(Navigator):
     def formatted_page(self):
         if self.mode == "level":
             return "\n".join(
-                f"`Lv.{str(g).rjust(2, ' ')}:` **{display_move(find_move(j), 'list')}**"
+                f"`Lv.{str(g).rjust(2, ' ')}:` **{self.bot.display_move(pk.find_move(j), 'list')}**"
                 for g, j in page_list(self.selected_table, self.per, self.page)
             )
         elif self.mode == "tm":
             return "\n".join(
-                f"`{k}` **{display_move(find_move(v), 'list')}**"
+                f"`{k}` **{self.bot.display_move(pk.find_move(v), 'list')}**"
                 for k, v in page_list(list(self.selected_table.items()), self.per, self.page)
             )
         else:
             return "\n".join(
-                f"\\- **{display_move(find_move(g), 'list')}**"
+                f"\\- **{self.bot.display_move(pk.find_move(g), 'list')}**"
                 for g in page_list(self.selected_table, self.per, self.page)
             )
 
@@ -684,41 +592,21 @@ class LearnsetNavigator(Navigator):
             )
 
 
-@zeph.command(
-    name="pokemon", aliases=["pkmn", "pk"], usage="z!pokemon help",
-    description="Performs various Pok\u00e9mon-related functions.",
-    help="Performs a variety of Pok\u00e9mon-related functions. I'm continually adding to this, so just use "
-         "`z!pokemon help` for more details."
-)
-async def pokemon_command(ctx: commands.Context, func: str = None, *args):
-    if not func:
-        return await ball_emol().send(
-            ctx, "It's Pok\u00e9mon.",
-            d="This command is gonna do a good bit eventually. For now it's not much; see `z!pokemon help` for info."
-        )
-
-    return await PokemonInterpreter(ctx).run(str(func).lower(), *args)
-
-
-def type_emol(typ: str):
-    return Emol(zeph.emojis[typ.title()], hexcol(pk.type_colors[typ]))
-
-
 class BuildAMonNavigator(Navigator):
     editable_properties = [
         "species", "form", "level", "tera", "item", "ability", "moves", "nature", "evs", "ivs", "gender", "nickname",
         "key"
     ]
 
-    def __init__(self, ctx: commands.Context, title: str = "Build-A-Mon", **kwargs):
-        super().__init__(kwargs.get("emol", ball_emol()), prev="", nxt="", timeout=300)
+    def __init__(self, bot: Zeph, ctx: commands.Context, title: str = "Build-A-Mon", **kwargs):
+        super().__init__(bot, kwargs.get("emol", bot.ball_emol()), prev="", nxt="", timeout=300)
         self.ctx = ctx
         self.title = title
-        self.mon = kwargs.get("starting_mon", find_mon("Bulbasaur"))
+        self.mon = kwargs.get("starting_mon", pk.find_mon("Bulbasaur"))
         self.saved = False
         self.cancelled = False
         self.funcs["💾"] = self.save_and_exit
-        self.funcs[zeph.emojis["no"]] = self.cancel
+        self.funcs[self.bot.emojis["no"]] = self.cancel
         self.delete_on_close = kwargs.get("delete_on_close", False)
 
     async def save_and_exit(self):
@@ -739,7 +627,7 @@ class BuildAMonNavigator(Navigator):
     @staticmethod
     def species_exists(s: str):
         try:
-            find_mon(s)
+            pk.find_mon(s)
         except commands.CommandError:
             return False
         else:
@@ -748,7 +636,7 @@ class BuildAMonNavigator(Navigator):
     @staticmethod
     def move_exists(s: str):
         try:
-            find_move(s)
+            pk.find_move(s)
         except commands.CommandError:
             return s.lower() in ["reorder", "done"]
         else:
@@ -800,13 +688,13 @@ class BuildAMonNavigator(Navigator):
         raise asyncio.TimeoutError
 
     async def get_emoji(self, ctx: commands.Context):
-        def pred(mr: MR, u: User = self.ctx.author):
+        def pred(mr: discord.Message | discord.Reaction, u: discord.User = self.ctx.author):
             if isinstance(mr, discord.Message):
                 return general_pred(self.ctx)(mr) and mr.content.lower() in self.editable_properties
             elif isinstance(mr, discord.Reaction):
                 return mr.emoji in self.legal and mr.message.id == self.message.id and u == self.ctx.author
 
-        user_input = (await zeph.wait_for("reaction_or_message", check=pred, timeout=self.timeout))[0]
+        user_input = (await self.bot.wait_for("reaction_or_message", check=pred, timeout=self.timeout))[0]
         if isinstance(user_input, discord.Message):
             await user_input.delete()
             return user_input.content.lower()
@@ -849,7 +737,7 @@ class BuildAMonNavigator(Navigator):
             "move_swap": valid_move_swap
         }
         necessary_check = additional_checks.get(message_type, lambda m: True)
-        mess = await zeph.wait_for(
+        mess = await self.bot.wait_for(
             "message", check=lambda m: general_pred(self.ctx)(m) and bool(necessary_check(m.content)),
             timeout=self.timeout
         )
@@ -859,7 +747,7 @@ class BuildAMonNavigator(Navigator):
         else:
             return mess.content
 
-    async def run_nonstandard_emoji(self, emoji: Union[discord.Emoji, str], ctx: commands.Context):
+    async def run_nonstandard_emoji(self, emoji: discord.Emoji | str, ctx: commands.Context):
         if emoji == "moves":
             return await self.edit_moves()
         if emoji == "form" and len(self.mon.species.forms) == 1:
@@ -898,7 +786,7 @@ class BuildAMonNavigator(Navigator):
         )
         user_input = await self.wait_for(emoji, force_lower=emoji not in ["key", "nickname"])
         if emoji == "species":
-            mon = find_mon(user_input)
+            mon = pk.find_mon(user_input)
             pack = self.mon.pack
             pack["spc"] = mon.species
             pack["form"] = mon.form.name
@@ -942,7 +830,7 @@ class BuildAMonNavigator(Navigator):
 
     @property
     def fancy_move_list(self):
-        return "\n".join(display_move(g, "inline") for g in self.mon.moves)
+        return "\n".join(self.bot.display_move(g, "inline") for g in self.mon.moves)
 
     async def edit_moves(self):
         mess = await self.emol.send(
@@ -975,7 +863,7 @@ class BuildAMonNavigator(Navigator):
                         self.mon.moves[swap[0] - 1] = self.mon.moves[swap[1] - 1]
                         self.mon.moves[swap[1] - 1] = temp
             else:
-                move = find_move(move_name, False).pack
+                move = pk.find_move(move_name, False).pack
                 if len(self.mon.moves) < 4:
                     self.mon.add_move(move)
                     await self.emol.edit(mess, f"{self.mon.name} learned {move.name}!")
@@ -998,17 +886,17 @@ class BuildAMonNavigator(Navigator):
 
     def con(self):
         return self.emol.con(
-            self.title, d=display_mon(self.mon, "builder"),
+            self.title, d=self.bot.display_mon(self.mon, "builder"),
             footer=f"To change something, say the name of the value you'd like to edit.",
             thumbnail=self.mon.dex_image
         )
 
 
 class BuildATeamNavigator(Navigator):
-    def __init__(self, ctx: commands.Context, team: pk.Team = pk.Team("Build-A-Team"), **kwargs):
+    def __init__(self, bot: Zeph, ctx: commands.Context, team: pk.Team = pk.Team("Build-A-Team"), **kwargs):
         super().__init__(
-            kwargs.get("emol", ball_emol()), per=1, title=kwargs.get("title", "Build-A-Team"), prev="🔼", nxt="🔽",
-            timeout=300
+            bot, kwargs.get("emol", bot.ball_emol()), per=1, title=kwargs.get("title", "Build-A-Team"),
+            prev="🔼", nxt="🔽", timeout=300
         )
         self.ctx = ctx
         self.team = team
@@ -1016,10 +904,10 @@ class BuildATeamNavigator(Navigator):
         self.cancelled = False
         self.funcs["📝"] = self.edit
         self.funcs["⤴"] = self.set_lead
-        self.funcs[zeph.emojis["plus"]] = self.add
-        self.funcs[zeph.emojis["minus"]] = self.remove
+        self.funcs[self.bot.emojis["plus"]] = self.add
+        self.funcs[self.bot.emojis["minus"]] = self.remove
         self.funcs["💾"] = self.save_and_exit
-        self.funcs[zeph.emojis["no"]] = self.cancel
+        self.funcs[self.bot.emojis["no"]] = self.cancel
 
     @property
     def mon(self):
@@ -1029,7 +917,8 @@ class BuildATeamNavigator(Navigator):
 
     async def get_mon(self, new: bool = False):
         bam = BuildAMonNavigator(
-            self.ctx, starting_mon=find_mon("Bulbasaur") if new else self.mon, delete_on_close=True, emol=self.emol
+            self.bot, self.ctx, starting_mon=pk.find_mon("Bulbasaur") if new else self.mon,
+            delete_on_close=True, emol=self.emol
         )
         try:
             await bam.run(self.ctx)
@@ -1077,13 +966,13 @@ class BuildATeamNavigator(Navigator):
             self.title,
             d=none_list([
                 f"{'**' + bs + '>' if n == self.page - 1 else '-'} "
-                f"{display_mon(g, 'team_builder')}"
+                f"{self.bot.display_mon(g, 'team_builder')}"
                 f"{'**' if n == self.page - 1 else ''}"
                 for n, g in enumerate(self.team.mons)
             ], "\n", "*you have no pokemon lol*") +
             f"\n\n📝 edit selection\n⤴ set lead\n"
-            f"{zeph.emojis['plus']} add new mon\n{zeph.emojis['minus']} remove selection\n"
-            f"💾 save and exit\n{zeph.emojis['no']} exit without saving"
+            f"{self.bot.emojis['plus']} add new mon\n{self.bot.emojis['minus']} remove selection\n"
+            f"💾 save and exit\n{self.bot.emojis['no']} exit without saving"
         )
 
 
@@ -1093,9 +982,9 @@ class CatchRateNavigator(Navigator):
         "fishing", "turn", "repeat", "dex", "badges", "hp"
     ]
 
-    def __init__(self, **kwargs):
-        super().__init__(ball_emol(), timeout=120)
-        self.calculator = pk.CatchRate(kwargs.get("ball", "poke"), kwargs.get("mon", find_mon(1)))
+    def __init__(self, bot: Zeph, **kwargs):
+        super().__init__(bot, bot.ball_emol(), timeout=120)
+        self.calculator = pk.CatchRate(kwargs.get("ball", "poke"), kwargs.get("mon", pk.find_mon(1)))
 
     @property
     def wild_mon(self):
@@ -1111,13 +1000,13 @@ class CatchRateNavigator(Navigator):
         ]
 
     async def get_emoji(self, ctx: commands.Context):
-        def pred(mr: MR, u: User = ctx.author):
+        def pred(mr: discord.Message | discord.Reaction, u: discord.User = ctx.author):
             if isinstance(mr, discord.Message):
                 return general_pred(ctx)(mr) and mr.content.lower() in self.editable_parameters
             elif isinstance(mr, discord.Reaction):
                 return mr.emoji in self.legal and mr.message.id == self.message.id and u == ctx.author
 
-        user_input = (await zeph.wait_for("reaction_or_message", check=pred, timeout=self.timeout))[0]
+        user_input = (await self.bot.wait_for("reaction_or_message", check=pred, timeout=self.timeout))[0]
         if isinstance(user_input, discord.Message):
             await user_input.delete()
             return user_input.content.lower()
@@ -1133,14 +1022,14 @@ class CatchRateNavigator(Navigator):
             return s.lower() in ["y", "yes", "n", "no"]
 
         additional_checks = {
-            "species": lambda c: find_mon(c, fail_silently=True),
+            "species": lambda c: pk.find_mon(c, fail_silently=True),
             "level": lambda c: can_int(c) and (1 <= int(c) <= 100),
             "ball": lambda c: caseless_match(c.split()[0], pk.poke_ball_types),
             "status": lambda c: caseless_match(c, ["None", *pk.status_conditions]),
             "surfing": is_yesno,
             "dark": is_yesno,
             "my_level": lambda c: can_int(c) and (1 <= int(c) <= 100),
-            "my_species": lambda c: find_mon(c, fail_silently=True),
+            "my_species": lambda c: pk.find_mon(c, fail_silently=True),
             "gender": lambda c: (c.lower() in ["male", "female"]) and self.wild_mon.default_gender == "random",
             "my_gender": lambda c: (c.lower() in ["male", "female"]) and self.player_mon.default_gender == "random",
             "fishing": is_yesno,
@@ -1151,13 +1040,13 @@ class CatchRateNavigator(Navigator):
             "hp": lambda c: can_int(c.strip("%")) and (1 <= int(c.strip("%")) <= 100),
         }
         necessary_check = additional_checks.get(message_type, lambda m: True)
-        mess = await zeph.wait_for(
+        mess = await self.bot.wait_for(
             "message", check=lambda m: general_pred(ctx)(m) and bool(necessary_check(m.content)), timeout=300
         )
         await mess.delete()
         return mess.content.lower()
 
-    async def run_nonstandard_emoji(self, emoji: Union[discord.Emoji, str], ctx: commands.Context):
+    async def run_nonstandard_emoji(self, emoji: discord.Emoji | str, ctx: commands.Context):
         if emoji == "gender" and self.wild_mon.default_gender != "random":
             mess = await self.emol.send(ctx, f"{self.wild_mon.species.name} is {self.wild_mon.default_gender} only.")
             await asyncio.sleep(2)
@@ -1187,12 +1076,12 @@ class CatchRateNavigator(Navigator):
             "badges": "Do you have all eight Gym Badges?",
             "hp": "What's the wild mon's current HP percentage?"
         }
-        mess = await ball_emol(self.calculator.ball_type).send(
+        mess = await self.bot.ball_emol(self.calculator.ball_type).send(
             ctx, messages[emoji].split("\n")[0], d="\n".join(messages[emoji].split("\n")[1:]),
         )
         user_input = await self.wait_for(emoji, ctx)
         if emoji == "species":
-            mon = find_mon(user_input)
+            mon = pk.find_mon(user_input)
             pack = self.wild_mon.pack
             pack["spc"] = mon.species
             pack["form"] = mon.form.name
@@ -1212,7 +1101,7 @@ class CatchRateNavigator(Navigator):
         if emoji == "my_level":
             self.calculator.player_mon.level = int(user_input)
         if emoji == "my_species":
-            mon = find_mon(user_input)
+            mon = pk.find_mon(user_input)
             pack = self.wild_mon.pack
             pack["spc"] = mon.species
             pack["form"] = mon.form
@@ -1288,7 +1177,7 @@ class CatchRateNavigator(Navigator):
                      f"What's the current turn (`turn`)?: **{self.calculator.turn}**",
             "ultra": "Flat 2x catch rate."
         }
-        return ball_emol(self.calculator.ball_type).con(
+        return self.bot.ball_emol(self.calculator.ball_type).con(
             "S/V Catch Rate Calculator",
             d=f"**Species**: {self.wild_mon.species.name} (catch rate: {self.wild_mon.species.catch_rate}) "
               f"/ **Level**: {self.wild_mon.level}\n"
@@ -1313,15 +1202,15 @@ class PokemonInterpreter(Interpreter):
         "ls": "learnset", "a": "ability"
     }
 
-    @staticmethod
-    def move_embed(move: pk.Move):
-        return type_emol(move.type).con(move.name, d=display_move(move, "wiki"))
+    def move_embed(self, move: pk.Move):
+        return self.bot.type_emol(move.type).con(move.name, d=self.bot.display_move(move, "wiki"))
 
     async def _help(self, *args):
         help_dict = {
             "type": "`z!pokemon type <type>` shows type effectiveness (offense and defense) for a given type.",
             "eff": "`z!pokemon eff` checks defensive type matchups against a type combination. Use the buttons "
-                   f"({zeph.emojis['left1']}{zeph.emojis['right1']}{zeph.emojis['left2']}{zeph.emojis['right2']}) "
+                   f"({self.bot.emojis['left1']}{self.bot.emojis['right1']}"
+                   f"{self.bot.emojis['left2']}{self.bot.emojis['right2']}) "
                    "to change types.\n`z!pokemon eff <mon...>` shows matchups against a given species or form.\n"
                    "`z!pokemon eff <type1> [type2]` shows matchups against a given type combination.",
             "move": "`z!pokemon move <move>` shows various information about a move - including type, power, "
@@ -1333,11 +1222,11 @@ class PokemonInterpreter(Interpreter):
                    "\\- If `mon` is not given, the dex opens on #0001 Bulbasaur.",
             "search": "`z!pokemon search [filters...]` opens a dialog that allows searching and filtering of the "
                       "Pok\u00e9dex. The search terms may be changed using the **settings button "
-                      f"{zeph.emojis['settings']}** or passed as arguments in the initial command. In either case, "
+                      f"{self.bot.emojis['settings']}** or passed as arguments in the initial command. In either case, "
                       "they should be formatted as `<name>:<value>`, and spaces should be replaced with dashes `-`. "
                       "Some filters may take multiple arguments; these should be separated by a comma, e.g. "
                       "`learns:ice-beam,thunderbolt`. For more details, use the **help button "
-                      f"{zeph.emojis['help']}**.\n\n"
+                      f"{self.bot.emojis['help']}**.\n\n"
                       f"Valid search terms:\n"
                       f"\\- `gen`: generation of release (e.g. `5`)\n"
                       f"\\- `type` or `types`: Pok\u00e9mon type (e.g. `grass`)\n"
@@ -1355,9 +1244,10 @@ class PokemonInterpreter(Interpreter):
                      "changed several times.",
             "raid": "`z!pokemon raid <# stars> <species...>` shows relevant info for a Tera Raid Battle. Note that "
                     "only 5- and 6-star raids are currently included, and event raids are not included.\n"
-                    f"\\- {zeph.emojis['moves']} lists the raid mon's possible abilities, moves, and extra actions.\n"
-                    f"\\- {zeph.emojis['rare_candy']} lists the raid item drops.\n"
-                    f"\\- {zeph.emojis['poke_ball']} opens the dex entry for the raid mon.\n\n"
+                    f"\\- {self.bot.emojis['moves']} lists the raid mon's possible abilities, moves, and "
+                    f"extra actions.\n"
+                    f"\\- {self.bot.emojis['rare_candy']} lists the raid item drops.\n"
+                    f"\\- {self.bot.emojis['poke_ball']} opens the dex entry for the raid mon.\n\n"
                     "`z!pk 5` may be used as a shortcut for `z!pokemon raid 5`, e.g. `z!pk 5 grimmsnarl`. The same "
                     "goes for `z!pk 6`.",
             "compare": "`z!pokemon compare <mon1> <mon2>` compares the base stats of two different species. If you "
@@ -1366,12 +1256,12 @@ class PokemonInterpreter(Interpreter):
                        "surround the name in \"double quotes\", or replace the spaces with hyphens.",
             "learnset": "`z!pokemon learnset <species...>` shows the Scarlet/Violet learnset for a given species. "
                         "Depending on the Pok\u00e9mon, you may see any of the following buttons:\n"
-                        f"\\- {zeph.emojis['rare_candy']} lists its level-up moves.\n"
-                        f"\\- {zeph.emojis['thunder_stone']} lists its evolution moves.\n"
-                        f"\\- {zeph.emojis['eviolite']} lists moves it only learns as a previous evolution.\n"
-                        f"\\- {zeph.emojis['heart_scale']} lists its Move Reminder moves.\n"
-                        f"\\- {zeph.emojis['pokemon_egg']} lists its egg moves.\n"
-                        f"\\- {zeph.emojis['technical_machine']} lists its compatible TMs.",
+                        f"\\- {self.bot.emojis['rare_candy']} lists its level-up moves.\n"
+                        f"\\- {self.bot.emojis['thunder_stone']} lists its evolution moves.\n"
+                        f"\\- {self.bot.emojis['eviolite']} lists moves it only learns as a previous evolution.\n"
+                        f"\\- {self.bot.emojis['heart_scale']} lists its Move Reminder moves.\n"
+                        f"\\- {self.bot.emojis['pokemon_egg']} lists its egg moves.\n"
+                        f"\\- {self.bot.emojis['technical_machine']} lists its compatible TMs.",
             "ability": "`z!pokemon ability <ability name...>` gives the in-game description of an Ability, and links "
                        "relevant wiki pages for more details."
         }
@@ -1396,7 +1286,7 @@ class PokemonInterpreter(Interpreter):
             return f"**`{s}`** (or **`{shortcuts[s]}`**)" if shortcuts.get(s) else f"**`{s}`**"
 
         if len(args) == 0 or (args[0].lower() not in help_dict and args[0].lower() not in self.redirects):
-            return await ball_emol().send(
+            return await self.bot.ball_emol().send(
                 self.ctx, "z!pokemon help",
                 d="Available functions:\n\n" + "\n".join(f"{get_command(g)} - {j}" for g, j in desc_dict.items()) +
                   "\n\nFor information on how to use these, use `z!pokemon help <function>`."
@@ -1404,12 +1294,12 @@ class PokemonInterpreter(Interpreter):
 
         ret = self.redirects.get(args[0].lower(), args[0].lower())
 
-        return await ball_emol().send(self.ctx, f"z!pokemon {ret}", d=help_dict[ret])
+        return await self.bot.ball_emol().send(self.ctx, f"z!pokemon {ret}", d=help_dict[ret])
 
     async def fallback(self, *args):
-        if find_mon(" ".join(args), fail_silently=True):
+        if pk.find_mon(" ".join(args), fail_silently=True):
             return await self.run("dex", *args)
-        elif find_move(" ".join(args), fail_silently=True):
+        elif pk.find_move(" ".join(args), fail_silently=True):
             return await self.run("move", *args)
         elif find_ability(" ".join(args), fail_silently=True):
             return await self.run("ability", *args)
@@ -1426,20 +1316,20 @@ class PokemonInterpreter(Interpreter):
             raise commands.CommandError(f"{typ} isn't a type.")
 
         eff = {
-            "2x damage against": [f"{zeph.emojis[g]} {g}" for g in pk.types if pk.effectiveness[typ][g] > 1],
-            "½x damage against": [f"{zeph.emojis[g]} {g}" for g in pk.types if 0 < pk.effectiveness[typ][g] < 1],
-            "0x damage against": [f"{zeph.emojis[g]} {g}" for g in pk.types if not pk.effectiveness[typ][g]],
-            "0x damage from": [f"{zeph.emojis[g]} {g}" for g in pk.types if not pk.effectiveness[g][typ]],
-            "½x damage from": [f"{zeph.emojis[g]} {g}" for g in pk.types if 0 < pk.effectiveness[g][typ] < 1],
-            "2x damage from": [f"{zeph.emojis[g]} {g}" for g in pk.types if pk.effectiveness[g][typ] > 1]
+            "2x damage against": [f"{self.bot.emojis[g]} {g}" for g in pk.types if pk.effectiveness[typ][g] > 1],
+            "½x damage against": [f"{self.bot.emojis[g]} {g}" for g in pk.types if 0 < pk.effectiveness[typ][g] < 1],
+            "0x damage against": [f"{self.bot.emojis[g]} {g}" for g in pk.types if not pk.effectiveness[typ][g]],
+            "0x damage from": [f"{self.bot.emojis[g]} {g}" for g in pk.types if not pk.effectiveness[g][typ]],
+            "½x damage from": [f"{self.bot.emojis[g]} {g}" for g in pk.types if 0 < pk.effectiveness[g][typ] < 1],
+            "2x damage from": [f"{self.bot.emojis[g]} {g}" for g in pk.types if pk.effectiveness[g][typ] > 1]
         }
-        return await type_emol(typ).send(
+        return await self.bot.type_emol(typ).send(
             self.ctx, f"{typ}-type", fs={g: "\n".join(j) for g, j in eff.items() if j}, same_line=True
         )
 
     async def _eff(self, *args):
         args = re.split(r"\s|/", " ".join(args))  # to account for inputs like "grass/steel"
-        mon = find_mon(" ".join(args), fail_silently=True, use_bare=True)
+        mon = pk.find_mon(" ".join(args), fail_silently=True, use_bare=True)
         if mon:
             types = mon.types
         else:
@@ -1457,32 +1347,32 @@ class PokemonInterpreter(Interpreter):
         field = pk.Field()
         a = pk.Team("Red Team")
         d = pk.Team("Blue Team")
-        emol = ball_emol()
+        emol = self.bot.ball_emol()
 
-        a.add(find_mon(
+        a.add(pk.find_mon(
             "Leafeon",
             moves=["Leaf Blade", "X-Scissor", "Sunny Day", "Quick Attack"],
             ability="Chlorophyll"
         ))
-        a.add(find_mon(
+        a.add(pk.find_mon(
             "Glaceon",
             moves=["Ice Beam", "Shadow Ball", "Hail", "Calm Mind"],
             ability="Snow Cloak",
             tera=pk.ghost
         ))
-        a.add(find_mon(
+        a.add(pk.find_mon(
             "Flareon",
             moves=["Flamethrower", "Trailblaze", "Dig", "Will-O-Wisp"],
             ability="Flash Fire",
             tera=pk.grass
         ))
 
-        d.add(find_mon(
+        d.add(pk.find_mon(
             "Aron",
             moves=["Flash Cannon", "Earthquake", "Stone Edge", "Ice Punch"],
             ability="Sturdy"
         ))
-        d.add(find_mon(
+        d.add(pk.find_mon(
             "Lairon",
             moves=["Flamethrower", "Thunderbolt", "Ice Beam", "Energy Ball"],
             ability="Sturdy"
@@ -1513,7 +1403,7 @@ class PokemonInterpreter(Interpreter):
             if bat2.saved:
                 d = bat2.team
 
-        b = Battle(field, self.ctx, a, d, emol=emol)
+        b = Battle(self.bot, field, self.ctx, a, d, emol=emol)
         return await b.run()
 
     async def _build(self, *args):
@@ -1526,19 +1416,19 @@ class PokemonInterpreter(Interpreter):
                 except IndexError:
                     raise commands.CommandError("Invalid key.")
             else:
-                mon = find_mon(" ".join(args))
+                mon = pk.find_mon(" ".join(args))
         else:
-            mon = find_mon("Bulbasaur")
+            mon = pk.find_mon("Bulbasaur")
 
         try:
-            return await BuildAMonNavigator(self.ctx, starting_mon=mon).run(self.ctx)
+            return await BuildAMonNavigator(self.bot, self.ctx, starting_mon=mon).run(self.ctx)
         except asyncio.TimeoutError:
             return
 
     async def _move(self, *args):
         if not args:
             raise commands.CommandError("Format: `z!pk move <move name...>`")
-        move = find_move(" ".join(args))
+        move = pk.find_move(" ".join(args))
         return await self.ctx.send(embed=self.move_embed(move))
 
     async def _team(self, *args):
@@ -1546,7 +1436,7 @@ class PokemonInterpreter(Interpreter):
 
         team = pk.Team("Test Team")
         original_team = team.copy()
-        bat = BuildATeamNavigator(self.ctx, team)
+        bat = BuildATeamNavigator(self.bot, self.ctx, team)
         await bat.run(self.ctx)
         return await bat.emol.send(
             self.ctx, "Team Keys",
@@ -1558,11 +1448,12 @@ class PokemonInterpreter(Interpreter):
         if mon.lower().split()[0] == "search":
             return await self._search(*args[1:])
 
-        nav = DexNavigator(find_mon(mon, use_bare=True), starting_mode=("help" if mon.lower() == "help" else None))
+        nav = DexNavigator(self.bot, pk.find_mon(mon, use_bare=True),
+                           starting_mode=("help" if mon.lower() == "help" else None))
         return await nav.run(self.ctx)
 
     async def _search(self, *args):
-        nav = DexSearchNavigator(mode=None if args else "settings")
+        nav = DexSearchNavigator(self.bot, mode=None if args else "settings")
         for arg in args:
             if not nav.is_valid_setting(arg):
                 raise commands.CommandError(f"Invalid search term `{arg}`.")
@@ -1576,35 +1467,35 @@ class PokemonInterpreter(Interpreter):
         if args:
             if not (ball_type := caseless_match(args[0], pk.poke_ball_types)):
                 ball_type = "poke"
-                starting_mon = find_mon(" ".join(args))
+                starting_mon = pk.find_mon(" ".join(args))
             else:
-                starting_mon = find_mon(" ".join(args[1:]), return_on_fail=find_mon(1))
+                starting_mon = pk.find_mon(" ".join(args[1:]), return_on_fail=pk.find_mon(1))
         else:
             ball_type = "poke"
-            starting_mon = find_mon(1)
+            starting_mon = pk.find_mon(1)
 
-        return await CatchRateNavigator(mon=starting_mon, ball=ball_type).run(self.ctx)
+        return await CatchRateNavigator(self.bot, mon=starting_mon, ball=ball_type).run(self.ctx)
 
     async def specify_raid_form(self, species: str) -> str:
         async def wait_for(*allowable_responses: str) -> str:
             try:
-                mess = await zeph.wait_for(
-                    "message", check=lambda c: general_pred(self.ctx)(c) and (pk.fix(c.content) in allowable_responses),
+                mess = await self.bot.wait_for(
+                    "message", check=lambda c: general_pred(self.ctx)(c) and (fix(c.content) in allowable_responses),
                     timeout=60
                 )
             except asyncio.TimeoutError:
                 return allowable_responses[0]
             else:
-                return pk.fix(mess.content)
+                return fix(mess.content)
 
         if species == "Tauros":
-            await ball_emol("master").send(self.ctx, "Is this Tauros Combat, Aqua, or Blaze Breed?")
+            await self.bot.ball_emol("master").send(self.ctx, "Is this Tauros Combat, Aqua, or Blaze Breed?")
             return await wait_for("combat", "aqua", "blaze")
         if species == "Toxtricity":
-            await ball_emol("master").send(self.ctx, "Is this Toxtricity Amped or Low Key?")
+            await self.bot.ball_emol("master").send(self.ctx, "Is this Toxtricity Amped or Low Key?")
             return await wait_for("amped", "low-key")
         if species == "Indeedee":
-            await ball_emol("master").send(self.ctx, "Is this Indeedee male or female?")
+            await self.bot.ball_emol("master").send(self.ctx, "Is this Indeedee male or female?")
             return await wait_for("male", "female")
 
     async def _raid(self, *args):
@@ -1615,9 +1506,9 @@ class PokemonInterpreter(Interpreter):
         if stars not in [5, 6]:
             raise commands.CommandError("Currently only 5- and 6-star raids are included in this command.")
 
-        mon = find_mon(" ".join(args[1:]))
+        mon = pk.find_mon(" ".join(args[1:]))
         if (mon.species.name in ["Tauros", "Indeedee", "Toxtricity"]) and \
-                (pk.fix(" ".join(args[1:])) != pk.fix(mon.species_and_form)):
+                (fix(" ".join(args[1:])) != fix(mon.species_and_form)):
             mon.change_form(await self.specify_raid_form(mon.species.name))
 
         if mon.species_and_form in pk.raids[stars]:
@@ -1627,7 +1518,7 @@ class PokemonInterpreter(Interpreter):
         else:
             raise commands.CommandError(f"There is no {stars}\u2605 {mon.species.name} raid.")
 
-        return await RaidNavigator(raid).run(self.ctx)
+        return await RaidNavigator(self.bot, raid).run(self.ctx)
 
     async def _5(self, *args):
         return await self._raid(5, *args)
@@ -1653,10 +1544,10 @@ class PokemonInterpreter(Interpreter):
                    f"{'>' if rule == 1 else '<' if rule == 2 else '='}" + \
                    f" {'**' if rule != 1 else ''}{n2}{'**' if rule != 1 else ''}"
 
-        mon1 = find_mon(args[0])
-        mon2 = find_mon(args[1])
+        mon1 = pk.find_mon(args[0])
+        mon2 = pk.find_mon(args[1])
 
-        return await ball_emol().send(
+        return await self.bot.ball_emol().send(
             self.ctx, "Stat Comparison",
             d=f"**{mon1.species_and_form}** vs. **{mon2.species_and_form}**\n\n"
               f"**HP:** {stat_comparison(0)}\n"
@@ -1673,11 +1564,11 @@ class PokemonInterpreter(Interpreter):
             raise commands.CommandError("Format: `z!pk learnset <species...>`")
 
         try:
-            mon = find_mon(" ".join(args))
+            mon = pk.find_mon(" ".join(args))
         except ValueError:
             raise commands.CommandError(f"Unknown Pok\u00e9mon `{' '.join(args)}`.")
 
-        return await LearnsetNavigator(mon).run(self.ctx)
+        return await LearnsetNavigator(self.bot, mon).run(self.ctx)
 
     async def _ability(self, *args):
         if not args:
@@ -1693,134 +1584,13 @@ class PokemonInterpreter(Interpreter):
         elif ability == "Embody Aspect":
             serebii += "-tealmask"
 
-        return await ball_emol().send(
+        return await self.bot.ball_emol().send(
             self.ctx, ability,
             d=f"{description}\n\n"
               f"[Bulbapedia](https://bulbapedia.bulbagarden.net/wiki/{pk.bulba_format(ability)}_(Ability)) | "
               f"[Serebii](https://www.serebii.net/abilitydex/{serebii}.shtml) | "
-              f"[Pok\u00e9monDB](https://pokemondb.net/ability/{pk.fix(ability)})"
+              f"[Pok\u00e9monDB](https://pokemondb.net/ability/{fix(ability)})"
         )
-
-
-@zeph.command(hidden=True, aliases=["lm"], usage="z!lm name type category PP power accuracy contact target **kwargs")
-async def loadmove(
-        ctx: commands.Context, name: str, typ: str, category: str, pp: int, pwr: Union[int, str], accuracy: int,
-        contact: bool, target: str, *args
-):
-    admin_check(ctx)
-
-    shortcuts = {
-        "pt": "can_protect", "mc": "can_magic_coat", "sn": "can_snatch", "mm": "can_mirror_move",
-        "rcr": "raised_crit_ratio"
-    }
-
-    def interpret_kwarg(s: str):
-        if len(s.split("=")) == 1:
-            return shortcuts.get(s, s), True
-        elif s.startswith("z_effect=") or s.startswith("z="):
-            return "z_effect", dict((interpret_kwarg("=".join(s.split("=")[1:])),))
-        else:
-            return shortcuts.get(s.split("=")[0], s.split("=")[0]), eval(s.split("=")[1])
-
-    kwargs = dict(interpret_kwarg(g) for g in args)
-
-    assert typ.title() in pk.types
-    assert category.title() in pk.categories
-
-    move = pk.Move(name, typ.title(), category.title(), pp, pwr, accuracy, contact, eval(f"pk.{target}"), **kwargs)
-    assert move.json == move.copy().json
-
-    if move.category == pk.status and not move.z_effect:
-        await ctx.send(embed=Emol(zeph.emojis["yield"], hexcol("DD2E44")).con("This status move has no Z-Effect."))
-    if move.name in pk.battle_moves:
-        await ctx.send(embed=Emol(zeph.emojis["yield"], hexcol("DD2E44")).con("This move already exists."))
-
-    await ctx.send(f"```py\n{move.json}```", embed=PokemonInterpreter.move_embed(move))
-    try:
-        assert await confirm(f"{'Overwrite' if move.name in pk.battle_moves else 'Save'} this move?", ctx, yes="save")
-    except AssertionError:
-        pass
-    else:
-        pk.battle_moves[move.name] = move.copy()
-        with open("pokemon/data/moves.json", "w") as f:
-            json.dump({g: j.json for g, j in pk.battle_moves.items()}, f, indent=4)
-        return await succ.send(ctx, "Move saved.")
-
-
-@zeph.command(
-    hidden=True, name="loadmon", aliases=["lp", "pn"],
-    usage="z!lp name"
-)
-async def loadmon_command(ctx: commands.Context, name: str, *args):
-    admin_check(ctx)
-
-    emol = ball_emol()
-
-    if existing_mon := find_mon(name, fail_silently=True):
-        if await confirm(
-                "A mon with that name already exists.", ctx,
-                desc_override=f"Add a new form to {existing_mon.species.name}?", allow_text_response=True
-        ):
-            species = pk.nat_dex[existing_mon.species.name]
-        else:
-            return
-    else:
-        species = pk.Species(name, 0, [])
-    force_exit = False
-    while True:
-        if args:
-            user_input = " ".join(args)
-            args = []
-        else:
-            try:
-                await emol.send(
-                    ctx, f"Input this form's stats:",
-                    d="Format: `HP Atk Def SpA SpD Spe type1 type2 height weight [form name]`"
-                )
-                user_input = (await zeph.wait_for("message", check=general_pred(ctx), timeout=300)).content
-            except asyncio.TimeoutError:
-                return await emol.send(ctx, "Request timed out.")
-        if user_input.lower() == "cancel":
-            return await emol.send(ctx, "Dex addition cancelled.")
-        form = pk.Form.from_str(user_input)
-        if form.name == "done":
-            force_exit = True
-            form.name = ""
-        species.add_form(form)
-        mon = pk.Mon(species, form=form.name)
-
-        try:
-            await emol.send(
-                ctx, f"What Abilities does {mon.species_and_form} have?",
-                d="Separate standard Abilities with a comma, and Hidden Abilities with a slash."
-            )
-            ability_input = (await zeph.wait_for("message", check=general_pred(ctx), timeout=300)).content
-        except asyncio.TimeoutError:
-            return await emol.send(ctx, "Request timed out.")
-        if "/" in ability_input:
-            standard_abilities = [g.strip() for g in ability_input.split("/")[0].split(",")]
-            hidden_ability = ability_input.split("/")[1].strip()
-        else:
-            standard_abilities = [g.strip() for g in ability_input.split(",")]
-            hidden_ability = ""
-        if len(standard_abilities) < 2:
-            standard_abilities.append("")
-        pk.legal_abilities[mon.species_and_form] = [*standard_abilities, hidden_ability, ""]
-
-        await emol.send(ctx, f"#{existing_mon.dex_no} {name}", d=display_mon(mon, "dex"), thumbnail=mon.dex_image)
-        if await confirm("Does this look right?", ctx, desc_override="", allow_text_response=True):
-            if force_exit or not (await confirm("Add another form?", ctx, desc_override="", allow_text_response=True)):
-                pk.rewrite_abilities()
-                if existing_mon:
-                    pk.rewrite_mons()
-                    return await succ.send(ctx, f"{species.name} updated.")
-                else:
-                    pk.add_new_mon(species)
-                    return await succ.send(ctx, f"{species.name} added to dex.")
-            else:
-                continue
-        else:
-            species.remove_form(form)
 
 
 class WalkerStroll:
@@ -1840,7 +1610,7 @@ class WalkerStroll:
         return mon
 
 
-def caught_indicator(user: pk.WalkerUser, mon: Union[pk.BareMiniMon, str]) -> str:
+def caught_indicator(user: pk.WalkerUser, mon: pk.BareMiniMon | str) -> str:
     if isinstance(mon, pk.BareMiniMon):
         mon = mon.species.name
     return f" {zeph.emojis['caught']}" if mon in user.dex else ""
@@ -1851,8 +1621,8 @@ def display_tokens(tokens: dict[str, int], joiner: str = " // ", if_empty: str =
 
 
 class EncounterNavigator(Navigator):
-    def __init__(self, mon: pk.BareMiniMon, stroll: WalkerStroll, message: discord.Message):
-        super().__init__(ball_emol("safari"), remove_immediately=True, timeout=300)
+    def __init__(self, bot: Zeph, mon: pk.BareMiniMon, stroll: WalkerStroll, message: discord.Message):
+        super().__init__(bot, bot.ball_emol("safari"), remove_immediately=True, timeout=300)
         self.mon = mon
         self.stroll = stroll
         self.berry_level = 0
@@ -1860,11 +1630,11 @@ class EncounterNavigator(Navigator):
         self.message = message
         rarity = pk.rarity_stars[self.stroll.location.get_rarity(self.mon)]
         if self.mon.shiny:
-            self.last_action = f"{zeph.emojis[rarity]} **Whoa! A :sparkles: shiny {mon.name} appeared!**"
+            self.last_action = f"{self.bot.emojis[rarity]} **Whoa! A :sparkles: shiny {mon.name} appeared!**"
         else:
-            self.last_action = f"{zeph.emojis[rarity]} **A wild {mon.name} appeared!**"
-        self.funcs[zeph.emojis["safari_ball"]] = self.ball
-        self.funcs[zeph.emojis["razz_berry"]] = self.berry
+            self.last_action = f"{self.bot.emojis[rarity]} **A wild {mon.name} appeared!**"
+        self.funcs[self.bot.emojis["safari_ball"]] = self.ball
+        self.funcs[self.bot.emojis["razz_berry"]] = self.berry
         self.funcs["\U0001f45f"] = self.flee
         self.funcs[zeph.emojis["no"]] = self.exit
 
@@ -1926,21 +1696,21 @@ class EncounterNavigator(Navigator):
 
     def con(self):
         action = "Out of Safari Balls! Come back another time." if not self.stroll.balls else \
-            (f"Throw a {zeph.emojis['safari_ball']} **ball** (x{self.stroll.balls}), "
-             f"throw a {zeph.emojis['razz_berry']} **berry** (x{self.stroll.berries}), or \U0001f45f **run**!")
-        berries = "" if self.berry_level == 0 else f" ({zeph.emojis['razz_berry']} x{self.berry_level})"
+            (f"Throw a {self.bot.emojis['safari_ball']} **ball** (x{self.stroll.balls}), "
+             f"throw a {self.bot.emojis['razz_berry']} **berry** (x{self.stroll.berries}), or \U0001f45f **run**!")
+        berries = "" if self.berry_level == 0 else f" ({self.bot.emojis['razz_berry']} x{self.berry_level})"
         return self.emol.con(
             f"Encounter: {self.mon.name} {caught_indicator(self.stroll.user, self.mon)}",
-            d=f"{self.last_action}\n\n{display_mon_types(self.mon, sep=' ')} // "
+            d=f"{self.last_action}\n\n{self.bot.display_mon_types(self.mon, sep=' ')} // "
               f"Catch chance: {self.chance_indicator} {berries}\n\n{action}",
             image=self.mon.home_sprite, footer=f"Encounters remaining: {self.stroll.remaining_encounters}"
         )
 
 
 class LocaleSelector(NumSelector):
-    def __init__(self, locale_override: list[pk.Locale] = None, caught_by: pk.WalkerUser = None):
+    def __init__(self, bot: Zeph, locale_override: list[pk.Locale] = None, caught_by: pk.WalkerUser = None):
         super().__init__(
-            ball_emol("safari"), locale_override if locale_override else list(pk.walker_locales.values()), 8
+            bot, bot.ball_emol("safari"), locale_override if locale_override else list(pk.walker_locales.values()), 8
         )
         self.selection = None
         self.caught_by = caught_by
@@ -1953,7 +1723,7 @@ class LocaleSelector(NumSelector):
         if not self.caught_by:
             return ""
         else:
-            return f" -- {len([g for g in self.caught_by.dex if locale.get_rarity(g)])} {zeph.emojis['caught']}"
+            return f" -- {len([g for g in self.caught_by.dex if locale.get_rarity(g)])} {self.bot.emojis['caught']}"
 
     def con(self):
         return self.emol.con(
@@ -1964,17 +1734,17 @@ class LocaleSelector(NumSelector):
 
 
 class WalkerBoxNavigator(Navigator):
-    def __init__(self, user: pk.WalkerUser):
-        super().__init__(Emol(":desktop:", hexcol("5DADEC")), user.box, timeout=300)
+    def __init__(self, bot: Zeph, user: pk.WalkerUser):
+        super().__init__(bot, Emol(":desktop:", hex_to_color("5DADEC")), user.box, timeout=300)
         self.user = user
         self.mode = "browse"
         self.filters = {"types": set(), "shiny": False, "sort": "date"}
         self.transfer_selection = []
         self.just_transferred = 0
-        self.funcs[zeph.emojis["search"]] = self.change_filter
-        self.funcs[zeph.emojis["moves"]] = self.back
-        self.funcs[zeph.emojis["transfer"]] = self.transfer
-        self.funcs[zeph.emojis["no"]] = self.close
+        self.funcs[self.bot.emojis["search"]] = self.change_filter
+        self.funcs[self.bot.emojis["moves"]] = self.back
+        self.funcs[self.bot.emojis["transfer"]] = self.transfer
+        self.funcs[self.bot.emojis["no"]] = self.close
 
         for g in range(self.per):
             self.funcs[f"!view {g+1}"] = partial(self.view_mon, g)
@@ -2082,10 +1852,9 @@ class WalkerBoxNavigator(Navigator):
     def is_transferred(self, index: int) -> bool:
         return self.box_index(index) in self.transfer_selection
 
-    @staticmethod
-    def display_evo_reqs(mon: pk.BareMiniMon, evo: pk.Evolution):
+    def display_evo_reqs(self, mon: pk.BareMiniMon, evo: pk.Evolution):
         return " // ".join(
-            f"{zeph.emojis[g + '_token'] if g in pk.types else '**'+g+'**'} x{j}"
+            f"{self.bot.emojis[g + '_token'] if g in pk.types else '**'+g+'**'} x{j}"
             for g, j in pk.evolution_tokens(mon, evo).items()
         )
 
@@ -2099,7 +1868,7 @@ class WalkerBoxNavigator(Navigator):
 
     def display_you_have(self, mon: pk.BareMiniMon):
         return none_list([
-            f"{zeph.emojis[g + '_token'] if g in pk.types else '**' + g + '**'} x{j}"
+            f"{self.bot.emojis[g + '_token'] if g in pk.types else '**' + g + '**'} x{j}"
             for g, j in self.you_have(mon).items()
         ], joiner=" // ")
 
@@ -2123,7 +1892,7 @@ class WalkerBoxNavigator(Navigator):
             return
         evo = self.met_evolutions(self.viewed_mon)[n]
         old_name = self.viewed_mon.name
-        emol = Emol(zeph.emojis["evolution"], hexcol("7B8F9E"))
+        emol = Emol(self.bot.emojis["evolution"], hex_to_color("7B8F9E"))
         await emol.edit(self.message, f"What? {self.viewed_mon.name} is evolving!", image=self.viewed_mon.home_sprite)
         await asyncio.sleep(2)
         self.user.spend(pk.evolution_tokens(self.viewed_mon, evo))
@@ -2144,11 +1913,11 @@ class WalkerBoxNavigator(Navigator):
 
     async def get_emoji(self, ctx: commands.Context):
         if self.mode.startswith("confirm_transfer"):
-            reaction = (await zeph.wait_for(
+            reaction = (await self.bot.wait_for(
                 'reaction_add', timeout=self.timeout, check=lambda r, u: r.emoji in self.legal and
                 r.message.id == self.message.id and u == ctx.author
             ))[0].emoji
-            if reaction != zeph.emojis["transfer"]:
+            if reaction != self.bot.emojis["transfer"]:
                 try:
                     await self.message.remove_reaction(reaction, ctx.author)
                 except discord.HTTPException:
@@ -2158,14 +1927,14 @@ class WalkerBoxNavigator(Navigator):
                 return reaction
 
         if self.mode == "filter":
-            def pred(mr: MR, u: User):
+            def pred(mr: discord.Message | discord.Reaction, u: discord.User):
                 if isinstance(mr, discord.Message):
                     return u == ctx.author and mr.channel == ctx.channel and \
                         mr.content.lower() in ["type", "types", "shiny", "sort"]
                 else:
                     return u == ctx.author and mr.emoji in self.funcs and mr.message.id == self.message.id
 
-            mess = (await zeph.wait_for(
+            mess = (await self.bot.wait_for(
                 'reaction_or_message', timeout=self.timeout, check=pred
             ))[0]
             if isinstance(mess, discord.Message):
@@ -2175,14 +1944,14 @@ class WalkerBoxNavigator(Navigator):
                 return mess.emoji
 
         if self.mode == "transfer":
-            def pred(mr: MR, u: User):
+            def pred(mr: discord.Message | discord.Reaction, u: discord.User):
                 if isinstance(mr, discord.Message):
                     return u == ctx.author and mr.channel == ctx.channel and \
                         all((g == " " or can_int(g)) for g in mr.content)
                 else:
                     return u == ctx.author and mr.message == self.message and mr.emoji in self.legal
 
-            mess = (await zeph.wait_for('reaction_or_message', timeout=self.timeout, check=pred))[0]
+            mess = (await self.bot.wait_for('reaction_or_message', timeout=self.timeout, check=pred))[0]
 
             if isinstance(mess, discord.Message):
                 try:
@@ -2194,13 +1963,13 @@ class WalkerBoxNavigator(Navigator):
                 return mess.emoji
 
         if self.mode.startswith("view"):
-            def pred(mr: MR, u: User):
+            def pred(mr: discord.Message | discord.Reaction, u: discord.User):
                 if isinstance(mr, discord.Message):
                     return u == ctx.author and mr.channel == ctx.channel and self.is_valid_evolution(mr.content)
                 else:
                     return u == ctx.author and mr.message == self.message and mr.emoji in self.legal
 
-            mess = (await zeph.wait_for('reaction_or_message', timeout=self.timeout, check=pred))[0]
+            mess = (await self.bot.wait_for('reaction_or_message', timeout=self.timeout, check=pred))[0]
 
             if isinstance(mess, discord.Message):
                 try:
@@ -2213,13 +1982,13 @@ class WalkerBoxNavigator(Navigator):
             else:
                 return mess.emoji
 
-        def pred(mr: MR, u: User):
+        def pred(mr: discord.Message | discord.Reaction, u: discord.User):
             if isinstance(mr, discord.Message):
                 return u == ctx.author and mr.channel == ctx.channel and f"!view {mr.content}" in self.legal
             else:
                 return u == ctx.author and mr.message == self.message and mr.emoji in self.legal
 
-        mess = (await zeph.wait_for('reaction_or_message', timeout=self.timeout, check=pred))[0]
+        mess = (await self.bot.wait_for('reaction_or_message', timeout=self.timeout, check=pred))[0]
 
         if isinstance(mess, discord.Message):
             try:
@@ -2230,7 +1999,7 @@ class WalkerBoxNavigator(Navigator):
         else:
             return mess.emoji
 
-    async def run_nonstandard_emoji(self, emoji: Union[discord.Emoji, str], ctx: commands.Context):
+    async def run_nonstandard_emoji(self, emoji: discord.Emoji | str, ctx: commands.Context):
         if emoji == "cancel transfer":
             if can_int(self.mode[-1]):
                 self.transfer_selection.clear()
@@ -2252,7 +2021,7 @@ class WalkerBoxNavigator(Navigator):
             mess = await self.emol.send(
                 ctx, "What type(s) would you like to filter for?", d="Enter `none` to clear the filter."
             )
-            user_input = await zeph.wait_for(
+            user_input = await self.bot.wait_for(
                 'message', check=lambda m: general_pred(ctx)(m) and
                 (all(g.title() in pk.types or g.title() == "None" for g in re.split(r"[/,\s]+", m.content)) or
                  m.content.lower() in ["cancel", "exit", "back"])
@@ -2273,7 +2042,7 @@ class WalkerBoxNavigator(Navigator):
                   "\\- **`dex`**: Sort mons by National Dex number.\n"
                   "\\- **`name`**: Sort mons alphabetically by name."
             )
-            user_input = await zeph.wait_for(
+            user_input = await self.bot.wait_for(
                 'message', check=lambda m: general_pred(ctx)(m) and
                 m.content.lower() in ["cancel", "exit", "back", "date", "dex", "name"]
             )
@@ -2292,7 +2061,8 @@ class WalkerBoxNavigator(Navigator):
             return self.emol.con(
                 "Filters", d="Enter the name of a filter to change it.", same_line=True,
                 fs={
-                    "Types": none_list(list(self.filters["types"]), "/"), "Shiny?": checked(self.filters["shiny"]),
+                    "Types": none_list(list(self.filters["types"]), "/"),
+                    "Shiny?": self.bot.checked(self.filters["shiny"]),
                     "Sort": self.sort_desc
                 }
             )
@@ -2315,7 +2085,7 @@ class WalkerBoxNavigator(Navigator):
                 f"{mon.name}{mon.shiny_indicator} "
                 f"{':male_sign:' if mon.gender == 'male' else ':female_sign:' if mon.gender == 'female' else ''}",
                 thumbnail=mon.home_sprite,
-                d=f"{display_mon_types(mon, sep=' / ', include_names=True)}\n\n{evo}\n\n"
+                d=f"{self.bot.display_mon_types(mon, sep=' / ', include_names=True)}\n\n{evo}\n\n"
                   f"Caught at {pk.walker_locale_ids[self.page_list[viewed][-2]].name} on "
                   f"{datetime.date.fromordinal(self.page_list[viewed][-1] + 719163).strftime('%B %d, %Y')}."
             )
@@ -2329,7 +2099,7 @@ class WalkerBoxNavigator(Navigator):
                 g: selected_names.count(g) for g in sorted(selected_names, key=lambda m: -selected_names.count(m))
             }
             aggregate_mons = "\n".join(
-                f"{display_mon(pk.get_saf(g), 'typed_list', saf=True)} x{j}"
+                f"{self.bot.display_mon(pk.get_saf(g), 'typed_list', saf=True)} x{j}"
                 for g, j in list(aggregate_mons.items())[:10]
             ) + (f"\n*...and {len(aggregate_mons) - 10} more species*" if len(aggregate_mons) > 10 else "")
             selected_shiny = [g.overworld_saf for g in selected_mons if g.shiny]
@@ -2337,7 +2107,7 @@ class WalkerBoxNavigator(Navigator):
                 g: selected_shiny.count(g) for g in sorted(selected_shiny, key=lambda m: -selected_shiny.count(m))
             }
             aggregate_shiny = ("\n".join(
-                f"{display_mon(pk.get_saf(g), 'typed_list', saf=True)} :sparkles: x{j}"
+                f"{self.bot.display_mon(pk.get_saf(g), 'typed_list', saf=True)} :sparkles: x{j}"
                 for g, j in list(aggregate_shiny.items())
             ) + "\n") if aggregate_shiny else ""
             return self.emol.con(
@@ -2353,16 +2123,16 @@ class WalkerBoxNavigator(Navigator):
             elif self.mode == "transfer":
                 additional_info = "Select Pok\u00e9mon to transfer to the Professor in exchange for tokens. You'll " \
                     "get one token for each type of each transferred mon.\n\n" \
-                    f"Press the {zeph.emojis['transfer']} **transfer** button to transfer " \
+                    f"Press the {self.bot.emojis['transfer']} **transfer** button to transfer " \
                     f"**{len(self.transfer_selection)}** selected Pok\u00e9mon.\nPress the " \
-                    f"{zeph.emojis['moves']} **browse** button to cancel.\n\n"
+                    f"{self.bot.emojis['moves']} **browse** button to cancel.\n\n"
             else:
                 additional_info = ""
             return self.emol.con(
                 f"Cypress's PC [{self.page}/{self.pgs}]",
                 d=additional_info + none_list(
-                    [f"**`[{n+1}]`**{(' ' + str(checked(self.is_transferred(n)))) if self.mode == 'transfer' else ''} "
-                     f"{display_mon(g, 'typed_list', saf=True)}{g.shiny_indicator}"
+                    [f"**`[{n+1}]`**{(' ' + str(self.bot.checked(self.is_transferred(n)))) if self.mode == 'transfer' else ''} "
+                     f"{self.bot.display_mon(g, 'typed_list', saf=True)}{g.shiny_indicator}"
                      for n, g in enumerate(self.page_mons)], "\n", "No mons found."
                 ),
                 footer="Enter the number beside a mon to select or unselect it.\nYou can also select "
@@ -2372,8 +2142,8 @@ class WalkerBoxNavigator(Navigator):
 
 
 class WalkerLevelNavigator(Navigator):
-    def __init__(self, user: pk.WalkerUser, start_at: int = 1):
-        super().__init__(ball_emol("safari"))
+    def __init__(self, bot: Zeph, user: pk.WalkerUser, start_at: int = 1):
+        super().__init__(bot, bot.ball_emol("safari"))
         self.user = user
         self.page = start_at
 
@@ -2391,15 +2161,15 @@ class WalkerLevelNavigator(Navigator):
 
 
 class WalkerCharmNavigator(NumSelector):
-    def __init__(self, user: pk.WalkerUser):
-        super().__init__(ball_emol("safari"), per=4)
+    def __init__(self, bot: Zeph, user: pk.WalkerUser):
+        super().__init__(bot, bot.ball_emol("safari"), per=4)
         self.user = user
         self.slot = 0
         self.replacing_id = -1  # charm initially equipped in self.slot
         self.selected_id = -1  # charm currently equipped in self.slot
         self.last_equipped_ids = []
         self.funcs["↩"] = self.back
-        self.funcs[zeph.emojis["no"]] = self.close
+        self.funcs[self.bot.emojis["no"]] = self.close
 
     def back(self):
         self.slot = 0
@@ -2478,21 +2248,21 @@ class WalkerCharmNavigator(NumSelector):
                 f"Owned Charms",
                 d=desc, footer="To select or unselect a Charm, enter the number beside it below.",
                 fs={f"Available Charms [{self.page}/{self.pgs}]": "\n\n".join([
-                    f"**`[{n+1}]` {checked(g.id in self.user.equipped_charm_ids)} {g.name}**\n\\- {g.desc}"
+                    f"**`[{n+1}]` {self.bot.checked(g.id in self.user.equipped_charm_ids)} {g.name}**\n\\- {g.desc}"
                     for n, g in enumerate(self.page_list)
                 ])}
             )
 
 
 class WalkerMarketNavigator(NumSelector):
-    def __init__(self, user: pk.WalkerUser):
-        super().__init__(ball_emol("safari"), s="Pok\u00e9Marketplace", timeout=180)
+    def __init__(self, bot: Zeph, user: pk.WalkerUser):
+        super().__init__(bot, bot.ball_emol("safari"), s="Pok\u00e9Marketplace", timeout=180)
         self.user = user
         self.mode = "main"
         self.buying_item = {}
         self.last_bought = ""
         self.funcs["↩"] = self.back
-        self.funcs[zeph.emojis["no"]] = self.attempt_close
+        self.funcs[self.bot.emojis["no"]] = self.attempt_close
 
     def back(self):
         if self.mode == "main":
@@ -2630,19 +2400,19 @@ class PokeWalkerInterpreter(Interpreter):
 
     @property
     def user(self) -> pk.WalkerUser:
-        return zeph.walker_users[self.au.id]
+        return self.bot.walker_users[self.au.id]
 
     async def _help(self, *args):
         help_dict = {
             "stroll": "Go for a stroll in one of your unlocked locales. While on a stroll, you can encounter up to "
                       "30 Pok\u00e9mon, randomly determined by the encounter table for that locale.\n\nDuring an "
-                      f"encounter, you have three options: throw a {zeph.emojis['safari_ball']} **ball** to try to "
-                      f"catch the Pok\u00e9mon; throw a {zeph.emojis['razz_berry']} **berry** to make it easier to "
+                      f"encounter, you have three options: throw a {self.bot.emojis['safari_ball']} **ball** to try to "
+                      f"catch the Pok\u00e9mon; throw a {self.bot.emojis['razz_berry']} **berry** to make it easier to "
                       f"catch; or :athletic_shoe: **run away**. A Razz Berry increases a Pok\u00e9mon's catch rate "
                       f"somewhat, and you can stack up to 3. Each stroll starts with 30 Safari Balls and 20 Razz "
                       f"Berries; use them wisely!\n\n"
-                      f"When a Pok\u00e9mon is caught, you earn one \"token\" {zeph.emojis['Grass_token']} for each "
-                      f"of its types. These can be spent on many things in the `z!pw market`.\n\n"
+                      f"When a Pok\u00e9mon is caught, you earn one **token** {self.bot.emojis['Grass_token']} for "
+                      f"each of its types. These can be spent on many things in the `z!pw market`.\n\n"
                       "`z!pw stroll` opens the locale browser to select the destination for a stroll.\n\n"
                       "`z!pw stroll <locale...>` jumps straight into a stroll at the specified locale.",
             "locale": "Check the wild Pok\u00e9mon available at a certain location.\n\n"
@@ -2678,7 +2448,7 @@ class PokeWalkerInterpreter(Interpreter):
             return f"**`{s}`** (or **`{shortcuts[s]}`**)" if shortcuts.get(s) else f"**`{s}`**"
 
         if len(args) == 0 or (args[0].lower() not in help_dict and args[0].lower() not in self.redirects):
-            return await ball_emol().send(
+            return await self.bot.ball_emol().send(
                 self.ctx, "z!pokewalker help",
                 d="Available functions:\n\n" + "\n".join(f"{get_command(g)} - {j}" for g, j in desc_dict.items()) +
                   "\n\nFor information on how to use these, use `z!pokewalker help <function>`."
@@ -2686,14 +2456,15 @@ class PokeWalkerInterpreter(Interpreter):
 
         ret = self.redirects.get(args[0].lower(), args[0].lower())
 
-        return await ball_emol("safari").send(self.ctx, f"z!pokewalker {ret}", d=help_dict[ret])
+        return await self.bot.ball_emol("safari").send(self.ctx, f"z!pokewalker {ret}", d=help_dict[ret])
 
     @property
     def unlocked_locales(self):
         return {g: j for g, j in pk.walker_locales.items() if self.user.meets_prereqs_for(j)}
 
     async def select_locale(self, include_caught: bool = False):
-        nav = LocaleSelector(list(self.unlocked_locales.values()), caught_by=(self.user if include_caught else None))
+        nav = LocaleSelector(self.bot, list(self.unlocked_locales.values()),
+                             caught_by=(self.user if include_caught else None))
         await nav.run(self.ctx)
         if nav.selection is not None:
             return nav.selection
@@ -2707,24 +2478,24 @@ class PokeWalkerInterpreter(Interpreter):
             if args[0].lower() in self.unlocked_locales:
                 loc = self.unlocked_locales[args[0].lower()]
             else:
-                fixed_locales = {pk.fix(g.name): g for g in self.unlocked_locales.values()}
-                if pk.fix(" ".join(args)) in fixed_locales:
-                    loc = fixed_locales[pk.fix(" ".join(args))]
+                fixed_locales = {fix(g.name): g for g in self.unlocked_locales.values()}
+                if fix(" ".join(args)) in fixed_locales:
+                    loc = fixed_locales[fix(" ".join(args))]
                 else:
                     loc = await self.select_locale()
 
         mons = {g: [pk.get_saf(p) for p in j] for g, j in loc.encounter_table.items()}
-        return await ball_emol("safari").send(
+        return await self.bot.ball_emol("safari").send(
             self.ctx, loc.name, d=loc.desc, same_line=True,
             fs={
-                f"{g} {zeph.emojis[pk.rarity_stars[g]]}":
-                "\n".join([display_mon(p, "typed_list") + caught_indicator(self.user, p) for p in j])
+                f"{g} {self.bot.emojis[pk.rarity_stars[g]]}":
+                "\n".join([self.bot.display_mon(p, "typed_list") + caught_indicator(self.user, p) for p in j])
                 for g, j in mons.items()
             }
         )
 
     async def _stroll(self, *args):
-        emol = ball_emol("safari")
+        emol = self.bot.ball_emol("safari")
         caught_mons = []
         if len(args) > 0 and args[0].lower() in self.unlocked_locales:
             destination = self.unlocked_locales[args[0].lower()]
@@ -2738,7 +2509,7 @@ class PokeWalkerInterpreter(Interpreter):
             d=f"**Equipped Charms:** {none_list([g.name for g in self.user.equipped_charms])}"
               if self.user.owned_charm_ids else None
         )
-        for button in [zeph.emojis["safari_ball"], zeph.emojis["razz_berry"], "\U0001f45f", zeph.emojis["no"]]:
+        for button in [self.bot.emojis["safari_ball"], self.bot.emojis["razz_berry"], "\U0001f45f", self.bot.emojis["no"]]:
             await message.add_reaction(button)
 
         stroll = WalkerStroll(self.user, destination)
@@ -2752,7 +2523,7 @@ class PokeWalkerInterpreter(Interpreter):
             encounter_history.append(f"{i+1}\\. Encountered a wild {':sparkles: ' if mon.shiny else ''}{mon.name}.")
             stroll.remaining_encounters -= 1
 
-            nav = EncounterNavigator(mon, stroll, message)
+            nav = EncounterNavigator(self.bot, mon, stroll, message)
             await nav.update_message()
             await emol.edit(log_message, "Logbook", d="\n".join(encounter_history))
             await nav.run(self.ctx, skip_setup=True)
@@ -2792,25 +2563,25 @@ class PokeWalkerInterpreter(Interpreter):
             return await emol.send(
                 self.ctx, "Congratulations!",
                 d="**You caught:**\n" +
-                  ("\n".join(f"{zeph.emojis[pk.rarity_stars[destination.get_rarity(m)]]} {m} x{n}"
+                  ("\n".join(f"{self.bot.emojis[pk.rarity_stars[destination.get_rarity(m)]]} {m} x{n}"
                              for m, n in aggregate_mons.items())) +
                   f"\n\n**Tokens collected:**\n{tokens}{xp}"
             )
 
     async def _box(self, *args):
         nativity = Nativity(self.ctx, block_all=True)
-        zeph.nativities.append(nativity)
-        await WalkerBoxNavigator(self.user).run(self.ctx)
-        return zeph.nativities.remove(nativity)
+        self.bot.nativities.append(nativity)
+        await WalkerBoxNavigator(self.bot, self.user).run(self.ctx)
+        return self.bot.nativities.remove(nativity)
 
     async def _profile(self, *args):
-        tokens = none_list([f"{zeph.emojis[g + '_token']} x{j}" for g, j in self.user.tokens.items() if j > 0])
-        star = zeph.emojis[
+        tokens = none_list([f"{self.bot.emojis[g + '_token']} x{j}" for g, j in self.user.tokens.items() if j > 0])
+        star = self.bot.emojis[
             "diamond_star" if self.user.level == len(pk.walker_exp_levels) else
             "gold_star" if self.user.level >= 7 else "silver_star" if self.user.level >= 4 else "bronze_star"
         ]
         next_level = "-" if self.user.level == len(pk.walker_exp_levels) else pk.walker_exp_levels[self.user.level]
-        return await ball_emol("safari").send(
+        return await self.bot.ball_emol("safari").send(
             self.ctx, f"Trainer Profile: {self.au.global_name}",
             d=f"{star} **Trainer Level {self.user.level}** {star}\n"
               f"XP: {self.user.exp} // Next Level: {next_level}\n\n"
@@ -2822,65 +2593,200 @@ class PokeWalkerInterpreter(Interpreter):
             start_at = int(args[0]) if 1 <= int(args[0]) <= len(pk.walker_exp_levels) else 1
         else:
             start_at = 1
-        return await WalkerLevelNavigator(self.user, start_at).run(self.ctx)
+        return await WalkerLevelNavigator(self.bot, self.user, start_at).run(self.ctx)
 
     async def _charms(self, *args):
         nativity = Nativity(self.ctx, block_all=True)
-        zeph.nativities.append(nativity)
-        await WalkerCharmNavigator(self.user).run(self.ctx)
-        return zeph.nativities.remove(nativity)
+        self.bot.nativities.append(nativity)
+        await WalkerCharmNavigator(self.bot, self.user).run(self.ctx)
+        return self.bot.nativities.remove(nativity)
 
     async def _market(self, *args):
         nativity = Nativity(self.ctx, block_all=True)
-        zeph.nativities.append(nativity)
-        await WalkerMarketNavigator(self.user).run(self.ctx)
-        return zeph.nativities.remove(nativity)
+        self.bot.nativities.append(nativity)
+        await WalkerMarketNavigator(self.bot, self.user).run(self.ctx)
+        return self.bot.nativities.remove(nativity)
 
 
-def load_walker_users():
-    with open("storage/walker.txt", "r") as read:
-        for i in read.read().split("\n"):
-            if i:
-                us = pk.WalkerUser.from_str(i)
-                zeph.walker_users[us.id] = us
+class PokemonCog(commands.Cog):
+    def __init__(self, bot: Zeph):
+        self.bot = bot
 
+    @commands.command(
+        name="pokemon", aliases=["pkmn", "pk"], usage="z!pokemon help",
+        description="Performs various Pok\u00e9mon-related functions.",
+        help="Performs a variety of Pok\u00e9mon-related functions. I'm continually adding to this, so just use "
+             "`z!pokemon help` for more details."
+    )
+    async def pokemon_command(self, ctx: commands.Context, func: str = None, *args):
+        if not func:
+            return await self.bot.ball_emol().send(
+                ctx, "It's Pok\u00e9mon.",
+                d="This command performs a multitude of Pok\u00e9mon data operations. See `z!pokemon help` for info."
+            )
 
-@zeph.command(
-    name="pokewalker", aliases=["pw"],
-    usage="z!pw help",
-    description="Go for a stroll with your Pok\u00e9mon.",
-    help="Similar to the Pok\u00e9walker from HeartGold/SoulSilver. Go for a stroll in one of many locations, "
-         "catch Pok\u00e9mon, and... probably other stuff eventually. See `z!pw` for more information."
-)
-async def pokewalker_command(ctx: commands.Context, func: str = None, *args):
-    if not func:
-        return await ball_emol("safari").send(
-            ctx, "The Pok\u00e9walker... kind of.",
-            d="**This game is a work in progress.** It was inspired by the Pok\u00e9walker, a pedometer accessory "
-              "that came bundled with Pok\u00e9mon HeartGold/SoulSilver and included its own catch & battle "
-              "minigame. I've taken a bit of liberty in translating that to Discord, and also added some features "
-              "inspired by Pok\u00e9mon GO, to create **`z!pw`**.\n\n"
-              "While on a `z!pw stroll`, you can encounter and catch up to 30 Pok\u00e9mon. (They can be shiny, by "
-              "the way.) For each Pok\u00e9mon you catch, you'll earn one token for each of its types - e.g. after "
-              f"catching a {zeph.emojis['Grass']} Grass / {zeph.emojis['Poison']} Poison Bulbasaur, you'll earn "
-              f"one {zeph.emojis['Grass_token']} Grass and one {zeph.emojis['Poison_token']} Poison token.\n\n"
-              "Pok\u00e9mon you catch get sent to your `z!pw box`, where you can view them, transfer them to the "
-              "Professor to earn additional tokens, or spend tokens to evolve them. You can also spend tokens in the "
-              "`z!pw market` to buy Charms - equippable items that provide passive effects while you're on a stroll "
-              "- and evolution items like Stones. As you progress through the game, you'll unlock more stroll "
-              "locales, more Charms, and more Pok\u00e9mon. Check `z!pw help` for a full list of commands!"
-        )
+        return await PokemonInterpreter(self.bot, ctx).run(str(func).lower(), *args)
 
-    if ctx.author.id not in zeph.walker_users:
-        zeph.walker_users[ctx.author.id] = pk.WalkerUser.new(ctx.author.id)
-    previous_level = zeph.walker_users[ctx.author.id].level
+    @commands.command(hidden=True, aliases=["lm"], usage="z!lm name type category PP power accuracy contact target **kwargs")
+    async def loadmove(
+            self, ctx: commands.Context, name: str, typ: str, category: str, pp: int, pwr: int | str, accuracy: int,
+            contact: bool, target: str, *args
+    ):
+        admin_check(ctx)
 
-    await PokeWalkerInterpreter(ctx).run(str(func).lower(), *args)
+        shortcuts = {
+            "pt": "can_protect", "mc": "can_magic_coat", "sn": "can_snatch", "mm": "can_mirror_move",
+            "rcr": "raised_crit_ratio"
+        }
 
-    if zeph.walker_users[ctx.author.id].level > previous_level:
-        await asyncio.sleep(1)
-        await ball_emol("safari").send(
-            ctx, "Level Up!",
-            d=f"Congratulations! You've reached **Trainer Level {zeph.walker_users[ctx.author.id].level}!**\n\n"
-              f"{pk.walker_level_up_rewards(zeph.walker_users[ctx.author.id].level)}"
-        )
+        def interpret_kwarg(s: str):
+            if len(s.split("=")) == 1:
+                return shortcuts.get(s, s), True
+            elif s.startswith("z_effect=") or s.startswith("z="):
+                return "z_effect", dict((interpret_kwarg("=".join(s.split("=")[1:])),))
+            else:
+                return shortcuts.get(s.split("=")[0], s.split("=")[0]), eval(s.split("=")[1])
+
+        kwargs = dict(interpret_kwarg(g) for g in args)
+
+        assert typ.title() in pk.types
+        assert category.title() in pk.categories
+
+        move = pk.Move(name, typ.title(), category.title(), pp, pwr, accuracy, contact, eval(f"pk.{target}"), **kwargs)
+        assert move.json == move.copy().json
+
+        if move.category == pk.status and not move.z_effect:
+            await ctx.send(embed=Emol(self.bot.emojis["yield"], hex_to_color("DD2E44"))
+                           .con("This status move has no Z-Effect."))
+        if move.name in pk.battle_moves:
+            await ctx.send(embed=Emol(self.bot.emojis["yield"], hex_to_color("DD2E44"))
+                           .con("This move already exists."))
+
+        await ctx.send(f"```py\n{move.json}```", embed=PokemonInterpreter(self.bot, ctx).move_embed(move))
+        try:
+            assert await self.bot.confirm(f"{'Overwrite' if move.name in pk.battle_moves else 'Save'} this move?",
+                                          ctx, yes="save")
+        except AssertionError:
+            pass
+        else:
+            pk.battle_moves[move.name] = move.copy()
+            with open("pokemon/data/moves.json", "w") as f:
+                json.dump({g: j.json for g, j in pk.battle_moves.items()}, f, indent=4)
+            return await success.send(ctx, "Move saved.")
+
+    @commands.command(
+        hidden=True, name="loadmon", aliases=["lp", "pn"],
+        usage="z!lp name"
+    )
+    async def loadmon_command(self, ctx: commands.Context, name: str, *args):
+        admin_check(ctx)
+
+        emol = self.bot.ball_emol()
+
+        if existing_mon := pk.find_mon(name, fail_silently=True):
+            if await self.bot.confirm(
+                    "A mon with that name already exists.", ctx,
+                    desc_override=f"Add a new form to {existing_mon.species.name}?", allow_text_response=True
+            ):
+                species = pk.nat_dex[existing_mon.species.name]
+            else:
+                return
+        else:
+            species = pk.Species(name, 0, [])
+        force_exit = False
+        while True:
+            if args:
+                user_input = " ".join(args)
+                args = []
+            else:
+                try:
+                    await emol.send(
+                        ctx, f"Input this form's stats:",
+                        d="Format: `HP Atk Def SpA SpD Spe type1 type2 height weight [form name]`"
+                    )
+                    user_input = (await self.bot.wait_for("message", check=general_pred(ctx), timeout=300)).content
+                except asyncio.TimeoutError:
+                    return await emol.send(ctx, "Request timed out.")
+            if user_input.lower() == "cancel":
+                return await emol.send(ctx, "Dex addition cancelled.")
+            form = pk.Form.from_str(user_input)
+            if form.name == "done":
+                force_exit = True
+                form.name = ""
+            species.add_form(form)
+            mon = pk.Mon(species, form=form.name)
+
+            try:
+                await emol.send(
+                    ctx, f"What Abilities does {mon.species_and_form} have?",
+                    d="Separate standard Abilities with a comma, and Hidden Abilities with a slash."
+                )
+                ability_input = (await self.bot.wait_for("message", check=general_pred(ctx), timeout=300)).content
+            except asyncio.TimeoutError:
+                return await emol.send(ctx, "Request timed out.")
+            if "/" in ability_input:
+                standard_abilities = [g.strip() for g in ability_input.split("/")[0].split(",")]
+                hidden_ability = ability_input.split("/")[1].strip()
+            else:
+                standard_abilities = [g.strip() for g in ability_input.split(",")]
+                hidden_ability = ""
+            if len(standard_abilities) < 2:
+                standard_abilities.append("")
+            pk.legal_abilities[mon.species_and_form] = [*standard_abilities, hidden_ability, ""]
+
+            await emol.send(ctx, f"#{existing_mon.dex_no} {name}",
+                            d=self.bot.display_mon(mon, "dex"), thumbnail=mon.dex_image)
+            if await self.bot.confirm("Does this look right?", ctx, desc_override="", allow_text_response=True):
+                if force_exit or not (await self.bot.confirm("Add another form?", ctx, desc_override="", allow_text_response=True)):
+                    pk.rewrite_abilities()
+                    if existing_mon:
+                        pk.rewrite_mons()
+                        return await success.send(ctx, f"{species.name} updated.")
+                    else:
+                        pk.add_new_mon(species)
+                        return await success.send(ctx, f"{species.name} added to dex.")
+                else:
+                    continue
+            else:
+                species.remove_form(form)
+
+    @commands.command(
+        name="pokewalker", aliases=["pw"],
+        usage="z!pw help",
+        description="Go for a stroll with your Pok\u00e9mon.",
+        help="Similar to the Pok\u00e9walker from HeartGold/SoulSilver. Go for a stroll in one of many locations, "
+             "catch Pok\u00e9mon, and... probably other stuff eventually. See `z!pw` for more information."
+    )
+    async def pokewalker_command(self, ctx: commands.Context, func: str = None, *args):
+        if not func:
+            return await self.bot.ball_emol("safari").send(
+                ctx, "The Pok\u00e9walker... kind of.",
+                d="**This game is a work in progress.** It was inspired by the Pok\u00e9walker, a pedometer accessory "
+                  "that came bundled with Pok\u00e9mon HeartGold/SoulSilver and included its own catch & battle "
+                  "minigame. I've taken a bit of liberty in translating that to Discord, and also added some features "
+                  "inspired by Pok\u00e9mon GO, to create **`z!pw`**.\n\n"
+                  "While on a `z!pw stroll`, you can encounter and catch up to 30 Pok\u00e9mon. (They can be shiny, by "
+                  "the way.) For each Pok\u00e9mon you catch, you'll earn one token for each of its types - e.g. after "
+                  f"catching a {self.bot.emojis['Grass']} Grass / {self.bot.emojis['Poison']} Poison Bulbasaur, you'll "
+                  f"earn one {self.bot.emojis['Grass_token']} Grass and one {self.bot.emojis['Poison_token']} Poison "
+                  "token.\n\nPok\u00e9mon you catch get sent to your `z!pw box`, where you can view them, transfer "
+                  "them to the Professor to earn additional tokens, or spend tokens to evolve them. You can also spend "
+                  "tokens in the `z!pw market` to buy Charms - equippable items that provide passive effects while "
+                  "you're on a stroll - and evolution items like Stones. As you progress through the game, you'll "
+                  "unlock more stroll locales, more Charms, and more Pok\u00e9mon. Check `z!pw help` for a full "
+                  "list of commands!"
+            )
+
+        if ctx.author.id not in self.bot.walker_users:
+            self.bot.walker_users[ctx.author.id] = pk.WalkerUser.new(ctx.author.id)
+        previous_level = self.bot.walker_users[ctx.author.id].level
+
+        await PokeWalkerInterpreter(self.bot, ctx).run(str(func).lower(), *args)
+
+        if self.bot.walker_users[ctx.author.id].level > previous_level:
+            await asyncio.sleep(1)
+            await self.bot.ball_emol("safari").send(
+                ctx, "Level Up!",
+                d=f"Congratulations! You've reached **Trainer Level {self.bot.walker_users[ctx.author.id].level}!**\n\n"
+                  f"{pk.walker_level_up_rewards(self.bot.walker_users[ctx.author.id].level)}"
+            )

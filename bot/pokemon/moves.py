@@ -1,10 +1,7 @@
-from typing import Union
-from re import sub
 import json
-
-
-def fix(s: str, joiner: str = "-"):
-    return sub(f"{joiner}+", joiner, sub(f"[^a-z0-9{joiner}]+", "", sub(r"\s+", joiner, s.lower().replace("é", "e"))))
+from discord.ext import commands
+from functions import best_guess, fix
+from re import sub
 
 
 def alpha_fix(s: str) -> str:
@@ -128,7 +125,7 @@ class StatusEffect:
 class ZEffect:
     """A class for the secondary effects of status Z-moves."""
 
-    def __init__(self, typ: Union[str, None], effect: Union[StatChange, bool, str]):
+    def __init__(self, typ: str | None, effect: StatChange | bool | str):
         self.type = typ
         self.effect = effect
 
@@ -614,3 +611,15 @@ class WikiMove:
 
 
 wiki_moves = {g: WikiMove(**j) for g, j in json.load(open("pokemon/data/wikimoves.json", "r")).items()}
+
+
+def find_move(s: str, return_wiki: bool = True, fail_silently: bool = False) -> Move | WikiMove:
+    try:
+        if return_wiki:
+            return [j for g, j in wiki_moves.items() if alpha_fix(g) == alpha_fix(s)][0]
+        return [j.copy() for g, j in battle_moves.items() if alpha_fix(g) == alpha_fix(s)][0]
+    except IndexError:
+        if not fail_silently:
+            lis = {fix(g): g for g in (wiki_moves if return_wiki else battle_moves)}
+            guess = best_guess(fix(s), list(lis))
+            raise commands.CommandError(f"`{s}` not found. Did you mean {lis[guess]}?")

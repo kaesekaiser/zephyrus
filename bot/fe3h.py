@@ -1,8 +1,12 @@
-from server import *
+from classes.bot import Zeph
+from classes.embeds import Emol
+from classes.interpreter import Interpreter
+from classes.menus import Navigator
+from discord.ext import commands
+from functions import hex_to_color
 from utilities import fe3hdata as fe
 
-
-femol = Emol(":crossed_swords:", hexcol("FFAC33"))
+femol = Emol(":crossed_swords:", hex_to_color("FFAC33"))
 
 
 class FE3HInterpreter(Interpreter):
@@ -38,7 +42,7 @@ class FE3HInterpreter(Interpreter):
                 raise commands.CommandError(f"Invalid character `{arg}`.")
 
         shared_meals = [f"- {g}" for g, j in fe.meals.items() if all(c.title() in j for c in args)]
-        emol = Emol(zeph.emojis["motivated"], hexcol("86FE9F"))
+        emol = Emol(self.bot.emojis["motivated"], hex_to_color("86FE9F"))
 
         if not shared_meals:
             return await emol.send(self.ctx, f"{args[0].title()} and {args[1].title()} have no meals in common.")
@@ -48,20 +52,24 @@ class FE3HInterpreter(Interpreter):
         else:
             title = f"{args[0].title()}'s Favorite Meals"
 
-        return await Navigator(emol, shared_meals, 8, title + " [{page}/{pgs}]").run(self.ctx)
+        return await Navigator(self.bot, emol, shared_meals, 8, title + " [{page}/{pgs}]").run(self.ctx)
 
 
-@zeph.command(
-    name="fe3h", aliases=["fe"],
-    description="Various Fire Emblem: Three Houses data.",
-    help="Returns various data from the game Fire Emblem: Three Houses. A work in progress. See `z!fe3h help` for more."
-)
-async def fe3h_command(ctx: commands.Context, func: str = None, *args: str):
-    if not func:
-        return await femol.send(
-            ctx, "Fire Emblem: Three Houses",
-            d="This command spits out various data from the game Fire Emblem: Three Houses. It's still a work in "
-              "progress, so it doesn't do much yet. Use `z!fe3h help` for more info."
-        )
+class FE3HCog(commands.Cog):
+    def __init__(self, bot: Zeph):
+        self.bot = bot
 
-    return await FE3HInterpreter(ctx).run(func, *args)
+    @commands.command(
+        name="fe3h", aliases=["fe"],
+        description="Various Fire Emblem: Three Houses data.",
+        help="Returns various data from the game Fire Emblem: Three Houses. WIP. See `z!fe3h help` for more."
+    )
+    async def fe3h_command(self, ctx: commands.Context, func: str = None, *args: str):
+        if not func:
+            return await femol.send(
+                ctx, "Fire Emblem: Three Houses",
+                d="This command spits out various data from the game Fire Emblem: Three Houses. It's still a work in "
+                  "progress, so it doesn't do much yet. Use `z!fe3h help` for more info."
+            )
+
+        return await FE3HInterpreter(self.bot, ctx).run(func, *args)

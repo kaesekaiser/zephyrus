@@ -1,46 +1,19 @@
-from epitaph import *
-from minigames import planes as pn
-from math import sin, cos
+import asyncio
+import datetime
+import discord
 import os
+import re
+import time
+from classes.bot import Zeph
+from classes.embeds import error, NewLine, plane, success
+from classes.interpreter import Interpreter
+from classes.menus import FieldNavigator, Nativity, Navigator, NumSelector, page_list
+from discord.ext import commands
+from functions import add_commas, admin_check, best_guess, can_int, grammatical_join, none_list
+from math import sin, cos
+from minigames.imaging import merge_down
 
-
-async def initialize_planes():
-    print("Initializing planes...")
-    start = time.time()
-    for i in re.findall(pn.pattern, pn.readurl(pn.map_url)):
-        pn.City.from_html(i)
-    if len(pn.cities) == 0:
-        return print("Initialization failed.")
-    for i in pn.cities.values():
-        if i.country not in pn.countries:
-            pn.Country.from_name_only(i.country)
-    with open("storage/planes.txt", "r") as read:
-        for i in read.readlines():
-            us = pn.User.from_str(i)
-            zeph.plane_users[us.id] = us
-    return print(f"Planes initialized. ({round(time.time() - start, 1)} s)")
-
-
-@zeph.command(
-    aliases=["p"], usage="z!planes help",
-    description="A shipping simulator I'm calling Planes.",
-    help="Lets you play a game I'm just calling Planes. It's a sort of semi-idle shipping simulator - really similar "
-         "to a mobile game called Pocket Planes - where you buy airports and airplanes, and use them to take jobs "
-         "back and forth for profit. There's many, many sub-commands, so do `z!planes help` for more info on what "
-         "exactly you can do, and how to do it."
-)
-async def planes(ctx: commands.Context, func: str = None, *args: str):
-    if not func:
-        return await plane.send(
-            ctx, "Planes",
-            d="I don't particularly know what this is. If you've ever played Pocket Planes on mobile, it's essentially "
-              "that, but a tiny bit different. There's a lot more airports, for one, and there's a distinct lack of a "
-              "screen, because it's Discord. I'm working on that. For now though, use `z!planes map` to view all "
-              "the airports, and `z!planes help` to view all the possible commands.\n\n"
-              "Important side note: One in-game hour is equal to one real-life minute. Everything else is to scale."
-        )
-
-    return await PlanesInterpreter(ctx).run(str(func).lower(), *args)
+from minigames import planes as pn
 
 
 class PlanesInterpreter(Interpreter):
@@ -54,8 +27,8 @@ class PlanesInterpreter(Interpreter):
     @property
     def user(self):
         try:
-            assert isinstance(zeph.plane_users[self.au.id], pn.User)
-            return zeph.plane_users[self.au.id]
+            assert isinstance(self.bot.plane_users[self.au.id], pn.User)
+            return self.bot.plane_users[self.au.id]
         except KeyError:
             return pn.User(0, {}, [], {}, 0)
 
@@ -89,7 +62,7 @@ class PlanesInterpreter(Interpreter):
         flag = f":flag_{pn.country_codes[ci.country]}: " if flag else ""
         return flag + (ci.name if (ci.name in self.user.cities or not italicize_unowned) else f"_{ci.name}_")
 
-    def market_price(self, model: Union[str, pn.Model], delta: int = 0):
+    def market_price(self, model: str | pn.Model, delta: int = 0):
         if isinstance(model, str):
             model = pn.craft[model.lower()]
         return round(
@@ -198,7 +171,7 @@ class PlanesInterpreter(Interpreter):
 
         self.user.credits -= round(fuel_cost)
         craft.launch(*args)
-        plane.task = zeph.loop.create_task(self.arrival_timer(craft))
+        plane.task = self.bot.loop.create_task(self.arrival_timer(craft))
         return await plane.send(
             self.ctx, f"{craft.name} will arrive at {craft.path[-1].name} <t:{craft.arrival}:R>.",
             d=f"ETA: <t:{craft.arrival}:t> / Flight time: `{pn.hrmin(round(craft.arrival - time.time()))}` / "
@@ -206,7 +179,7 @@ class PlanesInterpreter(Interpreter):
         )
 
     async def before_run(self, func: str):
-        if self.au.id in zeph.plane_users:
+        if self.au.id in self.bot.plane_users:
             for craft in self.user.planes.values():
                 if len(craft.path) > 0:  # messy; should only be called if zeph went down while a plane was in the air
                     while craft.next_eta and craft.next_eta < time.time():
@@ -406,11 +379,11 @@ class PlanesInterpreter(Interpreter):
                 raise commands.CommandError("You can't sell your last plane.")
 
             resale = int(self.market_price(craft.model) / 4)
-            if await confirm(f"You're selling {craft.name} for Ȼ{pn.addcomm(resale)}.", self.ctx, self.au):
+            if await self.bot.confirm(f"You're selling {craft.name} for Ȼ{pn.addcomm(resale)}.", self.ctx, self.au):
                 self.user.planes = \
                     {i: g for i, g in self.user.planes.items() if g.name != craft.name}
                 self.user.credits += resale
-                return await succ.send(self.ctx, "Plane sold.")
+                return await success.send(self.ctx, "Plane sold.")
 
             return await plane.send(self.ctx, "Sale cancelled.")
 
@@ -445,7 +418,7 @@ class PlanesInterpreter(Interpreter):
         license_level = self.user.countries.get(country.name, 0)
 
         if len(args) > 1 and args[1] in ["upgrade", "u", "--u"]:
-            return await LicenseUpgradeNavigator(self, country).run(self.ctx)
+            return await LicenseUpgradeNavigator(self.bot, self, country).run(self.ctx)
 
         fields = {
             "Traffic": pn.illion_suffix(sum([g.passengers for g in country.cities])),
@@ -457,11 +430,11 @@ class PlanesInterpreter(Interpreter):
         }
         if country.name in self.user.countries:
             fields["License Level"] = NewLine(
-                f"Your license is **Level {license_level}** [{zeph.emojis['ziplv' + str(license_level)]}]. "
+                f"Your license is **Level {license_level}** [{self.bot.emojis['ziplv' + str(license_level)]}]. "
                 f"Jobs headed for this country are worth **{round(25 * (license_level - 1))}%** more, "
                 f"and airports in this country are **{round(10 * (license_level - 1))}%** cheaper.\n\n"
                 f"Your license may be upgraded using `z!p license {country.name}`." if license_level > 1 else
-                f"Your license is **Level 1** [{zeph.emojis['ziplv1']}]. "
+                f"Your license is **Level 1** [{self.bot.emojis['ziplv1']}]. "
                 f"This provides no additional bonuses. "
                 f"Your license may be upgraded using `z!p license {country.name}`."
             )
@@ -488,10 +461,10 @@ class PlanesInterpreter(Interpreter):
                 raise commands.CommandError("You don't own that airport.")
 
             resale = int(self.airport_price(city) / 4)
-            if await confirm(f"You're selling {city.name} Airport for Ȼ{pn.addcomm(resale)}.", self.ctx, self.au):
+            if await self.bot.confirm(f"You're selling {city.name} Airport for Ȼ{pn.addcomm(resale)}.", self.ctx, self.au):
                 self.user.credits += resale
                 self.user.cities.remove(city.name)
-                return await succ.send(self.ctx, "Airport sold!")
+                return await success.send(self.ctx, "Airport sold!")
 
             return await plane.send(self.ctx, "Sale cancelled.")
 
@@ -503,19 +476,19 @@ class PlanesInterpreter(Interpreter):
         minimaps = {}
         for zoom in [1, 2, 4]:
             if os.path.exists(f"storage/minimaps/{city.name}{zoom}.png"):  # avoid unnecessary image generation
-                minimaps[zoom] = await image_url(f"storage/minimaps/{city.name}{zoom}.png")
+                minimaps[zoom] = await self.bot.image_url(f"storage/minimaps/{city.name}{zoom}.png")
             else:
-                base = zeph.airport_maps[zoom].copy()
+                base = self.bot.airport_maps[zoom].copy()
                 left_bound = max(0, min(city.imageCoords[zoom][0] - 300, 2752 * zoom - 601))
                 upper_bound = max(0, min(city.imageCoords[zoom][1] - 300, 1396 * zoom - 601))
                 right_bound = left_bound + 600
                 lower_bound = upper_bound + 600
-                im.merge_down(zeph.airport_icon, base, *city.imageCoords[zoom], center=True)
+                merge_down(self.bot.airport_icon, base, *city.imageCoords[zoom], center=True)
                 base = base.crop((left_bound, upper_bound, right_bound, lower_bound))
                 base.save(f"storage/minimaps/{city.name}{zoom}.png")
-                minimaps[zoom] = await image_url(f"storage/minimaps/{city.name}{zoom}.png")
+                minimaps[zoom] = await self.bot.image_url(f"storage/minimaps/{city.name}{zoom}.png")
 
-        return await AirportNavigator(self, city, message, minimaps).run(self.ctx, False)
+        return await AirportNavigator(self.bot, self, city, message, minimaps).run(self.ctx, False)
 
     async def _launch(self, *args):
         if len(args) < 2:
@@ -601,8 +574,8 @@ class PlanesInterpreter(Interpreter):
             city.job_reset = reset
 
         await JobNavigator(
-            self, city, fil, fil_str,
-            browse_only=nativity_special_case_match(self.ctx, "zip jobs"),
+            self.bot, self, city, fil, fil_str,
+            browse_only=self.bot.nativity_special_case_match(self.ctx, "zip jobs"),
             footer=f"new jobs in {self.form_et(((tm // 900 + 1) * 900 - tm) // 60)} min"
         ).run(self.ctx)
 
@@ -644,7 +617,7 @@ class PlanesInterpreter(Interpreter):
                     [g.name.lower() for g in possible_planes]
 
             try:
-                mess = await zeph.wait_for("message", timeout=90, check=pred)
+                mess = await self.bot.wait_for("message", timeout=90, check=pred)
             except asyncio.TimeoutError:
                 raise commands.CommandError(f"{self.ctx.author.name}'s load request timed out.")
             else:
@@ -654,9 +627,9 @@ class PlanesInterpreter(Interpreter):
             try:
                 craft.load(job.upper())
             except ValueError:
-                return await succ.send(self.ctx, f"Fully loaded {craft.name} with the first {jobs.index(job)} job(s).")
+                return await success.send(self.ctx, f"Fully loaded {craft.name} with the first {jobs.index(job)} job(s).")
 
-        return await succ.send(
+        return await success.send(
             self.ctx, f"Job loaded onto {craft.name}." if len(jobs) == 1 else f"Jobs loaded onto {craft.name}.",
             d=f"{craft.name} is now full." if craft.is_full else
               f"{craft.name} has {craft.pass_cap - len(craft.jobs)} empty slots remaining."
@@ -677,7 +650,7 @@ class PlanesInterpreter(Interpreter):
             raise commands.CommandError("You can't name a plane that.")
 
         self.user.rename(nam, args[1])
-        return await succ.send(self.ctx, f"{nam} renamed to {args[1]}.")
+        return await success.send(self.ctx, f"{nam} renamed to {args[1]}.")
 
     async def _unload(self, *args):
         if len(args) < 2:
@@ -692,7 +665,7 @@ class PlanesInterpreter(Interpreter):
         if args[1].lower() == "all":
             for i in craft.jobs.copy():
                 craft.unload(i.upper())
-            return await succ.send(self.ctx, "All jobs offloaded.")
+            return await success.send(self.ctx, "All jobs offloaded.")
         else:
             jobs = args[1:]
         for i in jobs:
@@ -701,18 +674,18 @@ class PlanesInterpreter(Interpreter):
 
         for i in jobs:
             craft.unload(i.upper())
-        return await succ.send(self.ctx, f"{plural('Job', len(jobs))} offloaded.")
+        return await success.send(self.ctx, f"{plural('Job', len(jobs))} offloaded.")
 
     async def _market(self, *args):
         prices = {g.name: self.market_price(g) for g in pn.craft.values()}
         yesterday_prices = {g.name: self.market_price(g, -1) for g in pn.craft.values()}
         prices = {
             g: f"Ȼ{pn.addcomm(prices[g])}"
-            f"{zeph.emojis['red_tri_up'] if yesterday_prices[g] < prices[g] else zeph.emojis['green_tri_down']}"
+            f"{self.bot.emojis['red_tri_up'] if yesterday_prices[g] < prices[g] else self.bot.emojis['green_tri_down']}"
             for g in prices
         }
         return await FieldNavigator(
-            plane, prices, 6, "The Market [{page}/{pgs}]", same_line=True,
+            self.bot, plane, prices, 6, "The Market [{page}/{pgs}]", same_line=True,
             footer="Use z!p model to see detailed stats, and z!p buy to buy a plane."
         ).run(self.ctx)
 
@@ -768,11 +741,11 @@ class PlanesInterpreter(Interpreter):
                 f"(from {craft.fuel_cap} L), which means its **range** will increase to **{comp_craft.range} km** " \
                 f"(from {craft.range} km).\n\n"
 
-        if await confirm(f"Are you sure you want to upgrade {craft.name}'s {args[1].lower()} for "
+        if await self.bot.confirm(f"Are you sure you want to upgrade {craft.name}'s {args[1].lower()} for "
                          f"Ȼ{pn.addcomm(up_cost)}?", self.ctx, self.au, add_info=comparison):
             self.user.credits -= up_cost
             craft.upgrades = new_grade
-            return await succ.send(self.ctx, "Plane upgraded!")
+            return await success.send(self.ctx, "Plane upgraded!")
         return await plane.send(self.ctx, "Upgrade cancelled.")
 
     async def _buyout(self, *args):
@@ -813,7 +786,7 @@ class PlanesInterpreter(Interpreter):
 
         confirm_text = "every airport" if total else f"the {len(bought)} biggest airports"
         try:
-            assert await confirm(
+            assert await self.bot.confirm(
                 f"You're buying {confirm_text} in {country.name} for Ȼ{pn.addcomm(price)}.", self.ctx, self.au
             )
         except AssertionError:
@@ -822,11 +795,11 @@ class PlanesInterpreter(Interpreter):
         for i in bought:
             self.user.cities.append(i.name)
         self.user.credits -= price
-        return await succ.send(self.ctx, f"Airports purchased!")
+        return await success.send(self.ctx, f"Airports purchased!")
 
     async def _restart(self, *args):
         try:
-            assert await confirm(
+            assert await self.bot.confirm(
                 "`WARNING:` This will completely and absolutely wipe your Planes data.", self.ctx, self.au,
                 add_info="All progress will be lost, and you won't be able to get it back, except through your own "
                          "blood, sweat, and tears. Are you sure you want to start over?\n", yes="wipe everything"
@@ -836,8 +809,8 @@ class PlanesInterpreter(Interpreter):
         else:
             mess = await plane.send(self.ctx, "Alright, one moment...")
             await asyncio.sleep(2 + random() * 2)
-            del zeph.plane_users[self.au.id]
-            return await succ.edit(mess, "Done.", d="Call `z!planes new` to start anew.")
+            del self.bot.plane_users[self.au.id]
+            return await success.edit(mess, "Done.", d="Call `z!planes new` to start anew.")
 
     async def _buy(self, *args):
         if len(args) < 2:
@@ -864,12 +837,12 @@ class PlanesInterpreter(Interpreter):
             if cost > self.user.credits:
                 raise commands.CommandError(f"You don't have enough credits; you need Ȼ{add_commas(cost)}.")
 
-            if await confirm(
+            if await self.bot.confirm(
                 f"You're buying {len(purchases)} airport(s) for a total of Ȼ{add_commas(cost)}.", self.ctx, self.au
             ):
                 self.user.credits -= cost
                 self.user.cities.extend(g.name for g in purchases)
-                return await succ.send(self.ctx, "Airport(s) purchased.")
+                return await success.send(self.ctx, "Airport(s) purchased.")
 
         elif args[0].lower() in ["c", "country", "countries", "license", "licenses"]:
             purchases = []
@@ -887,13 +860,13 @@ class PlanesInterpreter(Interpreter):
             if cost > self.user.credits:
                 raise commands.CommandError(f"You don't have enough credits; you need Ȼ{add_commas(cost)}.")
 
-            if await confirm(
+            if await self.bot.confirm(
                 f"You're buying {len(purchases)} country license(s) for a total of Ȼ{add_commas(cost)}.",
                 self.ctx, self.au
             ):
                 self.user.credits -= cost
                 self.user.countries.update([(g.name, 1) for g in purchases])
-                return await succ.send(self.ctx, "License(s) purchased.")
+                return await success.send(self.ctx, "License(s) purchased.")
 
         elif args[0].lower() in ["p", "plane", "planes"]:
             if len(args) > 2:
@@ -907,9 +880,9 @@ class PlanesInterpreter(Interpreter):
             if price > self.user.credits:
                 raise commands.CommandError("You don't have enough credits.")
 
-            if await confirm(f"You're buying a {model.name} for Ȼ{pn.addcomm(price)}.",
+            if await self.bot.confirm(f"You're buying a {model.name} for Ȼ{pn.addcomm(price)}.",
                              self.ctx, self.au):
-                await succ.send(self.ctx, "Aircraft purchased! What would you like to name your new craft?")
+                await success.send(self.ctx, "Aircraft purchased! What would you like to name your new craft?")
 
                 def pred1(m: discord.Message):
                     return m.author == self.au and m.channel == self.ctx.channel
@@ -925,7 +898,7 @@ class PlanesInterpreter(Interpreter):
 
                 while True:
                     try:
-                        mess = await zeph.wait_for("message", timeout=300, check=pred1)
+                        mess = await self.bot.wait_for("message", timeout=300, check=pred1)
                     except asyncio.TimeoutError:
                         return await plane.send(self.ctx, "Purchase timed out and cancelled.")
 
@@ -941,7 +914,7 @@ class PlanesInterpreter(Interpreter):
                             await plane.send(self.ctx, "You can't name a plane that.",
                                              d=f"What would you like to name your new {model.name}?")
                         else:
-                            await succ.send(self.ctx, f"{model.name} named {mess.content}.")
+                            await success.send(self.ctx, f"{model.name} named {mess.content}.")
                             new = pn.Plane.new(model.name.lower())
                             new.name = mess.content
                             break
@@ -949,7 +922,7 @@ class PlanesInterpreter(Interpreter):
                 await plane.send(self.ctx, f"What city do you want to deploy {new.name} in?")
                 while True:
                     try:
-                        mess = await zeph.wait_for("message", timeout=300, check=pred2)
+                        mess = await self.bot.wait_for("message", timeout=300, check=pred2)
                     except asyncio.TimeoutError:
                         return await plane.send(self.ctx, "Purchase timed out and cancelled.")
 
@@ -961,13 +934,13 @@ class PlanesInterpreter(Interpreter):
                             new.path = pn.Path(0, pn.find_city(mess.content))
                             self.user.credits -= price
                             self.user.planes[new.name.lower()] = new
-                            return await succ.send(self.ctx, f"{new.name} ready for flight!")
+                            return await success.send(self.ctx, f"{new.name} ready for flight!")
 
             else:
                 return await plane.send(self.ctx, "Purchase cancelled.")
 
     async def _new(self, *args):
-        if self.ctx.author.id in zeph.plane_users:
+        if self.ctx.author.id in self.bot.plane_users:
             return await plane.send(
                 self.ctx, "You've already started a game, but you can start over using `z!planes restart` if you want."
             )
@@ -1035,7 +1008,7 @@ class PlanesInterpreter(Interpreter):
 
             if len(args) > 2 and can_int(args[2]):
                 try:
-                    user = zeph.plane_users[int(args[2])]
+                    user = self.bot.plane_users[int(args[2])]
                 except KeyError:
                     raise commands.CommandError("User ID not found.")
             else:
@@ -1043,7 +1016,7 @@ class PlanesInterpreter(Interpreter):
 
             user.credits += int(args[1])
 
-            return await succ.send(
+            return await success.send(
                 self.ctx,
                 f"Credits changed by {'-' if int(args[1]) < 0 else ''}Ȼ{pn.addcomm(abs(int(args[1])))}.",
                 d=f"New value: **Ȼ{pn.addcomm(user.credits)}**."
@@ -1054,7 +1027,7 @@ class PlanesInterpreter(Interpreter):
             for city in pn.cities.values():
                 if city.jobs and city.job_reset < tm - 3600:  # if a city hasn't been checked in the last hour
                     city.jobs.clear()
-            return await succ.send(self.ctx, "Job cache cleared.")
+            return await success.send(self.ctx, "Job cache cleared.")
 
     async def _licenses(self, *args):
         if args:
@@ -1063,22 +1036,23 @@ class PlanesInterpreter(Interpreter):
             except KeyError:
                 raise commands.CommandError(f"Invalid country `{args[0]}`.")
             else:
-                return await LicenseUpgradeNavigator(self, country).run(self.ctx)
+                return await LicenseUpgradeNavigator(self.bot, self, country).run(self.ctx)
 
         nat_counts = {nat: len([g for g in pn.cities.values() if g.country == nat]) for nat in self.user.countries}
         licenses = [
-            f":flag_{pn.country_codes[k]}: **{k}**: Level {v} [{zeph.emojis['ziplv' + str(v)]}]\n"
+            f":flag_{pn.country_codes[k]}: **{k}**: Level {v} [{self.bot.emojis['ziplv' + str(v)]}]\n"
             f"- {len([g for g in self.user.cities if pn.city_countries[g] == k])}/{nat_counts[k]} airports owned"
             for k, v in sorted(list(self.user.countries.items()), key=lambda c: -(c[1] * 1000 + nat_counts[c[0]]))
         ]
-        return await Navigator(plane, licenses, 4, "Flight Licenses [{page}/{pgs}]").run(self.ctx)
+        return await Navigator(self.bot, plane, licenses, 4, "Flight Licenses [{page}/{pgs}]").run(self.ctx)
 
 
 class JobNavigator(NumSelector):
     launch_commands = ["launch", "go", "g"]
 
-    def __init__(self, inter: PlanesInterpreter, city: pn.City, fil: callable, fil_str: str, **kwargs):
-        super().__init__(plane, s=f"{fil_str}obs in {city.name}" + " [{page}/{pgs}]", timeout=180, multi=True, **kwargs)
+    def __init__(self, bot: Zeph, inter: PlanesInterpreter, city: pn.City, fil: callable, fil_str: str, **kwargs):
+        super().__init__(bot, plane, s=f"{fil_str}obs in {city.name}" + " [{page}/{pgs}]",
+                         timeout=180, multi=True, **kwargs)
         self.interpreter = inter
         self.city = city
         self.filter = fil
@@ -1092,7 +1066,7 @@ class JobNavigator(NumSelector):
         self.update_jobs()
         self.funcs["🔄"] = self.update_jobs
         self.funcs["✈"] = self.switch_planes
-        self.funcs[zeph.emojis["no"]] = self.close
+        self.funcs[self.bot.emojis["no"]] = self.close
         self.funcs["exit"] = self.close
 
         self.nativity = Nativity(self.ctx, special_case="zip jobs")
@@ -1140,7 +1114,7 @@ class JobNavigator(NumSelector):
     def switch_planes(self):
         if self.mode == "terminal":
             if self.is_browse_only:
-                if not nativity_special_case_match(self.ctx, "zip jobs"):
+                if not self.bot.nativity_special_case_match(self.ctx, "zip jobs"):
                     self.activate_nativity()
             self.check_plane()
             self.mode = "hangar"
@@ -1150,7 +1124,7 @@ class JobNavigator(NumSelector):
 
     def activate_nativity(self):
         self.is_browse_only = False
-        zeph.nativities.append(self.nativity)
+        self.bot.nativities.append(self.nativity)
 
     def reset_loading_plane(self):
         try:
@@ -1161,7 +1135,7 @@ class JobNavigator(NumSelector):
     async def close(self):
         self.closed_elsewhere = True
         try:
-            zeph.nativities.remove(self.nativity)
+            self.bot.nativities.remove(self.nativity)
         except ValueError:
             pass
         return await self.remove_buttons()
@@ -1237,7 +1211,7 @@ class JobNavigator(NumSelector):
 
             while True:
                 try:
-                    response = await zeph.wait_for("message", check=pred, timeout=60)
+                    response = await self.bot.wait_for("message", check=pred, timeout=60)
                 except asyncio.TimeoutError:
                     return await exit_message(mess, "Launch timed out. Returning to main jobs menu.")
 
@@ -1318,7 +1292,7 @@ class JobNavigator(NumSelector):
                     f"Planes landed at {self.city.name}",
                     d=f"This list is in **browse-only mode** to prevent interference with another open jobs menu. "
                       f"If you want to load jobs at this airport, first close the other menu with "
-                      f"{zeph.emojis['no']}, then return to this one."
+                      f"{self.bot.emojis['no']}, then return to this one."
                 )
 
             if not available_planes:
@@ -1347,12 +1321,12 @@ class JobNavigator(NumSelector):
             return plane.con(f"Planes landed at {self.city.name}" + title_suffix, d=desc)
 
         else:
-            return err.con("Something has gone horribly wrong.")
+            return error.con("Something has gone horribly wrong.")
 
 
 class AirportNavigator(Navigator):
-    def __init__(self, inter: PlanesInterpreter, city: pn.City, message: discord.Message, minimaps: dict):
-        super().__init__(plane, title=f"{city.name} Airport", prev="", nxt="")
+    def __init__(self, bot: Zeph, inter: PlanesInterpreter, city: pn.City, message: discord.Message, minimaps: dict):
+        super().__init__(bot, plane, title=f"{city.name} Airport", prev="", nxt="")
         self.interpreter = inter
         self.city = city
         self.funcs["🔍"] = self.zoom
@@ -1372,8 +1346,8 @@ class AirportNavigator(Navigator):
 
 
 class AirportSearchNavigator(Navigator):
-    def __init__(self, inter: PlanesInterpreter, *args):
-        super().__init__(plane, [], 5, "Airport Search [{page}/{pgs}]", prev="", nxt="", timeout=120)
+    def __init__(self, bot: Zeph, inter: PlanesInterpreter, *args):
+        super().__init__(bot, plane, [], 5, "Airport Search [{page}/{pgs}]", prev="", nxt="", timeout=120)
         self.interpreter = inter
         self.funcs["⏪"] = self.back_five
         self.funcs["◀"] = self.back_one
@@ -1483,7 +1457,8 @@ class AirportSearchNavigator(Navigator):
     def read_criteria(self, args: str):
         possible_params = ["in", "near", "sort", "startswith", "priority"]
         sorting_params = ["near", "sort", "priority"]
-        ret = {g: re.findall(r"(?<=\s"+g+r":).+?(?=\s|$)", args) for g in possible_params}
+        ret: dict[str, list | str | pn.City] = \
+            {g: re.findall(r"(?<=\s"+g+r":).+?(?=\s|$)", args) for g in possible_params}
 
         additional_countries = []
         for i in ret["in"]:
@@ -1539,14 +1514,14 @@ class AirportSearchNavigator(Navigator):
 
 
 class LicenseUpgradeNavigator(Navigator):
-    def __init__(self, inter: PlanesInterpreter, country: pn.Country):
-        super().__init__(plane, list(range(1, 10)), 1, f"{country.name} License Upgrades", timeout=180)
+    def __init__(self, bot: Zeph, inter: PlanesInterpreter, country: pn.Country):
+        super().__init__(bot, plane, list(range(1, 10)), 1, f"{country.name} License Upgrades", timeout=180)
         self.interpreter = inter
         self.country = country
         self.current_level = self.interpreter.user.countries.get(country.name, 0)
         self.page = max(1, self.current_level)
-        self.funcs[zeph.emojis["yes"]] = self.purchase_upgrade
-        self.funcs[zeph.emojis["no"]] = self.close
+        self.funcs[self.bot.emojis["yes"]] = self.purchase_upgrade
+        self.funcs[self.bot.emojis["no"]] = self.close
 
     async def purchase_upgrade(self):
         if self.current_level >= self.page:
@@ -1557,7 +1532,7 @@ class LicenseUpgradeNavigator(Navigator):
         if price <= self.interpreter.user.credits:
             self.interpreter.user.credits -= price
             self.interpreter.user.countries[self.country.name] = self.page
-            await succ.send(self.interpreter.ctx, f"Level {self.page} license purchased.")
+            await success.send(self.interpreter.ctx, f"Level {self.page} license purchased.")
             return await self.close()
         else:
             return
@@ -1568,7 +1543,7 @@ class LicenseUpgradeNavigator(Navigator):
         await self.remove_buttons()
 
     def con(self):
-        desc = f"**License Level {self.page} [{zeph.emojis['ziplv' + str(self.page)]}]:**\n" \
+        desc = f"**License Level {self.page} [{self.bot.emojis['ziplv' + str(self.page)]}]:**\n" \
             f"Job payout boost: **+{round(25 * (self.page - 1))}%**\n" \
             f"Airport price: **-{round(10 * (self.page - 1))}%**"
 
@@ -1585,10 +1560,36 @@ class LicenseUpgradeNavigator(Navigator):
             desc += f"\n\n{'Purchasing this license' if self.current_level == 0 else 'Upgrading to this level'} " \
                 f"will cost **Ȼ{pn.addcomm(price)}**.\n"
             if price <= self.interpreter.user.credits:
-                desc += f"Hit the {zeph.emojis['yes']} button to confirm " \
+                desc += f"Hit the {self.bot.emojis['yes']} button to confirm " \
                     f"{'purchase' if self.current_level == 0 else 'upgrade'}."
             else:
                 desc += f"You do not have enough credits for this " \
                     f"{'license' if self.current_level == 0 else 'upgrade'}."
 
         return plane.con(self.title, d=desc)
+
+
+class PlanesCog(commands.Cog):
+    def __init__(self, bot: Zeph):
+        self.bot = bot
+
+    @commands.command(
+        aliases=["p"], usage="z!planes help",
+        description="A shipping simulator I'm calling Planes.",
+        help="Lets you play a game I'm just calling Planes. It's a sort of semi-idle shipping simulator - really "
+             "similar to a mobile game called Pocket Planes - where you buy airports and airplanes, and use them to "
+             "take jobs back and forth for profit. There's many, many sub-commands, so do `z!planes help` for more "
+             "info on what exactly you can do, and how to do it."
+    )
+    async def planes(self, ctx: commands.Context, func: str = None, *args: str):
+        if not func:
+            return await plane.send(
+                ctx, "Planes",
+                d="Call it a passion project. If you've ever played Pocket Planes on mobile, this is essentially "
+                  "that, but a tiny bit different. There's a lot more airports, for one, and there's a distinct lack "
+                  "of a screen, because it's Discord. I'm working on that. For now though, use `z!planes map` to view "
+                  "all the airports, and `z!planes help` to view all the possible commands.\n\n"
+                  "Important side note: One in-game hour is equal to one real-life minute. Everything else is to scale."
+            )
+
+        return await PlanesInterpreter(self.bot, ctx).run(str(func).lower(), *args)

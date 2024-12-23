@@ -1,18 +1,19 @@
 import random
+from functions import can_int
 from pokemon.field import *
 from pokemon.learnsets import *
 from pyquery import PyQuery
 from math import floor, log, ceil
 
 
-def add_sign(n: Union[float, int]) -> str:
+def add_sign(n: float | int) -> str:
     if n > 0:
         return f"+{n}"
     else:
         return str(n)
 
 
-def rebase(n: Union[str, int], fro: int, to: int, min_length: int = 0) -> str:
+def rebase(n: str | int, fro: int, to: int, min_length: int = 0) -> str:
     base_order = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
     n = "".join(list(reversed(str(n))))
     n = sum([base_order.index(n[g]) * fro ** g for g in range(len(n))])
@@ -791,7 +792,7 @@ class BareMiniMon:
 class Mon(BareMiniMon):
     """The wieldiest of unwieldy classes."""
 
-    def __init__(self, spc: Union[Species, str], **kwargs):
+    def __init__(self, spc: Species | str, **kwargs):
         super().__init__(spc, **kwargs)
         self.nickname = kwargs.get("nickname", None)
         self.type3 = None  # can be added thru moves like Forest's Curse
@@ -937,7 +938,7 @@ class Mon(BareMiniMon):
             "shiny": shiny
         })
 
-    def add_move(self, move: Union[Move, PackedMove, str]):
+    def add_move(self, move: Move | PackedMove | str):
         if isinstance(move, Move):
             self.moves.append(move.pack)
         elif isinstance(move, PackedMove):
@@ -1158,7 +1159,7 @@ class Mon(BareMiniMon):
             f"**Base:** {' / '.join(str(g) + ' ' + six_stat_names[n] for n, g in enumerate(self.base_stats))}\n" \
             f"**Stats:** {' / '.join(str(g) + ' ' + six_stat_names[n] for n, g in enumerate(self.stats))}"
 
-    def apply(self, stat: Union[StatChange, StatusEffect]):
+    def apply(self, stat: StatChange | StatusEffect):
         ret = {}
         if random.random() < stat.chance / 100:
             if isinstance(stat, StatChange):
@@ -1197,7 +1198,7 @@ class Mon(BareMiniMon):
     def terastallize(self):
         self.terastallized = True
 
-    def has_move(self, move_name: Union[str, int]) -> int:
+    def has_move(self, move_name: str | int) -> int:
         """If the mon knows a move by the given name, returns the position (1-4) in its move list which it occupies."""
         if isinstance(move_name, int):
             return move_name
@@ -1307,7 +1308,8 @@ def add_new_mon(species: Species):
     nat_dex[species.name] = species
     fixed_dex[fix(species.name)] = species.name
     for fm in species.forms:
-        species_and_forms[fix(Mon(species.name, form=fm).species_and_form)] = (fix(species.name), fm)
+        mon = BareMiniMon(species.name, form=fm)
+        species_and_forms[fix(mon.species_and_form)] = mon
     rewrite_mons()
 
 
@@ -1319,6 +1321,47 @@ def rewrite_mons():
 def rewrite_abilities():
     with open("pokemon/data/abilities.json", "w") as f:
         json.dump({k: legal_abilities[k] for k in sorted(list(legal_abilities))}, f, indent=4)
+
+
+def find_mon(s: str | int | None, **kwargs) -> BareMiniMon | Mon:
+    """Use **kwargs to pass additional arguments to the Mon.__init__() statement."""
+    if kwargs.get("use_bare"):
+        return_class = BareMiniMon
+    else:
+        return_class = Mon
+
+    if isinstance(s, BareMiniMon):
+        return s
+
+    if can_int(s) or isinstance(s, int):
+        if int(s) < 1 or int(s) > len(nat_dex):
+            raise commands.CommandError(f"Use a dex number between 1 and {len(nat_dex)}.")
+        return return_class(list(nat_dex.keys())[int(s) - 1], **kwargs)
+    if s is None or s.lower() == "null":
+        return return_class.null()
+
+    if ret := species_and_forms.get(fix(s)):
+        return return_class(ret.species.name, form=ret.form.name, **kwargs)
+
+    for mon in nat_dex:
+        if set(fix(mon).split("-")) <= set(fix(s).split("-")) or alpha_fix(mon) == alpha_fix(s):
+            ret = mon
+            break
+    else:
+        if fix(s) == "nidoran":
+            ret = "Nidoran-F"
+        else:
+            if kwargs.get("fail_silently") or kwargs.get("return_on_fail"):
+                return kwargs.get("return_on_fail", return_class.null())
+            else:
+                guess = best_guess(fix(s), list(fixed_dex))
+                raise commands.CommandError(f"`{s}` not found. Did you mean {fixed_dex[guess]}?")
+
+    other_info = "-".join(g for g in fix(s).split("-") if g not in fix(ret).split("-"))
+    try:
+        return return_class(ret, form=nat_dex[ret].get_form_name(other_info), **kwargs)
+    except ValueError:
+        return return_class(ret, **kwargs)
 
 
 class CatchRate:

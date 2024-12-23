@@ -17,7 +17,7 @@ class Team:
         else:
             raise ValueError("Team already has six mons.")
 
-    def remove(self, mon: Union[Mon, int]):
+    def remove(self, mon: Mon | int):
         if self.mons:
             if isinstance(mon, Mon):
                 self.mons.remove(mon)
@@ -38,7 +38,7 @@ class Team:
         for i in range(len(self.mons)):
             self.mons[i]["pos"] = i + 1
 
-    def has_mon(self, query: Union[str, int], query_type: str = "spc") -> int:
+    def has_mon(self, query: str | int, query_type: str = "spc") -> int:
         """Like Mon.has_move(), returns the position (1-6) of a mon in the team, if one exists; else, returns 0."""
         if isinstance(query, str):
             ret = [n for n, g in enumerate(self.mons) if g[query_type].lower() == query.lower()]
@@ -50,7 +50,7 @@ class Team:
             raise ValueError("Multiple mons meet the criterion.")
         return 0 if not ret else (ret[0] + 1)
 
-    def get_mon(self, query: Union[str, int], query_type: str = "spc") -> dict:
+    def get_mon(self, query: str | int, query_type: str = "spc") -> dict:
         if has := self.has_mon(query, query_type):
             return self.mons[has - 1]
         raise ValueError("No mon found.")

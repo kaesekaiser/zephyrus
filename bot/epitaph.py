@@ -1,16 +1,22 @@
-from pkmn import *
+import asyncio
+import discord
+from classes.bot import Zeph
+from classes.embeds import ClientEmol
+from discord.ext import commands
 from epipile import civs as ep
+from functions import caseless_match, hex_to_color
 
 
-class Epitaph(ep.Civ):
-    def __init__(self, ctx: commands.Context, hands_off: bool = False):
+class EpitaphGame(ep.Civ):
+    def __init__(self, bot: Zeph, ctx: commands.Context, hands_off: bool = False):
+        self.bot = bot
         self.player = ctx.author
         self.ctx = ctx
         self.handsOff = hands_off
-        self.yellow = ClientEmol(":rocket:", hexcol("eeff00"), ctx)
-        self.red = ClientEmol(":rocket:", hexcol("ff0000"), ctx)
-        self.blue = ClientEmol(":rocket:", hexcol("00ffff"), ctx)
-        self.grey = ClientEmol(":rocket:", hexcol("adadad"), ctx)
+        self.yellow = ClientEmol(":rocket:", hex_to_color("eeff00"), ctx)
+        self.red = ClientEmol(":rocket:", hex_to_color("ff0000"), ctx)
+        self.blue = ClientEmol(":rocket:", hex_to_color("00ffff"), ctx)
+        self.grey = ClientEmol(":rocket:", hex_to_color("adadad"), ctx)
         super().__init__()
 
     async def eventech(self, eventech: ep.EvenTech, silent: bool = False, edit: discord.Message = None):
@@ -33,8 +39,8 @@ class Epitaph(ep.Civ):
 
     async def tick(self):
         def pred(m: discord.Message):
-            return m.content.lower() in lower(self.available_techs) + ["exit"] and m.author == self.player and \
-                m.channel == self.ctx.channel
+            return caseless_match(m.content, self.available_techs + ["exit"]) and \
+                m.author == self.player and m.channel == self.ctx.channel
 
         if self.stardate - self.lastIntervention == 30 and not self.handsOff:
             self.lastIntervention = self.stardate
@@ -45,7 +51,7 @@ class Epitaph(ep.Civ):
                        "Alternatively, say \"exit\" to exit." if len(self.knowledge) == 0 else None
             )
             try:
-                cho = await zeph.wait_for("message", timeout=300, check=pred)
+                cho = await self.bot.wait_for("message", timeout=300, check=pred)
             except asyncio.TimeoutError:
                 self.extinct = True
                 return await self.yellow.say("Game timed out.")
@@ -72,26 +78,30 @@ class Epitaph(ep.Civ):
 
     async def run(self):
         cont = self.contact()
-        zeph.epitaph_channels.append(self.ctx.channel)
+        self.bot.epitaph_channels.append(self.ctx.channel)
         await self.yellow.say(f"Stardate {self.stardate}", d=cont)
         self.history.append(f"{self.stardate} - {cont}")
         while not (self.extinct or self.victorious):
             await asyncio.sleep(0.2 if self.handsOff else 0.5)
             await self.tick()
-        zeph.epitaph_channels.remove(self.ctx.channel)
+        self.bot.epitaph_channels.remove(self.ctx.channel)
 
 
-@zeph.command(
-    usage="z!epitaph\nz!epitaph handsoff",
-    description="Runs a game of [Max Kreminski's Epitaph](https://mkremins.github.io/epitaph/).",
-    help="Runs a game of [Max Kreminski's Epitaph](https://mkremins.github.io/epitaph/). As an "
-         "ascended civilization, lead a burgeoning planet to join you in the stars. Play the original.\n\n"
-         "`z!epitaph handsoff` runs a game without player input."
-)
-async def epitaph(ctx: commands.Context, *, text: str = ""):
-    if text and text.casefold() != "handsoff":
-        raise commands.BadArgument
-    if ctx.channel in zeph.epitaph_channels:
-        raise commands.CommandError("There is already an Epitaph game running in this channel.")
+class EpitaphCog(commands.Cog):
+    def __init__(self, bot: Zeph):
+        self.bot = bot
 
-    return await Epitaph(ctx, bool(text)).run()
+    @commands.command(
+        usage="z!epitaph\nz!epitaph handsoff",
+        description="Runs a game of [Max Kreminski's Epitaph](https://mkremins.github.io/epitaph/).",
+        help="Runs a game of [Max Kreminski's Epitaph](https://mkremins.github.io/epitaph/). As an "
+             "ascended civilization, lead a burgeoning planet to join you in the stars. Play the original.\n\n"
+             "`z!epitaph handsoff` runs a game without player input."
+    )
+    async def epitaph(self, ctx: commands.Context, *, text: str = ""):
+        if text and text.casefold() != "handsoff":
+            raise commands.BadArgument
+        if ctx.channel in self.bot.epitaph_channels:
+            raise commands.CommandError("There is already an Epitaph game running in this channel.")
+
+        return await EpitaphGame(self.bot, ctx, bool(text)).run()

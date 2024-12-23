@@ -1,181 +1,28 @@
-from utils import *
+import asyncio
+import discord
+import random
+from classes.bot import Zeph
+from classes.embeds import Emol
+from classes.menus import Navigator
+from discord.ext import commands
+
 from pokemon import walker as pk
 
 
-ballColors = {
-    "beast": "8FD5F6", "cherish": "E84535", "dive": "81C7EF", "dream": "F4B4D0", "dusk": "30A241", "fast": "F2C63F",
-    "friend": "80BA40", "great": "3B82C4", "heal": "E95098", "heavy": "9B9EA4", "level": "F5D617", "love": "E489B8",
-    "lure": "49B0BE", "luxury": "D29936", "master": "7E308E", "moon": "00A6BA", "nest": "7EBF41", "net": "0998B4",
-    "park": "F4D050", "poke": "F18E38", "premier": "FFFFFF", "quick": "73B5E4", "repeat": "FFF338", "safari": "307D54",
-    "sport": "F18E38", "timer": "FFFFFF", "ultra": "FDD23C"
-}
-
-
-def ball_emol(ball: str = None):
-    ret = ball if ball else choice(list(ballColors))
-    return Emol(zeph.emojis[f"{ret}_ball"], hexcol(ballColors[ret]))
-
-
-def type_emol(s: str):
-    return Emol(zeph.emojis[s], hexcol(pk.type_colors[s]))
-
-
-def pokeround(n: Union[float, int]):  # for whatever reason, Game Freak rounds down on 0.5
+def pokeround(n: float | int):  # for whatever reason, Game Freak rounds down on 0.5
     return ceil(n) if n % 1 > 0.5 else floor(n)
 
 
-def m_to_ft_and_in(m: float) -> str:
-    inches = round(m / 0.0254)
-    return f"{inches // 12}'{str(inches % 12).rjust(2, '0')}\""
-
-
-def display_move(move: pk.PackedMove | pk.Move | pk.WikiMove, mode: str) -> str:
-    if isinstance(move, pk.PackedMove):
-        move = move.unpack()
-
-    if mode == "list":
-        return f"{zeph.emojis[move.type]} {move.name}"
-    if mode == "inline":
-        nbsp = "\u00a0"
-        return f"[ {zeph.emojis[move.type]} **`{move.name.ljust(16, nbsp)} [{str(move.ppc).rjust(2)}" \
-               f"/{str(move.pp).rjust(2)}]`** {zeph.emojis[move.category]} ]"
-    if mode == "partial":
-        return f"{display_move(move, 'inline')}\n" \
-               f"{zeph.emojis['__']} Power: {move.power_str} / Accuracy: {move.accuracy_str}"
-    if mode == "wiki":
-        return f"**Type:** {zeph.emojis[move.type]} {move.type} / " \
-               f"**Category:** {zeph.emojis[move.category]} {move.category}\n" \
-               f"**Power:** {move.power_str} / **Accuracy:** {move.accuracy_str} / **PP:** {move.pp}" \
-               f"\n\n{move.description}\n\n" \
-               f"[Bulbapedia]({move.bulbapedia}) | [Serebii]({move.serebii}) | [Pok\u00e9monDB]({move.pokemondb})"
-    if mode == "full":
-        priority = f" / **Priority:** {move.priority}" if (isinstance(move, pk.Move) and move.priority) else ""
-        return f"**Type:** {zeph.emojis[move.type]} {move.type} / " \
-               f"**Category:** {zeph.emojis[move.category]} {move.category}\n" \
-               f"**Power:** {move.power_str} / **Accuracy:** {move.accuracy_str} / **PP:** {move.pp}{priority}" \
-               + (f"\n**Target:** {move.target}" if isinstance(move, pk.Move) else "") + \
-               f"\n\n{move.description}"
-
-
-def display_type(s: str, include_name: bool = True) -> str:
-    return f"{zeph.emojis[s]}{(' ' + s) if include_name else ''}"
-
-
-def display_mon_types(mon: pk.BareMiniMon, sep: str = "", align: str = "right", include_names: bool = False) -> str:
-    if len(mon.types) > 1:
-        return sep.join(display_type(g, include_name=include_names) for g in mon.types)
-    else:
-        if include_names:
-            return display_type(mon.type1)
-        if align == "left":
-            return f"{zeph.emojis[mon.type1]}{sep}{zeph.emojis['__']}"
-        return f"{zeph.emojis['__']}{sep}{zeph.emojis[mon.type1]}"
-
-
-def display_mon(mon: dict | pk.BareMiniMon, mode: str = "default", **kwargs) -> str:
-    """Displays various attributes of a mon in pretty form, using Zeph's emotes."""
-    full_knowledge = True if mode == "builder" else kwargs.get("full_knowledge", True)
-
-    name = mon.overworld_saf if kwargs.get("saf") else mon.name
-
-    if isinstance(mon, dict):
-        mon = pk.Mon.unpack(mon)
-
-    if mode == "typed_list":
-        if mon.type2:
-            return f"{display_mon_types(mon)} {name}"
-        else:
-            return f"{display_mon_types(mon)} {name}"
-    if mode == "dex":
-        abilities = f"**{'Abilities' if len(mon.regular_abilities) > 1 else 'Ability'}:** " \
-            f"{' / '.join(mon.regular_abilities)}"
-        if mon.hidden_ability:
-            abilities += f"\n**Hidden Ability:** {mon.hidden_ability}"
-        if mon.special_event_ability:
-            abilities += f"\n**Special Event Ability:** {mon.special_event_ability}"
-        if mon.evolutions or mon.evolves_from:
-            evo = "\n".join(
-                ([mon.evolved_by.sentence("from")] if mon.evolved_by else []) +
-                [g.sentence() for g in mon.evolutions.values()]
-            )
-        else:
-            evo = "Does not evolve."
-
-        return f"**{mon.species_and_form}**\n" \
-               f"{display_mon_types(mon, sep=' / ', include_names=True)}\n" \
-               f"**Height:** {mon.height} m ({m_to_ft_and_in(mon.height)})\n" \
-               f"**Weight:** {mon.weight} kg ({round(mon.weight * 2.20462262, 1)} lb)\n\n" \
-               f"{abilities}\n\n" \
-               f"**Stats:** {' / '.join(str(g) + ' ' + pk.six_stat_names[n] for n, g in enumerate(mon.base_stats))}\n" \
-               f"**Total:** {sum(mon.base_stats)}\n\n" \
-               f"{evo}\n\n" \
-               f"[Bulbapedia]({mon.bulbapedia}) | [Serebii]({mon.serebii}) | [Pok\u00e9monDB]({mon.pokemondb})"
-
-    if not isinstance(mon, pk.Mon):
-        raise TypeError("Full Mon object needed for that display type.")
-
-    if mode == "inline":
-        return f"{mon.nickname_and_species} - {mon.hp_display(full_knowledge)}" + \
-               (f" {zeph.emojis[mon.status_emoji]}" if mon.status_emoji else "")
-    if mode == "turn_status":
-        ret = [f"{mon.nickname_and_species} - {mon.hp_display(full_knowledge)}"]
-        if mon.status_condition:
-            ret.append(f"{zeph.emojis[mon.status_emoji]} {mon.status_condition}")
-        if mon.terastallized:
-            ret.append(f"- Tera-{mon.tera_type}")
-        return "\n\u00a0\u00a0\u00a0\u00a0".join(ret)
-    if mode == "team_builder":
-        return f"{mon.nickname_and_species} Lv. {mon.level}"
-
-    starter = f"**Species:** {mon.species_and_form}\n**Nickname:** {mon.nickname}\n**Level:** {mon.level}" \
-        if mode == "builder" else f"**{mon.name}** (Lv. {mon.level} {mon.species_and_form})"
-
-    lb = "\n"
-    ret = [
-        f"{starter}"
-        f"{(' - ' + mon.hp_display(full_knowledge)) if kwargs.get('hp', True) and (mode != 'builder') else ''}\n"
-        f"{' / '.join([str(zeph.emojis[g]) + ' ' + g for g in mon.types])} "
-        f"{'(Terastallized)' if mon.terastallized else ''}\n"
-        f"{('**Tera:** ' + str(zeph.emojis[mon.tera_type]) + ' ' + mon.tera_type + lb) if full_knowledge else ''}"
-        f"**Gender:** {mon.gender.title()}\n"
-        f"**Ability:** {mon.ability if full_knowledge else '?'}\n"
-        f"**Item:** {display_item(mon.held_item) if full_knowledge else '?'}" +
-        (f"\n\n{kwargs.get('stats_display', mon.stats_display(kwargs.get('stat_changes', True)))}"
-         if kwargs.get('basic_stats', True) and (mode != 'builder') else "") +
-        (f"\n{zeph.emojis[mon.status_emoji]} **{mon.status_condition}**" if mon.status_condition else "")
-    ]
-    if mode == "battle":
-        ret.append(mon.battle_status)
-    if mode == "builder":
-        ret.append("**Moves:**\n" + none_list(['- ' + g.name for g in mon.moves], "\n"))
-        ret.append(mon.full_stat_breakdown)
-        ret.append(f"**Key:** `{mon.key()}`")
-    return "\n\n".join(ret).strip("\n")
-
-
-def display_team(team: pk.Team) -> str:
-    ret = [f"**{team.name}**"]
-    if team.reflect:
-        ret.append("- Protected by Reflect")
-    if team.light_screen:
-        ret.append("- Protected by Light Screen")
-    if team.aurora_veil:
-        ret.append("- Protected by Aurora Veil")
-
-    if len(ret) == 1:
-        ret.append("- no active status effects")
-    return "\n".join(ret)
-
-
 class BattleTeamNavigator(Navigator):
-    def __init__(self, emol: Emol, team: pk.Team, close_on_switch: bool = False, allow_manual_close: bool = True):
-        super().__init__(emol, team.mons, 1, prev="🔼", nxt="🔽", timeout=180)
+    def __init__(self, bot: Zeph, emol: Emol, team: pk.Team, close_on_switch: bool = False,
+                 allow_manual_close: bool = True):
+        super().__init__(bot, emol, team.mons, 1, prev="🔼", nxt="🔽", timeout=180)
         self.team = team
         self.funcs["🔀"] = self.switch
-        self.funcs[zeph.emojis["search"]] = self.view_summary
-        self.funcs[zeph.emojis["moves"]] = self.view_moves
+        self.funcs[self.bot.emojis["search"]] = self.view_summary
+        self.funcs[self.bot.emojis["moves"]] = self.view_moves
         if allow_manual_close:
-            self.funcs[zeph.emojis["no"]] = self.close
+            self.funcs[self.bot.emojis["no"]] = self.close
         self.switched = False
         self.timed_out = False
         self.close_on_switch = close_on_switch
@@ -214,7 +61,7 @@ class BattleTeamNavigator(Navigator):
     def mon_info(self, team_index: int) -> str:
         mon = pk.Mon.unpack(self.team.mons[team_index])
         return f"{'**' if team_index == self.page - 1 else ''}" \
-            f"{display_mon(mon, 'inline')}" \
+            f"{self.bot.display_mon(mon, 'inline')}" \
             f"{'**' if team_index == self.page - 1 else ''}"
 
     def con(self):
@@ -222,12 +69,12 @@ class BattleTeamNavigator(Navigator):
         if self.mode == "summary":
             return self.emol.con(
                 f"{mon.name}'s Status",
-                d=display_mon(mon)
+                d=self.bot.display_mon(mon)
             )
         if self.mode == "moves":
             return self.emol.con(
                 f"{mon.name}'s Moves",
-                d="\n".join(display_move(g, 'partial') for g in mon.moves)
+                d="\n".join(self.bot.display_move(g, 'partial') for g in mon.moves)
             )
         if self.mode == "list":
             return self.emol.con(
@@ -236,16 +83,11 @@ class BattleTeamNavigator(Navigator):
             )
 
 
-def display_item(item: str):
-    if emoji := zeph.emojis.get(f"PKMN{''.join(item.split())}"):
-        return f"{emoji} {item}"
-    return item
-
-
 class Battle:
     """The catch-all for most functions related to Pokémon battling, including actually running battles."""
-    def __init__(self, field: pk.Field, ctx: commands.Context, red: pk.Team, blu: pk.Team, **kwargs):
-        self.emol = kwargs.get("emol", ball_emol())
+    def __init__(self, bot: Zeph, field: pk.Field, ctx: commands.Context, red: pk.Team, blu: pk.Team, **kwargs):
+        self.bot = bot
+        self.emol = kwargs.get("emol", self.bot.ball_emol())
         self.format = kwargs.get("format", "singles")
         self.field = field
         self.ctx = ctx
@@ -303,7 +145,7 @@ class Battle:
 
     async def prompt_switch(self, team: int, browsing: bool = False, print_recall: bool = True):
         self.teams[team].update_mon(self.active_mons[team])
-        bat = BattleTeamNavigator(self.emol, self.teams[team], True, browsing)
+        bat = BattleTeamNavigator(self.bot, self.emol, self.teams[team], True, browsing)
         await bat.run(self.ctx)
         if bat.timed_out:
             raise commands.CommandError("Switch prompt timed out.")
@@ -319,9 +161,9 @@ class Battle:
     def move_select(self, mon: pk.Mon):
         return self.emol.con(
             f"What will {mon.name} do?",
-            d="\n".join(display_move(g, 'inline') for g in mon.moves) +
-              (f"\n\n[ {zeph.emojis[mon.tera_type]} **`      TERASTALLIZE      `** {checked(mon.activating_tera)} ]"
-               if self.can_tera(mon) else "")
+            d="\n".join(self.bot.display_move(g, 'inline') for g in mon.moves) +
+              (f"\n\n[ {self.bot.emojis[mon.tera_type]} **`      TERASTALLIZE      `** "
+               f"{self.bot.checked(mon.activating_tera)} ]" if self.can_tera(mon) else "")
         )
 
     def priorities(self, mon: pk.Mon):
@@ -330,7 +172,7 @@ class Battle:
             move.priority,
             0,  # will eventually include effects which cause a mon to go earlier or later within the priority bracket
             (-self.invisible_stat(mon, "spe") if self.field.trick_room else self.invisible_stat(mon, "spe")),
-            random()
+            random.random()
         )
 
     async def turn(self):
@@ -344,9 +186,9 @@ class Battle:
                                r.retrieve_move(m.content)
 
                     while True:
-                        user_input = await zeph.wait_for("message", timeout=300, check=pred)
+                        user_input = await self.bot.wait_for("message", timeout=300, check=pred)
                         if (move := r.retrieve_move(user_input.content)).name == "Status":
-                            await BattleStatusNavigator(self).run(self.ctx)
+                            await BattleStatusNavigator(self.bot, self).run(self.ctx)
                             mess = await self.ctx.send(embed=self.move_select(r))
                             continue
                         if (move.name == "Terastallize") and self.can_tera(r):
@@ -404,7 +246,7 @@ class Battle:
         # show the field status
         await self.send(
             "Status",
-            d="\n\n".join(display_mon(g, "turn_status") for g in self.active_mons)
+            d="\n\n".join(self.bot.display_mon(g, "turn_status") for g in self.active_mons)
         )
 
     def start_of_turn(self):
@@ -552,7 +394,7 @@ class Battle:
             a.flying = False
 
         if a.status_condition == pk.frozen:
-            if random() < 0.2:
+            if random.random() < 0.2:
                 self.channel.append(f"{a.name} thawed out!")
                 a.status_condition = None
             else:
@@ -567,7 +409,7 @@ class Battle:
                 a.stat_con_time -= 1
                 return False
         if a.status_condition == pk.paralyzed:
-            if random() < 0.5:
+            if random.random() < 0.5:
                 self.channel.append(f"{a.name} is paralyzed! It can't move!")
                 return False
 
@@ -578,9 +420,9 @@ class Battle:
             a.confusion_time -= 1
             if a.confusion_time:
                 self.channel.append(f"{a.name} is confused!")
-                if random() < 1/3:
+                if random.random() < 1/3:
                     damage = max(
-                        floor(self.blind_damage(a.atk_base, a.dfn_base, 40, a.level) * randrange(85, 101) / 100),
+                        floor(self.blind_damage(a.atk_base, a.dfn_base, 40, a.level) * random.randrange(85, 101) / 100),
                         1
                     )
                     self.channel.append("It hurt itself in its confusion!")
@@ -613,7 +455,7 @@ class Battle:
         if m.leech_seed and pk.grass in d.types:
             return self.channel.append("But it failed!")
         if m.used_in_succession:
-            if (random() > 1 / (3 ** min(a.successive_uses, 6))) and (a.last_used == m.name):
+            if (random.random() > 1 / (3 ** min(a.successive_uses, 6))) and (a.last_used == m.name):
                 self.channel.append("But it failed!")
                 a.successive_uses = 0  # reset the counter if it fails. i almost forgot to include this critical step
                 return False
@@ -693,12 +535,12 @@ class Battle:
             if not silent:
                 self.channel.append(f"{d.name} protected itself!")
             return False
-        if m.ohko and (a.level < d.level or random() > (a.level - d.level + 30) / 100):
+        if m.ohko and (a.level < d.level or random.random() > (a.level - d.level + 30) / 100):
             if not silent:
                 self.channel.append(f"{a.name}'s attack missed!")
             return False
         if m.accuracy and not m.ohko:
-            if random() > (m.accuracy / 100 * a.stat_level("acc", -d.stat_stages["eva"])):
+            if random.random() > (m.accuracy / 100 * a.stat_level("acc", -d.stat_stages["eva"])):
                 if not silent:
                     self.channel.append(f"{a.name}'s attack missed!")
                 return False
@@ -776,7 +618,7 @@ class Battle:
             if a.ability == "Skill Link":
                 strikes = 10
             elif a.held_item == "Loaded Dice":
-                strikes = randrange(4, 11)
+                strikes = random.randrange(4, 11)
             else:
                 strikes = 1
                 while strikes < 10 and self.accuracy_check(a, d, m, silent=True):
@@ -880,7 +722,7 @@ class Battle:
         if m.ohko:
             return d.hpc
 
-        crit = random() < self.crit_chance(a.crt + m.raised_crit_ratio)
+        crit = random.random() < self.crit_chance(a.crt + m.raised_crit_ratio)
 
         # calculating damage based on category
         if m.psyshock:
@@ -1012,7 +854,7 @@ class Battle:
     def weather(self):
         return self.field.weather
 
-    def change_weather(self, weather: Union[str, None], duration: int = 5):
+    def change_weather(self, weather: str | None, duration: int = 5):
         self.field.weather = weather
         self.field.weather_timer = duration if weather else 0
         if weather:
@@ -1050,11 +892,11 @@ class Battle:
             self.channel.append(additional_text[mon.ability])
 
     def print_item(self, mon: pk.Mon, use_up: bool = False):
-        self.channel.append(f"= {mon.name}'s {display_item(mon.held_item)}! =")
+        self.channel.append(f"= {mon.name}'s {self.bot.display_item(mon.held_item)}! =")
         if use_up:
             mon.held_item = "No Item"
 
-    def apply(self, stat: Union[pk.StatChange, pk.StatusEffect], mon: pk.Mon):
+    def apply(self, stat: pk.StatChange | pk.StatusEffect, mon: pk.Mon):
         if isinstance(stat, pk.StatChange):
             change = mon.apply(stat)
             for k, v in change.items():
@@ -1073,7 +915,7 @@ class Battle:
                     mon.status_condition = None
 
     def contact(self, a: pk.Mon, d: pk.Mon):
-        if d.ability == "Static" and pk.electric not in a.types and random() < 0.3:
+        if d.ability == "Static" and pk.electric not in a.types and random.random() < 0.3:
             self.print_ability(d)
             self.apply(pk.StatusEffect(100, pk.paralyzed), a)
 
@@ -1114,7 +956,7 @@ class Battle:
             n = 2 if self.weather == pk.sun else 1
             self.apply(pk.StatChange(100, {"atk": n, "spa": n}), a)
         if m.thrash:
-            if a.thrash_counter > 2 or (a.thrash_counter == 2 and random() < 0.5):
+            if a.thrash_counter > 2 or (a.thrash_counter == 2 and random.random() < 0.5):
                 a.confused = True
                 a.thrashing = False
                 a.thrash_counter = 0
@@ -1192,20 +1034,20 @@ class Battle:
             # or b) the attacker has the ability that allows them to poison them anyway
             if can_activate:
                 self.apply(m.status_effect, d)
-        if random() < m.confuse / 100:
+        if random.random() < m.confuse / 100:
             d.confused = True
-            d.confusion_time = randrange(2, 6)  # snap out after 1-4 attacking turns; if 1 at start of turn, snap out
+            d.confusion_time = random.randrange(2, 6)  # snap out after 1-4 attacking turns; if 1 at start of turn, snap out
             self.channel.append(f"{d.name} became confused!")
 
         if d.status_condition not in [pk.asleep, pk.frozen]:  # flinch odds
             if m.flinch:
-                if random() < m.flinch / 100:
+                if random.random() < m.flinch / 100:
                     d.flinching = True
             elif a.held_item in ["King's Rock", "Razor Fang"] and m.category != pk.status:
-                if random() < 0.1:
+                if random.random() < 0.1:
                     d.flinching = True
             elif a.ability == "Stench" and m.category != pk.status:
-                if random() < 0.1:
+                if random.random() < 0.1:
                     d.flinching = True
 
         if m.leech_seed:
@@ -1249,8 +1091,8 @@ class Battle:
 
 
 class BattleStatusNavigator(Navigator):
-    def __init__(self, battle: Battle):
-        super().__init__(battle.emol, [battle.field, *battle.active_mons], 1, timeout=180)
+    def __init__(self, bot: Zeph, battle: Battle):
+        super().__init__(bot, battle.emol, [battle.field, *battle.active_mons], 1, timeout=180)
         self.battle = battle
         self.funcs[zeph.emojis["no"]] = self.close
 

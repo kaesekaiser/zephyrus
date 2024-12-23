@@ -1,3 +1,6 @@
+from functions import levenshtein
+
+
 word_list = []
 with open("words.txt" if __name__ == '__main__' else "utilities/words.txt", "r") as r:
     for l in r.readlines():
@@ -5,26 +8,6 @@ with open("words.txt" if __name__ == '__main__' else "utilities/words.txt", "r")
 word_dict = {l: tuple(g for g in word_list if len(g) == l) for l in range(1, 23)}
 anagrams_dist = [13, 5, 6, 7, 24, 6, 7, 6, 12, 2, 2, 8, 8, 11, 15, 4, 2, 12, 10, 10, 6, 2, 4, 2, 2, 2]
 anagrams_dist = [g for sub in [[chr(j + 97)] * anagrams_dist[j] for j in range(26)] for g in sub]
-
-
-def levenshtein(s1, s2, insert_cost: int = 1, delete_cost: int = 1, sub_cost: int = 1):  # ripped from Wikipedia
-    if len(s1) < len(s2):
-        return levenshtein(s2, s1, insert_cost, delete_cost, sub_cost)
-
-    if len(s2) == 0:
-        return len(s1)
-
-    previous_row = range(len(s2) + 1)
-    for i, c1 in enumerate(s1):
-        current_row = [i + 1]
-        for j, c2 in enumerate(s2):
-            insertions = previous_row[j + 1] + insert_cost
-            deletions = current_row[j] + delete_cost
-            substitutions = previous_row[j] + (c1 != c2) * sub_cost
-            current_row.append(min((insertions, deletions, substitutions)))
-        previous_row = current_row
-
-    return previous_row[-1]
 
 
 def next_lev_step(start: str, goal: str) -> str:

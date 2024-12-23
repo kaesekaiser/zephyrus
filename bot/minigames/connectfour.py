@@ -1,4 +1,3 @@
-from typing import Union
 rightlet = [":regional_indicator_f:", "   |", ":regional_indicator_o:", "   |", ":regional_indicator_u:", "   |",
             ":regional_indicator_r:"]
 
@@ -41,12 +40,12 @@ class Board:
         self.emoDict = {-1: yellow, 0: blank, 1: red, 2: white}
         self.top = top + "\n"
 
-    def __getitem__(self, item: Union[tuple, list, int]):
-        if type(item) == int:
+    def __getitem__(self, item: list | tuple | int):
+        if isinstance(item, int):
             return self.board[item]
         return self.board[item[0]][item[1]]
 
-    def __setitem__(self, key: Union[tuple, list], value):
+    def __setitem__(self, key: iter, value):
         self.board[key[0]][key[1]] = value
 
     def __str__(self):
