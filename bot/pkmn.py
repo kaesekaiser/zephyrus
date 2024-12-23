@@ -12,6 +12,7 @@ from copy import deepcopy as copy
 from discord.ext import commands
 from functions import (a_or_an, admin_check, best_guess, can_int, caseless_match, fix, general_pred, hex_to_color,
                        levenshtein, none_list, smallcaps, yesno)
+from functools import partial
 
 from pokemon import walker as pk
 from pkmn_battle import Battle
@@ -446,7 +447,7 @@ class EffNavigator(Navigator):
         if (self.type1 or self.type2) and (self.initial_mon.types_with_none == [str(self.type1), str(self.type2)]):
             return self.initial_mon.dex_image
         try:
-            return find_mon(choice(pk.exemplary_mons[frozenset([self.type1, self.type2])])).dex_image
+            return pk.find_mon(choice(pk.exemplary_mons[frozenset([self.type1, self.type2])])).dex_image
         except KeyError:
             return None
 
