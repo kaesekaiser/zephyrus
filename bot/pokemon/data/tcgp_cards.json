@@ -1,0 +1,6571 @@
+{
+    "A1-001": {
+        "expansion": "A1",
+        "number": 1,
+        "name": "Bulbasaur",
+        "type": "Grass",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Vine Whip",
+                "energy_cost": [
+                    "Grass",
+                    "Colorless"
+                ],
+                "power": 40
+            }
+        ]
+    },
+    "A1-002": {
+        "expansion": "A1",
+        "number": 2,
+        "name": "Ivysaur",
+        "type": "Grass",
+        "stage": 1,
+        "evolves_from": "Bulbasaur",
+        "hp": 90,
+        "weakness": "Fire",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Razor Leaf",
+                "energy_cost": [
+                    "Grass",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 60
+            }
+        ]
+    },
+    "A1-003": {
+        "expansion": "A1",
+        "number": 3,
+        "name": "Venusaur",
+        "type": "Grass",
+        "stage": 2,
+        "evolves_from": "Ivysaur",
+        "hp": 160,
+        "weakness": "Fire",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Mega Drain",
+                "energy_cost": [
+                    "Grass",
+                    "Grass",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 80
+            }
+        ]
+    },
+    "A1-004": {
+        "expansion": "A1",
+        "number": 4,
+        "name": "Venusaur ex",
+        "type": "Grass",
+        "stage": 2,
+        "evolves_from": "Ivysaur",
+        "hp": 190,
+        "weakness": "Fire",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Razor Leaf",
+                "energy_cost": [
+                    "Grass",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 60
+            },
+            {
+                "name": "Giant Bloom",
+                "energy_cost": [
+                    "Grass",
+                    "Grass",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 100,
+                "description": "Heal 30 damage from this Pok\u00e9mon."
+            }
+        ]
+    },
+    "A1-005": {
+        "expansion": "A1",
+        "number": 5,
+        "name": "Caterpie",
+        "type": "Grass",
+        "stage": 0,
+        "hp": 50,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Find a Friend",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 0,
+                "description": "Put 1 random {Grass} Pok\u00e9mon from your deck into your hand."
+            }
+        ]
+    },
+    "A1-006": {
+        "expansion": "A1",
+        "number": 6,
+        "name": "Metapod",
+        "type": "Grass",
+        "stage": 1,
+        "evolves_from": "Caterpie",
+        "hp": 80,
+        "weakness": "Fire",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Bug Bite",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 30
+            }
+        ]
+    },
+    "A1-007": {
+        "expansion": "A1",
+        "number": 7,
+        "name": "Butterfree",
+        "type": "Grass",
+        "stage": 2,
+        "evolves_from": "Metapod",
+        "hp": 120,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "ability": {
+            "name": "Powder Heal",
+            "description": "Once during your turn, you may heal 20 damage from each of your Pok\u00e9mon."
+        },
+        "moves": [
+            {
+                "name": "Gust",
+                "energy_cost": [
+                    "Grass",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 60
+            }
+        ]
+    },
+    "A1-008": {
+        "expansion": "A1",
+        "number": 8,
+        "name": "Weedle",
+        "type": "Grass",
+        "stage": 0,
+        "hp": 50,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Sting",
+                "energy_cost": [
+                    "Grass"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A1-009": {
+        "expansion": "A1",
+        "number": 9,
+        "name": "Kakuna",
+        "type": "Grass",
+        "stage": 1,
+        "evolves_from": "Weedle",
+        "hp": 80,
+        "weakness": "Fire",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Bug Bite",
+                "energy_cost": [
+                    "Grass"
+                ],
+                "power": 30
+            }
+        ]
+    },
+    "A1-010": {
+        "expansion": "A1",
+        "number": 10,
+        "name": "Beedrill",
+        "type": "Grass",
+        "stage": 2,
+        "evolves_from": "Kakuna",
+        "hp": 120,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Sharp Sting",
+                "energy_cost": [
+                    "Grass"
+                ],
+                "power": 70
+            }
+        ]
+    },
+    "A1-011": {
+        "expansion": "A1",
+        "number": 11,
+        "name": "Oddish",
+        "type": "Grass",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Ram",
+                "energy_cost": [
+                    "Grass"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A1-012": {
+        "expansion": "A1",
+        "number": 12,
+        "name": "Gloom",
+        "type": "Grass",
+        "stage": 1,
+        "evolves_from": "Oddish",
+        "hp": 80,
+        "weakness": "Fire",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Drool",
+                "energy_cost": [
+                    "Grass",
+                    "Colorless"
+                ],
+                "power": 40
+            }
+        ]
+    },
+    "A1-013": {
+        "expansion": "A1",
+        "number": 13,
+        "name": "Vileplume",
+        "type": "Grass",
+        "stage": 2,
+        "evolves_from": "Gloom",
+        "hp": 140,
+        "weakness": "Fire",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Soothing Scent",
+                "energy_cost": [
+                    "Grass",
+                    "Grass",
+                    "Colorless"
+                ],
+                "power": 80,
+                "description": "Your opponent's Active Pok\u00e9mon is now Asleep."
+            }
+        ]
+    },
+    "A1-014": {
+        "expansion": "A1",
+        "number": 14,
+        "name": "Paras",
+        "type": "Grass",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Scratch",
+                "energy_cost": [
+                    "Grass",
+                    "Colorless"
+                ],
+                "power": 30
+            }
+        ]
+    },
+    "A1-015": {
+        "expansion": "A1",
+        "number": 15,
+        "name": "Parasect",
+        "type": "Grass",
+        "stage": 1,
+        "evolves_from": "Paras",
+        "hp": 120,
+        "weakness": "Fire",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Slash",
+                "energy_cost": [
+                    "Grass",
+                    "Grass",
+                    "Colorless"
+                ],
+                "power": 80
+            }
+        ]
+    },
+    "A1-016": {
+        "expansion": "A1",
+        "number": 16,
+        "name": "Venonat",
+        "type": "Grass",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Tackle",
+                "energy_cost": [
+                    "Grass"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A1-017": {
+        "expansion": "A1",
+        "number": 17,
+        "name": "Venomoth",
+        "type": "Grass",
+        "stage": 1,
+        "evolves_from": "Venonat",
+        "hp": 80,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Poison Powder",
+                "energy_cost": [
+                    "Grass"
+                ],
+                "power": 30,
+                "description": "Your opponent's active Pok\u00e9mon is now Poisoned."
+            }
+        ]
+    },
+    "A1-018": {
+        "expansion": "A1",
+        "number": 18,
+        "name": "Bellsprout",
+        "type": "Grass",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Vine Whip",
+                "energy_cost": [
+                    "Grass"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A1-019": {
+        "expansion": "A1",
+        "number": 19,
+        "name": "Weepinbell",
+        "type": "Grass",
+        "stage": 1,
+        "evolves_from": "Bellsprout",
+        "hp": 90,
+        "weakness": "Fire",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Razor Leaf",
+                "energy_cost": [
+                    "Grass",
+                    "Colorless"
+                ],
+                "power": 40
+            }
+        ]
+    },
+    "A1-020": {
+        "expansion": "A1",
+        "number": 20,
+        "name": "Victreebel",
+        "type": "Grass",
+        "stage": 2,
+        "evolves_from": "Weepinbell",
+        "hp": 140,
+        "weakness": "Fire",
+        "retreat_cost": 2,
+        "ability": {
+            "name": "Fragrance Trap",
+            "description": "If this Pok\u00e9mon is in the Active Spot, once during your turn, you may switch in 1 of your opponent's Benched Basic Pok\u00e9mon to the Active Spot."
+        },
+        "moves": [
+            {
+                "name": "Vine Whip",
+                "energy_cost": [
+                    "Grass",
+                    "Colorless"
+                ],
+                "power": 60
+            }
+        ]
+    },
+    "A1-021": {
+        "expansion": "A1",
+        "number": 21,
+        "name": "Exeggcute",
+        "type": "Grass",
+        "stage": 0,
+        "hp": 50,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Seed Bomb",
+                "energy_cost": [
+                    "Grass"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A1-022": {
+        "expansion": "A1",
+        "number": 22,
+        "name": "Exeggutor",
+        "type": "Grass",
+        "stage": 1,
+        "evolves_from": "Exeggcute",
+        "hp": 130,
+        "weakness": "Fire",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Stomp",
+                "energy_cost": [
+                    "Grass"
+                ],
+                "power": "30+",
+                "description": "Flip a coin. If heads, this attack does 30 more damage."
+            }
+        ]
+    },
+    "A1-023": {
+        "expansion": "A1",
+        "number": 23,
+        "name": "Exeggutor ex",
+        "type": "Grass",
+        "stage": 1,
+        "evolves_from": "Exeggcute",
+        "hp": 160,
+        "weakness": "Fire",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Tropical Swing",
+                "energy_cost": [
+                    "Grass"
+                ],
+                "power": "40+",
+                "description": "Flip a coin. If heads, this attack does 40 more damage."
+            }
+        ]
+    },
+    "A1-024": {
+        "expansion": "A1",
+        "number": 24,
+        "name": "Tangela",
+        "type": "Grass",
+        "stage": 0,
+        "hp": 80,
+        "weakness": "Fire",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Absorb",
+                "energy_cost": [
+                    "Grass",
+                    "Colorless"
+                ],
+                "power": 40,
+                "description": "Heal 10 damage from this Pok\u00e9mon."
+            }
+        ]
+    },
+    "A1-025": {
+        "expansion": "A1",
+        "number": 25,
+        "name": "Scyther",
+        "type": "Grass",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Sharp Scythe",
+                "energy_cost": [
+                    "Grass"
+                ],
+                "power": 30
+            }
+        ]
+    },
+    "A1-026": {
+        "expansion": "A1",
+        "number": 26,
+        "name": "Pinsir",
+        "type": "Grass",
+        "stage": 0,
+        "hp": 90,
+        "weakness": "Fire",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Double Horn",
+                "energy_cost": [
+                    "Grass",
+                    "Grass"
+                ],
+                "power": "50x",
+                "description": "Flip 2 coins. This attack does 50 damage for each heads."
+            }
+        ]
+    },
+    "A1-027": {
+        "expansion": "A1",
+        "number": 27,
+        "name": "Cottonee",
+        "type": "Grass",
+        "stage": 0,
+        "hp": 50,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Attach",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 10
+            }
+        ]
+    },
+    "A1-028": {
+        "expansion": "A1",
+        "number": 28,
+        "name": "Whimsicott",
+        "type": "Grass",
+        "stage": 1,
+        "evolves_from": "Cottonee",
+        "hp": 80,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Rolling Tackle",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 40
+            }
+        ]
+    },
+    "A1-029": {
+        "expansion": "A1",
+        "number": 29,
+        "name": "Petilil",
+        "type": "Grass",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Blot",
+                "energy_cost": [
+                    "Grass"
+                ],
+                "power": 10,
+                "description": "Heal 10 damage from this Pok\u00e9mon."
+            }
+        ]
+    },
+    "A1-030": {
+        "expansion": "A1",
+        "number": 30,
+        "name": "Lilligant",
+        "type": "Grass",
+        "stage": 1,
+        "evolves_from": "Petilil",
+        "hp": 100,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Leaf Supply",
+                "energy_cost": [
+                    "Grass",
+                    "Grass"
+                ],
+                "power": 50,
+                "description": "Take a {Grass} Energy from your Energy Zone and attach it to 1 of your Benched {Grass} Pok\u00e9mon."
+            }
+        ]
+    },
+    "A1-031": {
+        "expansion": "A1",
+        "number": 31,
+        "name": "Skiddo",
+        "type": "Grass",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Surprise Attack",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 40,
+                "description": "Flip a coin. If tails, this attack does nothing."
+            }
+        ]
+    },
+    "A1-032": {
+        "expansion": "A1",
+        "number": 32,
+        "name": "Gogoat",
+        "type": "Grass",
+        "stage": 1,
+        "evolves_from": "Skiddo",
+        "hp": 120,
+        "weakness": "Fire",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Razor Leaf",
+                "energy_cost": [
+                    "Grass",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 70
+            }
+        ]
+    },
+    "A1-033": {
+        "expansion": "A1",
+        "number": 33,
+        "name": "Charmander",
+        "type": "Fire",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Water",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Ember",
+                "energy_cost": [
+                    "Fire"
+                ],
+                "power": 30,
+                "description": "Discard a {Fire} Energy from this Pok\u00e9mon."
+            }
+        ]
+    },
+    "A1-034": {
+        "expansion": "A1",
+        "number": 34,
+        "name": "Charmeleon",
+        "type": "Fire",
+        "stage": 1,
+        "evolves_from": "Charmander",
+        "hp": 90,
+        "weakness": "Water",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Fire Claws",
+                "energy_cost": [
+                    "Fire",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 60
+            }
+        ]
+    },
+    "A1-035": {
+        "expansion": "A1",
+        "number": 35,
+        "name": "Charizard",
+        "type": "Fire",
+        "stage": 2,
+        "evolves_from": "Charmeleon",
+        "hp": 150,
+        "weakness": "Water",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Fire Spin",
+                "energy_cost": [
+                    "Fire",
+                    "Fire",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 150,
+                "description": "Discard 2 {Fire} Energy from this Pok\u00e9mon."
+            }
+        ]
+    },
+    "A1-036": {
+        "expansion": "A1",
+        "number": 36,
+        "name": "Charizard ex",
+        "type": "Fire",
+        "stage": 2,
+        "evolves_from": "Charmeleon",
+        "hp": 180,
+        "weakness": "Water",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Slash",
+                "energy_cost": [
+                    "Fire",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 60
+            },
+            {
+                "name": "Crimson Storm",
+                "energy_cost": [
+                    "Fire",
+                    "Fire",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 200,
+                "description": "Discard 2 {Fire} Energy from this Pok\u00e9mon."
+            }
+        ]
+    },
+    "A1-037": {
+        "expansion": "A1",
+        "number": 37,
+        "name": "Vulpix",
+        "type": "Fire",
+        "stage": 0,
+        "hp": 50,
+        "weakness": "Water",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Tail Whip",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 0,
+                "description": "Flip a coin. If heads, the Defending Pok\u00e9mon can't attack during your opponent's next turn."
+            }
+        ]
+    },
+    "A1-038": {
+        "expansion": "A1",
+        "number": 38,
+        "name": "Ninetales",
+        "type": "Fire",
+        "stage": 1,
+        "evolves_from": "Vulpix",
+        "hp": 90,
+        "weakness": "Water",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Flamethrower",
+                "energy_cost": [
+                    "Fire",
+                    "Fire"
+                ],
+                "power": 90,
+                "description": "Discard a {Fire} Energy from this Pok\u00e9mon."
+            }
+        ]
+    },
+    "A1-039": {
+        "expansion": "A1",
+        "number": 39,
+        "name": "Growlithe",
+        "type": "Fire",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Water",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Bite",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A1-040": {
+        "expansion": "A1",
+        "number": 40,
+        "name": "Arcanine",
+        "type": "Fire",
+        "stage": 1,
+        "evolves_from": "Growlithe",
+        "hp": 130,
+        "weakness": "Water",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Heat Tackle",
+                "energy_cost": [
+                    "Fire",
+                    "Fire",
+                    "Colorless"
+                ],
+                "power": 100,
+                "description": "This Pok\u00e9mon also does 20 damage to itself."
+            }
+        ]
+    },
+    "A1-041": {
+        "expansion": "A1",
+        "number": 41,
+        "name": "Arcanine ex",
+        "type": "Fire",
+        "stage": 1,
+        "evolves_from": "Growlithe",
+        "hp": 150,
+        "weakness": "Water",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Inferno Onrush",
+                "energy_cost": [
+                    "Fire",
+                    "Fire",
+                    "Colorless"
+                ],
+                "power": 120,
+                "description": "This Pok\u00e9mon also does 20 damage to itself."
+            }
+        ]
+    },
+    "A1-042": {
+        "expansion": "A1",
+        "number": 42,
+        "name": "Ponyta",
+        "type": "Fire",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Water",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Flare",
+                "energy_cost": [
+                    "Fire"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A1-043": {
+        "expansion": "A1",
+        "number": 43,
+        "name": "Rapidash",
+        "type": "Fire",
+        "stage": 1,
+        "evolves_from": "Ponyta",
+        "hp": 100,
+        "weakness": "Water",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Fire Mane",
+                "energy_cost": [
+                    "Fire"
+                ],
+                "power": 40
+            }
+        ]
+    },
+    "A1-044": {
+        "expansion": "A1",
+        "number": 44,
+        "name": "Magmar",
+        "type": "Fire",
+        "stage": 0,
+        "hp": 80,
+        "weakness": "Water",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Magma Punch",
+                "energy_cost": [
+                    "Fire",
+                    "Fire"
+                ],
+                "power": 50
+            }
+        ]
+    },
+    "A1-045": {
+        "expansion": "A1",
+        "number": 45,
+        "name": "Flareon",
+        "type": "Fire",
+        "stage": 1,
+        "evolves_from": "Eevee",
+        "hp": 120,
+        "weakness": "Water",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Flamethrower",
+                "energy_cost": [
+                    "Fire",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 110,
+                "description": "Discard a {Fire} energy from this pkmn."
+            }
+        ]
+    },
+    "A1-046": {
+        "expansion": "A1",
+        "number": 46,
+        "name": "Moltres",
+        "type": "Fire",
+        "stage": 0,
+        "hp": 100,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Sky Attack",
+                "energy_cost": [
+                    "Fire",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 130,
+                "description": "Flip a coin. If tails, this attack does nothing."
+            }
+        ]
+    },
+    "A1-047": {
+        "expansion": "A1",
+        "number": 47,
+        "name": "Moltres ex",
+        "type": "Fire",
+        "stage": 0,
+        "hp": 140,
+        "weakness": "Lightning",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Inferno Dance",
+                "energy_cost": [
+                    "Fire"
+                ],
+                "power": 0,
+                "description": "Flip 3 coins. Take an amount of {Fire} Energy from your Energy Zone equal to the number of heads and attach it to your Benched {Fire} Pok\u00e9mon in any way you like."
+            },
+            {
+                "name": "Heat Blast",
+                "energy_cost": [
+                    "Fire",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 70
+            }
+        ]
+    },
+    "A1-048": {
+        "expansion": "A1",
+        "number": 48,
+        "name": "Heatmor",
+        "type": "Fire",
+        "stage": 0,
+        "hp": 80,
+        "weakness": "Water",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Combustion",
+                "energy_cost": [
+                    "Fire"
+                ],
+                "power": 30
+            }
+        ]
+    },
+    "A1-049": {
+        "expansion": "A1",
+        "number": 49,
+        "name": "Salandit",
+        "type": "Fire",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Water",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Scratch",
+                "energy_cost": [
+                    "Fire"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A1-050": {
+        "expansion": "A1",
+        "number": 50,
+        "name": "Salazzle",
+        "type": "Fire",
+        "stage": 1,
+        "evolves_from": "Salandit",
+        "hp": 90,
+        "weakness": "Water",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Fire Claws",
+                "energy_cost": [
+                    "Fire",
+                    "Colorless"
+                ],
+                "power": 60
+            }
+        ]
+    },
+    "A1-051": {
+        "expansion": "A1",
+        "number": 51,
+        "name": "Sizzlipede",
+        "type": "Fire",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Water",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Gnaw",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 10
+            }
+        ]
+    },
+    "A1-052": {
+        "expansion": "A1",
+        "number": 52,
+        "name": "Centiskorch",
+        "type": "Fire",
+        "stage": 1,
+        "evolves_from": "Sizzlipede",
+        "hp": 130,
+        "weakness": "Water",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Fire Blast",
+                "energy_cost": [
+                    "Fire",
+                    "Colorless",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 130,
+                "description": "Discard a {Fire} Energy from this Pok\u00e9mon."
+            }
+        ]
+    },
+    "A1-053": {
+        "expansion": "A1",
+        "number": 53,
+        "name": "Squirtle",
+        "type": "Water",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Water Gun",
+                "energy_cost": [
+                    "Water"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A1-054": {
+        "expansion": "A1",
+        "number": 54,
+        "name": "Wartortle",
+        "type": "Water",
+        "stage": 1,
+        "evolves_from": "Squirtle",
+        "hp": 80,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Wave Splash",
+                "energy_cost": [
+                    "Water",
+                    "Colorless"
+                ],
+                "power": 40
+            }
+        ]
+    },
+    "A1-055": {
+        "expansion": "A1",
+        "number": 55,
+        "name": "Blastoise",
+        "type": "Water",
+        "stage": 2,
+        "evolves_from": "Wartortle",
+        "hp": 150,
+        "weakness": "Lightning",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Hydro Pump",
+                "energy_cost": [
+                    "Water",
+                    "Water",
+                    "Colorless"
+                ],
+                "power": "80+",
+                "description": "If this Pok\u00e9mon has at least 2 extra {Water} Energy attached, this attack does 60 more damage."
+            }
+        ]
+    },
+    "A1-056": {
+        "expansion": "A1",
+        "number": 56,
+        "name": "Blastoise ex",
+        "type": "Water",
+        "stage": 2,
+        "evolves_from": "Wartortle",
+        "hp": 180,
+        "weakness": "Lightning",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Surf",
+                "energy_cost": [
+                    "Water",
+                    "Colorless"
+                ],
+                "power": 40
+            },
+            {
+                "name": "Hydro Bazooka",
+                "energy_cost": [
+                    "Water",
+                    "Water",
+                    "Colorless"
+                ],
+                "power": "100+",
+                "description": "If this Pok\u00e9mon has at least 2 extra {Water} Energy attached, this attack does 60 more damage."
+            }
+        ]
+    },
+    "A1-057": {
+        "expansion": "A1",
+        "number": 57,
+        "name": "Psyduck",
+        "type": "Water",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Headache",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 10,
+                "description": "Your opponent can't use any Supporter cards from their hand during their next turn."
+            }
+        ]
+    },
+    "A1-058": {
+        "expansion": "A1",
+        "number": 58,
+        "name": "Golduck",
+        "type": "Water",
+        "stage": 1,
+        "evolves_from": "Psyduck",
+        "hp": 90,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Aqua Edge",
+                "energy_cost": [
+                    "Water",
+                    "Water"
+                ],
+                "power": 70
+            }
+        ]
+    },
+    "A1-059": {
+        "expansion": "A1",
+        "number": 59,
+        "name": "Poliwag",
+        "type": "Water",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Razor Fin",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 10
+            }
+        ]
+    },
+    "A1-060": {
+        "expansion": "A1",
+        "number": 60,
+        "name": "Poliwhirl",
+        "type": "Water",
+        "stage": 1,
+        "evolves_from": "Poliwag",
+        "hp": 90,
+        "weakness": "Lightning",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Knuckle Punch",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 40
+            }
+        ]
+    },
+    "A1-061": {
+        "expansion": "A1",
+        "number": 61,
+        "name": "Poliwrath",
+        "type": "Water",
+        "stage": 2,
+        "evolves_from": "Poliwhirl",
+        "hp": 150,
+        "weakness": "Lightning",
+        "retreat_cost": 2,
+        "ability": {
+            "name": "Counterattack",
+            "description": "If this Pok\u00e9mon is in the Actiev Spot and is damaged by an attack from your opponent's Pok\u00e9mon, do 20 damage to the Attacking Pok\u00e9mon."
+        },
+        "moves": [
+            {
+                "name": "Mega Punch",
+                "energy_cost": [
+                    "Water",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 80
+            }
+        ]
+    },
+    "A1-062": {
+        "expansion": "A1",
+        "number": 62,
+        "name": "Tentacool",
+        "type": "Water",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Gentle Slap",
+                "energy_cost": [
+                    "Water"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A1-063": {
+        "expansion": "A1",
+        "number": 63,
+        "name": "Tentacruel",
+        "type": "Water",
+        "stage": 1,
+        "evolves_from": "Tentacool",
+        "hp": 110,
+        "weakness": "Lightning",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Poison Tentacles",
+                "energy_cost": [
+                    "Water",
+                    "Colorless"
+                ],
+                "power": 50,
+                "description": "Your opponent's Active Pok\u00e9mon is now Poisoned."
+            }
+        ]
+    },
+    "A1-064": {
+        "expansion": "A1",
+        "number": 64,
+        "name": "Seel",
+        "type": "Water",
+        "stage": 0,
+        "hp": 80,
+        "weakness": "Lightning",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Headbutt",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 30
+            }
+        ]
+    },
+    "A1-065": {
+        "expansion": "A1",
+        "number": 65,
+        "name": "Dewgong",
+        "type": "Water",
+        "stage": 1,
+        "evolves_from": "Seel",
+        "hp": 120,
+        "weakness": "Lightning",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Surf",
+                "energy_cost": [
+                    "Water",
+                    "Water",
+                    "Water"
+                ],
+                "power": 90
+            }
+        ]
+    },
+    "A1-066": {
+        "expansion": "A1",
+        "number": 66,
+        "name": "Shellder",
+        "type": "Water",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Tongue Slap",
+                "energy_cost": [
+                    "Water"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A1-067": {
+        "expansion": "A1",
+        "number": 67,
+        "name": "Cloyster",
+        "type": "Water",
+        "stage": 1,
+        "evolves_from": "Shellder",
+        "hp": 120,
+        "weakness": "Lightning",
+        "retreat_cost": 3,
+        "ability": {
+            "name": "Shell Armor",
+            "description": "This Pok\u00e9mon takes -10 damage from attacks."
+        },
+        "moves": [
+            {
+                "name": "Surf",
+                "energy_cost": [
+                    "Water",
+                    "Water",
+                    "Colorless"
+                ],
+                "power": 70
+            }
+        ]
+    },
+    "A1-068": {
+        "expansion": "A1",
+        "number": 68,
+        "name": "Krabby",
+        "type": "Water",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Lightning",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Vise Grip",
+                "energy_cost": [
+                    "Water",
+                    "Colorless"
+                ],
+                "power": 40
+            }
+        ]
+    },
+    "A1-069": {
+        "expansion": "A1",
+        "number": 69,
+        "name": "Kingler",
+        "type": "Water",
+        "stage": 1,
+        "evolves_from": "Krabby",
+        "hp": 120,
+        "weakness": "Lightning",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "KO Crab",
+                "energy_cost": [
+                    "Water",
+                    "Water",
+                    "Colorless"
+                ],
+                "power": "80+",
+                "description": "Flip 2 coins. If both of them are heads, this attack does 80 more damage."
+            }
+        ]
+    },
+    "A1-070": {
+        "expansion": "A1",
+        "number": 70,
+        "name": "Horsea",
+        "type": "Water",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Water Gun",
+                "energy_cost": [
+                    "Water"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A1-071": {
+        "expansion": "A1",
+        "number": 71,
+        "name": "Seadra",
+        "type": "Water",
+        "stage": 1,
+        "evolves_from": "Horsea",
+        "hp": 70,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Water Arrow",
+                "energy_cost": [
+                    "Water",
+                    "Water",
+                    "Water"
+                ],
+                "power": 0,
+                "description": "This attack does 50 damage to 1 of your opponent's Pok\u00e9mon."
+            }
+        ]
+    },
+    "A1-072": {
+        "expansion": "A1",
+        "number": 72,
+        "name": "Goldeen",
+        "type": "Water",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Flop",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 10
+            }
+        ]
+    },
+    "A1-073": {
+        "expansion": "A1",
+        "number": 73,
+        "name": "Seaking",
+        "type": "Water",
+        "stage": 1,
+        "evolves_from": "Goldeen",
+        "hp": 100,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Horn Hazard",
+                "energy_cost": [
+                    "Water"
+                ],
+                "power": 80,
+                "description": "Flip a coin. If tails, this attack does nothing."
+            }
+        ]
+    },
+    "A1-074": {
+        "expansion": "A1",
+        "number": 74,
+        "name": "Staryu",
+        "type": "Water",
+        "stage": 0,
+        "hp": 50,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Smack",
+                "energy_cost": [
+                    "Water"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A1-075": {
+        "expansion": "A1",
+        "number": 75,
+        "name": "Starmie",
+        "type": "Water",
+        "stage": 1,
+        "evolves_from": "Staryu",
+        "hp": 90,
+        "weakness": "Lightning",
+        "retreat_cost": 0,
+        "moves": [
+            {
+                "name": "Wave Splash",
+                "energy_cost": [
+                    "Water"
+                ],
+                "power": 40
+            }
+        ]
+    },
+    "A1-076": {
+        "expansion": "A1",
+        "number": 76,
+        "name": "Starmie ex",
+        "type": "Water",
+        "stage": 1,
+        "evolves_from": "Staryu",
+        "hp": 130,
+        "weakness": "Lightning",
+        "retreat_cost": 0,
+        "moves": [
+            {
+                "name": "Hydro Splash",
+                "energy_cost": [
+                    "Water",
+                    "Water"
+                ],
+                "power": 90
+            }
+        ]
+    },
+    "A1-077": {
+        "expansion": "A1",
+        "number": 77,
+        "name": "Magikarp",
+        "type": "Water",
+        "stage": 0,
+        "hp": 30,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Splash",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 10
+            }
+        ]
+    },
+    "A1-078": {
+        "expansion": "A1",
+        "number": 78,
+        "name": "Gyarados",
+        "type": "Water",
+        "stage": 1,
+        "evolves_from": "Magikarp",
+        "hp": 150,
+        "weakness": "Lightning",
+        "retreat_cost": 4,
+        "moves": [
+            {
+                "name": "Hyper Beam",
+                "energy_cost": [
+                    "Water",
+                    "Water",
+                    "Water",
+                    "Water"
+                ],
+                "power": 100,
+                "description": "Discard a random Energy from your opponent's Active Pok\u00e9mon."
+            }
+        ]
+    },
+    "A1-079": {
+        "expansion": "A1",
+        "number": 79,
+        "name": "Lapras",
+        "type": "Water",
+        "stage": 0,
+        "hp": 100,
+        "weakness": "Lightning",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Hydro Pump",
+                "energy_cost": [
+                    "Water"
+                ],
+                "power": "20+",
+                "description": "If this Pok\u00e9mon has at least 3 extra {Water} energy attached, this attack does 70 more damage."
+            }
+        ]
+    },
+    "A1-080": {
+        "expansion": "A1",
+        "number": 80,
+        "name": "Vaporeon",
+        "type": "Water",
+        "stage": 1,
+        "evolves_from": "Eevee",
+        "hp": 130,
+        "weakness": "Lightning",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Bubble Drain",
+                "energy_cost": [
+                    "Water",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 60,
+                "description": "Heal 30 damage from this Pok\u00e9mon."
+            }
+        ]
+    },
+    "A1-081": {
+        "expansion": "A1",
+        "number": 81,
+        "name": "Omanyte",
+        "type": "Water",
+        "stage": 0,
+        "hp": 90,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Water Gun",
+                "energy_cost": [
+                    "Water"
+                ],
+                "power": 40
+            }
+        ]
+    },
+    "A1-082": {
+        "expansion": "A1",
+        "number": 82,
+        "name": "Omastar",
+        "type": "Water",
+        "stage": 1,
+        "evolves_from": "Omanyte",
+        "hp": 140,
+        "weakness": "Lightning",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Ancient Whirlpool",
+                "energy_cost": [
+                    "Water",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 70,
+                "description": "During your opponent's next turn, the Defending Pok\u00e9mon can't attack."
+            }
+        ]
+    },
+    "A1-083": {
+        "expansion": "A1",
+        "number": 83,
+        "name": "Articuno",
+        "type": "Water",
+        "stage": 0,
+        "hp": 100,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Ice Beam",
+                "energy_cost": [
+                    "Water",
+                    "Water",
+                    "Colorless"
+                ],
+                "power": 60,
+                "description": "Flip a coin. If heads, your opponent's Active Pok\u00e9mon is now Paralyzed."
+            }
+        ]
+    },
+    "A1-084": {
+        "expansion": "A1",
+        "number": 84,
+        "name": "Articuno ex",
+        "type": "Water",
+        "stage": 0,
+        "hp": 140,
+        "weakness": "Lightning",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Ice Wing",
+                "energy_cost": [
+                    "Water",
+                    "Colorless"
+                ],
+                "power": 40
+            },
+            {
+                "name": "Blizzard",
+                "energy_cost": [
+                    "Water",
+                    "Water",
+                    "Water"
+                ],
+                "power": 80,
+                "description": "This attack also does 10 damage to each of your opponent's Benched Pok\u00e9mon."
+            }
+        ]
+    },
+    "A1-085": {
+        "expansion": "A1",
+        "number": 85,
+        "name": "Ducklett",
+        "type": "Water",
+        "stage": 0,
+        "hp": 50,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Flap",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 30
+            }
+        ]
+    },
+    "A1-086": {
+        "expansion": "A1",
+        "number": 86,
+        "name": "Swanna",
+        "type": "Water",
+        "stage": 1,
+        "evolves_from": "Ducklett",
+        "hp": 90,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Wing Attack",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 70
+            }
+        ]
+    },
+    "A1-087": {
+        "expansion": "A1",
+        "number": 87,
+        "name": "Froakie",
+        "type": "Water",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Flop",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 10
+            }
+        ]
+    },
+    "A1-088": {
+        "expansion": "A1",
+        "number": 88,
+        "name": "Frogadier",
+        "type": "Water",
+        "stage": 1,
+        "evolves_from": "Froakie",
+        "hp": 80,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Water Drip",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 30
+            }
+        ]
+    },
+    "A1-089": {
+        "expansion": "A1",
+        "number": 89,
+        "name": "Greninja",
+        "type": "Water",
+        "stage": 2,
+        "evolves_from": "Frogadier",
+        "hp": 120,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "ability": {
+            "name": "Water Shuriken",
+            "description": "Once during your turn, you may do 20 damage to 1 of your opponent's Pok\u00e9mon."
+        },
+        "moves": [
+            {
+                "name": "Mist Slash",
+                "energy_cost": [
+                    "Water",
+                    "Colorless"
+                ],
+                "power": 60
+            }
+        ]
+    },
+    "A1-090": {
+        "expansion": "A1",
+        "number": 90,
+        "name": "Pyukumuku",
+        "type": "Water",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Rain Splash",
+                "energy_cost": [
+                    "Water"
+                ],
+                "power": 30
+            }
+        ]
+    },
+    "A1-091": {
+        "expansion": "A1",
+        "number": 91,
+        "name": "Bruxish",
+        "type": "Water",
+        "stage": 0,
+        "hp": 90,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Second Strike",
+                "energy_cost": [
+                    "Water",
+                    "Colorless"
+                ],
+                "power": "10+",
+                "description": "If your opponent's Active Pok\u00e9mon has damage on it, this attack does 60 more damage."
+            }
+        ]
+    },
+    "A1-092": {
+        "expansion": "A1",
+        "number": 92,
+        "name": "Snom",
+        "type": "Water",
+        "stage": 0,
+        "hp": 50,
+        "weakness": "Metal",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Ram",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 10
+            }
+        ]
+    },
+    "A1-093": {
+        "expansion": "A1",
+        "number": 93,
+        "name": "Frosmoth",
+        "type": "Water",
+        "stage": 1,
+        "evolves_from": "Snom",
+        "hp": 90,
+        "weakness": "Metal",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Powder Snow",
+                "energy_cost": [
+                    "Water",
+                    "Colorless"
+                ],
+                "power": 40,
+                "description": "Your opponent's Active Pok\u00e9mon is now Asleep."
+            }
+        ]
+    },
+    "A1-094": {
+        "expansion": "A1",
+        "number": 94,
+        "name": "Pikachu",
+        "type": "Lightning",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Gnaw",
+                "energy_cost": [
+                    "Lightning"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A1-095": {
+        "expansion": "A1",
+        "number": 95,
+        "name": "Raichu",
+        "type": "Lightning",
+        "stage": 1,
+        "evolves_from": "Pikachu",
+        "hp": 100,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Thunderbolt",
+                "energy_cost": [
+                    "Lightning",
+                    "Lightning",
+                    "Lightning"
+                ],
+                "power": 140,
+                "description": "Discard all Energy from this Pok\u00e9mon."
+            }
+        ]
+    },
+    "A1-096": {
+        "expansion": "A1",
+        "number": 96,
+        "name": "Pikachu ex",
+        "type": "Lightning",
+        "stage": 0,
+        "hp": 120,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Circle Circuit",
+                "energy_cost": [
+                    "Lightning",
+                    "Lightning"
+                ],
+                "power": "30x",
+                "description": "This attack does 30 damage for each of your Benched {Lightning} Pok\u00e9mon."
+            }
+        ]
+    },
+    "A1-097": {
+        "expansion": "A1",
+        "number": 97,
+        "name": "Magnemite",
+        "type": "Lightning",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Lightning Ball",
+                "energy_cost": [
+                    "Lightning"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A1-098": {
+        "expansion": "A1",
+        "number": 98,
+        "name": "Magneton",
+        "type": "Lightning",
+        "stage": 1,
+        "evolves_from": "Magnemite",
+        "hp": 80,
+        "weakness": "Fighting",
+        "retreat_cost": 2,
+        "ability": {
+            "name": "Volt Charge",
+            "description": "Once during your turn, you may take a {Lightning} Energy from your Energy Zone and attach it to this Pok\u00e9mon."
+        },
+        "moves": [
+            {
+                "name": "Spinning Attack",
+                "energy_cost": [
+                    "Lightning",
+                    "Colorless",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 60
+            }
+        ]
+    },
+    "A1-099": {
+        "expansion": "A1",
+        "number": 99,
+        "name": "Voltorb",
+        "type": "Lightning",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Tackle",
+                "energy_cost": [
+                    "Lightning"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A1-100": {
+        "expansion": "A1",
+        "number": 100,
+        "name": "Electrode",
+        "type": "Lightning",
+        "stage": 1,
+        "evolves_from": "Voltorb",
+        "hp": 80,
+        "weakness": "Fighting",
+        "retreat_cost": 0,
+        "moves": [
+            {
+                "name": "Electro Ball",
+                "energy_cost": [
+                    "Lightning",
+                    "Lightning"
+                ],
+                "power": 70
+            }
+        ]
+    },
+    "A1-101": {
+        "expansion": "A1",
+        "number": 101,
+        "name": "Electabuzz",
+        "type": "Lightning",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Thunder Punch",
+                "energy_cost": [
+                    "Lightning",
+                    "Lightning"
+                ],
+                "power": "40+",
+                "description": "Flip a coin. If heads, this attack does 40 more damage. If tails, this Pok\u00e9mon also does 20 damage to itself."
+            }
+        ]
+    },
+    "A1-102": {
+        "expansion": "A1",
+        "number": 102,
+        "name": "Jolteon",
+        "type": "Lightning",
+        "stage": 1,
+        "evolves_from": "Eevee",
+        "hp": 90,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Pin Missile",
+                "energy_cost": [
+                    "Lightning",
+                    "Colorless"
+                ],
+                "power": "40x",
+                "description": "Flip 4 coins. This attack does 40 damage for each heads."
+            }
+        ]
+    },
+    "A1-103": {
+        "expansion": "A1",
+        "number": 103,
+        "name": "Zapdos",
+        "type": "Lightning",
+        "stage": 0,
+        "hp": 100,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Raging Thunder",
+                "energy_cost": [
+                    "Lightning",
+                    "Lightning",
+                    "Colorless"
+                ],
+                "power": 100,
+                "description": "This attack also does 30 damage to 1 of your Benched Pok\u00e9mon."
+            }
+        ]
+    },
+    "A1-104": {
+        "expansion": "A1",
+        "number": 104,
+        "name": "Zapdos ex",
+        "type": "Lightning",
+        "stage": 0,
+        "hp": 130,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Peck",
+                "energy_cost": [
+                    "Lightning"
+                ],
+                "power": 20
+            },
+            {
+                "name": "Thundering Hurricane",
+                "energy_cost": [
+                    "Lightning",
+                    "Lightning",
+                    "Lightning"
+                ],
+                "power": "50x",
+                "description": "Flip 4 coins. This attack does 50 damage for each heads."
+            }
+        ]
+    },
+    "A1-105": {
+        "expansion": "A1",
+        "number": 105,
+        "name": "Blitzle",
+        "type": "Lightning",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Zap Kick",
+                "energy_cost": [
+                    "Lightning"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A1-106": {
+        "expansion": "A1",
+        "number": 106,
+        "name": "Zebstrika",
+        "type": "Lightning",
+        "stage": 1,
+        "evolves_from": "Blitzle",
+        "hp": 90,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Thunder Spear",
+                "energy_cost": [
+                    "Lightning"
+                ],
+                "power": 0,
+                "description": "This attack does 30 damage to 1 of your opponent's Pok\u00e9mon."
+            }
+        ]
+    },
+    "A1-107": {
+        "expansion": "A1",
+        "number": 107,
+        "name": "Tynamo",
+        "type": "Lightning",
+        "stage": 0,
+        "hp": 30,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Tiny Charge",
+                "energy_cost": [
+                    "Lightning"
+                ],
+                "power": 30
+            }
+        ]
+    },
+    "A1-108": {
+        "expansion": "A1",
+        "number": 108,
+        "name": "Eelektrik",
+        "type": "Lightning",
+        "stage": 1,
+        "evolves_from": "Tynamo",
+        "hp": 80,
+        "weakness": "Fighting",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Head Bolt",
+                "energy_cost": [
+                    "Lightning"
+                ],
+                "power": 40
+            }
+        ]
+    },
+    "A1-109": {
+        "expansion": "A1",
+        "number": 109,
+        "name": "Eelektross",
+        "type": "Lightning",
+        "stage": 2,
+        "evolves_from": "Eelektrik",
+        "hp": 140,
+        "weakness": "Fighting",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Thunder Fang",
+                "energy_cost": [
+                    "Lightning",
+                    "Lightning",
+                    "Colorless"
+                ],
+                "power": 80,
+                "description": "Flip a coin. If heads, your opponent's Active Pok\u00e9mon is now Paralyzed."
+            }
+        ]
+    },
+    "A1-110": {
+        "expansion": "A1",
+        "number": 110,
+        "name": "Helioptile",
+        "type": "Lightning",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Tail Whap",
+                "energy_cost": [
+                    "Lightning"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A1-111": {
+        "expansion": "A1",
+        "number": 111,
+        "name": "Heliolisk",
+        "type": "Lightning",
+        "stage": 1,
+        "evolves_from": "Helioptile",
+        "hp": 90,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Quick Attack",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": "40+",
+                "description": "Flip a coin. If heads, this attack does 40 more damage."
+            }
+        ]
+    },
+    "A1-112": {
+        "expansion": "A1",
+        "number": 112,
+        "name": "Pincurchin",
+        "type": "Lightning",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Thunder Shock",
+                "energy_cost": [
+                    "Lightning",
+                    "Lightning"
+                ],
+                "power": 30,
+                "description": "Flip a coin. If heads, your opponent's Active Pok\u00e9mon is now Paralyzed."
+            }
+        ]
+    },
+    "A1-113": {
+        "expansion": "A1",
+        "number": 113,
+        "name": "Clefairy",
+        "type": "Psychic",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Metal",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Slap",
+                "energy_cost": [
+                    "Psychic"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A1-114": {
+        "expansion": "A1",
+        "number": 114,
+        "name": "Clefable",
+        "type": "Psychic",
+        "stage": 1,
+        "evolves_from": "Clefairy",
+        "hp": 100,
+        "weakness": "Metal",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Magical Shot",
+                "energy_cost": [
+                    "Psychic"
+                ],
+                "power": 40
+            }
+        ]
+    },
+    "A1-115": {
+        "expansion": "A1",
+        "number": 115,
+        "name": "Abra",
+        "type": "Psychic",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Darkness",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Teleport",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 0,
+                "description": "Switch this Pok\u00e9mon with 1 of your Benched Pok\u00e9mon."
+            }
+        ]
+    },
+    "A1-116": {
+        "expansion": "A1",
+        "number": 116,
+        "name": "Kadabra",
+        "type": "Psychic",
+        "stage": 1,
+        "evolves_from": "Abra",
+        "hp": 80,
+        "weakness": "Darkness",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Super Psy Bolt",
+                "energy_cost": [
+                    "Psychic",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 60
+            }
+        ]
+    },
+    "A1-117": {
+        "expansion": "A1",
+        "number": 117,
+        "name": "Alakazam",
+        "type": "Psychic",
+        "stage": 2,
+        "evolves_from": "Kadabra",
+        "hp": 130,
+        "weakness": "Darkness",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Psychic",
+                "energy_cost": [
+                    "Psychic",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": "60+",
+                "description": "This attack does 30 more damage for each Energy attached to your opponent's Active Pok\u00e9mon."
+            }
+        ]
+    },
+    "A1-118": {
+        "expansion": "A1",
+        "number": 118,
+        "name": "Slowpoke",
+        "type": "Psychic",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Darkness",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Tail Whap",
+                "energy_cost": [
+                    "Psychic",
+                    "Colorless"
+                ],
+                "power": 30
+            }
+        ]
+    },
+    "A1-119": {
+        "expansion": "A1",
+        "number": 119,
+        "name": "Slowbro",
+        "type": "Psychic",
+        "stage": 1,
+        "evolves_from": "Slowpoke",
+        "hp": 130,
+        "weakness": "Darkness",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Super Psy Bolt",
+                "energy_cost": [
+                    "Psychic",
+                    "Psychic",
+                    "Colorless"
+                ],
+                "power": 80
+            }
+        ]
+    },
+    "A1-120": {
+        "expansion": "A1",
+        "number": 120,
+        "name": "Gastly",
+        "type": "Psychic",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Darkness",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Suffocating Gas",
+                "energy_cost": [
+                    "Psychic"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A1-121": {
+        "expansion": "A1",
+        "number": 121,
+        "name": "Haunter",
+        "type": "Psychic",
+        "stage": 1,
+        "evolves_from": "Gastly",
+        "hp": 80,
+        "weakness": "Darkness",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Will-O-Wisp",
+                "energy_cost": [
+                    "Psychic"
+                ],
+                "power": 30
+            }
+        ]
+    },
+    "A1-122": {
+        "expansion": "A1",
+        "number": 122,
+        "name": "Gengar",
+        "type": "Psychic",
+        "stage": 2,
+        "evolves_from": "Haunter",
+        "hp": 130,
+        "weakness": "Darkness",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Bother",
+                "energy_cost": [
+                    "Psychic"
+                ],
+                "power": 50,
+                "description": "Your opponent can't use any Supporter cards from their hand during their next turn."
+            }
+        ]
+    },
+    "A1-123": {
+        "expansion": "A1",
+        "number": 123,
+        "name": "Gengar ex",
+        "type": "Psychic",
+        "stage": 2,
+        "evolves_from": "Haunter",
+        "hp": 170,
+        "weakness": "Darkness",
+        "retreat_cost": 2,
+        "ability": {
+            "name": "Shadowy Spellbind",
+            "description": "As long as this Pok\u00e9mon is in the Active Spot, your opponent can't use any Supporter cards from their hand."
+        },
+        "moves": [
+            {
+                "name": "Spooky Shot",
+                "energy_cost": [
+                    "Psychic",
+                    "Psychic",
+                    "Psychic"
+                ],
+                "power": 100
+            }
+        ]
+    },
+    "A1-124": {
+        "expansion": "A1",
+        "number": 124,
+        "name": "Drowzee",
+        "type": "Psychic",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Darkness",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Mumble",
+                "energy_cost": [
+                    "Psychic",
+                    "Colorless"
+                ],
+                "power": 30
+            }
+        ]
+    },
+    "A1-125": {
+        "expansion": "A1",
+        "number": 125,
+        "name": "Hypno",
+        "type": "Psychic",
+        "stage": 1,
+        "evolves_from": "Drowzee",
+        "hp": 100,
+        "weakness": "Darkness",
+        "retreat_cost": 2,
+        "ability": {
+            "name": "Sleep Pendulum",
+            "description": "Once during your turn, you may flip a coin. If heads, your opponent's Active Pok\u00e9mon is now Asleep."
+        },
+        "moves": [
+            {
+                "name": "Psypunch",
+                "energy_cost": [
+                    "Psychic",
+                    "Psychic",
+                    "Colorless"
+                ],
+                "power": 50
+            }
+        ]
+    },
+    "A1-126": {
+        "expansion": "A1",
+        "number": 126,
+        "name": "Mr. Mime",
+        "type": "Psychic",
+        "stage": 0,
+        "hp": 80,
+        "weakness": "Darkness",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Barrier Attack",
+                "energy_cost": [
+                    "Psychic",
+                    "Colorless"
+                ],
+                "power": 30,
+                "description": "During your opponent's next turn, this Pok\u00e9mon takes -20 damage from attacks."
+            }
+        ]
+    },
+    "A1-127": {
+        "expansion": "A1",
+        "number": 127,
+        "name": "Jynx",
+        "type": "Psychic",
+        "stage": 0,
+        "hp": 80,
+        "weakness": "Darkness",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Psychic",
+                "energy_cost": [
+                    "Psychic",
+                    "Colorless"
+                ],
+                "power": "30+",
+                "description": "This attack does 20 more damage for each Energy attached to your opponent's Active Pok\u00e9mon."
+            }
+        ]
+    },
+    "A1-128": {
+        "expansion": "A1",
+        "number": 128,
+        "name": "Mewtwo",
+        "type": "Psychic",
+        "stage": 0,
+        "hp": 120,
+        "weakness": "Darkness",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Power Blast",
+                "energy_cost": [
+                    "Psychic",
+                    "Psychic",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 120,
+                "description": "Discard 2 {Psychic} Energy from this Pok\u00e9mon."
+            }
+        ]
+    },
+    "A1-129": {
+        "expansion": "A1",
+        "number": 129,
+        "name": "Mewtwo ex",
+        "type": "Psychic",
+        "stage": 0,
+        "hp": 150,
+        "weakness": "Darkness",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Psychic Sphere",
+                "energy_cost": [
+                    "Psychic",
+                    "Colorless"
+                ],
+                "power": 50
+            },
+            {
+                "name": "Psydrive",
+                "energy_cost": [
+                    "Psychic",
+                    "Psychic",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 150,
+                "description": "Discard 2 {Psychic} Energy from this Pok\u00e9mon."
+            }
+        ]
+    },
+    "A1-130": {
+        "expansion": "A1",
+        "number": 130,
+        "name": "Ralts",
+        "type": "Psychic",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Darkness",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Ram",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 10
+            }
+        ]
+    },
+    "A1-131": {
+        "expansion": "A1",
+        "number": 131,
+        "name": "Kirlia",
+        "type": "Psychic",
+        "stage": 1,
+        "evolves_from": "Ralts",
+        "hp": 80,
+        "weakness": "Darkness",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Smack",
+                "energy_cost": [
+                    "Psychic",
+                    "Colorless"
+                ],
+                "power": 30
+            }
+        ]
+    },
+    "A1-132": {
+        "expansion": "A1",
+        "number": 132,
+        "name": "Gardevoir",
+        "type": "Psychic",
+        "stage": 2,
+        "evolves_from": "Kirlia",
+        "hp": 110,
+        "weakness": "Darkness",
+        "retreat_cost": 2,
+        "ability": {
+            "name": "Psy Shadow",
+            "description": "Once during your turn, you may take a {Psychic} Energy from your Energy Zone and attach it to the {Psychic} Pok\u00e9mon in the Active Spot."
+        },
+        "moves": [
+            {
+                "name": "Psyshot",
+                "energy_cost": [
+                    "Psychic",
+                    "Psychic",
+                    "Colorless"
+                ],
+                "power": 60
+            }
+        ]
+    },
+    "A1-133": {
+        "expansion": "A1",
+        "number": 133,
+        "name": "Woobat",
+        "type": "Psychic",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Darkness",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Gnaw",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 10
+            }
+        ]
+    },
+    "A1-134": {
+        "expansion": "A1",
+        "number": 134,
+        "name": "Swoobat",
+        "type": "Psychic",
+        "stage": 1,
+        "evolves_from": "Woobat",
+        "hp": 90,
+        "weakness": "Darkness",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Heart Stamp",
+                "energy_cost": [
+                    "Psychic",
+                    "Colorless"
+                ],
+                "power": 60
+            }
+        ]
+    },
+    "A1-135": {
+        "expansion": "A1",
+        "number": 135,
+        "name": "Golett",
+        "type": "Psychic",
+        "stage": 0,
+        "hp": 90,
+        "weakness": "Darkness",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Mega Punch",
+                "energy_cost": [
+                    "Psychic",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 50
+            }
+        ]
+    },
+    "A1-136": {
+        "expansion": "A1",
+        "number": 136,
+        "name": "Golurk",
+        "type": "Psychic",
+        "stage": 1,
+        "evolves_from": "Golett",
+        "hp": 140,
+        "weakness": "Darkness",
+        "retreat_cost": 4,
+        "moves": [
+            {
+                "name": "Double Lariat",
+                "energy_cost": [
+                    "Psychic",
+                    "Psychic",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": "100x",
+                "description": "Flip 2 coins. This attack does 100 damage for each heads."
+            }
+        ]
+    },
+    "A1-137": {
+        "expansion": "A1",
+        "number": 137,
+        "name": "Sandshrew",
+        "type": "Fighting",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Grass",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Scratch",
+                "energy_cost": [
+                    "Fighting"
+                ],
+                "power": 10
+            }
+        ]
+    },
+    "A1-138": {
+        "expansion": "A1",
+        "number": 138,
+        "name": "Sandslash",
+        "type": "Fighting",
+        "stage": 1,
+        "evolves_from": "Sandshrew",
+        "hp": 100,
+        "weakness": "Grass",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Slash",
+                "energy_cost": [
+                    "Fighting",
+                    "Fighting"
+                ],
+                "power": 70
+            }
+        ]
+    },
+    "A1-139": {
+        "expansion": "A1",
+        "number": 139,
+        "name": "Diglett",
+        "type": "Fighting",
+        "stage": 0,
+        "hp": 50,
+        "weakness": "Grass",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Mud-Slap",
+                "energy_cost": [
+                    "Fighting"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A1-140": {
+        "expansion": "A1",
+        "number": 140,
+        "name": "Dugtrio",
+        "type": "Fighting",
+        "stage": 1,
+        "evolves_from": "Diglett",
+        "hp": 70,
+        "weakness": "Grass",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Dig",
+                "energy_cost": [
+                    "Fighting"
+                ],
+                "power": 40,
+                "description": "Flip a coin. If heads, during your opponent's next turn, prevent all damage from\u2014and effects of\u2014attacks done to this Pok\u00e9mon."
+            }
+        ]
+    },
+    "A1-141": {
+        "expansion": "A1",
+        "number": 141,
+        "name": "Mankey",
+        "type": "Fighting",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Psychic",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Low Kick",
+                "energy_cost": [
+                    "Fighting"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A1-142": {
+        "expansion": "A1",
+        "number": 142,
+        "name": "Primeape",
+        "type": "Fighting",
+        "stage": 1,
+        "evolves_from": "Mankey",
+        "hp": 90,
+        "weakness": "Psychic",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Fight Back",
+                "energy_cost": [
+                    "Fighting",
+                    "Fighting"
+                ],
+                "power": "40+",
+                "description": "If this Pok\u00e9mon has damage on it, this attack does 60 more damage."
+            }
+        ]
+    },
+    "A1-143": {
+        "expansion": "A1",
+        "number": 143,
+        "name": "Machop",
+        "type": "Fighting",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Psychic",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Knuckle Punch",
+                "energy_cost": [
+                    "Fighting"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A1-144": {
+        "expansion": "A1",
+        "number": 144,
+        "name": "Machoke",
+        "type": "Fighting",
+        "stage": 1,
+        "evolves_from": "Machop",
+        "hp": 100,
+        "weakness": "Psychic",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Strength",
+                "energy_cost": [
+                    "Fighting",
+                    "Fighting"
+                ],
+                "power": 50
+            }
+        ]
+    },
+    "A1-145": {
+        "expansion": "A1",
+        "number": 145,
+        "name": "Machamp",
+        "type": "Fighting",
+        "stage": 2,
+        "evolves_from": "Machoke",
+        "hp": 150,
+        "weakness": "Psychic",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Seismic Toss",
+                "energy_cost": [
+                    "Fighting",
+                    "Fighting",
+                    "Fighting"
+                ],
+                "power": 100
+            }
+        ]
+    },
+    "A1-146": {
+        "expansion": "A1",
+        "number": 146,
+        "name": "Machamp ex",
+        "type": "Fighting",
+        "stage": 2,
+        "evolves_from": "Machoke",
+        "hp": 180,
+        "weakness": "Psychic",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Mega Punch",
+                "energy_cost": [
+                    "Fighting",
+                    "Fighting",
+                    "Fighting"
+                ],
+                "power": 120
+            }
+        ]
+    },
+    "A1-147": {
+        "expansion": "A1",
+        "number": 147,
+        "name": "Geodude",
+        "type": "Fighting",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Grass",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Tackle",
+                "energy_cost": [
+                    "Fighting"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A1-148": {
+        "expansion": "A1",
+        "number": 148,
+        "name": "Graveler",
+        "type": "Fighting",
+        "stage": 1,
+        "evolves_from": "Geodude",
+        "hp": 100,
+        "weakness": "Grass",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Rollout",
+                "energy_cost": [
+                    "Fighting",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 70
+            }
+        ]
+    },
+    "A1-149": {
+        "expansion": "A1",
+        "number": 149,
+        "name": "Golem",
+        "type": "Fighting",
+        "stage": 2,
+        "evolves_from": "Graveler",
+        "hp": 160,
+        "weakness": "Grass",
+        "retreat_cost": 4,
+        "moves": [
+            {
+                "name": "Double-Edge",
+                "energy_cost": [
+                    "Fighting",
+                    "Colorless",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 150,
+                "description": "This Pok\u00e9mon also does 50 damage to itself."
+            }
+        ]
+    },
+    "A1-150": {
+        "expansion": "A1",
+        "number": 150,
+        "name": "Onix",
+        "type": "Fighting",
+        "stage": 0,
+        "hp": 110,
+        "weakness": "Grass",
+        "retreat_cost": 4,
+        "moves": [
+            {
+                "name": "Land Crush",
+                "energy_cost": [
+                    "Fighting",
+                    "Fighting",
+                    "Fighting"
+                ],
+                "power": 70
+            }
+        ]
+    },
+    "A1-151": {
+        "expansion": "A1",
+        "number": 151,
+        "name": "Cubone",
+        "type": "Fighting",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Grass",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Growl",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 0,
+                "description": "During your opponent's next turn, attacks used by the Defending Pok\u00e9mon do -20 damage."
+            }
+        ]
+    },
+    "A1-152": {
+        "expansion": "A1",
+        "number": 152,
+        "name": "Marowak",
+        "type": "Fighting",
+        "stage": 1,
+        "evolves_from": "Cubone",
+        "hp": 100,
+        "weakness": "Grass",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Bone Beatdown",
+                "energy_cost": [
+                    "Fighting"
+                ],
+                "power": 40
+            }
+        ]
+    },
+    "A1-153": {
+        "expansion": "A1",
+        "number": 153,
+        "name": "Marowak ex",
+        "type": "Fighting",
+        "stage": 1,
+        "evolves_from": "Cubone",
+        "hp": 140,
+        "weakness": "Grass",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Bonemerang",
+                "energy_cost": [
+                    "Fighting",
+                    "Fighting"
+                ],
+                "power": "80x",
+                "description": "Flip 2 coins. This attack does 80 damage for each heads."
+            }
+        ]
+    },
+    "A1-154": {
+        "expansion": "A1",
+        "number": 154,
+        "name": "Hitmonlee",
+        "type": "Fighting",
+        "stage": 0,
+        "hp": 80,
+        "weakness": "Psychic",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Stretch Kick",
+                "energy_cost": [
+                    "Fighting"
+                ],
+                "power": 0,
+                "description": "This attack does 30 damage to 1 of your opponent's Benched Pok\u00e9mon."
+            }
+        ]
+    },
+    "A1-155": {
+        "expansion": "A1",
+        "number": 155,
+        "name": "Hitmonchan",
+        "type": "Fighting",
+        "stage": 0,
+        "hp": 80,
+        "weakness": "Psychic",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Jab",
+                "energy_cost": [
+                    "Fighting"
+                ],
+                "power": 30
+            }
+        ]
+    },
+    "A1-156": {
+        "expansion": "A1",
+        "number": 156,
+        "name": "Rhyhorn",
+        "type": "Fighting",
+        "stage": 0,
+        "hp": 80,
+        "weakness": "Grass",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Tackle",
+                "energy_cost": [
+                    "Fighting",
+                    "Fighting",
+                    "Colorless"
+                ],
+                "power": 60
+            }
+        ]
+    },
+    "A1-157": {
+        "expansion": "A1",
+        "number": 157,
+        "name": "Rhydon",
+        "type": "Fighting",
+        "stage": 1,
+        "evolves_from": "Rhyhorn",
+        "hp": 120,
+        "weakness": "Grass",
+        "retreat_cost": 4,
+        "moves": [
+            {
+                "name": "Horn Drill",
+                "energy_cost": [
+                    "Fighting",
+                    "Fighting",
+                    "Fighting",
+                    "Colorless"
+                ],
+                "power": 100
+            }
+        ]
+    },
+    "A1-158": {
+        "expansion": "A1",
+        "number": 158,
+        "name": "Kabuto",
+        "type": "Fighting",
+        "stage": 1,
+        "evolves_from": "Dome Fossil",
+        "hp": 90,
+        "weakness": "Grass",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Shell Attack",
+                "energy_cost": [
+                    "Fighting"
+                ],
+                "power": 40
+            }
+        ]
+    },
+    "A1-159": {
+        "expansion": "A1",
+        "number": 159,
+        "name": "Kabutops",
+        "type": "Fighting",
+        "stage": 2,
+        "evolves_from": "Kabuto",
+        "hp": 140,
+        "weakness": "Grass",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Leech Life",
+                "energy_cost": [
+                    "Fighting"
+                ],
+                "power": 50,
+                "description": "Heal from this Pok\u00e9mon the same amount of damage you did to your opponent's Active Pok\u00e9mon."
+            }
+        ]
+    },
+    "A1-160": {
+        "expansion": "A1",
+        "number": 160,
+        "name": "Mienfoo",
+        "type": "Fighting",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Psychic",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Pound",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A1-161": {
+        "expansion": "A1",
+        "number": 161,
+        "name": "Mienshao",
+        "type": "Fighting",
+        "stage": 1,
+        "evolves_from": "Mienfoo",
+        "hp": 80,
+        "weakness": "Psychic",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Spiral Kick",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 40
+            }
+        ]
+    },
+    "A1-162": {
+        "expansion": "A1",
+        "number": 162,
+        "name": "Clobbopus",
+        "type": "Fighting",
+        "stage": 0,
+        "hp": 80,
+        "weakness": "Psychic",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Knuckle Punch",
+                "energy_cost": [
+                    "Fighting",
+                    "Colorless"
+                ],
+                "power": 30
+            }
+        ]
+    },
+    "A1-163": {
+        "expansion": "A1",
+        "number": 163,
+        "name": "Grapploct",
+        "type": "Fighting",
+        "stage": 1,
+        "evolves_from": "Clobbopus",
+        "hp": 130,
+        "weakness": "Psychic",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Knock Back",
+                "energy_cost": [
+                    "Fighting",
+                    "Fighting",
+                    "Colorless"
+                ],
+                "power": 70,
+                "description": "Switch out your opponent's Active Pok\u00e9mon to the Bench. (Your opponent chooses the new Active Pok\u00e9mon.)"
+            }
+        ]
+    },
+    "A1-164": {
+        "expansion": "A1",
+        "number": 164,
+        "name": "Ekans",
+        "type": "Darkness",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Bite",
+                "energy_cost": [
+                    "Darkness"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A1-165": {
+        "expansion": "A1",
+        "number": 165,
+        "name": "Arbok",
+        "type": "Darkness",
+        "stage": 1,
+        "evolves_from": "Ekans",
+        "hp": 100,
+        "weakness": "Fighting",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Corner",
+                "energy_cost": [
+                    "Darkness",
+                    "Colorless"
+                ],
+                "power": 60,
+                "description": "During your opponent's next turn, the Defending Pok\u00e9mon can't retreat."
+            }
+        ]
+    },
+    "A1-166": {
+        "expansion": "A1",
+        "number": 166,
+        "name": "Nidoran-F",
+        "type": "Darkness",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Call for Family",
+                "energy_cost": [
+                    "Darkness"
+                ],
+                "power": 0,
+                "description": "Put 1 random Nidoran-M from your deck onto your Bench."
+            }
+        ]
+    },
+    "A1-167": {
+        "expansion": "A1",
+        "number": 167,
+        "name": "Nidorina",
+        "type": "Darkness",
+        "stage": 1,
+        "evolves_from": "Nidoran-F",
+        "hp": 80,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Bite",
+                "energy_cost": [
+                    "Darkness"
+                ],
+                "power": 30
+            }
+        ]
+    },
+    "A1-168": {
+        "expansion": "A1",
+        "number": 168,
+        "name": "Nidoqueen",
+        "type": "Darkness",
+        "stage": 2,
+        "evolves_from": "Nidorina",
+        "hp": 140,
+        "weakness": "Fighting",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Lovestrike",
+                "energy_cost": [
+                    "Darkness",
+                    "Darkness",
+                    "Colorless"
+                ],
+                "power": "80+",
+                "description": "This attack does 50 more damage for each of your Benched Nidoking."
+            }
+        ]
+    },
+    "A1-169": {
+        "expansion": "A1",
+        "number": 169,
+        "name": "Nidoran-M",
+        "type": "Darkness",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Peck",
+                "energy_cost": [
+                    "Darkness"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A1-170": {
+        "expansion": "A1",
+        "number": 170,
+        "name": "Nidorino",
+        "type": "Darkness",
+        "stage": 1,
+        "evolves_from": "Nidoran-M",
+        "hp": 90,
+        "weakness": "Fighting",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Horn Attack",
+                "energy_cost": [
+                    "Darkness",
+                    "Colorless"
+                ],
+                "power": 40
+            }
+        ]
+    },
+    "A1-171": {
+        "expansion": "A1",
+        "number": 171,
+        "name": "Nidoking",
+        "type": "Darkness",
+        "stage": 2,
+        "evolves_from": "Nidorino",
+        "hp": 150,
+        "weakness": "Fighting",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Poison Horn",
+                "energy_cost": [
+                    "Darkness",
+                    "Darkness",
+                    "Colorless"
+                ],
+                "power": 90,
+                "description": "Your opponent's Active Pok\u00e9mon is now Poisoned."
+            }
+        ]
+    },
+    "A1-172": {
+        "expansion": "A1",
+        "number": 172,
+        "name": "Zubat",
+        "type": "Darkness",
+        "stage": 0,
+        "hp": 50,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Glide",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 10
+            }
+        ]
+    },
+    "A1-173": {
+        "expansion": "A1",
+        "number": 173,
+        "name": "Golbat",
+        "type": "Darkness",
+        "stage": 1,
+        "evolves_from": "Zubat",
+        "hp": 70,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Wing Attack",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 40
+            }
+        ]
+    },
+    "A1-174": {
+        "expansion": "A1",
+        "number": 174,
+        "name": "Grimer",
+        "type": "Darkness",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Fighting",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Poison Gas",
+                "energy_cost": [
+                    "Darkness"
+                ],
+                "power": 10,
+                "description": "Your opponent's Active Pok\u00e9mon is now Poisoned."
+            }
+        ]
+    },
+    "A1-175": {
+        "expansion": "A1",
+        "number": 175,
+        "name": "Muk",
+        "type": "Darkness",
+        "stage": 1,
+        "evolves_from": "Grimer",
+        "hp": 130,
+        "weakness": "Fighting",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Venoshock",
+                "energy_cost": [
+                    "Darkness",
+                    "Darkness",
+                    "Colorless"
+                ],
+                "power": "70+",
+                "description": "If your opponent's Active Pok\u00e9mon is Poisoned, this attack does 50 more damage."
+            }
+        ]
+    },
+    "A1-176": {
+        "expansion": "A1",
+        "number": 176,
+        "name": "Koffing",
+        "type": "Darkness",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Suffocating Gas",
+                "energy_cost": [
+                    "Darkness"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A1-177": {
+        "expansion": "A1",
+        "number": 177,
+        "name": "Weezing",
+        "type": "Darkness",
+        "stage": 1,
+        "evolves_from": "Koffing",
+        "hp": 110,
+        "weakness": "Fighting",
+        "retreat_cost": 3,
+        "ability": {
+            "name": "Gas Leak",
+            "description": "Once during your turn, if this Pok\u00e9mon is in the Active Spot, you may make your opponent's Active Pok\u00e9mon Poisoned."
+        },
+        "moves": [
+            {
+                "name": "Tackle",
+                "energy_cost": [
+                    "Darkness"
+                ],
+                "power": 30
+            }
+        ]
+    },
+    "A1-178": {
+        "expansion": "A1",
+        "number": 178,
+        "name": "Mawile",
+        "type": "Metal",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Crunch",
+                "energy_cost": [
+                    "Metal"
+                ],
+                "power": 20,
+                "description": "Flip a coin. If heads, discard a random Energy from your opponent's Active Pok\u00e9mon."
+            }
+        ]
+    },
+    "A1-179": {
+        "expansion": "A1",
+        "number": 179,
+        "name": "Pawniard",
+        "type": "Metal",
+        "stage": 0,
+        "hp": 50,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Pierce",
+                "energy_cost": [
+                    "Metal"
+                ],
+                "power": 30
+            }
+        ]
+    },
+    "A1-180": {
+        "expansion": "A1",
+        "number": 180,
+        "name": "Bisharp",
+        "type": "Metal",
+        "stage": 1,
+        "evolves_from": "Pawniard",
+        "hp": 90,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Metal Claw",
+                "energy_cost": [
+                    "Metal",
+                    "Metal"
+                ],
+                "power": 70
+            }
+        ]
+    },
+    "A1-181": {
+        "expansion": "A1",
+        "number": 181,
+        "name": "Meltan",
+        "type": "Metal",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Amass",
+                "energy_cost": [
+                    "Metal"
+                ],
+                "power": 0,
+                "description": "Take a {Metal} Energy from your Energy Zone and attach it to this Pok\u00e9mon."
+            }
+        ]
+    },
+    "A1-182": {
+        "expansion": "A1",
+        "number": 182,
+        "name": "Melmetal",
+        "type": "Metal",
+        "stage": 1,
+        "evolves_from": "Meltan",
+        "hp": 130,
+        "weakness": "Fire",
+        "retreat_cost": 3,
+        "ability": {
+            "name": "Hard Coat",
+            "description": "This Pok\u00e9mon takes -20 damage from attacks."
+        },
+        "moves": [
+            {
+                "name": "Heavy Impact",
+                "energy_cost": [
+                    "Metal",
+                    "Metal",
+                    "Metal",
+                    "Colorless"
+                ],
+                "power": 120
+            }
+        ]
+    },
+    "A1-183": {
+        "expansion": "A1",
+        "number": 183,
+        "name": "Dratini",
+        "type": "Dragon",
+        "stage": 0,
+        "hp": 70,
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Ram",
+                "energy_cost": [
+                    "Water",
+                    "Lightning"
+                ],
+                "power": 40
+            }
+        ]
+    },
+    "A1-184": {
+        "expansion": "A1",
+        "number": 184,
+        "name": "Dragonair",
+        "type": "Dragon",
+        "stage": 1,
+        "evolves_from": "Dratini",
+        "hp": 100,
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Tail Smack",
+                "energy_cost": [
+                    "Water",
+                    "Lightning",
+                    "Colorless"
+                ],
+                "power": 80
+            }
+        ]
+    },
+    "A1-185": {
+        "expansion": "A1",
+        "number": 185,
+        "name": "Dragonite",
+        "type": "Dragon",
+        "stage": 2,
+        "evolves_from": "Dragonair",
+        "hp": 160,
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Draco Meteor",
+                "energy_cost": [
+                    "Water",
+                    "Lightning",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 0,
+                "description": "1 of your opponent's Pok\u00e9mon is chosen at random 4 times. For each time a Pok\u00e9mon was chosen, do 50 damage to it."
+            }
+        ]
+    },
+    "A1-186": {
+        "expansion": "A1",
+        "number": 186,
+        "name": "Pidgey",
+        "type": "Colorless",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Gust",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 10
+            }
+        ]
+    },
+    "A1-187": {
+        "expansion": "A1",
+        "number": 187,
+        "name": "Pidgeotto",
+        "type": "Colorless",
+        "stage": 1,
+        "evolves_from": "Pidgey",
+        "hp": 80,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Gust",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 30
+            }
+        ]
+    },
+    "A1-188": {
+        "expansion": "A1",
+        "number": 188,
+        "name": "Pidgeot",
+        "type": "Colorless",
+        "stage": 2,
+        "evolves_from": "Pidgeotto",
+        "hp": 130,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "ability": {
+            "name": "Drive Off",
+            "description": "Once during your turn, you may switch out your opponent's Active Pok\u00e9mon to the Bench. (Your opponent chooses the new Active Pok\u00e9mon.)"
+        },
+        "moves": [
+            {
+                "name": "Wing Attack",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 70
+            }
+        ]
+    },
+    "A1-189": {
+        "expansion": "A1",
+        "number": 189,
+        "name": "Rattata",
+        "type": "Colorless",
+        "stage": 0,
+        "hp": 40,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Gnaw",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A1-190": {
+        "expansion": "A1",
+        "number": 190,
+        "name": "Raticate",
+        "type": "Colorless",
+        "stage": 1,
+        "evolves_from": "Rattata",
+        "hp": 80,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Bite",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 40
+            }
+        ]
+    },
+    "A1-191": {
+        "expansion": "A1",
+        "number": 191,
+        "name": "Spearow",
+        "type": "Colorless",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Peck",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A1-192": {
+        "expansion": "A1",
+        "number": 192,
+        "name": "Fearow",
+        "type": "Colorless",
+        "stage": 1,
+        "evolves_from": "Spearow",
+        "hp": 100,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Drill Run",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 50,
+                "description": "Flip a coin. If heads, discard a random Energy from your opponent's Active Pok\u00e9mon."
+            }
+        ]
+    },
+    "A1-193": {
+        "expansion": "A1",
+        "number": 193,
+        "name": "Jigglypuff",
+        "type": "Colorless",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Pound",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 30
+            }
+        ]
+    },
+    "A1-194": {
+        "expansion": "A1",
+        "number": 194,
+        "name": "Wigglytuff",
+        "type": "Colorless",
+        "stage": 1,
+        "evolves_from": "Jigglypuff",
+        "hp": 100,
+        "weakness": "Fighting",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Hyper Voice",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 60
+            }
+        ]
+    },
+    "A1-195": {
+        "expansion": "A1",
+        "number": 195,
+        "name": "Wigglytuff ex",
+        "type": "Colorless",
+        "stage": 1,
+        "evolves_from": "Jigglypuff",
+        "hp": 140,
+        "weakness": "Fighting",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Sleepy Song",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 80,
+                "description": "Your opponent's Active Pok\u00e9mon is now Asleep."
+            }
+        ]
+    },
+    "A1-196": {
+        "expansion": "A1",
+        "number": 196,
+        "name": "Meowth",
+        "type": "Colorless",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Pay Day",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 10,
+                "description": "Draw a card."
+            }
+        ]
+    },
+    "A1-197": {
+        "expansion": "A1",
+        "number": 197,
+        "name": "Persian",
+        "type": "Colorless",
+        "stage": 1,
+        "evolves_from": "Meowth",
+        "hp": 90,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Shadow Claw",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 40,
+                "description": "Flip a coin. If heads, discard a random card from your opponent's hand."
+            }
+        ]
+    },
+    "A1-198": {
+        "expansion": "A1",
+        "number": 198,
+        "name": "Farfetch'd",
+        "type": "Colorless",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Leek Slap",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 40
+            }
+        ]
+    },
+    "A1-199": {
+        "expansion": "A1",
+        "number": 199,
+        "name": "Doduo",
+        "type": "Colorless",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Peck",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A1-200": {
+        "expansion": "A1",
+        "number": 200,
+        "name": "Dodrio",
+        "type": "Colorless",
+        "stage": 1,
+        "evolves_from": "Doduo",
+        "hp": 80,
+        "weakness": "Lightning",
+        "retreat_cost": 0,
+        "moves": [
+            {
+                "name": "Drill Peck",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 40
+            }
+        ]
+    },
+    "A1-201": {
+        "expansion": "A1",
+        "number": 201,
+        "name": "Lickitung",
+        "type": "Colorless",
+        "stage": 0,
+        "hp": 90,
+        "weakness": "Fighting",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Continuous Lick",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": "60x",
+                "description": "Flip a coin until you get tails. This attack does 60 damage for each heads."
+            }
+        ]
+    },
+    "A1-202": {
+        "expansion": "A1",
+        "number": 202,
+        "name": "Chansey",
+        "type": "Colorless",
+        "stage": 0,
+        "hp": 120,
+        "weakness": "Fighting",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Gentle Slap",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 60
+            }
+        ]
+    },
+    "A1-203": {
+        "expansion": "A1",
+        "number": 203,
+        "name": "Kangaskhan",
+        "type": "Colorless",
+        "stage": 0,
+        "hp": 100,
+        "weakness": "Fighting",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Dizzy Punch",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": "30x",
+                "description": "Flip 2 coins. This attack does 30 damage for each heads."
+            }
+        ]
+    },
+    "A1-204": {
+        "expansion": "A1",
+        "number": 204,
+        "name": "Tauros",
+        "type": "Colorless",
+        "stage": 0,
+        "hp": 100,
+        "weakness": "Fighting",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Horn Attack",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 50
+            }
+        ]
+    },
+    "A1-205": {
+        "expansion": "A1",
+        "number": 205,
+        "name": "Ditto",
+        "type": "Colorless",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Copy Anything",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 0,
+                "description": "Choose 1 of your opponent's pkmn's attacks and use it as this attack. If this pkmn doesn't have the necessary Energy to use that attack, this attack does nothing."
+            }
+        ]
+    },
+    "A1-206": {
+        "expansion": "A1",
+        "number": 206,
+        "name": "Eevee",
+        "type": "Colorless",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Tackle",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A1-207": {
+        "expansion": "A1",
+        "number": 207,
+        "variant": "A1-206"
+    },
+    "A1-208": {
+        "expansion": "A1",
+        "number": 208,
+        "variant": "A1-206"
+    },
+    "A1-209": {
+        "expansion": "A1",
+        "number": 209,
+        "name": "Porygon",
+        "type": "Colorless",
+        "stage": 0,
+        "hp": 50,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "ability": {
+            "name": "Data Scan",
+            "description": "Once during your turn, you may look at the top card of your deck."
+        },
+        "moves": [
+            {
+                "name": "Sharpen",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A1-210": {
+        "expansion": "A1",
+        "number": 210,
+        "name": "Aerodactyl",
+        "type": "Colorless",
+        "stage": 1,
+        "evolves_from": "Old Amber",
+        "hp": 100,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Primal Wingbeat",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 0,
+                "description": "Flip a coin. If heads, your opponent shuffles their Active Pok\u00e9mon into their deck."
+            }
+        ]
+    },
+    "A1-211": {
+        "expansion": "A1",
+        "number": 211,
+        "name": "Snorlax",
+        "type": "Colorless",
+        "stage": 0,
+        "hp": 150,
+        "weakness": "Fighting",
+        "retreat_cost": 4,
+        "moves": [
+            {
+                "name": "Rollout",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 70
+            }
+        ]
+    },
+    "A1-212": {
+        "expansion": "A1",
+        "number": 212,
+        "name": "Minccino",
+        "type": "Colorless",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Tail Smack",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A1-213": {
+        "expansion": "A1",
+        "number": 213,
+        "name": "Cinccino",
+        "type": "Colorless",
+        "stage": 1,
+        "evolves_from": "Minccino",
+        "hp": 90,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Do the Wave",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": "30x",
+                "description": "This attack does 30 damage for each of your Benched Pok\u00e9mon."
+            }
+        ]
+    },
+    "A1-214": {
+        "expansion": "A1",
+        "number": 214,
+        "name": "Wooloo",
+        "type": "Colorless",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Tackle",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 30
+            }
+        ]
+    },
+    "A1-215": {
+        "expansion": "A1",
+        "number": 215,
+        "name": "Dubwool",
+        "type": "Colorless",
+        "stage": 1,
+        "evolves_from": "Wooloo",
+        "hp": 120,
+        "weakness": "Fighting",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Rolling Tackle",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 80
+            }
+        ]
+    },
+    "A1-216": {
+        "expansion": "A1",
+        "number": 216,
+        "name": "Helix Fossil",
+        "category": "Item",
+        "description": "Play this card as if it were a 40-HP Basic {Colorless} Pok\u00e9mon.\nAt any time during your turn, you may discard this card from play.\nThis card can't retreat."
+    },
+    "A1-217": {
+        "expansion": "A1",
+        "number": 217,
+        "name": "Dome Fossil",
+        "category": "Item",
+        "description": "Play this card as if it were a 40-HP Basic {Colorless} Pok\u00e9mon.\nAt any time during your turn, you may discard this card from play.\nThis card can't retreat."
+    },
+    "A1-218": {
+        "expansion": "A1",
+        "number": 218,
+        "name": "Old Amber",
+        "category": "Item",
+        "description": "Play this card as if it were a 40-HP Basic {Colorless} Pok\u00e9mon.\nAt any time during your turn, you may discard this card from play.\nThis card can't retreat."
+    },
+    "A1-219": {
+        "expansion": "A1",
+        "number": 219,
+        "name": "Erika",
+        "category": "Supporter",
+        "description": "Heal 50 damage from 1 of your {Grass} Pok\u00e9mon."
+    },
+    "A1-220": {
+        "expansion": "A1",
+        "number": 220,
+        "name": "Misty",
+        "category": "Supporter",
+        "description": "Choose 1 of your {Water} Pok\u00e9mon, and flip a coin until you get tails. For each heads, take a {Water} Energy from your Energy Zone and attach it to that Pok\u00e9mon."
+    },
+    "A1-221": {
+        "expansion": "A1",
+        "number": 221,
+        "name": "Blaine",
+        "category": "Supporter",
+        "description": "During this turn, attacks used by your Ninetales, Rapidash, or Magmar do +30 damage to your opponent's Active Pok\u00e9mon."
+    },
+    "A1-222": {
+        "expansion": "A1",
+        "number": 222,
+        "name": "Koga",
+        "category": "Supporter",
+        "description": "Put your Muk or Weezing in the Active Spot into your hand."
+    },
+    "A1-223": {
+        "expansion": "A1",
+        "number": 223,
+        "name": "Giovanni",
+        "category": "Supporter",
+        "description": "During this turn, attacks used by your Pok\u00e9mon do +10 damage to your opponent's Active Pok\u00e9mon."
+    },
+    "A1-224": {
+        "expansion": "A1",
+        "number": 224,
+        "name": "Brock",
+        "category": "Supporter",
+        "description": "Take a {Fighting} Energy from your Energy Zone and attach it to Golem or Onix."
+    },
+    "A1-225": {
+        "expansion": "A1",
+        "number": 225,
+        "name": "Sabrina",
+        "category": "Supporter",
+        "description": "Switch out your opponent's Active Pok\u00e9mon to the Bench. (Your opponent chooses the new Active Pok\u00e9mon.)"
+    },
+    "A1-226": {
+        "expansion": "A1",
+        "number": 226,
+        "name": "Lt. Surge",
+        "category": "Supporter",
+        "description": "Move all {Lightning} Energy from your Benched Pok\u00e9mon to your Raichu, Electrode, or Electabuzz in the Active Spot."
+    },
+    "A1-227": {
+        "expansion": "A1",
+        "number": 227,
+        "variant": "A1-001"
+    },
+    "A1-228": {
+        "expansion": "A1",
+        "number": 228,
+        "variant": "A1-012"
+    },
+    "A1-229": {
+        "expansion": "A1",
+        "number": 229,
+        "variant": "A1-026"
+    },
+    "A1-230": {
+        "expansion": "A1",
+        "number": 230,
+        "variant": "A1-033"
+    },
+    "A1-231": {
+        "expansion": "A1",
+        "number": 231,
+        "variant": "A1-043"
+    },
+    "A1-232": {
+        "expansion": "A1",
+        "number": 232,
+        "variant": "A1-053"
+    },
+    "A1-233": {
+        "expansion": "A1",
+        "number": 233,
+        "variant": "A1-078"
+    },
+    "A1-234": {
+        "expansion": "A1",
+        "number": 234,
+        "variant": "A1-079"
+    },
+    "A1-235": {
+        "expansion": "A1",
+        "number": 235,
+        "variant": "A1-100"
+    },
+    "A1-236": {
+        "expansion": "A1",
+        "number": 236,
+        "variant": "A1-117"
+    },
+    "A1-237": {
+        "expansion": "A1",
+        "number": 237,
+        "variant": "A1-118"
+    },
+    "A1-238": {
+        "expansion": "A1",
+        "number": 238,
+        "variant": "A1-139"
+    },
+    "A1-239": {
+        "expansion": "A1",
+        "number": 239,
+        "variant": "A1-151"
+    },
+    "A1-240": {
+        "expansion": "A1",
+        "number": 240,
+        "variant": "A1-168"
+    },
+    "A1-241": {
+        "expansion": "A1",
+        "number": 241,
+        "variant": "A1-171"
+    },
+    "A1-242": {
+        "expansion": "A1",
+        "number": 242,
+        "variant": "A1-173"
+    },
+    "A1-243": {
+        "expansion": "A1",
+        "number": 243,
+        "variant": "A1-177"
+    },
+    "A1-244": {
+        "expansion": "A1",
+        "number": 244,
+        "variant": "A1-185"
+    },
+    "A1-245": {
+        "expansion": "A1",
+        "number": 245,
+        "variant": "A1-188"
+    },
+    "A1-246": {
+        "expansion": "A1",
+        "number": 246,
+        "variant": "A1-196"
+    },
+    "A1-247": {
+        "expansion": "A1",
+        "number": 247,
+        "variant": "A1-205"
+    },
+    "A1-248": {
+        "expansion": "A1",
+        "number": 248,
+        "variant": "A1-206"
+    },
+    "A1-249": {
+        "expansion": "A1",
+        "number": 249,
+        "variant": "A1-209"
+    },
+    "A1-250": {
+        "expansion": "A1",
+        "number": 250,
+        "variant": "A1-211"
+    },
+    "A1-251": {
+        "expansion": "A1",
+        "number": 251,
+        "variant": "A1-004"
+    },
+    "A1-252": {
+        "expansion": "A1",
+        "number": 252,
+        "variant": "A1-023"
+    },
+    "A1-253": {
+        "expansion": "A1",
+        "number": 253,
+        "variant": "A1-036"
+    },
+    "A1-254": {
+        "expansion": "A1",
+        "number": 254,
+        "variant": "A1-041"
+    },
+    "A1-255": {
+        "expansion": "A1",
+        "number": 255,
+        "variant": "A1-047"
+    },
+    "A1-256": {
+        "expansion": "A1",
+        "number": 256,
+        "variant": "A1-056"
+    },
+    "A1-257": {
+        "expansion": "A1",
+        "number": 257,
+        "variant": "A1-076"
+    },
+    "A1-258": {
+        "expansion": "A1",
+        "number": 258,
+        "variant": "A1-084"
+    },
+    "A1-259": {
+        "expansion": "A1",
+        "number": 259,
+        "variant": "A1-096"
+    },
+    "A1-260": {
+        "expansion": "A1",
+        "number": 260,
+        "variant": "A1-104"
+    },
+    "A1-261": {
+        "expansion": "A1",
+        "number": 261,
+        "variant": "A1-123"
+    },
+    "A1-262": {
+        "expansion": "A1",
+        "number": 262,
+        "variant": "A1-129"
+    },
+    "A1-263": {
+        "expansion": "A1",
+        "number": 263,
+        "variant": "A1-146"
+    },
+    "A1-264": {
+        "expansion": "A1",
+        "number": 264,
+        "variant": "A1-153"
+    },
+    "A1-265": {
+        "expansion": "A1",
+        "number": 265,
+        "variant": "A1-195"
+    },
+    "A1-266": {
+        "expansion": "A1",
+        "number": 266,
+        "variant": "A1-219"
+    },
+    "A1-267": {
+        "expansion": "A1",
+        "number": 267,
+        "variant": "A1-220"
+    },
+    "A1-268": {
+        "expansion": "A1",
+        "number": 268,
+        "variant": "A1-221"
+    },
+    "A1-269": {
+        "expansion": "A1",
+        "number": 269,
+        "variant": "A1-222"
+    },
+    "A1-270": {
+        "expansion": "A1",
+        "number": 270,
+        "variant": "A1-223"
+    },
+    "A1-271": {
+        "expansion": "A1",
+        "number": 271,
+        "variant": "A1-224"
+    },
+    "A1-272": {
+        "expansion": "A1",
+        "number": 272,
+        "variant": "A1-225"
+    },
+    "A1-273": {
+        "expansion": "A1",
+        "number": 273,
+        "variant": "A1-226"
+    },
+    "A1-274": {
+        "expansion": "A1",
+        "number": 274,
+        "variant": "A1-047"
+    },
+    "A1-275": {
+        "expansion": "A1",
+        "number": 275,
+        "variant": "A1-084"
+    },
+    "A1-276": {
+        "expansion": "A1",
+        "number": 276,
+        "variant": "A1-104"
+    },
+    "A1-277": {
+        "expansion": "A1",
+        "number": 277,
+        "variant": "A1-123"
+    },
+    "A1-278": {
+        "expansion": "A1",
+        "number": 278,
+        "variant": "A1-146"
+    },
+    "A1-279": {
+        "expansion": "A1",
+        "number": 279,
+        "variant": "A1-195"
+    },
+    "A1-280": {
+        "expansion": "A1",
+        "number": 280,
+        "variant": "A1-036"
+    },
+    "A1-281": {
+        "expansion": "A1",
+        "number": 281,
+        "variant": "A1-096"
+    },
+    "A1-282": {
+        "expansion": "A1",
+        "number": 282,
+        "variant": "A1-129"
+    },
+    "A1-283": {
+        "expansion": "A1",
+        "number": 283,
+        "name": "Mew",
+        "type": "Psychic",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Darkness",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Psy Report",
+                "energy_cost": [
+                    "Psychic"
+                ],
+                "power": 20,
+                "description": "Your opponent reveals their hand."
+            }
+        ]
+    },
+    "A1-284": {
+        "expansion": "A1",
+        "number": 284,
+        "variant": "A1-036"
+    },
+    "A1-285": {
+        "expansion": "A1",
+        "number": 285,
+        "variant": "A1-096"
+    },
+    "A1-286": {
+        "expansion": "A1",
+        "number": 286,
+        "variant": "A1-129"
+    },
+    "PROMO-001": {
+        "expansion": "PROMO",
+        "number": 1,
+        "name": "Potion",
+        "category": "Item",
+        "description": "Heal 20 damage from 1 of your Pok\u00e9mon."
+    },
+    "PROMO-002": {
+        "expansion": "PROMO",
+        "number": 2,
+        "name": "X Speed",
+        "category": "Item",
+        "description": "During this turn, the Retreat Cost of your Active Pok\u00e9mon is 1 less."
+    },
+    "PROMO-003": {
+        "expansion": "PROMO",
+        "number": 3,
+        "name": "Hand Scope",
+        "category": "Item",
+        "description": "Your opponent reveals their hand."
+    },
+    "PROMO-004": {
+        "expansion": "PROMO",
+        "number": 4,
+        "name": "Pok\u00e9dex",
+        "category": "Item",
+        "description": "Look at the top 3 cards of your deck."
+    },
+    "PROMO-005": {
+        "expansion": "PROMO",
+        "number": 5,
+        "name": "Pok\u00e9 Ball",
+        "category": "Item",
+        "description": "Put 1 random Basic Pok\u00e9mon from your deck into your hand."
+    },
+    "PROMO-006": {
+        "expansion": "PROMO",
+        "number": 6,
+        "name": "Red Card",
+        "category": "Item",
+        "description": "Your opponent shuffles their hand into their deck and draws 3 cards."
+    },
+    "PROMO-007": {
+        "expansion": "PROMO",
+        "number": 7,
+        "name": "Professor's Research",
+        "category": "Supporter",
+        "description": "Draw 2 cards."
+    },
+    "PROMO-008": {
+        "expansion": "PROMO",
+        "number": 8,
+        "variant": "PROMO-004"
+    },
+    "PROMO-009": {
+        "expansion": "PROMO",
+        "number": 9,
+        "variant": "A1-094"
+    },
+    "PROMO-010": {
+        "expansion": "PROMO",
+        "number": 10,
+        "variant": "A1-128"
+    },
+    "PROMO-011": {
+        "expansion": "PROMO",
+        "number": 11,
+        "variant": "A1-202"
+    },
+    "PROMO-012": {
+        "expansion": "PROMO",
+        "number": 12,
+        "variant": "A1-196"
+    },
+    "PROMO-013": {
+        "expansion": "PROMO",
+        "number": 13,
+        "variant": "A1-007"
+    },
+    "PROMO-014": {
+        "expansion": "PROMO",
+        "number": 14,
+        "name": "Lapras ex",
+        "type": "Water",
+        "stage": 0,
+        "hp": 140,
+        "weakness": "Lightning",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Bubble Drain",
+                "energy_cost": [
+                    "Water",
+                    "Water",
+                    "Colorless"
+                ],
+                "power": 80,
+                "description": "Heal 20 damage from this Pok\u00e9mon."
+            }
+        ]
+    },
+    "PROMO-015": {
+        "expansion": "PROMO",
+        "number": 15,
+        "variant": "A1-094"
+    },
+    "PROMO-016": {
+        "expansion": "PROMO",
+        "number": 16,
+        "variant": "A1-113"
+    },
+    "PROMO-017": {
+        "expansion": "PROMO",
+        "number": 17,
+        "name": "Mankey",
+        "type": "Fighting",
+        "stage": 0,
+        "hp": 50,
+        "weakness": "Psychic",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Reckless Charge",
+                "energy_cost": [
+                    "Fighting"
+                ],
+                "power": 30,
+                "description": "This Pok\u00e9mon also does 10 damage to itself."
+            }
+        ]
+    },
+    "PROMO-018": {
+        "expansion": "PROMO",
+        "number": 18,
+        "variant": "A1-003"
+    },
+    "PROMO-019": {
+        "expansion": "PROMO",
+        "number": 19,
+        "variant": "A1-089"
+    },
+    "PROMO-020": {
+        "expansion": "PROMO",
+        "number": 20,
+        "name": "Haunter",
+        "type": "Psychic",
+        "stage": 1,
+        "evolves_from": "Gastly",
+        "hp": 70,
+        "weakness": "Darkness",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Surprise Attack",
+                "energy_cost": [
+                    "Psychic"
+                ],
+                "power": 50,
+                "description": "Flip a coin. If tails, this attack does nothing."
+            }
+        ]
+    },
+    "PROMO-021": {
+        "expansion": "PROMO",
+        "number": 21,
+        "variant": "A1-150"
+    },
+    "PROMO-022": {
+        "expansion": "PROMO",
+        "number": 22,
+        "name": "Jigglypuff",
+        "type": "Colorless",
+        "stage": 0,
+        "hp": 50,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Sing",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 0,
+                "description": "Your opponent's Active Pok\u00e9mon is now Asleep."
+            }
+        ]
+    },
+    "PROMO-023": {
+        "expansion": "PROMO",
+        "number": 23,
+        "variant": "A1-001"
+    },
+    "PROMO-024": {
+        "expansion": "PROMO",
+        "number": 24,
+        "variant": "A1-097"
+    },
+    "A1a-001": {
+        "expansion": "A1a",
+        "number": 1,
+        "name": "Exeggcute",
+        "type": "Grass",
+        "stage": 0,
+        "hp": 50,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Growth Spurt",
+                "energy_cost": [
+                    "Grass"
+                ],
+                "power": 0,
+                "description": "Take a {Grass} Energy from your Energy Zone and attach it to this Pok\u00e9mon."
+            }
+        ]
+    },
+    "A1a-002": {
+        "expansion": "A1a",
+        "number": 2,
+        "name": "Exeggutor",
+        "type": "Grass",
+        "stage": 1,
+        "evolves_from": "Exeggcute",
+        "hp": 130,
+        "weakness": "Fire",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Psychic",
+                "energy_cost": [
+                    "Grass",
+                    "Colorless",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": "80+",
+                "description": "This attack does 20 more damage for each Energy attached to your opponent's Active Pok\u00e9mon."
+            }
+        ]
+    },
+    "A1a-003": {
+        "expansion": "A1a",
+        "number": 3,
+        "name": "Celebi ex",
+        "type": "Grass",
+        "stage": 0,
+        "hp": 130,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Powerful Bloom",
+                "energy_cost": [
+                    "Grass",
+                    "Colorless"
+                ],
+                "power": "50x",
+                "description": "Flip a coin for each Energy attached to this Pok\u00e9mon. This attack does 50 damage for each heads."
+            }
+        ]
+    },
+    "A1a-004": {
+        "expansion": "A1a",
+        "number": 4,
+        "name": "Snivy",
+        "type": "Grass",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Vine Whip",
+                "energy_cost": [
+                    "Grass",
+                    "Colorless"
+                ],
+                "power": 40
+            }
+        ]
+    },
+    "A1a-005": {
+        "expansion": "A1a",
+        "number": 5,
+        "name": "Servine",
+        "type": "Grass",
+        "stage": 1,
+        "evolves_from": "Snivy",
+        "hp": 80,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Vine Whip",
+                "energy_cost": [
+                    "Grass",
+                    "Colorless"
+                ],
+                "power": 50
+            }
+        ]
+    },
+    "A1a-006": {
+        "expansion": "A1a",
+        "number": 6,
+        "name": "Serperior",
+        "type": "Grass",
+        "stage": 2,
+        "evolves_from": "Servine",
+        "hp": 110,
+        "weakness": "Fire",
+        "retreat_cost": 2,
+        "ability": {
+            "name": "Jungle Totem",
+            "description": "Each {Grass} Energy attached to your {Grass} Pok\u00e9mon provides 2 {Grass} Energy. This effect doesn't stack."
+        },
+        "moves": [
+            {
+                "name": "Solar Beam",
+                "energy_cost": [
+                    "Grass",
+                    "Colorless",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 70
+            }
+        ]
+    },
+    "A1a-007": {
+        "expansion": "A1a",
+        "number": 7,
+        "name": "Morelull",
+        "type": "Grass",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Ram",
+                "energy_cost": [
+                    "Grass"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A1a-008": {
+        "expansion": "A1a",
+        "number": 8,
+        "name": "Shiinotic",
+        "type": "Grass",
+        "stage": 1,
+        "evolves_from": "Morelull",
+        "hp": 90,
+        "weakness": "Fire",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Flickering Spores",
+                "energy_cost": [
+                    "Grass",
+                    "Grass"
+                ],
+                "power": 50,
+                "description": "Your opponent's Active Pok\u00e9mon is now Asleep."
+            }
+        ]
+    },
+    "A1a-009": {
+        "expansion": "A1a",
+        "number": 9,
+        "name": "Dhelmise",
+        "type": "Grass",
+        "stage": 0,
+        "hp": 100,
+        "weakness": "Fire",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Energy Whip",
+                "energy_cost": [
+                    "Grass"
+                ],
+                "power": "20+",
+                "description": "If this Pok\u00e9mon has at least 3 extra {Grass} Energy attached, this attack does 70 more damage."
+            }
+        ]
+    },
+    "A1a-010": {
+        "expansion": "A1a",
+        "number": 10,
+        "name": "Ponyta",
+        "type": "Fire",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Water",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Stomp",
+                "energy_cost": [
+                    "Fire"
+                ],
+                "power": "10+",
+                "description": "Flip a coin. If heads, this attack does 30 more damage."
+            }
+        ]
+    },
+    "A1a-011": {
+        "expansion": "A1a",
+        "number": 11,
+        "name": "Rapidash",
+        "type": "Fire",
+        "stage": 1,
+        "evolves_from": "Ponyta",
+        "hp": 100,
+        "weakness": "Water",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Rising Lunge",
+                "energy_cost": [
+                    "Fire",
+                    "Colorless"
+                ],
+                "power": "40+",
+                "description": "Flip a coin. If heads, this attack does 60 more damage."
+            }
+        ]
+    },
+    "A1a-012": {
+        "expansion": "A1a",
+        "number": 12,
+        "name": "Magmar",
+        "type": "Fire",
+        "stage": 0,
+        "hp": 80,
+        "weakness": "Water",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Fire Blast",
+                "energy_cost": [
+                    "Fire",
+                    "Fire"
+                ],
+                "power": 80,
+                "description": "Discard 2 {Fire} Energy from this Pok\u00e9mon."
+            }
+        ]
+    },
+    "A1a-013": {
+        "expansion": "A1a",
+        "number": 13,
+        "name": "Larvesta",
+        "type": "Fire",
+        "stage": 0,
+        "hp": 80,
+        "weakness": "Water",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Combustion",
+                "energy_cost": [
+                    "Fire",
+                    "Colorless"
+                ],
+                "power": 30
+            }
+        ]
+    },
+    "A1a-014": {
+        "expansion": "A1a",
+        "number": 14,
+        "name": "Volcarona",
+        "type": "Fire",
+        "stage": 1,
+        "evolves_from": "Larvesta",
+        "hp": 120,
+        "weakness": "Water",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Volcanic Ash",
+                "energy_cost": [
+                    "Fire",
+                    "Fire",
+                    "Colorless"
+                ],
+                "power": 0,
+                "description": "Discard 2 {Fire} Energy from this Pok\u00e9mon. This attack does 80 damage to 1 of your opponent's Pok\u00e9mon."
+            }
+        ]
+    },
+    "A1a-015": {
+        "expansion": "A1a",
+        "number": 15,
+        "name": "Salandit",
+        "type": "Fire",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Water",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Venoshock",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": "10+",
+                "description": "If your opponent's Active Pok\u00e9mon is Poisoned, this attack does 40 more damage."
+            }
+        ]
+    },
+    "A1a-016": {
+        "expansion": "A1a",
+        "number": 16,
+        "name": "Salazzle",
+        "type": "Fire",
+        "stage": 1,
+        "evolves_from": "Salandit",
+        "hp": 80,
+        "weakness": "Water",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Poison Claws",
+                "energy_cost": [
+                    "Fire"
+                ],
+                "power": 30,
+                "description": "Your opponent's Active Pok\u00e9mon is now Poisoned."
+            }
+        ]
+    },
+    "A1a-017": {
+        "expansion": "A1a",
+        "number": 17,
+        "name": "Magikarp",
+        "type": "Water",
+        "stage": 0,
+        "hp": 30,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Leap Out",
+                "energy_cost": [
+                    "Water"
+                ],
+                "power": 0,
+                "description": "Switch this Pok\u00e9mon with 1 of your Benched Pok\u00e9mon."
+            }
+        ]
+    },
+    "A1a-018": {
+        "expansion": "A1a",
+        "number": 18,
+        "name": "Gyarados ex",
+        "type": "Water",
+        "stage": 1,
+        "evolves_from": "Magikarp",
+        "hp": 180,
+        "weakness": "Lightning",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Rampaging Whirlpool",
+                "energy_cost": [
+                    "Water",
+                    "Water",
+                    "Water",
+                    "Colorless"
+                ],
+                "power": 140,
+                "description": "Discard a random Energy from among the Energy attached to all Pok\u00e9mon (both yours and your opponent's)."
+            }
+        ]
+    },
+    "A1a-019": {
+        "expansion": "A1a",
+        "number": 19,
+        "name": "Vaporeon",
+        "type": "Water",
+        "stage": 1,
+        "evolves_from": "Eevee",
+        "hp": 120,
+        "weakness": "Lightning",
+        "retreat_cost": 2,
+        "ability": {
+            "name": "Wash Out",
+            "description": "As often as you like during your turn, you may more a {Water} Energy from 1 of your Benched {Water} Pok\u00e9mon to your Active {Water} Pok\u00e9mon."
+        },
+        "moves": [
+            {
+                "name": "Wave Splash",
+                "energy_cost": [
+                    "Water",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 60
+            }
+        ]
+    },
+    "A1a-020": {
+        "expansion": "A1a",
+        "number": 20,
+        "name": "Finneon",
+        "type": "Water",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Water Gun",
+                "energy_cost": [
+                    "Water"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A1a-021": {
+        "expansion": "A1a",
+        "number": 21,
+        "name": "Lumineon",
+        "type": "Water",
+        "stage": 1,
+        "evolves_from": "Finneon",
+        "hp": 80,
+        "weakness": "Lightning",
+        "retreat_cost": 0,
+        "moves": [
+            {
+                "name": "Aqua Liner",
+                "energy_cost": [
+                    "Water",
+                    "Water"
+                ],
+                "power": 0,
+                "description": "This attack does 50 damage to 1 of your opponent's Benched Pok\u00e9mon."
+            }
+        ]
+    },
+    "A1a-022": {
+        "expansion": "A1a",
+        "number": 22,
+        "name": "Chewtle",
+        "type": "Water",
+        "stage": 0,
+        "hp": 80,
+        "weakness": "Lightning",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Bite",
+                "energy_cost": [
+                    "Water",
+                    "Colorless"
+                ],
+                "power": 40
+            }
+        ]
+    },
+    "A1a-023": {
+        "expansion": "A1a",
+        "number": 23,
+        "name": "Drednaw",
+        "type": "Water",
+        "stage": 1,
+        "evolves_from": "Chewtle",
+        "hp": 130,
+        "weakness": "Lightning",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Crunch",
+                "energy_cost": [
+                    "Water",
+                    "Water",
+                    "Water"
+                ],
+                "power": 70,
+                "description": "Flip a coin. If heads, discard a random Energy from your opponent's Active Pok\u00e9mon."
+            }
+        ]
+    },
+    "A1a-024": {
+        "expansion": "A1a",
+        "number": 24,
+        "name": "Cramorant",
+        "type": "Water",
+        "stage": 0,
+        "hp": 80,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Dive",
+                "energy_cost": [
+                    "Water",
+                    "Water",
+                    "Colorless"
+                ],
+                "power": 60,
+                "description": "Flip a coin. If heads, during your opponent's next turn, prevent all damage from\u2014and effects of\u2014attacks done to this Pok\u00e9mon."
+            }
+        ]
+    },
+    "A1a-025": {
+        "expansion": "A1a",
+        "number": 25,
+        "name": "Pikachu",
+        "type": "Lightning",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Circle Circuit",
+                "energy_cost": [
+                    "Lightning"
+                ],
+                "power": "10x",
+                "description": "This attack does 10 damage for each of your Benched {Lightning} Pok\u00e9mon."
+            }
+        ]
+    },
+    "A1a-026": {
+        "expansion": "A1a",
+        "number": 26,
+        "name": "Raichu",
+        "type": "Lightning",
+        "stage": 1,
+        "evolves_from": "Pikachu",
+        "hp": 120,
+        "weakness": "Fighting",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Gigashock",
+                "energy_cost": [
+                    "Lightning",
+                    "Lightning",
+                    "Lightning"
+                ],
+                "power": 60,
+                "description": "This attack also does 20 damage to each of your opponent's Benched Pok\u00e9mon."
+            }
+        ]
+    },
+    "A1a-027": {
+        "expansion": "A1a",
+        "number": 27,
+        "name": "Electabuzz",
+        "type": "Lightning",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Thunder Spear",
+                "energy_cost": [
+                    "Lightning",
+                    "Lightning"
+                ],
+                "power": 0,
+                "description": "This attack does 40 damage to 1 of your opponent's Pok\u00e9mon."
+            }
+        ]
+    },
+    "A1a-028": {
+        "expansion": "A1a",
+        "number": 28,
+        "name": "Joltik",
+        "type": "Lightning",
+        "stage": 0,
+        "hp": 40,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Bug Bite",
+                "energy_cost": [
+                    "Lightning"
+                ],
+                "power": 30
+            }
+        ]
+    },
+    "A1a-029": {
+        "expansion": "A1a",
+        "number": 29,
+        "name": "Galvantula",
+        "type": "Lightning",
+        "stage": 1,
+        "evolves_from": "Joltik",
+        "hp": 80,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Electroweb",
+                "energy_cost": [
+                    "Lightning",
+                    "Lightning"
+                ],
+                "power": 70,
+                "description": "During your opponent's next turn, the Defending Pok\u00e9mon can't retreat."
+            }
+        ]
+    },
+    "A1a-030": {
+        "expansion": "A1a",
+        "number": 30,
+        "name": "Dedenne",
+        "type": "Lightning",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Thunder Shock",
+                "energy_cost": [
+                    "Lightning"
+                ],
+                "power": 10,
+                "description": "Flip a coin. If heads, your opponent's Active Pok\u00e9mon is now Paralyzed."
+            }
+        ]
+    },
+    "A1a-031": {
+        "expansion": "A1a",
+        "number": 31,
+        "variant": "A1-283"
+    },
+    "A1a-032": {
+        "expansion": "A1a",
+        "number": 32,
+        "name": "Mew ex",
+        "type": "Psychic",
+        "stage": 0,
+        "hp": 130,
+        "weakness": "Darkness",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Psyshot",
+                "energy_cost": [
+                    "Psychic"
+                ],
+                "power": 20
+            },
+            {
+                "name": "Genome Hacking",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 0,
+                "description": "Choose 1 of your opponent's Active Pok\u00e9mon's attacks and use it as this attack."
+            }
+        ]
+    },
+    "A1a-033": {
+        "expansion": "A1a",
+        "number": 33,
+        "name": "Sigilyph",
+        "type": "Psychic",
+        "stage": 0,
+        "hp": 80,
+        "weakness": "Darkness",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Spike Draw",
+                "energy_cost": [
+                    "Psychic"
+                ],
+                "power": 10,
+                "description": "Draw a card."
+            }
+        ]
+    },
+    "A1a-034": {
+        "expansion": "A1a",
+        "number": 34,
+        "name": "Elgyem",
+        "type": "Psychic",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Darkness",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Headbutt",
+                "energy_cost": [
+                    "Psychic"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A1a-035": {
+        "expansion": "A1a",
+        "number": 35,
+        "name": "Beheeyem",
+        "type": "Psychic",
+        "stage": 1,
+        "evolves_from": "Elgyem",
+        "hp": 90,
+        "weakness": "Darkness",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Mind Jack",
+                "energy_cost": [
+                    "Psychic"
+                ],
+                "power": "10+",
+                "description": "This attack does 20 more damage for each of your opponent's Benched Pok\u00e9mon."
+            }
+        ]
+    },
+    "A1a-036": {
+        "expansion": "A1a",
+        "number": 36,
+        "name": "Flab\u00e9b\u00e9",
+        "type": "Psychic",
+        "stage": 0,
+        "hp": 40,
+        "weakness": "Metal",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Hypnotic Gaze",
+                "energy_cost": [
+                    "Psychic"
+                ],
+                "power": 0,
+                "description": "Your opponent's Active Pok\u00e9mon is now Asleep."
+            }
+        ]
+    },
+    "A1a-037": {
+        "expansion": "A1a",
+        "number": 37,
+        "name": "Floette",
+        "type": "Psychic",
+        "stage": 1,
+        "evolves_from": "Flab\u00e9b\u00e9",
+        "hp": 70,
+        "weakness": "Metal",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Leaf Drain",
+                "energy_cost": [
+                    "Psychic"
+                ],
+                "power": 40,
+                "description": "Heal 10 damage from this Pok\u00e9mon."
+            }
+        ]
+    },
+    "A1a-038": {
+        "expansion": "A1a",
+        "number": 38,
+        "name": "Florges",
+        "type": "Psychic",
+        "stage": 2,
+        "evolves_from": "Floette",
+        "hp": 120,
+        "weakness": "Metal",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Bloomshine",
+                "energy_cost": [
+                    "Psychic",
+                    "Psychic"
+                ],
+                "power": 80,
+                "description": "Heal 20 damage from each of your Pok\u00e9mon."
+            }
+        ]
+    },
+    "A1a-039": {
+        "expansion": "A1a",
+        "number": 39,
+        "name": "Swirlix",
+        "type": "Psychic",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Metal",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Fairy Wind",
+                "energy_cost": [
+                    "Psychic"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A1a-040": {
+        "expansion": "A1a",
+        "number": 40,
+        "name": "Slurpuff",
+        "type": "Psychic",
+        "stage": 1,
+        "evolves_from": "Swirlix",
+        "hp": 100,
+        "weakness": "Metal",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Magical Shot",
+                "energy_cost": [
+                    "Psychic",
+                    "Colorless"
+                ],
+                "power": 60
+            }
+        ]
+    },
+    "A1a-041": {
+        "expansion": "A1a",
+        "number": 41,
+        "name": "Mankey",
+        "type": "Fighting",
+        "stage": 0,
+        "hp": 50,
+        "weakness": "Psychic",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Focus Fist",
+                "energy_cost": [
+                    "Fighting"
+                ],
+                "power": 50,
+                "description": "Flip a coin. If tails, this attack does nothing."
+            }
+        ]
+    },
+    "A1a-042": {
+        "expansion": "A1a",
+        "number": 42,
+        "name": "Primeape",
+        "type": "Fighting",
+        "stage": 1,
+        "evolves_from": "Mankey",
+        "hp": 80,
+        "weakness": "Psychic",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Punch",
+                "energy_cost": [
+                    "Fighting"
+                ],
+                "power": 50
+            }
+        ]
+    },
+    "A1a-043": {
+        "expansion": "A1a",
+        "number": 43,
+        "name": "Geodude",
+        "type": "Fighting",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Grass",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Light Punch",
+                "energy_cost": [
+                    "Fighting",
+                    "Colorless"
+                ],
+                "power": 30
+            }
+        ]
+    },
+    "A1a-044": {
+        "expansion": "A1a",
+        "number": 44,
+        "name": "Graveler",
+        "type": "Fighting",
+        "stage": 1,
+        "evolves_from": "Geodude",
+        "hp": 100,
+        "weakness": "Grass",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Lunge Out",
+                "energy_cost": [
+                    "Fighting",
+                    "Colorless"
+                ],
+                "power": 40
+            }
+        ]
+    },
+    "A1a-045": {
+        "expansion": "A1a",
+        "number": 45,
+        "name": "Golem",
+        "type": "Fighting",
+        "stage": 2,
+        "evolves_from": "Graveler",
+        "hp": 160,
+        "weakness": "Grass",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Guard Press",
+                "energy_cost": [
+                    "Fighting",
+                    "Fighting",
+                    "Fighting",
+                    "Colorless"
+                ],
+                "power": 120,
+                "description": "During your opponent's next turn, this Pok\u00e9mon takes -30 damage from attacks."
+            }
+        ]
+    },
+    "A1a-046": {
+        "expansion": "A1a",
+        "number": 46,
+        "name": "Aerodactyl ex",
+        "type": "Fighting",
+        "stage": 1,
+        "evolves_from": "Old Amber",
+        "hp": 140,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "ability": {
+            "name": "Primeval Law",
+            "description": "Your opponent can't play any Pok\u00e9mon from their hand to evolve their Active Pok\u00e9mon."
+        },
+        "moves": [
+            {
+                "name": "Land Crush",
+                "energy_cost": [
+                    "Fighting",
+                    "Colorless"
+                ],
+                "power": 80
+            }
+        ]
+    },
+    "A1a-047": {
+        "expansion": "A1a",
+        "number": 47,
+        "name": "Marshadow",
+        "type": "Fighting",
+        "stage": 0,
+        "hp": 80,
+        "weakness": "Psychic",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Revenge",
+                "energy_cost": [
+                    "Fighting",
+                    "Colorless"
+                ],
+                "power": "40+",
+                "description": "If any of your Pok\u00e9mon were Knocked Out by damage from an attack during your opponent's last turn, this attack does 60 more damage."
+            }
+        ]
+    },
+    "A1a-048": {
+        "expansion": "A1a",
+        "number": 48,
+        "name": "Stonjourner",
+        "type": "Fighting",
+        "stage": 0,
+        "hp": 120,
+        "weakness": "Grass",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Mega Kick",
+                "energy_cost": [
+                    "Fighting",
+                    "Fighting",
+                    "Fighting"
+                ],
+                "power": 90
+            }
+        ]
+    },
+    "A1a-049": {
+        "expansion": "A1a",
+        "number": 49,
+        "name": "Koffing",
+        "type": "Darkness",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Fighting",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Division",
+                "energy_cost": [
+                    "Darkness"
+                ],
+                "power": 0,
+                "description": "Put 1 random Koffing from your deck onto your Bench."
+            }
+        ]
+    },
+    "A1a-050": {
+        "expansion": "A1a",
+        "number": 50,
+        "name": "Weezing",
+        "type": "Darkness",
+        "stage": 1,
+        "evolves_from": "Koffing",
+        "hp": 110,
+        "weakness": "Fighting",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Smokescreen",
+                "energy_cost": [
+                    "Darkness",
+                    "Darkness"
+                ],
+                "power": 50,
+                "description": "During your opponent's next turn, if the Defending Pok\u00e9mon tries to use an attack, your opponent flips a coin. If tails, that attack doesn't happen."
+            }
+        ]
+    },
+    "A1a-051": {
+        "expansion": "A1a",
+        "number": 51,
+        "name": "Purrloin",
+        "type": "Darkness",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Grass",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Scratch",
+                "energy_cost": [
+                    "Darkness"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A1a-052": {
+        "expansion": "A1a",
+        "number": 52,
+        "name": "Liepard",
+        "type": "Darkness",
+        "stage": 1,
+        "evolves_from": "Purrloin",
+        "hp": 90,
+        "weakness": "Grass",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Slash",
+                "energy_cost": [
+                    "Darkness"
+                ],
+                "power": 40
+            }
+        ]
+    },
+    "A1a-053": {
+        "expansion": "A1a",
+        "number": 53,
+        "name": "Venipede",
+        "type": "Darkness",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Ram",
+                "energy_cost": [
+                    "Darkness"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A1a-054": {
+        "expansion": "A1a",
+        "number": 54,
+        "name": "Whirlipede",
+        "type": "Darkness",
+        "stage": 1,
+        "evolves_from": "Venipede",
+        "hp": 90,
+        "weakness": "Fighting",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Poison Sting",
+                "energy_cost": [
+                    "Darkness"
+                ],
+                "power": 20,
+                "description": "Your opponent's Active Pok\u00e9mon is now Poisoned."
+            }
+        ]
+    },
+    "A1a-055": {
+        "expansion": "A1a",
+        "number": 55,
+        "name": "Scolipede",
+        "type": "Darkness",
+        "stage": 2,
+        "evolves_from": "Whirlipede",
+        "hp": 140,
+        "weakness": "Fighting",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Venoshock",
+                "energy_cost": [
+                    "Darkness",
+                    "Colorless"
+                ],
+                "power": "70+",
+                "description": "If your opponent's Active Pok\u00e9mon is Poisoned, this attack does 50 more damage."
+            }
+        ]
+    },
+    "A1a-056": {
+        "expansion": "A1a",
+        "number": 56,
+        "name": "Druddigon",
+        "type": "Dragon",
+        "stage": 0,
+        "hp": 100,
+        "retreat_cost": 2,
+        "ability": {
+            "name": "Rough Skin",
+            "description": "If this Pok\u00e9mon is in the Active Spot and is damaged by an attack from your opponent's Pok\u00e9mon, do 20 damage to the Attacking Pok\u00e9mon."
+        },
+        "moves": [
+            {
+                "name": "Dragon Claw",
+                "energy_cost": [
+                    "Fire",
+                    "Water",
+                    "Colorless"
+                ],
+                "power": 90
+            }
+        ]
+    },
+    "A1a-057": {
+        "expansion": "A1a",
+        "number": 57,
+        "name": "Pidgey",
+        "type": "Colorless",
+        "stage": 0,
+        "hp": 50,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Flap",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A1a-058": {
+        "expansion": "A1a",
+        "number": 58,
+        "name": "Pidgeotto",
+        "type": "Colorless",
+        "stage": 1,
+        "evolves_from": "Pidgey",
+        "hp": 90,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Wing Attack",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 50
+            }
+        ]
+    },
+    "A1a-059": {
+        "expansion": "A1a",
+        "number": 59,
+        "name": "Pidgeot ex",
+        "type": "Colorless",
+        "stage": 2,
+        "evolves_from": "Pidgeotto",
+        "hp": 170,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Scattering Cyclone",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": "80+",
+                "description": "This attack does 20 more damage for each of your opponent's Benched Pok\u00e9mon."
+            }
+        ]
+    },
+    "A1a-060": {
+        "expansion": "A1a",
+        "number": 60,
+        "name": "Tauros",
+        "type": "Colorless",
+        "stage": 0,
+        "hp": 100,
+        "weakness": "Fighting",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Fighting Tackle",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": "40+",
+                "description": "If your opponent's Active Pok\u00e9mon is a Pok\u00e9mon ex, this attack does 80 more damage."
+            }
+        ]
+    },
+    "A1a-061": {
+        "expansion": "A1a",
+        "number": 61,
+        "name": "Eevee",
+        "type": "Colorless",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Continuous Steps",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": "20x",
+                "description": "Flip a coin until you get tails. This attack does 20 damage for each heads."
+            }
+        ]
+    },
+    "A1a-062": {
+        "expansion": "A1a",
+        "number": 62,
+        "name": "Chatot",
+        "type": "Colorless",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Mimic",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 0,
+                "description": "Shuffle your hand into your deck. Draw a card for each card in your opponent's hand."
+            }
+        ]
+    },
+    "A1a-063": {
+        "expansion": "A1a",
+        "number": 63,
+        "variant": "A1-218"
+    },
+    "A1a-064": {
+        "expansion": "A1a",
+        "number": 64,
+        "name": "Pok\u00e9mon Flute",
+        "category": "Item",
+        "description": "Put a Basic Pok\u00e9mon from your opponent's discard pile onto their Bench."
+    },
+    "A1a-065": {
+        "expansion": "A1a",
+        "number": 65,
+        "name": "Mythical Slab",
+        "category": "Item",
+        "description": "Look at the top card of your deck. If that card is a {Psychic} Pok\u00e9mon, put it into your hand. If it is not a {Psychic} Pok\u00e9mon, put it on the bottom of your deck."
+    },
+    "A1a-066": {
+        "expansion": "A1a",
+        "number": 66,
+        "name": "Budding Expeditioner",
+        "category": "Supporter",
+        "description": "Put your Mew ex in the Active Spot into your hand."
+    },
+    "A1a-067": {
+        "expansion": "A1a",
+        "number": 67,
+        "name": "Blue",
+        "category": "Supporter",
+        "description": "During your opponent's next turn, all of your Pok\u00e9mon take -10 damage from attacks from your opponent's Pok\u00e9mon."
+    },
+    "A1a-068": {
+        "expansion": "A1a",
+        "number": 68,
+        "name": "Leaf",
+        "category": "Supporter",
+        "description": "During this turn, the Retreat Cost of your Active Pok\u00e9mon is 2 less."
+    },
+    "A1a-069": {
+        "expansion": "A1a",
+        "number": 69,
+        "variant": "A1a-002"
+    },
+    "A1a-070": {
+        "expansion": "A1a",
+        "number": 70,
+        "variant": "A1a-006"
+    },
+    "A1a-071": {
+        "expansion": "A1a",
+        "number": 71,
+        "variant": "A1a-015"
+    },
+    "A1a-072": {
+        "expansion": "A1a",
+        "number": 72,
+        "variant": "A1a-019"
+    },
+    "A1a-073": {
+        "expansion": "A1a",
+        "number": 73,
+        "variant": "A1a-030"
+    },
+    "A1a-074": {
+        "expansion": "A1a",
+        "number": 74,
+        "variant": "A1a-047"
+    },
+    "A1a-075": {
+        "expansion": "A1a",
+        "number": 75,
+        "variant": "A1a-003"
+    },
+    "A1a-076": {
+        "expansion": "A1a",
+        "number": 76,
+        "variant": "A1a-018"
+    },
+    "A1a-077": {
+        "expansion": "A1a",
+        "number": 77,
+        "variant": "A1a-032"
+    },
+    "A1a-078": {
+        "expansion": "A1a",
+        "number": 78,
+        "variant": "A1a-046"
+    },
+    "A1a-079": {
+        "expansion": "A1a",
+        "number": 79,
+        "variant": "A1a-059"
+    },
+    "A1a-080": {
+        "expansion": "A1a",
+        "number": 80,
+        "variant": "A1a-066"
+    },
+    "A1a-081": {
+        "expansion": "A1a",
+        "number": 81,
+        "variant": "A1a-067"
+    },
+    "A1a-082": {
+        "expansion": "A1a",
+        "number": 82,
+        "variant": "A1a-068"
+    },
+    "A1a-083": {
+        "expansion": "A1a",
+        "number": 83,
+        "variant": "A1a-032"
+    },
+    "A1a-084": {
+        "expansion": "A1a",
+        "number": 84,
+        "variant": "A1a-046"
+    },
+    "A1a-085": {
+        "expansion": "A1a",
+        "number": 85,
+        "variant": "A1a-003"
+    },
+    "A1a-086": {
+        "expansion": "A1a",
+        "number": 86,
+        "variant": "A1a-032"
+    }
+}

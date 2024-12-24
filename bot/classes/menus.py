@@ -3,12 +3,34 @@ import discord
 from classes.bot import Zeph
 from classes.embeds import Emol
 from discord.ext import commands
-from functions import can_int, general_pred, hex_to_color, none_list, should_await
+from functions import can_int, general_pred, hex_to_color, none_list, should_await, smallcaps
 from math import ceil
 
 
 def page_list(ls: list, per_page: int, page: int):  # assumes page number is between 1 and total pages
     return ls[int(page) * per_page - per_page:int(page) * per_page]
+
+
+def scroll_list(ls: iter, at: int, curved: bool = False, wrap: bool = True) -> str:
+    def format_item(index: int):
+        return f"**\\> {ls[index].upper()}**" if index == at else f"\\- {smallcaps(ls[index].lower())}"
+
+    if len(ls) <= 7:
+        if curved:
+            raise ValueError("Scroll list is too short to curve.")
+        return "\n".join([
+            ("\u2007" * [6, 5, 3, 0][abs(g - 4)] if curved else "") + format_item(g) for g in range(len(ls))
+        ])
+    if not wrap:
+        if curved:
+            raise ValueError("Non-wrapping scroll lists cannot be curved.")
+        return "\n".join([
+            format_item(g) for g in range(min(max(at - 3, 0), len(ls) - 7), max(min(at + 4, len(ls)), 7))
+        ])
+    return "\n".join([
+        ("\u2007" * [6, 5, 3, 0][abs(g - at)] if curved else "") + format_item(g % len(ls))
+        for g in range(at - 3, at + 4)
+    ])
 
 
 def page_dict(d: dict, per_page: int, page: int):  # assumes page number is between 1 and total pages

@@ -7,7 +7,7 @@ import time
 from classes.bot import Zeph
 from classes.embeds import Emol, success
 from classes.interpreter import Interpreter
-from classes.menus import Navigator, Nativity, NumSelector, page_list
+from classes.menus import Navigator, Nativity, NumSelector, page_list, scroll_list
 from copy import deepcopy as copy
 from discord.ext import commands
 from functions import (a_or_an, admin_check, best_guess, can_int, caseless_match, fix, general_pred, hex_to_color,
@@ -26,28 +26,6 @@ def find_ability(s: str, fail_silently: bool = False) -> str:
             lis = {fix(g): g for g in pk.abilities}
             guess = sorted(list(lis), key=lambda c: levenshtein(c, fix(s)))
             raise commands.CommandError(f"`{s}` not found. Did you mean {lis[guess[0]]}?")
-
-
-def scroll_list(ls: iter, at: int, curved: bool = False, wrap: bool = True) -> str:
-    def format_item(index: int):
-        return f"**\\> {ls[index].upper()}**" if index == at else f"\\- {smallcaps(ls[index].lower())}"
-
-    if len(ls) <= 7:
-        if curved:
-            raise ValueError("Scroll list is too short to curve.")
-        return "\n".join([
-            ("\u2007" * [6, 5, 3, 0][abs(g - 4)] if curved else "") + format_item(g) for g in range(len(ls))
-        ])
-    if not wrap:
-        if curved:
-            raise ValueError("Non-wrapping scroll lists cannot be curved.")
-        return "\n".join([
-            format_item(g) for g in range(min(max(at - 3, 0), len(ls) - 7), max(min(at + 4, len(ls)), 7))
-        ])
-    return "\n".join([
-        ("\u2007" * [6, 5, 3, 0][abs(g - at)] if curved else "") + format_item(g % len(ls))
-        for g in range(at - 3, at + 4)
-    ])
 
 
 class DexNavigator(Navigator):

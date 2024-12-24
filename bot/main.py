@@ -17,6 +17,7 @@ from game import GamesCog
 from pkmn import PokemonCog
 from planes import PlanesCog
 from server import load_server_settings, ServerSettings, ServerSettingsCog
+from tcgpocket import TCGPocketCog
 from utils import convert_x_sampa, convert_z_sampa, load_reminders, UtilitiesCog
 
 
@@ -381,6 +382,7 @@ async def on_ready():
     await zeph.add_cog(PokemonCog(zeph))
     await zeph.add_cog(PlanesCog(zeph))
     await zeph.add_cog(ServerSettingsCog(zeph))
+    await zeph.add_cog(TCGPocketCog(zeph))
     await zeph.add_cog(UtilitiesCog(zeph))
     await zeph.add_cog(MiscellaneousCog(zeph))
 

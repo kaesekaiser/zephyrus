@@ -9,7 +9,7 @@ from classes.embeds import Emol
 from discord.ext import commands
 from functions import general_pred, grammatical_join, hex_to_color, none_list
 from PIL import Image
-from pokemon import walker as pk
+from pokemon import walker as pk, tcgp as tp
 from minigames import planes as pn
 from pyquery import PyQuery
 
@@ -393,6 +393,43 @@ class Zeph(commands.Bot):
 
         elif mode == "dex":
             return self.display_mon(mon, "dex")
+
+    def add_energy_icons(self, txt: str):
+        return re.sub(
+            r"\{(" + ("|".join(tp.types)) + r")}",
+            lambda x: str(self.emojis[x[0].strip("{}") + "Energy"]),
+            txt
+        )
+
+    def display_card(self, card: tp.Card) -> discord.Embed:
+        variant_notice = f"*Variant of {card.variant_of}.*\n\n" if card.variant_of else ""
+        if isinstance(card, tp.PokemonCard):
+            return Emol(self.emojis[f"{card.type}Energy"], hex_to_color(tp.type_colors[card.type])).con(
+                card.name,
+                d=f"{variant_notice}"
+                  f"**{'Basic' if card.stage == 0 else ('Stage ' + str(card.stage))} | {card.hp} HP**\n" +
+                  (f"\\- Evolves from **{card.evolves_from}**\n" if card.evolves_from else "") +
+                  f"**Weakness:** {self.emojis[card.weakness + 'Energy'] if card.weakness else None}"
+                  f"{' +20' if card.weakness else ''}\n"
+                  f"**Retreat:** {str(self.emojis['ColorlessEnergy']) * card.retreat_cost}",
+                fs=({
+                    f"Ability: {card.ability.name}": self.add_energy_icons(card.ability.description)
+                } if card.ability else {}) |
+                {
+                    f"{''.join(str(self.emojis[g + 'Energy']) for g in mv.energy_cost)} {mv.name}" +
+                    (f" -- {mv.power}" if mv.power else ""):
+                    self.add_energy_icons(mv.description) if mv.description else " " for mv in card.moves
+                },
+                footer=f"{card.id} ({tp.expansion_names[card.expansion]})",
+                thumb=card.image_url
+            )
+        elif isinstance(card, tp.TrainerCard):
+            return self.ball_emol("poke").con(
+                card.name,
+                d=f"{variant_notice}**[{card.category}]**\n{self.add_energy_icons(card.description)}",
+                footer=f"{card.id} ({tp.expansion_names[card.expansion]})",
+                thumb=card.image_url
+            )
 
     def checked(self, b: bool):
         return self.emojis["checked"] if b else self.emojis["unchecked"]
