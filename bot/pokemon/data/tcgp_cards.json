@@ -963,7 +963,7 @@
                     "Colorless"
                 ],
                 "power": 110,
-                "description": "Discard a {Fire} energy from this pkmn."
+                "description": "Discard a {Fire} energy from this Pok\u00e9mon."
             }
         ]
     },
@@ -4361,7 +4361,7 @@
                     "Colorless"
                 ],
                 "power": 0,
-                "description": "Choose 1 of your opponent's pkmn's attacks and use it as this attack. If this pkmn doesn't have the necessary Energy to use that attack, this attack does nothing."
+                "description": "Choose 1 of your opponent's Pok\u00e9mon's attacks and use it as this attack. If this Pok\u00e9mon doesn't have the necessary Energy to use that attack, this attack does nothing."
             }
         ]
     },
