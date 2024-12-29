@@ -2,6 +2,7 @@ import asyncio
 import datetime
 import discord
 import json
+import random
 import re
 import time
 from classes.bot import Zeph
@@ -422,10 +423,10 @@ class EffNavigator(Navigator):
 
     @property
     def image(self):
-        if (self.type1 or self.type2) and (self.initial_mon.types_with_none == [str(self.type1), str(self.type2)]):
+        if (self.type1 or self.type2) and (self.initial_mon.types_with_none == (str(self.type1), str(self.type2))):
             return self.initial_mon.dex_image
         try:
-            return pk.find_mon(choice(pk.exemplary_mons[frozenset([self.type1, self.type2])])).dex_image
+            return pk.find_mon(random.choice(pk.exemplary_mons[frozenset([self.type1, self.type2])])).dex_image
         except KeyError:
             return None
 
@@ -1318,7 +1319,7 @@ class PokemonInterpreter(Interpreter):
             else:
                 types = ["Normal"]
 
-        return await EffNavigator(*types, initial_mon=mon).run(self.ctx)
+        return await EffNavigator(self.bot, *types, initial_mon=mon).run(self.ctx)
 
     async def _test(self, *args):
         admin_check(self.ctx)
