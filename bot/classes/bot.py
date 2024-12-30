@@ -392,6 +392,14 @@ class Zeph(commands.Bot):
         elif mode == "dex":
             return self.display_mon(mon, "dex")
 
+    def caught_indicator(self, user: pk.WalkerUser, mon: pk.BareMiniMon | str) -> str:
+        if isinstance(mon, pk.BareMiniMon):
+            mon = mon.species.name
+        return f" {self.emojis['caught']}" if mon in user.dex else ""
+
+    def display_tokens(self, tokens: dict[str, int], joiner: str = " // ", if_empty: str = "none") -> str:
+        return none_list([f"{self.emojis[g + 'Token']} x{j}" for g, j in tokens.items()], joiner, if_empty)
+
     def add_energy_icons(self, txt: str):
         return re.sub(
             r"\{(" + ("|".join(tp.types)) + r")}",

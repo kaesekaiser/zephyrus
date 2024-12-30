@@ -1585,19 +1585,9 @@ class WalkerStroll:
     def generate_encounter(self):
         mon = self.location.encounter(active_charms=self.user.equipped_charms)
         mon.randomize_gender()
-        if random() < self.shiny_odds:
+        if random.random() < self.shiny_odds:
             mon.shiny = True
         return mon
-
-
-def caught_indicator(user: pk.WalkerUser, mon: pk.BareMiniMon | str) -> str:
-    if isinstance(mon, pk.BareMiniMon):
-        mon = mon.species.name
-    return f" {zeph.emojis['caught']}" if mon in user.dex else ""
-
-
-def display_tokens(tokens: dict[str, int], joiner: str = " // ", if_empty: str = "none") -> str:
-    return none_list([f"{zeph.emojis[g + '_token']} x{j}" for g, j in tokens.items()], joiner, if_empty)
 
 
 class EncounterNavigator(Navigator):
@@ -1616,7 +1606,7 @@ class EncounterNavigator(Navigator):
         self.funcs[self.bot.emojis["safari_ball"]] = self.ball
         self.funcs[self.bot.emojis["razz_berry"]] = self.berry
         self.funcs["\U0001f45f"] = self.flee
-        self.funcs[zeph.emojis["no"]] = self.exit
+        self.funcs[self.bot.emojis["no"]] = self.exit
 
     @property
     def catch_chance(self):
@@ -1635,7 +1625,7 @@ class EncounterNavigator(Navigator):
 
     def ball(self):
         self.stroll.balls -= 1
-        if random() < self.catch_chance:
+        if random.random() < self.catch_chance:
             self.last_action = f":tada: Gotcha! {self.mon.name} was caught!"
             self.caught = True
             self.closed_elsewhere = True
@@ -1680,7 +1670,7 @@ class EncounterNavigator(Navigator):
              f"throw a {self.bot.emojis['razz_berry']} **berry** (x{self.stroll.berries}), or \U0001f45f **run**!")
         berries = "" if self.berry_level == 0 else f" ({self.bot.emojis['razz_berry']} x{self.berry_level})"
         return self.emol.con(
-            f"Encounter: {self.mon.name} {caught_indicator(self.stroll.user, self.mon)}",
+            f"Encounter: {self.mon.name} {self.bot.caught_indicator(self.stroll.user, self.mon)}",
             d=f"{self.last_action}\n\n{self.bot.display_mon_types(self.mon, sep=' ')} // "
               f"Catch chance: {self.chance_indicator} {berries}\n\n{action}",
             image=self.mon.home_sprite, footer=f"Encounters remaining: {self.stroll.remaining_encounters}"
@@ -2073,7 +2063,7 @@ class WalkerBoxNavigator(Navigator):
             selected_mons = [pk.BareMiniMon.from_walker_pack(self.user.box[g]) for g in self.transfer_selection]
             selected_types = [t for m in selected_mons for t in m.types]
             tokens = {g: selected_types.count(g) for g in pk.types if g in selected_types}
-            tokens = display_tokens(dict(sorted(list(tokens.items()), key=lambda c: -c[1])))
+            tokens = self.bot.display_tokens(dict(sorted(list(tokens.items()), key=lambda c: -c[1])))
             selected_names = [g.overworld_saf for g in selected_mons if not g.shiny]
             aggregate_mons = {
                 g: selected_names.count(g) for g in sorted(selected_names, key=lambda m: -selected_names.count(m))
@@ -2334,8 +2324,8 @@ class WalkerMarketNavigator(NumSelector):
             return self.emol.con(
                 self.title,
                 d=f"Do you want to buy {name}?\n{desc}\n"
-                  f"**Price:** {display_tokens(self.buying_item['price'])}\n"
-                  f"**You have:** {display_tokens(self.user.has_of(self.buying_item['price']))}",
+                  f"**Price:** {self.bot.display_tokens(self.buying_item['price'])}\n"
+                  f"**You have:** {self.bot.display_tokens(self.user.has_of(self.buying_item['price']))}",
                 footer="Press the return ↩ button to confirm. Press any other button to cancel."
             )
 
@@ -2344,7 +2334,7 @@ class WalkerMarketNavigator(NumSelector):
         add_info = f"You can't afford {a_or_an('**' + self.buying_item['afford'] + '**')}!\n\n" \
             if self.buying_item.get("afford") else f":white_check_mark: Purchased the **{self.last_bought}**." \
             f"{' Equip it using `z!pw charms`!' if self.mode == 'Charms' else ''}\n\n" if self.last_bought else ""
-        you_have = display_tokens(self.user.tokens)
+        you_have = self.bot.display_tokens(self.user.tokens)
         self.last_bought = ""
 
         if self.mode == "Charms":
@@ -2355,7 +2345,8 @@ class WalkerMarketNavigator(NumSelector):
                     desc = "You've bought all the Charms you can buy!"
             else:
                 desc = f"{add_info}You have: {you_have}\n\n" + \
-                       ("\n\n".join(f"**`[{n+1}]` {g['name']}**\n\\- {g['desc']}\nPrice: {display_tokens(g['price'])}"
+                       ("\n\n".join(f"**`[{n+1}]` {g['name']}**\n\\- {g['desc']}\n"
+                                    f"Price: {self.bot.display_tokens(g['price'])}"
                                     for n, g in enumerate(self.page_list)))
             return self.emol.con(
                 f"{self.title}: Charms [{self.page}/{self.pgs}]", d=desc,
@@ -2366,7 +2357,7 @@ class WalkerMarketNavigator(NumSelector):
             return self.emol.con(
                 f"{self.title}: {self.mode} [{self.page}/{self.pgs}]",
                 d=f"{add_info}You have: {you_have}\n\n" +
-                  ("\n\n".join(f"**`[{n + 1}]` {g['name']}**\nPrice: {display_tokens(g['price'])}"
+                  ("\n\n".join(f"**`[{n + 1}]` {g['name']}**\nPrice: {self.bot.display_tokens(g['price'])}"
                                for n, g in enumerate(self.page_list))),
                 footer="Enter the number beside an item in chat to select it."
             )
@@ -2469,7 +2460,7 @@ class PokeWalkerInterpreter(Interpreter):
             self.ctx, loc.name, d=loc.desc, same_line=True,
             fs={
                 f"{g} {self.bot.emojis[pk.rarity_stars[g]]}":
-                "\n".join([self.bot.display_mon(p, "typed_list") + caught_indicator(self.user, p) for p in j])
+                "\n".join([self.bot.display_mon(p, "typed_list") + self.bot.caught_indicator(self.user, p) for p in j])
                 for g, j in mons.items()
             }
         )
@@ -2532,7 +2523,7 @@ class PokeWalkerInterpreter(Interpreter):
         else:
             caught_types = [t for m in caught_mons for t in m.types]
             tokens = {g: round(caught_types.count(g) * token_reward) for g in pk.types if g in caught_types}
-            tokens = display_tokens(dict(sorted(list(tokens.items()), key=lambda c: -c[1])))
+            tokens = self.bot.display_tokens(dict(sorted(list(tokens.items()), key=lambda c: -c[1])))
             caught_names = [g.overworld_saf for g in caught_mons]
             aggregate_mons = {
                 g: caught_names.count(g) for g in sorted(caught_names, key=lambda m: destination.get_rarity(m, True))
