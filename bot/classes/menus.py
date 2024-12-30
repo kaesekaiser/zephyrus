@@ -4,6 +4,7 @@ from classes.bot import Zeph
 from classes.embeds import Emol
 from discord.ext import commands
 from functions import can_int, general_pred, hex_to_color, none_list, should_await, smallcaps
+from functools import partial
 from math import ceil
 
 
