@@ -116,7 +116,7 @@ class DexNavigator(Navigator):
                                and mr.channel == ctx.channel
                     return u == ctx.author and mr.channel == ctx.channel
                 else:
-                    return u == ctx.author and mr.emoji in self.funcs.keys() and mr.message.id == self.message.id
+                    return u == ctx.author and mr.emoji in list(self.funcs) and mr.message.id == self.message.id
 
             mess = (await self.bot.wait_for(
                 'reaction_or_message', timeout=self.timeout, check=pred
@@ -363,7 +363,7 @@ class DexSearchNavigator(Navigator):
                 if isinstance(mr, discord.Message):
                     return u == ctx.author and mr.channel == ctx.channel and self.is_valid_setting(mr.content.lower())
                 else:
-                    return u == ctx.author and mr.emoji in self.funcs.keys() and mr.message.id == self.message.id
+                    return u == ctx.author and mr.emoji in list(self.funcs) and mr.message.id == self.message.id
 
             mess = (await self.bot.wait_for(
                 'reaction_or_message', timeout=self.timeout, check=pred
@@ -1903,7 +1903,7 @@ class WalkerBoxNavigator(Navigator):
                     return u == ctx.author and mr.channel == ctx.channel and \
                         mr.content.lower() in ["type", "types", "shiny", "sort"]
                 else:
-                    return u == ctx.author and mr.emoji in self.funcs.keys() and mr.message.id == self.message.id
+                    return u == ctx.author and mr.emoji in list(self.funcs) and mr.message.id == self.message.id
 
             mess = (await self.bot.wait_for(
                 'reaction_or_message', timeout=self.timeout, check=pred
