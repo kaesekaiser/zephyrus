@@ -14,6 +14,7 @@ from discord.ext import commands
 from functions import (a_or_an, admin_check, best_guess, can_int, caseless_match, fix, general_pred, hex_to_color,
                        levenshtein, none_list, smallcaps, yesno)
 from functools import partial
+from math import ceil
 
 from pokemon import walker as pk
 from pkmn_battle import Battle
@@ -500,7 +501,7 @@ class LearnsetNavigator(Navigator):
 
     def __init__(self, bot: Zeph, mon: pk.Mon, gen: str = "SV", **kwargs):
         super().__init__(
-            bot, kwargs.get("emol", ball_emol()), per=8,
+            bot, kwargs.get("emol", self.bot.ball_emol()), per=8,
             prev=bot.emojis["dex_prev"], nxt=bot.emojis["dex_next"], timeout=120
         )
         self.mon = mon
@@ -1363,7 +1364,7 @@ class PokemonInterpreter(Interpreter):
                 a.clear()
                 d.clear()
 
-            bat1 = BuildATeamNavigator(self.ctx, a.copy(), title="Red Team", emol=emol)
+            bat1 = BuildATeamNavigator(self.bot, self.ctx, a.copy(), title="Red Team", emol=emol)
             try:
                 await bat1.run(self.ctx)
             except asyncio.TimeoutError:
@@ -1373,7 +1374,7 @@ class PokemonInterpreter(Interpreter):
             if bat1.saved:
                 a = bat1.team
 
-            bat2 = BuildATeamNavigator(self.ctx, d.copy(), title="Blue Team", emol=emol)
+            bat2 = BuildATeamNavigator(self.bot, self.ctx, d.copy(), title="Blue Team", emol=emol)
             try:
                 await bat2.run(self.ctx)
             except asyncio.TimeoutError:
