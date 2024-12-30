@@ -1824,7 +1824,7 @@ class WalkerBoxNavigator(Navigator):
 
     def display_evo_reqs(self, mon: pk.BareMiniMon, evo: pk.Evolution):
         return " // ".join(
-            f"{self.bot.emojis[g + '_token'] if g in pk.types else '**'+g+'**'} x{j}"
+            f"{self.bot.emojis[g + 'Token'] if g in pk.types else '**'+g+'**'} x{j}"
             for g, j in pk.evolution_tokens(mon, evo).items()
         )
 
@@ -1838,7 +1838,7 @@ class WalkerBoxNavigator(Navigator):
 
     def display_you_have(self, mon: pk.BareMiniMon):
         return none_list([
-            f"{self.bot.emojis[g + '_token'] if g in pk.types else '**' + g + '**'} x{j}"
+            f"{self.bot.emojis[g + 'Token'] if g in pk.types else '**' + g + '**'} x{j}"
             for g, j in self.you_have(mon).items()
         ], joiner=" // ")
 
@@ -2382,7 +2382,7 @@ class PokeWalkerInterpreter(Interpreter):
                       f"catch; or :athletic_shoe: **run away**. A Razz Berry increases a Pok\u00e9mon's catch rate "
                       f"somewhat, and you can stack up to 3. Each stroll starts with 30 Safari Balls and 20 Razz "
                       f"Berries; use them wisely!\n\n"
-                      f"When a Pok\u00e9mon is caught, you earn one **token** {self.bot.emojis['Grass_token']} for "
+                      f"When a Pok\u00e9mon is caught, you earn one **token** {self.bot.emojis['GrassToken']} for "
                       f"each of its types. These can be spent on many things in the `z!pw market`.\n\n"
                       "`z!pw stroll` opens the locale browser to select the destination for a stroll.\n\n"
                       "`z!pw stroll <locale...>` jumps straight into a stroll at the specified locale.",
@@ -2546,7 +2546,7 @@ class PokeWalkerInterpreter(Interpreter):
         return self.bot.nativities.remove(nativity)
 
     async def _profile(self, *args):
-        tokens = none_list([f"{self.bot.emojis[g + '_token']} x{j}" for g, j in self.user.tokens.items() if j > 0])
+        tokens = none_list([f"{self.bot.emojis[g + 'Token']} x{j}" for g, j in self.user.tokens.items() if j > 0])
         star = self.bot.emojis[
             "diamond_star" if self.user.level == len(pk.walker_exp_levels) else
             "gold_star" if self.user.level >= 7 else "silver_star" if self.user.level >= 4 else "bronze_star"
@@ -2739,7 +2739,7 @@ class PokemonCog(commands.Cog):
                   "While on a `z!pw stroll`, you can encounter and catch up to 30 Pok\u00e9mon. (They can be shiny, by "
                   "the way.) For each Pok\u00e9mon you catch, you'll earn one token for each of its types - e.g. after "
                   f"catching a {self.bot.emojis['Grass']} Grass / {self.bot.emojis['Poison']} Poison Bulbasaur, you'll "
-                  f"earn one {self.bot.emojis['Grass_token']} Grass and one {self.bot.emojis['Poison_token']} Poison "
+                  f"earn one {self.bot.emojis['GrassToken']} Grass and one {self.bot.emojis['PoisonToken']} Poison "
                   "token.\n\nPok\u00e9mon you catch get sent to your `z!pw box`, where you can view them, transfer "
                   "them to the Professor to earn additional tokens, or spend tokens to evolve them. You can also spend "
                   "tokens in the `z!pw market` to buy Charms - equippable items that provide passive effects while "
