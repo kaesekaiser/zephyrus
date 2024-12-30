@@ -3,7 +3,7 @@ import datetime
 import discord
 import re
 import time
-from classes.bot import testing_emote_servers, Zeph
+from classes.bot import Zeph
 from classes.embeds import author_from_user, blue, ClientEmol, error, phone, success
 from classes.menus import Navigator, page_list
 from discord.ext import commands
@@ -103,8 +103,7 @@ class MiscellaneousCog(commands.Cog):
 
         return await ClientEmol(":robot:", hex_to_color("6fc96f"), ctx).say(
             author=author_from_user(self.bot.user, f"\u2223 {self.bot.user.name}"),
-            d=f"**Connected to:** {len([g for g in self.bot.guilds if g.id not in testing_emote_servers])} servers / "
-            f"{len(set(self.bot.users))} users\n"
+            d=f"**Connected to:** {len(self.bot.guilds)} servers / {len(set(self.bot.users))} users\n"
             f"**Commands:** {len([g for g, j in self.bot.all_commands.items() if g == j.name and not j.hidden])}\n"
             f"**Runtime:** {runtime_format(datetime.datetime.now() - getattr(self.bot, 'readyTime'))}\n"
             f"**Build:** {self.bot.version} / Python {py_version}\n"
@@ -355,6 +354,16 @@ class MiscellaneousCog(commands.Cog):
         return await success.send(ctx, "Presence updated.")
 
     @commands.command(
+        hidden=True, name="reloademoji", usage="z!reloademoji",
+        help="Reloads application emoji."
+    )
+    async def reload_emoji_command(self, ctx: commands.Context):
+        admin_check(ctx)
+
+        await self.bot.load_emojis()
+        await success.send(ctx, "Emoji reloaded.")
+
+    @commands.command(
         name="close", hidden=True, usage="z!close",
         help="Saves and stops the bot."
     )
@@ -396,6 +405,7 @@ async def on_ready():
 
     setattr(zeph, "readyTime", datetime.datetime.now())
     print(f"ready at {getattr(zeph, 'readyTime')}")
+    await zeph.loop.create_task(zeph.load_emojis())
     await zeph.loop.create_task(zeph.initialize_planes())
     # zeph.loop.create_task(zeph.load_romanization())
     await zeph.loop.create_task(zeph.get_channel(activity_channel).send(f":up: **Ready** at `{datetime.datetime.now()}`"))

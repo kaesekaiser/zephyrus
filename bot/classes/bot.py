@@ -14,12 +14,6 @@ from minigames import planes as pn
 from pyquery import PyQuery
 
 
-testing_emote_servers = [  # servers that either are my testing server or that I use only for emote storage
-    405184040161771522, 516004299785109516, 516336805151506449, 516017413729419265, 516044646942638090,
-    516015721998843904, 516079973447237648, 528460450069872640, 800832873854271528, 826341777837260811
-]
-
-
 ball_colors = {
     "beast": "8FD5F6", "cherish": "E84535", "dive": "81C7EF", "dream": "F4B4D0", "dusk": "30A241", "fast": "F2C63F",
     "friend": "80BA40", "great": "3B82C4", "heal": "E95098", "heavy": "9B9EA4", "level": "F5D617", "love": "E489B8",
@@ -63,6 +57,7 @@ class Zeph(commands.Bot):
         self.tags = {}
         self.walker_users = {}
         self.usage_stats = {}
+        self.application_emojis = {}
 
     @staticmethod
     def get_version():
@@ -81,9 +76,9 @@ class Zeph(commands.Bot):
         return zeph_version
 
     @property
-    def emojis(self) -> dict:
-        """Emotes that come from my own personal servers, that I use in commands."""
-        return {g.name: g for g in self._connection.emojis if g.guild.id in testing_emote_servers}
+    def emojis(self) -> dict[str, discord.Emoji]:
+        """Emotes used in commands."""
+        return self.application_emojis
 
     @property
     def all_emojis(self) -> dict:
@@ -124,6 +119,9 @@ class Zeph(commands.Bot):
                 if i:
                     us = pk.WalkerUser.from_str(i)
                     self.walker_users[us.id] = us
+
+    async def load_emojis(self):
+        self.application_emojis = {g.name: g for g in await self.fetch_application_emojis()}
 
     async def initialize_planes(self):
         print("Initializing planes...")

@@ -167,6 +167,10 @@ class Navigator:
             except asyncio.TimeoutError:
                 return await self.after_timeout()
 
+            if isinstance(emoji, discord.PartialEmoji) and emoji in self.legal:
+                # discord.Emoji has a different hash function so a PartialEmoji can't be found in the dict self.funcs
+                emoji = [g for g in self.legal if g == emoji][0]
+
             if self.remove_immediately:
                 try:
                     await self.message.remove_reaction(emoji, ctx.author)
