@@ -2,6 +2,7 @@ import asyncio
 import datetime
 import discord
 import os
+import random
 import re
 import time
 from classes.bot import Zeph
@@ -808,7 +809,7 @@ class PlanesInterpreter(Interpreter):
             return await plane.send(self.ctx, "Game data not wiped.")
         else:
             mess = await plane.send(self.ctx, "Alright, one moment...")
-            await asyncio.sleep(2 + random() * 2)
+            await asyncio.sleep(2 + random.random() * 2)
             del self.bot.plane_users[self.au.id]
             return await success.edit(mess, "Done.", d="Call `z!planes new` to start anew.")
 
@@ -956,15 +957,15 @@ class PlanesInterpreter(Interpreter):
         )
         while True:
             try:
-                cho = await zeph.wait_for("message", timeout=300, check=pred)
+                cho = await self.bot.wait_for("message", timeout=300, check=pred)
             except asyncio.TimeoutError:
                 return await plane.send(self.ctx, f"{self.au.display_name}'s request timed out.")
             else:
                 if cho.content.lower() in pn.cities:
                     cho = cho.content.lower()
                     cit = pn.cities[cho]
-                    nam = choice(pn.starter_names)
-                    zeph.plane_users[self.au.id] = pn.User(
+                    nam = random.choice(pn.starter_names)
+                    self.bot.plane_users[self.au.id] = pn.User(
                         self.au.id, {cit.country: 1}, [cit.name],
                         {nam.lower(): pn.Plane(pn.craft["tyne-647"], nam, pn.Path(0, cit), [], [0, 0])}, 1000000
                     )
@@ -976,7 +977,7 @@ class PlanesInterpreter(Interpreter):
                 await plane.send(self.ctx, "That's not a recognized city.")
 
     async def _search(self, *args):
-        return await AirportSearchNavigator(self, *[g.lower() for g in args]).run(self.ctx)
+        return await AirportSearchNavigator(self.bot, self, *[g.lower() for g in args]).run(self.ctx)
 
 #     async def _ownmap(self, *args):
 #         message = await Emol(zeph.emojis["loading"], hexcol("66757F")).send(self.ctx, "Generating...")
@@ -1386,7 +1387,7 @@ class AirportSearchNavigator(Navigator):
         elif self.criteria["sort"] == "name":
             self.sort = lambda x: x.name
         elif self.criteria["sort"] == "random":
-            self.sort = lambda x: random()
+            self.sort = lambda x: random.random()
         else:
             self.sort = lambda x: -x.passengers
 

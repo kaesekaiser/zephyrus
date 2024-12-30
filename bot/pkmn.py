@@ -1639,7 +1639,7 @@ class EncounterNavigator(Navigator):
             if self.last_action not in messages:
                 self.last_action = messages[0]
             else:
-                self.last_action = choice([g for g in messages if self.last_action != g])
+                self.last_action = random.choice([g for g in messages if self.last_action != g])
         if self.stroll.balls == 0:
             self.closed_elsewhere = True
 

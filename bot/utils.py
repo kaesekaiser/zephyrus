@@ -858,7 +858,7 @@ class UtilitiesCog(commands.Cog):
     async def tekat(self, ctx: commands.Context, *, text: str):
         picks = re.split(r"\s+sing\s+", text)
         string = random.choice(["De tekat {}!"])  # will add more later
-        return await choose.send(ctx, string.format(f"**{choice(picks)}**"))
+        return await choose.send(ctx, string.format(f"**{random.choice(picks)}**"))
 
     @commands.command(
         name="8ball", usage="z!8ball <question...>",

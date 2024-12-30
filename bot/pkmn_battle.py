@@ -604,9 +604,9 @@ class Battle:
             if a.ability == "Skill Link":
                 strikes = 5
             elif a.held_item == "Loaded Dice":
-                strikes = choice([4, 5])
+                strikes = random.choice([4, 5])
             else:
-                strikes = choice([2, 2, 3, 3, 4, 5])
+                strikes = random.choice([2, 2, 3, 3, 4, 5])
         elif m.triple_kick:
             if a.ability == "Skill Link" or a.held_item == "Loaded Dice":
                 strikes = 3
@@ -760,7 +760,7 @@ class Battle:
             else:
                 stab = 1
 
-        dam = floor(pokeround(floor(dam * randrange(85, 101) / 100) * stab) * d.eff(m.type))
+        dam = floor(pokeround(floor(dam * random.randrange(85, 101) / 100) * stab) * d.eff(m.type))
         mod = 1
 
         if a.status_condition == pk.burned and a.ability != "Guts" and m.category == pk.physical and not m.facade:
@@ -1066,7 +1066,7 @@ class Battle:
             if a.held_item == "Grip Claw":
                 d.bind_timer = 7
             else:
-                d.bind_timer = choice([4, 5])
+                d.bind_timer = random.choice([4, 5])
             self.channel.append(f"{d.name} {special_descriptions.get(m.name, 'became bound by ' + m.name + '!')}")
         if m.add_type:
             d.type3 = m.add_type
@@ -1081,7 +1081,7 @@ class Battle:
         for team in self.teams:
             for mon in team.mons:
                 if mon["gender"] == "random":
-                    mon["gender"] = choice(["male", "female"])
+                    mon["gender"] = random.choice(["male", "female"])
 
         await self.call_out_lead(0)
         await self.call_out_lead(1)
@@ -1094,18 +1094,19 @@ class BattleStatusNavigator(Navigator):
     def __init__(self, bot: Zeph, battle: Battle):
         super().__init__(bot, battle.emol, [battle.field, *battle.active_mons], 1, timeout=180)
         self.battle = battle
-        self.funcs[zeph.emojis["no"]] = self.close
+        self.funcs[self.bot.emojis["no"]] = self.close
 
     def con(self):
         sel = self.table[self.page - 1]
         if isinstance(sel, pk.Field):
             return self.emol.con(
                 "Field Status",
-                d=f"{sel.status_screen}\n\n{display_team(self.battle.teams[0])}\n\n{display_team(self.battle.teams[1])}"
+                d=f"{sel.status_screen}\n\n{self.bot.display_team(self.battle.teams[0])}"
+                  f"\n\n{self.bot.display_team(self.battle.teams[1])}"
             )
         elif isinstance(sel, pk.Mon):
             return self.emol.con(
                 sel.name,
-                d=f"{display_mon(sel, 'battle', stats_display=self.battle.stats_display(sel))}\n\n"
-                  f"{display_team(self.battle.teams[sel.team_id])}"
+                d=f"{self.bot.display_mon(sel, 'battle', stats_display=self.battle.stats_display(sel))}\n\n"
+                  f"{self.bot.display_team(self.battle.teams[sel.team_id])}"
             )

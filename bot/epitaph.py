@@ -1,5 +1,6 @@
 import asyncio
 import discord
+import random
 from classes.bot import Zeph
 from classes.embeds import ClientEmol
 from discord.ext import commands
@@ -65,12 +66,12 @@ class EpitaphGame(ep.Civ):
             await self.eventech(ep.techs[cho.content.lower()], edit=message)
         else:
             for i in self.available_events:
-                if random() < self.eventChances[i]:
+                if random.random() < self.eventChances[i]:
                     await self.eventech(ep.events[i])
                     break
             else:
-                if random() < self.techChance and len(self.available_techs) > 0:
-                    await self.eventech(ep.techs[choice(self.available_techs).lower()])
+                if random.random() < self.techChance and len(self.available_techs) > 0:
+                    await self.eventech(ep.techs[random.choice(self.available_techs).lower()])
         if self.victorious:
             return await self.blue.say(self.vocabize("In stardate {stardate}, the {civ} joined us."),
                                        footer=f"{self.birth} - {self.stardate}")
