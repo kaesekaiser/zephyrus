@@ -1458,28 +1458,6 @@ class UtilitiesCog(commands.Cog):
         return await CounterNavigator(self.bot, start_value, increment).run(ctx)
 
     @commands.command(
-        name="yesno", aliases=["poll", "yn"], usage="z!yesno <poll question...>",
-        description="Sets up a simple yes/no poll.",
-        help="Sets up a very simple yes-or-no poll for other server members to answer. You provide a question, and "
-             "Zeph creates a fancy-looking box, with fancy-looking reactions. Just a slightly faster and slightly "
-             "prettier way to collect opinions."
-    )
-    async def yesno_command(self, ctx: commands.Context, *, question: str):
-        if len(question) > 1800:
-            raise commands.CommandError("Keep questions to under 1800 characters.")
-
-        if isinstance(ctx.channel, discord.DMChannel):
-            raise commands.CommandError("This command can't be run in DMs.")
-
-        emol = Emol(self.bot.emojis["yesno"], hex_to_color("7289DA"))
-
-        message = await emol.send(ctx, "Yea or Nay?", d=question)
-        await message.add_reaction(self.bot.emojis["yea"])
-        await message.add_reaction(self.bot.emojis["nay"])
-
-        return
-
-    @commands.command(
         name="esearch", aliases=["es"], usage="z!esearch <emote name>",
         description="Searches for an emote.",
         help="Searches for an emote by name. Returns a scrollable list of similarly-named emotes Zeph has access to, "
