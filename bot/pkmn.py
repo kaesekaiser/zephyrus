@@ -1611,7 +1611,8 @@ class EncounterNavigator(Navigator):
 
     @property
     def catch_chance(self):
-        return ((self.mon.species.catch_rate + 50) / 700) + self.berry_level * 0.12
+        return ((self.mon.species.catch_rate + 50) / 700) + self.berry_level * 0.12 + \
+            sum(g.effects.get("catch", 0) for g in self.stroll.user.equipped_charms)
 
     @property
     def chance_indicator(self):

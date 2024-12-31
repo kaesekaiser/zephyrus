@@ -139,7 +139,7 @@ def walker_level_desc(n: int) -> str:
         )
     if n >= 8:
         ret.append(
-            f"\\- {'**' if n == 8 else ''}Oaken Charm: Increases the spawn rates of starter Pok\u00e9mon by 5x."
+            f"\\- {'**' if n == 8 else ''}Oaken Charm: Increases the spawn rates of starter Pok\u00e9mon by 10x."
             f"{'**' if n == 8 else ''}"
         )
     if n >= 9:
