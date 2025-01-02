@@ -5134,6 +5134,70 @@
         "number": 24,
         "variant": "A1-097"
     },
+    "PROMO-025": {
+        "expansion": "PROMO",
+        "number": 25,
+        "variant": "A1-047"
+    },
+    "PROMO-026": {
+        "expansion": "PROMO",
+        "number": 26,
+        "variant": "A1-094"
+    },
+    "PROMO-027": {
+        "expansion": "PROMO",
+        "number": 27,
+        "name": "Snivy",
+        "type": "Grass",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Tackle",
+                "energy_cost": [
+                    "Grass"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "PROMO-028": {
+        "expansion": "PROMO",
+        "number": 28,
+        "variant": "A1a-014"
+    },
+    "PROMO-029": {
+        "expansion": "PROMO",
+        "number": 29,
+        "variant": "A1-055"
+    },
+    "PROMO-030": {
+        "expansion": "PROMO",
+        "number": 30,
+        "name": "Eevee",
+        "type": "Colorless",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Growl",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 0,
+                "description": "During your opponent's next turn, attacks used by the Defending Pok\u00e9mon do -20 damage."
+            }
+        ]
+    },
+    "PROMO-031": {
+        "expansion": "PROMO",
+        "number": 31,
+        "variant": "A1-213"
+    },
     "A1a-001": {
         "expansion": "A1a",
         "number": 1,
