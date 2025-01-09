@@ -5198,6 +5198,16 @@
         "number": 31,
         "variant": "A1-213"
     },
+    "PROMO-032": {
+        "expansion": "PROMO",
+        "number": 32,
+        "variant": "A1-033"
+    },
+    "PROMO-033": {
+        "expansion": "PROMO",
+        "number": 33,
+        "variant": "A1-053"
+    },
     "A1a-001": {
         "expansion": "A1a",
         "number": 1,
