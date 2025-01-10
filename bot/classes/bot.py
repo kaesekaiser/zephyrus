@@ -6,6 +6,7 @@ import re
 import requests
 import time
 from classes.embeds import Emol
+from datetime import datetime
 from discord.ext import commands
 from functions import general_pred, grammatical_join, hex_to_color, none_list
 from PIL import Image
@@ -58,6 +59,7 @@ class Zeph(commands.Bot):
         self.walker_users = {}
         self.usage_stats = {}
         self.application_emojis = {}
+        self.last_saved = datetime.utcnow()
 
     @staticmethod
     def get_version():
@@ -108,6 +110,8 @@ class Zeph(commands.Bot):
                 json.dump({g: j.minimal_json for g, j in self.server_settings.items()}, f, indent=4)
         with open("storage/usage.json", "w") as f:
             json.dump(self.usage_stats, f, indent=4)
+
+        self.last_saved = datetime.utcnow()
 
     def load_usage_stats(self):
         with open("storage/usage.json", "r") as f:
