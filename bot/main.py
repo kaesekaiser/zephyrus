@@ -559,7 +559,7 @@ async def one_minute_cycle():  # unified process for things done once per minute
             if rem.time < now:
                 try:
                     await zeph.get_user(rem.author).send(f"**Reminder:** {rem.text}")
-                except discord.DiscordException:
+                except (discord.DiscordException, AttributeError):
                     print(f"A reminder failed to send: {str(rem)}")
 
                 zeph.reminders.remove(rem)
