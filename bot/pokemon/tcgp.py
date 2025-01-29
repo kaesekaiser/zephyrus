@@ -22,7 +22,8 @@ type_colors = {
 expansion_names = {
     "A1": "Genetic Apex",
     "A1a": "Mythical Island",
-    "PROMO": "Promo-A"
+    "PROMO": "Promo-A",
+    "A2": "Space-Time Smackdown"
 }
 
 
