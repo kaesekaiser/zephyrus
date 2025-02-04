@@ -5208,6 +5208,81 @@
         "number": 33,
         "variant": "A1-053"
     },
+    "PROMO-034": {
+        "expansion": "PROMO",
+        "number": 34,
+        "variant": "A2-035"
+    },
+    "PROMO-035": {
+        "expansion": "PROMO",
+        "number": 35,
+        "variant": "A2-010"
+    },
+    "PROMO-036": {
+        "expansion": "PROMO",
+        "number": 36,
+        "variant": "A2-057"
+    },
+    "PROMO-037": {
+        "expansion": "PROMO",
+        "number": 37,
+        "name": "Cresselia ex",
+        "type": "Psychic",
+        "stage": 0,
+        "hp": 140,
+        "weakness": "Darkness",
+        "retreat_cost": 2,
+        "ability": {
+            "name": "Lunar Plumage",
+            "description": "Whenever you attach a {Psychic} Energy from your Energy Zone to this Pok\u00e9mon, heal 20 damage from this Pok\u00e9mon."
+        },
+        "moves": [
+            {
+                "name": "Psychic Flash",
+                "energy_cost": [
+                    "Psychic",
+                    "Psychic",
+                    "Colorless"
+                ],
+                "power": 80
+            }
+        ]
+    },
+    "PROMO-038": {
+        "expansion": "PROMO",
+        "number": 38,
+        "name": "Misdreavus",
+        "type": "Psychic",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Darkness",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Confuse Ray",
+                "energy_cost": [
+                    "Psychic"
+                ],
+                "power": 0,
+                "description": "Your opponent's Active Pok\u00e9mon is now Confused."
+            }
+        ]
+    },
+    "PROMO-039": {
+        "expansion": "PROMO",
+        "number": 39,
+        "variant": "A2-111"
+    },
+    "PROMO-040": {
+        "expansion": "PROMO",
+        "number": 40,
+        "variant": "A2-027"
+    },
+    "PROMO-041": {
+        "expansion": "PROMO",
+        "number": 41,
+        "variant": "A2-063"
+    },
     "A1a-001": {
         "expansion": "A1a",
         "number": 1,
