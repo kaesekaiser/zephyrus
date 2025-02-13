@@ -42,6 +42,10 @@ class Card:
     def image_url(self):
         return card_image_url.format(expansion=self.expansion, number=str(self.number).rjust(3, '0'))
 
+    @property
+    def expansion_name(self):
+        return expansion_names[self.expansion]
+
 
 class TrainerCard(Card):
     def __init__(self, expansion: str, number: int, name: str, category: str, description: str, **kwargs):
@@ -95,12 +99,13 @@ def card_search(txt: str, include_variants: bool = False) -> list[Card]:
     for id_number, card in card_dex.items():
         if fix(id_number) == s:
             return [card]
-        if include_variants or not card.variant_of:
-            overlap = set(fix(card.name).split("-")).intersection(set(split))
-            if overlap:
-                overlap_lengths[len(overlap)] = overlap_lengths.get(len(overlap), []) + [card]
-            elif fix(card.expansion) in split:
-                overlap_lengths[0] = overlap_lengths.get(0, []) + [card]
+        name_overlap = set(fix(card.name).split("-")).intersection(set(split))
+        expansion_overlap = set(fix(card.expansion_name).split("-")).intersection(set(split))
+        total_overlap = sum(({g: 0.1 for g in expansion_overlap} | {g: 1 for g in name_overlap}).values())
+        if total_overlap:
+            overlap_lengths[total_overlap] = overlap_lengths.get(total_overlap, []) + [card]
+        elif fix(card.expansion) in split:
+            overlap_lengths[0] = overlap_lengths.get(0, []) + [card]
     if not overlap_lengths:
         return []
     possible_matches = overlap_lengths[max(overlap_lengths.keys())]
@@ -109,6 +114,8 @@ def card_search(txt: str, include_variants: bool = False) -> list[Card]:
         possible_matches = [g for g in possible_matches if g.expansion == expansion_match[0]]
     elif max(overlap_lengths.keys()) == 0:
         return []
+    if not (include_variants or all(g.variant_of for g in possible_matches)):
+        return [g for g in possible_matches if not g.variant_of]
     return possible_matches
 
 
