@@ -7,12 +7,11 @@ import re
 import requests
 from classes.bot import Zeph
 from classes.embeds import author_from_user, blue, choose, ClientEmol, construct_embed, Emol, lost, success, wiki
-from classes.interpreter import Interpreter
 from classes.menus import Navigator, page_list
 from discord.ext import commands
-from functions import add_commas, can_int, hex_to_color, lower_alphabet, smallcaps
+from functions import add_commas, can_int, hex_to_color, lower_alphabet, plural, smallcaps
 from functools import partial
-from math import ceil, floor, isclose, log, log10
+from math import atan2, ceil, floor, isclose, log, log10, pi, sqrt
 from minigames.imaging import global_fill
 from PIL import Image
 from sympy import factorint
