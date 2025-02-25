@@ -46,12 +46,18 @@ class Card:
     def expansion_name(self):
         return expansion_names[self.expansion]
 
+    def all_text(self):
+        return self.name
+
 
 class TrainerCard(Card):
     def __init__(self, expansion: str, number: int, name: str, category: str, description: str, **kwargs):
         super().__init__(expansion, number, name, **kwargs)
         self.category = category
         self.description = description
+
+    def all_text(self):
+        return " ".join([self.name, self.description])
 
 
 class Ability:
@@ -81,6 +87,12 @@ class PokemonCard(Card):
         self.retreat_cost = kwargs.get("retreat_cost", 0)
         self.ex = kwargs.get("ex", False)
 
+    def all_text(self):
+        return " ".join(
+            [self.name] + (["Ability:", self.ability.name, self.ability.description] if self.ability else []) +
+            [j for g in self.moves for j in ([g.name, g.description] if g.description else [g.name])]
+        )
+
 
 def is_sublist(sublist: list, containing_list: list):
     for n, g in enumerate(containing_list):
@@ -90,7 +102,7 @@ def is_sublist(sublist: list, containing_list: list):
     return False
 
 
-def card_search(txt: str, include_variants: bool = False) -> list[Card]:
+def card_search(txt: str, include_variants: bool = False, text_match: bool = False) -> list[Card]:
     s = fix(txt)
     overlap_lengths = {}
     for expansion, name in expansion_names.items():
@@ -99,14 +111,19 @@ def card_search(txt: str, include_variants: bool = False) -> list[Card]:
     for id_number, card in card_dex.items():
         if fix(id_number) == s:
             return [card]
-        name_overlap = set(fix(card.name).split("-")).intersection(set(split))
-        expansion_overlap = set(fix(card.expansion_name).split("-")).intersection(set(split))
-        total_overlap = sum(({g: 0.1 for g in expansion_overlap} | {g: 1 for g in name_overlap}).values())
+        if text_match:
+            total_overlap = len(set(fix(card.all_text()).split("-")).intersection(set(split)))
+        else:
+            name_overlap = set(fix(card.name).split("-")).intersection(set(split))
+            expansion_overlap = set(fix(card.expansion_name).split("-")).intersection(set(split))
+            total_overlap = sum(({g: 0.1 for g in expansion_overlap} | {g: 1 for g in name_overlap}).values())
         if total_overlap:
             overlap_lengths[total_overlap] = overlap_lengths.get(total_overlap, []) + [card]
         elif fix(card.expansion) in split:
             overlap_lengths[0] = overlap_lengths.get(0, []) + [card]
     if not overlap_lengths:
+        return []
+    if text_match and max(overlap_lengths.keys()) != len(split):
         return []
     possible_matches = overlap_lengths[max(overlap_lengths.keys())]
     expansion_match = [k for k, v in expansion_names.items() if fix(k) in split]

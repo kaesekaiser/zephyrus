@@ -7,11 +7,12 @@ import pokemon.tcgp as tp
 
 
 class CardSearchNavigator(Navigator):
-    def __init__(self, bot: Zeph, query: str, cards: list[tp.Card]):
+    def __init__(self, bot: Zeph, query: str, cards: list[tp.Card], text_match: bool = False):
         super().__init__(bot, bot.ball_emol("poke"), cards, per=1, prev="🔼", nxt="🔽")
         self.query = query
         self.mode = "search"
         self.funcs[self.bot.emojis["search"]] = self.switch_mode
+        self.text_match = text_match
 
     def switch_mode(self):
         self.mode = "view" if self.mode == "search" else "search"
@@ -27,7 +28,7 @@ class CardSearchNavigator(Navigator):
     def con(self):
         if self.mode == "search":
             return self.emol.con(
-                f"Cards matching `{self.query}`",
+                f"Cards {'mentioning' if self.text_match else 'matching'} `{self.query}`",
                 d=f"{len(self.table)} matches found. Press {self.bot.emojis['search']} to view a card in detail.\n\n"
                   f"{scroll_list(self.name_table, self.page - 1, wrap=False)}",
                 thumb=self.selected_card.image_url
@@ -53,11 +54,17 @@ class TCGPocketCog(commands.Cog):
         if text.lower().split()[0] in ("v", "var", "variant", "variants") and len(text.split()) > 1:
             query = " ".join(text.split()[1:])
             include_variants = True
+            text_match = False
+        elif text.lower().split()[0] in ("s", "search") and len(text.split()) > 1:
+            query = " ".join(text.split()[1:])
+            include_variants = False
+            text_match = True
         else:
             query = text
             include_variants = False
+            text_match = False
 
-        matching_cards = tp.card_search(query, include_variants=include_variants)
+        matching_cards = tp.card_search(query, include_variants=include_variants, text_match=text_match)
         if not matching_cards:
             raise commands.CommandError("No cards found matching this search term.")
         elif len(matching_cards) == 1:
