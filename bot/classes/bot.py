@@ -430,7 +430,8 @@ class Zeph(commands.Bot):
                     (f" -- {mv.power}" if mv.power else ""):
                     self.add_energy_icons(mv.description) if mv.description else " " for mv in card.moves
                 },
-                footer=f"{card.id} ({tp.expansion_names[card.expansion]})",
+                footer=f"{card.id} ({tp.expansion_names[card.expansion]}"
+                       f"{(': '+card.pack if card.pack in tp.expansion_packs[card.expansion] else '')}) {card.rarity}",
                 thumb=card.image_url
             )
         elif isinstance(card, tp.TrainerCard):

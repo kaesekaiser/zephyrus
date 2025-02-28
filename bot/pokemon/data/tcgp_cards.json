@@ -2,6 +2,8 @@
     "A1-001": {
         "expansion": "A1",
         "number": 1,
+        "rarity": "\u2662",
+        "pack": "Mewtwo",
         "name": "Bulbasaur",
         "type": "Grass",
         "stage": 0,
@@ -22,6 +24,8 @@
     "A1-002": {
         "expansion": "A1",
         "number": 2,
+        "rarity": "\u2662\u2662",
+        "pack": "Mewtwo",
         "name": "Ivysaur",
         "type": "Grass",
         "stage": 1,
@@ -44,6 +48,8 @@
     "A1-003": {
         "expansion": "A1",
         "number": 3,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Mewtwo",
         "name": "Venusaur",
         "type": "Grass",
         "stage": 2,
@@ -60,13 +66,16 @@
                     "Colorless",
                     "Colorless"
                 ],
-                "power": 80
+                "power": 80,
+                "description": "Heal 30 damage from this Pok\u00e9mon."
             }
         ]
     },
     "A1-004": {
         "expansion": "A1",
         "number": 4,
+        "rarity": "\u2662\u2662\u2662\u2662",
+        "pack": "Mewtwo",
         "name": "Venusaur ex",
         "type": "Grass",
         "stage": 2,
@@ -100,6 +109,8 @@
     "A1-005": {
         "expansion": "A1",
         "number": 5,
+        "rarity": "\u2662",
+        "pack": "Pikachu",
         "name": "Caterpie",
         "type": "Grass",
         "stage": 0,
@@ -120,6 +131,8 @@
     "A1-006": {
         "expansion": "A1",
         "number": 6,
+        "rarity": "\u2662",
+        "pack": "Pikachu",
         "name": "Metapod",
         "type": "Grass",
         "stage": 1,
@@ -141,6 +154,8 @@
     "A1-007": {
         "expansion": "A1",
         "number": 7,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Pikachu",
         "name": "Butterfree",
         "type": "Grass",
         "stage": 2,
@@ -167,6 +182,8 @@
     "A1-008": {
         "expansion": "A1",
         "number": 8,
+        "rarity": "\u2662",
+        "pack": "Mewtwo",
         "name": "Weedle",
         "type": "Grass",
         "stage": 0,
@@ -186,6 +203,8 @@
     "A1-009": {
         "expansion": "A1",
         "number": 9,
+        "rarity": "\u2662",
+        "pack": "Mewtwo",
         "name": "Kakuna",
         "type": "Grass",
         "stage": 1,
@@ -206,6 +225,8 @@
     "A1-010": {
         "expansion": "A1",
         "number": 10,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Mewtwo",
         "name": "Beedrill",
         "type": "Grass",
         "stage": 2,
@@ -226,6 +247,8 @@
     "A1-011": {
         "expansion": "A1",
         "number": 11,
+        "rarity": "\u2662",
+        "pack": "Charizard",
         "name": "Oddish",
         "type": "Grass",
         "stage": 0,
@@ -245,6 +268,8 @@
     "A1-012": {
         "expansion": "A1",
         "number": 12,
+        "rarity": "\u2662\u2662",
+        "pack": "Charizard",
         "name": "Gloom",
         "type": "Grass",
         "stage": 1,
@@ -266,6 +291,8 @@
     "A1-013": {
         "expansion": "A1",
         "number": 13,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Charizard",
         "name": "Vileplume",
         "type": "Grass",
         "stage": 2,
@@ -289,6 +316,8 @@
     "A1-014": {
         "expansion": "A1",
         "number": 14,
+        "rarity": "\u2662",
+        "pack": "Pikachu",
         "name": "Paras",
         "type": "Grass",
         "stage": 0,
@@ -309,6 +338,8 @@
     "A1-015": {
         "expansion": "A1",
         "number": 15,
+        "rarity": "\u2662\u2662",
+        "pack": "Pikachu",
         "name": "Parasect",
         "type": "Grass",
         "stage": 1,
@@ -331,6 +362,8 @@
     "A1-016": {
         "expansion": "A1",
         "number": 16,
+        "rarity": "\u2662",
+        "pack": "Mewtwo",
         "name": "Venonat",
         "type": "Grass",
         "stage": 0,
@@ -350,6 +383,8 @@
     "A1-017": {
         "expansion": "A1",
         "number": 17,
+        "rarity": "\u2662\u2662",
+        "pack": "Mewtwo",
         "name": "Venomoth",
         "type": "Grass",
         "stage": 1,
@@ -364,13 +399,15 @@
                     "Grass"
                 ],
                 "power": 30,
-                "description": "Your opponent's active Pok\u00e9mon is now Poisoned."
+                "description": "Your opponent's Active Pok\u00e9mon is now Poisoned."
             }
         ]
     },
     "A1-018": {
         "expansion": "A1",
         "number": 18,
+        "rarity": "\u2662",
+        "pack": "Charizard",
         "name": "Bellsprout",
         "type": "Grass",
         "stage": 0,
@@ -390,6 +427,8 @@
     "A1-019": {
         "expansion": "A1",
         "number": 19,
+        "rarity": "\u2662\u2662",
+        "pack": "Charizard",
         "name": "Weepinbell",
         "type": "Grass",
         "stage": 1,
@@ -411,6 +450,8 @@
     "A1-020": {
         "expansion": "A1",
         "number": 20,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Charizard",
         "name": "Victreebel",
         "type": "Grass",
         "stage": 2,
@@ -436,6 +477,8 @@
     "A1-021": {
         "expansion": "A1",
         "number": 21,
+        "rarity": "\u2662",
+        "pack": "Charizard",
         "name": "Exeggcute",
         "type": "Grass",
         "stage": 0,
@@ -455,6 +498,8 @@
     "A1-022": {
         "expansion": "A1",
         "number": 22,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Charizard",
         "name": "Exeggutor",
         "type": "Grass",
         "stage": 1,
@@ -476,6 +521,8 @@
     "A1-023": {
         "expansion": "A1",
         "number": 23,
+        "rarity": "\u2662\u2662\u2662\u2662",
+        "pack": "Charizard",
         "name": "Exeggutor ex",
         "type": "Grass",
         "stage": 1,
@@ -497,6 +544,8 @@
     "A1-024": {
         "expansion": "A1",
         "number": 24,
+        "rarity": "\u2662",
+        "pack": "Charizard",
         "name": "Tangela",
         "type": "Grass",
         "stage": 0,
@@ -518,6 +567,8 @@
     "A1-025": {
         "expansion": "A1",
         "number": 25,
+        "rarity": "\u2662",
+        "pack": "Mewtwo",
         "name": "Scyther",
         "type": "Grass",
         "stage": 0,
@@ -537,6 +588,7 @@
     "A1-026": {
         "expansion": "A1",
         "number": 26,
+        "rarity": "\u2662\u2662",
         "name": "Pinsir",
         "type": "Grass",
         "stage": 0,
@@ -558,6 +610,7 @@
     "A1-027": {
         "expansion": "A1",
         "number": 27,
+        "rarity": "\u2662",
         "name": "Cottonee",
         "type": "Grass",
         "stage": 0,
@@ -577,6 +630,7 @@
     "A1-028": {
         "expansion": "A1",
         "number": 28,
+        "rarity": "\u2662\u2662",
         "name": "Whimsicott",
         "type": "Grass",
         "stage": 1,
@@ -597,6 +651,7 @@
     "A1-029": {
         "expansion": "A1",
         "number": 29,
+        "rarity": "\u2662",
         "name": "Petilil",
         "type": "Grass",
         "stage": 0,
@@ -617,6 +672,7 @@
     "A1-030": {
         "expansion": "A1",
         "number": 30,
+        "rarity": "\u2662\u2662",
         "name": "Lilligant",
         "type": "Grass",
         "stage": 1,
@@ -639,6 +695,8 @@
     "A1-031": {
         "expansion": "A1",
         "number": 31,
+        "rarity": "\u2662",
+        "pack": "Charizard",
         "name": "Skiddo",
         "type": "Grass",
         "stage": 0,
@@ -659,6 +717,8 @@
     "A1-032": {
         "expansion": "A1",
         "number": 32,
+        "rarity": "\u2662",
+        "pack": "Charizard",
         "name": "Gogoat",
         "type": "Grass",
         "stage": 1,
@@ -681,6 +741,8 @@
     "A1-033": {
         "expansion": "A1",
         "number": 33,
+        "rarity": "\u2662",
+        "pack": "Charizard",
         "name": "Charmander",
         "type": "Fire",
         "stage": 0,
@@ -701,6 +763,8 @@
     "A1-034": {
         "expansion": "A1",
         "number": 34,
+        "rarity": "\u2662\u2662",
+        "pack": "Charizard",
         "name": "Charmeleon",
         "type": "Fire",
         "stage": 1,
@@ -723,6 +787,8 @@
     "A1-035": {
         "expansion": "A1",
         "number": 35,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Charizard",
         "name": "Charizard",
         "type": "Fire",
         "stage": 2,
@@ -747,6 +813,8 @@
     "A1-036": {
         "expansion": "A1",
         "number": 36,
+        "rarity": "\u2662\u2662\u2662\u2662",
+        "pack": "Charizard",
         "name": "Charizard ex",
         "type": "Fire",
         "stage": 2,
@@ -780,6 +848,8 @@
     "A1-037": {
         "expansion": "A1",
         "number": 37,
+        "rarity": "\u2662",
+        "pack": "Charizard",
         "name": "Vulpix",
         "type": "Fire",
         "stage": 0,
@@ -800,6 +870,8 @@
     "A1-038": {
         "expansion": "A1",
         "number": 38,
+        "rarity": "\u2662\u2662",
+        "pack": "Charizard",
         "name": "Ninetales",
         "type": "Fire",
         "stage": 1,
@@ -822,6 +894,8 @@
     "A1-039": {
         "expansion": "A1",
         "number": 39,
+        "rarity": "\u2662",
+        "pack": "Pikachu",
         "name": "Growlithe",
         "type": "Fire",
         "stage": 0,
@@ -842,6 +916,8 @@
     "A1-040": {
         "expansion": "A1",
         "number": 40,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Pikachu",
         "name": "Arcanine",
         "type": "Fire",
         "stage": 1,
@@ -865,6 +941,8 @@
     "A1-041": {
         "expansion": "A1",
         "number": 41,
+        "rarity": "\u2662\u2662\u2662\u2662",
+        "pack": "Pikachu",
         "name": "Arcanine ex",
         "type": "Fire",
         "stage": 1,
@@ -888,6 +966,7 @@
     "A1-042": {
         "expansion": "A1",
         "number": 42,
+        "rarity": "\u2662",
         "name": "Ponyta",
         "type": "Fire",
         "stage": 0,
@@ -907,6 +986,7 @@
     "A1-043": {
         "expansion": "A1",
         "number": 43,
+        "rarity": "\u2662\u2662",
         "name": "Rapidash",
         "type": "Fire",
         "stage": 1,
@@ -927,6 +1007,8 @@
     "A1-044": {
         "expansion": "A1",
         "number": 44,
+        "rarity": "\u2662",
+        "pack": "Charizard",
         "name": "Magmar",
         "type": "Fire",
         "stage": 0,
@@ -947,6 +1029,8 @@
     "A1-045": {
         "expansion": "A1",
         "number": 45,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Charizard",
         "name": "Flareon",
         "type": "Fire",
         "stage": 1,
@@ -963,13 +1047,15 @@
                     "Colorless"
                 ],
                 "power": 110,
-                "description": "Discard a {Fire} energy from this Pok\u00e9mon."
+                "description": "Discard a {Fire} Energy from this Pok\u00e9mon."
             }
         ]
     },
     "A1-046": {
         "expansion": "A1",
         "number": 46,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Charizard",
         "name": "Moltres",
         "type": "Fire",
         "stage": 0,
@@ -992,6 +1078,8 @@
     "A1-047": {
         "expansion": "A1",
         "number": 47,
+        "rarity": "\u2662\u2662\u2662\u2662",
+        "pack": "Charizard",
         "name": "Moltres ex",
         "type": "Fire",
         "stage": 0,
@@ -1021,6 +1109,7 @@
     "A1-048": {
         "expansion": "A1",
         "number": 48,
+        "rarity": "\u2662",
         "name": "Heatmor",
         "type": "Fire",
         "stage": 0,
@@ -1040,6 +1129,8 @@
     "A1-049": {
         "expansion": "A1",
         "number": 49,
+        "rarity": "\u2662",
+        "pack": "Mewtwo",
         "name": "Salandit",
         "type": "Fire",
         "stage": 0,
@@ -1059,6 +1150,8 @@
     "A1-050": {
         "expansion": "A1",
         "number": 50,
+        "rarity": "\u2662",
+        "pack": "Mewtwo",
         "name": "Salazzle",
         "type": "Fire",
         "stage": 1,
@@ -1080,6 +1173,7 @@
     "A1-051": {
         "expansion": "A1",
         "number": 51,
+        "rarity": "\u2662",
         "name": "Sizzlipede",
         "type": "Fire",
         "stage": 0,
@@ -1099,6 +1193,7 @@
     "A1-052": {
         "expansion": "A1",
         "number": 52,
+        "rarity": "\u2662\u2662",
         "name": "Centiskorch",
         "type": "Fire",
         "stage": 1,
@@ -1123,6 +1218,8 @@
     "A1-053": {
         "expansion": "A1",
         "number": 53,
+        "rarity": "\u2662",
+        "pack": "Pikachu",
         "name": "Squirtle",
         "type": "Water",
         "stage": 0,
@@ -1142,6 +1239,8 @@
     "A1-054": {
         "expansion": "A1",
         "number": 54,
+        "rarity": "\u2662\u2662",
+        "pack": "Pikachu",
         "name": "Wartortle",
         "type": "Water",
         "stage": 1,
@@ -1163,6 +1262,8 @@
     "A1-055": {
         "expansion": "A1",
         "number": 55,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Pikachu",
         "name": "Blastoise",
         "type": "Water",
         "stage": 2,
@@ -1186,6 +1287,8 @@
     "A1-056": {
         "expansion": "A1",
         "number": 56,
+        "rarity": "\u2662\u2662\u2662\u2662",
+        "pack": "Pikachu",
         "name": "Blastoise ex",
         "type": "Water",
         "stage": 2,
@@ -1217,6 +1320,7 @@
     "A1-057": {
         "expansion": "A1",
         "number": 57,
+        "rarity": "\u2662",
         "name": "Psyduck",
         "type": "Water",
         "stage": 0,
@@ -1237,6 +1341,7 @@
     "A1-058": {
         "expansion": "A1",
         "number": 58,
+        "rarity": "\u2662\u2662",
         "name": "Golduck",
         "type": "Water",
         "stage": 1,
@@ -1258,6 +1363,8 @@
     "A1-059": {
         "expansion": "A1",
         "number": 59,
+        "rarity": "\u2662",
+        "pack": "Charizard",
         "name": "Poliwag",
         "type": "Water",
         "stage": 0,
@@ -1277,6 +1384,8 @@
     "A1-060": {
         "expansion": "A1",
         "number": 60,
+        "rarity": "\u2662\u2662",
+        "pack": "Charizard",
         "name": "Poliwhirl",
         "type": "Water",
         "stage": 1,
@@ -1298,6 +1407,8 @@
     "A1-061": {
         "expansion": "A1",
         "number": 61,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Charizard",
         "name": "Poliwrath",
         "type": "Water",
         "stage": 2,
@@ -1307,7 +1418,7 @@
         "retreat_cost": 2,
         "ability": {
             "name": "Counterattack",
-            "description": "If this Pok\u00e9mon is in the Actiev Spot and is damaged by an attack from your opponent's Pok\u00e9mon, do 20 damage to the Attacking Pok\u00e9mon."
+            "description": "If this Pok\u00e9mon is in the Active Spot and is damaged by an attack from your opponent's Pok\u00e9mon, do 20 damage to the Attacking Pok\u00e9mon."
         },
         "moves": [
             {
@@ -1324,6 +1435,8 @@
     "A1-062": {
         "expansion": "A1",
         "number": 62,
+        "rarity": "\u2662",
+        "pack": "Mewtwo",
         "name": "Tentacool",
         "type": "Water",
         "stage": 0,
@@ -1343,6 +1456,8 @@
     "A1-063": {
         "expansion": "A1",
         "number": 63,
+        "rarity": "\u2662\u2662",
+        "pack": "Mewtwo",
         "name": "Tentacruel",
         "type": "Water",
         "stage": 1,
@@ -1365,6 +1480,8 @@
     "A1-064": {
         "expansion": "A1",
         "number": 64,
+        "rarity": "\u2662",
+        "pack": "Pikachu",
         "name": "Seel",
         "type": "Water",
         "stage": 0,
@@ -1385,6 +1502,8 @@
     "A1-065": {
         "expansion": "A1",
         "number": 65,
+        "rarity": "\u2662\u2662",
+        "pack": "Pikachu",
         "name": "Dewgong",
         "type": "Water",
         "stage": 1,
@@ -1407,6 +1526,8 @@
     "A1-066": {
         "expansion": "A1",
         "number": 66,
+        "rarity": "\u2662",
+        "pack": "Mewtwo",
         "name": "Shellder",
         "type": "Water",
         "stage": 0,
@@ -1426,6 +1547,8 @@
     "A1-067": {
         "expansion": "A1",
         "number": 67,
+        "rarity": "\u2662\u2662",
+        "pack": "Mewtwo",
         "name": "Cloyster",
         "type": "Water",
         "stage": 1,
@@ -1452,6 +1575,8 @@
     "A1-068": {
         "expansion": "A1",
         "number": 68,
+        "rarity": "\u2662",
+        "pack": "Mewtwo",
         "name": "Krabby",
         "type": "Water",
         "stage": 0,
@@ -1472,6 +1597,8 @@
     "A1-069": {
         "expansion": "A1",
         "number": 69,
+        "rarity": "\u2662\u2662",
+        "pack": "Mewtwo",
         "name": "Kingler",
         "type": "Water",
         "stage": 1,
@@ -1495,6 +1622,8 @@
     "A1-070": {
         "expansion": "A1",
         "number": 70,
+        "rarity": "\u2662",
+        "pack": "Pikachu",
         "name": "Horsea",
         "type": "Water",
         "stage": 0,
@@ -1514,6 +1643,8 @@
     "A1-071": {
         "expansion": "A1",
         "number": 71,
+        "rarity": "\u2662\u2662",
+        "pack": "Pikachu",
         "name": "Seadra",
         "type": "Water",
         "stage": 1,
@@ -1537,6 +1668,8 @@
     "A1-072": {
         "expansion": "A1",
         "number": 72,
+        "rarity": "\u2662",
+        "pack": "Pikachu",
         "name": "Goldeen",
         "type": "Water",
         "stage": 0,
@@ -1556,6 +1689,8 @@
     "A1-073": {
         "expansion": "A1",
         "number": 73,
+        "rarity": "\u2662",
+        "pack": "Pikachu",
         "name": "Seaking",
         "type": "Water",
         "stage": 1,
@@ -1577,6 +1712,8 @@
     "A1-074": {
         "expansion": "A1",
         "number": 74,
+        "rarity": "\u2662",
+        "pack": "Charizard",
         "name": "Staryu",
         "type": "Water",
         "stage": 0,
@@ -1596,6 +1733,8 @@
     "A1-075": {
         "expansion": "A1",
         "number": 75,
+        "rarity": "\u2662\u2662",
+        "pack": "Charizard",
         "name": "Starmie",
         "type": "Water",
         "stage": 1,
@@ -1616,6 +1755,8 @@
     "A1-076": {
         "expansion": "A1",
         "number": 76,
+        "rarity": "\u2662\u2662\u2662\u2662",
+        "pack": "Charizard",
         "name": "Starmie ex",
         "type": "Water",
         "stage": 1,
@@ -1637,6 +1778,8 @@
     "A1-077": {
         "expansion": "A1",
         "number": 77,
+        "rarity": "\u2662",
+        "pack": "Pikachu",
         "name": "Magikarp",
         "type": "Water",
         "stage": 0,
@@ -1656,6 +1799,8 @@
     "A1-078": {
         "expansion": "A1",
         "number": 78,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Pikachu",
         "name": "Gyarados",
         "type": "Water",
         "stage": 1,
@@ -1680,6 +1825,8 @@
     "A1-079": {
         "expansion": "A1",
         "number": 79,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Charizard",
         "name": "Lapras",
         "type": "Water",
         "stage": 0,
@@ -1693,13 +1840,15 @@
                     "Water"
                 ],
                 "power": "20+",
-                "description": "If this Pok\u00e9mon has at least 3 extra {Water} energy attached, this attack does 70 more damage."
+                "description": "If this Pok\u00e9mon has at least 3 extra {Water} Energy attached, this attack does 70 more damage."
             }
         ]
     },
     "A1-080": {
         "expansion": "A1",
         "number": 80,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Mewtwo",
         "name": "Vaporeon",
         "type": "Water",
         "stage": 1,
@@ -1723,9 +1872,12 @@
     "A1-081": {
         "expansion": "A1",
         "number": 81,
+        "rarity": "\u2662\u2662",
+        "pack": "Pikachu",
         "name": "Omanyte",
         "type": "Water",
-        "stage": 0,
+        "stage": 1,
+        "evolves_from": "Helix Fossil",
         "hp": 90,
         "weakness": "Lightning",
         "retreat_cost": 1,
@@ -1742,9 +1894,11 @@
     "A1-082": {
         "expansion": "A1",
         "number": 82,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Pikachu",
         "name": "Omastar",
         "type": "Water",
-        "stage": 1,
+        "stage": 2,
         "evolves_from": "Omanyte",
         "hp": 140,
         "weakness": "Lightning",
@@ -1765,6 +1919,8 @@
     "A1-083": {
         "expansion": "A1",
         "number": 83,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Mewtwo",
         "name": "Articuno",
         "type": "Water",
         "stage": 0,
@@ -1787,6 +1943,8 @@
     "A1-084": {
         "expansion": "A1",
         "number": 84,
+        "rarity": "\u2662\u2662\u2662\u2662",
+        "pack": "Mewtwo",
         "name": "Articuno ex",
         "type": "Water",
         "stage": 0,
@@ -1817,6 +1975,8 @@
     "A1-085": {
         "expansion": "A1",
         "number": 85,
+        "rarity": "\u2662",
+        "pack": "Charizard",
         "name": "Ducklett",
         "type": "Water",
         "stage": 0,
@@ -1837,6 +1997,8 @@
     "A1-086": {
         "expansion": "A1",
         "number": 86,
+        "rarity": "\u2662\u2662",
+        "pack": "Charizard",
         "name": "Swanna",
         "type": "Water",
         "stage": 1,
@@ -1859,6 +2021,8 @@
     "A1-087": {
         "expansion": "A1",
         "number": 87,
+        "rarity": "\u2662",
+        "pack": "Charizard",
         "name": "Froakie",
         "type": "Water",
         "stage": 0,
@@ -1878,6 +2042,8 @@
     "A1-088": {
         "expansion": "A1",
         "number": 88,
+        "rarity": "\u2662\u2662",
+        "pack": "Charizard",
         "name": "Frogadier",
         "type": "Water",
         "stage": 1,
@@ -1898,6 +2064,8 @@
     "A1-089": {
         "expansion": "A1",
         "number": 89,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Charizard",
         "name": "Greninja",
         "type": "Water",
         "stage": 2,
@@ -1923,6 +2091,8 @@
     "A1-090": {
         "expansion": "A1",
         "number": 90,
+        "rarity": "\u2662",
+        "pack": "Charizard",
         "name": "Pyukumuku",
         "type": "Water",
         "stage": 0,
@@ -1942,6 +2112,7 @@
     "A1-091": {
         "expansion": "A1",
         "number": 91,
+        "rarity": "\u2662\u2662",
         "name": "Bruxish",
         "type": "Water",
         "stage": 0,
@@ -1963,6 +2134,7 @@
     "A1-092": {
         "expansion": "A1",
         "number": 92,
+        "rarity": "\u2662",
         "name": "Snom",
         "type": "Water",
         "stage": 0,
@@ -1982,6 +2154,7 @@
     "A1-093": {
         "expansion": "A1",
         "number": 93,
+        "rarity": "\u2662\u2662",
         "name": "Frosmoth",
         "type": "Water",
         "stage": 1,
@@ -2004,6 +2177,8 @@
     "A1-094": {
         "expansion": "A1",
         "number": 94,
+        "rarity": "\u2662",
+        "pack": "Pikachu",
         "name": "Pikachu",
         "type": "Lightning",
         "stage": 0,
@@ -2023,6 +2198,8 @@
     "A1-095": {
         "expansion": "A1",
         "number": 95,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Pikachu",
         "name": "Raichu",
         "type": "Lightning",
         "stage": 1,
@@ -2046,6 +2223,8 @@
     "A1-096": {
         "expansion": "A1",
         "number": 96,
+        "rarity": "\u2662\u2662\u2662\u2662",
+        "pack": "Pikachu",
         "name": "Pikachu ex",
         "type": "Lightning",
         "stage": 0,
@@ -2067,6 +2246,8 @@
     "A1-097": {
         "expansion": "A1",
         "number": 97,
+        "rarity": "\u2662",
+        "pack": "Pikachu",
         "name": "Magnemite",
         "type": "Lightning",
         "stage": 0,
@@ -2086,6 +2267,8 @@
     "A1-098": {
         "expansion": "A1",
         "number": 98,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Pikachu",
         "name": "Magneton",
         "type": "Lightning",
         "stage": 1,
@@ -2113,6 +2296,8 @@
     "A1-099": {
         "expansion": "A1",
         "number": 99,
+        "rarity": "\u2662",
+        "pack": "Pikachu",
         "name": "Voltorb",
         "type": "Lightning",
         "stage": 0,
@@ -2132,6 +2317,8 @@
     "A1-100": {
         "expansion": "A1",
         "number": 100,
+        "rarity": "\u2662\u2662",
+        "pack": "Pikachu",
         "name": "Electrode",
         "type": "Lightning",
         "stage": 1,
@@ -2153,6 +2340,8 @@
     "A1-101": {
         "expansion": "A1",
         "number": 101,
+        "rarity": "\u2662",
+        "pack": "Pikachu",
         "name": "Electabuzz",
         "type": "Lightning",
         "stage": 0,
@@ -2174,6 +2363,8 @@
     "A1-102": {
         "expansion": "A1",
         "number": 102,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Pikachu",
         "name": "Jolteon",
         "type": "Lightning",
         "stage": 1,
@@ -2196,6 +2387,8 @@
     "A1-103": {
         "expansion": "A1",
         "number": 103,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Pikachu",
         "name": "Zapdos",
         "type": "Lightning",
         "stage": 0,
@@ -2218,6 +2411,8 @@
     "A1-104": {
         "expansion": "A1",
         "number": 104,
+        "rarity": "\u2662\u2662\u2662\u2662",
+        "pack": "Pikachu",
         "name": "Zapdos ex",
         "type": "Lightning",
         "stage": 0,
@@ -2247,6 +2442,7 @@
     "A1-105": {
         "expansion": "A1",
         "number": 105,
+        "rarity": "\u2662",
         "name": "Blitzle",
         "type": "Lightning",
         "stage": 0,
@@ -2266,6 +2462,7 @@
     "A1-106": {
         "expansion": "A1",
         "number": 106,
+        "rarity": "\u2662\u2662",
         "name": "Zebstrika",
         "type": "Lightning",
         "stage": 1,
@@ -2287,6 +2484,8 @@
     "A1-107": {
         "expansion": "A1",
         "number": 107,
+        "rarity": "\u2662",
+        "pack": "Mewtwo",
         "name": "Tynamo",
         "type": "Lightning",
         "stage": 0,
@@ -2306,6 +2505,8 @@
     "A1-108": {
         "expansion": "A1",
         "number": 108,
+        "rarity": "\u2662\u2662",
+        "pack": "Mewtwo",
         "name": "Eelektrik",
         "type": "Lightning",
         "stage": 1,
@@ -2326,6 +2527,8 @@
     "A1-109": {
         "expansion": "A1",
         "number": 109,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Mewtwo",
         "name": "Eelektross",
         "type": "Lightning",
         "stage": 2,
@@ -2349,6 +2552,7 @@
     "A1-110": {
         "expansion": "A1",
         "number": 110,
+        "rarity": "\u2662",
         "name": "Helioptile",
         "type": "Lightning",
         "stage": 0,
@@ -2368,6 +2572,7 @@
     "A1-111": {
         "expansion": "A1",
         "number": 111,
+        "rarity": "\u2662",
         "name": "Heliolisk",
         "type": "Lightning",
         "stage": 1,
@@ -2390,6 +2595,7 @@
     "A1-112": {
         "expansion": "A1",
         "number": 112,
+        "rarity": "\u2662\u2662",
         "name": "Pincurchin",
         "type": "Lightning",
         "stage": 0,
@@ -2411,6 +2617,8 @@
     "A1-113": {
         "expansion": "A1",
         "number": 113,
+        "rarity": "\u2662",
+        "pack": "Pikachu",
         "name": "Clefairy",
         "type": "Psychic",
         "stage": 0,
@@ -2430,6 +2638,8 @@
     "A1-114": {
         "expansion": "A1",
         "number": 114,
+        "rarity": "\u2662\u2662",
+        "pack": "Pikachu",
         "name": "Clefable",
         "type": "Psychic",
         "stage": 1,
@@ -2450,6 +2660,8 @@
     "A1-115": {
         "expansion": "A1",
         "number": 115,
+        "rarity": "\u2662",
+        "pack": "Charizard",
         "name": "Abra",
         "type": "Psychic",
         "stage": 0,
@@ -2470,6 +2682,8 @@
     "A1-116": {
         "expansion": "A1",
         "number": 116,
+        "rarity": "\u2662\u2662",
+        "pack": "Charizard",
         "name": "Kadabra",
         "type": "Psychic",
         "stage": 1,
@@ -2492,6 +2706,8 @@
     "A1-117": {
         "expansion": "A1",
         "number": 117,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Charizard",
         "name": "Alakazam",
         "type": "Psychic",
         "stage": 2,
@@ -2515,6 +2731,7 @@
     "A1-118": {
         "expansion": "A1",
         "number": 118,
+        "rarity": "\u2662",
         "name": "Slowpoke",
         "type": "Psychic",
         "stage": 0,
@@ -2535,6 +2752,7 @@
     "A1-119": {
         "expansion": "A1",
         "number": 119,
+        "rarity": "\u2662\u2662",
         "name": "Slowbro",
         "type": "Psychic",
         "stage": 1,
@@ -2557,6 +2775,8 @@
     "A1-120": {
         "expansion": "A1",
         "number": 120,
+        "rarity": "\u2662",
+        "pack": "Mewtwo",
         "name": "Gastly",
         "type": "Psychic",
         "stage": 0,
@@ -2576,6 +2796,8 @@
     "A1-121": {
         "expansion": "A1",
         "number": 121,
+        "rarity": "\u2662\u2662",
+        "pack": "Mewtwo",
         "name": "Haunter",
         "type": "Psychic",
         "stage": 1,
@@ -2596,6 +2818,8 @@
     "A1-122": {
         "expansion": "A1",
         "number": 122,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Mewtwo",
         "name": "Gengar",
         "type": "Psychic",
         "stage": 2,
@@ -2617,6 +2841,8 @@
     "A1-123": {
         "expansion": "A1",
         "number": 123,
+        "rarity": "\u2662\u2662\u2662\u2662",
+        "pack": "Mewtwo",
         "name": "Gengar ex",
         "type": "Psychic",
         "stage": 2,
@@ -2643,6 +2869,8 @@
     "A1-124": {
         "expansion": "A1",
         "number": 124,
+        "rarity": "\u2662",
+        "pack": "Pikachu",
         "name": "Drowzee",
         "type": "Psychic",
         "stage": 0,
@@ -2663,6 +2891,8 @@
     "A1-125": {
         "expansion": "A1",
         "number": 125,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Pikachu",
         "name": "Hypno",
         "type": "Psychic",
         "stage": 1,
@@ -2689,6 +2919,8 @@
     "A1-126": {
         "expansion": "A1",
         "number": 126,
+        "rarity": "\u2662\u2662",
+        "pack": "Mewtwo",
         "name": "Mr. Mime",
         "type": "Psychic",
         "stage": 0,
@@ -2710,6 +2942,8 @@
     "A1-127": {
         "expansion": "A1",
         "number": 127,
+        "rarity": "\u2662",
+        "pack": "Mewtwo",
         "name": "Jynx",
         "type": "Psychic",
         "stage": 0,
@@ -2731,6 +2965,8 @@
     "A1-128": {
         "expansion": "A1",
         "number": 128,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Mewtwo",
         "name": "Mewtwo",
         "type": "Psychic",
         "stage": 0,
@@ -2754,6 +2990,8 @@
     "A1-129": {
         "expansion": "A1",
         "number": 129,
+        "rarity": "\u2662\u2662\u2662\u2662",
+        "pack": "Mewtwo",
         "name": "Mewtwo ex",
         "type": "Psychic",
         "stage": 0,
@@ -2785,6 +3023,8 @@
     "A1-130": {
         "expansion": "A1",
         "number": 130,
+        "rarity": "\u2662",
+        "pack": "Mewtwo",
         "name": "Ralts",
         "type": "Psychic",
         "stage": 0,
@@ -2804,6 +3044,8 @@
     "A1-131": {
         "expansion": "A1",
         "number": 131,
+        "rarity": "\u2662\u2662",
+        "pack": "Mewtwo",
         "name": "Kirlia",
         "type": "Psychic",
         "stage": 1,
@@ -2825,6 +3067,8 @@
     "A1-132": {
         "expansion": "A1",
         "number": 132,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Mewtwo",
         "name": "Gardevoir",
         "type": "Psychic",
         "stage": 2,
@@ -2851,6 +3095,7 @@
     "A1-133": {
         "expansion": "A1",
         "number": 133,
+        "rarity": "\u2662",
         "name": "Woobat",
         "type": "Psychic",
         "stage": 0,
@@ -2870,6 +3115,7 @@
     "A1-134": {
         "expansion": "A1",
         "number": 134,
+        "rarity": "\u2662",
         "name": "Swoobat",
         "type": "Psychic",
         "stage": 1,
@@ -2891,6 +3137,7 @@
     "A1-135": {
         "expansion": "A1",
         "number": 135,
+        "rarity": "\u2662",
         "name": "Golett",
         "type": "Psychic",
         "stage": 0,
@@ -2912,6 +3159,7 @@
     "A1-136": {
         "expansion": "A1",
         "number": 136,
+        "rarity": "\u2662\u2662",
         "name": "Golurk",
         "type": "Psychic",
         "stage": 1,
@@ -2936,6 +3184,7 @@
     "A1-137": {
         "expansion": "A1",
         "number": 137,
+        "rarity": "\u2662",
         "name": "Sandshrew",
         "type": "Fighting",
         "stage": 0,
@@ -2955,6 +3204,7 @@
     "A1-138": {
         "expansion": "A1",
         "number": 138,
+        "rarity": "\u2662\u2662",
         "name": "Sandslash",
         "type": "Fighting",
         "stage": 1,
@@ -2976,6 +3226,8 @@
     "A1-139": {
         "expansion": "A1",
         "number": 139,
+        "rarity": "\u2662",
+        "pack": "Pikachu",
         "name": "Diglett",
         "type": "Fighting",
         "stage": 0,
@@ -2995,6 +3247,8 @@
     "A1-140": {
         "expansion": "A1",
         "number": 140,
+        "rarity": "\u2662\u2662",
+        "pack": "Pikachu",
         "name": "Dugtrio",
         "type": "Fighting",
         "stage": 1,
@@ -3016,6 +3270,8 @@
     "A1-141": {
         "expansion": "A1",
         "number": 141,
+        "rarity": "\u2662",
+        "pack": "Charizard",
         "name": "Mankey",
         "type": "Fighting",
         "stage": 0,
@@ -3035,6 +3291,8 @@
     "A1-142": {
         "expansion": "A1",
         "number": 142,
+        "rarity": "\u2662\u2662",
+        "pack": "Charizard",
         "name": "Primeape",
         "type": "Fighting",
         "stage": 1,
@@ -3057,6 +3315,8 @@
     "A1-143": {
         "expansion": "A1",
         "number": 143,
+        "rarity": "\u2662",
+        "pack": "Charizard",
         "name": "Machop",
         "type": "Fighting",
         "stage": 0,
@@ -3076,6 +3336,8 @@
     "A1-144": {
         "expansion": "A1",
         "number": 144,
+        "rarity": "\u2662\u2662",
+        "pack": "Charizard",
         "name": "Machoke",
         "type": "Fighting",
         "stage": 1,
@@ -3097,6 +3359,8 @@
     "A1-145": {
         "expansion": "A1",
         "number": 145,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Charizard",
         "name": "Machamp",
         "type": "Fighting",
         "stage": 2,
@@ -3119,6 +3383,8 @@
     "A1-146": {
         "expansion": "A1",
         "number": 146,
+        "rarity": "\u2662\u2662\u2662\u2662",
+        "pack": "Charizard",
         "name": "Machamp ex",
         "type": "Fighting",
         "stage": 2,
@@ -3141,6 +3407,8 @@
     "A1-147": {
         "expansion": "A1",
         "number": 147,
+        "rarity": "\u2662",
+        "pack": "Pikachu",
         "name": "Geodude",
         "type": "Fighting",
         "stage": 0,
@@ -3160,6 +3428,8 @@
     "A1-148": {
         "expansion": "A1",
         "number": 148,
+        "rarity": "\u2662\u2662",
+        "pack": "Pikachu",
         "name": "Graveler",
         "type": "Fighting",
         "stage": 1,
@@ -3182,6 +3452,8 @@
     "A1-149": {
         "expansion": "A1",
         "number": 149,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Pikachu",
         "name": "Golem",
         "type": "Fighting",
         "stage": 2,
@@ -3206,6 +3478,8 @@
     "A1-150": {
         "expansion": "A1",
         "number": 150,
+        "rarity": "\u2662\u2662",
+        "pack": "Pikachu",
         "name": "Onix",
         "type": "Fighting",
         "stage": 0,
@@ -3227,6 +3501,8 @@
     "A1-151": {
         "expansion": "A1",
         "number": 151,
+        "rarity": "\u2662",
+        "pack": "Mewtwo",
         "name": "Cubone",
         "type": "Fighting",
         "stage": 0,
@@ -3247,6 +3523,8 @@
     "A1-152": {
         "expansion": "A1",
         "number": 152,
+        "rarity": "\u2662\u2662",
+        "pack": "Mewtwo",
         "name": "Marowak",
         "type": "Fighting",
         "stage": 1,
@@ -3267,6 +3545,8 @@
     "A1-153": {
         "expansion": "A1",
         "number": 153,
+        "rarity": "\u2662\u2662\u2662\u2662",
+        "pack": "Mewtwo",
         "name": "Marowak ex",
         "type": "Fighting",
         "stage": 1,
@@ -3289,6 +3569,8 @@
     "A1-154": {
         "expansion": "A1",
         "number": 154,
+        "rarity": "\u2662",
+        "pack": "Mewtwo",
         "name": "Hitmonlee",
         "type": "Fighting",
         "stage": 0,
@@ -3309,6 +3591,8 @@
     "A1-155": {
         "expansion": "A1",
         "number": 155,
+        "rarity": "\u2662",
+        "pack": "Charizard",
         "name": "Hitmonchan",
         "type": "Fighting",
         "stage": 0,
@@ -3328,6 +3612,8 @@
     "A1-156": {
         "expansion": "A1",
         "number": 156,
+        "rarity": "\u2662",
+        "pack": "Mewtwo",
         "name": "Rhyhorn",
         "type": "Fighting",
         "stage": 0,
@@ -3349,6 +3635,8 @@
     "A1-157": {
         "expansion": "A1",
         "number": 157,
+        "rarity": "\u2662\u2662",
+        "pack": "Mewtwo",
         "name": "Rhydon",
         "type": "Fighting",
         "stage": 1,
@@ -3372,6 +3660,8 @@
     "A1-158": {
         "expansion": "A1",
         "number": 158,
+        "rarity": "\u2662\u2662",
+        "pack": "Charizard",
         "name": "Kabuto",
         "type": "Fighting",
         "stage": 1,
@@ -3392,6 +3682,8 @@
     "A1-159": {
         "expansion": "A1",
         "number": 159,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Charizard",
         "name": "Kabutops",
         "type": "Fighting",
         "stage": 2,
@@ -3413,6 +3705,8 @@
     "A1-160": {
         "expansion": "A1",
         "number": 160,
+        "rarity": "\u2662",
+        "pack": "Pikachu",
         "name": "Mienfoo",
         "type": "Fighting",
         "stage": 0,
@@ -3432,6 +3726,8 @@
     "A1-161": {
         "expansion": "A1",
         "number": 161,
+        "rarity": "\u2662\u2662",
+        "pack": "Pikachu",
         "name": "Mienshao",
         "type": "Fighting",
         "stage": 1,
@@ -3452,6 +3748,7 @@
     "A1-162": {
         "expansion": "A1",
         "number": 162,
+        "rarity": "\u2662",
         "name": "Clobbopus",
         "type": "Fighting",
         "stage": 0,
@@ -3472,6 +3769,7 @@
     "A1-163": {
         "expansion": "A1",
         "number": 163,
+        "rarity": "\u2662\u2662",
         "name": "Grapploct",
         "type": "Fighting",
         "stage": 1,
@@ -3495,6 +3793,7 @@
     "A1-164": {
         "expansion": "A1",
         "number": 164,
+        "rarity": "\u2662",
         "name": "Ekans",
         "type": "Darkness",
         "stage": 0,
@@ -3514,6 +3813,7 @@
     "A1-165": {
         "expansion": "A1",
         "number": 165,
+        "rarity": "\u2662\u2662",
         "name": "Arbok",
         "type": "Darkness",
         "stage": 1,
@@ -3536,6 +3836,8 @@
     "A1-166": {
         "expansion": "A1",
         "number": 166,
+        "rarity": "\u2662",
+        "pack": "Pikachu",
         "name": "Nidoran-F",
         "type": "Darkness",
         "stage": 0,
@@ -3556,6 +3858,8 @@
     "A1-167": {
         "expansion": "A1",
         "number": 167,
+        "rarity": "\u2662\u2662",
+        "pack": "Pikachu",
         "name": "Nidorina",
         "type": "Darkness",
         "stage": 1,
@@ -3576,6 +3880,8 @@
     "A1-168": {
         "expansion": "A1",
         "number": 168,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Pikachu",
         "name": "Nidoqueen",
         "type": "Darkness",
         "stage": 2,
@@ -3599,6 +3905,8 @@
     "A1-169": {
         "expansion": "A1",
         "number": 169,
+        "rarity": "\u2662",
+        "pack": "Pikachu",
         "name": "Nidoran-M",
         "type": "Darkness",
         "stage": 0,
@@ -3618,6 +3926,8 @@
     "A1-170": {
         "expansion": "A1",
         "number": 170,
+        "rarity": "\u2662\u2662",
+        "pack": "Pikachu",
         "name": "Nidorino",
         "type": "Darkness",
         "stage": 1,
@@ -3639,6 +3949,8 @@
     "A1-171": {
         "expansion": "A1",
         "number": 171,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Pikachu",
         "name": "Nidoking",
         "type": "Darkness",
         "stage": 2,
@@ -3662,6 +3974,8 @@
     "A1-172": {
         "expansion": "A1",
         "number": 172,
+        "rarity": "\u2662",
+        "pack": "Mewtwo",
         "name": "Zubat",
         "type": "Darkness",
         "stage": 0,
@@ -3681,6 +3995,8 @@
     "A1-173": {
         "expansion": "A1",
         "number": 173,
+        "rarity": "\u2662\u2662",
+        "pack": "Mewtwo",
         "name": "Golbat",
         "type": "Darkness",
         "stage": 1,
@@ -3701,6 +4017,8 @@
     "A1-174": {
         "expansion": "A1",
         "number": 174,
+        "rarity": "\u2662",
+        "pack": "Mewtwo",
         "name": "Grimer",
         "type": "Darkness",
         "stage": 0,
@@ -3721,6 +4039,8 @@
     "A1-175": {
         "expansion": "A1",
         "number": 175,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Mewtwo",
         "name": "Muk",
         "type": "Darkness",
         "stage": 1,
@@ -3744,6 +4064,8 @@
     "A1-176": {
         "expansion": "A1",
         "number": 176,
+        "rarity": "\u2662",
+        "pack": "Mewtwo",
         "name": "Koffing",
         "type": "Darkness",
         "stage": 0,
@@ -3763,6 +4085,8 @@
     "A1-177": {
         "expansion": "A1",
         "number": 177,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Mewtwo",
         "name": "Weezing",
         "type": "Darkness",
         "stage": 1,
@@ -3787,6 +4111,8 @@
     "A1-178": {
         "expansion": "A1",
         "number": 178,
+        "rarity": "\u2662",
+        "pack": "Charizard",
         "name": "Mawile",
         "type": "Metal",
         "stage": 0,
@@ -3807,6 +4133,7 @@
     "A1-179": {
         "expansion": "A1",
         "number": 179,
+        "rarity": "\u2662",
         "name": "Pawniard",
         "type": "Metal",
         "stage": 0,
@@ -3826,6 +4153,7 @@
     "A1-180": {
         "expansion": "A1",
         "number": 180,
+        "rarity": "\u2662\u2662",
         "name": "Bisharp",
         "type": "Metal",
         "stage": 1,
@@ -3847,6 +4175,8 @@
     "A1-181": {
         "expansion": "A1",
         "number": 181,
+        "rarity": "\u2662",
+        "pack": "Charizard",
         "name": "Meltan",
         "type": "Metal",
         "stage": 0,
@@ -3867,6 +4197,8 @@
     "A1-182": {
         "expansion": "A1",
         "number": 182,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Charizard",
         "name": "Melmetal",
         "type": "Metal",
         "stage": 1,
@@ -3894,6 +4226,8 @@
     "A1-183": {
         "expansion": "A1",
         "number": 183,
+        "rarity": "\u2662",
+        "pack": "Mewtwo",
         "name": "Dratini",
         "type": "Dragon",
         "stage": 0,
@@ -3913,6 +4247,8 @@
     "A1-184": {
         "expansion": "A1",
         "number": 184,
+        "rarity": "\u2662\u2662",
+        "pack": "Mewtwo",
         "name": "Dragonair",
         "type": "Dragon",
         "stage": 1,
@@ -3934,6 +4270,8 @@
     "A1-185": {
         "expansion": "A1",
         "number": 185,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Mewtwo",
         "name": "Dragonite",
         "type": "Dragon",
         "stage": 2,
@@ -3957,6 +4295,8 @@
     "A1-186": {
         "expansion": "A1",
         "number": 186,
+        "rarity": "\u2662",
+        "pack": "Mewtwo",
         "name": "Pidgey",
         "type": "Colorless",
         "stage": 0,
@@ -3976,6 +4316,8 @@
     "A1-187": {
         "expansion": "A1",
         "number": 187,
+        "rarity": "\u2662",
+        "pack": "Mewtwo",
         "name": "Pidgeotto",
         "type": "Colorless",
         "stage": 1,
@@ -3996,6 +4338,8 @@
     "A1-188": {
         "expansion": "A1",
         "number": 188,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Mewtwo",
         "name": "Pidgeot",
         "type": "Colorless",
         "stage": 2,
@@ -4021,6 +4365,7 @@
     "A1-189": {
         "expansion": "A1",
         "number": 189,
+        "rarity": "\u2662",
         "name": "Rattata",
         "type": "Colorless",
         "stage": 0,
@@ -4040,6 +4385,7 @@
     "A1-190": {
         "expansion": "A1",
         "number": 190,
+        "rarity": "\u2662",
         "name": "Raticate",
         "type": "Colorless",
         "stage": 1,
@@ -4060,6 +4406,8 @@
     "A1-191": {
         "expansion": "A1",
         "number": 191,
+        "rarity": "\u2662",
+        "pack": "Charizard",
         "name": "Spearow",
         "type": "Colorless",
         "stage": 0,
@@ -4079,6 +4427,8 @@
     "A1-192": {
         "expansion": "A1",
         "number": 192,
+        "rarity": "\u2662",
+        "pack": "Charizard",
         "name": "Fearow",
         "type": "Colorless",
         "stage": 1,
@@ -4101,6 +4451,8 @@
     "A1-193": {
         "expansion": "A1",
         "number": 193,
+        "rarity": "\u2662",
+        "pack": "Pikachu",
         "name": "Jigglypuff",
         "type": "Colorless",
         "stage": 0,
@@ -4121,6 +4473,8 @@
     "A1-194": {
         "expansion": "A1",
         "number": 194,
+        "rarity": "\u2662",
+        "pack": "Pikachu",
         "name": "Wigglytuff",
         "type": "Colorless",
         "stage": 1,
@@ -4142,6 +4496,8 @@
     "A1-195": {
         "expansion": "A1",
         "number": 195,
+        "rarity": "\u2662\u2662\u2662\u2662",
+        "pack": "Pikachu",
         "name": "Wigglytuff ex",
         "type": "Colorless",
         "stage": 1,
@@ -4165,6 +4521,8 @@
     "A1-196": {
         "expansion": "A1",
         "number": 196,
+        "rarity": "\u2662",
+        "pack": "Charizard",
         "name": "Meowth",
         "type": "Colorless",
         "stage": 0,
@@ -4185,6 +4543,8 @@
     "A1-197": {
         "expansion": "A1",
         "number": 197,
+        "rarity": "\u2662\u2662",
+        "pack": "Charizard",
         "name": "Persian",
         "type": "Colorless",
         "stage": 1,
@@ -4207,6 +4567,7 @@
     "A1-198": {
         "expansion": "A1",
         "number": 198,
+        "rarity": "\u2662",
         "name": "Farfetch'd",
         "type": "Colorless",
         "stage": 0,
@@ -4226,6 +4587,7 @@
     "A1-199": {
         "expansion": "A1",
         "number": 199,
+        "rarity": "\u2662",
         "name": "Doduo",
         "type": "Colorless",
         "stage": 0,
@@ -4245,6 +4607,7 @@
     "A1-200": {
         "expansion": "A1",
         "number": 200,
+        "rarity": "\u2662\u2662",
         "name": "Dodrio",
         "type": "Colorless",
         "stage": 1,
@@ -4265,6 +4628,8 @@
     "A1-201": {
         "expansion": "A1",
         "number": 201,
+        "rarity": "\u2662\u2662",
+        "pack": "Mewtwo",
         "name": "Lickitung",
         "type": "Colorless",
         "stage": 0,
@@ -4287,6 +4652,8 @@
     "A1-202": {
         "expansion": "A1",
         "number": 202,
+        "rarity": "\u2662\u2662",
+        "pack": "Pikachu",
         "name": "Chansey",
         "type": "Colorless",
         "stage": 0,
@@ -4308,6 +4675,8 @@
     "A1-203": {
         "expansion": "A1",
         "number": 203,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Charizard",
         "name": "Kangaskhan",
         "type": "Colorless",
         "stage": 0,
@@ -4328,6 +4697,8 @@
     "A1-204": {
         "expansion": "A1",
         "number": 204,
+        "rarity": "\u2662\u2662",
+        "pack": "Charizard",
         "name": "Tauros",
         "type": "Colorless",
         "stage": 0,
@@ -4348,6 +4719,8 @@
     "A1-205": {
         "expansion": "A1",
         "number": 205,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Mewtwo",
         "name": "Ditto",
         "type": "Colorless",
         "stage": 0,
@@ -4368,6 +4741,8 @@
     "A1-206": {
         "expansion": "A1",
         "number": 206,
+        "rarity": "\u2662",
+        "pack": "Charizard",
         "name": "Eevee",
         "type": "Colorless",
         "stage": 0,
@@ -4387,16 +4762,22 @@
     "A1-207": {
         "expansion": "A1",
         "number": 207,
+        "rarity": "\u2662",
+        "pack": "Mewtwo",
         "variant": "A1-206"
     },
     "A1-208": {
         "expansion": "A1",
         "number": 208,
+        "rarity": "\u2662",
+        "pack": "Pikachu",
         "variant": "A1-206"
     },
     "A1-209": {
         "expansion": "A1",
         "number": 209,
+        "rarity": "\u2662\u2662",
+        "pack": "Mewtwo",
         "name": "Porygon",
         "type": "Colorless",
         "stage": 0,
@@ -4420,6 +4801,8 @@
     "A1-210": {
         "expansion": "A1",
         "number": 210,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Mewtwo",
         "name": "Aerodactyl",
         "type": "Colorless",
         "stage": 1,
@@ -4442,6 +4825,8 @@
     "A1-211": {
         "expansion": "A1",
         "number": 211,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Pikachu",
         "name": "Snorlax",
         "type": "Colorless",
         "stage": 0,
@@ -4464,6 +4849,7 @@
     "A1-212": {
         "expansion": "A1",
         "number": 212,
+        "rarity": "\u2662",
         "name": "Minccino",
         "type": "Colorless",
         "stage": 0,
@@ -4483,6 +4869,7 @@
     "A1-213": {
         "expansion": "A1",
         "number": 213,
+        "rarity": "\u2662\u2662",
         "name": "Cinccino",
         "type": "Colorless",
         "stage": 1,
@@ -4506,6 +4893,7 @@
     "A1-214": {
         "expansion": "A1",
         "number": 214,
+        "rarity": "\u2662",
         "name": "Wooloo",
         "type": "Colorless",
         "stage": 0,
@@ -4526,6 +4914,7 @@
     "A1-215": {
         "expansion": "A1",
         "number": 215,
+        "rarity": "\u2662",
         "name": "Dubwool",
         "type": "Colorless",
         "stage": 1,
@@ -4548,6 +4937,8 @@
     "A1-216": {
         "expansion": "A1",
         "number": 216,
+        "rarity": "\u2662",
+        "pack": "Pikachu",
         "name": "Helix Fossil",
         "category": "Item",
         "description": "Play this card as if it were a 40-HP Basic {Colorless} Pok\u00e9mon.\nAt any time during your turn, you may discard this card from play.\nThis card can't retreat."
@@ -4555,6 +4946,8 @@
     "A1-217": {
         "expansion": "A1",
         "number": 217,
+        "rarity": "\u2662",
+        "pack": "Charizard",
         "name": "Dome Fossil",
         "category": "Item",
         "description": "Play this card as if it were a 40-HP Basic {Colorless} Pok\u00e9mon.\nAt any time during your turn, you may discard this card from play.\nThis card can't retreat."
@@ -4562,6 +4955,8 @@
     "A1-218": {
         "expansion": "A1",
         "number": 218,
+        "rarity": "\u2662",
+        "pack": "Mewtwo",
         "name": "Old Amber",
         "category": "Item",
         "description": "Play this card as if it were a 40-HP Basic {Colorless} Pok\u00e9mon.\nAt any time during your turn, you may discard this card from play.\nThis card can't retreat."
@@ -4569,6 +4964,8 @@
     "A1-219": {
         "expansion": "A1",
         "number": 219,
+        "rarity": "\u2662\u2662",
+        "pack": "Charizard",
         "name": "Erika",
         "category": "Supporter",
         "description": "Heal 50 damage from 1 of your {Grass} Pok\u00e9mon."
@@ -4576,6 +4973,8 @@
     "A1-220": {
         "expansion": "A1",
         "number": 220,
+        "rarity": "\u2662\u2662",
+        "pack": "Pikachu",
         "name": "Misty",
         "category": "Supporter",
         "description": "Choose 1 of your {Water} Pok\u00e9mon, and flip a coin until you get tails. For each heads, take a {Water} Energy from your Energy Zone and attach it to that Pok\u00e9mon."
@@ -4583,6 +4982,8 @@
     "A1-221": {
         "expansion": "A1",
         "number": 221,
+        "rarity": "\u2662\u2662",
+        "pack": "Charizard",
         "name": "Blaine",
         "category": "Supporter",
         "description": "During this turn, attacks used by your Ninetales, Rapidash, or Magmar do +30 damage to your opponent's Active Pok\u00e9mon."
@@ -4590,6 +4991,8 @@
     "A1-222": {
         "expansion": "A1",
         "number": 222,
+        "rarity": "\u2662\u2662",
+        "pack": "Mewtwo",
         "name": "Koga",
         "category": "Supporter",
         "description": "Put your Muk or Weezing in the Active Spot into your hand."
@@ -4597,6 +5000,8 @@
     "A1-223": {
         "expansion": "A1",
         "number": 223,
+        "rarity": "\u2662\u2662",
+        "pack": "Mewtwo",
         "name": "Giovanni",
         "category": "Supporter",
         "description": "During this turn, attacks used by your Pok\u00e9mon do +10 damage to your opponent's Active Pok\u00e9mon."
@@ -4604,6 +5009,8 @@
     "A1-224": {
         "expansion": "A1",
         "number": 224,
+        "rarity": "\u2662\u2662",
+        "pack": "Pikachu",
         "name": "Brock",
         "category": "Supporter",
         "description": "Take a {Fighting} Energy from your Energy Zone and attach it to Golem or Onix."
@@ -4611,6 +5018,8 @@
     "A1-225": {
         "expansion": "A1",
         "number": 225,
+        "rarity": "\u2662\u2662",
+        "pack": "Charizard",
         "name": "Sabrina",
         "category": "Supporter",
         "description": "Switch out your opponent's Active Pok\u00e9mon to the Bench. (Your opponent chooses the new Active Pok\u00e9mon.)"
@@ -4618,6 +5027,8 @@
     "A1-226": {
         "expansion": "A1",
         "number": 226,
+        "rarity": "\u2662\u2662",
+        "pack": "Pikachu",
         "name": "Lt. Surge",
         "category": "Supporter",
         "description": "Move all {Lightning} Energy from your Benched Pok\u00e9mon to your Raichu, Electrode, or Electabuzz in the Active Spot."
@@ -4625,286 +5036,399 @@
     "A1-227": {
         "expansion": "A1",
         "number": 227,
+        "rarity": "\u2606",
+        "pack": "Mewtwo",
         "variant": "A1-001"
     },
     "A1-228": {
         "expansion": "A1",
         "number": 228,
+        "rarity": "\u2606",
+        "pack": "Charizard",
         "variant": "A1-012"
     },
     "A1-229": {
         "expansion": "A1",
         "number": 229,
+        "rarity": "\u2606",
+        "pack": "Charizard",
         "variant": "A1-026"
     },
     "A1-230": {
         "expansion": "A1",
         "number": 230,
+        "rarity": "\u2606",
+        "pack": "Charizard",
         "variant": "A1-033"
     },
     "A1-231": {
         "expansion": "A1",
         "number": 231,
+        "rarity": "\u2606",
+        "pack": "Charizard",
         "variant": "A1-043"
     },
     "A1-232": {
         "expansion": "A1",
         "number": 232,
+        "rarity": "\u2606",
+        "pack": "Pikachu",
         "variant": "A1-053"
     },
     "A1-233": {
         "expansion": "A1",
         "number": 233,
+        "rarity": "\u2606",
+        "pack": "Pikachu",
         "variant": "A1-078"
     },
     "A1-234": {
         "expansion": "A1",
         "number": 234,
+        "rarity": "\u2606",
+        "pack": "Charizard",
         "variant": "A1-079"
     },
     "A1-235": {
         "expansion": "A1",
         "number": 235,
+        "rarity": "\u2606",
+        "pack": "Pikachu",
         "variant": "A1-100"
     },
     "A1-236": {
         "expansion": "A1",
         "number": 236,
+        "rarity": "\u2606",
+        "pack": "Charizard",
         "variant": "A1-117"
     },
     "A1-237": {
         "expansion": "A1",
         "number": 237,
+        "rarity": "\u2606",
+        "pack": "Charizard",
         "variant": "A1-118"
     },
     "A1-238": {
         "expansion": "A1",
         "number": 238,
+        "rarity": "\u2606",
+        "pack": "Pikachu",
         "variant": "A1-139"
     },
     "A1-239": {
         "expansion": "A1",
         "number": 239,
+        "rarity": "\u2606",
+        "pack": "Mewtwo",
         "variant": "A1-151"
     },
     "A1-240": {
         "expansion": "A1",
         "number": 240,
+        "rarity": "\u2606",
+        "pack": "Pikachu",
         "variant": "A1-168"
     },
     "A1-241": {
         "expansion": "A1",
         "number": 241,
+        "rarity": "\u2606",
+        "pack": "Pikachu",
         "variant": "A1-171"
     },
     "A1-242": {
         "expansion": "A1",
         "number": 242,
+        "rarity": "\u2606",
+        "pack": "Mewtwo",
         "variant": "A1-173"
     },
     "A1-243": {
         "expansion": "A1",
         "number": 243,
+        "rarity": "\u2606",
+        "pack": "Mewtwo",
         "variant": "A1-177"
     },
     "A1-244": {
         "expansion": "A1",
         "number": 244,
+        "rarity": "\u2606",
+        "pack": "Mewtwo",
         "variant": "A1-185"
     },
     "A1-245": {
         "expansion": "A1",
         "number": 245,
+        "rarity": "\u2606",
+        "pack": "Mewtwo",
         "variant": "A1-188"
     },
     "A1-246": {
         "expansion": "A1",
         "number": 246,
+        "rarity": "\u2606",
+        "pack": "Charizard",
         "variant": "A1-196"
     },
     "A1-247": {
         "expansion": "A1",
         "number": 247,
+        "rarity": "\u2606",
+        "pack": "Mewtwo",
         "variant": "A1-205"
     },
     "A1-248": {
         "expansion": "A1",
         "number": 248,
+        "rarity": "\u2606",
+        "pack": "Pikachu",
         "variant": "A1-206"
     },
     "A1-249": {
         "expansion": "A1",
         "number": 249,
+        "rarity": "\u2606",
+        "pack": "Mewtwo",
         "variant": "A1-209"
     },
     "A1-250": {
         "expansion": "A1",
         "number": 250,
+        "rarity": "\u2606",
+        "pack": "Pikachu",
         "variant": "A1-211"
     },
     "A1-251": {
         "expansion": "A1",
         "number": 251,
+        "rarity": "\u2606\u2606",
+        "pack": "Mewtwo",
         "variant": "A1-004"
     },
     "A1-252": {
         "expansion": "A1",
         "number": 252,
+        "rarity": "\u2606\u2606",
+        "pack": "Charizard",
         "variant": "A1-023"
     },
     "A1-253": {
         "expansion": "A1",
         "number": 253,
+        "rarity": "\u2606\u2606",
+        "pack": "Charizard",
         "variant": "A1-036"
     },
     "A1-254": {
         "expansion": "A1",
         "number": 254,
+        "rarity": "\u2606\u2606",
+        "pack": "Pikachu",
         "variant": "A1-041"
     },
     "A1-255": {
         "expansion": "A1",
         "number": 255,
+        "rarity": "\u2606\u2606",
+        "pack": "Charizard",
         "variant": "A1-047"
     },
     "A1-256": {
         "expansion": "A1",
         "number": 256,
+        "rarity": "\u2606\u2606",
+        "pack": "Pikachu",
         "variant": "A1-056"
     },
     "A1-257": {
         "expansion": "A1",
         "number": 257,
+        "rarity": "\u2606\u2606",
+        "pack": "Charizard",
         "variant": "A1-076"
     },
     "A1-258": {
         "expansion": "A1",
         "number": 258,
+        "rarity": "\u2606\u2606",
+        "pack": "Mewtwo",
         "variant": "A1-084"
     },
     "A1-259": {
         "expansion": "A1",
         "number": 259,
+        "rarity": "\u2606\u2606",
+        "pack": "Pikachu",
         "variant": "A1-096"
     },
     "A1-260": {
         "expansion": "A1",
         "number": 260,
+        "rarity": "\u2606\u2606",
+        "pack": "Pikachu",
         "variant": "A1-104"
     },
     "A1-261": {
         "expansion": "A1",
         "number": 261,
+        "rarity": "\u2606\u2606",
+        "pack": "Mewtwo",
         "variant": "A1-123"
     },
     "A1-262": {
         "expansion": "A1",
         "number": 262,
+        "rarity": "\u2606\u2606",
+        "pack": "Mewtwo",
         "variant": "A1-129"
     },
     "A1-263": {
         "expansion": "A1",
         "number": 263,
+        "rarity": "\u2606\u2606",
+        "pack": "Charizard",
         "variant": "A1-146"
     },
     "A1-264": {
         "expansion": "A1",
         "number": 264,
+        "rarity": "\u2606\u2606",
+        "pack": "Mewtwo",
         "variant": "A1-153"
     },
     "A1-265": {
         "expansion": "A1",
         "number": 265,
+        "rarity": "\u2606\u2606",
+        "pack": "Pikachu",
         "variant": "A1-195"
     },
     "A1-266": {
         "expansion": "A1",
         "number": 266,
+        "rarity": "\u2606\u2606",
+        "pack": "Charizard",
         "variant": "A1-219"
     },
     "A1-267": {
         "expansion": "A1",
         "number": 267,
+        "rarity": "\u2606\u2606",
+        "pack": "Pikachu",
         "variant": "A1-220"
     },
     "A1-268": {
         "expansion": "A1",
         "number": 268,
+        "rarity": "\u2606\u2606",
+        "pack": "Charizard",
         "variant": "A1-221"
     },
     "A1-269": {
         "expansion": "A1",
         "number": 269,
+        "rarity": "\u2606\u2606",
+        "pack": "Mewtwo",
         "variant": "A1-222"
     },
     "A1-270": {
         "expansion": "A1",
         "number": 270,
+        "rarity": "\u2606\u2606",
+        "pack": "Mewtwo",
         "variant": "A1-223"
     },
     "A1-271": {
         "expansion": "A1",
         "number": 271,
+        "rarity": "\u2606\u2606",
+        "pack": "Pikachu",
         "variant": "A1-224"
     },
     "A1-272": {
         "expansion": "A1",
         "number": 272,
+        "rarity": "\u2606\u2606",
+        "pack": "Charizard",
         "variant": "A1-225"
     },
     "A1-273": {
         "expansion": "A1",
         "number": 273,
+        "rarity": "\u2606\u2606",
+        "pack": "Pikachu",
         "variant": "A1-226"
     },
     "A1-274": {
         "expansion": "A1",
         "number": 274,
+        "rarity": "\u2606\u2606",
+        "pack": "Charizard",
         "variant": "A1-047"
     },
     "A1-275": {
         "expansion": "A1",
         "number": 275,
+        "rarity": "\u2606\u2606",
+        "pack": "Mewtwo",
         "variant": "A1-084"
     },
     "A1-276": {
         "expansion": "A1",
         "number": 276,
+        "rarity": "\u2606\u2606",
+        "pack": "Pikachu",
         "variant": "A1-104"
     },
     "A1-277": {
         "expansion": "A1",
         "number": 277,
+        "rarity": "\u2606\u2606",
+        "pack": "Mewtwo",
         "variant": "A1-123"
     },
     "A1-278": {
         "expansion": "A1",
         "number": 278,
+        "rarity": "\u2606\u2606",
+        "pack": "Charizard",
         "variant": "A1-146"
     },
     "A1-279": {
         "expansion": "A1",
         "number": 279,
+        "rarity": "\u2606\u2606",
+        "pack": "Pikachu",
         "variant": "A1-195"
     },
     "A1-280": {
         "expansion": "A1",
         "number": 280,
+        "rarity": "\u2606\u2606\u2606",
+        "pack": "Charizard",
         "variant": "A1-036"
     },
     "A1-281": {
         "expansion": "A1",
         "number": 281,
+        "rarity": "\u2606\u2606\u2606",
+        "pack": "Pikachu",
         "variant": "A1-096"
     },
     "A1-282": {
         "expansion": "A1",
         "number": 282,
+        "rarity": "\u2606\u2606\u2606",
+        "pack": "Mewtwo",
         "variant": "A1-129"
     },
     "A1-283": {
         "expansion": "A1",
         "number": 283,
+        "rarity": "\u2606\u2606\u2606",
         "name": "Mew",
         "type": "Psychic",
         "stage": 0,
@@ -4925,21 +5449,25 @@
     "A1-284": {
         "expansion": "A1",
         "number": 284,
+        "rarity": "\u265b",
         "variant": "A1-036"
     },
     "A1-285": {
         "expansion": "A1",
         "number": 285,
+        "rarity": "\u265b",
         "variant": "A1-096"
     },
     "A1-286": {
         "expansion": "A1",
         "number": 286,
+        "rarity": "\u265b",
         "variant": "A1-129"
     },
     "PROMO-001": {
         "expansion": "PROMO",
         "number": 1,
+        "rarity": "Shop",
         "name": "Potion",
         "category": "Item",
         "description": "Heal 20 damage from 1 of your Pok\u00e9mon."
@@ -4947,6 +5475,7 @@
     "PROMO-002": {
         "expansion": "PROMO",
         "number": 2,
+        "rarity": "Shop",
         "name": "X Speed",
         "category": "Item",
         "description": "During this turn, the Retreat Cost of your Active Pok\u00e9mon is 1 less."
@@ -4954,6 +5483,7 @@
     "PROMO-003": {
         "expansion": "PROMO",
         "number": 3,
+        "rarity": "Shop",
         "name": "Hand Scope",
         "category": "Item",
         "description": "Your opponent reveals their hand."
@@ -4961,6 +5491,7 @@
     "PROMO-004": {
         "expansion": "PROMO",
         "number": 4,
+        "rarity": "Shop",
         "name": "Pok\u00e9dex",
         "category": "Item",
         "description": "Look at the top 3 cards of your deck."
@@ -4968,6 +5499,7 @@
     "PROMO-005": {
         "expansion": "PROMO",
         "number": 5,
+        "rarity": "Shop",
         "name": "Pok\u00e9 Ball",
         "category": "Item",
         "description": "Put 1 random Basic Pok\u00e9mon from your deck into your hand."
@@ -4975,6 +5507,7 @@
     "PROMO-006": {
         "expansion": "PROMO",
         "number": 6,
+        "rarity": "Shop",
         "name": "Red Card",
         "category": "Item",
         "description": "Your opponent shuffles their hand into their deck and draws 3 cards."
@@ -4982,6 +5515,7 @@
     "PROMO-007": {
         "expansion": "PROMO",
         "number": 7,
+        "rarity": "Shop",
         "name": "Professor's Research",
         "category": "Supporter",
         "description": "Draw 2 cards."
@@ -4989,36 +5523,43 @@
     "PROMO-008": {
         "expansion": "PROMO",
         "number": 8,
+        "rarity": "Campaign",
         "variant": "PROMO-004"
     },
     "PROMO-009": {
         "expansion": "PROMO",
         "number": 9,
+        "rarity": "Premium Missions",
         "variant": "A1-094"
     },
     "PROMO-010": {
         "expansion": "PROMO",
         "number": 10,
+        "rarity": "Premium Missions",
         "variant": "A1-128"
     },
     "PROMO-011": {
         "expansion": "PROMO",
         "number": 11,
+        "rarity": "Wonder Pick",
         "variant": "A1-202"
     },
     "PROMO-012": {
         "expansion": "PROMO",
         "number": 12,
+        "rarity": "Wonder Pick",
         "variant": "A1-196"
     },
     "PROMO-013": {
         "expansion": "PROMO",
         "number": 13,
+        "rarity": "Promo pack",
         "variant": "A1-007"
     },
     "PROMO-014": {
         "expansion": "PROMO",
         "number": 14,
+        "rarity": "Promo pack",
         "name": "Lapras ex",
         "type": "Water",
         "stage": 0,
@@ -5041,16 +5582,19 @@
     "PROMO-015": {
         "expansion": "PROMO",
         "number": 15,
+        "rarity": "Promo pack",
         "variant": "A1-094"
     },
     "PROMO-016": {
         "expansion": "PROMO",
         "number": 16,
+        "rarity": "Promo pack",
         "variant": "A1-113"
     },
     "PROMO-017": {
         "expansion": "PROMO",
         "number": 17,
+        "rarity": "Promo pack",
         "name": "Mankey",
         "type": "Fighting",
         "stage": 0,
@@ -5071,16 +5615,19 @@
     "PROMO-018": {
         "expansion": "PROMO",
         "number": 18,
+        "rarity": "Promo pack",
         "variant": "A1-003"
     },
     "PROMO-019": {
         "expansion": "PROMO",
         "number": 19,
+        "rarity": "Promo pack",
         "variant": "A1-089"
     },
     "PROMO-020": {
         "expansion": "PROMO",
         "number": 20,
+        "rarity": "Promo pack",
         "name": "Haunter",
         "type": "Psychic",
         "stage": 1,
@@ -5102,11 +5649,13 @@
     "PROMO-021": {
         "expansion": "PROMO",
         "number": 21,
+        "rarity": "Promo pack",
         "variant": "A1-150"
     },
     "PROMO-022": {
         "expansion": "PROMO",
         "number": 22,
+        "rarity": "Promo pack",
         "name": "Jigglypuff",
         "type": "Colorless",
         "stage": 0,
@@ -5127,26 +5676,31 @@
     "PROMO-023": {
         "expansion": "PROMO",
         "number": 23,
+        "rarity": "Wonder Pick",
         "variant": "A1-001"
     },
     "PROMO-024": {
         "expansion": "PROMO",
         "number": 24,
+        "rarity": "Wonder Pick",
         "variant": "A1-097"
     },
     "PROMO-025": {
         "expansion": "PROMO",
         "number": 25,
+        "rarity": "Premium Missions",
         "variant": "A1-047"
     },
     "PROMO-026": {
         "expansion": "PROMO",
         "number": 26,
+        "rarity": "Campaign",
         "variant": "A1-094"
     },
     "PROMO-027": {
         "expansion": "PROMO",
         "number": 27,
+        "rarity": "Promo pack",
         "name": "Snivy",
         "type": "Grass",
         "stage": 0,
@@ -5166,16 +5720,19 @@
     "PROMO-028": {
         "expansion": "PROMO",
         "number": 28,
+        "rarity": "Promo pack",
         "variant": "A1a-014"
     },
     "PROMO-029": {
         "expansion": "PROMO",
         "number": 29,
+        "rarity": "Promo pack",
         "variant": "A1-055"
     },
     "PROMO-030": {
         "expansion": "PROMO",
         "number": 30,
+        "rarity": "Promo pack",
         "name": "Eevee",
         "type": "Colorless",
         "stage": 0,
@@ -5196,36 +5753,43 @@
     "PROMO-031": {
         "expansion": "PROMO",
         "number": 31,
+        "rarity": "Promo pack",
         "variant": "A1-213"
     },
     "PROMO-032": {
         "expansion": "PROMO",
         "number": 32,
+        "rarity": "Wonder Pick",
         "variant": "A1-033"
     },
     "PROMO-033": {
         "expansion": "PROMO",
         "number": 33,
+        "rarity": "Wonder Pick",
         "variant": "A1-053"
     },
     "PROMO-034": {
         "expansion": "PROMO",
         "number": 34,
+        "rarity": "Premium Missions",
         "variant": "A2-035"
     },
     "PROMO-035": {
         "expansion": "PROMO",
         "number": 35,
+        "rarity": "Promo pack",
         "variant": "A2-010"
     },
     "PROMO-036": {
         "expansion": "PROMO",
         "number": 36,
+        "rarity": "Promo pack",
         "variant": "A2-057"
     },
     "PROMO-037": {
         "expansion": "PROMO",
         "number": 37,
+        "rarity": "Promo pack",
         "name": "Cresselia ex",
         "type": "Psychic",
         "stage": 0,
@@ -5251,6 +5815,7 @@
     "PROMO-038": {
         "expansion": "PROMO",
         "number": 38,
+        "rarity": "Promo pack",
         "name": "Misdreavus",
         "type": "Psychic",
         "stage": 0,
@@ -5271,21 +5836,111 @@
     "PROMO-039": {
         "expansion": "PROMO",
         "number": 39,
+        "rarity": "Promo pack",
         "variant": "A2-111"
     },
     "PROMO-040": {
         "expansion": "PROMO",
         "number": 40,
+        "rarity": "Wonder Pick",
         "variant": "A2-027"
     },
     "PROMO-041": {
         "expansion": "PROMO",
         "number": 41,
+        "rarity": "Wonder Pick",
         "variant": "A2-063"
+    },
+    "PROMO-042": {
+        "expansion": "PROMO",
+        "number": 42,
+        "rarity": "Premium Missions",
+        "variant": "A2-110"
+    },
+    "PROMO-043": {
+        "expansion": "PROMO",
+        "number": 43,
+        "rarity": "Promo pack",
+        "variant": "A2a-008"
+    },
+    "PROMO-044": {
+        "expansion": "PROMO",
+        "number": 44,
+        "rarity": "Promo pack",
+        "variant": "A2a-026"
+    },
+    "PROMO-045": {
+        "expansion": "PROMO",
+        "number": 45,
+        "rarity": "Promo pack",
+        "name": "Nosepass",
+        "type": "Fighting",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Grass",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Iron Defense",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 0,
+                "description": "Flip a coin. If heads, during your opponent's next turn, prevent all damage done to this Pok\u00e9mon by attacks."
+            }
+        ]
+    },
+    "PROMO-046": {
+        "expansion": "PROMO",
+        "number": 46,
+        "rarity": "Promo pack",
+        "variant": "A2a-045"
+    },
+    "PROMO-047": {
+        "expansion": "PROMO",
+        "number": 47,
+        "rarity": "Promo pack",
+        "name": "Staraptor",
+        "type": "Colorless",
+        "stage": 2,
+        "evolves_from": "Staravia",
+        "hp": 140,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "ability": {
+            "name": "Defensive Whirlwind",
+            "description": "This Pok\u00e9mon takes -30 damage from attacks from {Fighting} Pok\u00e9mon."
+        },
+        "moves": [
+            {
+                "name": "Wing Attack",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 90
+            }
+        ]
+    },
+    "PROMO-048": {
+        "expansion": "PROMO",
+        "number": 48,
+        "rarity": "Wonder Pick",
+        "variant": "A2-050"
+    },
+    "PROMO-049": {
+        "expansion": "PROMO",
+        "number": 49,
+        "rarity": "Wonder Pick",
+        "variant": "A2a-063"
     },
     "A1a-001": {
         "expansion": "A1a",
         "number": 1,
+        "rarity": "\u2662",
+        "pack": "Mew",
         "name": "Exeggcute",
         "type": "Grass",
         "stage": 0,
@@ -5296,7 +5951,7 @@
             {
                 "name": "Growth Spurt",
                 "energy_cost": [
-                    "Grass"
+                    "Colorless"
                 ],
                 "power": 0,
                 "description": "Take a {Grass} Energy from your Energy Zone and attach it to this Pok\u00e9mon."
@@ -5306,6 +5961,8 @@
     "A1a-002": {
         "expansion": "A1a",
         "number": 2,
+        "rarity": "\u2662\u2662",
+        "pack": "Mew",
         "name": "Exeggutor",
         "type": "Grass",
         "stage": 1,
@@ -5330,6 +5987,8 @@
     "A1a-003": {
         "expansion": "A1a",
         "number": 3,
+        "rarity": "\u2662\u2662\u2662\u2662",
+        "pack": "Mew",
         "name": "Celebi ex",
         "type": "Grass",
         "stage": 0,
@@ -5351,6 +6010,8 @@
     "A1a-004": {
         "expansion": "A1a",
         "number": 4,
+        "rarity": "\u2662",
+        "pack": "Mew",
         "name": "Snivy",
         "type": "Grass",
         "stage": 0,
@@ -5371,6 +6032,8 @@
     "A1a-005": {
         "expansion": "A1a",
         "number": 5,
+        "rarity": "\u2662\u2662",
+        "pack": "Mew",
         "name": "Servine",
         "type": "Grass",
         "stage": 1,
@@ -5392,6 +6055,8 @@
     "A1a-006": {
         "expansion": "A1a",
         "number": 6,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Mew",
         "name": "Serperior",
         "type": "Grass",
         "stage": 2,
@@ -5419,6 +6084,8 @@
     "A1a-007": {
         "expansion": "A1a",
         "number": 7,
+        "rarity": "\u2662",
+        "pack": "Mew",
         "name": "Morelull",
         "type": "Grass",
         "stage": 0,
@@ -5438,6 +6105,8 @@
     "A1a-008": {
         "expansion": "A1a",
         "number": 8,
+        "rarity": "\u2662\u2662",
+        "pack": "Mew",
         "name": "Shiinotic",
         "type": "Grass",
         "stage": 1,
@@ -5460,6 +6129,8 @@
     "A1a-009": {
         "expansion": "A1a",
         "number": 9,
+        "rarity": "\u2662\u2662",
+        "pack": "Mew",
         "name": "Dhelmise",
         "type": "Grass",
         "stage": 0,
@@ -5480,6 +6151,8 @@
     "A1a-010": {
         "expansion": "A1a",
         "number": 10,
+        "rarity": "\u2662",
+        "pack": "Mew",
         "name": "Ponyta",
         "type": "Fire",
         "stage": 0,
@@ -5500,6 +6173,8 @@
     "A1a-011": {
         "expansion": "A1a",
         "number": 11,
+        "rarity": "\u2662\u2662",
+        "pack": "Mew",
         "name": "Rapidash",
         "type": "Fire",
         "stage": 1,
@@ -5522,6 +6197,8 @@
     "A1a-012": {
         "expansion": "A1a",
         "number": 12,
+        "rarity": "\u2662\u2662",
+        "pack": "Mew",
         "name": "Magmar",
         "type": "Fire",
         "stage": 0,
@@ -5543,6 +6220,8 @@
     "A1a-013": {
         "expansion": "A1a",
         "number": 13,
+        "rarity": "\u2662",
+        "pack": "Mew",
         "name": "Larvesta",
         "type": "Fire",
         "stage": 0,
@@ -5563,6 +6242,8 @@
     "A1a-014": {
         "expansion": "A1a",
         "number": 14,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Mew",
         "name": "Volcarona",
         "type": "Fire",
         "stage": 1,
@@ -5586,6 +6267,8 @@
     "A1a-015": {
         "expansion": "A1a",
         "number": 15,
+        "rarity": "\u2662",
+        "pack": "Mew",
         "name": "Salandit",
         "type": "Fire",
         "stage": 0,
@@ -5606,6 +6289,8 @@
     "A1a-016": {
         "expansion": "A1a",
         "number": 16,
+        "rarity": "\u2662",
+        "pack": "Mew",
         "name": "Salazzle",
         "type": "Fire",
         "stage": 1,
@@ -5627,6 +6312,8 @@
     "A1a-017": {
         "expansion": "A1a",
         "number": 17,
+        "rarity": "\u2662",
+        "pack": "Mew",
         "name": "Magikarp",
         "type": "Water",
         "stage": 0,
@@ -5647,6 +6334,8 @@
     "A1a-018": {
         "expansion": "A1a",
         "number": 18,
+        "rarity": "\u2662\u2662\u2662\u2662",
+        "pack": "Mew",
         "name": "Gyarados ex",
         "type": "Water",
         "stage": 1,
@@ -5671,6 +6360,8 @@
     "A1a-019": {
         "expansion": "A1a",
         "number": 19,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Mew",
         "name": "Vaporeon",
         "type": "Water",
         "stage": 1,
@@ -5680,7 +6371,7 @@
         "retreat_cost": 2,
         "ability": {
             "name": "Wash Out",
-            "description": "As often as you like during your turn, you may more a {Water} Energy from 1 of your Benched {Water} Pok\u00e9mon to your Active {Water} Pok\u00e9mon."
+            "description": "As often as you like during your turn, you may move a {Water} Energy from 1 of your Benched {Water} Pok\u00e9mon to your Active {Water} Pok\u00e9mon."
         },
         "moves": [
             {
@@ -5697,6 +6388,8 @@
     "A1a-020": {
         "expansion": "A1a",
         "number": 20,
+        "rarity": "\u2662",
+        "pack": "Mew",
         "name": "Finneon",
         "type": "Water",
         "stage": 0,
@@ -5716,6 +6409,8 @@
     "A1a-021": {
         "expansion": "A1a",
         "number": 21,
+        "rarity": "\u2662\u2662",
+        "pack": "Mew",
         "name": "Lumineon",
         "type": "Water",
         "stage": 1,
@@ -5738,6 +6433,8 @@
     "A1a-022": {
         "expansion": "A1a",
         "number": 22,
+        "rarity": "\u2662",
+        "pack": "Mew",
         "name": "Chewtle",
         "type": "Water",
         "stage": 0,
@@ -5751,13 +6448,15 @@
                     "Water",
                     "Colorless"
                 ],
-                "power": 40
+                "power": 30
             }
         ]
     },
     "A1a-023": {
         "expansion": "A1a",
         "number": 23,
+        "rarity": "\u2662\u2662",
+        "pack": "Mew",
         "name": "Drednaw",
         "type": "Water",
         "stage": 1,
@@ -5781,6 +6480,8 @@
     "A1a-024": {
         "expansion": "A1a",
         "number": 24,
+        "rarity": "\u2662",
+        "pack": "Mew",
         "name": "Cramorant",
         "type": "Water",
         "stage": 0,
@@ -5803,6 +6504,8 @@
     "A1a-025": {
         "expansion": "A1a",
         "number": 25,
+        "rarity": "\u2662",
+        "pack": "Mew",
         "name": "Pikachu",
         "type": "Lightning",
         "stage": 0,
@@ -5823,6 +6526,8 @@
     "A1a-026": {
         "expansion": "A1a",
         "number": 26,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Mew",
         "name": "Raichu",
         "type": "Lightning",
         "stage": 1,
@@ -5846,6 +6551,8 @@
     "A1a-027": {
         "expansion": "A1a",
         "number": 27,
+        "rarity": "\u2662\u2662",
+        "pack": "Mew",
         "name": "Electabuzz",
         "type": "Lightning",
         "stage": 0,
@@ -5867,6 +6574,8 @@
     "A1a-028": {
         "expansion": "A1a",
         "number": 28,
+        "rarity": "\u2662",
+        "pack": "Mew",
         "name": "Joltik",
         "type": "Lightning",
         "stage": 0,
@@ -5886,6 +6595,8 @@
     "A1a-029": {
         "expansion": "A1a",
         "number": 29,
+        "rarity": "\u2662\u2662",
+        "pack": "Mew",
         "name": "Galvantula",
         "type": "Lightning",
         "stage": 1,
@@ -5908,6 +6619,8 @@
     "A1a-030": {
         "expansion": "A1a",
         "number": 30,
+        "rarity": "\u2662",
+        "pack": "Mew",
         "name": "Dedenne",
         "type": "Lightning",
         "stage": 0,
@@ -5928,11 +6641,15 @@
     "A1a-031": {
         "expansion": "A1a",
         "number": 31,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Mew",
         "variant": "A1-283"
     },
     "A1a-032": {
         "expansion": "A1a",
         "number": 32,
+        "rarity": "\u2662\u2662\u2662\u2662",
+        "pack": "Mew",
         "name": "Mew ex",
         "type": "Psychic",
         "stage": 0,
@@ -5962,6 +6679,8 @@
     "A1a-033": {
         "expansion": "A1a",
         "number": 33,
+        "rarity": "\u2662\u2662",
+        "pack": "Mew",
         "name": "Sigilyph",
         "type": "Psychic",
         "stage": 0,
@@ -5982,6 +6701,8 @@
     "A1a-034": {
         "expansion": "A1a",
         "number": 34,
+        "rarity": "\u2662",
+        "pack": "Mew",
         "name": "Elgyem",
         "type": "Psychic",
         "stage": 0,
@@ -6001,6 +6722,8 @@
     "A1a-035": {
         "expansion": "A1a",
         "number": 35,
+        "rarity": "\u2662\u2662",
+        "pack": "Mew",
         "name": "Beheeyem",
         "type": "Psychic",
         "stage": 1,
@@ -6022,6 +6745,8 @@
     "A1a-036": {
         "expansion": "A1a",
         "number": 36,
+        "rarity": "\u2662",
+        "pack": "Mew",
         "name": "Flab\u00e9b\u00e9",
         "type": "Psychic",
         "stage": 0,
@@ -6042,6 +6767,8 @@
     "A1a-037": {
         "expansion": "A1a",
         "number": 37,
+        "rarity": "\u2662",
+        "pack": "Mew",
         "name": "Floette",
         "type": "Psychic",
         "stage": 1,
@@ -6063,6 +6790,8 @@
     "A1a-038": {
         "expansion": "A1a",
         "number": 38,
+        "rarity": "\u2662\u2662",
+        "pack": "Mew",
         "name": "Florges",
         "type": "Psychic",
         "stage": 2,
@@ -6085,6 +6814,8 @@
     "A1a-039": {
         "expansion": "A1a",
         "number": 39,
+        "rarity": "\u2662",
+        "pack": "Mew",
         "name": "Swirlix",
         "type": "Psychic",
         "stage": 0,
@@ -6104,6 +6835,8 @@
     "A1a-040": {
         "expansion": "A1a",
         "number": 40,
+        "rarity": "\u2662",
+        "pack": "Mew",
         "name": "Slurpuff",
         "type": "Psychic",
         "stage": 1,
@@ -6125,6 +6858,8 @@
     "A1a-041": {
         "expansion": "A1a",
         "number": 41,
+        "rarity": "\u2662",
+        "pack": "Mew",
         "name": "Mankey",
         "type": "Fighting",
         "stage": 0,
@@ -6145,6 +6880,8 @@
     "A1a-042": {
         "expansion": "A1a",
         "number": 42,
+        "rarity": "\u2662",
+        "pack": "Mew",
         "name": "Primeape",
         "type": "Fighting",
         "stage": 1,
@@ -6165,6 +6902,8 @@
     "A1a-043": {
         "expansion": "A1a",
         "number": 43,
+        "rarity": "\u2662",
+        "pack": "Mew",
         "name": "Geodude",
         "type": "Fighting",
         "stage": 0,
@@ -6185,6 +6924,8 @@
     "A1a-044": {
         "expansion": "A1a",
         "number": 44,
+        "rarity": "\u2662\u2662",
+        "pack": "Mew",
         "name": "Graveler",
         "type": "Fighting",
         "stage": 1,
@@ -6206,6 +6947,8 @@
     "A1a-045": {
         "expansion": "A1a",
         "number": 45,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Mew",
         "name": "Golem",
         "type": "Fighting",
         "stage": 2,
@@ -6230,6 +6973,8 @@
     "A1a-046": {
         "expansion": "A1a",
         "number": 46,
+        "rarity": "\u2662\u2662\u2662\u2662",
+        "pack": "Mew",
         "name": "Aerodactyl ex",
         "type": "Fighting",
         "stage": 1,
@@ -6255,6 +7000,8 @@
     "A1a-047": {
         "expansion": "A1a",
         "number": 47,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Mew",
         "name": "Marshadow",
         "type": "Fighting",
         "stage": 0,
@@ -6276,6 +7023,8 @@
     "A1a-048": {
         "expansion": "A1a",
         "number": 48,
+        "rarity": "\u2662\u2662",
+        "pack": "Mew",
         "name": "Stonjourner",
         "type": "Fighting",
         "stage": 0,
@@ -6297,6 +7046,8 @@
     "A1a-049": {
         "expansion": "A1a",
         "number": 49,
+        "rarity": "\u2662",
+        "pack": "Mew",
         "name": "Koffing",
         "type": "Darkness",
         "stage": 0,
@@ -6317,6 +7068,8 @@
     "A1a-050": {
         "expansion": "A1a",
         "number": 50,
+        "rarity": "\u2662\u2662",
+        "pack": "Mew",
         "name": "Weezing",
         "type": "Darkness",
         "stage": 1,
@@ -6339,6 +7092,8 @@
     "A1a-051": {
         "expansion": "A1a",
         "number": 51,
+        "rarity": "\u2662",
+        "pack": "Mew",
         "name": "Purrloin",
         "type": "Darkness",
         "stage": 0,
@@ -6358,6 +7113,8 @@
     "A1a-052": {
         "expansion": "A1a",
         "number": 52,
+        "rarity": "\u2662",
+        "pack": "Mew",
         "name": "Liepard",
         "type": "Darkness",
         "stage": 1,
@@ -6378,6 +7135,8 @@
     "A1a-053": {
         "expansion": "A1a",
         "number": 53,
+        "rarity": "\u2662",
+        "pack": "Mew",
         "name": "Venipede",
         "type": "Darkness",
         "stage": 0,
@@ -6397,6 +7156,8 @@
     "A1a-054": {
         "expansion": "A1a",
         "number": 54,
+        "rarity": "\u2662",
+        "pack": "Mew",
         "name": "Whirlipede",
         "type": "Darkness",
         "stage": 1,
@@ -6418,6 +7179,8 @@
     "A1a-055": {
         "expansion": "A1a",
         "number": 55,
+        "rarity": "\u2662\u2662",
+        "pack": "Mew",
         "name": "Scolipede",
         "type": "Darkness",
         "stage": 2,
@@ -6440,6 +7203,8 @@
     "A1a-056": {
         "expansion": "A1a",
         "number": 56,
+        "rarity": "\u2662\u2662",
+        "pack": "Mew",
         "name": "Druddigon",
         "type": "Dragon",
         "stage": 0,
@@ -6464,6 +7229,8 @@
     "A1a-057": {
         "expansion": "A1a",
         "number": 57,
+        "rarity": "\u2662",
+        "pack": "Mew",
         "name": "Pidgey",
         "type": "Colorless",
         "stage": 0,
@@ -6483,6 +7250,8 @@
     "A1a-058": {
         "expansion": "A1a",
         "number": 58,
+        "rarity": "\u2662",
+        "pack": "Mew",
         "name": "Pidgeotto",
         "type": "Colorless",
         "stage": 1,
@@ -6505,6 +7274,8 @@
     "A1a-059": {
         "expansion": "A1a",
         "number": 59,
+        "rarity": "\u2662\u2662\u2662\u2662",
+        "pack": "Mew",
         "name": "Pidgeot ex",
         "type": "Colorless",
         "stage": 2,
@@ -6528,6 +7299,8 @@
     "A1a-060": {
         "expansion": "A1a",
         "number": 60,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Mew",
         "name": "Tauros",
         "type": "Colorless",
         "stage": 0,
@@ -6550,6 +7323,8 @@
     "A1a-061": {
         "expansion": "A1a",
         "number": 61,
+        "rarity": "\u2662",
+        "pack": "Mew",
         "name": "Eevee",
         "type": "Colorless",
         "stage": 0,
@@ -6570,6 +7345,8 @@
     "A1a-062": {
         "expansion": "A1a",
         "number": 62,
+        "rarity": "\u2662",
+        "pack": "Mew",
         "name": "Chatot",
         "type": "Colorless",
         "stage": 0,
@@ -6590,11 +7367,15 @@
     "A1a-063": {
         "expansion": "A1a",
         "number": 63,
+        "rarity": "\u2662",
+        "pack": "Mew",
         "variant": "A1-218"
     },
     "A1a-064": {
         "expansion": "A1a",
         "number": 64,
+        "rarity": "\u2662\u2662",
+        "pack": "Mew",
         "name": "Pok\u00e9mon Flute",
         "category": "Item",
         "description": "Put a Basic Pok\u00e9mon from your opponent's discard pile onto their Bench."
@@ -6602,6 +7383,8 @@
     "A1a-065": {
         "expansion": "A1a",
         "number": 65,
+        "rarity": "\u2662\u2662",
+        "pack": "Mew",
         "name": "Mythical Slab",
         "category": "Item",
         "description": "Look at the top card of your deck. If that card is a {Psychic} Pok\u00e9mon, put it into your hand. If it is not a {Psychic} Pok\u00e9mon, put it on the bottom of your deck."
@@ -6609,6 +7392,8 @@
     "A1a-066": {
         "expansion": "A1a",
         "number": 66,
+        "rarity": "\u2662\u2662",
+        "pack": "Mew",
         "name": "Budding Expeditioner",
         "category": "Supporter",
         "description": "Put your Mew ex in the Active Spot into your hand."
@@ -6616,6 +7401,8 @@
     "A1a-067": {
         "expansion": "A1a",
         "number": 67,
+        "rarity": "\u2662\u2662",
+        "pack": "Mew",
         "name": "Blue",
         "category": "Supporter",
         "description": "During your opponent's next turn, all of your Pok\u00e9mon take -10 damage from attacks from your opponent's Pok\u00e9mon."
@@ -6623,6 +7410,8 @@
     "A1a-068": {
         "expansion": "A1a",
         "number": 68,
+        "rarity": "\u2662\u2662",
+        "pack": "Mew",
         "name": "Leaf",
         "category": "Supporter",
         "description": "During this turn, the Retreat Cost of your Active Pok\u00e9mon is 2 less."
@@ -6630,96 +7419,133 @@
     "A1a-069": {
         "expansion": "A1a",
         "number": 69,
+        "rarity": "\u2606",
+        "pack": "Mew",
         "variant": "A1a-002"
     },
     "A1a-070": {
         "expansion": "A1a",
         "number": 70,
+        "rarity": "\u2606",
+        "pack": "Mew",
         "variant": "A1a-006"
     },
     "A1a-071": {
         "expansion": "A1a",
         "number": 71,
+        "rarity": "\u2606",
+        "pack": "Mew",
         "variant": "A1a-015"
     },
     "A1a-072": {
         "expansion": "A1a",
         "number": 72,
+        "rarity": "\u2606",
+        "pack": "Mew",
         "variant": "A1a-019"
     },
     "A1a-073": {
         "expansion": "A1a",
         "number": 73,
+        "rarity": "\u2606",
+        "pack": "Mew",
         "variant": "A1a-030"
     },
     "A1a-074": {
         "expansion": "A1a",
         "number": 74,
+        "rarity": "\u2606",
+        "pack": "Mew",
         "variant": "A1a-047"
     },
     "A1a-075": {
         "expansion": "A1a",
         "number": 75,
+        "rarity": "\u2606\u2606",
+        "pack": "Mew",
         "variant": "A1a-003"
     },
     "A1a-076": {
         "expansion": "A1a",
         "number": 76,
+        "rarity": "\u2606\u2606",
+        "pack": "Mew",
         "variant": "A1a-018"
     },
     "A1a-077": {
         "expansion": "A1a",
         "number": 77,
+        "rarity": "\u2606\u2606",
+        "pack": "Mew",
         "variant": "A1a-032"
     },
     "A1a-078": {
         "expansion": "A1a",
         "number": 78,
+        "rarity": "\u2606\u2606",
+        "pack": "Mew",
         "variant": "A1a-046"
     },
     "A1a-079": {
         "expansion": "A1a",
         "number": 79,
+        "rarity": "\u2606\u2606",
+        "pack": "Mew",
         "variant": "A1a-059"
     },
     "A1a-080": {
         "expansion": "A1a",
         "number": 80,
+        "rarity": "\u2606\u2606",
+        "pack": "Mew",
         "variant": "A1a-066"
     },
     "A1a-081": {
         "expansion": "A1a",
         "number": 81,
+        "rarity": "\u2606\u2606",
+        "pack": "Mew",
         "variant": "A1a-067"
     },
     "A1a-082": {
         "expansion": "A1a",
         "number": 82,
+        "rarity": "\u2606\u2606",
+        "pack": "Mew",
         "variant": "A1a-068"
     },
     "A1a-083": {
         "expansion": "A1a",
         "number": 83,
+        "rarity": "\u2606\u2606",
+        "pack": "Mew",
         "variant": "A1a-032"
     },
     "A1a-084": {
         "expansion": "A1a",
         "number": 84,
+        "rarity": "\u2606\u2606",
+        "pack": "Mew",
         "variant": "A1a-046"
     },
     "A1a-085": {
         "expansion": "A1a",
         "number": 85,
+        "rarity": "\u2606\u2606\u2606",
+        "pack": "Mew",
         "variant": "A1a-003"
     },
     "A1a-086": {
         "expansion": "A1a",
         "number": 86,
+        "rarity": "\u265b",
+        "pack": "Mew",
         "variant": "A1a-032"
     },
     "A2-001": {
         "expansion": "A2",
         "number": 1,
+        "rarity": "\u2662",
         "name": "Oddish",
         "type": "Grass",
         "stage": 0,
@@ -6740,6 +7566,7 @@
     "A2-002": {
         "expansion": "A2",
         "number": 2,
+        "rarity": "\u2662",
         "name": "Gloom",
         "type": "Grass",
         "stage": 1,
@@ -6760,6 +7587,7 @@
     "A2-003": {
         "expansion": "A2",
         "number": 3,
+        "rarity": "\u2662\u2662",
         "name": "Bellossom",
         "type": "Grass",
         "stage": 2,
@@ -6781,6 +7609,8 @@
     "A2-004": {
         "expansion": "A2",
         "number": 4,
+        "rarity": "\u2662",
+        "pack": "Dialga",
         "name": "Tangela",
         "type": "Grass",
         "stage": 0,
@@ -6801,6 +7631,8 @@
     "A2-005": {
         "expansion": "A2",
         "number": 5,
+        "rarity": "\u2662\u2662",
+        "pack": "Dialga",
         "name": "Tangrowth",
         "type": "Grass",
         "stage": 1,
@@ -6825,6 +7657,8 @@
     "A2-006": {
         "expansion": "A2",
         "number": 6,
+        "rarity": "\u2662",
+        "pack": "Dialga",
         "name": "Yanma",
         "type": "Grass",
         "stage": 0,
@@ -6844,6 +7678,8 @@
     "A2-007": {
         "expansion": "A2",
         "number": 7,
+        "rarity": "\u2662\u2662\u2662\u2662",
+        "pack": "Dialga",
         "name": "Yanmega ex",
         "type": "Grass",
         "stage": 1,
@@ -6867,6 +7703,7 @@
     "A2-008": {
         "expansion": "A2",
         "number": 8,
+        "rarity": "\u2662",
         "name": "Roselia",
         "type": "Grass",
         "stage": 0,
@@ -6886,6 +7723,7 @@
     "A2-009": {
         "expansion": "A2",
         "number": 9,
+        "rarity": "\u2662\u2662",
         "name": "Roserade",
         "type": "Grass",
         "stage": 1,
@@ -6908,6 +7746,8 @@
     "A2-010": {
         "expansion": "A2",
         "number": 10,
+        "rarity": "\u2662",
+        "pack": "Palkia",
         "name": "Turtwig",
         "type": "Grass",
         "stage": 0,
@@ -6928,6 +7768,8 @@
     "A2-011": {
         "expansion": "A2",
         "number": 11,
+        "rarity": "\u2662\u2662",
+        "pack": "Palkia",
         "name": "Grotle",
         "type": "Grass",
         "stage": 1,
@@ -6950,6 +7792,8 @@
     "A2-012": {
         "expansion": "A2",
         "number": 12,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Palkia",
         "name": "Torterra",
         "type": "Grass",
         "stage": 2,
@@ -6974,6 +7818,8 @@
     "A2-013": {
         "expansion": "A2",
         "number": 13,
+        "rarity": "\u2662",
+        "pack": "Palkia",
         "name": "Kricketot",
         "type": "Grass",
         "stage": 0,
@@ -6993,6 +7839,8 @@
     "A2-014": {
         "expansion": "A2",
         "number": 14,
+        "rarity": "\u2662",
+        "pack": "Palkia",
         "name": "Kricketune",
         "type": "Grass",
         "stage": 1,
@@ -7015,6 +7863,7 @@
     "A2-015": {
         "expansion": "A2",
         "number": 15,
+        "rarity": "\u2662",
         "name": "Burmy",
         "type": "Grass",
         "stage": 0,
@@ -7034,6 +7883,7 @@
     "A2-016": {
         "expansion": "A2",
         "number": 16,
+        "rarity": "\u2662",
         "name": "Wormadam",
         "type": "Grass",
         "stage": 1,
@@ -7057,6 +7907,8 @@
     "A2-017": {
         "expansion": "A2",
         "number": 17,
+        "rarity": "\u2662",
+        "pack": "Dialga",
         "name": "Combee",
         "type": "Grass",
         "stage": 0,
@@ -7077,6 +7929,8 @@
     "A2-018": {
         "expansion": "A2",
         "number": 18,
+        "rarity": "\u2662\u2662",
+        "pack": "Dialga",
         "name": "Vespiquen",
         "type": "Grass",
         "stage": 1,
@@ -7098,6 +7952,8 @@
     "A2-019": {
         "expansion": "A2",
         "number": 19,
+        "rarity": "\u2662\u2662",
+        "pack": "Palkia",
         "name": "Carnivine",
         "type": "Grass",
         "stage": 0,
@@ -7120,6 +7976,8 @@
     "A2-020": {
         "expansion": "A2",
         "number": 20,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Dialga",
         "name": "Leafeon",
         "type": "Grass",
         "stage": 1,
@@ -7142,6 +8000,7 @@
     "A2-021": {
         "expansion": "A2",
         "number": 21,
+        "rarity": "\u2662",
         "name": "Mow Rotom",
         "type": "Grass",
         "stage": 0,
@@ -7163,6 +8022,8 @@
     "A2-022": {
         "expansion": "A2",
         "number": 22,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Dialga",
         "name": "Shaymin",
         "type": "Grass",
         "stage": 0,
@@ -7187,6 +8048,8 @@
     "A2-023": {
         "expansion": "A2",
         "number": 23,
+        "rarity": "\u2662",
+        "pack": "Palkia",
         "name": "Magmar",
         "type": "Fire",
         "stage": 0,
@@ -7207,6 +8070,8 @@
     "A2-024": {
         "expansion": "A2",
         "number": 24,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Palkia",
         "name": "Magmortar",
         "type": "Fire",
         "stage": 1,
@@ -7231,6 +8096,7 @@
     "A2-025": {
         "expansion": "A2",
         "number": 25,
+        "rarity": "\u2662",
         "name": "Slugma",
         "type": "Fire",
         "stage": 0,
@@ -7250,6 +8116,7 @@
     "A2-026": {
         "expansion": "A2",
         "number": 26,
+        "rarity": "\u2662\u2662",
         "name": "Magcargo",
         "type": "Fire",
         "stage": 1,
@@ -7272,6 +8139,8 @@
     "A2-027": {
         "expansion": "A2",
         "number": 27,
+        "rarity": "\u2662",
+        "pack": "Palkia",
         "name": "Chimchar",
         "type": "Fire",
         "stage": 0,
@@ -7291,6 +8160,8 @@
     "A2-028": {
         "expansion": "A2",
         "number": 28,
+        "rarity": "\u2662\u2662",
+        "pack": "Palkia",
         "name": "Monferno",
         "type": "Fire",
         "stage": 1,
@@ -7311,6 +8182,8 @@
     "A2-029": {
         "expansion": "A2",
         "number": 29,
+        "rarity": "\u2662\u2662\u2662\u2662",
+        "pack": "Palkia",
         "name": "Infernape ex",
         "type": "Fire",
         "stage": 2,
@@ -7333,6 +8206,7 @@
     "A2-030": {
         "expansion": "A2",
         "number": 30,
+        "rarity": "\u2662",
         "name": "Heat Rotom",
         "type": "Fire",
         "stage": 0,
@@ -7354,6 +8228,8 @@
     "A2-031": {
         "expansion": "A2",
         "number": 31,
+        "rarity": "\u2662",
+        "pack": "Dialga",
         "name": "Swinub",
         "type": "Water",
         "stage": 0,
@@ -7374,6 +8250,8 @@
     "A2-032": {
         "expansion": "A2",
         "number": 32,
+        "rarity": "\u2662\u2662",
+        "pack": "Dialga",
         "name": "Piloswine",
         "type": "Water",
         "stage": 1,
@@ -7400,6 +8278,8 @@
     "A2-033": {
         "expansion": "A2",
         "number": 33,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Dialga",
         "name": "Mamoswine",
         "type": "Water",
         "stage": 2,
@@ -7427,6 +8307,8 @@
     "A2-034": {
         "expansion": "A2",
         "number": 34,
+        "rarity": "\u2662\u2662",
+        "pack": "Palkia",
         "name": "Regice",
         "type": "Water",
         "stage": 0,
@@ -7451,6 +8333,8 @@
     "A2-035": {
         "expansion": "A2",
         "number": 35,
+        "rarity": "\u2662",
+        "pack": "Palkia",
         "name": "Piplup",
         "type": "Water",
         "stage": 0,
@@ -7471,6 +8355,8 @@
     "A2-036": {
         "expansion": "A2",
         "number": 36,
+        "rarity": "\u2662\u2662",
+        "pack": "Palkia",
         "name": "Prinplup",
         "type": "Water",
         "stage": 1,
@@ -7492,6 +8378,8 @@
     "A2-037": {
         "expansion": "A2",
         "number": 37,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Palkia",
         "name": "Empoleon",
         "type": "Water",
         "stage": 2,
@@ -7515,6 +8403,7 @@
     "A2-038": {
         "expansion": "A2",
         "number": 38,
+        "rarity": "\u2662",
         "name": "Buizel",
         "type": "Water",
         "stage": 0,
@@ -7534,6 +8423,7 @@
     "A2-039": {
         "expansion": "A2",
         "number": 39,
+        "rarity": "\u2662\u2662",
         "name": "Floatzel",
         "type": "Water",
         "stage": 1,
@@ -7555,6 +8445,8 @@
     "A2-040": {
         "expansion": "A2",
         "number": 40,
+        "rarity": "\u2662",
+        "pack": "Palkia",
         "name": "Shellos",
         "type": "Water",
         "stage": 0,
@@ -7575,6 +8467,8 @@
     "A2-041": {
         "expansion": "A2",
         "number": 41,
+        "rarity": "\u2662\u2662",
+        "pack": "Palkia",
         "name": "Gastrodon",
         "type": "Water",
         "stage": 1,
@@ -7598,6 +8492,7 @@
     "A2-042": {
         "expansion": "A2",
         "number": 42,
+        "rarity": "\u2662",
         "name": "Finneon",
         "type": "Water",
         "stage": 0,
@@ -7618,6 +8513,7 @@
     "A2-043": {
         "expansion": "A2",
         "number": 43,
+        "rarity": "\u2662\u2662",
         "name": "Lumineon",
         "type": "Water",
         "stage": 1,
@@ -7638,6 +8534,7 @@
     "A2-044": {
         "expansion": "A2",
         "number": 44,
+        "rarity": "\u2662",
         "name": "Snover",
         "type": "Water",
         "stage": 0,
@@ -7658,6 +8555,7 @@
     "A2-045": {
         "expansion": "A2",
         "number": 45,
+        "rarity": "\u2662\u2662",
         "name": "Abomasnow",
         "type": "Water",
         "stage": 1,
@@ -7681,6 +8579,8 @@
     "A2-046": {
         "expansion": "A2",
         "number": 46,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Palkia",
         "name": "Glaceon",
         "type": "Water",
         "stage": 1,
@@ -7703,6 +8603,7 @@
     "A2-047": {
         "expansion": "A2",
         "number": 47,
+        "rarity": "\u2662",
         "name": "Wash Rotom",
         "type": "Water",
         "stage": 0,
@@ -7722,6 +8623,7 @@
     "A2-048": {
         "expansion": "A2",
         "number": 48,
+        "rarity": "\u2662",
         "name": "Frost Rotom",
         "type": "Water",
         "stage": 0,
@@ -7743,6 +8645,8 @@
     "A2-049": {
         "expansion": "A2",
         "number": 49,
+        "rarity": "\u2662\u2662\u2662\u2662",
+        "pack": "Palkia",
         "name": "Palkia ex",
         "type": "Water",
         "stage": 0,
@@ -7773,6 +8677,8 @@
     "A2-050": {
         "expansion": "A2",
         "number": 50,
+        "rarity": "\u2662\u2662",
+        "pack": "Palkia",
         "name": "Manaphy",
         "type": "Water",
         "stage": 0,
@@ -7793,6 +8699,7 @@
     "A2-051": {
         "expansion": "A2",
         "number": 51,
+        "rarity": "\u2662",
         "name": "Magnemite",
         "type": "Lightning",
         "stage": 0,
@@ -7812,6 +8719,7 @@
     "A2-052": {
         "expansion": "A2",
         "number": 52,
+        "rarity": "\u2662\u2662",
         "name": "Magneton",
         "type": "Lightning",
         "stage": 1,
@@ -7833,6 +8741,7 @@
     "A2-053": {
         "expansion": "A2",
         "number": 53,
+        "rarity": "\u2662\u2662\u2662",
         "name": "Magnezone",
         "type": "Lightning",
         "stage": 2,
@@ -7856,6 +8765,7 @@
     "A2-054": {
         "expansion": "A2",
         "number": 54,
+        "rarity": "\u2662",
         "name": "Voltorb",
         "type": "Lightning",
         "stage": 0,
@@ -7876,6 +8786,7 @@
     "A2-055": {
         "expansion": "A2",
         "number": 55,
+        "rarity": "\u2662\u2662",
         "name": "Electrode",
         "type": "Lightning",
         "stage": 1,
@@ -7896,6 +8807,8 @@
     "A2-056": {
         "expansion": "A2",
         "number": 56,
+        "rarity": "\u2662",
+        "pack": "Dialga",
         "name": "Electabuzz",
         "type": "Lightning",
         "stage": 0,
@@ -7916,6 +8829,8 @@
     "A2-057": {
         "expansion": "A2",
         "number": 57,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Dialga",
         "name": "Electivire",
         "type": "Lightning",
         "stage": 1,
@@ -7938,6 +8853,8 @@
     "A2-058": {
         "expansion": "A2",
         "number": 58,
+        "rarity": "\u2662",
+        "pack": "Dialga",
         "name": "Shinx",
         "type": "Lightning",
         "stage": 0,
@@ -7958,6 +8875,8 @@
     "A2-059": {
         "expansion": "A2",
         "number": 59,
+        "rarity": "\u2662\u2662",
+        "pack": "Dialga",
         "name": "Luxio",
         "type": "Lightning",
         "stage": 1,
@@ -7979,6 +8898,8 @@
     "A2-060": {
         "expansion": "A2",
         "number": 60,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Dialga",
         "name": "Luxray",
         "type": "Lightning",
         "stage": 2,
@@ -8002,6 +8923,8 @@
     "A2-061": {
         "expansion": "A2",
         "number": 61,
+        "rarity": "\u2662\u2662\u2662\u2662",
+        "pack": "Dialga",
         "name": "Pachirisu ex",
         "type": "Lightning",
         "stage": 0,
@@ -8023,6 +8946,8 @@
     "A2-062": {
         "expansion": "A2",
         "number": 62,
+        "rarity": "\u2662",
+        "pack": "Palkia",
         "name": "Rotom",
         "type": "Lightning",
         "stage": 0,
@@ -8043,6 +8968,7 @@
     "A2-063": {
         "expansion": "A2",
         "number": 63,
+        "rarity": "\u2662",
         "name": "Togepi",
         "type": "Psychic",
         "stage": 0,
@@ -8062,6 +8988,7 @@
     "A2-064": {
         "expansion": "A2",
         "number": 64,
+        "rarity": "\u2662\u2662",
         "name": "Togetic",
         "type": "Psychic",
         "stage": 1,
@@ -8082,6 +9009,7 @@
     "A2-065": {
         "expansion": "A2",
         "number": 65,
+        "rarity": "\u2662\u2662\u2662",
         "name": "Togekiss",
         "type": "Psychic",
         "stage": 2,
@@ -8104,6 +9032,8 @@
     "A2-066": {
         "expansion": "A2",
         "number": 66,
+        "rarity": "\u2662",
+        "pack": "Palkia",
         "name": "Misdreavus",
         "type": "Psychic",
         "stage": 0,
@@ -8123,6 +9053,8 @@
     "A2-067": {
         "expansion": "A2",
         "number": 67,
+        "rarity": "\u2662\u2662\u2662\u2662",
+        "pack": "Palkia",
         "name": "Mismagius ex",
         "type": "Psychic",
         "stage": 1,
@@ -8145,6 +9077,8 @@
     "A2-068": {
         "expansion": "A2",
         "number": 68,
+        "rarity": "\u2662",
+        "pack": "Dialga",
         "name": "Ralts",
         "type": "Psychic",
         "stage": 0,
@@ -8165,6 +9099,8 @@
     "A2-069": {
         "expansion": "A2",
         "number": 69,
+        "rarity": "\u2662",
+        "pack": "Dialga",
         "name": "Kirlia",
         "type": "Psychic",
         "stage": 1,
@@ -8185,6 +9121,8 @@
     "A2-070": {
         "expansion": "A2",
         "number": 70,
+        "rarity": "\u2662",
+        "pack": "Dialga",
         "name": "Duskull",
         "type": "Psychic",
         "stage": 0,
@@ -8204,6 +9142,8 @@
     "A2-071": {
         "expansion": "A2",
         "number": 71,
+        "rarity": "\u2662\u2662",
+        "pack": "Dialga",
         "name": "Dusclops",
         "type": "Psychic",
         "stage": 1,
@@ -8226,6 +9166,8 @@
     "A2-072": {
         "expansion": "A2",
         "number": 72,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Dialga",
         "name": "Dusknoir",
         "type": "Psychic",
         "stage": 2,
@@ -8252,6 +9194,8 @@
     "A2-073": {
         "expansion": "A2",
         "number": 73,
+        "rarity": "\u2662",
+        "pack": "Dialga",
         "name": "Drifloon",
         "type": "Psychic",
         "stage": 0,
@@ -8272,6 +9216,8 @@
     "A2-074": {
         "expansion": "A2",
         "number": 74,
+        "rarity": "\u2662\u2662",
+        "pack": "Dialga",
         "name": "Drifblim",
         "type": "Psychic",
         "stage": 1,
@@ -8293,6 +9239,7 @@
     "A2-075": {
         "expansion": "A2",
         "number": 75,
+        "rarity": "\u2662\u2662",
         "name": "Uxie",
         "type": "Psychic",
         "stage": 0,
@@ -8313,6 +9260,7 @@
     "A2-076": {
         "expansion": "A2",
         "number": 76,
+        "rarity": "\u2662\u2662\u2662",
         "name": "Mesprit",
         "type": "Psychic",
         "stage": 0,
@@ -8335,6 +9283,7 @@
     "A2-077": {
         "expansion": "A2",
         "number": 77,
+        "rarity": "\u2662\u2662",
         "name": "Azelf",
         "type": "Psychic",
         "stage": 0,
@@ -8355,6 +9304,8 @@
     "A2-078": {
         "expansion": "A2",
         "number": 78,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Palkia",
         "name": "Giratina",
         "type": "Psychic",
         "stage": 0,
@@ -8380,6 +9331,8 @@
     "A2-079": {
         "expansion": "A2",
         "number": 79,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Palkia",
         "name": "Cresselia",
         "type": "Psychic",
         "stage": 0,
@@ -8401,6 +9354,8 @@
     "A2-080": {
         "expansion": "A2",
         "number": 80,
+        "rarity": "\u2662",
+        "pack": "Palkia",
         "name": "Rhyhorn",
         "type": "Fighting",
         "stage": 0,
@@ -8421,6 +9376,8 @@
     "A2-081": {
         "expansion": "A2",
         "number": 81,
+        "rarity": "\u2662\u2662",
+        "pack": "Palkia",
         "name": "Rhydon",
         "type": "Fighting",
         "stage": 1,
@@ -8443,6 +9400,8 @@
     "A2-082": {
         "expansion": "A2",
         "number": 82,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Palkia",
         "name": "Rhyperior",
         "type": "Fighting",
         "stage": 2,
@@ -8467,6 +9426,8 @@
     "A2-083": {
         "expansion": "A2",
         "number": 83,
+        "rarity": "\u2662",
+        "pack": "Dialga",
         "name": "Gligar",
         "type": "Fighting",
         "stage": 0,
@@ -8486,6 +9447,8 @@
     "A2-084": {
         "expansion": "A2",
         "number": 84,
+        "rarity": "\u2662\u2662",
+        "pack": "Dialga",
         "name": "Gliscor",
         "type": "Fighting",
         "stage": 1,
@@ -8507,6 +9470,8 @@
     "A2-085": {
         "expansion": "A2",
         "number": 85,
+        "rarity": "\u2662",
+        "pack": "Dialga",
         "name": "Hitmontop",
         "type": "Fighting",
         "stage": 0,
@@ -8527,6 +9492,7 @@
     "A2-086": {
         "expansion": "A2",
         "number": 86,
+        "rarity": "\u2662",
         "name": "Nosepass",
         "type": "Fighting",
         "stage": 0,
@@ -8547,6 +9513,7 @@
     "A2-087": {
         "expansion": "A2",
         "number": 87,
+        "rarity": "\u2662\u2662",
         "name": "Regirock",
         "type": "Fighting",
         "stage": 0,
@@ -8573,6 +9540,8 @@
     "A2-088": {
         "expansion": "A2",
         "number": 88,
+        "rarity": "\u2662\u2662",
+        "pack": "Dialga",
         "name": "Cranidos",
         "type": "Fighting",
         "stage": 1,
@@ -8593,6 +9562,8 @@
     "A2-089": {
         "expansion": "A2",
         "number": 89,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Dialga",
         "name": "Rampardos",
         "type": "Fighting",
         "stage": 2,
@@ -8614,6 +9585,8 @@
     "A2-090": {
         "expansion": "A2",
         "number": 90,
+        "rarity": "\u2662",
+        "pack": "Dialga",
         "name": "Wormadam",
         "type": "Fighting",
         "stage": 1,
@@ -8636,6 +9609,8 @@
     "A2-091": {
         "expansion": "A2",
         "number": 91,
+        "rarity": "\u2662",
+        "pack": "Dialga",
         "name": "Riolu",
         "type": "Fighting",
         "stage": 0,
@@ -8655,6 +9630,8 @@
     "A2-092": {
         "expansion": "A2",
         "number": 92,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Dialga",
         "name": "Lucario",
         "type": "Fighting",
         "stage": 1,
@@ -8680,6 +9657,8 @@
     "A2-093": {
         "expansion": "A2",
         "number": 93,
+        "rarity": "\u2662",
+        "pack": "Palkia",
         "name": "Hippopotas",
         "type": "Fighting",
         "stage": 0,
@@ -8701,6 +9680,8 @@
     "A2-094": {
         "expansion": "A2",
         "number": 94,
+        "rarity": "\u2662\u2662",
+        "pack": "Palkia",
         "name": "Hippowdon",
         "type": "Fighting",
         "stage": 1,
@@ -8724,6 +9705,8 @@
     "A2-095": {
         "expansion": "A2",
         "number": 95,
+        "rarity": "\u2662\u2662\u2662\u2662",
+        "pack": "Dialga",
         "name": "Gallade ex",
         "type": "Fighting",
         "stage": 2,
@@ -8746,6 +9729,8 @@
     "A2-096": {
         "expansion": "A2",
         "number": 96,
+        "rarity": "\u2662",
+        "pack": "Dialga",
         "name": "Murkrow",
         "type": "Darkness",
         "stage": 0,
@@ -8765,6 +9750,8 @@
     "A2-097": {
         "expansion": "A2",
         "number": 97,
+        "rarity": "\u2662\u2662",
+        "pack": "Dialga",
         "name": "Honchkrow",
         "type": "Darkness",
         "stage": 1,
@@ -8787,6 +9774,8 @@
     "A2-098": {
         "expansion": "A2",
         "number": 98,
+        "rarity": "\u2662",
+        "pack": "Palkia",
         "name": "Sneasel",
         "type": "Darkness",
         "stage": 0,
@@ -8807,6 +9796,8 @@
     "A2-099": {
         "expansion": "A2",
         "number": 99,
+        "rarity": "\u2662\u2662\u2662\u2662",
+        "pack": "Palkia",
         "name": "Weavile ex",
         "type": "Darkness",
         "stage": 1,
@@ -8828,6 +9819,7 @@
     "A2-100": {
         "expansion": "A2",
         "number": 100,
+        "rarity": "\u2662",
         "name": "Poochyena",
         "type": "Darkness",
         "stage": 0,
@@ -8847,6 +9839,7 @@
     "A2-101": {
         "expansion": "A2",
         "number": 101,
+        "rarity": "\u2662\u2662",
         "name": "Mightyena",
         "type": "Darkness",
         "stage": 1,
@@ -8868,6 +9861,8 @@
     "A2-102": {
         "expansion": "A2",
         "number": 102,
+        "rarity": "\u2662",
+        "pack": "Dialga",
         "name": "Stunky",
         "type": "Darkness",
         "stage": 0,
@@ -8887,6 +9882,8 @@
     "A2-103": {
         "expansion": "A2",
         "number": 103,
+        "rarity": "\u2662\u2662",
+        "pack": "Dialga",
         "name": "Skuntank",
         "type": "Darkness",
         "stage": 1,
@@ -8909,6 +9906,8 @@
     "A2-104": {
         "expansion": "A2",
         "number": 104,
+        "rarity": "\u2662\u2662",
+        "pack": "Palkia",
         "name": "Spiritomb",
         "type": "Darkness",
         "stage": 0,
@@ -8929,6 +9928,7 @@
     "A2-105": {
         "expansion": "A2",
         "number": 105,
+        "rarity": "\u2662",
         "name": "Skorupi",
         "type": "Darkness",
         "stage": 0,
@@ -8949,6 +9949,7 @@
     "A2-106": {
         "expansion": "A2",
         "number": 106,
+        "rarity": "\u2662\u2662",
         "name": "Drapion",
         "type": "Darkness",
         "stage": 1,
@@ -8972,6 +9973,8 @@
     "A2-107": {
         "expansion": "A2",
         "number": 107,
+        "rarity": "\u2662",
+        "pack": "Dialga",
         "name": "Croagunk",
         "type": "Darkness",
         "stage": 0,
@@ -8993,6 +9996,8 @@
     "A2-108": {
         "expansion": "A2",
         "number": 108,
+        "rarity": "\u2662\u2662",
+        "pack": "Dialga",
         "name": "Toxicroak",
         "type": "Darkness",
         "stage": 1,
@@ -9015,6 +10020,8 @@
     "A2-109": {
         "expansion": "A2",
         "number": 109,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Dialga",
         "name": "Darkrai",
         "type": "Darkness",
         "stage": 0,
@@ -9037,6 +10044,8 @@
     "A2-110": {
         "expansion": "A2",
         "number": 110,
+        "rarity": "\u2662\u2662\u2662\u2662",
+        "pack": "Dialga",
         "name": "Darkrai ex",
         "type": "Darkness",
         "stage": 0,
@@ -9062,6 +10071,7 @@
     "A2-111": {
         "expansion": "A2",
         "number": 111,
+        "rarity": "\u2662\u2662",
         "name": "Skarmory",
         "type": "Metal",
         "stage": 0,
@@ -9082,6 +10092,8 @@
     "A2-112": {
         "expansion": "A2",
         "number": 112,
+        "rarity": "\u2662\u2662",
+        "pack": "Dialga",
         "name": "Registeel",
         "type": "Metal",
         "stage": 0,
@@ -9103,6 +10115,8 @@
     "A2-113": {
         "expansion": "A2",
         "number": 113,
+        "rarity": "\u2662\u2662",
+        "pack": "Palkia",
         "name": "Shieldon",
         "type": "Metal",
         "stage": 1,
@@ -9124,6 +10138,8 @@
     "A2-114": {
         "expansion": "A2",
         "number": 114,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Palkia",
         "name": "Bastiodon",
         "type": "Metal",
         "stage": 2,
@@ -9150,6 +10166,8 @@
     "A2-115": {
         "expansion": "A2",
         "number": 115,
+        "rarity": "\u2662",
+        "pack": "Palkia",
         "name": "Wormadam",
         "type": "Metal",
         "stage": 1,
@@ -9172,6 +10190,8 @@
     "A2-116": {
         "expansion": "A2",
         "number": 116,
+        "rarity": "\u2662",
+        "pack": "Dialga",
         "name": "Bronzor",
         "type": "Metal",
         "stage": 0,
@@ -9192,6 +10212,8 @@
     "A2-117": {
         "expansion": "A2",
         "number": 117,
+        "rarity": "\u2662\u2662",
+        "pack": "Dialga",
         "name": "Bronzong",
         "type": "Metal",
         "stage": 1,
@@ -9215,6 +10237,7 @@
     "A2-118": {
         "expansion": "A2",
         "number": 118,
+        "rarity": "\u2662\u2662",
         "name": "Probopass",
         "type": "Metal",
         "stage": 1,
@@ -9239,6 +10262,8 @@
     "A2-119": {
         "expansion": "A2",
         "number": 119,
+        "rarity": "\u2662\u2662\u2662\u2662",
+        "pack": "Dialga",
         "name": "Dialga ex",
         "type": "Metal",
         "stage": 0,
@@ -9270,6 +10295,8 @@
     "A2-120": {
         "expansion": "A2",
         "number": 120,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Dialga",
         "name": "Heatran",
         "type": "Metal",
         "stage": 0,
@@ -9292,6 +10319,8 @@
     "A2-121": {
         "expansion": "A2",
         "number": 121,
+        "rarity": "\u2662",
+        "pack": "Palkia",
         "name": "Gible",
         "type": "Dragon",
         "stage": 0,
@@ -9310,6 +10339,8 @@
     "A2-122": {
         "expansion": "A2",
         "number": 122,
+        "rarity": "\u2662\u2662",
+        "pack": "Palkia",
         "name": "Gabite",
         "type": "Dragon",
         "stage": 1,
@@ -9330,6 +10361,8 @@
     "A2-123": {
         "expansion": "A2",
         "number": 123,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Palkia",
         "name": "Garchomp",
         "type": "Dragon",
         "stage": 2,
@@ -9354,6 +10387,8 @@
     "A2-124": {
         "expansion": "A2",
         "number": 124,
+        "rarity": "\u2662",
+        "pack": "Palkia",
         "name": "Lickitung",
         "type": "Colorless",
         "stage": 0,
@@ -9375,6 +10410,8 @@
     "A2-125": {
         "expansion": "A2",
         "number": 125,
+        "rarity": "\u2662\u2662\u2662\u2662",
+        "pack": "Palkia",
         "name": "Lickilicky ex",
         "type": "Colorless",
         "stage": 1,
@@ -9399,6 +10436,7 @@
     "A2-126": {
         "expansion": "A2",
         "number": 126,
+        "rarity": "\u2662",
         "name": "Eevee",
         "type": "Colorless",
         "stage": 0,
@@ -9419,6 +10457,8 @@
     "A2-127": {
         "expansion": "A2",
         "number": 127,
+        "rarity": "\u2662",
+        "pack": "Palkia",
         "name": "Porygon",
         "type": "Colorless",
         "stage": 0,
@@ -9438,6 +10478,8 @@
     "A2-128": {
         "expansion": "A2",
         "number": 128,
+        "rarity": "\u2662\u2662",
+        "pack": "Palkia",
         "name": "Porygon2",
         "type": "Colorless",
         "stage": 1,
@@ -9458,6 +10500,8 @@
     "A2-129": {
         "expansion": "A2",
         "number": 129,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Palkia",
         "name": "Porygon-Z",
         "type": "Colorless",
         "stage": 2,
@@ -9481,6 +10525,7 @@
     "A2-130": {
         "expansion": "A2",
         "number": 130,
+        "rarity": "\u2662",
         "name": "Aipom",
         "type": "Colorless",
         "stage": 0,
@@ -9500,6 +10545,7 @@
     "A2-131": {
         "expansion": "A2",
         "number": 131,
+        "rarity": "\u2662",
         "name": "Ambipom",
         "type": "Colorless",
         "stage": 1,
@@ -9521,6 +10567,8 @@
     "A2-132": {
         "expansion": "A2",
         "number": 132,
+        "rarity": "\u2662",
+        "pack": "Palkia",
         "name": "Starly",
         "type": "Colorless",
         "stage": 0,
@@ -9541,6 +10589,8 @@
     "A2-133": {
         "expansion": "A2",
         "number": 133,
+        "rarity": "\u2662",
+        "pack": "Palkia",
         "name": "Staravia",
         "type": "Colorless",
         "stage": 1,
@@ -9562,6 +10612,8 @@
     "A2-134": {
         "expansion": "A2",
         "number": 134,
+        "rarity": "\u2662\u2662",
+        "pack": "Palkia",
         "name": "Staraptor",
         "type": "Colorless",
         "stage": 2,
@@ -9585,6 +10637,8 @@
     "A2-135": {
         "expansion": "A2",
         "number": 135,
+        "rarity": "\u2662",
+        "pack": "Dialga",
         "name": "Bidoof",
         "type": "Colorless",
         "stage": 0,
@@ -9606,6 +10660,8 @@
     "A2-136": {
         "expansion": "A2",
         "number": 136,
+        "rarity": "\u2662",
+        "pack": "Dialga",
         "name": "Bibarel",
         "type": "Colorless",
         "stage": 1,
@@ -9627,6 +10683,8 @@
     "A2-137": {
         "expansion": "A2",
         "number": 137,
+        "rarity": "\u2662",
+        "pack": "Dialga",
         "name": "Buneary",
         "type": "Colorless",
         "stage": 0,
@@ -9646,6 +10704,8 @@
     "A2-138": {
         "expansion": "A2",
         "number": 138,
+        "rarity": "\u2662",
+        "pack": "Dialga",
         "name": "Lopunny",
         "type": "Colorless",
         "stage": 1,
@@ -9667,6 +10727,8 @@
     "A2-139": {
         "expansion": "A2",
         "number": 139,
+        "rarity": "\u2662",
+        "pack": "Palkia",
         "name": "Glameow",
         "type": "Colorless",
         "stage": 0,
@@ -9687,6 +10749,8 @@
     "A2-140": {
         "expansion": "A2",
         "number": 140,
+        "rarity": "\u2662\u2662",
+        "pack": "Palkia",
         "name": "Purugly",
         "type": "Colorless",
         "stage": 1,
@@ -9710,6 +10774,8 @@
     "A2-141": {
         "expansion": "A2",
         "number": 141,
+        "rarity": "\u2662",
+        "pack": "Palkia",
         "name": "Chatot",
         "type": "Colorless",
         "stage": 0,
@@ -9730,6 +10796,7 @@
     "A2-142": {
         "expansion": "A2",
         "number": 142,
+        "rarity": "\u2662",
         "name": "Fan Rotom",
         "type": "Colorless",
         "stage": 0,
@@ -9751,6 +10818,7 @@
     "A2-143": {
         "expansion": "A2",
         "number": 143,
+        "rarity": "\u2662\u2662\u2662",
         "name": "Regigigas",
         "type": "Colorless",
         "stage": 0,
@@ -9774,6 +10842,8 @@
     "A2-144": {
         "expansion": "A2",
         "number": 144,
+        "rarity": "\u2662",
+        "pack": "Dialga",
         "name": "Skull Fossil",
         "category": "Item",
         "description": "Play this card as if it were a 40-HP Basic {Colorless} Pok\u00e9mon.At any time during your turn, you may discard this card from play.This card can't retreat."
@@ -9781,6 +10851,8 @@
     "A2-145": {
         "expansion": "A2",
         "number": 145,
+        "rarity": "\u2662",
+        "pack": "Palkia",
         "name": "Armor Fossil",
         "category": "Item",
         "description": "Play this card as if it were a 40-HP Basic {Colorless} Pok\u00e9mon.At any time during your turn, you may discard this card from play.This card can't retreat."
@@ -9788,6 +10860,8 @@
     "A2-146": {
         "expansion": "A2",
         "number": 146,
+        "rarity": "\u2662\u2662",
+        "pack": "Dialga",
         "name": "Pok\u00e9mon Communication",
         "category": "Item",
         "description": "Choose a Pok\u00e9mon in your hand and switch it with a random Pok\u00e9mon in your deck."
@@ -9795,6 +10869,8 @@
     "A2-147": {
         "expansion": "A2",
         "number": 147,
+        "rarity": "\u2662\u2662",
+        "pack": "Dialga",
         "name": "Giant Cape",
         "category": "Tool",
         "description": "The Pok\u00e9mon this card is attached to gets +20 HP."
@@ -9802,6 +10878,8 @@
     "A2-148": {
         "expansion": "A2",
         "number": 148,
+        "rarity": "\u2662\u2662",
+        "pack": "Palkia",
         "name": "Rocky Helmet",
         "category": "Tool",
         "description": "If the Pok\u00e9mon this card is attached to is in the Active Spot and is damaged by an attack from your opponent's Pok\u00e9mon, do 20 damage to the Attacking Pok\u00e9mon."
@@ -9809,6 +10887,8 @@
     "A2-149": {
         "expansion": "A2",
         "number": 149,
+        "rarity": "\u2662\u2662",
+        "pack": "Palkia",
         "name": "Lum Berry",
         "category": "Tool",
         "description": "At the end of each turn, if the Pok\u00e9mon this card is attached to is affected by any Special Conditions, it recovers from all of them, and discard this card."
@@ -9816,6 +10896,8 @@
     "A2-150": {
         "expansion": "A2",
         "number": 150,
+        "rarity": "\u2662\u2662",
+        "pack": "Palkia",
         "name": "Cyrus",
         "category": "Supporter",
         "description": "Switch in 1 of your opponent's Benched Pok\u00e9mon that has damage on it to the Active Spot."
@@ -9823,6 +10905,8 @@
     "A2-151": {
         "expansion": "A2",
         "number": 151,
+        "rarity": "\u2662\u2662",
+        "pack": "Dialga",
         "name": "Team Galactic Grunt",
         "category": "Supporter",
         "description": "Put 1 random Glameow, Stunky, or Croagunk from your deck into your hand."
@@ -9830,6 +10914,8 @@
     "A2-152": {
         "expansion": "A2",
         "number": 152,
+        "rarity": "\u2662\u2662",
+        "pack": "Palkia",
         "name": "Cynthia",
         "category": "Supporter",
         "description": "During this turn, attacks used by your Garchomp or Togekiss do +50 damage to your opponent's Active Pok\u00e9mon."
@@ -9837,6 +10923,8 @@
     "A2-153": {
         "expansion": "A2",
         "number": 153,
+        "rarity": "\u2662\u2662",
+        "pack": "Dialga",
         "name": "Volkner",
         "category": "Supporter",
         "description": "Choose 1 of your Electivire or Luxray. Attach 2 {Lightning} Energy from your discard pile to that Pok\u00e9mon."
@@ -9844,6 +10932,8 @@
     "A2-154": {
         "expansion": "A2",
         "number": 154,
+        "rarity": "\u2662\u2662",
+        "pack": "Dialga",
         "name": "Dawn",
         "category": "Supporter",
         "description": "Move an Energy from 1 of your Benched Pok\u00e9mon to your Active Pok\u00e9mon."
@@ -9851,6 +10941,8 @@
     "A2-155": {
         "expansion": "A2",
         "number": 155,
+        "rarity": "\u2662\u2662",
+        "pack": "Palkia",
         "name": "Mars",
         "category": "Supporter",
         "description": "Your opponent shuffles their hand into their deck and draws a card for each of their remaining points needed to win."
@@ -9858,261 +10950,2223 @@
     "A2-156": {
         "expansion": "A2",
         "number": 156,
+        "rarity": "\u2606",
+        "pack": "Dialga",
         "variant": "A2-005"
     },
     "A2-157": {
         "expansion": "A2",
         "number": 157,
+        "rarity": "\u2606",
+        "pack": "Dialga",
         "variant": "A2-017"
     },
     "A2-158": {
         "expansion": "A2",
         "number": 158,
+        "rarity": "\u2606",
+        "pack": "Palkia",
         "variant": "A2-019"
     },
     "A2-159": {
         "expansion": "A2",
         "number": 159,
+        "rarity": "\u2606",
+        "pack": "Dialga",
         "variant": "A2-022"
     },
     "A2-160": {
         "expansion": "A2",
         "number": 160,
+        "rarity": "\u2606",
+        "pack": "Dialga",
         "variant": "A2-033"
     },
     "A2-161": {
         "expansion": "A2",
         "number": 161,
+        "rarity": "\u2606",
+        "pack": "Palkia",
         "variant": "A2-041"
     },
     "A2-162": {
         "expansion": "A2",
         "number": 162,
+        "rarity": "\u2606",
+        "pack": "Palkia",
         "variant": "A2-050"
     },
     "A2-163": {
         "expansion": "A2",
         "number": 163,
+        "rarity": "\u2606",
+        "pack": "Dialga",
         "variant": "A2-058"
     },
     "A2-164": {
         "expansion": "A2",
         "number": 164,
+        "rarity": "\u2606",
+        "pack": "Palkia",
         "variant": "A2-062"
     },
     "A2-165": {
         "expansion": "A2",
         "number": 165,
+        "rarity": "\u2606",
+        "pack": "Dialga",
         "variant": "A2-073"
     },
     "A2-166": {
         "expansion": "A2",
         "number": 166,
+        "rarity": "\u2606",
+        "pack": "Dialga",
         "variant": "A2-076"
     },
     "A2-167": {
         "expansion": "A2",
         "number": 167,
+        "rarity": "\u2606",
+        "pack": "Palkia",
         "variant": "A2-078"
     },
     "A2-168": {
         "expansion": "A2",
         "number": 168,
+        "rarity": "\u2606",
+        "pack": "Palkia",
         "variant": "A2-079"
     },
     "A2-169": {
         "expansion": "A2",
         "number": 169,
+        "rarity": "\u2606",
+        "pack": "Palkia",
         "variant": "A2-082"
     },
     "A2-170": {
         "expansion": "A2",
         "number": 170,
+        "rarity": "\u2606",
+        "pack": "Dialga",
         "variant": "A2-092"
     },
     "A2-171": {
         "expansion": "A2",
         "number": 171,
+        "rarity": "\u2606",
+        "pack": "Palkia",
         "variant": "A2-093"
     },
     "A2-172": {
         "expansion": "A2",
         "number": 172,
+        "rarity": "\u2606",
+        "pack": "Palkia",
         "variant": "A2-104"
     },
     "A2-173": {
         "expansion": "A2",
         "number": 173,
+        "rarity": "\u2606",
+        "pack": "Dialga",
         "variant": "A2-107"
     },
     "A2-174": {
         "expansion": "A2",
         "number": 174,
+        "rarity": "\u2606",
+        "pack": "Dialga",
         "variant": "A2-120"
     },
     "A2-175": {
         "expansion": "A2",
         "number": 175,
+        "rarity": "\u2606",
+        "pack": "Palkia",
         "variant": "A2-123"
     },
     "A2-176": {
         "expansion": "A2",
         "number": 176,
+        "rarity": "\u2606",
+        "pack": "Palkia",
         "variant": "A2-134"
     },
     "A2-177": {
         "expansion": "A2",
         "number": 177,
+        "rarity": "\u2606",
+        "pack": "Dialga",
         "variant": "A2-135"
     },
     "A2-178": {
         "expansion": "A2",
         "number": 178,
+        "rarity": "\u2606",
+        "pack": "Palkia",
         "variant": "A2-139"
     },
     "A2-179": {
         "expansion": "A2",
         "number": 179,
+        "rarity": "\u2606",
+        "pack": "Dialga",
         "variant": "A2-143"
     },
     "A2-180": {
         "expansion": "A2",
         "number": 180,
+        "rarity": "\u2606\u2606",
+        "pack": "Dialga",
         "variant": "A2-007"
     },
     "A2-181": {
         "expansion": "A2",
         "number": 181,
+        "rarity": "\u2606\u2606",
+        "pack": "Palkia",
         "variant": "A2-029"
     },
     "A2-182": {
         "expansion": "A2",
         "number": 182,
+        "rarity": "\u2606\u2606",
+        "pack": "Palkia",
         "variant": "A2-049"
     },
     "A2-183": {
         "expansion": "A2",
         "number": 183,
+        "rarity": "\u2606\u2606",
+        "pack": "Dialga",
         "variant": "A2-061"
     },
     "A2-184": {
         "expansion": "A2",
         "number": 184,
+        "rarity": "\u2606\u2606",
+        "pack": "Palkia",
         "variant": "A2-067"
     },
     "A2-185": {
         "expansion": "A2",
         "number": 185,
+        "rarity": "\u2606\u2606",
+        "pack": "Dialga",
         "variant": "A2-095"
     },
     "A2-186": {
         "expansion": "A2",
         "number": 186,
+        "rarity": "\u2606\u2606",
+        "pack": "Palkia",
         "variant": "A2-099"
     },
     "A2-187": {
         "expansion": "A2",
         "number": 187,
+        "rarity": "\u2606\u2606",
+        "pack": "Dialga",
         "variant": "A2-110"
     },
     "A2-188": {
         "expansion": "A2",
         "number": 188,
+        "rarity": "\u2606\u2606",
+        "pack": "Dialga",
         "variant": "A2-119"
     },
     "A2-189": {
         "expansion": "A2",
         "number": 189,
+        "rarity": "\u2606\u2606",
+        "pack": "Palkia",
         "variant": "A2-125"
     },
     "A2-190": {
         "expansion": "A2",
         "number": 190,
+        "rarity": "\u2606\u2606",
+        "pack": "Palkia",
         "variant": "A2-150"
     },
     "A2-191": {
         "expansion": "A2",
         "number": 191,
+        "rarity": "\u2606\u2606",
+        "pack": "Dialga",
         "variant": "A2-151"
     },
     "A2-192": {
         "expansion": "A2",
         "number": 192,
+        "rarity": "\u2606\u2606",
+        "pack": "Palkia",
         "variant": "A2-152"
     },
     "A2-193": {
         "expansion": "A2",
         "number": 193,
+        "rarity": "\u2606\u2606",
+        "pack": "Dialga",
         "variant": "A2-153"
     },
     "A2-194": {
         "expansion": "A2",
         "number": 194,
+        "rarity": "\u2606\u2606",
+        "pack": "Dialga",
         "variant": "A2-154"
     },
     "A2-195": {
         "expansion": "A2",
         "number": 195,
+        "rarity": "\u2606\u2606",
+        "pack": "Palkia",
         "variant": "A2-155"
     },
     "A2-196": {
         "expansion": "A2",
         "number": 196,
+        "rarity": "\u2606\u2606",
+        "pack": "Dialga",
         "variant": "A2-007"
     },
     "A2-197": {
         "expansion": "A2",
         "number": 197,
+        "rarity": "\u2606\u2606",
+        "pack": "Palkia",
         "variant": "A2-029"
     },
     "A2-198": {
         "expansion": "A2",
         "number": 198,
+        "rarity": "\u2606\u2606",
+        "pack": "Dialga",
         "variant": "A2-061"
     },
     "A2-199": {
         "expansion": "A2",
         "number": 199,
+        "rarity": "\u2606\u2606",
+        "pack": "Palkia",
         "variant": "A2-067"
     },
     "A2-200": {
         "expansion": "A2",
         "number": 200,
+        "rarity": "\u2606\u2606",
+        "pack": "Dialga",
         "variant": "A2-095"
     },
     "A2-201": {
         "expansion": "A2",
         "number": 201,
+        "rarity": "\u2606\u2606",
+        "pack": "Palkia",
         "variant": "A2-099"
     },
     "A2-202": {
         "expansion": "A2",
         "number": 202,
+        "rarity": "\u2606\u2606",
+        "pack": "Dialga",
         "variant": "A2-110"
     },
     "A2-203": {
         "expansion": "A2",
         "number": 203,
+        "rarity": "\u2606\u2606",
+        "pack": "Palkia",
         "variant": "A2-125"
     },
     "A2-204": {
         "expansion": "A2",
         "number": 204,
+        "rarity": "\u2606\u2606\u2606",
+        "pack": "Palkia",
         "variant": "A2-049"
     },
     "A2-205": {
         "expansion": "A2",
         "number": 205,
+        "rarity": "\u2606\u2606\u2606",
+        "pack": "Dialga",
         "variant": "A2-119"
     },
     "A2-206": {
         "expansion": "A2",
         "number": 206,
+        "rarity": "\u265b",
         "variant": "A2-049"
     },
     "A2-207": {
         "expansion": "A2",
         "number": 207,
+        "rarity": "\u265b",
         "variant": "A2-119"
+    },
+    "A2a-001": {
+        "expansion": "A2a",
+        "number": 1,
+        "rarity": "\u2662\u2662",
+        "pack": "Arceus",
+        "name": "Heracross",
+        "type": "Grass",
+        "stage": 0,
+        "hp": 100,
+        "weakness": "Fire",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Single-Horn Throw",
+                "energy_cost": [
+                    "Grass",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": "50+",
+                "description": "Flip 2 coins. If both of them are heads, this attack does 70 more damage."
+            }
+        ]
+    },
+    "A2a-002": {
+        "expansion": "A2a",
+        "number": 2,
+        "rarity": "\u2662",
+        "pack": "Arceus",
+        "name": "Burmy",
+        "type": "Grass",
+        "stage": 0,
+        "hp": 50,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Ram",
+                "energy_cost": [
+                    "Grass"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A2a-003": {
+        "expansion": "A2a",
+        "number": 3,
+        "rarity": "\u2662\u2662",
+        "pack": "Arceus",
+        "name": "Mothim",
+        "type": "Grass",
+        "stage": 1,
+        "evolves_from": "Burmy",
+        "hp": 90,
+        "weakness": "Lightning",
+        "retreat_cost": 0,
+        "moves": [
+            {
+                "name": "Gust",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 50
+            }
+        ]
+    },
+    "A2a-004": {
+        "expansion": "A2a",
+        "number": 4,
+        "rarity": "\u2662",
+        "pack": "Arceus",
+        "name": "Combee",
+        "type": "Grass",
+        "stage": 0,
+        "hp": 50,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Bug Bite",
+                "energy_cost": [
+                    "Grass"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A2a-005": {
+        "expansion": "A2a",
+        "number": 5,
+        "rarity": "\u2662\u2662",
+        "pack": "Arceus",
+        "name": "Vespiquen",
+        "type": "Grass",
+        "stage": 1,
+        "evolves_from": "Combee",
+        "hp": 100,
+        "weakness": "Fire",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Reckless Charge",
+                "energy_cost": [
+                    "Grass",
+                    "Grass",
+                    "Grass"
+                ],
+                "power": 120,
+                "description": "This Pok\u00e9mon also does 30 damage to itself."
+            }
+        ]
+    },
+    "A2a-006": {
+        "expansion": "A2a",
+        "number": 6,
+        "rarity": "\u2662",
+        "pack": "Arceus",
+        "name": "Cherubi",
+        "type": "Grass",
+        "stage": 0,
+        "hp": 50,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Leafage",
+                "energy_cost": [
+                    "Grass"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A2a-007": {
+        "expansion": "A2a",
+        "number": 7,
+        "rarity": "\u2662\u2662",
+        "pack": "Arceus",
+        "name": "Cherrim",
+        "type": "Grass",
+        "stage": 1,
+        "evolves_from": "Cherubi",
+        "hp": 80,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Worry Seed",
+                "energy_cost": [
+                    "Grass"
+                ],
+                "power": 40,
+                "description": "Your opponent's Active Pok\u00e9mon is now Confused."
+            }
+        ]
+    },
+    "A2a-008": {
+        "expansion": "A2a",
+        "number": 8,
+        "rarity": "\u2662\u2662",
+        "pack": "Arceus",
+        "name": "Cherrim",
+        "type": "Grass",
+        "stage": 1,
+        "evolves_from": "Cherubi",
+        "hp": 80,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Leech Seed",
+                "energy_cost": [
+                    "Grass",
+                    "Grass"
+                ],
+                "power": 60,
+                "description": "Heal 20 damage from this Pok\u00e9mon."
+            }
+        ]
+    },
+    "A2a-009": {
+        "expansion": "A2a",
+        "number": 9,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Arceus",
+        "name": "Carnivine",
+        "type": "Grass",
+        "stage": 0,
+        "hp": 80,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "ability": {
+            "name": "Power Link",
+            "description": "If you have Arceus or Arceus ex in play, attacks used by this Pok\u00e9mon do +30 damage to your opponent's Active Pok\u00e9mon."
+        },
+        "moves": [
+            {
+                "name": "Vine Whip",
+                "energy_cost": [
+                    "Grass"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A2a-010": {
+        "expansion": "A2a",
+        "number": 10,
+        "rarity": "\u2662\u2662\u2662\u2662",
+        "pack": "Arceus",
+        "name": "Leafeon ex",
+        "type": "Grass",
+        "stage": 1,
+        "evolves_from": "Eevee",
+        "hp": 140,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "ability": {
+            "name": "Forest Breath",
+            "description": "Once during your turn, if this Pok\u00e9mon is in the Active Spot, you may take a {Grass} Energy from your Energy Zone and attach it to 1 of your {Grass} Pok\u00e9mon."
+        },
+        "moves": [
+            {
+                "name": "Solar Beam",
+                "energy_cost": [
+                    "Grass",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 70
+            }
+        ]
+    },
+    "A2a-011": {
+        "expansion": "A2a",
+        "number": 11,
+        "rarity": "\u2662",
+        "pack": "Arceus",
+        "name": "Houndour",
+        "type": "Fire",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Water",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Flare",
+                "energy_cost": [
+                    "Fire"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A2a-012": {
+        "expansion": "A2a",
+        "number": 12,
+        "rarity": "\u2662\u2662",
+        "pack": "Arceus",
+        "name": "Houndoom",
+        "type": "Fire",
+        "stage": 1,
+        "evolves_from": "Houndour",
+        "hp": 100,
+        "weakness": "Water",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Corner",
+                "energy_cost": [
+                    "Fire",
+                    "Colorless"
+                ],
+                "power": 60,
+                "description": "During your opponent's next turn, the Defending Pok\u00e9mon can't retreat."
+            }
+        ]
+    },
+    "A2a-013": {
+        "expansion": "A2a",
+        "number": 13,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Arceus",
+        "name": "Heatran",
+        "type": "Fire",
+        "stage": 0,
+        "hp": 110,
+        "weakness": "Water",
+        "retreat_cost": 3,
+        "ability": {
+            "name": "Speed Link",
+            "description": "If you have Arceus or Arceus ex in play, this Pok\u00e9mon has no Retreat Cost."
+        },
+        "moves": [
+            {
+                "name": "Ragin\u2019 Mad Strike",
+                "energy_cost": [
+                    "Fire",
+                    "Fire"
+                ],
+                "power": "40+",
+                "description": "If this Pok\u00e9mon has damage on it, this attack does 40 more damage."
+            }
+        ]
+    },
+    "A2a-014": {
+        "expansion": "A2a",
+        "number": 14,
+        "rarity": "\u2662",
+        "pack": "Arceus",
+        "name": "Marill",
+        "type": "Water",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Water Gun",
+                "energy_cost": [
+                    "Water"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A2a-015": {
+        "expansion": "A2a",
+        "number": 15,
+        "rarity": "\u2662",
+        "pack": "Arceus",
+        "name": "Azumarill",
+        "type": "Water",
+        "stage": 1,
+        "evolves_from": "Marill",
+        "hp": 100,
+        "weakness": "Lightning",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Waterfall",
+                "energy_cost": [
+                    "Water",
+                    "Colorless"
+                ],
+                "power": 60
+            }
+        ]
+    },
+    "A2a-016": {
+        "expansion": "A2a",
+        "number": 16,
+        "rarity": "\u2662",
+        "pack": "Arceus",
+        "name": "Barboach",
+        "type": "Water",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Mud-Slap",
+                "energy_cost": [
+                    "Water",
+                    "Colorless"
+                ],
+                "power": 30
+            }
+        ]
+    },
+    "A2a-017": {
+        "expansion": "A2a",
+        "number": 17,
+        "rarity": "\u2662\u2662",
+        "pack": "Arceus",
+        "name": "Whiscash",
+        "type": "Water",
+        "stage": 1,
+        "evolves_from": "Barboach",
+        "hp": 120,
+        "weakness": "Lightning",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Thrash",
+                "energy_cost": [
+                    "Water",
+                    "Water",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": "80+",
+                "description": "Flip a coin. If heads, this attack does 60 more damage. If tails, this Pok\u00e9mon also does 20 damage to itself."
+            }
+        ]
+    },
+    "A2a-018": {
+        "expansion": "A2a",
+        "number": 18,
+        "rarity": "\u2662",
+        "pack": "Arceus",
+        "name": "Snorunt",
+        "type": "Water",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Metal",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Icicle",
+                "energy_cost": [
+                    "Water"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A2a-019": {
+        "expansion": "A2a",
+        "number": 19,
+        "rarity": "\u2662\u2662",
+        "pack": "Arceus",
+        "name": "Froslass",
+        "type": "Water",
+        "stage": 1,
+        "evolves_from": "Snorunt",
+        "hp": 90,
+        "weakness": "Metal",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Blizzard",
+                "energy_cost": [
+                    "Water",
+                    "Colorless"
+                ],
+                "power": 40,
+                "description": "This attack also does 10 damage to each of your opponent's Benched Pok\u00e9mon."
+            }
+        ]
+    },
+    "A2a-020": {
+        "expansion": "A2a",
+        "number": 20,
+        "rarity": "\u2662",
+        "pack": "Arceus",
+        "name": "Snover",
+        "type": "Water",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Metal",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Corkscrew Punch",
+                "energy_cost": [
+                    "Water",
+                    "Colorless"
+                ],
+                "power": 30
+            }
+        ]
+    },
+    "A2a-021": {
+        "expansion": "A2a",
+        "number": 21,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Arceus",
+        "name": "Abomasnow",
+        "type": "Water",
+        "stage": 1,
+        "evolves_from": "Snover",
+        "hp": 120,
+        "weakness": "Metal",
+        "retreat_cost": 3,
+        "ability": {
+            "name": "Vigor Link",
+            "description": "If you have Arceus or Arceus ex in play, attacks used by this Pok\u00e9mon cost 1 less {Colorless} Energy."
+        },
+        "moves": [
+            {
+                "name": "Mega Punch",
+                "energy_cost": [
+                    "Water",
+                    "Water",
+                    "Colorless"
+                ],
+                "power": 80
+            }
+        ]
+    },
+    "A2a-022": {
+        "expansion": "A2a",
+        "number": 22,
+        "rarity": "\u2662\u2662\u2662\u2662",
+        "pack": "Arceus",
+        "name": "Glaceon ex",
+        "type": "Water",
+        "stage": 1,
+        "evolves_from": "Eevee",
+        "hp": 140,
+        "weakness": "Metal",
+        "retreat_cost": 1,
+        "ability": {
+            "name": "Snowy Terrain",
+            "description": "During Pok\u00e9mon Checkup, if this Pok\u00e9mon is in the Active Spot, do 10 damage to your opponent's Active Pok\u00e9mon."
+        },
+        "moves": [
+            {
+                "name": "Freezing Wind",
+                "energy_cost": [
+                    "Water",
+                    "Water",
+                    "Colorless"
+                ],
+                "power": 90
+            }
+        ]
+    },
+    "A2a-023": {
+        "expansion": "A2a",
+        "number": 23,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Arceus",
+        "name": "Origin Forme Palkia",
+        "type": "Water",
+        "stage": 0,
+        "hp": 120,
+        "weakness": "Lightning",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Zone Smash",
+                "energy_cost": [
+                    "Water",
+                    "Water",
+                    "Water"
+                ],
+                "power": "60+",
+                "description": "Flip a coin. If heads, this attack does 60 more damage."
+            }
+        ]
+    },
+    "A2a-024": {
+        "expansion": "A2a",
+        "number": 24,
+        "rarity": "\u2662\u2662",
+        "pack": "Arceus",
+        "name": "Phione",
+        "type": "Water",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Water Pulse",
+                "energy_cost": [
+                    "Water",
+                    "Water"
+                ],
+                "power": 40,
+                "description": "Your opponent's Active Pok\u00e9mon is now Asleep."
+            }
+        ]
+    },
+    "A2a-025": {
+        "expansion": "A2a",
+        "number": 25,
+        "rarity": "\u2662",
+        "pack": "Arceus",
+        "name": "Pikachu",
+        "type": "Lightning",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Spark",
+                "energy_cost": [
+                    "Lightning"
+                ],
+                "power": 10,
+                "description": "This attack also does 10 damage to 1 of your opponent's Benched Pok\u00e9mon."
+            }
+        ]
+    },
+    "A2a-026": {
+        "expansion": "A2a",
+        "number": 26,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Arceus",
+        "name": "Raichu",
+        "type": "Lightning",
+        "stage": 1,
+        "evolves_from": "Pikachu",
+        "hp": 90,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "ability": {
+            "name": "Resilience Link",
+            "description": "If you have Arceus or Arceus ex in play, this Pok\u00e9mon takes -30 damage from attacks."
+        },
+        "moves": [
+            {
+                "name": "Spark",
+                "energy_cost": [
+                    "Lightning",
+                    "Lightning"
+                ],
+                "power": 40,
+                "description": "This attack also does 20 damage to 1 of your opponent's Benched Pok\u00e9mon."
+            }
+        ]
+    },
+    "A2a-027": {
+        "expansion": "A2a",
+        "number": 27,
+        "rarity": "\u2662",
+        "pack": "Arceus",
+        "name": "Electrike",
+        "type": "Lightning",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Zap Kick",
+                "energy_cost": [
+                    "Lightning"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A2a-028": {
+        "expansion": "A2a",
+        "number": 28,
+        "rarity": "\u2662\u2662",
+        "pack": "Arceus",
+        "name": "Manectric",
+        "type": "Lightning",
+        "stage": 1,
+        "evolves_from": "Electrike",
+        "hp": 90,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Flash",
+                "energy_cost": [
+                    "Lightning"
+                ],
+                "power": 40,
+                "description": "During your opponent's next turn, if the Defending Pok\u00e9mon tries to use an attack, your opponent flips a coin. If tails, that attack doesn't happen."
+            }
+        ]
+    },
+    "A2a-029": {
+        "expansion": "A2a",
+        "number": 29,
+        "rarity": "\u2662",
+        "pack": "Arceus",
+        "name": "Clefairy",
+        "type": "Psychic",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Metal",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Smack",
+                "energy_cost": [
+                    "Psychic",
+                    "Colorless"
+                ],
+                "power": 30
+            }
+        ]
+    },
+    "A2a-030": {
+        "expansion": "A2a",
+        "number": 30,
+        "rarity": "\u2662\u2662",
+        "pack": "Arceus",
+        "name": "Clefable",
+        "type": "Psychic",
+        "stage": 1,
+        "evolves_from": "Clefairy",
+        "hp": 100,
+        "weakness": "Metal",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Moonblast",
+                "energy_cost": [
+                    "Psychic",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 60,
+                "description": "During your opponent's next turn, attacks used by the Defending Pok\u00e9mon do -30 damage."
+            }
+        ]
+    },
+    "A2a-031": {
+        "expansion": "A2a",
+        "number": 31,
+        "rarity": "\u2662",
+        "pack": "Arceus",
+        "name": "Gastly",
+        "type": "Psychic",
+        "stage": 0,
+        "hp": 50,
+        "weakness": "Darkness",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Astonish",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 0,
+                "description": "Flip a coin. If heads, your opponent reveals a random card from their hand and shuffles it into their deck."
+            }
+        ]
+    },
+    "A2a-032": {
+        "expansion": "A2a",
+        "number": 32,
+        "rarity": "\u2662",
+        "pack": "Arceus",
+        "name": "Haunter",
+        "type": "Psychic",
+        "stage": 1,
+        "evolves_from": "Gastly",
+        "hp": 80,
+        "weakness": "Darkness",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Mumble",
+                "energy_cost": [
+                    "Psychic",
+                    "Psychic"
+                ],
+                "power": 40
+            }
+        ]
+    },
+    "A2a-033": {
+        "expansion": "A2a",
+        "number": 33,
+        "rarity": "\u2662\u2662",
+        "pack": "Arceus",
+        "name": "Gengar",
+        "type": "Psychic",
+        "stage": 2,
+        "evolves_from": "Haunter",
+        "hp": 140,
+        "weakness": "Darkness",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Hypnoblast",
+                "energy_cost": [
+                    "Psychic",
+                    "Psychic"
+                ],
+                "power": 70,
+                "description": "Your opponent's Active Pok\u00e9mon is now Asleep."
+            }
+        ]
+    },
+    "A2a-034": {
+        "expansion": "A2a",
+        "number": 34,
+        "rarity": "\u2662\u2662",
+        "pack": "Arceus",
+        "name": "Unown",
+        "type": "Psychic",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Darkness",
+        "retreat_cost": 1,
+        "ability": {
+            "name": "CHECK",
+            "description": "Once during your turn, you may choose either player. Look at the top card of that player's deck."
+        },
+        "moves": [
+            {
+                "name": "Hidden Power",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A2a-035": {
+        "expansion": "A2a",
+        "number": 35,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Arceus",
+        "name": "Rotom",
+        "type": "Psychic",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Darkness",
+        "retreat_cost": 1,
+        "ability": {
+            "name": "Speed Link",
+            "description": "If you have Arceus or Arceus ex in play, this Pok\u00e9mon has no Retreat Cost."
+        },
+        "moves": [
+            {
+                "name": "Dash Attack",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 0,
+                "description": "This attack does 20 damage to 1 of your opponent's Benched Pok\u00e9mon."
+            }
+        ]
+    },
+    "A2a-036": {
+        "expansion": "A2a",
+        "number": 36,
+        "rarity": "\u2662\u2662",
+        "pack": "Arceus",
+        "name": "Sudowoodo",
+        "type": "Fighting",
+        "stage": 0,
+        "hp": 80,
+        "weakness": "Grass",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Fighting Headbutt",
+                "energy_cost": [
+                    "Fighting"
+                ],
+                "power": "20+",
+                "description": "If your opponent's Active Pok\u00e9mon is a Pok\u00e9mon ex, this attack does 30 more damage."
+            }
+        ]
+    },
+    "A2a-037": {
+        "expansion": "A2a",
+        "number": 37,
+        "rarity": "\u2662",
+        "pack": "Arceus",
+        "name": "Phanpy",
+        "type": "Fighting",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Grass",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Rollout",
+                "energy_cost": [
+                    "Fighting"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A2a-038": {
+        "expansion": "A2a",
+        "number": 38,
+        "rarity": "\u2662\u2662",
+        "pack": "Arceus",
+        "name": "Donphan",
+        "type": "Fighting",
+        "stage": 1,
+        "evolves_from": "Phanpy",
+        "hp": 120,
+        "weakness": "Grass",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Rolling Spin",
+                "energy_cost": [
+                    "Fighting",
+                    "Fighting",
+                    "Fighting"
+                ],
+                "power": 60,
+                "description": "During your next turn, this Pok\u00e9mon's Rolling Spin attack does +60 damage."
+            }
+        ]
+    },
+    "A2a-039": {
+        "expansion": "A2a",
+        "number": 39,
+        "rarity": "\u2662",
+        "pack": "Arceus",
+        "name": "Larvitar",
+        "type": "Fighting",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Grass",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Corkscrew Punch",
+                "energy_cost": [
+                    "Fighting",
+                    "Colorless"
+                ],
+                "power": 30
+            }
+        ]
+    },
+    "A2a-040": {
+        "expansion": "A2a",
+        "number": 40,
+        "rarity": "\u2662\u2662",
+        "pack": "Arceus",
+        "name": "Pupitar",
+        "type": "Fighting",
+        "stage": 1,
+        "evolves_from": "Larvitar",
+        "hp": 80,
+        "weakness": "Grass",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Speed Attack",
+                "energy_cost": [
+                    "Fighting",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 50
+            }
+        ]
+    },
+    "A2a-041": {
+        "expansion": "A2a",
+        "number": 41,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Arceus",
+        "name": "Tyranitar",
+        "type": "Fighting",
+        "stage": 2,
+        "evolves_from": "Pupitar",
+        "hp": 160,
+        "weakness": "Grass",
+        "retreat_cost": 4,
+        "ability": {
+            "name": "Power Link",
+            "description": "If you have Arceus or Arceus ex in play, attacks used by this Pok\u00e9mon do +30 damage to your opponent's Active Pok\u00e9mon."
+        },
+        "moves": [
+            {
+                "name": "Land Crush",
+                "energy_cost": [
+                    "Fighting",
+                    "Fighting",
+                    "Fighting",
+                    "Colorless"
+                ],
+                "power": 130
+            }
+        ]
+    },
+    "A2a-042": {
+        "expansion": "A2a",
+        "number": 42,
+        "rarity": "\u2662",
+        "pack": "Arceus",
+        "name": "Nosepass",
+        "type": "Fighting",
+        "stage": 0,
+        "hp": 80,
+        "weakness": "Grass",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Tackle",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 10
+            }
+        ]
+    },
+    "A2a-043": {
+        "expansion": "A2a",
+        "number": 43,
+        "rarity": "\u2662",
+        "pack": "Arceus",
+        "name": "Meditite",
+        "type": "Fighting",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Psychic",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Kick",
+                "energy_cost": [
+                    "Fighting"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A2a-044": {
+        "expansion": "A2a",
+        "number": 44,
+        "rarity": "\u2662\u2662",
+        "pack": "Arceus",
+        "name": "Medicham",
+        "type": "Fighting",
+        "stage": 1,
+        "evolves_from": "Meditite",
+        "hp": 100,
+        "weakness": "Psychic",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Kick Shot",
+                "energy_cost": [
+                    "Fighting"
+                ],
+                "power": 80,
+                "description": "Flip a coin. If tails, this attack does nothing."
+            }
+        ]
+    },
+    "A2a-045": {
+        "expansion": "A2a",
+        "number": 45,
+        "rarity": "\u2662",
+        "pack": "Arceus",
+        "name": "Gible",
+        "type": "Fighting",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Grass",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Tackle",
+                "energy_cost": [
+                    "Fighting"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A2a-046": {
+        "expansion": "A2a",
+        "number": 46,
+        "rarity": "\u2662",
+        "pack": "Arceus",
+        "name": "Gabite",
+        "type": "Fighting",
+        "stage": 1,
+        "evolves_from": "Gible",
+        "hp": 80,
+        "weakness": "Grass",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Sharp Scythe",
+                "energy_cost": [
+                    "Fighting"
+                ],
+                "power": 30
+            }
+        ]
+    },
+    "A2a-047": {
+        "expansion": "A2a",
+        "number": 47,
+        "rarity": "\u2662\u2662\u2662\u2662",
+        "pack": "Arceus",
+        "name": "Garchomp ex",
+        "type": "Fighting",
+        "stage": 2,
+        "evolves_from": "Gabite",
+        "hp": 170,
+        "weakness": "Grass",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Linear Attack",
+                "energy_cost": [
+                    "Fighting"
+                ],
+                "power": 0,
+                "description": "This attack does 50 damage to 1 of your opponent's Pok\u00e9mon."
+            },
+            {
+                "name": "Dragon Claw",
+                "energy_cost": [
+                    "Fighting",
+                    "Fighting",
+                    "Colorless"
+                ],
+                "power": 100
+            }
+        ]
+    },
+    "A2a-048": {
+        "expansion": "A2a",
+        "number": 48,
+        "rarity": "\u2662",
+        "pack": "Arceus",
+        "name": "Zubat",
+        "type": "Darkness",
+        "stage": 0,
+        "hp": 50,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Bite",
+                "energy_cost": [
+                    "Darkness"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A2a-049": {
+        "expansion": "A2a",
+        "number": 49,
+        "rarity": "\u2662",
+        "pack": "Arceus",
+        "name": "Golbat",
+        "type": "Darkness",
+        "stage": 1,
+        "evolves_from": "Zubat",
+        "hp": 80,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Bite",
+                "energy_cost": [
+                    "Darkness"
+                ],
+                "power": 30
+            }
+        ]
+    },
+    "A2a-050": {
+        "expansion": "A2a",
+        "number": 50,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Arceus",
+        "name": "Crobat",
+        "type": "Darkness",
+        "stage": 2,
+        "evolves_from": "Golbat",
+        "hp": 110,
+        "weakness": "Fighting",
+        "retreat_cost": 0,
+        "ability": {
+            "name": "Cunning Link",
+            "description": "Once during your turn, if you have Arceus or Arceus ex in play, you may do 30 damage to your opponent's Active Pok\u00e9mon."
+        },
+        "moves": [
+            {
+                "name": "Darkness Fang",
+                "energy_cost": [
+                    "Darkness"
+                ],
+                "power": 50
+            }
+        ]
+    },
+    "A2a-051": {
+        "expansion": "A2a",
+        "number": 51,
+        "rarity": "\u2662",
+        "pack": "Arceus",
+        "name": "Croagunk",
+        "type": "Darkness",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Beat",
+                "energy_cost": [
+                    "Darkness"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A2a-052": {
+        "expansion": "A2a",
+        "number": 52,
+        "rarity": "\u2662\u2662",
+        "pack": "Arceus",
+        "name": "Toxicroak",
+        "type": "Darkness",
+        "stage": 1,
+        "evolves_from": "Croagunk",
+        "hp": 100,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Toxic",
+                "energy_cost": [
+                    "Darkness"
+                ],
+                "power": 0,
+                "description": "Your opponent's Active Pok\u00e9mon is now Poisoned. Do 20 damage to this Pok\u00e9mon instead of the usual amount for this Special Condition."
+            }
+        ]
+    },
+    "A2a-053": {
+        "expansion": "A2a",
+        "number": 53,
+        "rarity": "\u2662",
+        "pack": "Arceus",
+        "name": "Magnemite",
+        "type": "Metal",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Tackle",
+                "energy_cost": [
+                    "Metal"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A2a-054": {
+        "expansion": "A2a",
+        "number": 54,
+        "rarity": "\u2662",
+        "pack": "Arceus",
+        "name": "Magneton",
+        "type": "Metal",
+        "stage": 1,
+        "evolves_from": "Magnemite",
+        "hp": 90,
+        "weakness": "Fire",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Rolling Attack",
+                "energy_cost": [
+                    "Metal",
+                    "Colorless"
+                ],
+                "power": 30
+            }
+        ]
+    },
+    "A2a-055": {
+        "expansion": "A2a",
+        "number": 55,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Arceus",
+        "name": "Magnezone",
+        "type": "Metal",
+        "stage": 2,
+        "evolves_from": "Magneton",
+        "hp": 140,
+        "weakness": "Fire",
+        "retreat_cost": 2,
+        "ability": {
+            "name": "Resilience Link",
+            "description": "If you have Arceus or Arceus ex in play, this Pok\u00e9mon takes -30 damage from attacks."
+        },
+        "moves": [
+            {
+                "name": "Power Beam",
+                "energy_cost": [
+                    "Metal",
+                    "Metal",
+                    "Colorless"
+                ],
+                "power": 80
+            }
+        ]
+    },
+    "A2a-056": {
+        "expansion": "A2a",
+        "number": 56,
+        "rarity": "\u2662",
+        "pack": "Arceus",
+        "name": "Mawile",
+        "type": "Metal",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Iron Beam Breaker",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": "20+",
+                "description": "If your opponent's Active Pok\u00e9mon is a {Metal} Pok\u00e9mon, this attack does 30 more damage."
+            }
+        ]
+    },
+    "A2a-057": {
+        "expansion": "A2a",
+        "number": 57,
+        "rarity": "\u2662\u2662\u2662\u2662",
+        "pack": "Arceus",
+        "name": "Probopass ex",
+        "type": "Metal",
+        "stage": 1,
+        "evolves_from": "Nosepass",
+        "hp": 160,
+        "weakness": "Fire",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Defensive Unit",
+                "energy_cost": [
+                    "Metal",
+                    "Metal",
+                    "Colorless"
+                ],
+                "power": 90,
+                "description": "During your opponent's next turn, this Pok\u00e9mon takes -20 damage from attacks."
+            }
+        ]
+    },
+    "A2a-058": {
+        "expansion": "A2a",
+        "number": 58,
+        "rarity": "\u2662",
+        "pack": "Arceus",
+        "name": "Bronzor",
+        "type": "Metal",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Ram",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 10
+            }
+        ]
+    },
+    "A2a-059": {
+        "expansion": "A2a",
+        "number": 59,
+        "rarity": "\u2662\u2662",
+        "pack": "Arceus",
+        "name": "Bronzong",
+        "type": "Metal",
+        "stage": 1,
+        "evolves_from": "Bronzor",
+        "hp": 120,
+        "weakness": "Fire",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Psychic",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": "50+",
+                "description": "This attack does 20 more damage for each Energy attached to your opponent's Active Pok\u00e9mon."
+            }
+        ]
+    },
+    "A2a-060": {
+        "expansion": "A2a",
+        "number": 60,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Arceus",
+        "name": "Origin Forme Dialga",
+        "type": "Metal",
+        "stage": 0,
+        "hp": 120,
+        "weakness": "Fire",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Time Mash",
+                "energy_cost": [
+                    "Metal",
+                    "Metal",
+                    "Colorless"
+                ],
+                "power": 100,
+                "description": "Flip a coin. If tails, during your next turn, this Pok\u00e9mon can't attack."
+            }
+        ]
+    },
+    "A2a-061": {
+        "expansion": "A2a",
+        "number": 61,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Arceus",
+        "name": "Giratina",
+        "type": "Dragon",
+        "stage": 0,
+        "hp": 120,
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Crisis Dive",
+                "energy_cost": [
+                    "Grass",
+                    "Psychic",
+                    "Colorless"
+                ],
+                "power": 120,
+                "description": "Discard 2 random Energy from this Pok\u00e9mon."
+            }
+        ]
+    },
+    "A2a-062": {
+        "expansion": "A2a",
+        "number": 62,
+        "rarity": "\u2662",
+        "pack": "Arceus",
+        "name": "Eevee",
+        "type": "Colorless",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Tail Whap",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 30
+            }
+        ]
+    },
+    "A2a-063": {
+        "expansion": "A2a",
+        "number": 63,
+        "rarity": "\u2662\u2662",
+        "pack": "Arceus",
+        "name": "Snorlax",
+        "type": "Colorless",
+        "stage": 0,
+        "hp": 140,
+        "weakness": "Fighting",
+        "retreat_cost": 4,
+        "moves": [
+            {
+                "name": "Collapse",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 100,
+                "description": "This Pok\u00e9mon is now Asleep."
+            }
+        ]
+    },
+    "A2a-064": {
+        "expansion": "A2a",
+        "number": 64,
+        "rarity": "\u2662",
+        "pack": "Arceus",
+        "name": "Hoothoot",
+        "type": "Colorless",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Peck",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A2a-065": {
+        "expansion": "A2a",
+        "number": 65,
+        "rarity": "\u2662\u2662",
+        "pack": "Arceus",
+        "name": "Noctowl",
+        "type": "Colorless",
+        "stage": 1,
+        "evolves_from": "Hoothoot",
+        "hp": 100,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Silent Wing",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 50,
+                "description": "Your opponent reveals their hand."
+            }
+        ]
+    },
+    "A2a-066": {
+        "expansion": "A2a",
+        "number": 66,
+        "rarity": "\u2662",
+        "pack": "Arceus",
+        "name": "Starly",
+        "type": "Colorless",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Glide",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A2a-067": {
+        "expansion": "A2a",
+        "number": 67,
+        "rarity": "\u2662",
+        "pack": "Arceus",
+        "name": "Staravia",
+        "type": "Colorless",
+        "stage": 1,
+        "evolves_from": "Starly",
+        "hp": 80,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Wing Attack",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 30
+            }
+        ]
+    },
+    "A2a-068": {
+        "expansion": "A2a",
+        "number": 68,
+        "rarity": "\u2662\u2662",
+        "pack": "Arceus",
+        "name": "Staraptor",
+        "type": "Colorless",
+        "stage": 2,
+        "evolves_from": "Staravia",
+        "hp": 150,
+        "weakness": "Lightning",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Brave Bird",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 130,
+                "description": "This Pok\u00e9mon also does 20 damage to itself."
+            }
+        ]
+    },
+    "A2a-069": {
+        "expansion": "A2a",
+        "number": 69,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Arceus",
+        "name": "Shaymin",
+        "type": "Colorless",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "ability": {
+            "name": "Sky Support",
+            "description": "As long as this Pok\u00e9mon is on your Bench, your Active Basic Pok\u00e9mon's Retreat Cost is 1 less."
+        },
+        "moves": [
+            {
+                "name": "Flap",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 30
+            }
+        ]
+    },
+    "A2a-070": {
+        "expansion": "A2a",
+        "number": 70,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Arceus",
+        "name": "Arceus",
+        "type": "Colorless",
+        "stage": 0,
+        "hp": 120,
+        "weakness": "Fighting",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Power Blast",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 100,
+                "description": "Discard a random Energy from this Pok\u00e9mon."
+            }
+        ]
+    },
+    "A2a-071": {
+        "expansion": "A2a",
+        "number": 71,
+        "rarity": "\u2662\u2662\u2662\u2662",
+        "pack": "Arceus",
+        "name": "Arceus ex",
+        "type": "Colorless",
+        "stage": 0,
+        "hp": 140,
+        "weakness": "Fighting",
+        "retreat_cost": 2,
+        "ability": {
+            "name": "Fabled Luster",
+            "description": "This Pok\u00e9mon can't be affected by any Special Conditions."
+        },
+        "moves": [
+            {
+                "name": "Ultimate Force",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": "70+",
+                "description": "This attack does 20 more damage for each of your Benched Pok\u00e9mon."
+            }
+        ]
+    },
+    "A2a-072": {
+        "expansion": "A2a",
+        "number": 72,
+        "rarity": "\u2662\u2662",
+        "pack": "Arceus",
+        "name": "Irida",
+        "category": "Supporter",
+        "description": "Heal 40 damage from each of your Pok\u00e9mon that has any {Water} Energy attached."
+    },
+    "A2a-073": {
+        "expansion": "A2a",
+        "number": 73,
+        "rarity": "\u2662\u2662",
+        "pack": "Arceus",
+        "name": "Celestic Town Elder",
+        "category": "Supporter",
+        "description": "Put 1 random Basic Pok\u00e9mon from your discard pile into your hand."
+    },
+    "A2a-074": {
+        "expansion": "A2a",
+        "number": 74,
+        "rarity": "\u2662\u2662",
+        "pack": "Arceus",
+        "name": "Barry",
+        "category": "Supporter",
+        "description": "During this turn, attacks used by your Snorlax, Heracross, and Staraptor cost 2 less {Colorless} Energy."
+    },
+    "A2a-075": {
+        "expansion": "A2a",
+        "number": 75,
+        "rarity": "\u2662\u2662",
+        "pack": "Arceus",
+        "name": "Adaman",
+        "category": "Supporter",
+        "description": "During your opponent's next turn, all of your {Metal} Pok\u00e9mon take -20 damage from attacks from your opponent's Pok\u00e9mon."
+    },
+    "A2a-076": {
+        "expansion": "A2a",
+        "number": 76,
+        "rarity": "\u2606",
+        "pack": "Arceus",
+        "variant": "A2a-012"
+    },
+    "A2a-077": {
+        "expansion": "A2a",
+        "number": 77,
+        "rarity": "\u2606",
+        "pack": "Arceus",
+        "variant": "A2a-014"
+    },
+    "A2a-078": {
+        "expansion": "A2a",
+        "number": 78,
+        "rarity": "\u2606",
+        "pack": "Arceus",
+        "variant": "A2a-034"
+    },
+    "A2a-079": {
+        "expansion": "A2a",
+        "number": 79,
+        "rarity": "\u2606",
+        "pack": "Arceus",
+        "variant": "A2a-036"
+    },
+    "A2a-080": {
+        "expansion": "A2a",
+        "number": 80,
+        "rarity": "\u2606",
+        "pack": "Arceus",
+        "variant": "A2a-053"
+    },
+    "A2a-081": {
+        "expansion": "A2a",
+        "number": 81,
+        "rarity": "\u2606",
+        "pack": "Arceus",
+        "variant": "A2a-069"
+    },
+    "A2a-082": {
+        "expansion": "A2a",
+        "number": 82,
+        "rarity": "\u2606\u2606",
+        "pack": "Arceus",
+        "variant": "A2a-010"
+    },
+    "A2a-083": {
+        "expansion": "A2a",
+        "number": 83,
+        "rarity": "\u2606\u2606",
+        "pack": "Arceus",
+        "variant": "A2a-022"
+    },
+    "A2a-084": {
+        "expansion": "A2a",
+        "number": 84,
+        "rarity": "\u2606\u2606",
+        "pack": "Arceus",
+        "variant": "A2a-047"
+    },
+    "A2a-085": {
+        "expansion": "A2a",
+        "number": 85,
+        "rarity": "\u2606\u2606",
+        "pack": "Arceus",
+        "variant": "A2a-057"
+    },
+    "A2a-086": {
+        "expansion": "A2a",
+        "number": 86,
+        "rarity": "\u2606\u2606",
+        "pack": "Arceus",
+        "variant": "A2a-071"
+    },
+    "A2a-087": {
+        "expansion": "A2a",
+        "number": 87,
+        "rarity": "\u2606\u2606",
+        "pack": "Arceus",
+        "variant": "A2a-072"
+    },
+    "A2a-088": {
+        "expansion": "A2a",
+        "number": 88,
+        "rarity": "\u2606\u2606",
+        "pack": "Arceus",
+        "variant": "A2a-073"
+    },
+    "A2a-089": {
+        "expansion": "A2a",
+        "number": 89,
+        "rarity": "\u2606\u2606",
+        "pack": "Arceus",
+        "variant": "A2a-074"
+    },
+    "A2a-090": {
+        "expansion": "A2a",
+        "number": 90,
+        "rarity": "\u2606\u2606",
+        "pack": "Arceus",
+        "variant": "A2a-075"
+    },
+    "A2a-091": {
+        "expansion": "A2a",
+        "number": 91,
+        "rarity": "\u2606\u2606",
+        "pack": "Arceus",
+        "variant": "A2a-010"
+    },
+    "A2a-092": {
+        "expansion": "A2a",
+        "number": 92,
+        "rarity": "\u2606\u2606",
+        "pack": "Arceus",
+        "variant": "A2a-022"
+    },
+    "A2a-093": {
+        "expansion": "A2a",
+        "number": 93,
+        "rarity": "\u2606\u2606",
+        "pack": "Arceus",
+        "variant": "A2a-047"
+    },
+    "A2a-094": {
+        "expansion": "A2a",
+        "number": 94,
+        "rarity": "\u2606\u2606",
+        "pack": "Arceus",
+        "variant": "A2a-057"
+    },
+    "A2a-095": {
+        "expansion": "A2a",
+        "number": 95,
+        "rarity": "\u2606\u2606\u2606",
+        "pack": "Arceus",
+        "variant": "A2a-071"
+    },
+    "A2a-096": {
+        "expansion": "A2a",
+        "number": 96,
+        "rarity": "\u265b",
+        "pack": "Arceus",
+        "variant": "A2a-071"
     }
 }

@@ -23,15 +23,25 @@ expansion_names = {
     "A1": "Genetic Apex",
     "A1a": "Mythical Island",
     "PROMO": "Promo-A",
-    "A2": "Space-Time Smackdown"
+    "A2": "Space-Time Smackdown",
+    "A2a": "Triumphant Light"
+}
+expansion_packs = {
+    "A1": ["Charizard", "Mewtwo", "Pikachu"],
+    "A1a": [],
+    "PROMO": [],
+    "A2": ["Dialga", "Palkia"],
+    "A2a": []
 }
 
 
 class Card:
-    def __init__(self, expansion: str, number: int, name: str, **kwargs):
+    def __init__(self, expansion: str, number: int, name: str, rarity: str, **kwargs):
         self.expansion = expansion
         self.number = number
         self.name = name
+        self.rarity = rarity
+        self.pack = kwargs.get("pack")
         self.variant_of: str = kwargs.get("variant")
 
     @property
