@@ -437,7 +437,7 @@ class Zeph(commands.Bot):
         elif isinstance(card, tp.TrainerCard):
             return self.ball_emol("poke").con(
                 card.name,
-                d=f"{variant_notice}**[{card.category}]**\n{self.add_energy_icons(card.description)}",
+                d=f"{variant_notice}**[{card.type}]**\n{self.add_energy_icons(card.description)}",
                 footer=f"{card.id} ({tp.expansion_names[card.expansion]})",
                 thumb=card.image_url
             )

@@ -40,8 +40,9 @@ class Card:
         self.expansion = expansion
         self.number = number
         self.name = name
+        self.type = "blank"
         self.rarity = rarity
-        self.pack = kwargs.get("pack")
+        self.pack: str = kwargs.get("pack")
         self.variant_of: str = kwargs.get("variant")
 
     @property
@@ -63,7 +64,7 @@ class Card:
 class TrainerCard(Card):
     def __init__(self, expansion: str, number: int, name: str, category: str, description: str, **kwargs):
         super().__init__(expansion, number, name, **kwargs)
-        self.category = category
+        self.type = category
         self.description = description
 
     def all_text(self):
@@ -95,13 +96,95 @@ class PokemonCard(Card):
         self.moves: list[Move] = [Move(**g) if isinstance(g, dict) else g for g in kwargs.get("moves", [])]
         self.weakness = kwargs.get("weakness")
         self.retreat_cost = kwargs.get("retreat_cost", 0)
-        self.ex = kwargs.get("ex", False)
+        self.ex = kwargs.get("ex", self.name.endswith(" ex"))
 
     def all_text(self):
         return " ".join(
             [self.name] + (["Ability:", self.ability.name, self.ability.description] if self.ability else []) +
             [j for g in self.moves for j in ([g.name, g.description] if g.description else [g.name])]
         )
+
+
+class CardSearchQuery:
+    def __init__(self, **kwargs):
+        self.type: str = kwargs.get("type")
+        self.hp: str = kwargs.get("hp")
+        self.power: str = kwargs.get("power")
+        self.stage: int = kwargs.get("stage")
+        self.ex: bool = kwargs.get("ex")
+        self.text_match: list[str] = kwargs.get("text_match", [])
+        self.original_query: str = kwargs.get("original_query")
+
+    def __str__(self):
+        return self.original_query
+
+    @staticmethod
+    def from_str(txt: str):
+        kwargs = {}
+        plaintext = []
+        for word in txt.split():
+            if match := re.fullmatch(
+                    r"type[:=](pokemon|trainer|item|supporter|tool|"+("|".join(g.lower() for g in types))+")", word, re.I):
+                kwargs["type"] = match[1].title()
+            elif match := re.fullmatch(r"(hp)([<>=:]=?[0-9]+)", word, re.I):
+                kwargs["hp"] = match[2].replace(":", "=")
+            elif match := re.fullmatch(r"(power|pwr|damage|dmg)([<>=:]=?[0-9]+)", word, re.I):
+                kwargs["power"] = match[2].replace(":", "=")
+            elif match := re.fullmatch(r"stage[:=]([012]|basic)", word, re.I):
+                kwargs["stage"] = int(match[1].lower().replace("basic", "0"))
+            elif match := re.fullmatch(r"ex[:=](y(es)?|t(rue)?|n(o)?|f(alse)?|[01])", word.lower()):
+                kwargs["ex"] = match[1].startswith("y") or match[1].startswith("t") or match[1] == "1"
+            else:
+                plaintext.append(word)
+        return CardSearchQuery(original_query=txt, text_match=plaintext, **kwargs)
+
+    @staticmethod
+    def compare_attribute(card_value: int, search_term: str) -> bool:
+        if not isinstance(card_value, int):
+            return False
+        search_value = int(search_term.strip("<>="))
+        if search_term.startswith(">="):
+            return card_value >= search_value
+        elif search_term.startswith(">"):
+            return card_value > search_value
+        elif search_term.startswith("<="):
+            return card_value <= search_value
+        elif search_term.startswith("<"):
+            return card_value < search_value
+        else:
+            return card_value == search_value
+
+    def matches_card(self, card: Card):
+        if isinstance(card, TrainerCard):
+            return card.type == self.type or (self.type is None and self.hp is None and self.power is None and
+                                              self.stage is None and self.ex is None)
+        elif isinstance(card, PokemonCard):
+            if (self.type is not None and self.type != "Pokemon") and card.type != self.type:
+                return False
+            if self.hp is not None and not self.compare_attribute(card.hp, self.hp):
+                return False
+            if self.power is not None and not any([self.compare_attribute(m.power, self.power) for m in card.moves]):
+                return False
+            if self.stage is not None and card.stage != self.stage:
+                return False
+            if self.ex is not None and card.ex != self.ex:
+                return False
+        return True
+
+    def get_matches(self) -> list[Card]:
+        all_matches = [g for g in card_dex.values() if not g.variant_of and self.matches_card(g)]
+        if self.text_match:
+            overlap_lengths = {}
+            for card in all_matches:
+                total_overlap = len(set(fix(card.all_text()).split("-")).intersection(set(self.text_match)))
+                if total_overlap:
+                    overlap_lengths[total_overlap] = overlap_lengths.get(total_overlap, []) + [card]
+            if not overlap_lengths:
+                return []
+            if max(overlap_lengths.keys()) != len(self.text_match):
+                return []
+            return overlap_lengths[max(overlap_lengths.keys())]
+        return all_matches
 
 
 def is_sublist(sublist: list, containing_list: list):
@@ -112,7 +195,7 @@ def is_sublist(sublist: list, containing_list: list):
     return False
 
 
-def card_search(txt: str, include_variants: bool = False, text_match: bool = False) -> list[Card]:
+def name_search(txt: str, include_variants: bool = False) -> list[Card]:
     s = fix(txt)
     overlap_lengths = {}
     for expansion, name in expansion_names.items():
@@ -121,19 +204,14 @@ def card_search(txt: str, include_variants: bool = False, text_match: bool = Fal
     for id_number, card in card_dex.items():
         if fix(id_number) == s:
             return [card]
-        if text_match:
-            total_overlap = len(set(fix(card.all_text()).split("-")).intersection(set(split)))
-        else:
-            name_overlap = set(fix(card.name).split("-")).intersection(set(split))
-            expansion_overlap = set(fix(card.expansion_name).split("-")).intersection(set(split))
-            total_overlap = sum(({g: 0.1 for g in expansion_overlap} | {g: 1 for g in name_overlap}).values())
+        name_overlap = set(fix(card.name).split("-")).intersection(set(split))
+        expansion_overlap = set(fix(card.expansion_name).split("-")).intersection(set(split))
+        total_overlap = sum(({g: 0.1 for g in expansion_overlap} | {g: 1 for g in name_overlap}).values())
         if total_overlap:
             overlap_lengths[total_overlap] = overlap_lengths.get(total_overlap, []) + [card]
         elif fix(card.expansion) in split:
             overlap_lengths[0] = overlap_lengths.get(0, []) + [card]
     if not overlap_lengths:
-        return []
-    if text_match and max(overlap_lengths.keys()) != len(split):
         return []
     possible_matches = overlap_lengths[max(overlap_lengths.keys())]
     expansion_match = [k for k, v in expansion_names.items() if fix(k) in split]

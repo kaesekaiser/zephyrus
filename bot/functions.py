@@ -8,7 +8,7 @@ from functools import partial
 
 def plural(s: str, n: float | int, **kwargs):
     """Pluralizes a noun if n != 1. 'plural' kwarg allows alternative plural form."""
-    return kwargs.get("plural", s + "s") if n != 1 else s
+    return kwargs.get("plural", s + kwargs.get("suffix", "s")) if n != 1 else s
 
 
 def a_or_an(s: str) -> str:
