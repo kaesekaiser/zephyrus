@@ -4,6 +4,7 @@ import random
 import re
 from discord.ext import commands
 from functools import partial
+from math import ceil
 
 
 def plural(s: str, n: float | int, **kwargs):
