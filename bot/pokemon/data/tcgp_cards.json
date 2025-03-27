@@ -5464,100 +5464,100 @@
         "rarity": "\u265b",
         "variant": "A1-129"
     },
-    "PROMO-001": {
-        "expansion": "PROMO",
+    "P-A-001": {
+        "expansion": "P-A",
         "number": 1,
         "rarity": "Shop",
         "name": "Potion",
         "category": "Item",
         "description": "Heal 20 damage from 1 of your Pok\u00e9mon."
     },
-    "PROMO-002": {
-        "expansion": "PROMO",
+    "P-A-002": {
+        "expansion": "P-A",
         "number": 2,
         "rarity": "Shop",
         "name": "X Speed",
         "category": "Item",
         "description": "During this turn, the Retreat Cost of your Active Pok\u00e9mon is 1 less."
     },
-    "PROMO-003": {
-        "expansion": "PROMO",
+    "P-A-003": {
+        "expansion": "P-A",
         "number": 3,
         "rarity": "Shop",
         "name": "Hand Scope",
         "category": "Item",
         "description": "Your opponent reveals their hand."
     },
-    "PROMO-004": {
-        "expansion": "PROMO",
+    "P-A-004": {
+        "expansion": "P-A",
         "number": 4,
         "rarity": "Shop",
         "name": "Pok\u00e9dex",
         "category": "Item",
         "description": "Look at the top 3 cards of your deck."
     },
-    "PROMO-005": {
-        "expansion": "PROMO",
+    "P-A-005": {
+        "expansion": "P-A",
         "number": 5,
         "rarity": "Shop",
         "name": "Pok\u00e9 Ball",
         "category": "Item",
         "description": "Put 1 random Basic Pok\u00e9mon from your deck into your hand."
     },
-    "PROMO-006": {
-        "expansion": "PROMO",
+    "P-A-006": {
+        "expansion": "P-A",
         "number": 6,
         "rarity": "Shop",
         "name": "Red Card",
         "category": "Item",
         "description": "Your opponent shuffles their hand into their deck and draws 3 cards."
     },
-    "PROMO-007": {
-        "expansion": "PROMO",
+    "P-A-007": {
+        "expansion": "P-A",
         "number": 7,
         "rarity": "Shop",
         "name": "Professor's Research",
         "category": "Supporter",
         "description": "Draw 2 cards."
     },
-    "PROMO-008": {
-        "expansion": "PROMO",
+    "P-A-008": {
+        "expansion": "P-A",
         "number": 8,
         "rarity": "Campaign",
-        "variant": "PROMO-004"
+        "variant": "P-A-004"
     },
-    "PROMO-009": {
-        "expansion": "PROMO",
+    "P-A-009": {
+        "expansion": "P-A",
         "number": 9,
         "rarity": "Premium Missions",
         "variant": "A1-094"
     },
-    "PROMO-010": {
-        "expansion": "PROMO",
+    "P-A-010": {
+        "expansion": "P-A",
         "number": 10,
         "rarity": "Premium Missions",
         "variant": "A1-128"
     },
-    "PROMO-011": {
-        "expansion": "PROMO",
+    "P-A-011": {
+        "expansion": "P-A",
         "number": 11,
         "rarity": "Wonder Pick",
         "variant": "A1-202"
     },
-    "PROMO-012": {
-        "expansion": "PROMO",
+    "P-A-012": {
+        "expansion": "P-A",
         "number": 12,
         "rarity": "Wonder Pick",
         "variant": "A1-196"
     },
-    "PROMO-013": {
-        "expansion": "PROMO",
+    "P-A-013": {
+        "expansion": "P-A",
         "number": 13,
         "rarity": "Promo pack",
         "variant": "A1-007"
     },
-    "PROMO-014": {
-        "expansion": "PROMO",
+    "P-A-014": {
+        "expansion": "P-A",
         "number": 14,
         "rarity": "Promo pack",
         "name": "Lapras ex",
@@ -5579,20 +5579,20 @@
             }
         ]
     },
-    "PROMO-015": {
-        "expansion": "PROMO",
+    "P-A-015": {
+        "expansion": "P-A",
         "number": 15,
         "rarity": "Promo pack",
         "variant": "A1-094"
     },
-    "PROMO-016": {
-        "expansion": "PROMO",
+    "P-A-016": {
+        "expansion": "P-A",
         "number": 16,
         "rarity": "Promo pack",
         "variant": "A1-113"
     },
-    "PROMO-017": {
-        "expansion": "PROMO",
+    "P-A-017": {
+        "expansion": "P-A",
         "number": 17,
         "rarity": "Promo pack",
         "name": "Mankey",
@@ -5612,20 +5612,20 @@
             }
         ]
     },
-    "PROMO-018": {
-        "expansion": "PROMO",
+    "P-A-018": {
+        "expansion": "P-A",
         "number": 18,
         "rarity": "Promo pack",
         "variant": "A1-003"
     },
-    "PROMO-019": {
-        "expansion": "PROMO",
+    "P-A-019": {
+        "expansion": "P-A",
         "number": 19,
         "rarity": "Promo pack",
         "variant": "A1-089"
     },
-    "PROMO-020": {
-        "expansion": "PROMO",
+    "P-A-020": {
+        "expansion": "P-A",
         "number": 20,
         "rarity": "Promo pack",
         "name": "Haunter",
@@ -5646,14 +5646,14 @@
             }
         ]
     },
-    "PROMO-021": {
-        "expansion": "PROMO",
+    "P-A-021": {
+        "expansion": "P-A",
         "number": 21,
         "rarity": "Promo pack",
         "variant": "A1-150"
     },
-    "PROMO-022": {
-        "expansion": "PROMO",
+    "P-A-022": {
+        "expansion": "P-A",
         "number": 22,
         "rarity": "Promo pack",
         "name": "Jigglypuff",
@@ -5673,32 +5673,32 @@
             }
         ]
     },
-    "PROMO-023": {
-        "expansion": "PROMO",
+    "P-A-023": {
+        "expansion": "P-A",
         "number": 23,
         "rarity": "Wonder Pick",
         "variant": "A1-001"
     },
-    "PROMO-024": {
-        "expansion": "PROMO",
+    "P-A-024": {
+        "expansion": "P-A",
         "number": 24,
         "rarity": "Wonder Pick",
         "variant": "A1-097"
     },
-    "PROMO-025": {
-        "expansion": "PROMO",
+    "P-A-025": {
+        "expansion": "P-A",
         "number": 25,
         "rarity": "Premium Missions",
         "variant": "A1-047"
     },
-    "PROMO-026": {
-        "expansion": "PROMO",
+    "P-A-026": {
+        "expansion": "P-A",
         "number": 26,
         "rarity": "Campaign",
         "variant": "A1-094"
     },
-    "PROMO-027": {
-        "expansion": "PROMO",
+    "P-A-027": {
+        "expansion": "P-A",
         "number": 27,
         "rarity": "Promo pack",
         "name": "Snivy",
@@ -5717,20 +5717,20 @@
             }
         ]
     },
-    "PROMO-028": {
-        "expansion": "PROMO",
+    "P-A-028": {
+        "expansion": "P-A",
         "number": 28,
         "rarity": "Promo pack",
         "variant": "A1a-014"
     },
-    "PROMO-029": {
-        "expansion": "PROMO",
+    "P-A-029": {
+        "expansion": "P-A",
         "number": 29,
         "rarity": "Promo pack",
         "variant": "A1-055"
     },
-    "PROMO-030": {
-        "expansion": "PROMO",
+    "P-A-030": {
+        "expansion": "P-A",
         "number": 30,
         "rarity": "Promo pack",
         "name": "Eevee",
@@ -5750,44 +5750,44 @@
             }
         ]
     },
-    "PROMO-031": {
-        "expansion": "PROMO",
+    "P-A-031": {
+        "expansion": "P-A",
         "number": 31,
         "rarity": "Promo pack",
         "variant": "A1-213"
     },
-    "PROMO-032": {
-        "expansion": "PROMO",
+    "P-A-032": {
+        "expansion": "P-A",
         "number": 32,
         "rarity": "Wonder Pick",
         "variant": "A1-033"
     },
-    "PROMO-033": {
-        "expansion": "PROMO",
+    "P-A-033": {
+        "expansion": "P-A",
         "number": 33,
         "rarity": "Wonder Pick",
         "variant": "A1-053"
     },
-    "PROMO-034": {
-        "expansion": "PROMO",
+    "P-A-034": {
+        "expansion": "P-A",
         "number": 34,
         "rarity": "Premium Missions",
         "variant": "A2-035"
     },
-    "PROMO-035": {
-        "expansion": "PROMO",
+    "P-A-035": {
+        "expansion": "P-A",
         "number": 35,
         "rarity": "Promo pack",
         "variant": "A2-010"
     },
-    "PROMO-036": {
-        "expansion": "PROMO",
+    "P-A-036": {
+        "expansion": "P-A",
         "number": 36,
         "rarity": "Promo pack",
         "variant": "A2-057"
     },
-    "PROMO-037": {
-        "expansion": "PROMO",
+    "P-A-037": {
+        "expansion": "P-A",
         "number": 37,
         "rarity": "Promo pack",
         "name": "Cresselia ex",
@@ -5812,8 +5812,8 @@
             }
         ]
     },
-    "PROMO-038": {
-        "expansion": "PROMO",
+    "P-A-038": {
+        "expansion": "P-A",
         "number": 38,
         "rarity": "Promo pack",
         "name": "Misdreavus",
@@ -5833,44 +5833,44 @@
             }
         ]
     },
-    "PROMO-039": {
-        "expansion": "PROMO",
+    "P-A-039": {
+        "expansion": "P-A",
         "number": 39,
         "rarity": "Promo pack",
         "variant": "A2-111"
     },
-    "PROMO-040": {
-        "expansion": "PROMO",
+    "P-A-040": {
+        "expansion": "P-A",
         "number": 40,
         "rarity": "Wonder Pick",
         "variant": "A2-027"
     },
-    "PROMO-041": {
-        "expansion": "PROMO",
+    "P-A-041": {
+        "expansion": "P-A",
         "number": 41,
         "rarity": "Wonder Pick",
         "variant": "A2-063"
     },
-    "PROMO-042": {
-        "expansion": "PROMO",
+    "P-A-042": {
+        "expansion": "P-A",
         "number": 42,
         "rarity": "Premium Missions",
         "variant": "A2-110"
     },
-    "PROMO-043": {
-        "expansion": "PROMO",
+    "P-A-043": {
+        "expansion": "P-A",
         "number": 43,
         "rarity": "Promo pack",
         "variant": "A2a-008"
     },
-    "PROMO-044": {
-        "expansion": "PROMO",
+    "P-A-044": {
+        "expansion": "P-A",
         "number": 44,
         "rarity": "Promo pack",
         "variant": "A2a-026"
     },
-    "PROMO-045": {
-        "expansion": "PROMO",
+    "P-A-045": {
+        "expansion": "P-A",
         "number": 45,
         "rarity": "Promo pack",
         "name": "Nosepass",
@@ -5891,14 +5891,14 @@
             }
         ]
     },
-    "PROMO-046": {
-        "expansion": "PROMO",
+    "P-A-046": {
+        "expansion": "P-A",
         "number": 46,
         "rarity": "Promo pack",
         "variant": "A2a-045"
     },
-    "PROMO-047": {
-        "expansion": "PROMO",
+    "P-A-047": {
+        "expansion": "P-A",
         "number": 47,
         "rarity": "Promo pack",
         "name": "Staraptor",
@@ -5924,17 +5924,108 @@
             }
         ]
     },
-    "PROMO-048": {
-        "expansion": "PROMO",
+    "P-A-048": {
+        "expansion": "P-A",
         "number": 48,
         "rarity": "Wonder Pick",
         "variant": "A2-050"
     },
-    "PROMO-049": {
-        "expansion": "PROMO",
+    "P-A-049": {
+        "expansion": "P-A",
         "number": 49,
         "rarity": "Wonder Pick",
         "variant": "A2a-063"
+    },
+    "P-A-050": {
+        "expansion": "P-A",
+        "number": 50,
+        "rarity": "Paid",
+        "variant": "A1-129"
+    },
+    "P-A-051": {
+        "expansion": "P-A",
+        "number": 51,
+        "rarity": "Missions",
+        "variant": "A2b-068"
+    },
+    "P-A-052": {
+        "expansion": "P-A",
+        "number": 52,
+        "rarity": "Premium Missions",
+        "variant": "A2b-005"
+    },
+    "P-A-053": {
+        "expansion": "P-A",
+        "number": 53,
+        "rarity": "Promo pack",
+        "name": "Floatzel",
+        "type": "Water",
+        "stage": 1,
+        "evolves_from": "Buizel",
+        "hp": 100,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Attack the Wound",
+                "energy_cost": [
+                    "Water"
+                ],
+                "power": "10+",
+                "description": "If your opponent's Active Pok\u00e9mon has damage on it, this attack does 60 more damage."
+            }
+        ]
+    },
+    "P-A-054": {
+        "expansion": "P-A",
+        "number": 54,
+        "rarity": "Promo pack",
+        "variant": "A2b-028"
+    },
+    "P-A-055": {
+        "expansion": "P-A",
+        "number": 55,
+        "rarity": "Promo pack",
+        "variant": "A2b-039"
+    },
+    "P-A-056": {
+        "expansion": "P-A",
+        "number": 56,
+        "rarity": "Promo pack",
+        "name": "Ekans",
+        "type": "Darkness",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Poison Sting",
+                "energy_cost": [
+                    "Darkness"
+                ],
+                "power": 0,
+                "description": "Your opponent's Active Pok\u00e9mon is now Poisoned."
+            }
+        ]
+    },
+    "P-A-057": {
+        "expansion": "P-A",
+        "number": 57,
+        "rarity": "Promo pack",
+        "variant": "A2b-064"
+    },
+    "P-A-058": {
+        "expansion": "P-A",
+        "number": 58,
+        "rarity": "Wonder Pick",
+        "variant": "A2b-025"
+    },
+    "P-A-059": {
+        "expansion": "P-A",
+        "number": 59,
+        "rarity": "Wonder Pick",
+        "variant": "A2b-042"
     },
     "A1a-001": {
         "expansion": "A1a",
@@ -13168,5 +13259,1781 @@
         "rarity": "\u265b",
         "pack": "Arceus",
         "variant": "A2a-071"
+    },
+    "A2b-001": {
+        "expansion": "A2b",
+        "number": 1,
+        "rarity": "\u2662",
+        "name": "Weedle",
+        "type": "Grass",
+        "stage": 0,
+        "hp": 50,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Multiply",
+                "energy_cost": [
+                    "Grass"
+                ],
+                "power": 0,
+                "description": "Put 1 random Weedle from your deck onto your Bench."
+            }
+        ]
+    },
+    "A2b-002": {
+        "expansion": "A2b",
+        "number": 2,
+        "rarity": "\u2662\u2662",
+        "name": "Kakuna",
+        "type": "Grass",
+        "stage": 1,
+        "evolves_from": "Weedle",
+        "hp": 80,
+        "weakness": "Fire",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "String Shot",
+                "energy_cost": [
+                    "Grass"
+                ],
+                "power": 20,
+                "description": "Flip a coin. If heads, your opponent's Active Pok\u00e9mon is now Paralyzed."
+            }
+        ]
+    },
+    "A2b-003": {
+        "expansion": "A2b",
+        "number": 3,
+        "rarity": "\u2662\u2662\u2662\u2662",
+        "name": "Beedrill ex",
+        "type": "Grass",
+        "stage": 2,
+        "evolves_from": "Kakuna",
+        "hp": 170,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Crushing Spear",
+                "energy_cost": [
+                    "Grass",
+                    "Grass"
+                ],
+                "power": 80,
+                "description": "Discard a random Energy from your opponent's Active Pok\u00e9mon."
+            }
+        ]
+    },
+    "A2b-004": {
+        "expansion": "A2b",
+        "number": 4,
+        "rarity": "\u2662",
+        "name": "Pinsir",
+        "type": "Grass",
+        "stage": 0,
+        "hp": 90,
+        "weakness": "Fire",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Guillotine Rush",
+                "energy_cost": [
+                    "Grass",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": "50+",
+                "description": "Flip a coin until you get tails. This attack does 40 more damage for each heads."
+            }
+        ]
+    },
+    "A2b-005": {
+        "expansion": "A2b",
+        "number": 5,
+        "rarity": "\u2662",
+        "name": "Sprigatito",
+        "type": "Grass",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Cry for Help",
+                "energy_cost": [
+                    "Grass"
+                ],
+                "power": 0,
+                "description": "Put 1 random {Grass} Pok\u00e9mon from your deck into your hand."
+            }
+        ]
+    },
+    "A2b-006": {
+        "expansion": "A2b",
+        "number": 6,
+        "rarity": "\u2662\u2662",
+        "name": "Floragato",
+        "type": "Grass",
+        "stage": 1,
+        "evolves_from": "Sprigatito",
+        "hp": 90,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Slash",
+                "energy_cost": [
+                    "Grass",
+                    "Grass"
+                ],
+                "power": 40
+            }
+        ]
+    },
+    "A2b-007": {
+        "expansion": "A2b",
+        "number": 7,
+        "rarity": "\u2662\u2662\u2662",
+        "name": "Meowscarada",
+        "type": "Grass",
+        "stage": 2,
+        "evolves_from": "Floragato",
+        "hp": 140,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Fighting Claws",
+                "energy_cost": [
+                    "Grass",
+                    "Grass"
+                ],
+                "power": "60+",
+                "description": "If your opponent's Active Pok\u00e9mon is a Pok\u00e9mon ex, this attack does 70 more damage."
+            }
+        ]
+    },
+    "A2b-008": {
+        "expansion": "A2b",
+        "number": 8,
+        "rarity": "\u2662",
+        "name": "Charmander",
+        "type": "Fire",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Water",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Combustion",
+                "energy_cost": [
+                    "Fire"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A2b-009": {
+        "expansion": "A2b",
+        "number": 9,
+        "rarity": "\u2662\u2662",
+        "name": "Charmeleon",
+        "type": "Fire",
+        "stage": 1,
+        "evolves_from": "Charmander",
+        "hp": 90,
+        "weakness": "Water",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Combustion",
+                "energy_cost": [
+                    "Fire",
+                    "Fire"
+                ],
+                "power": 40
+            }
+        ]
+    },
+    "A2b-010": {
+        "expansion": "A2b",
+        "number": 10,
+        "rarity": "\u2662\u2662\u2662\u2662",
+        "name": "Charizard ex",
+        "type": "Fire",
+        "stage": 2,
+        "evolves_from": "Charmeleon",
+        "hp": 180,
+        "weakness": "Water",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Stoke",
+                "energy_cost": [
+                    "Fire"
+                ],
+                "power": 0,
+                "description": "Take 3 {Fire} Energy from your Energy Zone and attach it to this Pok\u00e9mon."
+            },
+            {
+                "name": "Steam Artillery",
+                "energy_cost": [
+                    "Fire",
+                    "Fire",
+                    "Fire",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 150
+            }
+        ]
+    },
+    "A2b-011": {
+        "expansion": "A2b",
+        "number": 11,
+        "rarity": "\u2662",
+        "name": "Magmar",
+        "type": "Fire",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Water",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Flare",
+                "energy_cost": [
+                    "Fire"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A2b-012": {
+        "expansion": "A2b",
+        "number": 12,
+        "rarity": "\u2662\u2662\u2662",
+        "name": "Magmortar",
+        "type": "Fire",
+        "stage": 1,
+        "evolves_from": "Magmar",
+        "hp": 120,
+        "weakness": "Water",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Smoke Bomb",
+                "energy_cost": [
+                    "Fire",
+                    "Fire",
+                    "Colorless"
+                ],
+                "power": 70,
+                "description": "During your opponent's next turn, if the Defending Pok\u00e9mon tries to use an attack, your opponent flips a coin. If tails, that attack doesn't happen."
+            }
+        ]
+    },
+    "A2b-013": {
+        "expansion": "A2b",
+        "number": 13,
+        "rarity": "\u2662\u2662",
+        "name": "Paldean Tauros",
+        "type": "Fire",
+        "stage": 0,
+        "hp": 110,
+        "weakness": "Water",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Blaze Tackle",
+                "energy_cost": [
+                    "Fire",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 80,
+                "description": "This Pok\u00e9mon also does 10 damage to itself."
+            }
+        ]
+    },
+    "A2b-014": {
+        "expansion": "A2b",
+        "number": 14,
+        "rarity": "\u2662",
+        "name": "Tentacool",
+        "type": "Water",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Rain Splash",
+                "energy_cost": [
+                    "Water"
+                ],
+                "power": 10
+            }
+        ]
+    },
+    "A2b-015": {
+        "expansion": "A2b",
+        "number": 15,
+        "rarity": "\u2662\u2662",
+        "name": "Tentacruel",
+        "type": "Water",
+        "stage": 1,
+        "evolves_from": "Tentacool",
+        "hp": 100,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Wave Splash",
+                "energy_cost": [
+                    "Water"
+                ],
+                "power": 40
+            }
+        ]
+    },
+    "A2b-016": {
+        "expansion": "A2b",
+        "number": 16,
+        "rarity": "\u2662",
+        "name": "Buizel",
+        "type": "Water",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Water Gun",
+                "energy_cost": [
+                    "Water"
+                ],
+                "power": 10
+            }
+        ]
+    },
+    "A2b-017": {
+        "expansion": "A2b",
+        "number": 17,
+        "rarity": "\u2662\u2662",
+        "name": "Floatzel",
+        "type": "Water",
+        "stage": 1,
+        "evolves_from": "Buizel",
+        "hp": 90,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Water Arrow",
+                "energy_cost": [
+                    "Water"
+                ],
+                "power": 0,
+                "description": "This attack does 30 damage to 1 of your opponent's Pok\u00e9mon."
+            }
+        ]
+    },
+    "A2b-018": {
+        "expansion": "A2b",
+        "number": 18,
+        "rarity": "\u2662",
+        "name": "Wiglett",
+        "type": "Water",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Spring Out",
+                "energy_cost": [
+                    "Water"
+                ],
+                "power": 0,
+                "description": "1 of your opponent's Pok\u00e9mon is chosen at random. Do 30 damage to it."
+            }
+        ]
+    },
+    "A2b-019": {
+        "expansion": "A2b",
+        "number": 19,
+        "rarity": "\u2662\u2662\u2662\u2662",
+        "name": "Wugtrio ex",
+        "type": "Water",
+        "stage": 1,
+        "evolves_from": "Wiglett",
+        "hp": 140,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Pop Out Throughout",
+                "energy_cost": [
+                    "Water",
+                    "Water",
+                    "Water"
+                ],
+                "power": 0,
+                "description": "1 of your opponent's Pok\u00e9mon is chosen at random 3 times. For each time a Pok\u00e9mon was chosen, do 50 damage to it."
+            }
+        ]
+    },
+    "A2b-020": {
+        "expansion": "A2b",
+        "number": 20,
+        "rarity": "\u2662\u2662\u2662",
+        "name": "Dondozo",
+        "type": "Water",
+        "stage": 0,
+        "hp": 120,
+        "weakness": "Lightning",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Ocean Cyclone",
+                "energy_cost": [
+                    "Water",
+                    "Water",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 80,
+                "description": "This attack also does 10 damage to each of your opponent's Benched Pok\u00e9mon."
+            }
+        ]
+    },
+    "A2b-021": {
+        "expansion": "A2b",
+        "number": 21,
+        "rarity": "\u2662\u2662",
+        "name": "Tatsugiri",
+        "type": "Water",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "ability": {
+            "name": "Retreat Directive",
+            "description": "Your Active Dondozo has no Retreat Cost."
+        },
+        "moves": [
+            {
+                "name": "Rain Splash",
+                "energy_cost": [
+                    "Water"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A2b-022": {
+        "expansion": "A2b",
+        "number": 22,
+        "rarity": "\u2662\u2662\u2662\u2662",
+        "name": "Pikachu ex",
+        "type": "Lightning",
+        "stage": 0,
+        "hp": 120,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Thunderbolt",
+                "energy_cost": [
+                    "Lightning",
+                    "Lightning",
+                    "Lightning"
+                ],
+                "power": 150,
+                "description": "Discard all Energy from this Pok\u00e9mon."
+            }
+        ]
+    },
+    "A2b-023": {
+        "expansion": "A2b",
+        "number": 23,
+        "rarity": "\u2662",
+        "name": "Voltorb",
+        "type": "Lightning",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Lightning Ball",
+                "energy_cost": [
+                    "Lightning"
+                ],
+                "power": 10
+            }
+        ]
+    },
+    "A2b-024": {
+        "expansion": "A2b",
+        "number": 24,
+        "rarity": "\u2662\u2662",
+        "name": "Electrode",
+        "type": "Lightning",
+        "stage": 1,
+        "evolves_from": "Voltorb",
+        "hp": 90,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Tumbling Attack",
+                "energy_cost": [
+                    "Lightning",
+                    "Lightning"
+                ],
+                "power": "50+",
+                "description": "Flip a coin. If heads, this attack does 30 more damage."
+            }
+        ]
+    },
+    "A2b-025": {
+        "expansion": "A2b",
+        "number": 25,
+        "rarity": "\u2662\u2662",
+        "name": "Pachirisu",
+        "type": "Lightning",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Plasma",
+                "energy_cost": [
+                    "Lightning"
+                ],
+                "power": 10,
+                "description": "Take a {Lightning} Energy from your Energy Zone and attach it to 1 of your Benched {Lightning} Pok\u00e9mon."
+            }
+        ]
+    },
+    "A2b-026": {
+        "expansion": "A2b",
+        "number": 26,
+        "rarity": "\u2662",
+        "name": "Pawmi",
+        "type": "Lightning",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Punch",
+                "energy_cost": [
+                    "Lightning"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A2b-027": {
+        "expansion": "A2b",
+        "number": 27,
+        "rarity": "\u2662\u2662",
+        "name": "Pawmo",
+        "type": "Lightning",
+        "stage": 1,
+        "evolves_from": "Pawmi",
+        "hp": 90,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Punch",
+                "energy_cost": [
+                    "Lightning",
+                    "Lightning"
+                ],
+                "power": 40
+            }
+        ]
+    },
+    "A2b-028": {
+        "expansion": "A2b",
+        "number": 28,
+        "rarity": "\u2662\u2662\u2662",
+        "name": "Pawmot",
+        "type": "Lightning",
+        "stage": 2,
+        "evolves_from": "Pawmo",
+        "hp": 140,
+        "weakness": "Fighting",
+        "retreat_cost": 0,
+        "ability": {
+            "name": "Counterattack",
+            "description": "If this Pok\u00e9mon is in the Active Spot and is damaged by an attack from your opponent's Pok\u00e9mon, do 20 damage to the Attacking Pok\u00e9mon."
+        },
+        "moves": [
+            {
+                "name": "Electric Punch",
+                "energy_cost": [
+                    "Lightning",
+                    "Lightning"
+                ],
+                "power": 70
+            }
+        ]
+    },
+    "A2b-029": {
+        "expansion": "A2b",
+        "number": 29,
+        "rarity": "\u2662",
+        "name": "Abra",
+        "type": "Psychic",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Darkness",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Psyshot",
+                "energy_cost": [
+                    "Psychic"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A2b-030": {
+        "expansion": "A2b",
+        "number": 30,
+        "rarity": "\u2662\u2662",
+        "name": "Kadabra",
+        "type": "Psychic",
+        "stage": 1,
+        "evolves_from": "Abra",
+        "hp": 80,
+        "weakness": "Darkness",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Psyshot",
+                "energy_cost": [
+                    "Psychic"
+                ],
+                "power": 30
+            }
+        ]
+    },
+    "A2b-031": {
+        "expansion": "A2b",
+        "number": 31,
+        "rarity": "\u2662\u2662\u2662",
+        "name": "Alakazam",
+        "type": "Psychic",
+        "stage": 2,
+        "evolves_from": "Kadabra",
+        "hp": 130,
+        "weakness": "Darkness",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Psychic Suppression",
+                "energy_cost": [
+                    "Psychic",
+                    "Psychic"
+                ],
+                "power": 80,
+                "description": "This attack also does 20 damage to each of your opponent's Benched Pok\u00e9mon that has any Energy attached."
+            }
+        ]
+    },
+    "A2b-032": {
+        "expansion": "A2b",
+        "number": 32,
+        "rarity": "\u2662",
+        "name": "Mr. Mime",
+        "type": "Psychic",
+        "stage": 0,
+        "hp": 90,
+        "weakness": "Darkness",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Juggling",
+                "energy_cost": [
+                    "Psychic",
+                    "Colorless"
+                ],
+                "power": "20x",
+                "description": "Flip 4 coins. This attack does 20 damage for each heads."
+            }
+        ]
+    },
+    "A2b-033": {
+        "expansion": "A2b",
+        "number": 33,
+        "rarity": "\u2662",
+        "name": "Drifloon",
+        "type": "Psychic",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Darkness",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Ram",
+                "energy_cost": [
+                    "Psychic"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A2b-034": {
+        "expansion": "A2b",
+        "number": 34,
+        "rarity": "\u2662\u2662",
+        "name": "Drifblim",
+        "type": "Psychic",
+        "stage": 1,
+        "evolves_from": "Drifloon",
+        "hp": 90,
+        "weakness": "Darkness",
+        "retreat_cost": 0,
+        "moves": [
+            {
+                "name": "Gust",
+                "energy_cost": [
+                    "Psychic"
+                ],
+                "power": 40
+            }
+        ]
+    },
+    "A2b-035": {
+        "expansion": "A2b",
+        "number": 35,
+        "rarity": "\u2662\u2662\u2662\u2662",
+        "name": "Giratina ex",
+        "type": "Psychic",
+        "stage": 0,
+        "hp": 150,
+        "weakness": "Darkness",
+        "retreat_cost": 2,
+        "ability": {
+            "name": "Broken-Space Bellow",
+            "description": "Once during your turn, you may take a {Psychic} Energy from your Energy Zone and attach it to this Pok\u00e9mon. If you use this Ability, your turn ends."
+        },
+        "moves": [
+            {
+                "name": "Chaotic Impact",
+                "energy_cost": [
+                    "Psychic",
+                    "Psychic",
+                    "Psychic",
+                    "Colorless"
+                ],
+                "power": 130,
+                "description": "This Pok\u00e9mon also does 20 damage to itself."
+            }
+        ]
+    },
+    "A2b-036": {
+        "expansion": "A2b",
+        "number": 36,
+        "rarity": "\u2662",
+        "name": "Gimmighoul",
+        "type": "Psychic",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Darkness",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Chest-ouflage",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 0,
+                "description": "Flip a coin. If heads, during your opponent's next turn, prevent all damage from\u2014and effects of\u2014attacks done to this Pok\u00e9mon."
+            }
+        ]
+    },
+    "A2b-037": {
+        "expansion": "A2b",
+        "number": 37,
+        "rarity": "\u2662",
+        "name": "Machop",
+        "type": "Fighting",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Psychic",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Low Kick",
+                "energy_cost": [
+                    "Fighting"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A2b-038": {
+        "expansion": "A2b",
+        "number": 38,
+        "rarity": "\u2662",
+        "name": "Machoke",
+        "type": "Fighting",
+        "stage": 1,
+        "evolves_from": "Machop",
+        "hp": 100,
+        "weakness": "Psychic",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Pummel",
+                "energy_cost": [
+                    "Fighting",
+                    "Fighting"
+                ],
+                "power": "30+",
+                "description": "Flip a coin. If heads, this attack does 30 more damage."
+            }
+        ]
+    },
+    "A2b-039": {
+        "expansion": "A2b",
+        "number": 39,
+        "rarity": "\u2662\u2662\u2662",
+        "name": "Machamp",
+        "type": "Fighting",
+        "stage": 2,
+        "evolves_from": "Machoke",
+        "hp": 150,
+        "weakness": "Psychic",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Power Press",
+                "energy_cost": [
+                    "Fighting",
+                    "Fighting"
+                ],
+                "power": "70+",
+                "description": "If this Pok\u00e9mon has at least 2 extra {Fighting} Energy attached, this attack does 50 more damage."
+            }
+        ]
+    },
+    "A2b-040": {
+        "expansion": "A2b",
+        "number": 40,
+        "rarity": "\u2662",
+        "name": "Hitmonlee",
+        "type": "Fighting",
+        "stage": 0,
+        "hp": 80,
+        "weakness": "Psychic",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Kick",
+                "energy_cost": [
+                    "Fighting"
+                ],
+                "power": 30
+            }
+        ]
+    },
+    "A2b-041": {
+        "expansion": "A2b",
+        "number": 41,
+        "rarity": "\u2662",
+        "name": "Hitmonchan",
+        "type": "Fighting",
+        "stage": 0,
+        "hp": 90,
+        "weakness": "Psychic",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Magnum Punch",
+                "energy_cost": [
+                    "Fighting",
+                    "Fighting",
+                    "Fighting"
+                ],
+                "power": 90
+            }
+        ]
+    },
+    "A2b-042": {
+        "expansion": "A2b",
+        "number": 42,
+        "rarity": "\u2662",
+        "name": "Riolu",
+        "type": "Fighting",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Psychic",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Punch",
+                "energy_cost": [
+                    "Fighting",
+                    "Fighting"
+                ],
+                "power": 40
+            }
+        ]
+    },
+    "A2b-043": {
+        "expansion": "A2b",
+        "number": 43,
+        "rarity": "\u2662\u2662\u2662\u2662",
+        "name": "Lucario ex",
+        "type": "Fighting",
+        "stage": 1,
+        "evolves_from": "Riolu",
+        "hp": 150,
+        "weakness": "Psychic",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Aura Sphere",
+                "energy_cost": [
+                    "Fighting",
+                    "Fighting",
+                    "Fighting"
+                ],
+                "power": 100,
+                "description": "This attack also does 30 damage to 1 of your opponent's Benched Pok\u00e9mon."
+            }
+        ]
+    },
+    "A2b-044": {
+        "expansion": "A2b",
+        "number": 44,
+        "rarity": "\u2662\u2662",
+        "name": "Flamigo",
+        "type": "Fighting",
+        "stage": 0,
+        "hp": 80,
+        "weakness": "Psychic",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Double Kick",
+                "energy_cost": [
+                    "Fighting",
+                    "Fighting"
+                ],
+                "power": "50x",
+                "description": "Flip 2 coins. This attack does 50 damage for each heads."
+            }
+        ]
+    },
+    "A2b-045": {
+        "expansion": "A2b",
+        "number": 45,
+        "rarity": "\u2662",
+        "name": "Ekans",
+        "type": "Darkness",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Ram",
+                "energy_cost": [
+                    "Darkness",
+                    "Colorless"
+                ],
+                "power": 30
+            }
+        ]
+    },
+    "A2b-046": {
+        "expansion": "A2b",
+        "number": 46,
+        "rarity": "\u2662\u2662",
+        "name": "Arbok",
+        "type": "Darkness",
+        "stage": 1,
+        "evolves_from": "Ekans",
+        "hp": 110,
+        "weakness": "Fighting",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Venomous Fang",
+                "energy_cost": [
+                    "Darkness",
+                    "Darkness",
+                    "Colorless"
+                ],
+                "power": 70,
+                "description": "Your opponent's Active Pok\u00e9mon is now Poisoned."
+            }
+        ]
+    },
+    "A2b-047": {
+        "expansion": "A2b",
+        "number": 47,
+        "rarity": "\u2662",
+        "name": "Paldean Wooper",
+        "type": "Darkness",
+        "stage": 0,
+        "hp": 50,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Poison Jab",
+                "energy_cost": [
+                    "Darkness"
+                ],
+                "power": 10,
+                "description": "Your opponent's Active Pok\u00e9mon is now Poisoned."
+            }
+        ]
+    },
+    "A2b-048": {
+        "expansion": "A2b",
+        "number": 48,
+        "rarity": "\u2662\u2662\u2662\u2662",
+        "name": "Paldean Clodsire ex",
+        "type": "Darkness",
+        "stage": 1,
+        "evolves_from": "Paldean Wooper",
+        "hp": 160,
+        "weakness": "Fighting",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Venoshock",
+                "energy_cost": [
+                    "Darkness",
+                    "Darkness"
+                ],
+                "power": "60+",
+                "description": "If your opponent's Active Pok\u00e9mon is Poisoned, this attack does 60 more damage."
+            }
+        ]
+    },
+    "A2b-049": {
+        "expansion": "A2b",
+        "number": 49,
+        "rarity": "\u2662\u2662",
+        "name": "Spiritomb",
+        "type": "Darkness",
+        "stage": 0,
+        "hp": 80,
+        "weakness": "Grass",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Confuse Ray",
+                "energy_cost": [
+                    "Darkness"
+                ],
+                "power": 20,
+                "description": "Flip a coin. If heads, your opponent's Active Pok\u00e9mon is now Confused."
+            }
+        ]
+    },
+    "A2b-050": {
+        "expansion": "A2b",
+        "number": 50,
+        "rarity": "\u2662",
+        "name": "Shroodle",
+        "type": "Darkness",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Gnaw",
+                "energy_cost": [
+                    "Darkness"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A2b-051": {
+        "expansion": "A2b",
+        "number": 51,
+        "rarity": "\u2662\u2662\u2662",
+        "name": "Grafaiai",
+        "type": "Darkness",
+        "stage": 1,
+        "evolves_from": "Shroodle",
+        "hp": 90,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "ability": {
+            "name": "Poison Coating",
+            "description": "Once during your turn, you may flip a coin. If heads, your opponent's Active Pok\u00e9mon is now Poisoned."
+        },
+        "moves": [
+            {
+                "name": "Bite",
+                "energy_cost": [
+                    "Darkness",
+                    "Darkness"
+                ],
+                "power": 40
+            }
+        ]
+    },
+    "A2b-052": {
+        "expansion": "A2b",
+        "number": 52,
+        "rarity": "\u2662",
+        "name": "Tinkatink",
+        "type": "Metal",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Corkscrew Punch",
+                "energy_cost": [
+                    "Metal"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A2b-053": {
+        "expansion": "A2b",
+        "number": 53,
+        "rarity": "\u2662\u2662",
+        "name": "Tinkatuff",
+        "type": "Metal",
+        "stage": 1,
+        "evolves_from": "Tinkatink",
+        "hp": 90,
+        "weakness": "Fire",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Tenacious Hammer",
+                "energy_cost": [
+                    "Metal",
+                    "Metal"
+                ],
+                "power": "30+",
+                "description": "Flip a coin. If heads, this attack does 30 more damage."
+            }
+        ]
+    },
+    "A2b-054": {
+        "expansion": "A2b",
+        "number": 54,
+        "rarity": "\u2662\u2662\u2662\u2662",
+        "name": "Tinkaton ex",
+        "type": "Metal",
+        "stage": 2,
+        "evolves_from": "Tinkatuff",
+        "hp": 170,
+        "weakness": "Fire",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Terrific Thumping",
+                "energy_cost": [
+                    "Metal",
+                    "Metal",
+                    "Colorless"
+                ],
+                "power": "80+",
+                "description": "Flip a coin. If heads, this attack does 80 more damage."
+            }
+        ]
+    },
+    "A2b-055": {
+        "expansion": "A2b",
+        "number": 55,
+        "rarity": "\u2662",
+        "name": "Varoom",
+        "type": "Metal",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Headbutt",
+                "energy_cost": [
+                    "Metal"
+                ],
+                "power": 10
+            }
+        ]
+    },
+    "A2b-056": {
+        "expansion": "A2b",
+        "number": 56,
+        "rarity": "\u2662\u2662",
+        "name": "Revavroom",
+        "type": "Metal",
+        "stage": 1,
+        "evolves_from": "Varoom",
+        "hp": 110,
+        "weakness": "Fire",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Spinning Drift",
+                "energy_cost": [
+                    "Metal",
+                    "Metal",
+                    "Colorless"
+                ],
+                "power": 70,
+                "description": "Flip a coin. If heads, during your opponent's next turn, prevent all damage from\u2014and effects of\u2014attacks done to this Pok\u00e9mon."
+            }
+        ]
+    },
+    "A2b-057": {
+        "expansion": "A2b",
+        "number": 57,
+        "rarity": "\u2662\u2662\u2662",
+        "name": "Gholdengo",
+        "type": "Metal",
+        "stage": 1,
+        "evolves_from": "Gimmighoul",
+        "hp": 120,
+        "weakness": "Fire",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Scintillating Surfing",
+                "energy_cost": [
+                    "Metal",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": "50x",
+                "description": "Flip a coin for each {Metal} Energy attached to this Pok\u00e9mon. This attack does 50 damage for each heads."
+            }
+        ]
+    },
+    "A2b-058": {
+        "expansion": "A2b",
+        "number": 58,
+        "rarity": "\u2662",
+        "name": "Rattata",
+        "type": "Colorless",
+        "stage": 0,
+        "hp": 50,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Tackle",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 10
+            }
+        ]
+    },
+    "A2b-059": {
+        "expansion": "A2b",
+        "number": 59,
+        "rarity": "\u2662",
+        "name": "Raticate",
+        "type": "Colorless",
+        "stage": 1,
+        "evolves_from": "Rattata",
+        "hp": 90,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Tackle",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 50
+            }
+        ]
+    },
+    "A2b-060": {
+        "expansion": "A2b",
+        "number": 60,
+        "rarity": "\u2662",
+        "name": "Jigglypuff",
+        "type": "Colorless",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Rollout",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A2b-061": {
+        "expansion": "A2b",
+        "number": 61,
+        "rarity": "\u2662\u2662\u2662",
+        "name": "Wigglytuff",
+        "type": "Colorless",
+        "stage": 1,
+        "evolves_from": "Jigglypuff",
+        "hp": 100,
+        "weakness": "Fighting",
+        "retreat_cost": 2,
+        "ability": {
+            "name": "Comforting Song",
+            "description": "Once during your turn, you may heal 20 damage from your Active Pok\u00e9mon."
+        },
+        "moves": [
+            {
+                "name": "Gentle Slap",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 50
+            }
+        ]
+    },
+    "A2b-062": {
+        "expansion": "A2b",
+        "number": 62,
+        "rarity": "\u2662",
+        "name": "Lickitung",
+        "type": "Colorless",
+        "stage": 0,
+        "hp": 80,
+        "weakness": "Fighting",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Rollout",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 30
+            }
+        ]
+    },
+    "A2b-063": {
+        "expansion": "A2b",
+        "number": 63,
+        "rarity": "\u2662",
+        "name": "Lickilicky",
+        "type": "Colorless",
+        "stage": 1,
+        "evolves_from": "Lickitung",
+        "hp": 130,
+        "weakness": "Fighting",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Rollout",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 70
+            }
+        ]
+    },
+    "A2b-064": {
+        "expansion": "A2b",
+        "number": 64,
+        "rarity": "\u2662",
+        "name": "Bidoof",
+        "type": "Colorless",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Fighting",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Headbutt",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 30
+            }
+        ]
+    },
+    "A2b-065": {
+        "expansion": "A2b",
+        "number": 65,
+        "rarity": "\u2662\u2662\u2662\u2662",
+        "name": "Bibarel ex",
+        "type": "Colorless",
+        "stage": 1,
+        "evolves_from": "Bidoof",
+        "hp": 160,
+        "weakness": "Fighting",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Carefree Press",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 100,
+                "description": "Heal 30 damage from this Pok\u00e9mon."
+            }
+        ]
+    },
+    "A2b-066": {
+        "expansion": "A2b",
+        "number": 66,
+        "rarity": "\u2662",
+        "name": "Buneary",
+        "type": "Colorless",
+        "stage": 0,
+        "hp": 50,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Pound",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A2b-067": {
+        "expansion": "A2b",
+        "number": 67,
+        "rarity": "\u2662",
+        "name": "Lopunny",
+        "type": "Colorless",
+        "stage": 1,
+        "evolves_from": "Buneary",
+        "hp": 100,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Hopping Shot",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 30
+            }
+        ]
+    },
+    "A2b-068": {
+        "expansion": "A2b",
+        "number": 68,
+        "rarity": "\u2662\u2662",
+        "name": "Cyclizar",
+        "type": "Colorless",
+        "stage": 0,
+        "hp": 80,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Overacceleration",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 20,
+                "description": "During your next turn, this Pok\u00e9mon's Overacceleration attack does +20 damage."
+            }
+        ]
+    },
+    "A2b-069": {
+        "expansion": "A2b",
+        "number": 69,
+        "rarity": "\u2662\u2662",
+        "name": "Iono",
+        "category": "Supporter",
+        "description": "Each player shuffles the cards in their hand into their deck, then draws that many cards."
+    },
+    "A2b-070": {
+        "expansion": "A2b",
+        "number": 70,
+        "rarity": "\u2662\u2662",
+        "name": "Pok\u00e9mon Center Lady",
+        "category": "Supporter",
+        "description": "Heal 30 damage from 1 of your Pok\u00e9mon, and it recovers from all Special Conditions."
+    },
+    "A2b-071": {
+        "expansion": "A2b",
+        "number": 71,
+        "rarity": "\u2662\u2662",
+        "name": "Red",
+        "category": "Supporter",
+        "description": "During this turn, attacks used by your Pok\u00e9mon do +20 damage to your opponent's Active Pok\u00e9mon ex."
+    },
+    "A2b-072": {
+        "expansion": "A2b",
+        "number": 72,
+        "rarity": "\u2662\u2662",
+        "name": "Team Rocket Grunt",
+        "category": "Supporter",
+        "description": "Flip a coin until you get tails. For each heads, discard a random Energy from your opponent's Active Pok\u00e9mon."
+    },
+    "A2b-073": {
+        "expansion": "A2b",
+        "number": 73,
+        "rarity": "\u2606",
+        "variant": "A2b-007"
+    },
+    "A2b-074": {
+        "expansion": "A2b",
+        "number": 74,
+        "rarity": "\u2606",
+        "variant": "A2b-016"
+    },
+    "A2b-075": {
+        "expansion": "A2b",
+        "number": 75,
+        "rarity": "\u2606",
+        "variant": "A2b-021"
+    },
+    "A2b-076": {
+        "expansion": "A2b",
+        "number": 76,
+        "rarity": "\u2606",
+        "variant": "A2b-051"
+    },
+    "A2b-077": {
+        "expansion": "A2b",
+        "number": 77,
+        "rarity": "\u2606",
+        "variant": "A2b-057"
+    },
+    "A2b-078": {
+        "expansion": "A2b",
+        "number": 78,
+        "rarity": "\u2606",
+        "variant": "A2b-061"
+    },
+    "A2b-079": {
+        "expansion": "A2b",
+        "number": 79,
+        "rarity": "\u2606\u2606",
+        "variant": "A2b-003"
+    },
+    "A2b-080": {
+        "expansion": "A2b",
+        "number": 80,
+        "rarity": "\u2606\u2606",
+        "variant": "A2b-010"
+    },
+    "A2b-081": {
+        "expansion": "A2b",
+        "number": 81,
+        "rarity": "\u2606\u2606",
+        "variant": "A2b-019"
+    },
+    "A2b-082": {
+        "expansion": "A2b",
+        "number": 82,
+        "rarity": "\u2606\u2606",
+        "variant": "A2b-022"
+    },
+    "A2b-083": {
+        "expansion": "A2b",
+        "number": 83,
+        "rarity": "\u2606\u2606",
+        "variant": "A2b-035"
+    },
+    "A2b-084": {
+        "expansion": "A2b",
+        "number": 84,
+        "rarity": "\u2606\u2606",
+        "variant": "A2b-043"
+    },
+    "A2b-085": {
+        "expansion": "A2b",
+        "number": 85,
+        "rarity": "\u2606\u2606",
+        "variant": "A2b-048"
+    },
+    "A2b-086": {
+        "expansion": "A2b",
+        "number": 86,
+        "rarity": "\u2606\u2606",
+        "variant": "A2b-054"
+    },
+    "A2b-087": {
+        "expansion": "A2b",
+        "number": 87,
+        "rarity": "\u2606\u2606",
+        "variant": "A2b-065"
+    },
+    "A2b-088": {
+        "expansion": "A2b",
+        "number": 88,
+        "rarity": "\u2606\u2606",
+        "variant": "A2b-069"
+    },
+    "A2b-089": {
+        "expansion": "A2b",
+        "number": 89,
+        "rarity": "\u2606\u2606",
+        "variant": "A2b-070"
+    },
+    "A2b-090": {
+        "expansion": "A2b",
+        "number": 90,
+        "rarity": "\u2606\u2606",
+        "variant": "A2b-071"
+    },
+    "A2b-091": {
+        "expansion": "A2b",
+        "number": 91,
+        "rarity": "\u2606\u2606",
+        "variant": "A2b-072"
+    },
+    "A2b-092": {
+        "expansion": "A2b",
+        "number": 92,
+        "rarity": "\u2606\u2606",
+        "variant": "A2b-022"
+    },
+    "A2b-093": {
+        "expansion": "A2b",
+        "number": 93,
+        "rarity": "\u2606\u2606",
+        "variant": "A2b-048"
+    },
+    "A2b-094": {
+        "expansion": "A2b",
+        "number": 94,
+        "rarity": "\u2606\u2606",
+        "variant": "A2b-054"
+    },
+    "A2b-095": {
+        "expansion": "A2b",
+        "number": 95,
+        "rarity": "\u2606\u2606",
+        "variant": "A2b-065"
+    },
+    "A2b-096": {
+        "expansion": "A2b",
+        "number": 96,
+        "rarity": "\u2606\u2606\u2606",
+        "variant": "A2b-035"
+    },
+    "A2b-097": {
+        "expansion": "A2b",
+        "number": 97,
+        "rarity": "\u2735",
+        "variant": "A2b-001"
+    },
+    "A2b-098": {
+        "expansion": "A2b",
+        "number": 98,
+        "rarity": "\u2735",
+        "variant": "A2b-002"
+    },
+    "A2b-099": {
+        "expansion": "A2b",
+        "number": 99,
+        "rarity": "\u2735",
+        "variant": "A2b-008"
+    },
+    "A2b-100": {
+        "expansion": "A2b",
+        "number": 100,
+        "rarity": "\u2735",
+        "variant": "A2b-009"
+    },
+    "A2b-101": {
+        "expansion": "A2b",
+        "number": 101,
+        "rarity": "\u2735",
+        "variant": "A2b-018"
+    },
+    "A2b-102": {
+        "expansion": "A2b",
+        "number": 102,
+        "rarity": "\u2735",
+        "variant": "A2b-020"
+    },
+    "A2b-103": {
+        "expansion": "A2b",
+        "number": 103,
+        "rarity": "\u2735",
+        "variant": "A2b-025"
+    },
+    "A2b-104": {
+        "expansion": "A2b",
+        "number": 104,
+        "rarity": "\u2735",
+        "variant": "A2b-042"
+    },
+    "A2b-105": {
+        "expansion": "A2b",
+        "number": 105,
+        "rarity": "\u2735",
+        "variant": "A2b-055"
+    },
+    "A2b-106": {
+        "expansion": "A2b",
+        "number": 106,
+        "rarity": "\u2735",
+        "variant": "A2b-056"
+    },
+    "A2b-107": {
+        "expansion": "A2b",
+        "number": 107,
+        "rarity": "\u2735\u2735",
+        "variant": "A2b-003"
+    },
+    "A2b-108": {
+        "expansion": "A2b",
+        "number": 108,
+        "rarity": "\u2735\u2735",
+        "variant": "A2b-010"
+    },
+    "A2b-109": {
+        "expansion": "A2b",
+        "number": 109,
+        "rarity": "\u2735\u2735",
+        "variant": "A2b-019"
+    },
+    "A2b-110": {
+        "expansion": "A2b",
+        "number": 110,
+        "rarity": "\u2735\u2735",
+        "variant": "A2b-043"
+    },
+    "A2b-111": {
+        "expansion": "A2b",
+        "number": 111,
+        "rarity": "\u265b",
+        "variant": "P-A-005"
     }
 }

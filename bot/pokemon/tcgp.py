@@ -22,16 +22,18 @@ type_colors = {
 expansion_names = {
     "A1": "Genetic Apex",
     "A1a": "Mythical Island",
-    "PROMO": "Promo-A",
+    "P-A": "Promo-A",
     "A2": "Space-Time Smackdown",
-    "A2a": "Triumphant Light"
+    "A2a": "Triumphant Light",
+    "A2b": "Shining Revelry"
 }
 expansion_packs = {
     "A1": ["Charizard", "Mewtwo", "Pikachu"],
     "A1a": [],
-    "PROMO": [],
+    "P-A": [],
     "A2": ["Dialga", "Palkia"],
-    "A2a": []
+    "A2a": [],
+    "A2b": []
 }
 
 
@@ -51,7 +53,10 @@ class Card:
 
     @property
     def image_url(self):
-        return card_image_url.format(expansion=self.expansion, number=str(self.number).rjust(3, '0'))
+        return card_image_url.format(
+            expansion="PROMO" if self.expansion == "P-A" else self.expansion,
+            number=str(self.number).rjust(3, '0')
+        )
 
     @property
     def expansion_name(self):
