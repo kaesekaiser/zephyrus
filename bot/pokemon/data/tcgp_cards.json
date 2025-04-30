@@ -6027,6 +6027,158 @@
         "rarity": "Wonder Pick",
         "variant": "A2b-042"
     },
+    "P-A-060": {
+        "expansion": "P-A",
+        "number": 60,
+        "rarity": "Promo pack",
+        "variant": "A1a-001"
+    },
+    "P-A-061": {
+        "expansion": "P-A",
+        "number": 61,
+        "rarity": "Promo pack",
+        "variant": "A1-087"
+    },
+    "P-A-062": {
+        "expansion": "P-A",
+        "number": 62,
+        "rarity": "Promo pack",
+        "variant": "A1-198"
+    },
+    "P-A-063": {
+        "expansion": "P-A",
+        "number": 63,
+        "rarity": "Promo pack",
+        "name": "Rayquaza",
+        "type": "Colorless",
+        "stage": 0,
+        "hp": 100,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Spiral Rush",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": "70+",
+                "description": "Flip a coin until you get tails. This attack does 30 more damage for each heads."
+            }
+        ]
+    },
+    "P-A-064": {
+        "expansion": "P-A",
+        "number": 64,
+        "rarity": "Promo pack",
+        "name": "Rayquaza ex",
+        "type": "Colorless",
+        "stage": 0,
+        "hp": 140,
+        "weakness": "Lightning",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Draco Meteor",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 0,
+                "description": "1 of your opponent's Pok\u00e9mon is chosen at random 4 times. For each time a Pok\u00e9mon was chosen, do 40 damage to it."
+            }
+        ]
+    },
+    "P-A-065": {
+        "expansion": "P-A",
+        "number": 65,
+        "rarity": "Missions",
+        "variant": "P-A-064"
+    },
+    "P-A-066": {
+        "expansion": "P-A",
+        "number": 66,
+        "rarity": "Premium Missions",
+        "variant": "A3-083"
+    },
+    "P-A-067": {
+        "expansion": "P-A",
+        "number": 67,
+        "rarity": "Promo pack",
+        "variant": "A3-085"
+    },
+    "P-A-068": {
+        "expansion": "P-A",
+        "number": 68,
+        "rarity": "Promo pack",
+        "variant": "A3-100"
+    },
+    "P-A-069": {
+        "expansion": "P-A",
+        "number": 69,
+        "rarity": "Promo pack",
+        "variant": "A3-002"
+    },
+    "P-A-070": {
+        "expansion": "P-A",
+        "number": 70,
+        "rarity": "Promo pack",
+        "variant": "A3-041"
+    },
+    "P-A-071": {
+        "expansion": "P-A",
+        "number": 71,
+        "rarity": "Promo pack",
+        "variant": "A3-097"
+    },
+    "P-A-072": {
+        "expansion": "P-A",
+        "number": 72,
+        "rarity": "Wonder Pick",
+        "name": "Alolan Grimer",
+        "type": "Darkness",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Fighting",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Poison Gas",
+                "energy_cost": [
+                    "Darkness"
+                ],
+                "power": 0,
+                "description": "Your opponent's Active Pok\u00e9mon is now Poisoned."
+            }
+        ]
+    },
+    "P-A-073": {
+        "expansion": "P-A",
+        "number": 73,
+        "rarity": "Wonder Pick",
+        "name": "Toucannon",
+        "type": "Colorless",
+        "stage": 2,
+        "evolves_from": "Trumbeak",
+        "hp": 140,
+        "weakness": "Lightning",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Beak Blast",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 80,
+                "description": "Flip a coin. If heads, your opponent's Active Pok\u00e9mon is now Burned."
+            }
+        ]
+    },
     "A1a-001": {
         "expansion": "A1a",
         "number": 1,
@@ -15035,5 +15187,3935 @@
         "number": 111,
         "rarity": "\u265b",
         "variant": "P-A-005"
+    },
+    "A3-001": {
+        "expansion": "A3",
+        "number": 1,
+        "rarity": "\u2662",
+        "pack": "Lunala",
+        "name": "Exeggcute",
+        "type": "Grass",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Rolling Tackle",
+                "energy_cost": [
+                    "Grass",
+                    "Colorless"
+                ],
+                "power": 30
+            }
+        ]
+    },
+    "A3-002": {
+        "expansion": "A3",
+        "number": 2,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Lunala",
+        "name": "Alolan Exeggutor",
+        "type": "Grass",
+        "stage": 1,
+        "evolves_from": "Exeggcute",
+        "hp": 150,
+        "weakness": "Fire",
+        "retreat_cost": 4,
+        "moves": [
+            {
+                "name": "Tropical Hammer",
+                "energy_cost": [
+                    "Grass",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 150,
+                "description": "Flip a coin. If tails, this attack does nothing."
+            }
+        ]
+    },
+    "A3-003": {
+        "expansion": "A3",
+        "number": 3,
+        "rarity": "\u2662",
+        "name": "Surskit",
+        "type": "Grass",
+        "stage": 0,
+        "hp": 50,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Quick Attack",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": "10+",
+                "description": "Flip a coin. If heads, this attack does 20 more damage."
+            }
+        ]
+    },
+    "A3-004": {
+        "expansion": "A3",
+        "number": 4,
+        "rarity": "\u2662\u2662",
+        "name": "Masquerain",
+        "type": "Grass",
+        "stage": 1,
+        "evolves_from": "Surskit",
+        "hp": 90,
+        "weakness": "Fire",
+        "retreat_cost": 0,
+        "moves": [
+            {
+                "name": "Bug Buzz",
+                "energy_cost": [
+                    "Grass"
+                ],
+                "power": 40
+            }
+        ]
+    },
+    "A3-005": {
+        "expansion": "A3",
+        "number": 5,
+        "rarity": "\u2662",
+        "pack": "Lunala",
+        "name": "Maractus",
+        "type": "Grass",
+        "stage": 0,
+        "hp": 90,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Sting",
+                "energy_cost": [
+                    "Grass",
+                    "Colorless"
+                ],
+                "power": 40
+            }
+        ]
+    },
+    "A3-006": {
+        "expansion": "A3",
+        "number": 6,
+        "rarity": "\u2662",
+        "name": "Karrablast",
+        "type": "Grass",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Headbutt",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 10
+            }
+        ]
+    },
+    "A3-007": {
+        "expansion": "A3",
+        "number": 7,
+        "rarity": "\u2662",
+        "pack": "Solgaleo",
+        "name": "Phantump",
+        "type": "Grass",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Hook",
+                "energy_cost": [
+                    "Grass"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A3-008": {
+        "expansion": "A3",
+        "number": 8,
+        "rarity": "\u2662\u2662",
+        "pack": "Solgaleo",
+        "name": "Trevenant",
+        "type": "Grass",
+        "stage": 1,
+        "evolves_from": "Phantump",
+        "hp": 130,
+        "weakness": "Fire",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Claw Slash",
+                "energy_cost": [
+                    "Grass",
+                    "Grass",
+                    "Colorless"
+                ],
+                "power": 80
+            }
+        ]
+    },
+    "A3-009": {
+        "expansion": "A3",
+        "number": 9,
+        "rarity": "\u2662",
+        "pack": "Solgaleo",
+        "name": "Rowlet",
+        "type": "Grass",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Leafage",
+                "energy_cost": [
+                    "Grass"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A3-010": {
+        "expansion": "A3",
+        "number": 10,
+        "rarity": "\u2662",
+        "pack": "Lunala",
+        "name": "Rowlet",
+        "type": "Grass",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Skill Dive",
+                "energy_cost": [
+                    "Grass"
+                ],
+                "power": 0,
+                "description": "This attack does 10 damage to 1 of your opponent's Pok\u00e9mon."
+            }
+        ]
+    },
+    "A3-011": {
+        "expansion": "A3",
+        "number": 11,
+        "rarity": "\u2662\u2662",
+        "pack": "Lunala",
+        "name": "Dartrix",
+        "type": "Grass",
+        "stage": 1,
+        "evolves_from": "Rowlet",
+        "hp": 80,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Razor Wing",
+                "energy_cost": [
+                    "Grass"
+                ],
+                "power": 30
+            }
+        ]
+    },
+    "A3-012": {
+        "expansion": "A3",
+        "number": 12,
+        "rarity": "\u2662\u2662\u2662\u2662",
+        "pack": "Lunala",
+        "name": "Decidueye ex",
+        "type": "Grass",
+        "stage": 2,
+        "evolves_from": "Dartrix",
+        "hp": 170,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Pierce the Pain",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 0,
+                "description": "This attack does 100 damage to 1 of your opponent's Pok\u00e9mon that have damage on them."
+            },
+            {
+                "name": "Razor Leaf",
+                "energy_cost": [
+                    "Grass",
+                    "Grass"
+                ],
+                "power": 80
+            }
+        ]
+    },
+    "A3-013": {
+        "expansion": "A3",
+        "number": 13,
+        "rarity": "\u2662",
+        "pack": "Lunala",
+        "name": "Grubbin",
+        "type": "Grass",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Gnaw",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 10
+            }
+        ]
+    },
+    "A3-014": {
+        "expansion": "A3",
+        "number": 14,
+        "rarity": "\u2662",
+        "name": "Fomantis",
+        "type": "Grass",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Leafage",
+                "energy_cost": [
+                    "Grass"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A3-015": {
+        "expansion": "A3",
+        "number": 15,
+        "rarity": "\u2662\u2662",
+        "name": "Lurantis",
+        "type": "Grass",
+        "stage": 1,
+        "evolves_from": "Fomantis",
+        "hp": 90,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Petal Blizzard",
+                "energy_cost": [
+                    "Grass"
+                ],
+                "power": 0,
+                "description": "This attack does 20 damage to each of your opponent's Pok\u00e9mon."
+            }
+        ]
+    },
+    "A3-016": {
+        "expansion": "A3",
+        "number": 16,
+        "rarity": "\u2662",
+        "pack": "Lunala",
+        "name": "Morelull",
+        "type": "Grass",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Stampede",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 10
+            }
+        ]
+    },
+    "A3-017": {
+        "expansion": "A3",
+        "number": 17,
+        "rarity": "\u2662\u2662",
+        "pack": "Lunala",
+        "name": "Shiinotic",
+        "type": "Grass",
+        "stage": 1,
+        "evolves_from": "Morelull",
+        "hp": 100,
+        "weakness": "Fire",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Flickering Light",
+                "energy_cost": [
+                    "Grass",
+                    "Colorless"
+                ],
+                "power": 50,
+                "description": "Flip a coin. If heads, the Defending Pok\u00e9mon can't attack during your opponent's next turn."
+            }
+        ]
+    },
+    "A3-018": {
+        "expansion": "A3",
+        "number": 18,
+        "rarity": "\u2662",
+        "pack": "Solgaleo",
+        "name": "Bounsweet",
+        "type": "Grass",
+        "stage": 0,
+        "hp": 50,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Stampede",
+                "energy_cost": [
+                    "Grass"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A3-019": {
+        "expansion": "A3",
+        "number": 19,
+        "rarity": "\u2662\u2662",
+        "pack": "Solgaleo",
+        "name": "Steenee",
+        "type": "Grass",
+        "stage": 1,
+        "evolves_from": "Bounsweet",
+        "hp": 80,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Double Spin",
+                "energy_cost": [
+                    "Grass"
+                ],
+                "power": "30x",
+                "description": "Flip 2 coins. This attack does 30 damage for each heads."
+            }
+        ]
+    },
+    "A3-020": {
+        "expansion": "A3",
+        "number": 20,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Solgaleo",
+        "name": "Tsareena",
+        "type": "Grass",
+        "stage": 2,
+        "evolves_from": "Steenee",
+        "hp": 130,
+        "weakness": "Fire",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Three Kick Combo",
+                "energy_cost": [
+                    "Grass"
+                ],
+                "power": "50x",
+                "description": "Flip 3 coins. This attack does 50 damage for each heads."
+            }
+        ]
+    },
+    "A3-021": {
+        "expansion": "A3",
+        "number": 21,
+        "rarity": "\u2662",
+        "pack": "Solgaleo",
+        "name": "Wimpod",
+        "type": "Grass",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Fire",
+        "retreat_cost": 3,
+        "ability": {
+            "name": "Wimp Out",
+            "description": "During your first turn, this Pok\u00e9mon has no Retreat Cost."
+        },
+        "moves": [
+            {
+                "name": "Gnaw",
+                "energy_cost": [
+                    "Grass",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 30
+            }
+        ]
+    },
+    "A3-022": {
+        "expansion": "A3",
+        "number": 22,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Solgaleo",
+        "name": "Golisopod",
+        "type": "Grass",
+        "stage": 1,
+        "evolves_from": "Wimpod",
+        "hp": 120,
+        "weakness": "Fire",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "First Impression",
+                "energy_cost": [
+                    "Grass",
+                    "Grass",
+                    "Grass"
+                ],
+                "power": "60+",
+                "description": "If this Pok\u00e9mon moved from your Bench to the Active Spot this turn, this attack does 60 more damage."
+            }
+        ]
+    },
+    "A3-023": {
+        "expansion": "A3",
+        "number": 23,
+        "rarity": "\u2662\u2662\u2662\u2662",
+        "pack": "Solgaleo",
+        "name": "Dhelmise ex",
+        "type": "Grass",
+        "stage": 0,
+        "hp": 140,
+        "weakness": "Fire",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Anchor Shot",
+                "energy_cost": [
+                    "Grass",
+                    "Grass",
+                    "Colorless"
+                ],
+                "power": 80,
+                "description": "During your opponent's next turn, the Defending Pok\u00e9mon can't retreat."
+            }
+        ]
+    },
+    "A3-024": {
+        "expansion": "A3",
+        "number": 24,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Solgaleo",
+        "name": "Tapu Bulu",
+        "type": "Grass",
+        "stage": 0,
+        "hp": 120,
+        "weakness": "Fire",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Stuck-In Tackle",
+                "energy_cost": [
+                    "Grass",
+                    "Grass",
+                    "Colorless"
+                ],
+                "power": 100,
+                "description": "Flip a coin. If tails, this Pok\u00e9mon also does 20 damage to itself."
+            }
+        ]
+    },
+    "A3-025": {
+        "expansion": "A3",
+        "number": 25,
+        "rarity": "\u2662",
+        "name": "Growlithe",
+        "type": "Fire",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Water",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Combustion",
+                "energy_cost": [
+                    "Fire",
+                    "Colorless"
+                ],
+                "power": 30
+            }
+        ]
+    },
+    "A3-026": {
+        "expansion": "A3",
+        "number": 26,
+        "rarity": "\u2662\u2662",
+        "name": "Arcanine",
+        "type": "Fire",
+        "stage": 1,
+        "evolves_from": "Growlithe",
+        "hp": 130,
+        "weakness": "Water",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Fire Mane",
+                "energy_cost": [
+                    "Fire",
+                    "Fire",
+                    "Colorless"
+                ],
+                "power": 80
+            }
+        ]
+    },
+    "A3-027": {
+        "expansion": "A3",
+        "number": 27,
+        "rarity": "\u2662\u2662",
+        "pack": "Lunala",
+        "name": "Alolan Marowak",
+        "type": "Fire",
+        "stage": 1,
+        "evolves_from": "Cubone",
+        "hp": 110,
+        "weakness": "Water",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Burning Bonemerang",
+                "energy_cost": [
+                    "Fire",
+                    "Fire",
+                    "Colorless"
+                ],
+                "power": "70x",
+                "description": "Flip 2 coins. This attack does 70 damage for each heads. If at least 1 of them is heads, your opponent's Active Pok\u00e9mon is now Burned."
+            }
+        ]
+    },
+    "A3-028": {
+        "expansion": "A3",
+        "number": 28,
+        "rarity": "\u2662",
+        "pack": "Solgaleo",
+        "name": "Fletchinder",
+        "type": "Fire",
+        "stage": 1,
+        "evolves_from": "Fletchling",
+        "hp": 80,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Steady Firebreathing",
+                "energy_cost": [
+                    "Fire"
+                ],
+                "power": 30
+            }
+        ]
+    },
+    "A3-029": {
+        "expansion": "A3",
+        "number": 29,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Solgaleo",
+        "name": "Talonflame",
+        "type": "Fire",
+        "stage": 2,
+        "evolves_from": "Fletchinder",
+        "hp": 120,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Fire Wing",
+                "energy_cost": [
+                    "Fire",
+                    "Fire"
+                ],
+                "power": 90
+            }
+        ]
+    },
+    "A3-030": {
+        "expansion": "A3",
+        "number": 30,
+        "rarity": "\u2662",
+        "pack": "Solgaleo",
+        "name": "Litten",
+        "type": "Fire",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Water",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Heat Tackle",
+                "energy_cost": [
+                    "Fire"
+                ],
+                "power": 30,
+                "description": "This Pok\u00e9mon also does 10 damage to itself."
+            }
+        ]
+    },
+    "A3-031": {
+        "expansion": "A3",
+        "number": 31,
+        "rarity": "\u2662",
+        "pack": "Lunala",
+        "name": "Litten",
+        "type": "Fire",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Water",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Scratch",
+                "energy_cost": [
+                    "Fire"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A3-032": {
+        "expansion": "A3",
+        "number": 32,
+        "rarity": "\u2662\u2662",
+        "pack": "Solgaleo",
+        "name": "Torracat",
+        "type": "Fire",
+        "stage": 1,
+        "evolves_from": "Litten",
+        "hp": 80,
+        "weakness": "Water",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Heat Tackle",
+                "energy_cost": [
+                    "Fire"
+                ],
+                "power": 40,
+                "description": "This Pok\u00e9mon also does 10 damage to itself."
+            }
+        ]
+    },
+    "A3-033": {
+        "expansion": "A3",
+        "number": 33,
+        "rarity": "\u2662\u2662\u2662\u2662",
+        "pack": "Solgaleo",
+        "name": "Incineroar ex",
+        "type": "Fire",
+        "stage": 2,
+        "evolves_from": "Torracat",
+        "hp": 180,
+        "weakness": "Water",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Fire Fang",
+                "energy_cost": [
+                    "Fire"
+                ],
+                "power": 30,
+                "description": "Your opponent's Active Pok\u00e9mon is now Burned."
+            },
+            {
+                "name": "Scar-Charged Smash",
+                "energy_cost": [
+                    "Fire",
+                    "Fire",
+                    "Colorless"
+                ],
+                "power": "80+",
+                "description": "If this Pok\u00e9mon has damage on it, this attack does 60 more damage."
+            }
+        ]
+    },
+    "A3-034": {
+        "expansion": "A3",
+        "number": 34,
+        "rarity": "\u2662\u2662",
+        "pack": "Lunala",
+        "name": "Oricorio",
+        "type": "Fire",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Water",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Kindle",
+                "energy_cost": [
+                    "Fire",
+                    "Fire"
+                ],
+                "power": 40,
+                "description": "Discard a random Energy from both Active Pok\u00e9mon."
+            }
+        ]
+    },
+    "A3-035": {
+        "expansion": "A3",
+        "number": 35,
+        "rarity": "\u2662",
+        "name": "Salandit",
+        "type": "Fire",
+        "stage": 0,
+        "hp": 50,
+        "weakness": "Water",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Gnaw",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A3-036": {
+        "expansion": "A3",
+        "number": 36,
+        "rarity": "\u2662",
+        "name": "Salazzle",
+        "type": "Fire",
+        "stage": 1,
+        "evolves_from": "Salandit",
+        "hp": 90,
+        "weakness": "Water",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Heated Poison",
+                "energy_cost": [
+                    "Fire",
+                    "Fire"
+                ],
+                "power": 30,
+                "description": "Your opponent's Active Pok\u00e9mon is now Poisoned and Burned."
+            }
+        ]
+    },
+    "A3-037": {
+        "expansion": "A3",
+        "number": 37,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Lunala",
+        "name": "Turtonator",
+        "type": "Fire",
+        "stage": 0,
+        "hp": 120,
+        "weakness": "Water",
+        "retreat_cost": 4,
+        "moves": [
+            {
+                "name": "Fire Spin",
+                "energy_cost": [
+                    "Fire",
+                    "Fire",
+                    "Colorless"
+                ],
+                "power": 90,
+                "description": "Discard a {Fire} Energy from this Pok\u00e9mon."
+            }
+        ]
+    },
+    "A3-038": {
+        "expansion": "A3",
+        "number": 38,
+        "rarity": "\u2662",
+        "name": "Alolan Sandshrew",
+        "type": "Water",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Metal",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Scratch",
+                "energy_cost": [
+                    "Water"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A3-039": {
+        "expansion": "A3",
+        "number": 39,
+        "rarity": "\u2662\u2662",
+        "name": "Alolan Sandslash",
+        "type": "Water",
+        "stage": 1,
+        "evolves_from": "Alolan Sandshrew",
+        "hp": 100,
+        "weakness": "Metal",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Spike Armor",
+                "energy_cost": [
+                    "Water"
+                ],
+                "power": 20,
+                "description": "During your opponent's next turn, if this Pok\u00e9mon is damaged by an attack, do 40 damage to the Attacking Pok\u00e9mon."
+            }
+        ]
+    },
+    "A3-040": {
+        "expansion": "A3",
+        "number": 40,
+        "rarity": "\u2662",
+        "pack": "Lunala",
+        "name": "Alolan Vulpix",
+        "type": "Water",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Metal",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Call Forth Cold",
+                "energy_cost": [
+                    "Water"
+                ],
+                "power": 0,
+                "description": "Take a {Water} Energy from your Energy Zone and attach it to this Pok\u00e9mon."
+            }
+        ]
+    },
+    "A3-041": {
+        "expansion": "A3",
+        "number": 41,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Lunala",
+        "name": "Alolan Ninetales",
+        "type": "Water",
+        "stage": 1,
+        "evolves_from": "Alolan Vulpix",
+        "hp": 110,
+        "weakness": "Metal",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Blizzard",
+                "energy_cost": [
+                    "Water",
+                    "Water",
+                    "Water"
+                ],
+                "power": 60,
+                "description": "This attack also does 20 damage to each of your opponent's Benched Pok\u00e9mon."
+            }
+        ]
+    },
+    "A3-042": {
+        "expansion": "A3",
+        "number": 42,
+        "rarity": "\u2662",
+        "pack": "Solgaleo",
+        "name": "Shellder",
+        "type": "Water",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Tackle",
+                "energy_cost": [
+                    "Water"
+                ],
+                "power": 10
+            }
+        ]
+    },
+    "A3-043": {
+        "expansion": "A3",
+        "number": 43,
+        "rarity": "\u2662\u2662",
+        "pack": "Solgaleo",
+        "name": "Cloyster",
+        "type": "Water",
+        "stage": 1,
+        "evolves_from": "Shellder",
+        "hp": 110,
+        "weakness": "Lightning",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Guard Press",
+                "energy_cost": [
+                    "Water",
+                    "Water"
+                ],
+                "power": 50,
+                "description": "During your opponent's next turn, this Pok\u00e9mon takes -20 damage from attacks."
+            }
+        ]
+    },
+    "A3-044": {
+        "expansion": "A3",
+        "number": 44,
+        "rarity": "\u2662\u2662",
+        "name": "Lapras",
+        "type": "Water",
+        "stage": 0,
+        "hp": 110,
+        "weakness": "Lightning",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Surf",
+                "energy_cost": [
+                    "Water",
+                    "Water",
+                    "Colorless"
+                ],
+                "power": 70
+            }
+        ]
+    },
+    "A3-045": {
+        "expansion": "A3",
+        "number": 45,
+        "rarity": "\u2662",
+        "pack": "Lunala",
+        "name": "Popplio",
+        "type": "Water",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Sing",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 0,
+                "description": "Your opponent's Active Pok\u00e9mon is now Asleep."
+            }
+        ]
+    },
+    "A3-046": {
+        "expansion": "A3",
+        "number": 46,
+        "rarity": "\u2662",
+        "pack": "Solgaleo",
+        "name": "Popplio",
+        "type": "Water",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Water Gun",
+                "energy_cost": [
+                    "Water"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A3-047": {
+        "expansion": "A3",
+        "number": 47,
+        "rarity": "\u2662\u2662",
+        "pack": "Lunala",
+        "name": "Brionne",
+        "type": "Water",
+        "stage": 1,
+        "evolves_from": "Popplio",
+        "hp": 80,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Wave Splash",
+                "energy_cost": [
+                    "Water"
+                ],
+                "power": 30
+            }
+        ]
+    },
+    "A3-048": {
+        "expansion": "A3",
+        "number": 48,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Lunala",
+        "name": "Primarina",
+        "type": "Water",
+        "stage": 2,
+        "evolves_from": "Brionne",
+        "hp": 140,
+        "weakness": "Lightning",
+        "retreat_cost": 2,
+        "ability": {
+            "name": "Melodious Healing",
+            "description": "Once during your turn, you may heal 30 damage from each of your {Water} Pok\u00e9mon."
+        },
+        "moves": [
+            {
+                "name": "Surf",
+                "energy_cost": [
+                    "Water",
+                    "Colorless"
+                ],
+                "power": 60
+            }
+        ]
+    },
+    "A3-049": {
+        "expansion": "A3",
+        "number": 49,
+        "rarity": "\u2662\u2662\u2662\u2662",
+        "pack": "Solgaleo",
+        "name": "Crabominable ex",
+        "type": "Water",
+        "stage": 1,
+        "evolves_from": "Crabrawler",
+        "hp": 160,
+        "weakness": "Metal",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Insatiable Striking",
+                "energy_cost": [
+                    "Water"
+                ],
+                "power": 40,
+                "description": "During your next turn, this Pok\u00e9mon's Insatiable Striking attack does +40 damage."
+            }
+        ]
+    },
+    "A3-050": {
+        "expansion": "A3",
+        "number": 50,
+        "rarity": "\u2662",
+        "pack": "Lunala",
+        "name": "Wishiwashi",
+        "type": "Water",
+        "stage": 0,
+        "hp": 30,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Call for Family",
+                "energy_cost": [
+                    "Water"
+                ],
+                "power": 0,
+                "description": "Put 1 random Wishiwashi or Wishiwashi ex from your deck onto your Bench."
+            }
+        ]
+    },
+    "A3-051": {
+        "expansion": "A3",
+        "number": 51,
+        "rarity": "\u2662\u2662\u2662\u2662",
+        "pack": "Lunala",
+        "name": "Wishiwashi ex",
+        "type": "Water",
+        "stage": 0,
+        "hp": 170,
+        "weakness": "Lightning",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "School Storm",
+                "energy_cost": [
+                    "Water",
+                    "Water",
+                    "Water"
+                ],
+                "power": "30+",
+                "description": "This attack does 40 more damage for each of your Benched Wishiwashi or Wishiwashi ex."
+            }
+        ]
+    },
+    "A3-052": {
+        "expansion": "A3",
+        "number": 52,
+        "rarity": "\u2662",
+        "pack": "Solgaleo",
+        "name": "Dewpider",
+        "type": "Water",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Hook",
+                "energy_cost": [
+                    "Water",
+                    "Colorless"
+                ],
+                "power": 30
+            }
+        ]
+    },
+    "A3-053": {
+        "expansion": "A3",
+        "number": 53,
+        "rarity": "\u2662\u2662",
+        "pack": "Solgaleo",
+        "name": "Araquanid",
+        "type": "Water",
+        "stage": 1,
+        "evolves_from": "Dewpider",
+        "hp": 110,
+        "weakness": "Lightning",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Dangerous Claws",
+                "energy_cost": [
+                    "Water",
+                    "Water",
+                    "Colorless"
+                ],
+                "power": "60+",
+                "description": "If your opponent's Active Pok\u00e9mon is a Basic Pokemon, this attack does 60 more damage."
+            }
+        ]
+    },
+    "A3-054": {
+        "expansion": "A3",
+        "number": 54,
+        "rarity": "\u2662",
+        "pack": "Lunala",
+        "name": "Pyukumuku",
+        "type": "Water",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "ability": {
+            "name": "Innards Out",
+            "description": "If this Pok\u00e9mon is in the Active Spot and is Knocked Out by damage from an attack from your opponent's Pok\u00e9mon, do 50 damage to the Attacking Pok\u00e9mon."
+        },
+        "moves": [
+            {
+                "name": "Sprinkle Water",
+                "energy_cost": [
+                    "Water"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A3-055": {
+        "expansion": "A3",
+        "number": 55,
+        "rarity": "\u2662",
+        "name": "Bruxish",
+        "type": "Water",
+        "stage": 0,
+        "hp": 80,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Wave Splash",
+                "energy_cost": [
+                    "Water",
+                    "Colorless"
+                ],
+                "power": 50
+            }
+        ]
+    },
+    "A3-056": {
+        "expansion": "A3",
+        "number": 56,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Lunala",
+        "name": "Tapu Fini",
+        "type": "Water",
+        "stage": 0,
+        "hp": 100,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Spiral Drain",
+                "energy_cost": [
+                    "Water",
+                    "Water",
+                    "Colorless"
+                ],
+                "power": 60,
+                "description": "Heal 20 damage from this Pok\u00e9mon."
+            }
+        ]
+    },
+    "A3-057": {
+        "expansion": "A3",
+        "number": 57,
+        "rarity": "\u2662",
+        "pack": "Solgaleo",
+        "name": "Pikachu",
+        "type": "Lightning",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Tail Smack",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 30
+            }
+        ]
+    },
+    "A3-058": {
+        "expansion": "A3",
+        "number": 58,
+        "rarity": "\u2662\u2662\u2662\u2662",
+        "pack": "Solgaleo",
+        "name": "Alolan Raichu ex",
+        "type": "Lightning",
+        "stage": 1,
+        "evolves_from": "Pikachu",
+        "hp": 140,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Psychic",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": "60+",
+                "description": "This attack does 30 more damage for each Energy attached to your opponent's Active Pok\u00e9mon."
+            }
+        ]
+    },
+    "A3-059": {
+        "expansion": "A3",
+        "number": 59,
+        "rarity": "\u2662",
+        "pack": "Solgaleo",
+        "name": "Alolan Geodude",
+        "type": "Lightning",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Fighting",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Knuckle Punch",
+                "energy_cost": [
+                    "Lightning",
+                    "Colorless"
+                ],
+                "power": 40
+            }
+        ]
+    },
+    "A3-060": {
+        "expansion": "A3",
+        "number": 60,
+        "rarity": "\u2662\u2662",
+        "pack": "Solgaleo",
+        "name": "Alolan Graveler",
+        "type": "Lightning",
+        "stage": 1,
+        "evolves_from": "Alolan Geodude",
+        "hp": 110,
+        "weakness": "Fighting",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Heavy Impact",
+                "energy_cost": [
+                    "Lightning",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 60
+            }
+        ]
+    },
+    "A3-061": {
+        "expansion": "A3",
+        "number": 61,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Solgaleo",
+        "name": "Alolan Golem",
+        "type": "Lightning",
+        "stage": 2,
+        "evolves_from": "Alolan Graveler",
+        "hp": 160,
+        "weakness": "Fighting",
+        "retreat_cost": 4,
+        "moves": [
+            {
+                "name": "Super Zap Cannon",
+                "energy_cost": [
+                    "Lightning",
+                    "Lightning",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 150,
+                "description": "Discard 2 {Lightning} Energy from this Pok\u00e9mon."
+            }
+        ]
+    },
+    "A3-062": {
+        "expansion": "A3",
+        "number": 62,
+        "rarity": "\u2662",
+        "name": "Helioptile",
+        "type": "Lightning",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Smash Kick",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 10
+            }
+        ]
+    },
+    "A3-063": {
+        "expansion": "A3",
+        "number": 63,
+        "rarity": "\u2662",
+        "name": "Heliolisk",
+        "type": "Lightning",
+        "stage": 1,
+        "evolves_from": "Helioptile",
+        "hp": 90,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Rear Kick",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 40
+            }
+        ]
+    },
+    "A3-064": {
+        "expansion": "A3",
+        "number": 64,
+        "rarity": "\u2662\u2662",
+        "pack": "Lunala",
+        "name": "Charjabug",
+        "type": "Lightning",
+        "stage": 1,
+        "evolves_from": "Grubbin",
+        "hp": 90,
+        "weakness": "Fighting",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Vise Grip",
+                "energy_cost": [
+                    "Lightning"
+                ],
+                "power": 30
+            }
+        ]
+    },
+    "A3-065": {
+        "expansion": "A3",
+        "number": 65,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Lunala",
+        "name": "Vikavolt",
+        "type": "Lightning",
+        "stage": 2,
+        "evolves_from": "Charjabug",
+        "hp": 140,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Disconnect",
+                "energy_cost": [
+                    "Lightning",
+                    "Lightning"
+                ],
+                "power": 70,
+                "description": "During your opponent's next turn, they can't play any Item cards from their hand."
+            }
+        ]
+    },
+    "A3-066": {
+        "expansion": "A3",
+        "number": 66,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Solgaleo",
+        "name": "Oricorio",
+        "type": "Lightning",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "ability": {
+            "name": "Safeguard",
+            "description": "Prevent all damage done to this Pok\u00e9mon by attacks from your opponent's Pok\u00e9mon ex."
+        },
+        "moves": [
+            {
+                "name": "Zzzap",
+                "energy_cost": [
+                    "Lightning",
+                    "Colorless"
+                ],
+                "power": 50
+            }
+        ]
+    },
+    "A3-067": {
+        "expansion": "A3",
+        "number": 67,
+        "rarity": "\u2662",
+        "pack": "Lunala",
+        "name": "Togedemaru",
+        "type": "Lightning",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Electrosmash",
+                "energy_cost": [
+                    "Lightning"
+                ],
+                "power": "20+",
+                "description": "Flip a coin. If heads, this attack does 30 more damage."
+            }
+        ]
+    },
+    "A3-068": {
+        "expansion": "A3",
+        "number": 68,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Solgaleo",
+        "name": "Tapu Koko",
+        "type": "Lightning",
+        "stage": 0,
+        "hp": 100,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Volt Switch",
+                "energy_cost": [
+                    "Lightning",
+                    "Lightning",
+                    "Lightning"
+                ],
+                "power": 70,
+                "description": "Switch this Pok\u00e9mon with 1 of your Benched {Lightning} Pok\u00e9mon."
+            }
+        ]
+    },
+    "A3-069": {
+        "expansion": "A3",
+        "number": 69,
+        "rarity": "\u2662\u2662",
+        "pack": "Solgaleo",
+        "name": "Mr. Mime",
+        "type": "Psychic",
+        "stage": 0,
+        "hp": 80,
+        "weakness": "Darkness",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Barrier Shove",
+                "energy_cost": [
+                    "Psychic",
+                    "Colorless"
+                ],
+                "power": 30,
+                "description": "Flip a coin. If heads, during your opponent's next turn, prevent all damage from\u2014and effects of\u2014attacks done to this Pok\u00e9mon."
+            }
+        ]
+    },
+    "A3-070": {
+        "expansion": "A3",
+        "number": 70,
+        "rarity": "\u2662\u2662",
+        "name": "Sableye",
+        "type": "Psychic",
+        "stage": 0,
+        "hp": 80,
+        "weakness": "Darkness",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Corner",
+                "energy_cost": [
+                    "Psychic",
+                    "Colorless"
+                ],
+                "power": 40,
+                "description": "During your opponent's next turn, the Defending Pok\u00e9mon can't retreat."
+            }
+        ]
+    },
+    "A3-071": {
+        "expansion": "A3",
+        "number": 71,
+        "rarity": "\u2662",
+        "name": "Spoink",
+        "type": "Psychic",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Darkness",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Psycharge",
+                "energy_cost": [
+                    "Psychic"
+                ],
+                "power": 0,
+                "description": "Take a {Psychic} Energy from your Energy Zone and attach it to this Pok\u00e9mon."
+            }
+        ]
+    },
+    "A3-072": {
+        "expansion": "A3",
+        "number": 72,
+        "rarity": "\u2662\u2662",
+        "name": "Grumpig",
+        "type": "Psychic",
+        "stage": 1,
+        "evolves_from": "Spoink",
+        "hp": 110,
+        "weakness": "Darkness",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Zen Headbutt",
+                "energy_cost": [
+                    "Psychic",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 70
+            }
+        ]
+    },
+    "A3-073": {
+        "expansion": "A3",
+        "number": 73,
+        "rarity": "\u2662",
+        "pack": "Lunala",
+        "name": "Lunatone",
+        "type": "Psychic",
+        "stage": 0,
+        "hp": 90,
+        "weakness": "Darkness",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Moon Press",
+                "energy_cost": [
+                    "Psychic",
+                    "Colorless"
+                ],
+                "power": 50
+            }
+        ]
+    },
+    "A3-074": {
+        "expansion": "A3",
+        "number": 74,
+        "rarity": "\u2662",
+        "name": "Shuppet",
+        "type": "Psychic",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Darkness",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Will-O-Wisp",
+                "energy_cost": [
+                    "Psychic"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A3-075": {
+        "expansion": "A3",
+        "number": 75,
+        "rarity": "\u2662",
+        "name": "Banette",
+        "type": "Psychic",
+        "stage": 1,
+        "evolves_from": "Shuppet",
+        "hp": 90,
+        "weakness": "Darkness",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Night Bind",
+                "energy_cost": [
+                    "Psychic"
+                ],
+                "power": 30,
+                "description": "During your opponent's next turn, they can't take any Energy from their Energy Zone to attach to their Active Pok\u00e9mon."
+            }
+        ]
+    },
+    "A3-076": {
+        "expansion": "A3",
+        "number": 76,
+        "rarity": "\u2662\u2662",
+        "pack": "Solgaleo",
+        "name": "Oricorio",
+        "type": "Psychic",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Darkness",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Dazzle Dance",
+                "energy_cost": [
+                    "Psychic",
+                    "Psychic"
+                ],
+                "power": 40,
+                "description": "Your opponent's Active Pok\u00e9mon is now Confused."
+            }
+        ]
+    },
+    "A3-077": {
+        "expansion": "A3",
+        "number": 77,
+        "rarity": "\u2662\u2662",
+        "pack": "Lunala",
+        "name": "Oricorio",
+        "type": "Psychic",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Darkness",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Spiteful Dance",
+                "energy_cost": [
+                    "Psychic"
+                ],
+                "power": "20+",
+                "description": "If any of your Pok\u00e9mon were Knocked Out by damage from an attack during your opponent's last turn, this attack does 60 more damage."
+            }
+        ]
+    },
+    "A3-078": {
+        "expansion": "A3",
+        "number": 78,
+        "rarity": "\u2662",
+        "pack": "Solgaleo",
+        "name": "Cutiefly",
+        "type": "Psychic",
+        "stage": 0,
+        "hp": 30,
+        "weakness": "Metal",
+        "retreat_cost": 0,
+        "moves": [
+            {
+                "name": "Flap",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 10
+            }
+        ]
+    },
+    "A3-079": {
+        "expansion": "A3",
+        "number": 79,
+        "rarity": "\u2662",
+        "pack": "Solgaleo",
+        "name": "Ribombee",
+        "type": "Psychic",
+        "stage": 1,
+        "evolves_from": "Cutiefly",
+        "hp": 80,
+        "weakness": "Metal",
+        "retreat_cost": 0,
+        "moves": [
+            {
+                "name": "Fairy Wind",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 40
+            }
+        ]
+    },
+    "A3-080": {
+        "expansion": "A3",
+        "number": 80,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Solgaleo",
+        "name": "Comfey",
+        "type": "Psychic",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Metal",
+        "retreat_cost": 1,
+        "ability": {
+            "name": "Flower Shield",
+            "description": "Each of your Pok\u00e9mon that has any {Psychic} Energy attached recovers from all Special Conditions and can't be affected by any Special Conditions."
+        },
+        "moves": [
+            {
+                "name": "Spinning Attack",
+                "energy_cost": [
+                    "Psychic",
+                    "Colorless"
+                ],
+                "power": 30
+            }
+        ]
+    },
+    "A3-081": {
+        "expansion": "A3",
+        "number": 81,
+        "rarity": "\u2662",
+        "pack": "Solgaleo",
+        "name": "Sandygast",
+        "type": "Psychic",
+        "stage": 0,
+        "hp": 80,
+        "weakness": "Darkness",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Vibration",
+                "energy_cost": [
+                    "Psychic",
+                    "Colorless"
+                ],
+                "power": 30
+            }
+        ]
+    },
+    "A3-082": {
+        "expansion": "A3",
+        "number": 82,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Solgaleo",
+        "name": "Palossand",
+        "type": "Psychic",
+        "stage": 1,
+        "evolves_from": "Sandygast",
+        "hp": 130,
+        "weakness": "Darkness",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Spooky Shot",
+                "energy_cost": [
+                    "Psychic",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 70
+            }
+        ]
+    },
+    "A3-083": {
+        "expansion": "A3",
+        "number": 83,
+        "rarity": "\u2662",
+        "pack": "Lunala",
+        "name": "Mimikyu",
+        "type": "Psychic",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Darkness",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Shadow Hit",
+                "energy_cost": [
+                    "Psychic",
+                    "Colorless"
+                ],
+                "power": 60,
+                "description": "This attack also does 20 damage to 1 of your Pok\u00e9mon."
+            }
+        ]
+    },
+    "A3-084": {
+        "expansion": "A3",
+        "number": 84,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Lunala",
+        "name": "Tapu Lele",
+        "type": "Psychic",
+        "stage": 0,
+        "hp": 90,
+        "weakness": "Metal",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Energy Arrow",
+                "energy_cost": [
+                    "Psychic"
+                ],
+                "power": 0,
+                "description": "This attack does 20 damage to 1 of your opponent's Pok\u00e9mon for each Energy attached to that Pok\u00e9mon."
+            }
+        ]
+    },
+    "A3-085": {
+        "expansion": "A3",
+        "number": 85,
+        "rarity": "\u2662",
+        "name": "Cosmog",
+        "type": "Psychic",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Darkness",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Teleport",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 0,
+                "description": "Switch this Pok\u00e9mon with 1 of your Benched Pok\u00e9mon."
+            }
+        ]
+    },
+    "A3-086": {
+        "expansion": "A3",
+        "number": 86,
+        "rarity": "\u2662\u2662",
+        "name": "Cosmoem",
+        "type": "Psychic",
+        "stage": 1,
+        "evolves_from": "Cosmog",
+        "hp": 100,
+        "weakness": "Darkness",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Stiffen",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 0,
+                "description": "During your opponent's next turn, this Pok\u00e9mon takes -50 damage from attacks."
+            }
+        ]
+    },
+    "A3-087": {
+        "expansion": "A3",
+        "number": 87,
+        "rarity": "\u2662\u2662\u2662\u2662",
+        "pack": "Lunala",
+        "name": "Lunala ex",
+        "type": "Psychic",
+        "stage": 2,
+        "evolves_from": "Cosmoem",
+        "hp": 180,
+        "weakness": "Darkness",
+        "retreat_cost": 1,
+        "ability": {
+            "name": "Psychic Connect",
+            "description": "Once during your turn, you may move all {Psychic} Energy from 1 of your Benched {Psychic} Pok\u00e9mon to your Active Pok\u00e9mon."
+        },
+        "moves": [
+            {
+                "name": "Lunar Blast",
+                "energy_cost": [
+                    "Psychic",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 100
+            }
+        ]
+    },
+    "A3-088": {
+        "expansion": "A3",
+        "number": 88,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Lunala",
+        "name": "Necrozma",
+        "type": "Psychic",
+        "stage": 0,
+        "hp": 120,
+        "weakness": "Darkness",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Prismatic Laser",
+                "energy_cost": [
+                    "Psychic",
+                    "Psychic",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 120,
+                "description": "During your next turn, this Pok\u00e9mon can't attack."
+            }
+        ]
+    },
+    "A3-089": {
+        "expansion": "A3",
+        "number": 89,
+        "rarity": "\u2662",
+        "pack": "Lunala",
+        "name": "Cubone",
+        "type": "Fighting",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Grass",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Beat",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 30
+            }
+        ]
+    },
+    "A3-090": {
+        "expansion": "A3",
+        "number": 90,
+        "rarity": "\u2662",
+        "name": "Makuhita",
+        "type": "Fighting",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Psychic",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Slap Push",
+                "energy_cost": [
+                    "Fighting"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A3-091": {
+        "expansion": "A3",
+        "number": 91,
+        "rarity": "\u2662\u2662",
+        "name": "Hariyama",
+        "type": "Fighting",
+        "stage": 1,
+        "evolves_from": "Makuhita",
+        "hp": 120,
+        "weakness": "Psychic",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Push Out",
+                "energy_cost": [
+                    "Fighting",
+                    "Colorless"
+                ],
+                "power": 50,
+                "description": "Switch out your opponent's Active Pok\u00e9mon to the Bench. (Your opponent chooses the new Active Pok\u00e9mon.)"
+            }
+        ]
+    },
+    "A3-092": {
+        "expansion": "A3",
+        "number": 92,
+        "rarity": "\u2662",
+        "pack": "Solgaleo",
+        "name": "Solrock",
+        "type": "Fighting",
+        "stage": 0,
+        "hp": 90,
+        "weakness": "Grass",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Solar Beam",
+                "energy_cost": [
+                    "Fighting",
+                    "Fighting"
+                ],
+                "power": 60
+            }
+        ]
+    },
+    "A3-093": {
+        "expansion": "A3",
+        "number": 93,
+        "rarity": "\u2662",
+        "name": "Drilbur",
+        "type": "Fighting",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Grass",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Scratch",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 10
+            }
+        ]
+    },
+    "A3-094": {
+        "expansion": "A3",
+        "number": 94,
+        "rarity": "\u2662",
+        "pack": "Lunala",
+        "name": "Timburr",
+        "type": "Fighting",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Psychic",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Corkscrew Punch",
+                "energy_cost": [
+                    "Fighting"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A3-095": {
+        "expansion": "A3",
+        "number": 95,
+        "rarity": "\u2662\u2662",
+        "pack": "Lunala",
+        "name": "Gurdurr",
+        "type": "Fighting",
+        "stage": 1,
+        "evolves_from": "Timburr",
+        "hp": 90,
+        "weakness": "Psychic",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Strength",
+                "energy_cost": [
+                    "Fighting",
+                    "Colorless"
+                ],
+                "power": 40
+            }
+        ]
+    },
+    "A3-096": {
+        "expansion": "A3",
+        "number": 96,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Lunala",
+        "name": "Conkeldurr",
+        "type": "Fighting",
+        "stage": 2,
+        "evolves_from": "Gurdurr",
+        "hp": 150,
+        "weakness": "Psychic",
+        "retreat_cost": 3,
+        "ability": {
+            "name": "Guts",
+            "description": "If this Pok\u00e9mon would be Knocked Out by damage from an attack, flip a coin. If heads, this Pok\u00e9mon is not Knocked Out, and its remaining HP becomes 10."
+        },
+        "moves": [
+            {
+                "name": "Mega Punch",
+                "energy_cost": [
+                    "Fighting",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 80
+            }
+        ]
+    },
+    "A3-097": {
+        "expansion": "A3",
+        "number": 97,
+        "rarity": "\u2662",
+        "pack": "Solgaleo",
+        "name": "Crabrawler",
+        "type": "Fighting",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Psychic",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Punch",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A3-098": {
+        "expansion": "A3",
+        "number": 98,
+        "rarity": "\u2662",
+        "pack": "Lunala",
+        "name": "Rockruff",
+        "type": "Fighting",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Grass",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Signs of Evolution",
+                "energy_cost": [
+                    "Fighting"
+                ],
+                "power": 0,
+                "description": "Put a random card that evolves from Rockruff from your deck into your hand."
+            }
+        ]
+    },
+    "A3-099": {
+        "expansion": "A3",
+        "number": 99,
+        "rarity": "\u2662",
+        "pack": "Solgaleo",
+        "name": "Rockruff",
+        "type": "Fighting",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Grass",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Tackle",
+                "energy_cost": [
+                    "Fighting"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A3-100": {
+        "expansion": "A3",
+        "number": 100,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Solgaleo",
+        "name": "Lycanroc",
+        "type": "Fighting",
+        "stage": 1,
+        "evolves_from": "Rockruff",
+        "hp": 100,
+        "weakness": "Grass",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Crunch",
+                "energy_cost": [
+                    "Fighting",
+                    "Fighting",
+                    "Colorless"
+                ],
+                "power": 80,
+                "description": "Flip a coin. If heads, discard a random Energy from your opponent's Active Pok\u00e9mon."
+            }
+        ]
+    },
+    "A3-101": {
+        "expansion": "A3",
+        "number": 101,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Lunala",
+        "name": "Lycanroc",
+        "type": "Fighting",
+        "stage": 1,
+        "evolves_from": "Rockruff",
+        "hp": 100,
+        "weakness": "Grass",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Blood Fang",
+                "energy_cost": [
+                    "Fighting",
+                    "Fighting"
+                ],
+                "power": "50+",
+                "description": "If your opponent's Active Pok\u00e9mon has more remaining HP than this Pok\u00e9mon, this attack does 50 more damage."
+            }
+        ]
+    },
+    "A3-102": {
+        "expansion": "A3",
+        "number": 102,
+        "rarity": "\u2662",
+        "pack": "Solgaleo",
+        "name": "Mudbray",
+        "type": "Fighting",
+        "stage": 0,
+        "hp": 80,
+        "weakness": "Grass",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Rear Kick",
+                "energy_cost": [
+                    "Fighting",
+                    "Colorless"
+                ],
+                "power": 30
+            }
+        ]
+    },
+    "A3-103": {
+        "expansion": "A3",
+        "number": 103,
+        "rarity": "\u2662\u2662",
+        "pack": "Solgaleo",
+        "name": "Mudsdale",
+        "type": "Fighting",
+        "stage": 1,
+        "evolves_from": "Mudbray",
+        "hp": 140,
+        "weakness": "Grass",
+        "retreat_cost": 4,
+        "moves": [
+            {
+                "name": "High Horsepower",
+                "energy_cost": [
+                    "Fighting",
+                    "Fighting",
+                    "Fighting",
+                    "Colorless"
+                ],
+                "power": 140,
+                "description": "This Pok\u00e9mon also does 40 damage to itself."
+            }
+        ]
+    },
+    "A3-104": {
+        "expansion": "A3",
+        "number": 104,
+        "rarity": "\u2662\u2662\u2662\u2662",
+        "pack": "Lunala",
+        "name": "Passimian ex",
+        "type": "Fighting",
+        "stage": 0,
+        "hp": 130,
+        "weakness": "Psychic",
+        "retreat_cost": 2,
+        "ability": {
+            "name": "Offload Pass",
+            "description": "If this Pok\u00e9mon is in the Active Spot and is Knocked Out by damage from an attack from your opponent's Pok\u00e9mon, move all {Fighting} Energy from this Pok\u00e9mon to 1 of your Benched Pok\u00e9mon."
+        },
+        "moves": [
+            {
+                "name": "Seismic Toss",
+                "energy_cost": [
+                    "Fighting",
+                    "Colorless"
+                ],
+                "power": 60
+            }
+        ]
+    },
+    "A3-105": {
+        "expansion": "A3",
+        "number": 105,
+        "rarity": "\u2662\u2662",
+        "pack": "Lunala",
+        "name": "Minior",
+        "type": "Fighting",
+        "stage": 0,
+        "hp": 80,
+        "weakness": "Grass",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Star Drop",
+                "energy_cost": [
+                    "Fighting",
+                    "Fighting"
+                ],
+                "power": 0,
+                "description": "This attack does 40 damage to 1 of your opponent's Pok\u00e9mon."
+            }
+        ]
+    },
+    "A3-106": {
+        "expansion": "A3",
+        "number": 106,
+        "rarity": "\u2662",
+        "pack": "Lunala",
+        "name": "Alolan Rattata",
+        "type": "Darkness",
+        "stage": 0,
+        "hp": 50,
+        "weakness": "Grass",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Bite",
+                "energy_cost": [
+                    "Darkness"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A3-107": {
+        "expansion": "A3",
+        "number": 107,
+        "rarity": "\u2662\u2662",
+        "pack": "Lunala",
+        "name": "Alolan Raticate",
+        "type": "Darkness",
+        "stage": 1,
+        "evolves_from": "Alolan Rattata",
+        "hp": 110,
+        "weakness": "Grass",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Scrounge-and-Scarf",
+                "energy_cost": [
+                    "Darkness",
+                    "Darkness"
+                ],
+                "power": 50,
+                "description": "Discard a random Item card from your opponent's hand."
+            }
+        ]
+    },
+    "A3-108": {
+        "expansion": "A3",
+        "number": 108,
+        "rarity": "\u2662",
+        "pack": "Solgaleo",
+        "name": "Alolan Meowth",
+        "type": "Darkness",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Grass",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Scratch",
+                "energy_cost": [
+                    "Darkness"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A3-109": {
+        "expansion": "A3",
+        "number": 109,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Solgaleo",
+        "name": "Alolan Persian",
+        "type": "Darkness",
+        "stage": 1,
+        "evolves_from": "Alolan Meowth",
+        "hp": 100,
+        "weakness": "Grass",
+        "retreat_cost": 1,
+        "ability": {
+            "name": "Fur Coat",
+            "description": "This Pok\u00e9mon takes -20 damage from attacks."
+        },
+        "moves": [
+            {
+                "name": "Claw Slash",
+                "energy_cost": [
+                    "Darkness",
+                    "Colorless"
+                ],
+                "power": 50
+            }
+        ]
+    },
+    "A3-110": {
+        "expansion": "A3",
+        "number": 110,
+        "rarity": "\u2662",
+        "pack": "Lunala",
+        "name": "Alolan Grimer",
+        "type": "Darkness",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Fighting",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Sludge Toss",
+                "energy_cost": [
+                    "Darkness",
+                    "Colorless"
+                ],
+                "power": 30
+            }
+        ]
+    },
+    "A3-111": {
+        "expansion": "A3",
+        "number": 111,
+        "rarity": "\u2662\u2662\u2662\u2662",
+        "pack": "Lunala",
+        "name": "Alolan Muk ex",
+        "type": "Darkness",
+        "stage": 1,
+        "evolves_from": "Alolan Grimer",
+        "hp": 160,
+        "weakness": "Fighting",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Chemical Panic",
+                "energy_cost": [
+                    "Darkness",
+                    "Darkness",
+                    "Colorless"
+                ],
+                "power": 80,
+                "description": "1 Special Condition from among Asleep, Burned, Confused, Paralyzed, and Poisoned is chosen at random, and your opponent's Active Pok\u00e9mon is now affected by that Special Condition. Any Special Conditions already affecting that Pok\u00e9mon will not be chosen."
+            }
+        ]
+    },
+    "A3-112": {
+        "expansion": "A3",
+        "number": 112,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Lunala",
+        "name": "Absol",
+        "type": "Darkness",
+        "stage": 0,
+        "hp": 80,
+        "weakness": "Grass",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Unseen Claw",
+                "energy_cost": [
+                    "Darkness",
+                    "Colorless"
+                ],
+                "power": "20+",
+                "description": "If your opponent's Active Pok\u00e9mon is affected by a Special Condition, this attack does 60 more damage."
+            }
+        ]
+    },
+    "A3-113": {
+        "expansion": "A3",
+        "number": 113,
+        "rarity": "\u2662",
+        "name": "Trubbish",
+        "type": "Darkness",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Pound",
+                "energy_cost": [
+                    "Darkness"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A3-114": {
+        "expansion": "A3",
+        "number": 114,
+        "rarity": "\u2662\u2662",
+        "name": "Garbodor",
+        "type": "Darkness",
+        "stage": 1,
+        "evolves_from": "Trubbish",
+        "hp": 120,
+        "weakness": "Fighting",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Super Poison Breath",
+                "energy_cost": [
+                    "Darkness",
+                    "Darkness",
+                    "Colorless"
+                ],
+                "power": 70,
+                "description": "Your opponent's Active Pok\u00e9mon is now Poisoned."
+            }
+        ]
+    },
+    "A3-115": {
+        "expansion": "A3",
+        "number": 115,
+        "rarity": "\u2662",
+        "pack": "Lunala",
+        "name": "Mareanie",
+        "type": "Darkness",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Fighting",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Pierce",
+                "energy_cost": [
+                    "Darkness"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A3-116": {
+        "expansion": "A3",
+        "number": 116,
+        "rarity": "\u2662",
+        "pack": "Lunala",
+        "name": "Toxapex",
+        "type": "Darkness",
+        "stage": 1,
+        "evolves_from": "Mareanie",
+        "hp": 110,
+        "weakness": "Fighting",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Spike Cannon",
+                "energy_cost": [
+                    "Darkness"
+                ],
+                "power": "20x",
+                "description": "Flip 4 coins. This attack does 20 damage for each heads."
+            }
+        ]
+    },
+    "A3-117": {
+        "expansion": "A3",
+        "number": 117,
+        "rarity": "\u2662",
+        "name": "Alolan Diglett",
+        "type": "Metal",
+        "stage": 0,
+        "hp": 50,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Headbutt",
+                "energy_cost": [
+                    "Metal"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A3-118": {
+        "expansion": "A3",
+        "number": 118,
+        "rarity": "\u2662",
+        "name": "Alolan Dugtrio",
+        "type": "Metal",
+        "stage": 1,
+        "evolves_from": "Alolan Diglett",
+        "hp": 90,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Iron Head",
+                "energy_cost": [
+                    "Metal",
+                    "Metal"
+                ],
+                "power": "70x",
+                "description": "Flip a coin until you get tails. This attack does 70 damage for each heads."
+            }
+        ]
+    },
+    "A3-119": {
+        "expansion": "A3",
+        "number": 119,
+        "rarity": "\u2662\u2662",
+        "name": "Excadrill",
+        "type": "Metal",
+        "stage": 1,
+        "evolves_from": "Drilbur",
+        "hp": 110,
+        "weakness": "Fire",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Slash",
+                "energy_cost": [
+                    "Metal"
+                ],
+                "power": 50
+            }
+        ]
+    },
+    "A3-120": {
+        "expansion": "A3",
+        "number": 120,
+        "rarity": "\u2662\u2662",
+        "name": "Escavalier",
+        "type": "Metal",
+        "stage": 1,
+        "evolves_from": "Karrablast",
+        "hp": 110,
+        "weakness": "Fire",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Pike",
+                "energy_cost": [
+                    "Metal"
+                ],
+                "power": 30,
+                "description": "This attack also does 20 damage to 1 of your opponent's Benched Pok\u00e9mon."
+            }
+        ]
+    },
+    "A3-121": {
+        "expansion": "A3",
+        "number": 121,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Solgaleo",
+        "name": "Klefki",
+        "type": "Metal",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Unlock",
+                "energy_cost": [
+                    "Metal"
+                ],
+                "power": 10,
+                "description": "Draw a card."
+            }
+        ]
+    },
+    "A3-122": {
+        "expansion": "A3",
+        "number": 122,
+        "rarity": "\u2662\u2662\u2662\u2662",
+        "pack": "Solgaleo",
+        "name": "Solgaleo ex",
+        "type": "Metal",
+        "stage": 2,
+        "evolves_from": "Cosmoem",
+        "hp": 180,
+        "weakness": "Fire",
+        "retreat_cost": 2,
+        "ability": {
+            "name": "Rising Road",
+            "description": "Once during your turn, if this Pok\u00e9mon is on your Bench, you may switch it with your Active Pok\u00e9mon."
+        },
+        "moves": [
+            {
+                "name": "Sol Breaker",
+                "energy_cost": [
+                    "Metal",
+                    "Metal"
+                ],
+                "power": 120,
+                "description": "This Pok\u00e9mon also does 10 damage to itself."
+            }
+        ]
+    },
+    "A3-123": {
+        "expansion": "A3",
+        "number": 123,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Solgaleo",
+        "name": "Magearna",
+        "type": "Metal",
+        "stage": 0,
+        "hp": 90,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Silver Cannon",
+                "energy_cost": [
+                    "Metal",
+                    "Metal"
+                ],
+                "power": "40+",
+                "description": "If your opponent's Active Pok\u00e9mon has an Ability, this attack does 40 more damage."
+            }
+        ]
+    },
+    "A3-124": {
+        "expansion": "A3",
+        "number": 124,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Solgaleo",
+        "name": "Drampa",
+        "type": "Dragon",
+        "stage": 0,
+        "hp": 100,
+        "weakness": "none",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Berserk",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": "20+",
+                "description": "If any of your Benched Pok\u00e9mon have damage on them, this attack does 50 more damage."
+            }
+        ]
+    },
+    "A3-125": {
+        "expansion": "A3",
+        "number": 125,
+        "rarity": "\u2662",
+        "pack": "Lunala",
+        "name": "Jangmo-o",
+        "type": "Dragon",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "none",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Headbutt",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A3-126": {
+        "expansion": "A3",
+        "number": 126,
+        "rarity": "\u2662\u2662",
+        "pack": "Lunala",
+        "name": "Hakamo-o",
+        "type": "Dragon",
+        "stage": 1,
+        "evolves_from": "Jangmo",
+        "hp": 100,
+        "weakness": "none",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Dragon Claw",
+                "energy_cost": [
+                    "Lightning",
+                    "Fighting"
+                ],
+                "power": 60
+            }
+        ]
+    },
+    "A3-127": {
+        "expansion": "A3",
+        "number": 127,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Lunala",
+        "name": "Kommo-o",
+        "type": "Dragon",
+        "stage": 2,
+        "evolves_from": "Hakamo",
+        "hp": 150,
+        "weakness": "none",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Clanging Scales",
+                "energy_cost": [
+                    "Lightning",
+                    "Fighting"
+                ],
+                "power": 130,
+                "description": "During your opponent's next turn, this Pok\u00e9mon takes +30 damage from attacks."
+            }
+        ]
+    },
+    "A3-128": {
+        "expansion": "A3",
+        "number": 128,
+        "rarity": "\u2662\u2662",
+        "name": "Tauros",
+        "type": "Colorless",
+        "stage": 0,
+        "hp": 100,
+        "weakness": "Fighting",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Rising Lunge",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": "50+",
+                "description": "Flip a coin. If heads, this attack does 50 more damage."
+            }
+        ]
+    },
+    "A3-129": {
+        "expansion": "A3",
+        "number": 129,
+        "rarity": "\u2662",
+        "name": "Skitty",
+        "type": "Colorless",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Tackle",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A3-130": {
+        "expansion": "A3",
+        "number": 130,
+        "rarity": "\u2662\u2662",
+        "name": "Delcatty",
+        "type": "Colorless",
+        "stage": 1,
+        "evolves_from": "Skitty",
+        "hp": 90,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Energy Assist",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 30,
+                "description": "Take a {Colorless} Energy from your Energy Zone and attach it to 1 of your Benched Pok\u00e9mon."
+            }
+        ]
+    },
+    "A3-131": {
+        "expansion": "A3",
+        "number": 131,
+        "rarity": "\u2662",
+        "pack": "Solgaleo",
+        "name": "Fletchling",
+        "type": "Colorless",
+        "stage": 0,
+        "hp": 50,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Flap",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A3-132": {
+        "expansion": "A3",
+        "number": 132,
+        "rarity": "\u2662\u2662",
+        "pack": "Solgaleo",
+        "name": "Hawlucha",
+        "type": "Colorless",
+        "stage": 0,
+        "hp": 80,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Justified Press",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": "20+",
+                "description": "If your opponent's Active Pok\u00e9mon is a {Darkness} Pok\u00e9mon, this attack does 30 more damage."
+            }
+        ]
+    },
+    "A3-133": {
+        "expansion": "A3",
+        "number": 133,
+        "rarity": "\u2662",
+        "name": "Pikipek",
+        "type": "Colorless",
+        "stage": 0,
+        "hp": 50,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Peck",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A3-134": {
+        "expansion": "A3",
+        "number": 134,
+        "rarity": "\u2662",
+        "name": "Trumbeak",
+        "type": "Colorless",
+        "stage": 1,
+        "evolves_from": "Pikipek",
+        "hp": 80,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Glide",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 30
+            }
+        ]
+    },
+    "A3-135": {
+        "expansion": "A3",
+        "number": 135,
+        "rarity": "\u2662\u2662",
+        "name": "Toucannon",
+        "type": "Colorless",
+        "stage": 2,
+        "evolves_from": "Trumbeak",
+        "hp": 140,
+        "weakness": "Lightning",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Drill Peck",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 70
+            }
+        ]
+    },
+    "A3-136": {
+        "expansion": "A3",
+        "number": 136,
+        "rarity": "\u2662",
+        "pack": "Solgaleo",
+        "name": "Yungoos",
+        "type": "Colorless",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Tackle",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "A3-137": {
+        "expansion": "A3",
+        "number": 137,
+        "rarity": "\u2662",
+        "pack": "Solgaleo",
+        "name": "Gumshoos",
+        "type": "Colorless",
+        "stage": 1,
+        "evolves_from": "Yungoos",
+        "hp": 100,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Headbang",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 50
+            }
+        ]
+    },
+    "A3-138": {
+        "expansion": "A3",
+        "number": 138,
+        "rarity": "\u2662",
+        "pack": "Lunala",
+        "name": "Stufful",
+        "type": "Colorless",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Fighting",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Hammer In",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 60
+            }
+        ]
+    },
+    "A3-139": {
+        "expansion": "A3",
+        "number": 139,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Lunala",
+        "name": "Bewear",
+        "type": "Colorless",
+        "stage": 1,
+        "evolves_from": "Stufful",
+        "hp": 130,
+        "weakness": "Fighting",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Tantrum",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 130,
+                "description": "This Pok\u00e9mon is now Confused."
+            }
+        ]
+    },
+    "A3-140": {
+        "expansion": "A3",
+        "number": 140,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Lunala",
+        "name": "Oranguru",
+        "type": "Colorless",
+        "stage": 0,
+        "hp": 100,
+        "weakness": "Fighting",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Primate\u2019s Trap",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 40,
+                "description": "During your opponent's next turn, attacks used by the Defending Pok\u00e9mon cost 1 {Colorless} more, and its Retreat Cost is 1 {Colorless} more."
+            }
+        ]
+    },
+    "A3-141": {
+        "expansion": "A3",
+        "number": 141,
+        "rarity": "\u2662\u2662",
+        "pack": "Solgaleo",
+        "name": "Komala",
+        "type": "Colorless",
+        "stage": 0,
+        "hp": 90,
+        "weakness": "Fighting",
+        "retreat_cost": 2,
+        "ability": {
+            "name": "Comatose",
+            "description": "As long as this Pok\u00e9mon is in the Active Spot, whenever you attach an Energy from your Energy Zone to it, it is now Asleep."
+        },
+        "moves": [
+            {
+                "name": "Rolling Tackle",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 70
+            }
+        ]
+    },
+    "A3-142": {
+        "expansion": "A3",
+        "number": 142,
+        "rarity": "\u2662\u2662",
+        "name": "Big Malasada",
+        "category": "Item",
+        "description": "Heal 10 damage and remove a random Special Condition from your Active Pok\u00e9mon."
+    },
+    "A3-143": {
+        "expansion": "A3",
+        "number": 143,
+        "rarity": "\u2662\u2662",
+        "pack": "Lunala",
+        "name": "Fishing Net",
+        "category": "Item",
+        "description": "Put a random Basic {Water} Pok\u00e9mon from your discard pile into your hand."
+    },
+    "A3-144": {
+        "expansion": "A3",
+        "number": 144,
+        "rarity": "\u2662\u2662",
+        "name": "Rare Candy",
+        "category": "Item",
+        "description": "Choose 1 of your Basic Pok\u00e9mon in play. If you have a Stage 2 card in your hand that evolves from that Pok\u00e9mon, put that card onto the Basic Pok\u00e9mon to evolve it, skipping the Stage 1. You can't use this card during your first turn or on a Basic Pok\u00e9mon that was put into play this turn."
+    },
+    "A3-145": {
+        "expansion": "A3",
+        "number": 145,
+        "rarity": "\u2662\u2662",
+        "pack": "Solgaleo",
+        "name": "Rotom Dex",
+        "category": "Item",
+        "description": "Look at the top card of your deck. Then, you may shuffle your deck."
+    },
+    "A3-146": {
+        "expansion": "A3",
+        "number": 146,
+        "rarity": "\u2662\u2662",
+        "pack": "Lunala",
+        "name": "Poison Barb",
+        "category": "Tool",
+        "description": "If the Pok\u00e9mon this card is attached to is your Active Pok\u00e9mon and is damaged by an attack from your opponent's Pok\u00e9mon, the Attacking Pok\u00e9mon is now Poisoned."
+    },
+    "A3-147": {
+        "expansion": "A3",
+        "number": 147,
+        "rarity": "\u2662\u2662",
+        "pack": "Solgaleo",
+        "name": "Leaf Cape",
+        "category": "Tool",
+        "description": "The {Grass} Pok\u00e9mon this card is attached to gets +30 HP."
+    },
+    "A3-148": {
+        "expansion": "A3",
+        "number": 148,
+        "rarity": "\u2662\u2662",
+        "pack": "Lunala",
+        "name": "Acerola",
+        "category": "Supporter",
+        "description": "Choose 1 of your Palossand or Mimikyu that has damage on it, and move 40 of its damage to your opponent's Active Pok\u00e9mon."
+    },
+    "A3-149": {
+        "expansion": "A3",
+        "number": 149,
+        "rarity": "\u2662\u2662",
+        "pack": "Lunala",
+        "name": "Ilima",
+        "category": "Supporter",
+        "description": "Put 1 of your {Colorless} Pok\u00e9mon that has damage on it into your hand."
+    },
+    "A3-150": {
+        "expansion": "A3",
+        "number": 150,
+        "rarity": "\u2662\u2662",
+        "pack": "Lunala",
+        "name": "Kiawe",
+        "category": "Supporter",
+        "description": "Choose 1 of your Alolan Marowak or Turtonator. Take 2 {Fire} Energy from your Energy Zone and attach it to that Pok\u00e9mon. Your turn ends."
+    },
+    "A3-151": {
+        "expansion": "A3",
+        "number": 151,
+        "rarity": "\u2662\u2662",
+        "pack": "Lunala",
+        "name": "Guzma",
+        "category": "Supporter",
+        "description": "Discard all Pok\u00e9mon Tool cards attached to each of your opponent's Pok\u00e9mon."
+    },
+    "A3-152": {
+        "expansion": "A3",
+        "number": 152,
+        "rarity": "\u2662\u2662",
+        "pack": "Solgaleo",
+        "name": "Lana",
+        "category": "Supporter",
+        "description": "You can use this card only if you have Araquanid in play.Switch in 1 of your opponent's Benched Pok\u00e9mon to the Active Spot."
+    },
+    "A3-153": {
+        "expansion": "A3",
+        "number": 153,
+        "rarity": "\u2662\u2662",
+        "pack": "Solgaleo",
+        "name": "Sophocles",
+        "category": "Supporter",
+        "description": "During this turn, attacks used by your Alolan Golem, Vikavolt, or Togedemaru do +30 damage to your opponent's Active Pok\u00e9mon."
+    },
+    "A3-154": {
+        "expansion": "A3",
+        "number": 154,
+        "rarity": "\u2662\u2662",
+        "pack": "Solgaleo",
+        "name": "Mallow",
+        "category": "Supporter",
+        "description": "Heal all damage from 1 of your Shiinotic or Tsareena. If you do, discard all Energy from that Pok\u00e9mon."
+    },
+    "A3-155": {
+        "expansion": "A3",
+        "number": 155,
+        "rarity": "\u2662\u2662",
+        "pack": "Solgaleo",
+        "name": "Lillie",
+        "category": "Supporter",
+        "description": "Heal 60 damage from 1 of your Stage 2 Pokemon."
+    },
+    "A3-156": {
+        "expansion": "A3",
+        "number": 156,
+        "rarity": "\u2606",
+        "pack": "Lunala",
+        "variant": "A3-002"
+    },
+    "A3-157": {
+        "expansion": "A3",
+        "number": 157,
+        "rarity": "\u2606",
+        "pack": "Lunala",
+        "variant": "A3-016"
+    },
+    "A3-158": {
+        "expansion": "A3",
+        "number": 158,
+        "rarity": "\u2606",
+        "pack": "Solgaleo",
+        "variant": "A3-020"
+    },
+    "A3-159": {
+        "expansion": "A3",
+        "number": 159,
+        "rarity": "\u2606",
+        "pack": "Solgaleo",
+        "variant": "A3-024"
+    },
+    "A3-160": {
+        "expansion": "A3",
+        "number": 160,
+        "rarity": "\u2606",
+        "pack": "Lunala",
+        "variant": "A3-027"
+    },
+    "A3-161": {
+        "expansion": "A3",
+        "number": 161,
+        "rarity": "\u2606",
+        "pack": "Lunala",
+        "variant": "A3-037"
+    },
+    "A3-162": {
+        "expansion": "A3",
+        "number": 162,
+        "rarity": "\u2606",
+        "pack": "Lunala",
+        "variant": "A3-040"
+    },
+    "A3-163": {
+        "expansion": "A3",
+        "number": 163,
+        "rarity": "\u2606",
+        "pack": "Lunala",
+        "variant": "A3-054"
+    },
+    "A3-164": {
+        "expansion": "A3",
+        "number": 164,
+        "rarity": "\u2606",
+        "pack": "Lunala",
+        "variant": "A3-056"
+    },
+    "A3-165": {
+        "expansion": "A3",
+        "number": 165,
+        "rarity": "\u2606",
+        "pack": "Solgaleo",
+        "variant": "A3-066"
+    },
+    "A3-166": {
+        "expansion": "A3",
+        "number": 166,
+        "rarity": "\u2606",
+        "pack": "Solgaleo",
+        "variant": "A3-068"
+    },
+    "A3-167": {
+        "expansion": "A3",
+        "number": 167,
+        "rarity": "\u2606",
+        "pack": "Solgaleo",
+        "variant": "A3-078"
+    },
+    "A3-168": {
+        "expansion": "A3",
+        "number": 168,
+        "rarity": "\u2606",
+        "pack": "Solgaleo",
+        "variant": "A3-080"
+    },
+    "A3-169": {
+        "expansion": "A3",
+        "number": 169,
+        "rarity": "\u2606",
+        "pack": "Solgaleo",
+        "variant": "A3-081"
+    },
+    "A3-170": {
+        "expansion": "A3",
+        "number": 170,
+        "rarity": "\u2606",
+        "pack": "Lunala",
+        "variant": "A3-084"
+    },
+    "A3-171": {
+        "expansion": "A3",
+        "number": 171,
+        "rarity": "\u2606",
+        "pack": "Lunala",
+        "variant": "A3-085"
+    },
+    "A3-172": {
+        "expansion": "A3",
+        "number": 172,
+        "rarity": "\u2606",
+        "pack": "Solgaleo",
+        "variant": "A3-098"
+    },
+    "A3-173": {
+        "expansion": "A3",
+        "number": 173,
+        "rarity": "\u2606",
+        "pack": "Solgaleo",
+        "variant": "A3-103"
+    },
+    "A3-174": {
+        "expansion": "A3",
+        "number": 174,
+        "rarity": "\u2606",
+        "pack": "Lunala",
+        "variant": "A3-105"
+    },
+    "A3-175": {
+        "expansion": "A3",
+        "number": 175,
+        "rarity": "\u2606",
+        "pack": "Solgaleo",
+        "variant": "A3-123"
+    },
+    "A3-176": {
+        "expansion": "A3",
+        "number": 176,
+        "rarity": "\u2606",
+        "pack": "Solgaleo",
+        "variant": "A3-124"
+    },
+    "A3-177": {
+        "expansion": "A3",
+        "number": 177,
+        "rarity": "\u2606",
+        "pack": "Lunala",
+        "variant": "A3-133"
+    },
+    "A3-178": {
+        "expansion": "A3",
+        "number": 178,
+        "rarity": "\u2606",
+        "pack": "Lunala",
+        "variant": "A3-139"
+    },
+    "A3-179": {
+        "expansion": "A3",
+        "number": 179,
+        "rarity": "\u2606",
+        "pack": "Solgaleo",
+        "variant": "A3-141"
+    },
+    "A3-180": {
+        "expansion": "A3",
+        "number": 180,
+        "rarity": "\u2606\u2606",
+        "pack": "Lunala",
+        "variant": "A3-012"
+    },
+    "A3-181": {
+        "expansion": "A3",
+        "number": 181,
+        "rarity": "\u2606\u2606",
+        "pack": "Solgaleo",
+        "variant": "A3-023"
+    },
+    "A3-182": {
+        "expansion": "A3",
+        "number": 182,
+        "rarity": "\u2606\u2606",
+        "pack": "Solgaleo",
+        "variant": "A3-033"
+    },
+    "A3-183": {
+        "expansion": "A3",
+        "number": 183,
+        "rarity": "\u2606\u2606",
+        "pack": "Solgaleo",
+        "variant": "A3-049"
+    },
+    "A3-184": {
+        "expansion": "A3",
+        "number": 184,
+        "rarity": "\u2606\u2606",
+        "pack": "Lunala",
+        "variant": "A3-051"
+    },
+    "A3-185": {
+        "expansion": "A3",
+        "number": 185,
+        "rarity": "\u2606\u2606",
+        "pack": "Solgaleo",
+        "variant": "A3-058"
+    },
+    "A3-186": {
+        "expansion": "A3",
+        "number": 186,
+        "rarity": "\u2606\u2606",
+        "pack": "Lunala",
+        "variant": "A3-087"
+    },
+    "A3-187": {
+        "expansion": "A3",
+        "number": 187,
+        "rarity": "\u2606\u2606",
+        "pack": "Lunala",
+        "variant": "A3-104"
+    },
+    "A3-188": {
+        "expansion": "A3",
+        "number": 188,
+        "rarity": "\u2606\u2606",
+        "pack": "Lunala",
+        "variant": "A3-111"
+    },
+    "A3-189": {
+        "expansion": "A3",
+        "number": 189,
+        "rarity": "\u2606\u2606",
+        "pack": "Solgaleo",
+        "variant": "A3-122"
+    },
+    "A3-190": {
+        "expansion": "A3",
+        "number": 190,
+        "rarity": "\u2606\u2606",
+        "pack": "Lunala",
+        "variant": "A3-148"
+    },
+    "A3-191": {
+        "expansion": "A3",
+        "number": 191,
+        "rarity": "\u2606\u2606",
+        "pack": "Lunala",
+        "variant": "A3-149"
+    },
+    "A3-192": {
+        "expansion": "A3",
+        "number": 192,
+        "rarity": "\u2606\u2606",
+        "pack": "Lunala",
+        "variant": "A3-150"
+    },
+    "A3-193": {
+        "expansion": "A3",
+        "number": 193,
+        "rarity": "\u2606\u2606",
+        "pack": "Lunala",
+        "variant": "A3-151"
+    },
+    "A3-194": {
+        "expansion": "A3",
+        "number": 194,
+        "rarity": "\u2606\u2606",
+        "pack": "Solgaleo",
+        "variant": "A3-152"
+    },
+    "A3-195": {
+        "expansion": "A3",
+        "number": 195,
+        "rarity": "\u2606\u2606",
+        "pack": "Solgaleo",
+        "variant": "A3-153"
+    },
+    "A3-196": {
+        "expansion": "A3",
+        "number": 196,
+        "rarity": "\u2606\u2606",
+        "pack": "Solgaleo",
+        "variant": "A3-154"
+    },
+    "A3-197": {
+        "expansion": "A3",
+        "number": 197,
+        "rarity": "\u2606\u2606",
+        "pack": "Solgaleo",
+        "variant": "A3-155"
+    },
+    "A3-198": {
+        "expansion": "A3",
+        "number": 198,
+        "rarity": "\u2606\u2606",
+        "pack": "Lunala",
+        "variant": "A3-012"
+    },
+    "A3-199": {
+        "expansion": "A3",
+        "number": 199,
+        "rarity": "\u2606\u2606",
+        "pack": "Solgaleo",
+        "variant": "A3-023"
+    },
+    "A3-200": {
+        "expansion": "A3",
+        "number": 200,
+        "rarity": "\u2606\u2606",
+        "pack": "Solgaleo",
+        "variant": "A3-033"
+    },
+    "A3-201": {
+        "expansion": "A3",
+        "number": 201,
+        "rarity": "\u2606\u2606",
+        "pack": "Solgaleo",
+        "variant": "A3-049"
+    },
+    "A3-202": {
+        "expansion": "A3",
+        "number": 202,
+        "rarity": "\u2606\u2606",
+        "pack": "Lunala",
+        "variant": "A3-051"
+    },
+    "A3-203": {
+        "expansion": "A3",
+        "number": 203,
+        "rarity": "\u2606\u2606",
+        "pack": "Solgaleo",
+        "variant": "A3-058"
+    },
+    "A3-204": {
+        "expansion": "A3",
+        "number": 204,
+        "rarity": "\u2606\u2606",
+        "pack": "Lunala",
+        "variant": "A3-087"
+    },
+    "A3-205": {
+        "expansion": "A3",
+        "number": 205,
+        "rarity": "\u2606\u2606",
+        "pack": "Lunala",
+        "variant": "A3-104"
+    },
+    "A3-206": {
+        "expansion": "A3",
+        "number": 206,
+        "rarity": "\u2606\u2606",
+        "pack": "Lunala",
+        "variant": "A3-111"
+    },
+    "A3-207": {
+        "expansion": "A3",
+        "number": 207,
+        "rarity": "\u2606\u2606",
+        "pack": "Solgaleo",
+        "variant": "A3-122"
+    },
+    "A3-208": {
+        "expansion": "A3",
+        "number": 208,
+        "rarity": "\u2606\u2606\u2606",
+        "pack": "Lunala",
+        "variant": "A3-151"
+    },
+    "A3-209": {
+        "expansion": "A3",
+        "number": 209,
+        "rarity": "\u2606\u2606\u2606",
+        "pack": "Solgaleo",
+        "variant": "A3-155"
+    },
+    "A3-210": {
+        "expansion": "A3",
+        "number": 210,
+        "rarity": "\u2606",
+        "pack": "Solgaleo",
+        "variant": "A1-001"
+    },
+    "A3-211": {
+        "expansion": "A3",
+        "number": 211,
+        "rarity": "\u2606",
+        "pack": "Solgaleo",
+        "variant": "A1-002"
+    },
+    "A3-212": {
+        "expansion": "A3",
+        "number": 212,
+        "rarity": "\u2606",
+        "pack": "Solgaleo",
+        "variant": "A1-003"
+    },
+    "A3-213": {
+        "expansion": "A3",
+        "number": 213,
+        "rarity": "\u2606",
+        "pack": "Lunala",
+        "variant": "A3-001"
+    },
+    "A3-214": {
+        "expansion": "A3",
+        "number": 214,
+        "rarity": "\u2606",
+        "pack": "Lunala",
+        "variant": "A1a-002"
+    },
+    "A3-215": {
+        "expansion": "A3",
+        "number": 215,
+        "rarity": "\u2606",
+        "pack": "Lunala",
+        "variant": "A1-053"
+    },
+    "A3-216": {
+        "expansion": "A3",
+        "number": 216,
+        "rarity": "\u2606",
+        "pack": "Lunala",
+        "variant": "A1-054"
+    },
+    "A3-217": {
+        "expansion": "A3",
+        "number": 217,
+        "rarity": "\u2606",
+        "pack": "Lunala",
+        "variant": "A1-055"
+    },
+    "A3-218": {
+        "expansion": "A3",
+        "number": 218,
+        "rarity": "\u2606",
+        "pack": "Solgaleo",
+        "variant": "A1-074"
+    },
+    "A3-219": {
+        "expansion": "A3",
+        "number": 219,
+        "rarity": "\u2606",
+        "pack": "Solgaleo",
+        "variant": "A1-075"
+    },
+    "A3-220": {
+        "expansion": "A3",
+        "number": 220,
+        "rarity": "\u2606",
+        "pack": "Lunala",
+        "variant": "A2a-031"
+    },
+    "A3-221": {
+        "expansion": "A3",
+        "number": 221,
+        "rarity": "\u2606",
+        "pack": "Lunala",
+        "variant": "A1-121"
+    },
+    "A3-222": {
+        "expansion": "A3",
+        "number": 222,
+        "rarity": "\u2606",
+        "pack": "Lunala",
+        "variant": "A1-122"
+    },
+    "A3-223": {
+        "expansion": "A3",
+        "number": 223,
+        "rarity": "\u2606",
+        "pack": "Solgaleo",
+        "variant": "A1-143"
+    },
+    "A3-224": {
+        "expansion": "A3",
+        "number": 224,
+        "rarity": "\u2606",
+        "pack": "Solgaleo",
+        "variant": "A1-144"
+    },
+    "A3-225": {
+        "expansion": "A3",
+        "number": 225,
+        "rarity": "\u2606",
+        "pack": "Solgaleo",
+        "variant": "A2b-039"
+    },
+    "A3-226": {
+        "expansion": "A3",
+        "number": 226,
+        "rarity": "\u2606",
+        "pack": "Lunala",
+        "variant": "A1-151"
+    },
+    "A3-227": {
+        "expansion": "A3",
+        "number": 227,
+        "rarity": "\u2606",
+        "pack": "Lunala",
+        "variant": "A1-152"
+    },
+    "A3-228": {
+        "expansion": "A3",
+        "number": 228,
+        "rarity": "\u2606",
+        "pack": "Solgaleo",
+        "variant": "A2b-060"
+    },
+    "A3-229": {
+        "expansion": "A3",
+        "number": 229,
+        "rarity": "\u2606",
+        "pack": "Solgaleo",
+        "variant": "A2b-061"
+    },
+    "A3-230": {
+        "expansion": "A3",
+        "number": 230,
+        "rarity": "\u2606\u2606",
+        "pack": "Solgaleo",
+        "variant": "A1-004"
+    },
+    "A3-231": {
+        "expansion": "A3",
+        "number": 231,
+        "rarity": "\u2606\u2606",
+        "pack": "Lunala",
+        "variant": "A1-023"
+    },
+    "A3-232": {
+        "expansion": "A3",
+        "number": 232,
+        "rarity": "\u2606\u2606",
+        "pack": "Lunala",
+        "variant": "A1-056"
+    },
+    "A3-233": {
+        "expansion": "A3",
+        "number": 233,
+        "rarity": "\u2606\u2606",
+        "pack": "Solgaleo",
+        "variant": "A1-076"
+    },
+    "A3-234": {
+        "expansion": "A3",
+        "number": 234,
+        "rarity": "\u2606\u2606",
+        "pack": "Lunala",
+        "variant": "A1-123"
+    },
+    "A3-235": {
+        "expansion": "A3",
+        "number": 235,
+        "rarity": "\u2606\u2606",
+        "pack": "Solgaleo",
+        "variant": "A1-146"
+    },
+    "A3-236": {
+        "expansion": "A3",
+        "number": 236,
+        "rarity": "\u2606\u2606",
+        "pack": "Lunala",
+        "variant": "A1-153"
+    },
+    "A3-237": {
+        "expansion": "A3",
+        "number": 237,
+        "rarity": "\u2606\u2606",
+        "pack": "Solgaleo",
+        "variant": "A1-195"
+    },
+    "A3-238": {
+        "expansion": "A3",
+        "number": 238,
+        "rarity": "\u265b",
+        "variant": "A3-087"
+    },
+    "A3-239": {
+        "expansion": "A3",
+        "number": 239,
+        "rarity": "\u265b",
+        "variant": "A3-122"
     }
 }

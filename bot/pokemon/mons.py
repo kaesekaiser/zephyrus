@@ -1,5 +1,5 @@
 import random
-from functions import can_int
+from functions import can_int, none_list, snip
 from pokemon.field import *
 from pokemon.learnsets import *
 from pyquery import PyQuery
@@ -25,14 +25,6 @@ def rebase(n: str | int, fro: int, to: int, min_length: int = 0) -> str:
 
 def decimal(n: str, fro: int) -> int:
     return int(rebase(n, fro, 10))
-
-
-def none_list(ls: iter, joiner: str = ", ") -> str:
-    return joiner.join(ls) if ls else "none"
-
-
-def snip(ls: iter, length: int) -> list:
-    return [ls[g*length:(g+1)*length] for g in range((len(ls) // length) + 1) if g*length < len(ls)]
 
 
 def product(ls: iter) -> float:
