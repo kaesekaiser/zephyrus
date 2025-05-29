@@ -501,7 +501,7 @@ class LearnsetNavigator(Navigator):
 
     def __init__(self, bot: Zeph, mon: pk.Mon, gen: str = "SV", **kwargs):
         super().__init__(
-            bot, kwargs.get("emol", self.bot.ball_emol()), per=8,
+            bot, kwargs.get("emol", bot.ball_emol()), per=8,
             prev=bot.emojis["dex_prev"], nxt=bot.emojis["dex_next"], timeout=120
         )
         self.mon = mon
