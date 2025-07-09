@@ -6266,7 +6266,6 @@
         "type": "Dragon",
         "stage": 0,
         "hp": 150,
-        "weakness": "none",
         "retreat_cost": 2,
         "moves": [
             {
@@ -6336,7 +6335,6 @@
         "stage": 1,
         "evolves_from": "Dratini",
         "hp": 100,
-        "weakness": "none",
         "retreat_cost": 2,
         "moves": [
             {
@@ -18224,7 +18222,6 @@
         "type": "Dragon",
         "stage": 0,
         "hp": 100,
-        "weakness": "none",
         "retreat_cost": 2,
         "moves": [
             {
@@ -18247,7 +18244,6 @@
         "type": "Dragon",
         "stage": 0,
         "hp": 60,
-        "weakness": "none",
         "retreat_cost": 1,
         "moves": [
             {
@@ -18269,7 +18265,6 @@
         "stage": 1,
         "evolves_from": "Jangmo",
         "hp": 100,
-        "weakness": "none",
         "retreat_cost": 2,
         "moves": [
             {
@@ -18292,7 +18287,6 @@
         "stage": 2,
         "evolves_from": "Hakamo",
         "hp": 150,
-        "weakness": "none",
         "retreat_cost": 2,
         "moves": [
             {
@@ -22119,7 +22113,6 @@
         "type": "Dragon",
         "stage": 0,
         "hp": 60,
-        "weakness": "none",
         "retreat_cost": 1,
         "moves": [
             {
