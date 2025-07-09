@@ -22133,7 +22133,6 @@
         "stage": 1,
         "evolves_from": "Dratini",
         "hp": 90,
-        "weakness": "none",
         "retreat_cost": 1,
         "moves": [
             {
@@ -22155,7 +22154,6 @@
         "stage": 2,
         "evolves_from": "Dragonair",
         "hp": 180,
-        "weakness": "none",
         "retreat_cost": 2,
         "moves": [
             {
@@ -22178,7 +22176,6 @@
         "type": "Dragon",
         "stage": 0,
         "hp": 100,
-        "weakness": "none",
         "retreat_cost": 2,
         "moves": [
             {
