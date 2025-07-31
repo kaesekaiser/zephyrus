@@ -421,13 +421,15 @@ class Zeph(commands.Bot):
                   (f"\\- Evolves from **{card.evolves_from}**\n" if card.evolves_from else "") +
                   f"**Weakness:** {self.emojis[card.weakness + 'Energy'] if card.weakness else None}"
                   f"{' +20' if card.weakness else ''}\n"
-                  f"**Retreat:** {str(self.emojis['ColorlessEnergy']) * card.retreat_cost}",
+                  f"**Retreat:** " + ((str(self.emojis['ColorlessEnergy']) * card.retreat_cost)
+                                      if card.retreat_cost else "None"),
                 fs=({
                     f"Ability: {card.ability.name}": self.add_energy_icons(card.ability.description)
                 } if card.ability else {}) |
                 {
-                    f"{''.join(str(self.emojis[g + 'Energy']) for g in mv.energy_cost)} {mv.name}" +
-                    (f" -- {mv.power}" if mv.power else ""):
+                    (''.join(str(self.emojis[g + "Energy"]) for g in mv.energy_cost)
+                     if mv.energy_cost else str(self.emojis["NoEnergy"])) +
+                    f" {mv.name}" + (f" -- {mv.power}" if mv.power else ""):
                     self.add_energy_icons(mv.description) if mv.description else " " for mv in card.moves
                 },
                 footer=f"{card.id} ({tp.expansion_names[card.expansion]}"

@@ -28,7 +28,8 @@ expansion_names = {
     "A2b": "Shining Revelry",
     "A3": "Celestial Guardians",
     "A3a": "Extradimensional Crisis",
-    "A3b": "Eevee Grove"
+    "A3b": "Eevee Grove",
+    "A4": "Wisdom of Sky and Sea"
 }
 expansion_packs = {
     "A1": ["Charizard", "Mewtwo", "Pikachu"],
@@ -39,7 +40,8 @@ expansion_packs = {
     "A2b": [],
     "A3": ["Solgaleo", "Lunala"],
     "A3a": [],
-    "A3b": []
+    "A3b": [],
+    "A4": ["Ho-Oh", "Lugia"]
 }
 
 
