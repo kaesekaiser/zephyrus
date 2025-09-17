@@ -8,6 +8,7 @@ from classes.embeds import Emol
 from classes.menus import Navigator
 from discord.ext import commands
 from functions import grammatical_join, hex_to_color
+from functools import partial
 from termcolor import colored
 
 
