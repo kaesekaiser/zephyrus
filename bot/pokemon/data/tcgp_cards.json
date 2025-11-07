@@ -28679,5 +28679,5712 @@
         "number": 105,
         "rarity": "\u265b",
         "variant": "A4a-023"
+    },
+    "B1-001": {
+        "expansion": "B1",
+        "number": 1,
+        "rarity": "\u2662",
+        "pack": "Mega Blaziken",
+        "name": "Pinsir",
+        "type": "Grass",
+        "stage": 0,
+        "hp": 90,
+        "weakness": "Fire",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "X-Scissor",
+                "energy_cost": [
+                    "Grass",
+                    "Grass",
+                    "Colorless"
+                ],
+                "power": "50+",
+                "description": "Flip a coin. If heads, this attack does 50 more damage."
+            }
+        ]
+    },
+    "B1-002": {
+        "expansion": "B1",
+        "number": 2,
+        "rarity": "\u2662\u2662\u2662\u2662",
+        "pack": "Mega Blaziken",
+        "name": "Mega Pinsir ex",
+        "type": "Grass",
+        "stage": 0,
+        "hp": 170,
+        "weakness": "Fire",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Critical Scissors",
+                "energy_cost": [
+                    "Grass",
+                    "Grass",
+                    "Colorless"
+                ],
+                "power": "80+",
+                "description": "Flip a coin. If heads, this attack does 70 more damage."
+            }
+        ]
+    },
+    "B1-003": {
+        "expansion": "B1",
+        "number": 3,
+        "rarity": "\u2662",
+        "pack": "Mega Blaziken",
+        "name": "Wurmple",
+        "type": "Grass",
+        "stage": 0,
+        "hp": 50,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Ram",
+                "energy_cost": [
+                    "Grass"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "B1-004": {
+        "expansion": "B1",
+        "number": 4,
+        "rarity": "\u2662",
+        "pack": "Mega Blaziken",
+        "name": "Silcoon",
+        "type": "Grass",
+        "stage": 1,
+        "evolves_from": "Wurmple",
+        "hp": 80,
+        "weakness": "Fire",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Harden",
+                "energy_cost": [
+                    "Grass"
+                ],
+                "power": 0,
+                "description": "During your opponent's next turn, prevent all damage done to this Pok\u00e9mon by attacks if that damage is 40 or less."
+            }
+        ]
+    },
+    "B1-005": {
+        "expansion": "B1",
+        "number": 5,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Mega Blaziken",
+        "name": "Beautifly",
+        "type": "Grass",
+        "stage": 2,
+        "evolves_from": "Silcoon",
+        "hp": 130,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Skill Dive",
+                "energy_cost": [
+                    "Grass"
+                ],
+                "power": 0,
+                "description": "This attack does 50 damage to 1 of your opponent's Pok\u00e9mon."
+            }
+        ]
+    },
+    "B1-006": {
+        "expansion": "B1",
+        "number": 6,
+        "rarity": "\u2662",
+        "pack": "Mega Blaziken",
+        "name": "Cascoon",
+        "type": "Grass",
+        "stage": 1,
+        "evolves_from": "Wurmple",
+        "hp": 80,
+        "weakness": "Fire",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Harden",
+                "energy_cost": [
+                    "Grass"
+                ],
+                "power": 0,
+                "description": "During your opponent's next turn, prevent all damage done to this Pok\u00e9mon by attacks if that damage is 40 or less."
+            }
+        ]
+    },
+    "B1-007": {
+        "expansion": "B1",
+        "number": 7,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Mega Blaziken",
+        "name": "Dustox",
+        "type": "Grass",
+        "stage": 2,
+        "evolves_from": "Cascoon",
+        "hp": 130,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Select Powder",
+                "energy_cost": [
+                    "Grass"
+                ],
+                "power": 60,
+                "description": "Choose either Poisoned or Confused. Your opponent's Active Pok\u00e9mon is now affected by that Special Condition."
+            }
+        ]
+    },
+    "B1-008": {
+        "expansion": "B1",
+        "number": 8,
+        "rarity": "\u2662",
+        "pack": "Mega Blaziken",
+        "name": "Seedot",
+        "type": "Grass",
+        "stage": 0,
+        "hp": 50,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Rollout",
+                "energy_cost": [
+                    "Grass"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "B1-009": {
+        "expansion": "B1",
+        "number": 9,
+        "rarity": "\u2662\u2662",
+        "pack": "Mega Blaziken",
+        "name": "Nuzleaf",
+        "type": "Grass",
+        "stage": 1,
+        "evolves_from": "Seedot",
+        "hp": 80,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Gentle Slap",
+                "energy_cost": [
+                    "Grass",
+                    "Grass"
+                ],
+                "power": 40
+            }
+        ]
+    },
+    "B1-010": {
+        "expansion": "B1",
+        "number": 10,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Mega Blaziken",
+        "name": "Shiftry",
+        "type": "Grass",
+        "stage": 2,
+        "evolves_from": "Nuzleaf",
+        "hp": 140,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Nipping Cyclone",
+                "energy_cost": [
+                    "Grass",
+                    "Grass"
+                ],
+                "power": 70,
+                "description": "Discard a random card from your opponent's hand."
+            }
+        ]
+    },
+    "B1-011": {
+        "expansion": "B1",
+        "number": 11,
+        "rarity": "\u2662",
+        "name": "Shroomish",
+        "type": "Grass",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Tackle",
+                "energy_cost": [
+                    "Grass"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "B1-012": {
+        "expansion": "B1",
+        "number": 12,
+        "rarity": "\u2662\u2662",
+        "name": "Breloom",
+        "type": "Grass",
+        "stage": 1,
+        "evolves_from": "Shroomish",
+        "hp": 100,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Seed Bomb",
+                "energy_cost": [
+                    "Grass"
+                ],
+                "power": 40
+            }
+        ]
+    },
+    "B1-013": {
+        "expansion": "B1",
+        "number": 13,
+        "rarity": "\u2662",
+        "pack": "Mega Gyarados",
+        "name": "Pansage",
+        "type": "Grass",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Beat",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 10
+            }
+        ]
+    },
+    "B1-014": {
+        "expansion": "B1",
+        "number": 14,
+        "rarity": "\u2662",
+        "pack": "Mega Gyarados",
+        "name": "Simisage",
+        "type": "Grass",
+        "stage": 1,
+        "evolves_from": "Pansage",
+        "hp": 100,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Fury Swipes",
+                "energy_cost": [
+                    "Grass",
+                    "Colorless"
+                ],
+                "power": "40x",
+                "description": "Flip 3 coins. This attack does 40 damage for each heads."
+            }
+        ]
+    },
+    "B1-015": {
+        "expansion": "B1",
+        "number": 15,
+        "rarity": "\u2662",
+        "pack": "Mega Altaria",
+        "name": "Cottonee",
+        "type": "Grass",
+        "stage": 0,
+        "hp": 50,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Razor Leaf",
+                "energy_cost": [
+                    "Grass"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "B1-016": {
+        "expansion": "B1",
+        "number": 16,
+        "rarity": "\u2662\u2662\u2662\u2662",
+        "pack": "Mega Altaria",
+        "name": "Whimsicott ex",
+        "type": "Grass",
+        "stage": 1,
+        "evolves_from": "Cottonee",
+        "hp": 140,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Grass Knot",
+                "energy_cost": [
+                    "Grass",
+                    "Colorless"
+                ],
+                "power": "40+",
+                "description": "This attack does 30 more damage for each Energy in your opponent's Active Pok\u00e9mon's Retreat Cost."
+            }
+        ]
+    },
+    "B1-017": {
+        "expansion": "B1",
+        "number": 17,
+        "rarity": "\u2662",
+        "pack": "Mega Altaria",
+        "name": "Petilil",
+        "type": "Grass",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Flop",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 10
+            }
+        ]
+    },
+    "B1-018": {
+        "expansion": "B1",
+        "number": 18,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Mega Altaria",
+        "name": "Lilligant",
+        "type": "Grass",
+        "stage": 1,
+        "evolves_from": "Petilil",
+        "hp": 80,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "ability": {
+            "name": "Toughness Aroma",
+            "description": "Each of your {Grass} Pok\u00e9mon gets +20 HP."
+        },
+        "moves": [
+            {
+                "name": "Smack",
+                "energy_cost": [
+                    "Grass",
+                    "Colorless"
+                ],
+                "power": 50
+            }
+        ]
+    },
+    "B1-019": {
+        "expansion": "B1",
+        "number": 19,
+        "rarity": "\u2662",
+        "name": "Maractus",
+        "type": "Grass",
+        "stage": 0,
+        "hp": 80,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Dazzle Dance",
+                "energy_cost": [
+                    "Grass",
+                    "Colorless"
+                ],
+                "power": 40,
+                "description": "Your opponent's Active Pok\u00e9mon is now Confused."
+            }
+        ]
+    },
+    "B1-020": {
+        "expansion": "B1",
+        "number": 20,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Mega Altaria",
+        "name": "Virizion",
+        "type": "Grass",
+        "stage": 0,
+        "hp": 100,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Sacred Sword",
+                "energy_cost": [
+                    "Grass",
+                    "Grass",
+                    "Colorless"
+                ],
+                "power": 110,
+                "description": "During your next turn, this Pok\u00e9mon can't use Sacred Sword."
+            }
+        ]
+    },
+    "B1-021": {
+        "expansion": "B1",
+        "number": 21,
+        "rarity": "\u2662",
+        "pack": "Mega Altaria",
+        "name": "Skiddo",
+        "type": "Grass",
+        "stage": 0,
+        "hp": 80,
+        "weakness": "Fire",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Razor Leaf",
+                "energy_cost": [
+                    "Grass",
+                    "Colorless"
+                ],
+                "power": 30
+            }
+        ]
+    },
+    "B1-022": {
+        "expansion": "B1",
+        "number": 22,
+        "rarity": "\u2662",
+        "pack": "Mega Altaria",
+        "name": "Gogoat",
+        "type": "Grass",
+        "stage": 1,
+        "evolves_from": "Skiddo",
+        "hp": 120,
+        "weakness": "Fire",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Double-Edge",
+                "energy_cost": [
+                    "Grass",
+                    "Grass",
+                    "Colorless"
+                ],
+                "power": 100,
+                "description": "This Pok\u00e9mon also does 20 damage to itself."
+            }
+        ]
+    },
+    "B1-023": {
+        "expansion": "B1",
+        "number": 23,
+        "rarity": "\u2662",
+        "name": "Phantump",
+        "type": "Grass",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Branch Poke",
+                "energy_cost": [
+                    "Grass",
+                    "Grass"
+                ],
+                "power": 40
+            }
+        ]
+    },
+    "B1-024": {
+        "expansion": "B1",
+        "number": 24,
+        "rarity": "\u2662\u2662",
+        "name": "Trevenant",
+        "type": "Grass",
+        "stage": 1,
+        "evolves_from": "Phantump",
+        "hp": 110,
+        "weakness": "Fire",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Horn Leech",
+                "energy_cost": [
+                    "Grass",
+                    "Grass"
+                ],
+                "power": 60,
+                "description": "Heal 20 damage from this Pok\u00e9mon."
+            }
+        ]
+    },
+    "B1-025": {
+        "expansion": "B1",
+        "number": 25,
+        "rarity": "\u2662",
+        "pack": "Mega Altaria",
+        "name": "Grookey",
+        "type": "Grass",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Beat",
+                "energy_cost": [
+                    "Grass"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "B1-026": {
+        "expansion": "B1",
+        "number": 26,
+        "rarity": "\u2662\u2662",
+        "pack": "Mega Altaria",
+        "name": "Thwackey",
+        "type": "Grass",
+        "stage": 1,
+        "evolves_from": "Grookey",
+        "hp": 90,
+        "weakness": "Fire",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Hammer In",
+                "energy_cost": [
+                    "Grass",
+                    "Grass"
+                ],
+                "power": 50
+            }
+        ]
+    },
+    "B1-027": {
+        "expansion": "B1",
+        "number": 27,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Mega Altaria",
+        "name": "Rillaboom",
+        "type": "Grass",
+        "stage": 2,
+        "evolves_from": "Thwackey",
+        "hp": 150,
+        "weakness": "Fire",
+        "retreat_cost": 3,
+        "ability": {
+            "name": "Captivating Rhythm",
+            "description": "Once during your turn, you may flip a coin. If heads, switch in 1 of your opponent's Benched Pok\u00e9mon to the Active Spot."
+        },
+        "moves": [
+            {
+                "name": "Drum Rush",
+                "energy_cost": [
+                    "Grass",
+                    "Grass",
+                    "Grass",
+                    "Colorless"
+                ],
+                "power": 120
+            }
+        ]
+    },
+    "B1-028": {
+        "expansion": "B1",
+        "number": 28,
+        "rarity": "\u2662",
+        "pack": "Mega Blaziken",
+        "name": "Growlithe",
+        "type": "Fire",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Water",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Dig Claws",
+                "energy_cost": [
+                    "Fire"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "B1-029": {
+        "expansion": "B1",
+        "number": 29,
+        "rarity": "\u2662\u2662",
+        "pack": "Mega Blaziken",
+        "name": "Arcanine",
+        "type": "Fire",
+        "stage": 1,
+        "evolves_from": "Growlithe",
+        "hp": 120,
+        "weakness": "Water",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Fire Fang",
+                "energy_cost": [
+                    "Fire",
+                    "Fire"
+                ],
+                "power": 50,
+                "description": "Flip a coin. If heads, your opponent's Active Pok\u00e9mon is now Burned."
+            }
+        ]
+    },
+    "B1-030": {
+        "expansion": "B1",
+        "number": 30,
+        "rarity": "\u2662",
+        "pack": "Mega Blaziken",
+        "name": "Ponyta",
+        "type": "Fire",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Water",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Combustion",
+                "energy_cost": [
+                    "Fire",
+                    "Fire"
+                ],
+                "power": 40
+            }
+        ]
+    },
+    "B1-031": {
+        "expansion": "B1",
+        "number": 31,
+        "rarity": "\u2662\u2662\u2662\u2662",
+        "pack": "Mega Blaziken",
+        "name": "Rapidash ex",
+        "type": "Fire",
+        "stage": 1,
+        "evolves_from": "Ponyta",
+        "hp": 150,
+        "weakness": "Water",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Sprinting Flare",
+                "energy_cost": [
+                    "Fire",
+                    "Fire",
+                    "Fire"
+                ],
+                "power": 110,
+                "description": "This attack also does 20 damage to 1 of your opponent's Benched Pok\u00e9mon."
+            }
+        ]
+    },
+    "B1-032": {
+        "expansion": "B1",
+        "number": 32,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Mega Blaziken",
+        "name": "Ho-Oh",
+        "type": "Fire",
+        "stage": 0,
+        "hp": 120,
+        "weakness": "Lightning",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Blessed Burn",
+                "energy_cost": [
+                    "Fire",
+                    "Fire",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 100,
+                "description": "Heal 30 damage from each of your Benched Basic Pok\u00e9mon."
+            }
+        ]
+    },
+    "B1-033": {
+        "expansion": "B1",
+        "number": 33,
+        "rarity": "\u2662",
+        "pack": "Mega Blaziken",
+        "name": "Torchic",
+        "type": "Fire",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Water",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Peck",
+                "energy_cost": [
+                    "Fire"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "B1-034": {
+        "expansion": "B1",
+        "number": 34,
+        "rarity": "\u2662\u2662",
+        "pack": "Mega Blaziken",
+        "name": "Combusken",
+        "type": "Fire",
+        "stage": 1,
+        "evolves_from": "Torchic",
+        "hp": 80,
+        "weakness": "Water",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "High Jump Kick",
+                "energy_cost": [
+                    "Fire",
+                    "Fire"
+                ],
+                "power": 50
+            }
+        ]
+    },
+    "B1-035": {
+        "expansion": "B1",
+        "number": 35,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Mega Blaziken",
+        "name": "Blaziken",
+        "type": "Fire",
+        "stage": 2,
+        "evolves_from": "Combusken",
+        "hp": 140,
+        "weakness": "Water",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Blaze Kick",
+                "energy_cost": [
+                    "Fire",
+                    "Fire"
+                ],
+                "power": 100,
+                "description": "Discard a {Fire} Energy from this Pok\u00e9mon."
+            }
+        ]
+    },
+    "B1-036": {
+        "expansion": "B1",
+        "number": 36,
+        "rarity": "\u2662\u2662\u2662\u2662",
+        "pack": "Mega Blaziken",
+        "name": "Mega Blaziken ex",
+        "type": "Fire",
+        "stage": 2,
+        "evolves_from": "Combusken",
+        "hp": 210,
+        "weakness": "Water",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Mega Burning",
+                "energy_cost": [
+                    "Fire",
+                    "Fire"
+                ],
+                "power": 120,
+                "description": "Discard a {Fire} Energy from this Pok\u00e9mon. Your opponent's Active Pok\u00e9mon is now Burned."
+            }
+        ]
+    },
+    "B1-037": {
+        "expansion": "B1",
+        "number": 37,
+        "rarity": "\u2662",
+        "pack": "Mega Blaziken",
+        "name": "Pansear",
+        "type": "Fire",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Water",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Beat",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 10
+            }
+        ]
+    },
+    "B1-038": {
+        "expansion": "B1",
+        "number": 38,
+        "rarity": "\u2662",
+        "pack": "Mega Blaziken",
+        "name": "Simisear",
+        "type": "Fire",
+        "stage": 1,
+        "evolves_from": "Pansear",
+        "hp": 100,
+        "weakness": "Water",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Fury Swipes",
+                "energy_cost": [
+                    "Fire",
+                    "Colorless"
+                ],
+                "power": "40x",
+                "description": "Flip 3 coins. This attack does 40 damage for each heads."
+            }
+        ]
+    },
+    "B1-039": {
+        "expansion": "B1",
+        "number": 39,
+        "rarity": "\u2662",
+        "pack": "Mega Gyarados",
+        "name": "Darumaka",
+        "type": "Fire",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Water",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Reckless Charge",
+                "energy_cost": [
+                    "Fire",
+                    "Fire"
+                ],
+                "power": 50,
+                "description": "This Pok\u00e9mon also does 10 damage to itself."
+            }
+        ]
+    },
+    "B1-040": {
+        "expansion": "B1",
+        "number": 40,
+        "rarity": "\u2662\u2662",
+        "pack": "Mega Gyarados",
+        "name": "Darmanitan",
+        "type": "Fire",
+        "stage": 1,
+        "evolves_from": "Darumaka",
+        "hp": 130,
+        "weakness": "Water",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Darmani-Hands",
+                "energy_cost": [
+                    "Fire",
+                    "Fire",
+                    "Fire",
+                    "Colorless"
+                ],
+                "power": "80+",
+                "description": "Flip 2 coins. This attack does 30 more damage for each heads."
+            }
+        ]
+    },
+    "B1-041": {
+        "expansion": "B1",
+        "number": 41,
+        "rarity": "\u2662",
+        "pack": "Mega Altaria",
+        "name": "Litwick",
+        "type": "Fire",
+        "stage": 0,
+        "hp": 50,
+        "weakness": "Water",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Flare",
+                "energy_cost": [
+                    "Fire"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "B1-042": {
+        "expansion": "B1",
+        "number": 42,
+        "rarity": "\u2662\u2662",
+        "pack": "Mega Altaria",
+        "name": "Lampent",
+        "type": "Fire",
+        "stage": 1,
+        "evolves_from": "Litwick",
+        "hp": 80,
+        "weakness": "Water",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Will-O-Wisp",
+                "energy_cost": [
+                    "Fire",
+                    "Fire"
+                ],
+                "power": 40
+            }
+        ]
+    },
+    "B1-043": {
+        "expansion": "B1",
+        "number": 43,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Mega Altaria",
+        "name": "Chandelure",
+        "type": "Fire",
+        "stage": 2,
+        "evolves_from": "Lampent",
+        "hp": 140,
+        "weakness": "Water",
+        "retreat_cost": 2,
+        "ability": {
+            "name": "Slow Sear",
+            "description": "Once during your turn, you may discard the top card of your opponent's deck."
+        },
+        "moves": [
+            {
+                "name": "Heat Blast",
+                "energy_cost": [
+                    "Fire",
+                    "Fire"
+                ],
+                "power": 80
+            }
+        ]
+    },
+    "B1-044": {
+        "expansion": "B1",
+        "number": 44,
+        "rarity": "\u2662",
+        "name": "Heatmor",
+        "type": "Fire",
+        "stage": 0,
+        "hp": 80,
+        "weakness": "Water",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Tongue Whip",
+                "energy_cost": [
+                    "Fire"
+                ],
+                "power": 0,
+                "description": "This attack does 30 damage to 1 of your opponent's Benched Pok\u00e9mon."
+            }
+        ]
+    },
+    "B1-045": {
+        "expansion": "B1",
+        "number": 45,
+        "rarity": "\u2662",
+        "pack": "Mega Blaziken",
+        "name": "Litleo",
+        "type": "Fire",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Water",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Live Coal",
+                "energy_cost": [
+                    "Fire"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "B1-046": {
+        "expansion": "B1",
+        "number": 46,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Mega Blaziken",
+        "name": "Pyroar",
+        "type": "Fire",
+        "stage": 1,
+        "evolves_from": "Litleo",
+        "hp": 130,
+        "weakness": "Water",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Fire Blast",
+                "energy_cost": [
+                    "Fire",
+                    "Fire",
+                    "Colorless"
+                ],
+                "power": 130,
+                "description": "Discard 2 {Fire} Energy from this Pok\u00e9mon."
+            }
+        ]
+    },
+    "B1-047": {
+        "expansion": "B1",
+        "number": 47,
+        "rarity": "\u2662\u2662",
+        "pack": "Mega Gyarados",
+        "name": "Turtonator",
+        "type": "Fire",
+        "stage": 0,
+        "hp": 110,
+        "weakness": "Water",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Shell Trap",
+                "energy_cost": [
+                    "Fire",
+                    "Fire"
+                ],
+                "power": 40,
+                "description": "During your opponent's next turn, if this Pok\u00e9mon is damaged by an attack, do 20 damage to the Attacking Pok\u00e9mon."
+            }
+        ]
+    },
+    "B1-048": {
+        "expansion": "B1",
+        "number": 48,
+        "rarity": "\u2662",
+        "pack": "Mega Blaziken",
+        "name": "Psyduck",
+        "type": "Water",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Rain Splash",
+                "energy_cost": [
+                    "Water"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "B1-049": {
+        "expansion": "B1",
+        "number": 49,
+        "rarity": "\u2662",
+        "pack": "Mega Blaziken",
+        "name": "Golduck",
+        "type": "Water",
+        "stage": 1,
+        "evolves_from": "Psyduck",
+        "hp": 90,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Wave Splash",
+                "energy_cost": [
+                    "Water"
+                ],
+                "power": 50
+            }
+        ]
+    },
+    "B1-050": {
+        "expansion": "B1",
+        "number": 50,
+        "rarity": "\u2662",
+        "pack": "Mega Gyarados",
+        "name": "Magikarp",
+        "type": "Water",
+        "stage": 0,
+        "hp": 30,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Waterfall Evolution",
+                "energy_cost": [
+                    "Water",
+                    "Water",
+                    "Colorless"
+                ],
+                "power": 0,
+                "description": "Put a random card from your deck that evolves from this Pok\u00e9mon onto this Pok\u00e9mon to evolve it."
+            }
+        ]
+    },
+    "B1-051": {
+        "expansion": "B1",
+        "number": 51,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Mega Gyarados",
+        "name": "Gyarados",
+        "type": "Water",
+        "stage": 1,
+        "evolves_from": "Magikarp",
+        "hp": 140,
+        "weakness": "Lightning",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Hammering Tail",
+                "energy_cost": [
+                    "Water",
+                    "Water",
+                    "Water",
+                    "Colorless"
+                ],
+                "power": 100,
+                "description": "Discard the top card of your opponent's deck."
+            }
+        ]
+    },
+    "B1-052": {
+        "expansion": "B1",
+        "number": 52,
+        "rarity": "\u2662\u2662\u2662\u2662",
+        "pack": "Mega Gyarados",
+        "name": "Mega Gyarados ex",
+        "type": "Water",
+        "stage": 1,
+        "evolves_from": "Magikarp",
+        "hp": 210,
+        "weakness": "Lightning",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Mega Blaster",
+                "energy_cost": [
+                    "Water",
+                    "Water",
+                    "Water",
+                    "Colorless"
+                ],
+                "power": 140,
+                "description": "Discard the top 3 cards of your opponent's deck."
+            }
+        ]
+    },
+    "B1-053": {
+        "expansion": "B1",
+        "number": 53,
+        "rarity": "\u2662",
+        "pack": "Mega Altaria",
+        "name": "Lotad",
+        "type": "Water",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Water Gun",
+                "energy_cost": [
+                    "Water"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "B1-054": {
+        "expansion": "B1",
+        "number": 54,
+        "rarity": "\u2662\u2662",
+        "pack": "Mega Altaria",
+        "name": "Lombre",
+        "type": "Water",
+        "stage": 1,
+        "evolves_from": "Lotad",
+        "hp": 90,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Gentle Slap",
+                "energy_cost": [
+                    "Water",
+                    "Water"
+                ],
+                "power": 40
+            }
+        ]
+    },
+    "B1-055": {
+        "expansion": "B1",
+        "number": 55,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Mega Altaria",
+        "name": "Ludicolo",
+        "type": "Water",
+        "stage": 2,
+        "evolves_from": "Lombre",
+        "hp": 140,
+        "weakness": "Lightning",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Rhythmic Steps",
+                "energy_cost": [
+                    "Water",
+                    "Water"
+                ],
+                "power": "60+",
+                "description": "If you have exactly 1, 3, or 5 cards in your hand, this attack does 60 more damage."
+            }
+        ]
+    },
+    "B1-056": {
+        "expansion": "B1",
+        "number": 56,
+        "rarity": "\u2662",
+        "pack": "Mega Gyarados",
+        "name": "Wailmer",
+        "type": "Water",
+        "stage": 0,
+        "hp": 100,
+        "weakness": "Lightning",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Surf",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 50
+            }
+        ]
+    },
+    "B1-057": {
+        "expansion": "B1",
+        "number": 57,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Mega Gyarados",
+        "name": "Wailord",
+        "type": "Water",
+        "stage": 1,
+        "evolves_from": "Wailmer",
+        "hp": 200,
+        "weakness": "Lightning",
+        "retreat_cost": 4,
+        "moves": [
+            {
+                "name": "Whale Pump",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": "60+",
+                "description": "This attack does 10 more damage for each {Water} Energy attached to this Pok\u00e9mon."
+            }
+        ]
+    },
+    "B1-058": {
+        "expansion": "B1",
+        "number": 58,
+        "rarity": "\u2662",
+        "name": "Corphish",
+        "type": "Water",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Lightning",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Water Gun",
+                "energy_cost": [
+                    "Water"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "B1-059": {
+        "expansion": "B1",
+        "number": 59,
+        "rarity": "\u2662\u2662",
+        "name": "Crawdaunt",
+        "type": "Water",
+        "stage": 1,
+        "evolves_from": "Corphish",
+        "hp": 100,
+        "weakness": "Lightning",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Guillotine",
+                "energy_cost": [
+                    "Water",
+                    "Water",
+                    "Colorless"
+                ],
+                "power": 90
+            }
+        ]
+    },
+    "B1-060": {
+        "expansion": "B1",
+        "number": 60,
+        "rarity": "\u2662",
+        "pack": "Mega Altaria",
+        "name": "Luvdisc",
+        "type": "Water",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Paired Tackle",
+                "energy_cost": [
+                    "Water",
+                    "Water"
+                ],
+                "power": "30+",
+                "description": "If you have exactly 2, 4, or 6 cards in your hand, this attack does 30 more damage."
+            }
+        ]
+    },
+    "B1-061": {
+        "expansion": "B1",
+        "number": 61,
+        "rarity": "\u2662",
+        "pack": "Mega Altaria",
+        "name": "Panpour",
+        "type": "Water",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Beat",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 10
+            }
+        ]
+    },
+    "B1-062": {
+        "expansion": "B1",
+        "number": 62,
+        "rarity": "\u2662",
+        "pack": "Mega Altaria",
+        "name": "Simipour",
+        "type": "Water",
+        "stage": 1,
+        "evolves_from": "Panpour",
+        "hp": 100,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Fury Swipes",
+                "energy_cost": [
+                    "Water",
+                    "Colorless"
+                ],
+                "power": "40x",
+                "description": "Flip 3 coins. This attack does 40 damage for each heads."
+            }
+        ]
+    },
+    "B1-063": {
+        "expansion": "B1",
+        "number": 63,
+        "rarity": "\u2662",
+        "name": "Tympole",
+        "type": "Water",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Mud-Slap",
+                "energy_cost": [
+                    "Water",
+                    "Colorless"
+                ],
+                "power": 30
+            }
+        ]
+    },
+    "B1-064": {
+        "expansion": "B1",
+        "number": 64,
+        "rarity": "\u2662",
+        "name": "Palpitoad",
+        "type": "Water",
+        "stage": 1,
+        "evolves_from": "Tympole",
+        "hp": 90,
+        "weakness": "Lightning",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Hyper Voice",
+                "energy_cost": [
+                    "Water",
+                    "Water",
+                    "Colorless"
+                ],
+                "power": 60
+            }
+        ]
+    },
+    "B1-065": {
+        "expansion": "B1",
+        "number": 65,
+        "rarity": "\u2662\u2662",
+        "name": "Seismitoad",
+        "type": "Water",
+        "stage": 2,
+        "evolves_from": "Palpitoad",
+        "hp": 150,
+        "weakness": "Lightning",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Split Spiral Punch",
+                "energy_cost": [
+                    "Water",
+                    "Water",
+                    "Colorless"
+                ],
+                "power": 90,
+                "description": "Your opponent's Active Pok\u00e9mon is now Confused."
+            }
+        ]
+    },
+    "B1-066": {
+        "expansion": "B1",
+        "number": 66,
+        "rarity": "\u2662\u2662",
+        "pack": "Mega Gyarados",
+        "name": "Tirtouga",
+        "type": "Water",
+        "stage": 1,
+        "evolves_from": "Cover Fossil",
+        "hp": 90,
+        "weakness": "Lightning",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Shell Attack",
+                "energy_cost": [
+                    "Water",
+                    "Colorless"
+                ],
+                "power": 50
+            }
+        ]
+    },
+    "B1-067": {
+        "expansion": "B1",
+        "number": 67,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Mega Gyarados",
+        "name": "Carracosta",
+        "type": "Water",
+        "stage": 2,
+        "evolves_from": "Tirtouga",
+        "hp": 150,
+        "weakness": "Lightning",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Blocking Shell",
+                "energy_cost": [
+                    "Water",
+                    "Water",
+                    "Colorless"
+                ],
+                "power": 100,
+                "description": "Prevent all damage done to this Pok\u00e9mon by attacks from Basic Pok\u00e9mon during your opponent's next turn."
+            }
+        ]
+    },
+    "B1-068": {
+        "expansion": "B1",
+        "number": 68,
+        "rarity": "\u2662",
+        "pack": "Mega Gyarados",
+        "name": "Frillish",
+        "type": "Water",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Water Gun",
+                "energy_cost": [
+                    "Water"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "B1-069": {
+        "expansion": "B1",
+        "number": 69,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Mega Gyarados",
+        "name": "Jellicent",
+        "type": "Water",
+        "stage": 1,
+        "evolves_from": "Frillish",
+        "hp": 120,
+        "weakness": "Lightning",
+        "retreat_cost": 2,
+        "ability": {
+            "name": "Bouncy Body",
+            "description": "If this Pok\u00e9mon is in the Active Spot and is damaged by an attack from your opponent's Pok\u00e9mon, take a {Water} Energy from your Energy Zone and attach it to 1 of your Benched Pok\u00e9mon."
+        },
+        "moves": [
+            {
+                "name": "Surf",
+                "energy_cost": [
+                    "Water",
+                    "Water"
+                ],
+                "power": 60
+            }
+        ]
+    },
+    "B1-070": {
+        "expansion": "B1",
+        "number": 70,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Mega Blaziken",
+        "name": "Keldeo",
+        "type": "Water",
+        "stage": 0,
+        "hp": 100,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Sacred Sword",
+                "energy_cost": [
+                    "Water",
+                    "Water",
+                    "Colorless"
+                ],
+                "power": 110,
+                "description": "During your next turn, this Pok\u00e9mon can't use Sacred Sword."
+            }
+        ]
+    },
+    "B1-071": {
+        "expansion": "B1",
+        "number": 71,
+        "rarity": "\u2662",
+        "pack": "Mega Gyarados",
+        "name": "Froakie",
+        "type": "Water",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Water Drip",
+                "energy_cost": [
+                    "Water"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "B1-072": {
+        "expansion": "B1",
+        "number": 72,
+        "rarity": "\u2662\u2662",
+        "pack": "Mega Gyarados",
+        "name": "Frogadier",
+        "type": "Water",
+        "stage": 1,
+        "evolves_from": "Froakie",
+        "hp": 80,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Bounce",
+                "energy_cost": [
+                    "Water",
+                    "Water"
+                ],
+                "power": 40,
+                "description": "Switch this Pok\u00e9mon with 1 of your Benched Pok\u00e9mon."
+            }
+        ]
+    },
+    "B1-073": {
+        "expansion": "B1",
+        "number": 73,
+        "rarity": "\u2662\u2662\u2662\u2662",
+        "pack": "Mega Gyarados",
+        "name": "Greninja ex",
+        "type": "Water",
+        "stage": 2,
+        "evolves_from": "Frogadier",
+        "hp": 170,
+        "weakness": "Lightning",
+        "retreat_cost": 2,
+        "ability": {
+            "name": "Shifting Stream",
+            "description": "Once during your turn, you may switch your Active {Water} Pok\u00e9mon with 1 of your Benched Pok\u00e9mon."
+        },
+        "moves": [
+            {
+                "name": "Aqua Edge",
+                "energy_cost": [
+                    "Water",
+                    "Water"
+                ],
+                "power": 100
+            }
+        ]
+    },
+    "B1-074": {
+        "expansion": "B1",
+        "number": 74,
+        "rarity": "\u2662",
+        "pack": "Mega Gyarados",
+        "name": "Bergmite",
+        "type": "Water",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Metal",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Icicle",
+                "energy_cost": [
+                    "Water",
+                    "Colorless"
+                ],
+                "power": 30
+            }
+        ]
+    },
+    "B1-075": {
+        "expansion": "B1",
+        "number": 75,
+        "rarity": "\u2662\u2662",
+        "pack": "Mega Gyarados",
+        "name": "Avalugg",
+        "type": "Water",
+        "stage": 1,
+        "evolves_from": "Bergmite",
+        "hp": 140,
+        "weakness": "Metal",
+        "retreat_cost": 4,
+        "moves": [
+            {
+                "name": "Frost Barrier",
+                "energy_cost": [
+                    "Water",
+                    "Water",
+                    "Colorless"
+                ],
+                "power": 70,
+                "description": "During your opponent's next turn, this Pok\u00e9mon takes -20 damage from attacks."
+            }
+        ]
+    },
+    "B1-076": {
+        "expansion": "B1",
+        "number": 76,
+        "rarity": "\u2662",
+        "pack": "Mega Gyarados",
+        "name": "Chewtle",
+        "type": "Water",
+        "stage": 0,
+        "hp": 80,
+        "weakness": "Lightning",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Wave Splash",
+                "energy_cost": [
+                    "Water",
+                    "Water"
+                ],
+                "power": 40
+            }
+        ]
+    },
+    "B1-077": {
+        "expansion": "B1",
+        "number": 77,
+        "rarity": "\u2662\u2662",
+        "pack": "Mega Gyarados",
+        "name": "Drednaw",
+        "type": "Water",
+        "stage": 1,
+        "evolves_from": "Chewtle",
+        "hp": 130,
+        "weakness": "Lightning",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Jaw Lock",
+                "energy_cost": [
+                    "Water",
+                    "Water",
+                    "Colorless"
+                ],
+                "power": 70,
+                "description": "During your opponent's next turn, the Defending Pok\u00e9mon can't retreat."
+            }
+        ]
+    },
+    "B1-078": {
+        "expansion": "B1",
+        "number": 78,
+        "rarity": "\u2662",
+        "pack": "Mega Gyarados",
+        "name": "Arrokuda",
+        "type": "Water",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Peck",
+                "energy_cost": [
+                    "Water"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "B1-079": {
+        "expansion": "B1",
+        "number": 79,
+        "rarity": "\u2662\u2662",
+        "pack": "Mega Gyarados",
+        "name": "Barraskewda",
+        "type": "Water",
+        "stage": 1,
+        "evolves_from": "Arrokuda",
+        "hp": 90,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Double-Edge",
+                "energy_cost": [
+                    "Water",
+                    "Colorless"
+                ],
+                "power": 80,
+                "description": "This Pok\u00e9mon also does 20 damage to itself."
+            }
+        ]
+    },
+    "B1-080": {
+        "expansion": "B1",
+        "number": 80,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Mega Altaria",
+        "name": "Eiscue",
+        "type": "Water",
+        "stage": 0,
+        "hp": 80,
+        "weakness": "Metal",
+        "retreat_cost": 1,
+        "ability": {
+            "name": "Ice Face",
+            "description": "If this Pok\u00e9mon has full HP, it takes -40 damage from attacks from your opponent's Pok\u00e9mon."
+        },
+        "moves": [
+            {
+                "name": "Ram",
+                "energy_cost": [
+                    "Water",
+                    "Water"
+                ],
+                "power": 50
+            }
+        ]
+    },
+    "B1-081": {
+        "expansion": "B1",
+        "number": 81,
+        "rarity": "\u2662\u2662\u2662\u2662",
+        "pack": "Mega Gyarados",
+        "name": "Jolteon ex",
+        "type": "Lightning",
+        "stage": 1,
+        "evolves_from": "Eevee",
+        "hp": 140,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "ability": {
+            "name": "Electromagnetic Wall",
+            "description": "As long as this Pok\u00e9mon is in the Active Spot, whenever your opponent attaches an Energy from their Energy Zone to 1 of their Pok\u00e9mon, do 20 damage to that Pok\u00e9mon."
+        },
+        "moves": [
+            {
+                "name": "Mach Bolt",
+                "energy_cost": [
+                    "Lightning",
+                    "Lightning"
+                ],
+                "power": 80
+            }
+        ]
+    },
+    "B1-082": {
+        "expansion": "B1",
+        "number": 82,
+        "rarity": "\u2662",
+        "pack": "Mega Altaria",
+        "name": "Mareep",
+        "type": "Lightning",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Rear Kick",
+                "energy_cost": [
+                    "Lightning"
+                ],
+                "power": 10
+            }
+        ]
+    },
+    "B1-083": {
+        "expansion": "B1",
+        "number": 83,
+        "rarity": "\u2662\u2662",
+        "pack": "Mega Altaria",
+        "name": "Flaaffy",
+        "type": "Lightning",
+        "stage": 1,
+        "evolves_from": "Mareep",
+        "hp": 90,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Electric Punch",
+                "energy_cost": [
+                    "Lightning",
+                    "Colorless"
+                ],
+                "power": 40
+            }
+        ]
+    },
+    "B1-084": {
+        "expansion": "B1",
+        "number": 84,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Mega Altaria",
+        "name": "Ampharos",
+        "type": "Lightning",
+        "stage": 2,
+        "evolves_from": "Flaaffy",
+        "hp": 140,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Zapping Bullet",
+                "energy_cost": [
+                    "Lightning",
+                    "Lightning",
+                    "Colorless"
+                ],
+                "power": 90,
+                "description": "1 of your opponent's Benched Pok\u00e9mon is chosen at random. This attack also does 20 damage to it."
+            }
+        ]
+    },
+    "B1-085": {
+        "expansion": "B1",
+        "number": 85,
+        "rarity": "\u2662\u2662\u2662\u2662",
+        "pack": "Mega Altaria",
+        "name": "Mega Ampharos ex",
+        "type": "Lightning",
+        "stage": 2,
+        "evolves_from": "Flaaffy",
+        "hp": 210,
+        "weakness": "Fighting",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Lightning Lancer",
+                "energy_cost": [
+                    "Lightning",
+                    "Lightning",
+                    "Colorless"
+                ],
+                "power": 100,
+                "description": "1 of your opponent's Benched Pok\u00e9mon is chosen at random 3 times. For each time a Pok\u00e9mon was chosen, also do 20 damage to it."
+            }
+        ]
+    },
+    "B1-086": {
+        "expansion": "B1",
+        "number": 86,
+        "rarity": "\u2662",
+        "pack": "Mega Blaziken",
+        "name": "Shinx",
+        "type": "Lightning",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Flop",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 10
+            }
+        ]
+    },
+    "B1-087": {
+        "expansion": "B1",
+        "number": 87,
+        "rarity": "\u2662\u2662",
+        "pack": "Mega Blaziken",
+        "name": "Luxio",
+        "type": "Lightning",
+        "stage": 1,
+        "evolves_from": "Shinx",
+        "hp": 90,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Bite",
+                "energy_cost": [
+                    "Lightning"
+                ],
+                "power": 30
+            }
+        ]
+    },
+    "B1-088": {
+        "expansion": "B1",
+        "number": 88,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Mega Blaziken",
+        "name": "Luxray",
+        "type": "Lightning",
+        "stage": 2,
+        "evolves_from": "Luxio",
+        "hp": 130,
+        "weakness": "Fighting",
+        "retreat_cost": 0,
+        "moves": [
+            {
+                "name": "Flash Impact",
+                "energy_cost": [
+                    "Lightning",
+                    "Colorless"
+                ],
+                "power": 110,
+                "description": "This attack also does 20 damage to 1 of your Benched Pok\u00e9mon."
+            }
+        ]
+    },
+    "B1-089": {
+        "expansion": "B1",
+        "number": 89,
+        "rarity": "\u2662",
+        "name": "Pachirisu",
+        "type": "Lightning",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Attack the Wound",
+                "energy_cost": [
+                    "Lightning",
+                    "Colorless"
+                ],
+                "power": "30+",
+                "description": "If your opponent's Active Pok\u00e9mon has damage on it, this attack does 30 more damage."
+            }
+        ]
+    },
+    "B1-090": {
+        "expansion": "B1",
+        "number": 90,
+        "rarity": "\u2662",
+        "pack": "Mega Blaziken",
+        "name": "Blitzle",
+        "type": "Lightning",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Tiny Charge",
+                "energy_cost": [
+                    "Lightning"
+                ],
+                "power": 10
+            }
+        ]
+    },
+    "B1-091": {
+        "expansion": "B1",
+        "number": 91,
+        "rarity": "\u2662\u2662",
+        "pack": "Mega Blaziken",
+        "name": "Zebstrika",
+        "type": "Lightning",
+        "stage": 1,
+        "evolves_from": "Blitzle",
+        "hp": 100,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Electric Ball",
+                "energy_cost": [
+                    "Lightning",
+                    "Lightning",
+                    "Lightning"
+                ],
+                "power": 90
+            }
+        ]
+    },
+    "B1-092": {
+        "expansion": "B1",
+        "number": 92,
+        "rarity": "\u2662",
+        "name": "Joltik",
+        "type": "Lightning",
+        "stage": 0,
+        "hp": 30,
+        "weakness": "Fighting",
+        "retreat_cost": 0,
+        "moves": [
+            {
+                "name": "Attach",
+                "energy_cost": [
+                    "Lightning"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "B1-093": {
+        "expansion": "B1",
+        "number": 93,
+        "rarity": "\u2662\u2662",
+        "name": "Galvantula",
+        "type": "Lightning",
+        "stage": 1,
+        "evolves_from": "Joltik",
+        "hp": 80,
+        "weakness": "Fighting",
+        "retreat_cost": 0,
+        "moves": [
+            {
+                "name": "Electro Ball",
+                "energy_cost": [
+                    "Lightning"
+                ],
+                "power": 50
+            }
+        ]
+    },
+    "B1-094": {
+        "expansion": "B1",
+        "number": 94,
+        "rarity": "\u2662",
+        "pack": "Mega Altaria",
+        "name": "Dedenne",
+        "type": "Lightning",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Electric Nibbling",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 20,
+                "description": "Discard a {Lightning} Energy from your opponent's Active Pok\u00e9mon."
+            }
+        ]
+    },
+    "B1-095": {
+        "expansion": "B1",
+        "number": 95,
+        "rarity": "\u2662",
+        "pack": "Mega Altaria",
+        "name": "Yamper",
+        "type": "Lightning",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Roar",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 0,
+                "description": "Switch out your opponent's Active Pok\u00e9mon to the Bench. (Your opponent chooses the new Active Pok\u00e9mon.)"
+            }
+        ]
+    },
+    "B1-096": {
+        "expansion": "B1",
+        "number": 96,
+        "rarity": "\u2662\u2662",
+        "pack": "Mega Altaria",
+        "name": "Boltund",
+        "type": "Lightning",
+        "stage": 1,
+        "evolves_from": "Yamper",
+        "hp": 110,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Zap Kick",
+                "energy_cost": [
+                    "Lightning",
+                    "Colorless"
+                ],
+                "power": 60
+            }
+        ]
+    },
+    "B1-097": {
+        "expansion": "B1",
+        "number": 97,
+        "rarity": "\u2662",
+        "name": "Natu",
+        "type": "Psychic",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Darkness",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Peck",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 10
+            }
+        ]
+    },
+    "B1-098": {
+        "expansion": "B1",
+        "number": 98,
+        "rarity": "\u2662\u2662",
+        "name": "Xatu",
+        "type": "Psychic",
+        "stage": 1,
+        "evolves_from": "Natu",
+        "hp": 100,
+        "weakness": "Darkness",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Zen Headbutt",
+                "energy_cost": [
+                    "Psychic",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 80
+            }
+        ]
+    },
+    "B1-099": {
+        "expansion": "B1",
+        "number": 99,
+        "rarity": "\u2662",
+        "name": "Misdreavus",
+        "type": "Psychic",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Darkness",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Double Spin",
+                "energy_cost": [
+                    "Psychic"
+                ],
+                "power": "20x",
+                "description": "Flip 2 coins. This attack does 20 damage for each heads."
+            }
+        ]
+    },
+    "B1-100": {
+        "expansion": "B1",
+        "number": 100,
+        "rarity": "\u2662\u2662",
+        "name": "Mismagius",
+        "type": "Psychic",
+        "stage": 1,
+        "evolves_from": "Misdreavus",
+        "hp": 90,
+        "weakness": "Darkness",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Spooky Shot",
+                "energy_cost": [
+                    "Psychic",
+                    "Psychic"
+                ],
+                "power": 70
+            }
+        ]
+    },
+    "B1-101": {
+        "expansion": "B1",
+        "number": 101,
+        "rarity": "\u2662",
+        "pack": "Mega Altaria",
+        "name": "Sableye",
+        "type": "Psychic",
+        "stage": 0,
+        "hp": 80,
+        "weakness": "Darkness",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Dirty Throw",
+                "energy_cost": [
+                    "Psychic",
+                    "Psychic"
+                ],
+                "power": 70,
+                "description": "Discard a card from your hand. If you can't, this attack does nothing."
+            }
+        ]
+    },
+    "B1-102": {
+        "expansion": "B1",
+        "number": 102,
+        "rarity": "\u2662\u2662\u2662\u2662",
+        "pack": "Mega Altaria",
+        "name": "Mega Altaria ex",
+        "type": "Psychic",
+        "stage": 1,
+        "evolves_from": "Swablu",
+        "hp": 190,
+        "weakness": "Metal",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Mega Harmony",
+                "energy_cost": [
+                    "Psychic",
+                    "Psychic"
+                ],
+                "power": "40+",
+                "description": "This attack does 30 more damage for each of your Benched Pok\u00e9mon."
+            }
+        ]
+    },
+    "B1-103": {
+        "expansion": "B1",
+        "number": 103,
+        "rarity": "\u2662",
+        "pack": "Mega Blaziken",
+        "name": "Duskull",
+        "type": "Psychic",
+        "stage": 0,
+        "hp": 50,
+        "weakness": "Darkness",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Ambush",
+                "energy_cost": [
+                    "Psychic"
+                ],
+                "power": "10+",
+                "description": "Flip a coin. If heads, this attack does 30 more damage."
+            }
+        ]
+    },
+    "B1-104": {
+        "expansion": "B1",
+        "number": 104,
+        "rarity": "\u2662\u2662",
+        "pack": "Mega Blaziken",
+        "name": "Dusclops",
+        "type": "Psychic",
+        "stage": 1,
+        "evolves_from": "Duskull",
+        "hp": 90,
+        "weakness": "Darkness",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Will-O-Wisp",
+                "energy_cost": [
+                    "Psychic"
+                ],
+                "power": 30
+            }
+        ]
+    },
+    "B1-105": {
+        "expansion": "B1",
+        "number": 105,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Mega Blaziken",
+        "name": "Dusknoir",
+        "type": "Psychic",
+        "stage": 2,
+        "evolves_from": "Dusclops",
+        "hp": 150,
+        "weakness": "Darkness",
+        "retreat_cost": 2,
+        "ability": {
+            "name": "Fade into Darkness",
+            "description": "When this Pok\u00e9mon is Knocked Out, flip a coin. If heads, your opponent can't get any points for it."
+        },
+        "moves": [
+            {
+                "name": "Hammer In",
+                "energy_cost": [
+                    "Psychic",
+                    "Colorless"
+                ],
+                "power": 80
+            }
+        ]
+    },
+    "B1-106": {
+        "expansion": "B1",
+        "number": 106,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Mega Altaria",
+        "name": "Jirachi",
+        "type": "Psychic",
+        "stage": 0,
+        "hp": 50,
+        "weakness": "Darkness",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Star Drop",
+                "energy_cost": [
+                    "Psychic"
+                ],
+                "power": 0,
+                "description": "This attack does 30 damage to 1 of your opponent's Pok\u00e9mon."
+            }
+        ]
+    },
+    "B1-107": {
+        "expansion": "B1",
+        "number": 107,
+        "rarity": "\u2662",
+        "pack": "Mega Altaria",
+        "name": "Drifloon",
+        "type": "Psychic",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Darkness",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Wind Blast",
+                "energy_cost": [
+                    "Psychic"
+                ],
+                "power": 0,
+                "description": "This attack does 20 damage to 1 of your opponent's Benched Pok\u00e9mon."
+            }
+        ]
+    },
+    "B1-108": {
+        "expansion": "B1",
+        "number": 108,
+        "rarity": "\u2662\u2662",
+        "pack": "Mega Altaria",
+        "name": "Drifblim",
+        "type": "Psychic",
+        "stage": 1,
+        "evolves_from": "Drifloon",
+        "hp": 100,
+        "weakness": "Darkness",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Balloon Barrage",
+                "energy_cost": [
+                    "Psychic",
+                    "Colorless"
+                ],
+                "power": "20+",
+                "description": "This attack does 20 more damage for each Energy attached to this Pok\u00e9mon."
+            }
+        ]
+    },
+    "B1-109": {
+        "expansion": "B1",
+        "number": 109,
+        "rarity": "\u2662\u2662\u2662",
+        "name": "Chingling",
+        "type": "Psychic",
+        "stage": 0,
+        "hp": 30,
+        "retreat_cost": 0,
+        "moves": [
+            {
+                "name": "Jingly Noise",
+                "energy_cost": [],
+                "power": 10,
+                "description": "During your opponent's next turn, they can't play any Item cards from their hand."
+            }
+        ]
+    },
+    "B1-110": {
+        "expansion": "B1",
+        "number": 110,
+        "rarity": "\u2662",
+        "pack": "Mega Gyarados",
+        "name": "Yamask",
+        "type": "Psychic",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Darkness",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Mumble",
+                "energy_cost": [
+                    "Psychic"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "B1-111": {
+        "expansion": "B1",
+        "number": 111,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Mega Gyarados",
+        "name": "Cofagrigus",
+        "type": "Psychic",
+        "stage": 1,
+        "evolves_from": "Yamask",
+        "hp": 120,
+        "weakness": "Darkness",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Soul Shot",
+                "energy_cost": [
+                    "Psychic",
+                    "Psychic"
+                ],
+                "power": 120,
+                "description": "Discard 2 cards from your hand. If you can't discard 2 cards, this attack does nothing."
+            }
+        ]
+    },
+    "B1-112": {
+        "expansion": "B1",
+        "number": 112,
+        "rarity": "\u2662",
+        "pack": "Mega Altaria",
+        "name": "Gothita",
+        "type": "Psychic",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Darkness",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Stampede",
+                "energy_cost": [
+                    "Psychic"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "B1-113": {
+        "expansion": "B1",
+        "number": 113,
+        "rarity": "\u2662\u2662",
+        "pack": "Mega Altaria",
+        "name": "Gothorita",
+        "type": "Psychic",
+        "stage": 1,
+        "evolves_from": "Gothita",
+        "hp": 80,
+        "weakness": "Darkness",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Slap",
+                "energy_cost": [
+                    "Psychic"
+                ],
+                "power": 30
+            }
+        ]
+    },
+    "B1-114": {
+        "expansion": "B1",
+        "number": 114,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Mega Altaria",
+        "name": "Gothitelle",
+        "type": "Psychic",
+        "stage": 2,
+        "evolves_from": "Gothorita",
+        "hp": 130,
+        "weakness": "Darkness",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Stellar Cradle",
+                "energy_cost": [
+                    "Psychic",
+                    "Psychic"
+                ],
+                "power": 70,
+                "description": "During your opponent's next turn, if they attach Energy from their Energy Zone to the Defending Pok\u00e9mon, that Pok\u00e9mon will be Asleep."
+            }
+        ]
+    },
+    "B1-115": {
+        "expansion": "B1",
+        "number": 115,
+        "rarity": "\u2662",
+        "name": "Spritzee",
+        "type": "Psychic",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Metal",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Fairy Wind",
+                "energy_cost": [
+                    "Psychic"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "B1-116": {
+        "expansion": "B1",
+        "number": 116,
+        "rarity": "\u2662\u2662",
+        "name": "Aromatisse",
+        "type": "Psychic",
+        "stage": 1,
+        "evolves_from": "Spritzee",
+        "hp": 90,
+        "weakness": "Metal",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Confounding Cologne",
+                "energy_cost": [
+                    "Psychic"
+                ],
+                "power": 40,
+                "description": "Your opponent's Active Pok\u00e9mon is now Confused."
+            }
+        ]
+    },
+    "B1-117": {
+        "expansion": "B1",
+        "number": 117,
+        "rarity": "\u2662",
+        "pack": "Mega Altaria",
+        "name": "Swirlix",
+        "type": "Psychic",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Metal",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Cotton Guard",
+                "energy_cost": [
+                    "Psychic"
+                ],
+                "power": 10,
+                "description": "During your opponent's next turn, this Pok\u00e9mon takes -20 damage from attacks."
+            }
+        ]
+    },
+    "B1-118": {
+        "expansion": "B1",
+        "number": 118,
+        "rarity": "\u2662\u2662",
+        "pack": "Mega Altaria",
+        "name": "Slurpuff",
+        "type": "Psychic",
+        "stage": 1,
+        "evolves_from": "Swirlix",
+        "hp": 110,
+        "weakness": "Metal",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Draining Kiss",
+                "energy_cost": [
+                    "Psychic",
+                    "Colorless"
+                ],
+                "power": 50,
+                "description": "Heal 30 damage from this Pok\u00e9mon."
+            }
+        ]
+    },
+    "B1-119": {
+        "expansion": "B1",
+        "number": 119,
+        "rarity": "\u2662",
+        "pack": "Mega Altaria",
+        "name": "Carbink",
+        "type": "Psychic",
+        "stage": 0,
+        "hp": 50,
+        "weakness": "Metal",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Guard Press",
+                "energy_cost": [
+                    "Psychic"
+                ],
+                "power": 30,
+                "description": "During your opponent's next turn, this Pok\u00e9mon takes -30 damage from attacks."
+            }
+        ]
+    },
+    "B1-120": {
+        "expansion": "B1",
+        "number": 120,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Mega Gyarados",
+        "name": "Klefki",
+        "type": "Psychic",
+        "stage": 0,
+        "hp": 50,
+        "weakness": "Metal",
+        "retreat_cost": 1,
+        "ability": {
+            "name": "Dismantling Keys",
+            "description": "Once during your turn, if this Pok\u00e9mon is on your Bench, you may discard all Pok\u00e9mon Tools from your opponent's Active Pok\u00e9mon. If you do, discard this Pok\u00e9mon."
+        },
+        "moves": [
+            {
+                "name": "Hook",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "B1-121": {
+        "expansion": "B1",
+        "number": 121,
+        "rarity": "\u2662\u2662\u2662\u2662",
+        "pack": "Mega Altaria",
+        "name": "Indeedee ex",
+        "type": "Psychic",
+        "stage": 0,
+        "hp": 130,
+        "weakness": "Darkness",
+        "retreat_cost": 1,
+        "ability": {
+            "name": "Watch Over",
+            "description": "Once during your turn, you may heal 20 damage from your Active Pok\u00e9mon."
+        },
+        "moves": [
+            {
+                "name": "Psychic",
+                "energy_cost": [
+                    "Psychic",
+                    "Psychic"
+                ],
+                "power": "30+",
+                "description": "This attack does 30 more damage for each Energy attached to your opponent's Active Pok\u00e9mon."
+            }
+        ]
+    },
+    "B1-122": {
+        "expansion": "B1",
+        "number": 122,
+        "rarity": "\u2662",
+        "name": "Sandshrew",
+        "type": "Fighting",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Grass",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Sand Spray",
+                "energy_cost": [
+                    "Fighting"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "B1-123": {
+        "expansion": "B1",
+        "number": 123,
+        "rarity": "\u2662\u2662",
+        "name": "Sandslash",
+        "type": "Fighting",
+        "stage": 1,
+        "evolves_from": "Sandshrew",
+        "hp": 90,
+        "weakness": "Grass",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Cut",
+                "energy_cost": [
+                    "Fighting"
+                ],
+                "power": 50
+            }
+        ]
+    },
+    "B1-124": {
+        "expansion": "B1",
+        "number": 124,
+        "rarity": "\u2662\u2662\u2662\u2662",
+        "pack": "Mega Blaziken",
+        "name": "Hitmonchan ex",
+        "type": "Fighting",
+        "stage": 0,
+        "hp": 130,
+        "weakness": "Psychic",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Quick Straight",
+                "energy_cost": [
+                    "Fighting"
+                ],
+                "power": 50,
+                "description": "This attack's damage isn't affected by Weakness."
+            }
+        ]
+    },
+    "B1-125": {
+        "expansion": "B1",
+        "number": 125,
+        "rarity": "\u2662",
+        "name": "Sudowoodo",
+        "type": "Fighting",
+        "stage": 0,
+        "hp": 90,
+        "weakness": "Grass",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Fight Back",
+                "energy_cost": [
+                    "Fighting",
+                    "Fighting"
+                ],
+                "power": "30+",
+                "description": "If this Pok\u00e9mon has damage on it, this attack does 50 more damage."
+            }
+        ]
+    },
+    "B1-126": {
+        "expansion": "B1",
+        "number": 126,
+        "rarity": "\u2662",
+        "pack": "Mega Blaziken",
+        "name": "Makuhita",
+        "type": "Fighting",
+        "stage": 0,
+        "hp": 80,
+        "weakness": "Psychic",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Lunge Out",
+                "energy_cost": [
+                    "Fighting",
+                    "Fighting",
+                    "Colorless"
+                ],
+                "power": 50
+            }
+        ]
+    },
+    "B1-127": {
+        "expansion": "B1",
+        "number": 127,
+        "rarity": "\u2662\u2662",
+        "pack": "Mega Blaziken",
+        "name": "Hariyama",
+        "type": "Fighting",
+        "stage": 1,
+        "evolves_from": "Makuhita",
+        "hp": 130,
+        "weakness": "Psychic",
+        "retreat_cost": 4,
+        "moves": [
+            {
+                "name": "Slapping Knockdown",
+                "energy_cost": [
+                    "Fighting",
+                    "Fighting",
+                    "Fighting",
+                    "Colorless"
+                ],
+                "power": 110,
+                "description": "Before doing damage, discard all Pok\u00e9mon Tools from your opponent's Active Pok\u00e9mon."
+            }
+        ]
+    },
+    "B1-128": {
+        "expansion": "B1",
+        "number": 128,
+        "rarity": "\u2662",
+        "pack": "Mega Gyarados",
+        "name": "Hippopotas",
+        "type": "Fighting",
+        "stage": 0,
+        "hp": 80,
+        "weakness": "Grass",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Mud Shot",
+                "energy_cost": [
+                    "Fighting",
+                    "Colorless"
+                ],
+                "power": 30
+            }
+        ]
+    },
+    "B1-129": {
+        "expansion": "B1",
+        "number": 129,
+        "rarity": "\u2662\u2662",
+        "pack": "Mega Gyarados",
+        "name": "Hippowdon",
+        "type": "Fighting",
+        "stage": 1,
+        "evolves_from": "Hippopotas",
+        "hp": 130,
+        "weakness": "Grass",
+        "retreat_cost": 4,
+        "moves": [
+            {
+                "name": "Crashing Fangs",
+                "energy_cost": [
+                    "Fighting",
+                    "Fighting",
+                    "Colorless"
+                ],
+                "power": 100,
+                "description": "Flip a coin. If tails, during your next turn, this Pok\u00e9mon can't attack."
+            }
+        ]
+    },
+    "B1-130": {
+        "expansion": "B1",
+        "number": 130,
+        "rarity": "\u2662",
+        "pack": "Mega Gyarados",
+        "name": "Sandile",
+        "type": "Fighting",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Grass",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Gnaw",
+                "energy_cost": [
+                    "Fighting"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "B1-131": {
+        "expansion": "B1",
+        "number": 131,
+        "rarity": "\u2662\u2662",
+        "pack": "Mega Gyarados",
+        "name": "Krokorok",
+        "type": "Fighting",
+        "stage": 1,
+        "evolves_from": "Sandile",
+        "hp": 90,
+        "weakness": "Grass",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Bite",
+                "energy_cost": [
+                    "Fighting",
+                    "Colorless"
+                ],
+                "power": 40
+            }
+        ]
+    },
+    "B1-132": {
+        "expansion": "B1",
+        "number": 132,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Mega Gyarados",
+        "name": "Krookodile",
+        "type": "Fighting",
+        "stage": 2,
+        "evolves_from": "Krokorok",
+        "hp": 160,
+        "weakness": "Grass",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Chomp Chomp Bite",
+                "energy_cost": [
+                    "Fighting",
+                    "Fighting",
+                    "Colorless"
+                ],
+                "power": 90,
+                "description": "Flip a coin until you get tails. For each heads, discard a random Energy from your opponent's Active Pok\u00e9mon."
+            }
+        ]
+    },
+    "B1-133": {
+        "expansion": "B1",
+        "number": 133,
+        "rarity": "\u2662\u2662",
+        "pack": "Mega Blaziken",
+        "name": "Archen",
+        "type": "Fighting",
+        "stage": 1,
+        "evolves_from": "Plume Fossil",
+        "hp": 90,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Rock Throw",
+                "energy_cost": [
+                    "Fighting"
+                ],
+                "power": 40
+            }
+        ]
+    },
+    "B1-134": {
+        "expansion": "B1",
+        "number": 134,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Mega Blaziken",
+        "name": "Archeops",
+        "type": "Fighting",
+        "stage": 2,
+        "evolves_from": "Archen",
+        "hp": 140,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Wild Spin",
+                "energy_cost": [
+                    "Fighting"
+                ],
+                "power": 0,
+                "description": "This attack does 20 damage to each of your opponent's Pok\u00e9mon. During your next turn, this Pok\u00e9mon's Wild Spin attack does +20 damage to each of your opponent's Pok\u00e9mon."
+            }
+        ]
+    },
+    "B1-135": {
+        "expansion": "B1",
+        "number": 135,
+        "rarity": "\u2662",
+        "pack": "Mega Blaziken",
+        "name": "Golett",
+        "type": "Fighting",
+        "stage": 0,
+        "hp": 80,
+        "weakness": "Grass",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Stampede",
+                "energy_cost": [
+                    "Fighting"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "B1-136": {
+        "expansion": "B1",
+        "number": 136,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Mega Blaziken",
+        "name": "Golurk",
+        "type": "Fighting",
+        "stage": 1,
+        "evolves_from": "Golett",
+        "hp": 130,
+        "weakness": "Grass",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Heavy Rocket",
+                "energy_cost": [
+                    "Fighting",
+                    "Fighting"
+                ],
+                "power": "60x",
+                "description": "Reveal the top 3 cards of your deck. This attack does 60 damage for each Pok\u00e9mon with a Retreat Cost of 3 or more you find there. Shuffle the revealed cards back into your deck."
+            }
+        ]
+    },
+    "B1-137": {
+        "expansion": "B1",
+        "number": 137,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Mega Gyarados",
+        "name": "Terrakion",
+        "type": "Fighting",
+        "stage": 0,
+        "hp": 120,
+        "weakness": "Grass",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Sacred Sword",
+                "energy_cost": [
+                    "Fighting",
+                    "Fighting",
+                    "Colorless"
+                ],
+                "power": 110,
+                "description": "During your next turn, this Pok\u00e9mon can't use Sacred Sword."
+            }
+        ]
+    },
+    "B1-138": {
+        "expansion": "B1",
+        "number": 138,
+        "rarity": "\u2662",
+        "pack": "Mega Gyarados",
+        "name": "Pancham",
+        "type": "Fighting",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Psychic",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Punch",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "B1-139": {
+        "expansion": "B1",
+        "number": 139,
+        "rarity": "\u2662",
+        "pack": "Mega Blaziken",
+        "name": "Crabrawler",
+        "type": "Fighting",
+        "stage": 0,
+        "hp": 80,
+        "weakness": "Psychic",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Knuckle Punch",
+                "energy_cost": [
+                    "Fighting"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "B1-140": {
+        "expansion": "B1",
+        "number": 140,
+        "rarity": "\u2662\u2662",
+        "pack": "Mega Blaziken",
+        "name": "Crabominable",
+        "type": "Fighting",
+        "stage": 1,
+        "evolves_from": "Crabrawler",
+        "hp": 120,
+        "weakness": "Psychic",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Last-Chance Punch",
+                "energy_cost": [
+                    "Fighting"
+                ],
+                "power": "30+",
+                "description": "If this Pok\u00e9mon's remaining HP is 30 or less, this attack does 60 more damage."
+            }
+        ]
+    },
+    "B1-141": {
+        "expansion": "B1",
+        "number": 141,
+        "rarity": "\u2662",
+        "pack": "Mega Blaziken",
+        "name": "Stufful",
+        "type": "Fighting",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Psychic",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Magnum Punch",
+                "energy_cost": [
+                    "Fighting",
+                    "Fighting"
+                ],
+                "power": 40
+            }
+        ]
+    },
+    "B1-142": {
+        "expansion": "B1",
+        "number": 142,
+        "rarity": "\u2662\u2662",
+        "pack": "Mega Blaziken",
+        "name": "Bewear",
+        "type": "Fighting",
+        "stage": 1,
+        "evolves_from": "Stufful",
+        "hp": 130,
+        "weakness": "Psychic",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Heavy Impact",
+                "energy_cost": [
+                    "Fighting",
+                    "Fighting",
+                    "Fighting"
+                ],
+                "power": 90
+            }
+        ]
+    },
+    "B1-143": {
+        "expansion": "B1",
+        "number": 143,
+        "rarity": "\u2662",
+        "name": "Sandygast",
+        "type": "Fighting",
+        "stage": 0,
+        "hp": 80,
+        "weakness": "Grass",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Sand Attack",
+                "energy_cost": [
+                    "Fighting",
+                    "Colorless"
+                ],
+                "power": 20,
+                "description": "During your opponent's next turn, if the Defending Pok\u00e9mon tries to use an attack, your opponent flips a coin. If tails, that attack doesn't happen."
+            }
+        ]
+    },
+    "B1-144": {
+        "expansion": "B1",
+        "number": 144,
+        "rarity": "\u2662\u2662",
+        "name": "Palossand",
+        "type": "Fighting",
+        "stage": 1,
+        "evolves_from": "Sandygast",
+        "hp": 140,
+        "weakness": "Grass",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Life Sucker",
+                "energy_cost": [
+                    "Fighting",
+                    "Fighting",
+                    "Colorless"
+                ],
+                "power": 70,
+                "description": "Heal 20 damage from this Pok\u00e9mon."
+            }
+        ]
+    },
+    "B1-145": {
+        "expansion": "B1",
+        "number": 145,
+        "rarity": "\u2662",
+        "pack": "Mega Gyarados",
+        "name": "Rolycoly",
+        "type": "Fighting",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Grass",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Ram",
+                "energy_cost": [
+                    "Fighting"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "B1-146": {
+        "expansion": "B1",
+        "number": 146,
+        "rarity": "\u2662\u2662",
+        "pack": "Mega Gyarados",
+        "name": "Carkol",
+        "type": "Fighting",
+        "stage": 1,
+        "evolves_from": "Rolycoly",
+        "hp": 90,
+        "weakness": "Grass",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Heat Crash",
+                "energy_cost": [
+                    "Fighting",
+                    "Fighting"
+                ],
+                "power": 50
+            }
+        ]
+    },
+    "B1-147": {
+        "expansion": "B1",
+        "number": 147,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Mega Gyarados",
+        "name": "Coalossal",
+        "type": "Fighting",
+        "stage": 2,
+        "evolves_from": "Carkol",
+        "hp": 150,
+        "weakness": "Grass",
+        "retreat_cost": 4,
+        "moves": [
+            {
+                "name": "Coal Drop",
+                "energy_cost": [
+                    "Fighting",
+                    "Fighting",
+                    "Fighting"
+                ],
+                "power": "100+",
+                "description": "If your opponent's Active Pok\u00e9mon is a {Grass} Pok\u00e9mon, this attack does 50 more damage."
+            }
+        ]
+    },
+    "B1-148": {
+        "expansion": "B1",
+        "number": 148,
+        "rarity": "\u2662",
+        "pack": "Mega Gyarados",
+        "name": "Murkrow",
+        "type": "Darkness",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Glide",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "B1-149": {
+        "expansion": "B1",
+        "number": 149,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Mega Gyarados",
+        "name": "Honchkrow",
+        "type": "Darkness",
+        "stage": 1,
+        "evolves_from": "Murkrow",
+        "hp": 100,
+        "weakness": "Lightning",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Evil Admonition",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": "40+",
+                "description": "This attack does 40 more damage for each of your opponent's Pok\u00e9mon in play that has an Ability."
+            }
+        ]
+    },
+    "B1-150": {
+        "expansion": "B1",
+        "number": 150,
+        "rarity": "\u2662\u2662",
+        "pack": "Mega Gyarados",
+        "name": "Absol",
+        "type": "Darkness",
+        "stage": 0,
+        "hp": 80,
+        "weakness": "Grass",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Ominous Claw",
+                "energy_cost": [
+                    "Darkness",
+                    "Darkness"
+                ],
+                "power": 50,
+                "description": "Flip a coin. If heads, your opponent reveals their hand. Choose a Supporter card you find there and discard it."
+            }
+        ]
+    },
+    "B1-151": {
+        "expansion": "B1",
+        "number": 151,
+        "rarity": "\u2662\u2662\u2662\u2662",
+        "pack": "Mega Gyarados",
+        "name": "Mega Absol ex",
+        "type": "Darkness",
+        "stage": 0,
+        "hp": 170,
+        "weakness": "Grass",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Darkness Claw",
+                "energy_cost": [
+                    "Darkness",
+                    "Darkness"
+                ],
+                "power": 80,
+                "description": "Your opponent reveals their hand. Choose a Supporter card you find there and discard it."
+            }
+        ]
+    },
+    "B1-152": {
+        "expansion": "B1",
+        "number": 152,
+        "rarity": "\u2662",
+        "pack": "Mega Gyarados",
+        "name": "Skorupi",
+        "type": "Darkness",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Bug Bite",
+                "energy_cost": [
+                    "Darkness"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "B1-153": {
+        "expansion": "B1",
+        "number": 153,
+        "rarity": "\u2662\u2662",
+        "pack": "Mega Gyarados",
+        "name": "Drapion",
+        "type": "Darkness",
+        "stage": 1,
+        "evolves_from": "Skorupi",
+        "hp": 130,
+        "weakness": "Fighting",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Stun Poison",
+                "energy_cost": [
+                    "Darkness",
+                    "Darkness",
+                    "Colorless"
+                ],
+                "power": 50,
+                "description": "Flip a coin. If heads, your opponent's Active Pok\u00e9mon is now Poisoned and Paralyzed."
+            }
+        ]
+    },
+    "B1-154": {
+        "expansion": "B1",
+        "number": 154,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Mega Altaria",
+        "name": "Darkrai",
+        "type": "Darkness",
+        "stage": 0,
+        "hp": 120,
+        "weakness": "Grass",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Shadow Cage",
+                "energy_cost": [
+                    "Darkness",
+                    "Darkness",
+                    "Colorless"
+                ],
+                "power": 70,
+                "description": "During your opponent's next turn, the Defending Pok\u00e9mon can't retreat."
+            }
+        ]
+    },
+    "B1-155": {
+        "expansion": "B1",
+        "number": 155,
+        "rarity": "\u2662",
+        "pack": "Mega Gyarados",
+        "name": "Deino",
+        "type": "Darkness",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Grass",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Headbutt",
+                "energy_cost": [
+                    "Darkness"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "B1-156": {
+        "expansion": "B1",
+        "number": 156,
+        "rarity": "\u2662\u2662",
+        "pack": "Mega Gyarados",
+        "name": "Zweilous",
+        "type": "Darkness",
+        "stage": 1,
+        "evolves_from": "Deino",
+        "hp": 90,
+        "weakness": "Grass",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Darkness Fang",
+                "energy_cost": [
+                    "Darkness",
+                    "Darkness"
+                ],
+                "power": 40
+            }
+        ]
+    },
+    "B1-157": {
+        "expansion": "B1",
+        "number": 157,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Mega Gyarados",
+        "name": "Hydreigon",
+        "type": "Darkness",
+        "stage": 2,
+        "evolves_from": "Zweilous",
+        "hp": 150,
+        "weakness": "Grass",
+        "retreat_cost": 2,
+        "ability": {
+            "name": "Roar in Unison",
+            "description": "Once during your turn, you may take 2 {Darkness} Energy from your Energy Zone and attach it to this Pok\u00e9mon. If you do, do 30 damage to this Pok\u00e9mon."
+        },
+        "moves": [
+            {
+                "name": "Hyper Ray",
+                "energy_cost": [
+                    "Darkness",
+                    "Darkness",
+                    "Darkness"
+                ],
+                "power": 130,
+                "description": "Discard all Energy from this Pok\u00e9mon."
+            }
+        ]
+    },
+    "B1-158": {
+        "expansion": "B1",
+        "number": 158,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Mega Gyarados",
+        "name": "Pangoro",
+        "type": "Darkness",
+        "stage": 1,
+        "evolves_from": "Pancham",
+        "hp": 120,
+        "weakness": "Grass",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Overdrive Smash",
+                "energy_cost": [
+                    "Darkness"
+                ],
+                "power": 30,
+                "description": "During your next turn, this Pok\u00e9mon's Overdrive Smash attack does +30 damage."
+            }
+        ]
+    },
+    "B1-159": {
+        "expansion": "B1",
+        "number": 159,
+        "rarity": "\u2662",
+        "pack": "Mega Blaziken",
+        "name": "Skrelp",
+        "type": "Darkness",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Razor Fin",
+                "energy_cost": [
+                    "Darkness",
+                    "Colorless"
+                ],
+                "power": 40
+            }
+        ]
+    },
+    "B1-160": {
+        "expansion": "B1",
+        "number": 160,
+        "rarity": "\u2662\u2662\u2662\u2662",
+        "pack": "Mega Blaziken",
+        "name": "Dragalge ex",
+        "type": "Darkness",
+        "stage": 1,
+        "evolves_from": "Skrelp",
+        "hp": 150,
+        "weakness": "Fighting",
+        "retreat_cost": 2,
+        "ability": {
+            "name": "Poison Point",
+            "description": "If this Pok\u00e9mon is in the Active Spot and is damaged by an attack from your opponent's Pok\u00e9mon, the Attacking Pok\u00e9mon is now Poisoned."
+        },
+        "moves": [
+            {
+                "name": "Draconic Whip",
+                "energy_cost": [
+                    "Darkness",
+                    "Colorless"
+                ],
+                "power": 80
+            }
+        ]
+    },
+    "B1-161": {
+        "expansion": "B1",
+        "number": 161,
+        "rarity": "\u2662",
+        "name": "Mareanie",
+        "type": "Darkness",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Poison Sting",
+                "energy_cost": [
+                    "Darkness"
+                ],
+                "power": 0,
+                "description": "Your opponent's Active Pok\u00e9mon is now Poisoned."
+            }
+        ]
+    },
+    "B1-162": {
+        "expansion": "B1",
+        "number": 162,
+        "rarity": "\u2662\u2662",
+        "name": "Toxapex",
+        "type": "Darkness",
+        "stage": 1,
+        "evolves_from": "Mareanie",
+        "hp": 100,
+        "weakness": "Fighting",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Venoshock",
+                "energy_cost": [
+                    "Darkness",
+                    "Darkness"
+                ],
+                "power": "50+",
+                "description": "If your opponent's Active Pok\u00e9mon is Poisoned, this attack does 70 more damage."
+            }
+        ]
+    },
+    "B1-163": {
+        "expansion": "B1",
+        "number": 163,
+        "rarity": "\u2662",
+        "pack": "Mega Altaria",
+        "name": "Impidimp",
+        "type": "Darkness",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Grass",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Bite",
+                "energy_cost": [
+                    "Darkness"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "B1-164": {
+        "expansion": "B1",
+        "number": 164,
+        "rarity": "\u2662\u2662",
+        "pack": "Mega Altaria",
+        "name": "Morgrem",
+        "type": "Darkness",
+        "stage": 1,
+        "evolves_from": "Impidimp",
+        "hp": 90,
+        "weakness": "Grass",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "False Surrender",
+                "energy_cost": [
+                    "Darkness",
+                    "Darkness"
+                ],
+                "power": 50,
+                "description": "This attack's damage isn't affected by any effects on your opponent's Active Pok\u00e9mon."
+            }
+        ]
+    },
+    "B1-165": {
+        "expansion": "B1",
+        "number": 165,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Mega Altaria",
+        "name": "Grimmsnarl",
+        "type": "Darkness",
+        "stage": 2,
+        "evolves_from": "Morgrem",
+        "hp": 160,
+        "weakness": "Grass",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Wrack Down",
+                "energy_cost": [
+                    "Darkness",
+                    "Darkness",
+                    "Darkness"
+                ],
+                "power": 100
+            }
+        ]
+    },
+    "B1-166": {
+        "expansion": "B1",
+        "number": 166,
+        "rarity": "\u2662",
+        "name": "Ferroseed",
+        "type": "Metal",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Fire",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Rolling Tackle",
+                "energy_cost": [
+                    "Metal"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "B1-167": {
+        "expansion": "B1",
+        "number": 167,
+        "rarity": "\u2662\u2662",
+        "name": "Ferrothorn",
+        "type": "Metal",
+        "stage": 1,
+        "evolves_from": "Ferroseed",
+        "hp": 110,
+        "weakness": "Fire",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Guard Press",
+                "energy_cost": [
+                    "Metal",
+                    "Metal"
+                ],
+                "power": 50,
+                "description": "During your opponent's next turn, this Pok\u00e9mon takes -20 damage from attacks."
+            }
+        ]
+    },
+    "B1-168": {
+        "expansion": "B1",
+        "number": 168,
+        "rarity": "\u2662",
+        "name": "Durant",
+        "type": "Metal",
+        "stage": 0,
+        "hp": 80,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Bite Together",
+                "energy_cost": [
+                    "Metal",
+                    "Colorless"
+                ],
+                "power": "40+",
+                "description": "If Durant is on your Bench, this attack does 40 more damage."
+            }
+        ]
+    },
+    "B1-169": {
+        "expansion": "B1",
+        "number": 169,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Mega Blaziken",
+        "name": "Cobalion",
+        "type": "Metal",
+        "stage": 0,
+        "hp": 110,
+        "weakness": "Fire",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Sacred Sword",
+                "energy_cost": [
+                    "Metal",
+                    "Metal",
+                    "Colorless"
+                ],
+                "power": 110,
+                "description": "During your next turn, this Pok\u00e9mon can't use Sacred Sword."
+            }
+        ]
+    },
+    "B1-170": {
+        "expansion": "B1",
+        "number": 170,
+        "rarity": "\u2662",
+        "pack": "Mega Blaziken",
+        "name": "Honedge",
+        "type": "Metal",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Fire",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Pierce",
+                "energy_cost": [
+                    "Metal"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "B1-171": {
+        "expansion": "B1",
+        "number": 171,
+        "rarity": "\u2662\u2662",
+        "pack": "Mega Blaziken",
+        "name": "Doublade",
+        "type": "Metal",
+        "stage": 1,
+        "evolves_from": "Honedge",
+        "hp": 90,
+        "weakness": "Fire",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Slash",
+                "energy_cost": [
+                    "Metal",
+                    "Colorless"
+                ],
+                "power": 40
+            }
+        ]
+    },
+    "B1-172": {
+        "expansion": "B1",
+        "number": 172,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Mega Blaziken",
+        "name": "Aegislash",
+        "type": "Metal",
+        "stage": 2,
+        "evolves_from": "Doublade",
+        "hp": 140,
+        "weakness": "Fire",
+        "retreat_cost": 2,
+        "ability": {
+            "name": "Cursed Metal",
+            "description": "Attacks used by your {Psychic} Pok\u00e9mon and {Metal} Pok\u00e9mon do +30 damage to your opponent's Active Pok\u00e9mon."
+        },
+        "moves": [
+            {
+                "name": "Slicing Blade",
+                "energy_cost": [
+                    "Metal",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 70
+            }
+        ]
+    },
+    "B1-173": {
+        "expansion": "B1",
+        "number": 173,
+        "rarity": "\u2662",
+        "pack": "Mega Gyarados",
+        "name": "Meltan",
+        "type": "Metal",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Fire",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Beam",
+                "energy_cost": [
+                    "Metal"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "B1-174": {
+        "expansion": "B1",
+        "number": 174,
+        "rarity": "\u2662\u2662\u2662\u2662",
+        "pack": "Mega Gyarados",
+        "name": "Melmetal ex",
+        "type": "Metal",
+        "stage": 1,
+        "evolves_from": "Meltan",
+        "hp": 170,
+        "weakness": "Fire",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Headbutt",
+                "energy_cost": [
+                    "Metal",
+                    "Metal",
+                    "Colorless"
+                ],
+                "power": 80
+            },
+            {
+                "name": "Metal Arms",
+                "energy_cost": [
+                    "Metal",
+                    "Metal",
+                    "Metal",
+                    "Colorless"
+                ],
+                "power": "100+",
+                "description": "If this Pok\u00e9mon has a Pok\u00e9mon Tool attached, this attack does 50 more damage."
+            }
+        ]
+    },
+    "B1-175": {
+        "expansion": "B1",
+        "number": 175,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Mega Blaziken",
+        "name": "Corviknight",
+        "type": "Metal",
+        "stage": 2,
+        "evolves_from": "Corvisquire",
+        "hp": 140,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Iron Wings",
+                "energy_cost": [
+                    "Metal",
+                    "Metal",
+                    "Colorless"
+                ],
+                "power": 100,
+                "description": "Discard 2 {Metal} Energy from this Pok\u00e9mon. During your opponent's next turn, this Pok\u00e9mon takes -50 damage from attacks."
+            }
+        ]
+    },
+    "B1-176": {
+        "expansion": "B1",
+        "number": 176,
+        "rarity": "\u2662",
+        "pack": "Mega Gyarados",
+        "name": "Druddigon",
+        "type": "Dragon",
+        "stage": 0,
+        "hp": 110,
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Giga Claw",
+                "energy_cost": [
+                    "Fire",
+                    "Water",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 120,
+                "description": "Flip 2 coins. If both of them are tails, this attack does nothing."
+            }
+        ]
+    },
+    "B1-177": {
+        "expansion": "B1",
+        "number": 177,
+        "rarity": "\u2662",
+        "pack": "Mega Altaria",
+        "name": "Goomy",
+        "type": "Dragon",
+        "stage": 0,
+        "hp": 40,
+        "retreat_cost": 1,
+        "ability": {
+            "name": "Sticky Membrane",
+            "description": "As long as this Pok\u00e9mon is in the Active Spot, attacks used by your opponent's Active Pok\u00e9mon cost 1 {Colorless} more."
+        },
+        "moves": [
+            {
+                "name": "Ram",
+                "energy_cost": [
+                    "Water",
+                    "Psychic"
+                ],
+                "power": 30
+            }
+        ]
+    },
+    "B1-178": {
+        "expansion": "B1",
+        "number": 178,
+        "rarity": "\u2662\u2662",
+        "pack": "Mega Altaria",
+        "name": "Sliggoo",
+        "type": "Dragon",
+        "stage": 1,
+        "evolves_from": "Goomy",
+        "hp": 90,
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Gentle Slap",
+                "energy_cost": [
+                    "Water",
+                    "Psychic"
+                ],
+                "power": 60
+            }
+        ]
+    },
+    "B1-179": {
+        "expansion": "B1",
+        "number": 179,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Mega Altaria",
+        "name": "Goodra",
+        "type": "Dragon",
+        "stage": 2,
+        "evolves_from": "Sliggoo",
+        "hp": 150,
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Spiral Drain",
+                "energy_cost": [
+                    "Water",
+                    "Psychic",
+                    "Colorless"
+                ],
+                "power": 100,
+                "description": "Heal 40 damage from this Pok\u00e9mon."
+            }
+        ]
+    },
+    "B1-180": {
+        "expansion": "B1",
+        "number": 180,
+        "rarity": "\u2662",
+        "name": "Pidgey",
+        "type": "Colorless",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Peck",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 30
+            }
+        ]
+    },
+    "B1-181": {
+        "expansion": "B1",
+        "number": 181,
+        "rarity": "\u2662",
+        "name": "Pidgeotto",
+        "type": "Colorless",
+        "stage": 1,
+        "evolves_from": "Pidgey",
+        "hp": 90,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Speed Wing",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 40
+            }
+        ]
+    },
+    "B1-182": {
+        "expansion": "B1",
+        "number": 182,
+        "rarity": "\u2662\u2662",
+        "name": "Pidgeot",
+        "type": "Colorless",
+        "stage": 2,
+        "evolves_from": "Pidgeotto",
+        "hp": 150,
+        "weakness": "Lightning",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Twister",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 80,
+                "description": "Flip 2 coins. For each heads, discard a random Energy from your opponent's Active Pok\u00e9mon. If both of them are tails, this attack does nothing."
+            }
+        ]
+    },
+    "B1-183": {
+        "expansion": "B1",
+        "number": 183,
+        "rarity": "\u2662\u2662\u2662\u2662",
+        "pack": "Mega Altaria",
+        "name": "Tauros ex",
+        "type": "Colorless",
+        "stage": 0,
+        "hp": 140,
+        "weakness": "Fighting",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Wild Tackle",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 90,
+                "description": "Flip a coin. If tails, this Pok\u00e9mon also does 30 damage to itself."
+            }
+        ]
+    },
+    "B1-184": {
+        "expansion": "B1",
+        "number": 184,
+        "rarity": "\u2662",
+        "pack": "Mega Gyarados",
+        "name": "Eevee",
+        "type": "Colorless",
+        "stage": 0,
+        "hp": 50,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "ability": {
+            "name": "Boosted Evolution",
+            "description": "As long as this Pok\u00e9mon is in the Active Spot, it can evolve during your first turn or the turn you play it."
+        },
+        "moves": [
+            {
+                "name": "Stampede",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 10
+            }
+        ]
+    },
+    "B1-185": {
+        "expansion": "B1",
+        "number": 185,
+        "rarity": "\u2662",
+        "pack": "Mega Altaria",
+        "name": "Aipom",
+        "type": "Colorless",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Tail Smash",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 40,
+                "description": "Flip a coin. If tails, this attack does nothing."
+            }
+        ]
+    },
+    "B1-186": {
+        "expansion": "B1",
+        "number": 186,
+        "rarity": "\u2662\u2662",
+        "pack": "Mega Altaria",
+        "name": "Ambipom",
+        "type": "Colorless",
+        "stage": 1,
+        "evolves_from": "Aipom",
+        "hp": 100,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Excited Tail",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": "30x",
+                "description": "Flip 2 coins. This attack does 30 damage for each heads. If this Pok\u00e9mon has Lucky Mittens attached, flip 4 coins instead."
+            }
+        ]
+    },
+    "B1-187": {
+        "expansion": "B1",
+        "number": 187,
+        "rarity": "\u2662",
+        "name": "Miltank",
+        "type": "Colorless",
+        "stage": 0,
+        "hp": 100,
+        "weakness": "Fighting",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Body Slam",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 40,
+                "description": "Flip a coin. If heads, your opponent's Active Pok\u00e9mon is now Paralyzed."
+            }
+        ]
+    },
+    "B1-188": {
+        "expansion": "B1",
+        "number": 188,
+        "rarity": "\u2662",
+        "name": "Zigzagoon",
+        "type": "Colorless",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Tackle",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "B1-189": {
+        "expansion": "B1",
+        "number": 189,
+        "rarity": "\u2662\u2662",
+        "name": "Linoone",
+        "type": "Colorless",
+        "stage": 1,
+        "evolves_from": "Zigzagoon",
+        "hp": 100,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Jet Headbutt",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 40
+            }
+        ]
+    },
+    "B1-190": {
+        "expansion": "B1",
+        "number": 190,
+        "rarity": "\u2662",
+        "pack": "Mega Gyarados",
+        "name": "Whismur",
+        "type": "Colorless",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Pound",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "B1-191": {
+        "expansion": "B1",
+        "number": 191,
+        "rarity": "\u2662",
+        "pack": "Mega Gyarados",
+        "name": "Loudred",
+        "type": "Colorless",
+        "stage": 1,
+        "evolves_from": "Whismur",
+        "hp": 90,
+        "weakness": "Fighting",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Hyper Voice",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 40
+            }
+        ]
+    },
+    "B1-192": {
+        "expansion": "B1",
+        "number": 192,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Mega Gyarados",
+        "name": "Exploud",
+        "type": "Colorless",
+        "stage": 2,
+        "evolves_from": "Loudred",
+        "hp": 150,
+        "weakness": "Fighting",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Booming Roar",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 90,
+                "description": "During your opponent's next turn, they can't play any Item cards from their hand."
+            }
+        ]
+    },
+    "B1-193": {
+        "expansion": "B1",
+        "number": 193,
+        "rarity": "\u2662",
+        "pack": "Mega Gyarados",
+        "name": "Skitty",
+        "type": "Colorless",
+        "stage": 0,
+        "hp": 50,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Play Rough",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": "10+",
+                "description": "Flip a coin. If heads, this attack does 30 more damage."
+            }
+        ]
+    },
+    "B1-194": {
+        "expansion": "B1",
+        "number": 194,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Mega Gyarados",
+        "name": "Delcatty",
+        "type": "Colorless",
+        "stage": 1,
+        "evolves_from": "Skitty",
+        "hp": 80,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "ability": {
+            "name": "Search for Friends",
+            "description": "Once during your turn, when you play this Pok\u00e9mon from your hand to evolve 1 of your Pok\u00e9mon, you may put a Supporter card from your discard pile into your hand."
+        },
+        "moves": [
+            {
+                "name": "Cat Kick",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 40
+            }
+        ]
+    },
+    "B1-195": {
+        "expansion": "B1",
+        "number": 195,
+        "rarity": "\u2662",
+        "pack": "Mega Altaria",
+        "name": "Spinda",
+        "type": "Colorless",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Dizzying Headbutt",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 30,
+                "description": "Both Active Pok\u00e9mon are now Confused."
+            }
+        ]
+    },
+    "B1-196": {
+        "expansion": "B1",
+        "number": 196,
+        "rarity": "\u2662",
+        "pack": "Mega Altaria",
+        "name": "Swablu",
+        "type": "Colorless",
+        "stage": 0,
+        "hp": 50,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Sing",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 0,
+                "description": "Your opponent's Active Pok\u00e9mon is now Asleep."
+            }
+        ]
+    },
+    "B1-197": {
+        "expansion": "B1",
+        "number": 197,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Mega Altaria",
+        "name": "Altaria",
+        "type": "Colorless",
+        "stage": 1,
+        "evolves_from": "Swablu",
+        "hp": 100,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Do the Wave",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": "20+",
+                "description": "This attack does 20 more damage for each of your Benched Pok\u00e9mon."
+            }
+        ]
+    },
+    "B1-198": {
+        "expansion": "B1",
+        "number": 198,
+        "rarity": "\u2662",
+        "name": "Chatot",
+        "type": "Colorless",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Sleepy Song",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 30,
+                "description": "Your opponent's Active Pok\u00e9mon is now Asleep."
+            }
+        ]
+    },
+    "B1-199": {
+        "expansion": "B1",
+        "number": 199,
+        "rarity": "\u2662",
+        "name": "Patrat",
+        "type": "Colorless",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Bite",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "B1-200": {
+        "expansion": "B1",
+        "number": 200,
+        "rarity": "\u2662\u2662",
+        "name": "Watchog",
+        "type": "Colorless",
+        "stage": 1,
+        "evolves_from": "Patrat",
+        "hp": 100,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Biting Fang",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": "40+",
+                "description": "Flip a coin. If heads, this attack does 40 more damage."
+            }
+        ]
+    },
+    "B1-201": {
+        "expansion": "B1",
+        "number": 201,
+        "rarity": "\u2662",
+        "pack": "Mega Altaria",
+        "name": "Lillipup",
+        "type": "Colorless",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Collect",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 0,
+                "description": "Draw a card."
+            }
+        ]
+    },
+    "B1-202": {
+        "expansion": "B1",
+        "number": 202,
+        "rarity": "\u2662\u2662",
+        "pack": "Mega Altaria",
+        "name": "Herdier",
+        "type": "Colorless",
+        "stage": 1,
+        "evolves_from": "Lillipup",
+        "hp": 90,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Headbutt Bounce",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 40
+            }
+        ]
+    },
+    "B1-203": {
+        "expansion": "B1",
+        "number": 203,
+        "rarity": "\u2662\u2662\u2662",
+        "pack": "Mega Altaria",
+        "name": "Stoutland",
+        "type": "Colorless",
+        "stage": 2,
+        "evolves_from": "Herdier",
+        "hp": 150,
+        "weakness": "Fighting",
+        "retreat_cost": 3,
+        "moves": [
+            {
+                "name": "Dangerous Bite",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": "70+",
+                "description": "If your opponent's Active Pok\u00e9mon is a Basic Pok\u00e9mon, this attack does 70 more damage."
+            }
+        ]
+    },
+    "B1-204": {
+        "expansion": "B1",
+        "number": 204,
+        "rarity": "\u2662",
+        "pack": "Mega Blaziken",
+        "name": "Rufflet",
+        "type": "Colorless",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Wing Attack",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 40
+            }
+        ]
+    },
+    "B1-205": {
+        "expansion": "B1",
+        "number": 205,
+        "rarity": "\u2662\u2662",
+        "pack": "Mega Blaziken",
+        "name": "Braviary",
+        "type": "Colorless",
+        "stage": 1,
+        "evolves_from": "Rufflet",
+        "hp": 120,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Slash",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 80
+            }
+        ]
+    },
+    "B1-206": {
+        "expansion": "B1",
+        "number": 206,
+        "rarity": "\u2662\u2662",
+        "pack": "Mega Blaziken",
+        "name": "Furfrou",
+        "type": "Colorless",
+        "stage": 0,
+        "hp": 80,
+        "weakness": "Fighting",
+        "retreat_cost": 1,
+        "ability": {
+            "name": "Fur Coat",
+            "description": "This Pok\u00e9mon takes -20 damage from attacks."
+        },
+        "moves": [
+            {
+                "name": "Sharp Fang",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 50
+            }
+        ]
+    },
+    "B1-207": {
+        "expansion": "B1",
+        "number": 207,
+        "rarity": "\u2662\u2662",
+        "pack": "Mega Altaria",
+        "variant": "B1-206"
+    },
+    "B1-208": {
+        "expansion": "B1",
+        "number": 208,
+        "rarity": "\u2662\u2662",
+        "pack": "Mega Gyarados",
+        "variant": "B1-206"
+    },
+    "B1-209": {
+        "expansion": "B1",
+        "number": 209,
+        "rarity": "\u2662",
+        "pack": "Mega Blaziken",
+        "name": "Rookidee",
+        "type": "Colorless",
+        "stage": 0,
+        "hp": 60,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Flap",
+                "energy_cost": [
+                    "Colorless"
+                ],
+                "power": 20
+            }
+        ]
+    },
+    "B1-210": {
+        "expansion": "B1",
+        "number": 210,
+        "rarity": "\u2662\u2662",
+        "pack": "Mega Blaziken",
+        "name": "Corvisquire",
+        "type": "Colorless",
+        "stage": 1,
+        "evolves_from": "Rookidee",
+        "hp": 80,
+        "weakness": "Lightning",
+        "retreat_cost": 1,
+        "moves": [
+            {
+                "name": "Drill Peck",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 40
+            }
+        ]
+    },
+    "B1-211": {
+        "expansion": "B1",
+        "number": 211,
+        "rarity": "\u2662",
+        "pack": "Mega Altaria",
+        "name": "Wooloo",
+        "type": "Colorless",
+        "stage": 0,
+        "hp": 70,
+        "weakness": "Fighting",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Continuous Tumble",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": "40x",
+                "description": "Flip a coin until you get tails. This attack does 40 damage for each heads."
+            }
+        ]
+    },
+    "B1-212": {
+        "expansion": "B1",
+        "number": 212,
+        "rarity": "\u2662\u2662",
+        "pack": "Mega Altaria",
+        "name": "Dubwool",
+        "type": "Colorless",
+        "stage": 1,
+        "evolves_from": "Wooloo",
+        "hp": 130,
+        "weakness": "Fighting",
+        "retreat_cost": 2,
+        "moves": [
+            {
+                "name": "Boundless Power",
+                "energy_cost": [
+                    "Colorless",
+                    "Colorless",
+                    "Colorless"
+                ],
+                "power": 100,
+                "description": "During your next turn, this Pok\u00e9mon can't attack."
+            }
+        ]
+    },
+    "B1-213": {
+        "expansion": "B1",
+        "number": 213,
+        "rarity": "\u2662\u2662",
+        "pack": "Mega Blaziken",
+        "name": "Prank Spinner",
+        "category": "Item",
+        "description": "A card from among both player's hands is chosen at random, revealed to the other player, and shuffled into its owner's deck."
+    },
+    "B1-214": {
+        "expansion": "B1",
+        "number": 214,
+        "rarity": "\u2662",
+        "pack": "Mega Blaziken",
+        "name": "Plume Fossil",
+        "category": "Item",
+        "description": "Play this card as if it were a 40-HP Basic {Colorless} Pok\u00e9mon.At any time during your turn, you may discard this card from play.This card can't retreat."
+    },
+    "B1-215": {
+        "expansion": "B1",
+        "number": 215,
+        "rarity": "\u2662\u2662",
+        "pack": "Mega Gyarados",
+        "name": "Hitting Hammer",
+        "category": "Item",
+        "description": "Flip 2 coins. If both of them are heads, discard a random Energy from your opponent's Active Pok\u00e9mon."
+    },
+    "B1-216": {
+        "expansion": "B1",
+        "number": 216,
+        "rarity": "\u2662",
+        "pack": "Mega Gyarados",
+        "name": "Cover Fossil",
+        "category": "Item",
+        "description": "Play this card as if it were a 40-HP Basic {Colorless} Pok\u00e9mon.At any time during your turn, you may discard this card from play.This card can't retreat."
+    },
+    "B1-217": {
+        "expansion": "B1",
+        "number": 217,
+        "rarity": "\u2662\u2662",
+        "pack": "Mega Blaziken",
+        "name": "Flame Patch",
+        "category": "Item",
+        "description": "Attach a {Fire} Energy from your discard pile to your Active {Fire} Pok\u00e9mon."
+    },
+    "B1-218": {
+        "expansion": "B1",
+        "number": 218,
+        "rarity": "\u2662\u2662",
+        "pack": "Mega Altaria",
+        "name": "Sitrus Berry",
+        "category": "Tool",
+        "description": "At the end of each turn, if the Pok\u00e9mon this card is attached to has half of its maximum HP or less remaining, heal 30 damage from it. If you do, discard this card."
+    },
+    "B1-219": {
+        "expansion": "B1",
+        "number": 219,
+        "rarity": "\u2662\u2662",
+        "pack": "Mega Gyarados",
+        "name": "Heavy Helmet",
+        "category": "Tool",
+        "description": "If the Pok\u00e9mon this card is attached to has a Retreat Cost of 3 or more, it takes -20 damage from attacks from your opponent's Pok\u00e9mon."
+    },
+    "B1-220": {
+        "expansion": "B1",
+        "number": 220,
+        "rarity": "\u2662\u2662",
+        "pack": "Mega Altaria",
+        "name": "Lucky Mittens",
+        "category": "Tool",
+        "description": "Whenever your opponent's Pok\u00e9mon is Knocked Out by damage from an attack used by the Pok\u00e9mon this card is attached to, draw a card."
+    },
+    "B1-221": {
+        "expansion": "B1",
+        "number": 221,
+        "rarity": "\u2662\u2662",
+        "pack": "Mega Gyarados",
+        "name": "Marlon",
+        "category": "Supporter",
+        "description": "Heal 70 damage from 1 of your Carracosta or Jellicent."
+    },
+    "B1-222": {
+        "expansion": "B1",
+        "number": 222,
+        "rarity": "\u2662\u2662",
+        "pack": "Mega Blaziken",
+        "name": "Hala",
+        "category": "Supporter",
+        "description": "During your opponent's next turn, if your Hariyama or Crabominable would be Knocked Out by damage from an attack, it is not Knocked Out and its remaining HP becomes 10."
+    },
+    "B1-223": {
+        "expansion": "B1",
+        "number": 223,
+        "rarity": "\u2662\u2662",
+        "pack": "Mega Blaziken",
+        "name": "May",
+        "category": "Supporter",
+        "description": "Put 2 random Pok\u00e9mon from your deck into your hand. For each Pok\u00e9mon you put into your hand in this way, choose a Pok\u00e9mon to shuffle from your hand into your deck."
+    },
+    "B1-224": {
+        "expansion": "B1",
+        "number": 224,
+        "rarity": "\u2662\u2662",
+        "pack": "Mega Altaria",
+        "name": "Fantina",
+        "category": "Supporter",
+        "description": "Take a {Psychic} Energy from your Energy Zone and attach it to each of your Drifblim and Mismagius."
+    },
+    "B1-225": {
+        "expansion": "B1",
+        "number": 225,
+        "rarity": "\u2662\u2662",
+        "pack": "Mega Gyarados",
+        "name": "Copycat",
+        "category": "Supporter",
+        "description": "Shuffle your hand into your deck. Draw a card for each card in your opponent's hand."
+    },
+    "B1-226": {
+        "expansion": "B1",
+        "number": 226,
+        "rarity": "\u2662\u2662",
+        "pack": "Mega Altaria",
+        "name": "Lisia",
+        "category": "Supporter",
+        "description": "Put 2 random Basic Pok\u00e9mon with 50 HP or less from your deck into your hand."
+    },
+    "B1-227": {
+        "expansion": "B1",
+        "number": 227,
+        "rarity": "\u2606",
+        "pack": "Mega Blaziken",
+        "variant": "B1-005"
+    },
+    "B1-228": {
+        "expansion": "B1",
+        "number": 228,
+        "rarity": "\u2606",
+        "pack": "Mega Altaria",
+        "variant": "B1-021"
+    },
+    "B1-229": {
+        "expansion": "B1",
+        "number": 229,
+        "rarity": "\u2606",
+        "pack": "Mega Altaria",
+        "variant": "B1-027"
+    },
+    "B1-230": {
+        "expansion": "B1",
+        "number": 230,
+        "rarity": "\u2606",
+        "pack": "Mega Blaziken",
+        "variant": "B1-028"
+    },
+    "B1-231": {
+        "expansion": "B1",
+        "number": 231,
+        "rarity": "\u2606",
+        "pack": "Mega Altaria",
+        "variant": "B1-043"
+    },
+    "B1-232": {
+        "expansion": "B1",
+        "number": 232,
+        "rarity": "\u2606",
+        "pack": "Mega Gyarados",
+        "variant": "B1-050"
+    },
+    "B1-233": {
+        "expansion": "B1",
+        "number": 233,
+        "rarity": "\u2606",
+        "pack": "Mega Altaria",
+        "variant": "B1-055"
+    },
+    "B1-234": {
+        "expansion": "B1",
+        "number": 234,
+        "rarity": "\u2606",
+        "pack": "Mega Gyarados",
+        "variant": "B1-069"
+    },
+    "B1-235": {
+        "expansion": "B1",
+        "number": 235,
+        "rarity": "\u2606",
+        "pack": "Mega Blaziken",
+        "variant": "B1-070"
+    },
+    "B1-236": {
+        "expansion": "B1",
+        "number": 236,
+        "rarity": "\u2606",
+        "pack": "Mega Altaria",
+        "variant": "B1-080"
+    },
+    "B1-237": {
+        "expansion": "B1",
+        "number": 237,
+        "rarity": "\u2606",
+        "pack": "Mega Blaziken",
+        "variant": "B1-088"
+    },
+    "B1-238": {
+        "expansion": "B1",
+        "number": 238,
+        "rarity": "\u2606",
+        "pack": "Mega Gyarados",
+        "variant": "B1-111"
+    },
+    "B1-239": {
+        "expansion": "B1",
+        "number": 239,
+        "rarity": "\u2606",
+        "pack": "Mega Altaria",
+        "variant": "B1-112"
+    },
+    "B1-240": {
+        "expansion": "B1",
+        "number": 240,
+        "rarity": "\u2606",
+        "pack": "Mega Blaziken",
+        "variant": "B1-126"
+    },
+    "B1-241": {
+        "expansion": "B1",
+        "number": 241,
+        "rarity": "\u2606",
+        "pack": "Mega Gyarados",
+        "variant": "B1-129"
+    },
+    "B1-242": {
+        "expansion": "B1",
+        "number": 242,
+        "rarity": "\u2606",
+        "pack": "Mega Blaziken",
+        "variant": "B1-134"
+    },
+    "B1-243": {
+        "expansion": "B1",
+        "number": 243,
+        "rarity": "\u2606",
+        "pack": "Mega Gyarados",
+        "variant": "B1-138"
+    },
+    "B1-244": {
+        "expansion": "B1",
+        "number": 244,
+        "rarity": "\u2606",
+        "pack": "Mega Gyarados",
+        "variant": "B1-149"
+    },
+    "B1-245": {
+        "expansion": "B1",
+        "number": 245,
+        "rarity": "\u2606",
+        "pack": "Mega Gyarados",
+        "variant": "B1-157"
+    },
+    "B1-246": {
+        "expansion": "B1",
+        "number": 246,
+        "rarity": "\u2606",
+        "pack": "Mega Blaziken",
+        "variant": "B1-175"
+    },
+    "B1-247": {
+        "expansion": "B1",
+        "number": 247,
+        "rarity": "\u2606",
+        "pack": "Mega Altaria",
+        "variant": "B1-177"
+    },
+    "B1-248": {
+        "expansion": "B1",
+        "number": 248,
+        "rarity": "\u2606",
+        "pack": "Mega Gyarados",
+        "variant": "B1-194"
+    },
+    "B1-249": {
+        "expansion": "B1",
+        "number": 249,
+        "rarity": "\u2606",
+        "pack": "Mega Altaria",
+        "variant": "B1-203"
+    },
+    "B1-250": {
+        "expansion": "B1",
+        "number": 250,
+        "rarity": "\u2606",
+        "pack": "Mega Blaziken",
+        "variant": "B1-204"
+    },
+    "B1-251": {
+        "expansion": "B1",
+        "number": 251,
+        "rarity": "\u2606\u2606",
+        "pack": "Mega Blaziken",
+        "variant": "B1-002"
+    },
+    "B1-252": {
+        "expansion": "B1",
+        "number": 252,
+        "rarity": "\u2606\u2606",
+        "pack": "Mega Altaria",
+        "variant": "B1-016"
+    },
+    "B1-253": {
+        "expansion": "B1",
+        "number": 253,
+        "rarity": "\u2606\u2606",
+        "pack": "Mega Blaziken",
+        "variant": "B1-031"
+    },
+    "B1-254": {
+        "expansion": "B1",
+        "number": 254,
+        "rarity": "\u2606\u2606",
+        "pack": "Mega Blaziken",
+        "variant": "B1-036"
+    },
+    "B1-255": {
+        "expansion": "B1",
+        "number": 255,
+        "rarity": "\u2606\u2606",
+        "pack": "Mega Gyarados",
+        "variant": "B1-052"
+    },
+    "B1-256": {
+        "expansion": "B1",
+        "number": 256,
+        "rarity": "\u2606\u2606",
+        "pack": "Mega Gyarados",
+        "variant": "B1-073"
+    },
+    "B1-257": {
+        "expansion": "B1",
+        "number": 257,
+        "rarity": "\u2606\u2606",
+        "pack": "Mega Gyarados",
+        "variant": "B1-081"
+    },
+    "B1-258": {
+        "expansion": "B1",
+        "number": 258,
+        "rarity": "\u2606\u2606",
+        "pack": "Mega Altaria",
+        "variant": "B1-085"
+    },
+    "B1-259": {
+        "expansion": "B1",
+        "number": 259,
+        "rarity": "\u2606\u2606",
+        "pack": "Mega Altaria",
+        "variant": "B1-102"
+    },
+    "B1-260": {
+        "expansion": "B1",
+        "number": 260,
+        "rarity": "\u2606\u2606",
+        "pack": "Mega Altaria",
+        "variant": "B1-121"
+    },
+    "B1-261": {
+        "expansion": "B1",
+        "number": 261,
+        "rarity": "\u2606\u2606",
+        "pack": "Mega Blaziken",
+        "variant": "B1-124"
+    },
+    "B1-262": {
+        "expansion": "B1",
+        "number": 262,
+        "rarity": "\u2606\u2606",
+        "pack": "Mega Gyarados",
+        "variant": "B1-151"
+    },
+    "B1-263": {
+        "expansion": "B1",
+        "number": 263,
+        "rarity": "\u2606\u2606",
+        "pack": "Mega Blaziken",
+        "variant": "B1-160"
+    },
+    "B1-264": {
+        "expansion": "B1",
+        "number": 264,
+        "rarity": "\u2606\u2606",
+        "pack": "Mega Gyarados",
+        "variant": "B1-174"
+    },
+    "B1-265": {
+        "expansion": "B1",
+        "number": 265,
+        "rarity": "\u2606\u2606",
+        "pack": "Mega Altaria",
+        "variant": "B1-183"
+    },
+    "B1-266": {
+        "expansion": "B1",
+        "number": 266,
+        "rarity": "\u2606\u2606",
+        "pack": "Mega Gyarados",
+        "variant": "B1-221"
+    },
+    "B1-267": {
+        "expansion": "B1",
+        "number": 267,
+        "rarity": "\u2606\u2606",
+        "pack": "Mega Blaziken",
+        "variant": "B1-222"
+    },
+    "B1-268": {
+        "expansion": "B1",
+        "number": 268,
+        "rarity": "\u2606\u2606",
+        "pack": "Mega Blaziken",
+        "variant": "B1-223"
+    },
+    "B1-269": {
+        "expansion": "B1",
+        "number": 269,
+        "rarity": "\u2606\u2606",
+        "pack": "Mega Altaria",
+        "variant": "B1-224"
+    },
+    "B1-270": {
+        "expansion": "B1",
+        "number": 270,
+        "rarity": "\u2606\u2606",
+        "pack": "Mega Gyarados",
+        "variant": "B1-225"
+    },
+    "B1-271": {
+        "expansion": "B1",
+        "number": 271,
+        "rarity": "\u2606\u2606",
+        "pack": "Mega Altaria",
+        "variant": "B1-226"
+    },
+    "B1-272": {
+        "expansion": "B1",
+        "number": 272,
+        "rarity": "\u2606\u2606",
+        "pack": "Mega Blaziken",
+        "variant": "B1-002"
+    },
+    "B1-273": {
+        "expansion": "B1",
+        "number": 273,
+        "rarity": "\u2606\u2606",
+        "pack": "Mega Altaria",
+        "variant": "B1-016"
+    },
+    "B1-274": {
+        "expansion": "B1",
+        "number": 274,
+        "rarity": "\u2606\u2606",
+        "pack": "Mega Blaziken",
+        "variant": "B1-031"
+    },
+    "B1-275": {
+        "expansion": "B1",
+        "number": 275,
+        "rarity": "\u2606\u2606",
+        "pack": "Mega Gyarados",
+        "variant": "B1-073"
+    },
+    "B1-276": {
+        "expansion": "B1",
+        "number": 276,
+        "rarity": "\u2606\u2606",
+        "pack": "Mega Gyarados",
+        "variant": "B1-081"
+    },
+    "B1-277": {
+        "expansion": "B1",
+        "number": 277,
+        "rarity": "\u2606\u2606",
+        "pack": "Mega Altaria",
+        "variant": "B1-085"
+    },
+    "B1-278": {
+        "expansion": "B1",
+        "number": 278,
+        "rarity": "\u2606\u2606",
+        "pack": "Mega Altaria",
+        "variant": "B1-121"
+    },
+    "B1-279": {
+        "expansion": "B1",
+        "number": 279,
+        "rarity": "\u2606\u2606",
+        "pack": "Mega Blaziken",
+        "variant": "B1-124"
+    },
+    "B1-280": {
+        "expansion": "B1",
+        "number": 280,
+        "rarity": "\u2606\u2606",
+        "pack": "Mega Gyarados",
+        "variant": "B1-151"
+    },
+    "B1-281": {
+        "expansion": "B1",
+        "number": 281,
+        "rarity": "\u2606\u2606",
+        "pack": "Mega Blaziken",
+        "variant": "B1-160"
+    },
+    "B1-282": {
+        "expansion": "B1",
+        "number": 282,
+        "rarity": "\u2606\u2606",
+        "pack": "Mega Gyarados",
+        "variant": "B1-174"
+    },
+    "B1-283": {
+        "expansion": "B1",
+        "number": 283,
+        "rarity": "\u2606\u2606",
+        "pack": "Mega Altaria",
+        "variant": "B1-183"
+    },
+    "B1-284": {
+        "expansion": "B1",
+        "number": 284,
+        "rarity": "\u2606\u2606\u2606",
+        "pack": "Mega Blaziken",
+        "variant": "B1-036"
+    },
+    "B1-285": {
+        "expansion": "B1",
+        "number": 285,
+        "rarity": "\u2606\u2606\u2606",
+        "pack": "Mega Gyarados",
+        "variant": "B1-052"
+    },
+    "B1-286": {
+        "expansion": "B1",
+        "number": 286,
+        "rarity": "\u2606\u2606\u2606",
+        "pack": "Mega Altaria",
+        "variant": "B1-102"
+    },
+    "B1-287": {
+        "expansion": "B1",
+        "number": 287,
+        "rarity": "\u2735",
+        "pack": "Mega Altaria",
+        "variant": "A1-018"
+    },
+    "B1-288": {
+        "expansion": "B1",
+        "number": 288,
+        "rarity": "\u2735",
+        "pack": "Mega Altaria",
+        "variant": "A1-019"
+    },
+    "B1-289": {
+        "expansion": "B1",
+        "number": 289,
+        "rarity": "\u2735",
+        "pack": "Mega Altaria",
+        "variant": "A1-020"
+    },
+    "B1-290": {
+        "expansion": "B1",
+        "number": 290,
+        "rarity": "\u2735",
+        "pack": "Mega Blaziken",
+        "variant": "A3-010"
+    },
+    "B1-291": {
+        "expansion": "B1",
+        "number": 291,
+        "rarity": "\u2735",
+        "pack": "Mega Blaziken",
+        "variant": "A3a-004"
+    },
+    "B1-292": {
+        "expansion": "B1",
+        "number": 292,
+        "rarity": "\u2735",
+        "pack": "Mega Blaziken",
+        "variant": "A1-046"
+    },
+    "B1-293": {
+        "expansion": "B1",
+        "number": 293,
+        "rarity": "\u2735",
+        "pack": "Mega Gyarados",
+        "variant": "A3-030"
+    },
+    "B1-294": {
+        "expansion": "B1",
+        "number": 294,
+        "rarity": "\u2735",
+        "pack": "Mega Gyarados",
+        "variant": "A3-032"
+    },
+    "B1-295": {
+        "expansion": "B1",
+        "number": 295,
+        "rarity": "\u2735",
+        "pack": "Mega Gyarados",
+        "variant": "A4a-013"
+    },
+    "B1-296": {
+        "expansion": "B1",
+        "number": 296,
+        "rarity": "\u2735",
+        "pack": "Mega Gyarados",
+        "variant": "A1-060"
+    },
+    "B1-297": {
+        "expansion": "B1",
+        "number": 297,
+        "rarity": "\u2735",
+        "pack": "Mega Gyarados",
+        "variant": "A1-061"
+    },
+    "B1-298": {
+        "expansion": "B1",
+        "number": 298,
+        "rarity": "\u2735",
+        "pack": "Mega Altaria",
+        "variant": "A1-083"
+    },
+    "B1-299": {
+        "expansion": "B1",
+        "number": 299,
+        "rarity": "\u2735",
+        "pack": "Mega Blaziken",
+        "variant": "A2-050"
+    },
+    "B1-300": {
+        "expansion": "B1",
+        "number": 300,
+        "rarity": "\u2735",
+        "pack": "Mega Altaria",
+        "variant": "A3-045"
+    },
+    "B1-301": {
+        "expansion": "B1",
+        "number": 301,
+        "rarity": "\u2735",
+        "pack": "Mega Altaria",
+        "variant": "A3b-023"
+    },
+    "B1-302": {
+        "expansion": "B1",
+        "number": 302,
+        "rarity": "\u2735",
+        "pack": "Mega Gyarados",
+        "variant": "A1-103"
+    },
+    "B1-303": {
+        "expansion": "B1",
+        "number": 303,
+        "rarity": "\u2735",
+        "pack": "Mega Gyarados",
+        "variant": "A3-066"
+    },
+    "B1-304": {
+        "expansion": "B1",
+        "number": 304,
+        "rarity": "\u2735",
+        "pack": "Mega Altaria",
+        "variant": "A3a-021"
+    },
+    "B1-305": {
+        "expansion": "B1",
+        "number": 305,
+        "rarity": "\u2735",
+        "pack": "Mega Gyarados",
+        "variant": "A1-124"
+    },
+    "B1-306": {
+        "expansion": "B1",
+        "number": 306,
+        "rarity": "\u2735",
+        "pack": "Mega Gyarados",
+        "variant": "A1-125"
+    },
+    "B1-307": {
+        "expansion": "B1",
+        "number": 307,
+        "rarity": "\u2735",
+        "pack": "Mega Blaziken",
+        "variant": "A1-147"
+    },
+    "B1-308": {
+        "expansion": "B1",
+        "number": 308,
+        "rarity": "\u2735",
+        "pack": "Mega Blaziken",
+        "variant": "A1a-044"
+    },
+    "B1-309": {
+        "expansion": "B1",
+        "number": 309,
+        "rarity": "\u2735",
+        "pack": "Mega Blaziken",
+        "variant": "A1a-045"
+    },
+    "B1-310": {
+        "expansion": "B1",
+        "number": 310,
+        "rarity": "\u2735",
+        "pack": "Mega Gyarados",
+        "variant": "A3-098"
+    },
+    "B1-311": {
+        "expansion": "B1",
+        "number": 311,
+        "rarity": "\u2735",
+        "pack": "Mega Blaziken",
+        "variant": "A3-117"
+    },
+    "B1-312": {
+        "expansion": "B1",
+        "number": 312,
+        "rarity": "\u2735",
+        "pack": "Mega Altaria",
+        "variant": "A1-196"
+    },
+    "B1-313": {
+        "expansion": "B1",
+        "number": 313,
+        "rarity": "\u2735",
+        "pack": "Mega Altaria",
+        "variant": "A1-197"
+    },
+    "B1-314": {
+        "expansion": "B1",
+        "number": 314,
+        "rarity": "\u2735",
+        "pack": "Mega Blaziken",
+        "variant": "A1-199"
+    },
+    "B1-315": {
+        "expansion": "B1",
+        "number": 315,
+        "rarity": "\u2735",
+        "pack": "Mega Blaziken",
+        "variant": "A1-200"
+    },
+    "B1-316": {
+        "expansion": "B1",
+        "number": 316,
+        "rarity": "\u2735",
+        "pack": "Mega Altaria",
+        "variant": "A2-135"
+    },
+    "B1-317": {
+        "expansion": "B1",
+        "number": 317,
+        "rarity": "\u2735\u2735",
+        "pack": "Mega Blaziken",
+        "variant": "A3-012"
+    },
+    "B1-318": {
+        "expansion": "B1",
+        "number": 318,
+        "rarity": "\u2735\u2735",
+        "pack": "Mega Gyarados",
+        "variant": "A3-033"
+    },
+    "B1-319": {
+        "expansion": "B1",
+        "number": 319,
+        "rarity": "\u2735\u2735",
+        "pack": "Mega Blaziken",
+        "variant": "A2-049"
+    },
+    "B1-320": {
+        "expansion": "B1",
+        "number": 320,
+        "rarity": "\u2735\u2735",
+        "pack": "Mega Altaria",
+        "variant": "A3b-024"
+    },
+    "B1-321": {
+        "expansion": "B1",
+        "number": 321,
+        "rarity": "\u2735\u2735",
+        "pack": "Mega Gyarados",
+        "variant": "A2b-022"
+    },
+    "B1-322": {
+        "expansion": "B1",
+        "number": 322,
+        "rarity": "\u2735\u2735",
+        "pack": "Mega Blaziken",
+        "variant": "A3a-019"
+    },
+    "B1-323": {
+        "expansion": "B1",
+        "number": 323,
+        "rarity": "\u2735\u2735",
+        "pack": "Mega Gyarados",
+        "variant": "A3a-033"
+    },
+    "B1-324": {
+        "expansion": "B1",
+        "number": 324,
+        "rarity": "\u2735\u2735",
+        "pack": "Mega Altaria",
+        "variant": "A3-104"
+    },
+    "B1-325": {
+        "expansion": "B1",
+        "number": 325,
+        "rarity": "\u2735\u2735",
+        "pack": "Mega Blaziken",
+        "variant": "A3a-047"
+    },
+    "B1-326": {
+        "expansion": "B1",
+        "number": 326,
+        "rarity": "\u2735\u2735",
+        "pack": "Mega Altaria",
+        "variant": "A2-119"
+    },
+    "B1-327": {
+        "expansion": "B1",
+        "number": 327,
+        "rarity": "\u2735\u2735",
+        "pack": "Mega Altaria",
+        "variant": "A2b-065"
+    },
+    "B1-328": {
+        "expansion": "B1",
+        "number": 328,
+        "rarity": "\u2735\u2735",
+        "pack": "Mega Gyarados",
+        "variant": "A2a-071"
+    },
+    "B1-329": {
+        "expansion": "B1",
+        "number": 329,
+        "rarity": "\u265b",
+        "variant": "B1-018"
+    },
+    "B1-330": {
+        "expansion": "B1",
+        "number": 330,
+        "rarity": "\u265b",
+        "variant": "B1-120"
+    },
+    "B1-331": {
+        "expansion": "B1",
+        "number": 331,
+        "rarity": "\u265b",
+        "variant": "B1-217"
     }
 }

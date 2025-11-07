@@ -30,7 +30,8 @@ expansion_names = {
     "A3a": "Extradimensional Crisis",
     "A3b": "Eevee Grove",
     "A4": "Wisdom of Sky and Sea",
-    "A4a": "Secluded Springs"
+    "A4a": "Secluded Springs",
+    "B1": "Mega Rising"
 }
 expansion_packs = {
     "A1": ["Charizard", "Mewtwo", "Pikachu"],
@@ -43,7 +44,8 @@ expansion_packs = {
     "A3a": [],
     "A3b": [],
     "A4": ["Ho-Oh", "Lugia"],
-    "A4a": []
+    "A4a": [],
+    "B1": ["Mega Gyarados", "Mega Blaziken", "Mega Altaria"]
 }
 
 
